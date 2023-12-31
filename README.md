@@ -3,4 +3,4 @@ Front and backend for the website, allowing users to write a coding exercise and
 
 ---
 
-[funtions](docs/requierments.md)
+[requierments](docs/requierments.md)
