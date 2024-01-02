@@ -10,6 +10,8 @@
 * user should be able to comment under coding excersises
 * user should get information how fast his code runs and be able to compare it to avrarage time for excersies 
 * user should should be able to create excersezes that are tested by running specific fucntion
+* user should be able to join queue for his code to be tested
+* user should be able to remove his code from queue if changes mind
 
 * additional if time allows
 ** user should be able to take part in courses made out of few excersies
