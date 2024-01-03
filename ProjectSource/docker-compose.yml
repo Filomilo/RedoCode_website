@@ -1,0 +1,17 @@
+version: '3'
+networks:
+  default:
+
+
+services:
+  frontend:
+    build: ./coding_exercise_frontend
+    ports:
+      - "5173:5173"
+    networks:
+      default:
+        aliases:
+          - frontend  
+    volumes:
+      - ./coding_exercise_frontend/src:/frontend/src:delegated
+   
