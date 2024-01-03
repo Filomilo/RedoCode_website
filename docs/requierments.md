@@ -12,12 +12,16 @@
 * user should should be able to create excersezes that are tested by running specific fucntion
 * user should be able to join queue for his code to be tested
 * user should be able to remove his code from queue if changes mind
+* user should be able to change avatart picture
+* user should be able to change nick
+* user should be able to choose amoutn and types of arguments that are gonna be provided to his code
+* user should be able to rate diffuculity level of excerise
 
 * additional if time allows
-** user should be able to take part in courses made out of few excersies
-** user should be able to create courses
-** user should be able to sign up for course using code/password
-** user should be abele to review soulution made for specific excersise 
+- user should be able to take part in courses made out of few excersies
+- user should be able to create courses
+- user should be able to sign up for course using code/password
+- user should be abele to review soulution made for specific excersise 
 
 
 
