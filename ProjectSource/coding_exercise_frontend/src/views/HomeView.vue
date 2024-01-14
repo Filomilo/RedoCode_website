@@ -1,15 +1,9 @@
-<script setup lang='ts'>
-import {ref} from 'vue'
-console.log("test home");
-
-const name=ref('test')
-
+<script setup lang="ts">
+import TheWelcome from '../components/TheWelcome.vue'
 </script>
 
-
 <template>
-test
-
-<p> text is: {{ name }}</p>
-<input v-model="name" />
+  <main>
+    <TheWelcome />
+  </main>
 </template>
