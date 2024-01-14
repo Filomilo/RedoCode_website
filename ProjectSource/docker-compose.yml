@@ -1,0 +1,40 @@
+version: '3'
+networks:
+  frontend:
+    driver: bridge
+
+services:
+  frontend:
+    build: ./coding_exercise_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./coding_exercise_frontend/src:/frontend/src:delegated
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1G
+  backend:
+    build: ./coding_exercise_backend
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./coding_exercise_backend/src:/backend/src:delegated
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1G
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"  
+    environment:
+      POSTGRES_PASSWORD: password
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1G
