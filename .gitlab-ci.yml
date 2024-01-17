@@ -1,4 +1,4 @@
-stages:          # List of stages for jobs, and their order of execution
+npmstages:          # List of stages for jobs, and their order of execution
   - test
 
 test-job:
@@ -9,12 +9,11 @@ test-job:
   coverage: '/% Coverage report from v8/'
   before_script:
     - ls
-    - cd ProjectSource/RedoCode_frontend
+    - cd ProjectSource/coding_exercise_frontend
     - npm install
-    - yarn
     
   script:
-   - yarn vitest run --coverage
+   - npx vitest run --coverage
 
 
 
