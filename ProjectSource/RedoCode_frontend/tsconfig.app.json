@@ -1,7 +1,11 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue","src/**/*.ts","src/types/**/*.ts"],
   "exclude": ["src/**/__tests__/*"],
+  "files": [
+    "src/types/ExerciseType.ts",
+    "src/types/OnTableClickType.ts",
+  ],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
