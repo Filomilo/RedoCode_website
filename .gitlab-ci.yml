@@ -11,10 +11,9 @@ test-job:
     - ls
     - cd ProjectSource/RedoCode_frontend
     - npm install
-    - yarn
     
   script:
-   - yarn vitest run --coverage
+   - npx vitest run --coverage
 
 
 
