@@ -1,4 +1,4 @@
-package com.coding_exercise.coding_exercise_backend;
+package com.redocode.backend;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

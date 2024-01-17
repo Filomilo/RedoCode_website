@@ -5,22 +5,22 @@ networks:
 
 services:
   frontend:
-    build: ./coding_exercise_frontend
+    build: ./RedoCode_frontend
     ports:
       - "5173:5173"
     volumes:
-      - ./coding_exercise_frontend/src:/frontend/src:delegated
+      - ./RedoCode_frontend/src:/frontend/src:delegated
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 1G
   backend:
-    build: ./coding_exercise_backend
+    build: ./RedoCode_backend
     ports:
       - "9090:9090"
     volumes:
-      - ./coding_exercise_backend/src:/backend/src:delegated
+      - ./RedoCode_backend/src:/backend/src:delegated
     deploy:
       resources:
         limits:

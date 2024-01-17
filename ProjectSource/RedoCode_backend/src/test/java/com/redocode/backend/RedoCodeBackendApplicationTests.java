@@ -1,10 +1,10 @@
-package com.coding_exercise.coding_exercise_backend;
+package com.redocode.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CodingExerciseBackendApplicationTests {
+class RedoCodeBackendApplicationTests {
 
     @Test
     void contextLoads() {
