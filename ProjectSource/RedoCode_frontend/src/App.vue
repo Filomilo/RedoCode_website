@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-
-console.log("test")
 </script>
 
 <template>
+  <html lang="pl" data-bs-theme="dark">
   <RouterView />
-  
+  </html>
 </template>
 
 
+<style lang="scss">
+
+
+
+</style>
