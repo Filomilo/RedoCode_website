@@ -1,11 +1,14 @@
 <template>
+    <div class="excercise-table-container">
     <b-table 
     striped hover 
     :items="data"
     :fields="fields"
-    
+    class="excercise-table-wrapper"
     >
 
+
+  
 <template #cell(actions)="{item}">
     <b-button 
     pill
@@ -16,7 +19,7 @@
     </b-button>
 </template>
 </b-table>
-
+</div>
 </template>
 
 

@@ -1,0 +1,32 @@
+@import "variables.scss";
+
+.excercise-table-container{
+ width: auto;
+ justify-self: center;
+ align-items: center;
+  align-content: center;
+
+}
+
+.excercise-table-wrapper{
+
+    width: 90%;
+    margin-left: 5%;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+
+
+////// table header field
+.b-table th{
+    background-color: $primary;
+    color: black;
+    font-size: 170%;
+    align-items: center;
+    align-content: center;
+    border-color: red;
+    margin: 2;
+}
+
