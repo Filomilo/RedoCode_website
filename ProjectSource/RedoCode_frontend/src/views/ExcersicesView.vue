@@ -8,9 +8,12 @@
 <script setup lang="ts">
 import type ExerciseType from "@/types/ExerciseType";
 import ExcersiceTable from "@/components/ExcersiceTable.vue"
+import { useRouter } from "vue-router";
 
-const onExcersiceButton=(data: number)=>{
-    alert(JSON.stringify(data));
+const router = useRouter();
+
+const onExcersiceButton=(id: number)=>{
+    router.push({ name: "Exercise", params:{id: id} });
 }
 
 
