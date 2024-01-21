@@ -9,12 +9,11 @@ test-job:
   coverage: '/% Coverage report from v8/'
   before_script:
     - ls
-    - cd ProjectSource/coding_exercise_frontend
+    - cd ProjectSource/RedoCode_frontend
     - npm install
-    - yarn
     
   script:
-   - yarn vitest run --coverage
+   - npx vitest run --coverage
 
 
 

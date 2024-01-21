@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-
-console.log("test")
+import TopBar from '@/components/TopBar.vue'
 </script>
 
 <template>
+  <html lang="pl" data-bs-theme="dark">
+  <TopBar />
   <RouterView />
-  
+  </html>
 </template>
 
 
+<style lang="scss">
+
+
+
+</style>
