@@ -1,5 +1,5 @@
 <template>
-  <div class="excercise-table-container" v-if="data.length>0">
+  <div class="excercise-table-container" v-if="false">
 
 
 
@@ -24,9 +24,7 @@
     </table>
 </div>
 <div class="excercise-table-container" v-else>
-    <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+    <LoadingIndicator/>
 </div>
 </template>
 
@@ -35,6 +33,7 @@
 <script setup lang="ts">
 import type ExerciseType from "@/types/ExerciseType";
 import type OnTableClickType from "@/types/OnTableClickType"
+import LoadingIndicator from "./LoadingIndicator.vue";
 import type { ref } from "vue";
 
 const fields: any[]= [
