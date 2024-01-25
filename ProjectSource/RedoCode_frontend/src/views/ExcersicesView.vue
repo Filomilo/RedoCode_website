@@ -1,4 +1,10 @@
 <template>
+    <button 
+  class="btn btn-primary" 
+  data-bs-target="#collapseTarget" 
+  data-bs-toggle="collapse">
+  Bootstrap collapse
+</button>
 <ExcersiceTable :data="exerciseData" :onRowClick="onExcersiceButton"></ExcersiceTable>
     
 
