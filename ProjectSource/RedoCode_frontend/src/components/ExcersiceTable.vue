@@ -1,8 +1,7 @@
 <template>
-  <div class="excercise-table-container" v-if="false">
+  <div class="excercise-table-container" v-if="data.length>0">
 
-    {{ JSON.stringify( data)}}
-  
+
 
 
 
@@ -36,6 +35,7 @@
 <script setup lang="ts">
 import type ExerciseType from "@/types/ExerciseType";
 import type OnTableClickType from "@/types/OnTableClickType"
+import type { ref } from "vue";
 
 const fields: any[]= [
     {key: 'name'}, 
@@ -49,7 +49,7 @@ const fields: any[]= [
 }
 ];
 defineProps<{
-  data: any,
+  data:  ref<ExerciseType[]>,
   onRowClick: OnTableClickType
 }>()
 
