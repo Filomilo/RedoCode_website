@@ -22,11 +22,11 @@
         </tr>
     </tbody>
     </table>
-
-
-
-  
-
+</div>
+<div class="excercise-table-container" v-else>
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
 </div>
 </template>
 
