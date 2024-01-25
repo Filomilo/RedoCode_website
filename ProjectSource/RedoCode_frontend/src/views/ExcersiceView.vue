@@ -1,7 +1,7 @@
 <template>
-   <div>
-    {{ text}}
-   </div>
+   <main>
+      {{ JSON.stringify(text) }}
+        </main>
 </template>
 
 
@@ -14,8 +14,9 @@ const text=ref('');
 
 
 onMounted(()=>{
+   console.log("axios")
     axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .get('/RedoCodeBacked/exerciseList')
       .then(response => (text.value = response.data));
 })
 

@@ -1,10 +1,5 @@
 <template>
-    <button 
-  class="btn btn-primary" 
-  data-bs-target="#collapseTarget" 
-  data-bs-toggle="collapse">
-  Bootstrap collapse
-</button>
+
 <ExcersiceTable :data="exerciseData" :onRowClick="onExcersiceButton"></ExcersiceTable>
     
 
@@ -15,6 +10,8 @@
 import type ExerciseType from "@/types/ExerciseType";
 import ExcersiceTable from "@/components/ExcersiceTable.vue"
 import { useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import axios from "axios";
 
 const router = useRouter();
 
@@ -24,29 +21,20 @@ const onExcersiceButton=(id: number)=>{
 
 
 
-const exerciseData:ExerciseType[] =[
-    {
-        name: "task1",
-        language: "c++",
-        difficulty: "hard",
-        popularity: 222,
-        id: 1,
-    },
-    {
-        name: "task2",
-        language: "any",
-        difficulty: "hard",
-        popularity: 222122,
-        id: 2
-    },
-    {
-        name: "task3",
-        language: "c++",
-        difficulty: "easy",
-        popularity: 23,
-        id: 3
-    }
-]
+const exerciseData =ref<ExerciseType[]>([]);
+
+onMounted(()=>{
+    axios
+      .get('/RedoCodeBacked/exerciseList')
+      .then(response => {
+        if(response===undefined){
+            console.error("couldn't retrieve excercise list from server")
+        throw "couldn't retrieve excercise list from server"
+      }
+        exerciseData.value = response.data
+    });
+})
+
 
 
 const HeadType: string="Dark"

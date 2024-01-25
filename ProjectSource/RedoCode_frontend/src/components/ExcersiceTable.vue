@@ -1,15 +1,9 @@
 <template>
-    <div class="excercise-table-container">
-    <b-table 
-    striped hover 
-    :items="data"
-    :fields="fields"
-    class="excercise-table-wrapper"
-    >
+  <div class="excercise-table-container" v-if="false">
 
-
-    {{data}}
+    {{ JSON.stringify( data)}}
   
+
 
 
 <table class="table">
@@ -22,7 +16,7 @@
     </thead>
     <tbody>
         
-        <tr  v-for="item in  data"  :key="item.id">
+        <tr  v-for="item in  data"  :key="item.id" v-on:click="onRowClick(item.id)">
         <th v-for="(elemnt,index) in  item" scope="col" :key="index">
             {{ elemnt }}
             </th>
@@ -31,48 +25,9 @@
     </table>
 
 
-      <hr>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
 
   
-<template #cell(actions)="{item}">
-    <b-button 
-    pill
-    @click="onRowClick(item.id)"
-    variant="primary"
-    >
-        try
-    </b-button>
-</template>
-</b-table>
+
 </div>
 </template>
 
@@ -94,7 +49,7 @@ const fields: any[]= [
 }
 ];
 defineProps<{
-  data: ExerciseType[],
+  data: any,
   onRowClick: OnTableClickType
 }>()
 
