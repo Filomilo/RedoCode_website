@@ -34,3 +34,22 @@
         font-size: 1.2rem; 
 
         }
+
+
+.excercise-table-row {
+    transition: background-color 0.05s linear
+}
+
+.excercise-table-row:hover {
+    background-color: $primary-dark;
+}
+.excercise-table-row:active  {
+    background-color: $primary;
+}
+
+
+  
+  /* Override Bootstrap table cell background color */
+  .table td, .table th {
+    background-color: transparent; /* Your desired cell background color */
+  }

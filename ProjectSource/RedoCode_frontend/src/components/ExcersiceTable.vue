@@ -13,9 +13,9 @@
         </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody >
         
-        <tr  v-for="item in  data"  :key="item.id" v-on:click="onRowClick(item.id)">
+        <tr  v-for="item in  data"  :key="item.id" v-on:click="onRowClick(item.id)" class="excercise-table-row" >
         <th v-for="(elemnt,index) in  item" scope="col" :key="index">
             {{ elemnt }}
             </th>
