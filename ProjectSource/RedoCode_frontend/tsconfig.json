@@ -12,10 +12,6 @@
     }
   ],
   "compilerOptions": {
-    "module": "NodeNext",
-    "typeRoots":  ["node_modules/@types", "path/to/your/declaration/files"],
-    "noImplicitAny": false,
-      "allowJs": true,
+    "module": "NodeNext"
   }
-  
 }

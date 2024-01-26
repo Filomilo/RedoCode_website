@@ -1,20 +1,6 @@
 import { createServer, Model } from "miragejs"
 import type ExerciseType from "./types/ExerciseType";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function makeServer({ environment = "development" } = {}) {
 
     const exerciseData:ExerciseType[] =[
@@ -42,7 +28,10 @@ export function makeServer({ environment = "development" } = {}) {
     ]
     
 
-
+    const exerciseListHandler = (schema: any, request: any) => {
+      return exerciseData;
+  };
+  
   const server = createServer({
     environment,
 
@@ -50,7 +39,10 @@ export function makeServer({ environment = "development" } = {}) {
     routes() {
       this.namespace = "RedoCodeBacked"
 
-      this.get("/exerciseList", exerciseData);
+
+ 
+
+      this.get("/exerciseList", exerciseListHandler);
     },
   })
 

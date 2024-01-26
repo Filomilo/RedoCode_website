@@ -7,9 +7,7 @@ services:
   frontend:
     build: ./RedoCode_frontend
     ports:
-      - "5173:5173"
-    volumes:
-      - ./RedoCode_frontend/src:/frontend/src:delegated
+      - "80:80"
     deploy:
       resources:
         limits:

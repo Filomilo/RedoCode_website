@@ -8,10 +8,10 @@ import "bootstrap"
 
 
 const app = createApp(App)
-
-if (process.env.NODE_ENV === "development") {
-    makeServer()
-  }
+if (import.meta.env.MODE === 'development') {
+  const { makeServer } = await import('./server');
+  makeServer();
+}
 
 app.use(router)
 //app.use(BootstrapVue3)
