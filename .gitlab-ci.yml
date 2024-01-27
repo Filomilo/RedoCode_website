@@ -10,10 +10,10 @@ test-job:
   before_script:
     - ls
     - cd ProjectSource/RedoCode_frontend
-    - npm install
+    - yarn
     
   script:
-   - npx vitest run --coverage
+   - npm run test:unit
 
 
 
