@@ -1,0 +1,55 @@
+@import "variables.scss";
+
+.excercise-table-container{
+ width: auto;
+ justify-self: center;
+ align-items: center;
+  align-content: center;
+
+}
+
+.excercise-table-wrapper{
+
+    width: 90%;
+    margin-left: 5%;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+
+
+
+.topbar-navigation{
+
+}
+
+.topbar-navigation .nav-item {
+
+    font-size: 1rem; 
+  transition: font-size 0.1s ease-in-out; 
+    }
+    
+    .topbar-navigation .nav-item:hover {
+        font-size: 1.2rem; 
+
+        }
+
+
+.excercise-table-row {
+    transition: background-color 0.05s linear
+}
+
+.excercise-table-row:hover {
+    background-color: $primary-dark;
+}
+.excercise-table-row:active  {
+    background-color: $primary;
+}
+
+
+  
+  /* Override Bootstrap table cell background color */
+  .table td, .table th {
+    background-color: transparent; /* Your desired cell background color */
+  }
