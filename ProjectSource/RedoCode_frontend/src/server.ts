@@ -37,10 +37,8 @@ export function makeServer({ environment = "development" } = {}) {
 
 
     routes() {
-      this.namespace = "RedoCodeBacked"
+      this.namespace = "localhost:9090"
 
-
- 
 
       this.get("/exercises", exerciseListHandler);
     },
