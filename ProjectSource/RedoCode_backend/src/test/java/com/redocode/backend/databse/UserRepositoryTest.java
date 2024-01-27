@@ -1,7 +1,7 @@
 package com.redocode.backend.databse;
 
-import com.redocode.backend.database.UsersRepository;
 import com.redocode.backend.database.User;
+import com.redocode.backend.database.UsersRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

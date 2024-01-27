@@ -1,5 +1,5 @@
 <template>
-  <div class="excercise-table-container" v-if="false">
+  <div class="excercise-table-container" v-if="data.length>0">
 
 
 
@@ -48,7 +48,7 @@ const fields: any[]= [
 }
 ];
 defineProps<{
-  data:  ref<ExerciseType[]>,
+  data:  ExerciseType[],
   onRowClick: OnTableClickType
 }>()
 

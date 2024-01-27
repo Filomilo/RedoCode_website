@@ -16,7 +16,7 @@ const text=ref('');
 onMounted(()=>{
    console.log("axios")
     axios
-      .get('/RedoCodeBacked/exerciseList')
+      .get('http://localhost:9090/exercises')
       .then(response => (text.value = response.data));
 })
 

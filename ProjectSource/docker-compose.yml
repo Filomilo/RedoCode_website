@@ -2,39 +2,68 @@ version: '3'
 networks:
   frontend:
     driver: bridge
+  backend:
+    driver: bridge
 
 services:
   frontend:
     build: ./RedoCode_frontend
     ports:
-      - "5173:5173"
-    volumes:
-      - ./RedoCode_frontend/src:/frontend/src:delegated
+      - "80:80"
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 1G
-  backend:
+    # depends_on:
+    #   api:
+    #     condition: service_healthy
+    networks:
+      - frontend
+    hostname: frontend
+  api:
     build: ./RedoCode_backend
     ports:
       - "9090:9090"
-    volumes:
-      - ./RedoCode_backend/src:/backend/src:delegated
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 1G
+    # healthcheck:
+    #   test: "curl --fail --silent localhost:9090/exercises | grep UP || exit 1"
+    #   interval: 20s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 180s
+    depends_on:
+      db:
+        condition: service_healthy
+    hostname: api
+    networks:
+      - frontend
+      - backend
   db:
     image: postgres
     restart: always
     ports:
       - "5432:5432"  
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: RedoCode-database
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -q -U admin -d RedoCode-database" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s  
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 1G
+    networks:
+      - backend
+    hostname: db
+    

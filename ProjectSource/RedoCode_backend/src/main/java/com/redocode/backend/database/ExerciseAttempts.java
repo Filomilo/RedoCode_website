@@ -6,20 +6,20 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Exercise_Attempts")
+@Table(name = "exercise_attempts")
 public class ExerciseAttempts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "Excersize_id"
     )
     Excersize excersize;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id"
     )
