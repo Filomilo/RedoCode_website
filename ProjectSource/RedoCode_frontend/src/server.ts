@@ -42,7 +42,7 @@ export function makeServer({ environment = "development" } = {}) {
 
  
 
-      this.get("/exerciseList", exerciseListHandler);
+      this.get("/exercises", exerciseListHandler);
     },
   })
 
