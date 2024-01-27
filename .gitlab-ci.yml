@@ -13,7 +13,7 @@ test-job:
     - yarn
     
   script:
-   - npx vitest run --coverage
+   - npm run test:unit
 
 
 
