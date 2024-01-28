@@ -1,0 +1,36 @@
+#service for frontend vue
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-redocode
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend-redocode
+  ports:
+  - port: 80
+    targetPort: 80
+---
+#deployment for frontend vue
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-redocode
+spec:
+  selector:
+    matchLabels:
+      app: frontend-redocode
+  template:
+    metadata:
+      labels:
+        app: frontend-redocode
+    spec:
+      containers:
+      - name: frontend-redocode
+        image: filipredocode/redocode:frontend
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 80

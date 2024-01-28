@@ -1,0 +1,49 @@
+# api-redocode service
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-redocode-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: api-redocode
+  ports:
+  - port: 9090
+    targetPort: 9090
+
+
+
+
+---
+# api redocode deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-redocode
+  labels:
+    app: api-redocode
+spec:
+  selector:
+    matchLabels:
+      app: api-redocode
+  template:
+    metadata:
+      labels:
+        app: api-redocode
+    spec:
+      containers:
+      - name: api-redocode
+        image: filipredocode/redocode:api
+        ports:
+        - containerPort: 9090
+        env:
+        - name: DATABASE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: database-host
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "300m"
+

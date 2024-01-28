@@ -1,0 +1,57 @@
+#db-redocode service
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-redocode-service
+spec:
+  selector:
+    app: db-redocode
+  ports:
+  - name:  host-port
+    port:  5432
+    targetPort: 5432
+    protocol: TCP
+---
+#db-redocode deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-redocode-deployment
+  labels:
+    app: db-redocode
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-redocode
+  template:
+    metadata:
+      labels:
+        app: db-redocode
+    spec:
+      containers:
+      - name: db-redocode
+        image: postgres
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: database-name
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name:  postgres-secret
+              key: password
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name:  postgres-secret
+              key: username
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+
+
+

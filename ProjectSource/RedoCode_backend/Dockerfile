@@ -1,8 +1,9 @@
 # build stage
-FROM eclipse-temurin:17-jdk-alpine  as build-stage
+FROM maven  as build-stage
 WORKDIR /backend/
 COPY . ./
-RUN ./mvnw clean install -DskipTests 
+RUN ls
+RUN mvn clean install -DskipTests 
 # EXPOSE 9090
 # RUN ls
 # ENTRYPOINT [ "ls" ]
