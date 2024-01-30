@@ -1,13 +1,18 @@
 package com.redocode.backend.coderunners;
 
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.async.ResultCallback;
 import com.github.dockerjava.api.command.*;
 import com.github.dockerjava.api.exception.ConflictException;
 import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.Container;
+import com.github.dockerjava.api.model.Frame;
+import com.github.dockerjava.api.model.StreamType;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
+import com.github.dockerjava.core.command.AttachContainerResultCallback;
+import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import org.slf4j.Logger;
@@ -183,9 +188,34 @@ return        contiaenrList.stream()
         }
     }
 
+
+
+    private String execCreate(String containerId, String... command) {
+        return this.dockerClient.execCreateCmd(containerId)
+                .withAttachStdout(true).withAttachStderr(true)
+                .withAttachStdin(true).withTty(false)
+                .withCmd(command).exec().getId();
+    }
+
     @Override
-    String executeCommandInVm(String id, String command) {
-        return null;
+    String executeCommandInVm(String id, String... command) {
+        logger.info("Executing commandL :\n"+ Arrays.toString(Arrays.stream(command).toList().toArray())+"\n in conaitner: "+ id);
+
+        String execResponseId = execCreate(id, command);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        OutputStream errorStream = new ByteArrayOutputStream();
+        try {
+            this.dockerClient.execStartCmd(execResponseId).withDetach(false)
+                    .exec(new ExecStartResultCallback(outputStream, errorStream)).awaitCompletion();
+        } catch (InterruptedException e) {
+            return "";
+        }
+        logger.info("rturned: "+outputStream.toString().trim());
+        return outputStream.toString().trim();
+
+
+
+//        return null;
 
     }
 }

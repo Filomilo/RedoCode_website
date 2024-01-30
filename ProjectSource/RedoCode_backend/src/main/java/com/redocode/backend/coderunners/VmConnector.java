@@ -14,7 +14,7 @@ abstract String createVm(String vmName);
     abstract String getVmStatus(String id);
     abstract List<String> getRunningVmList();
     abstract List<String> getVmList();
-    abstract String executeCommandInVm(String id, String command);
+    abstract String executeCommandInVm(String id, String... command);
 
 
     abstract public void close();

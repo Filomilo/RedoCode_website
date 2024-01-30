@@ -93,7 +93,7 @@ class VmConnectorDockerTest {
 
             String checkpharase="Hello, execute";
 
-            String res= vmConnectorDocker.executeCommandInVm(id,"echo \""+checkpharase+"\"");
+            String res= vmConnectorDocker.executeCommandInVm(id,"echo",checkpharase);
 
 
             vmConnectorDocker.destroyVm(id);
@@ -106,4 +106,33 @@ class VmConnectorDockerTest {
         });
 
     }
+
+    @Test
+    void executeProgramInputInVMInVm() {
+
+        assertDoesNotThrow(()->{
+            int amtOfConatinersBefore=this.vmConnectorDocker.getVmList().size();
+            String id= this.vmConnectorDocker.createVm(testContainerNeverEnding);
+            this.vmConnectorDocker.startVm(id);
+
+         //   String checkpharase="Hello, execute";
+
+            String res= vmConnectorDocker.executeCommandInVm(id,"ls");
+            res= vmConnectorDocker.executeCommandInVm(id,"ls","./dev/");
+            res= vmConnectorDocker.executeCommandInVm(id,"lss");
+
+            vmConnectorDocker.destroyVm(id);
+            int amtOfConatinersAfterestrcution=this.vmConnectorDocker.getVmList().size();
+
+
+
+            assertEquals(amtOfConatinersBefore,amtOfConatinersAfterestrcution,"New Vm failed to bew removed after creation");
+
+        });
+
+    }
+
+
+
+
 }
