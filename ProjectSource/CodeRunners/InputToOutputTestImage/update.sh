@@ -1,2 +1,2 @@
 docker build -t filipredocode/redocode:inputoutput .
-dokcer push filipredocode/redocode:inputoutput
+docker push filipredocode/redocode:inputoutput

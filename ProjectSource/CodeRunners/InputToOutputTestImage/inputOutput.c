@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <string.h>
 
 
 int main()
@@ -13,6 +13,8 @@ int main()
       }
     fscanf(stdin,"%s",input);
     fprintf(stdout,"%s\n",input);
+    if(strcmp(input,"exit")==0)
+      break;
     free(input);
  }
     return 0;
