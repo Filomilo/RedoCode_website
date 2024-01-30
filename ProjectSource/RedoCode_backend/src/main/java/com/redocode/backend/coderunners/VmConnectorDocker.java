@@ -15,12 +15,15 @@ import com.github.dockerjava.core.command.AttachContainerResultCallback;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
+import io.netty.handler.timeout.ReadTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.github.dockerjava.transport.DockerHttpClient.Request;
 import com.github.dockerjava.transport.DockerHttpClient.Response;
 
 import java.io.*;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -197,25 +200,48 @@ return        contiaenrList.stream()
                 .withCmd(command).exec().getId();
     }
 
+
     @Override
     String executeCommandInVm(String id, String... command) {
-        logger.info("Executing commandL :\n"+ Arrays.toString(Arrays.stream(command).toList().toArray())+"\n in conaitner: "+ id);
+        logger.info("Executing command :\n"+ Arrays.toString(Arrays.stream(command).toList().toArray())+"\n in conaitner: "+ id);
 
         String execResponseId = execCreate(id, command);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         OutputStream errorStream = new ByteArrayOutputStream();
+
         try {
             this.dockerClient.execStartCmd(execResponseId).withDetach(false)
                     .exec(new ExecStartResultCallback(outputStream, errorStream)).awaitCompletion();
-        } catch (InterruptedException e) {
-            return "";
+        } catch (Exception e) {
+            return null;
         }
+
+        logger.info("returned: "+outputStream.toString().trim());
+        return outputStream.toString().trim();
+
+    }
+    String executeCommandInVmWithInput(String id, String command,String input) {
+        logger.info("Executing command :\n"+ command+" with input: \n"+input+"\n in conaitner: "+ id);
+
+        String execResponseId = execCreate(id, command);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        OutputStream errorStream = new ByteArrayOutputStream();
+
+        InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+
+        try {
+            this.dockerClient.execStartCmd(execResponseId).withDetach(false).withStdIn(inputStream)
+                    .exec(new ExecStartResultCallback(outputStream, errorStream)).awaitCompletion();
+        } catch (Exception e) {
+            return null;
+        }
+
         logger.info("rturned: "+outputStream.toString().trim());
         return outputStream.toString().trim();
 
-
-
-//        return null;
-
     }
+//todo add exception when ocmamnd or program doesnt exist
+    //todo add exception when execution timeout
+
+
 }

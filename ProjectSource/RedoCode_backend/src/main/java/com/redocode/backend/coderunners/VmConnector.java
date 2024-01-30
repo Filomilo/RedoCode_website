@@ -15,7 +15,7 @@ abstract String createVm(String vmName);
     abstract List<String> getRunningVmList();
     abstract List<String> getVmList();
     abstract String executeCommandInVm(String id, String... command);
-
+abstract String executeCommandInVmWithInput(String id, String command,String input);
 
     abstract public void close();
 }

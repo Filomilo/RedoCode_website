@@ -15,6 +15,7 @@ class VmConnectorDockerTest {
 
     static final String testContainer="hello-world";
     static final String testContainerNeverEnding="nginx";
+    static final String testProgramInput="filipredocode/redocode:inputoutput";
     @BeforeAll
     static void initializeVmDockerConnector()
     {
@@ -112,20 +113,18 @@ class VmConnectorDockerTest {
 
         assertDoesNotThrow(()->{
             int amtOfConatinersBefore=this.vmConnectorDocker.getVmList().size();
-            String id= this.vmConnectorDocker.createVm(testContainerNeverEnding);
+            String id= this.vmConnectorDocker.createVm(testProgramInput);
             this.vmConnectorDocker.startVm(id);
 
-         //   String checkpharase="Hello, execute";
+            String argumentsInput="Test\nTest2\nTest3\n1\n2\n3\n4\n5\n6\nexit\n";
 
-            String res= vmConnectorDocker.executeCommandInVm(id,"ls");
-            res= vmConnectorDocker.executeCommandInVm(id,"ls","./dev/");
-            res= vmConnectorDocker.executeCommandInVm(id,"lss");
+            String res= vmConnectorDocker.executeCommandInVmWithInput(id,"/inputOutput",argumentsInput);
 
             vmConnectorDocker.destroyVm(id);
             int amtOfConatinersAfterestrcution=this.vmConnectorDocker.getVmList().size();
 
 
-
+assertEquals(argumentsInput.trim(),res,"Testing program output did not match provided arguments");
             assertEquals(amtOfConatinersBefore,amtOfConatinersAfterestrcution,"New Vm failed to bew removed after creation");
 
         });
