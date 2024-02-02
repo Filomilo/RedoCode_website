@@ -1,59 +1,59 @@
 package com.redocode.backend.coderunners;
 
 import com.github.dockerjava.api.DockerClient;
-import com.github.dockerjava.api.async.ResultCallback;
 import com.github.dockerjava.api.command.*;
 import com.github.dockerjava.api.exception.ConflictException;
 import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.Container;
-import com.github.dockerjava.api.model.Frame;
-import com.github.dockerjava.api.model.StreamType;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
-import com.github.dockerjava.core.command.AttachContainerResultCallback;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
-import io.netty.handler.timeout.ReadTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.github.dockerjava.transport.DockerHttpClient.Request;
 import com.github.dockerjava.transport.DockerHttpClient.Response;
-
 import java.io.*;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class VmConnectorDocker extends VmConnector {
 
     static Logger logger= LoggerFactory.getLogger(VmConnectorDocker.class);
 
-   private DockerClientConfig dockerConfiguration;
-    private DockerHttpClient httpClient;
-    private DockerClient dockerClient;
+    private final DockerClient dockerClient;
 
-    public VmConnectorDocker() {
-        dockerConfiguration= DefaultDockerClientConfig.createDefaultConfigBuilder()
-                        .withDockerHost("tcp://localhost:2375")
-                        .withDockerTlsVerify(false)
-                        .withApiVersion("1.43")
-                        .build();
+  VmConnectorDocker() {
+        
+        String dockerHost=System.getenv("DOCKER_HOST");
+        if(dockerHost==null)
+        {
+            logger.error("Error: no docker host specified in system environment variables");
+            throw new RuntimeException("Error: no docker host specified in system environment variables");
+            // TODO: 31/01/2024 replace wioth custom exception 
+        }
+
+      DockerClientConfig dockerConfiguration = DefaultDockerClientConfig.createDefaultConfigBuilder()
+              .withDockerHost("tcp://localhost:2375")
+              .withDockerTlsVerify(false)
+              .withApiVersion("1.43")
+              .build();
 
 
 
-    logger.info("dockerConfiguration: "+dockerConfiguration.toString());
-        httpClient= new ApacheDockerHttpClient.Builder()
-                .dockerHost(dockerConfiguration.getDockerHost())
-                .sslConfig(dockerConfiguration.getSSLConfig())
-                .maxConnections(100)
-                .connectionTimeout(Duration.ofSeconds(30))
-                .responseTimeout(Duration.ofSeconds(45))
-                .build();
+    logger.info("dockerConfiguration: "+ dockerConfiguration.toString());
+      DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
+              .dockerHost(dockerConfiguration.getDockerHost())
+              .sslConfig(dockerConfiguration.getSSLConfig())
+              .maxConnections(100)
+              .connectionTimeout(Duration.ofSeconds(30))
+              .responseTimeout(Duration.ofSeconds(45))
+              .build();
 
         Request request = Request.builder()
                 .method(Request.Method.GET)
@@ -77,7 +77,7 @@ public class VmConnectorDocker extends VmConnector {
     @Override
     String createVm(String Image) {
 
-        CreateContainerResponse response=null;
+        CreateContainerResponse response;
         logger.info("attempting to create new vm in docker: "+ Image);
         try {
             response=   dockerClient.createContainerCmd(Image).exec();
@@ -152,7 +152,7 @@ catch (ConflictException ex)
     {
         return dockerClient.listContainersCmd()
                 .withShowAll(true)
-                .withFilter("id",new ArrayList<>(Arrays.asList(id)))
+                .withFilter("id",new ArrayList<>(Collections.singletonList(id)))
                 .exec()
                 .get(0);
     }
@@ -242,6 +242,7 @@ return        contiaenrList.stream()
     }
 //todo add exception when ocmamnd or program doesnt exist
     //todo add exception when execution timeout
+
 
 
 }

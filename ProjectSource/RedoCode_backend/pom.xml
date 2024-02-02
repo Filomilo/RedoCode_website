@@ -76,8 +76,16 @@
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-
-
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>kubernetes-client</artifactId>
+			<version>6.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>2.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
