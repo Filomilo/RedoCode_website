@@ -70,6 +70,7 @@ class VmConnectorDockerTest {
             vmConnectorDocker.destroyVm(id);
             int amtOfConatinersAfterestrcution= vmConnectorDocker.getVmList().size();
 
+            // TODO: 02/02/2024 create namespaces for stastus shared between docker and kubernetes management 
             //assertEquals("Up",containerStatusAfterRunning.split(" ",2)[0],"Container has a wrong status after starting");
             assertEquals(amtOfConatinersBefore,amtOfConatinersAfterestrcution,"New Vm failed to bew removed after creation");
 
