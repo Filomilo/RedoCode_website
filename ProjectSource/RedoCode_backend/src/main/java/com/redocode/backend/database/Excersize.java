@@ -35,10 +35,9 @@ public class Excersize {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize")
-   private Set<ExcersizeDiffucultyRating> ratings = new HashSet<>();;
+   private Set<ExcersizeDiffucultyRating> ratings = new HashSet<>();
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize" )
-    private Set<ExerciseAttempts> attempts = new HashSet<>();;
-
+    private Set<ExerciseAttempts> attempts = new HashSet<>();
 
 
     public Long getId() {
