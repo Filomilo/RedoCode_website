@@ -1,6 +1,6 @@
 import { url } from "inspector";
 
-describe('template spec', () => {
+describe('open first exercise', () => {
   it('passes', () => {
     cy.visit('http://localhost:4173/')
     cy.get('#Excersices_button > b-nav-text:nth-child(1)').click()
