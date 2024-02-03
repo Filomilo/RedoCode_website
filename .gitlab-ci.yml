@@ -1,11 +1,50 @@
 stages:          # List of stages for jobs, and their order of execution
-  - test
+  - build
+  - unit-test
+  
+  
+frontend-build:
+  tags:
+  - docker-executor
+  image: node:lts-alpine
+  stage: build
+  before_script:
+    - cd ProjectSource/RedoCode_frontend
+    - yarn
+  script:
+    - npm run build-only
 
-test-job:
+
+backend-build:
+  tags:
+  - docker-executor
+  image: maven
+  stage: build
+  before_script:
+    - cd ProjectSource/RedoCode_backend
+  script:
+    - mvn clean install -DskipTests 
+
+
+vue-vitest:
   tags:
   - docker-executor 
   image: node:20
-  stage: test 
+  stage: unit-test 
+  coverage: '/% Coverage report from v8/'
+  before_script:
+    - ls
+    - cd ProjectSource/RedoCode_frontend
+    - yarn
+  script:
+   - npm run test:dev:unit
+
+
+vue-cypress-dev:
+  tags:
+  - docker-executor 
+  image: node:20
+  stage: unit-test 
   coverage: '/% Coverage report from v8/'
   before_script:
     - ls
@@ -13,7 +52,9 @@ test-job:
     - yarn
     
   script:
-   - npm run test:unit
+   - npm run test:dev:e2e
+
+
 
 
 

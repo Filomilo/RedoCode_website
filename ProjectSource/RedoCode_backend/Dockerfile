@@ -2,14 +2,7 @@
 FROM maven  as build-stage
 WORKDIR /backend/
 COPY . ./
-RUN ls
 RUN mvn clean install -DskipTests 
-# EXPOSE 9090
-# RUN ls
-# ENTRYPOINT [ "ls" ]
-##ENTRYPOINT [ "java","-jar","target/backend-0.0.1-SNAPSHOT.jar" ]
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
-
 
 
 # production stage
