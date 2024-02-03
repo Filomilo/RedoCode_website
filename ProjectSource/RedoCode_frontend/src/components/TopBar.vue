@@ -13,7 +13,7 @@
           <div class="collapse navbar-collapse " id="navbarNav">
             <ul class="navbar-nav topbar-navigation">
               <li class="nav-item ">
-                <router-link to="/Exercises" class="nav-link">
+                <router-link to="/Exercises" class="nav-link" id="Excersices_button">
                     <b-nav-text>Excersices</b-nav-text>
                     </router-link>              </li>
               <li class="nav-item">
