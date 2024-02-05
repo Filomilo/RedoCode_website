@@ -1,0 +1,28 @@
+version: '3'
+networks:
+  docker_net:
+    driver: bridge
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+services:
+  docker_runner:
+    container_name: docker_runner
+    image: docker:25.0.2-dind
+    networks:
+      - docker_net
+    ports:
+      - "2376:2375"
+    privileged: true
+  docker_runner_test:
+    container_name: docker_runner_test
+    image: docker:18.09-dind
+    networks:
+      - docker_net
+    privileged: true
+    environment:
+      - DOCKER_API_VERSION=1.39
+      - DOCKER_HOST=docker_runner:2376
+    

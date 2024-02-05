@@ -4,23 +4,25 @@ networks:
     driver: bridge
   backend:
     driver: bridge
+  docker_net:
+    driver: bridge
 
 services:
-  frontend:
-    build: ./RedoCode_frontend
-    ports:
-      - "80:80"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 1G
-    # depends_on:
-    #   api:
-    #     condition: service_healthy
-    networks:
-      - frontend
-    hostname: frontend
+  # frontend:
+  #   build: ./RedoCode_frontend
+  #   ports:
+  #     - "80:80"
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '0.1'
+  #         memory: 1G
+  #   # depends_on:
+  #   #   api:
+  #   #     condition: service_healthy
+  #   networks:
+  #     - frontend
+  #   hostname: frontend
   api:
     build: ./RedoCode_backend
     ports:
@@ -30,6 +32,10 @@ services:
         limits:
           cpus: '0.1'
           memory: 1G
+    environment:
+      DATABASE_HOST: db
+      CONTAINER_MANGER: docker
+      DOCKER_HOST: tcp://dockerrunner:2376
     # healthcheck:
     #   test: "curl --fail --silent localhost:9090/exercises | grep UP || exit 1"
     #   interval: 20s
@@ -43,6 +49,9 @@ services:
     networks:
       - frontend
       - backend
+      - docker_net
+    volumes:
+      - ./RedoCode_backend:/backend/
   db:
     image: postgres
     restart: always
@@ -66,4 +75,15 @@ services:
     networks:
       - backend
     hostname: db
-    
+  dockerrunner:
+    platform: linux/amd64
+    container_name: dockerrunner
+    build: ./DockerRunner
+    networks:
+      - docker_net
+    ports:
+      - "2376:2376"
+    privileged: true
+    entrypoint:
+    environment:
+      - DOCKER_HOST=tcp://localhost:2376

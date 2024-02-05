@@ -54,7 +54,36 @@ vue-cypress-dev:
   script:
    - npm run test:dev:e2e
 
-
+backend-junit-dev-docker:
+  tags:
+    - docker-executor
+  image: docker
+  
+  variables:
+    POSTGRES_DB: RedoCode-database
+    POSTGRES_USER: admin
+    POSTGRES_PASSWORD: admin
+    CONTAINER_MANGER: docker
+  stage: unit-test 
+  before_script:
+    - apt update -y
+    - apt-get update -qy
+    - apt-get install wget -y  
+    - apt install default-jre -y
+    - java -version
+    - wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+    - tar -xvf apache-maven-3.9.6-bin.tar.gz
+    - mv  apache-maven-3.9.6 /opt/
+    - M2_HOME='/opt/apache-maven-3.9.6'
+    - PATH="$M2_HOME/bin:$PATH"
+    - export PATH
+    
+  script:
+   - mvn -v
+   - export PGPASSWORD=$POSTGRES_PASSWORD
+   - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 'OK' AS status;"
+   - cd ProjectSource/RedoCode_backend
+   - mvn test 
 
 
 

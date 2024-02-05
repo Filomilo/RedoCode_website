@@ -1,0 +1,30 @@
+FROM ubuntu
+RUN apt update
+RUN apt install wget -y  
+RUN apt install apt-transport-https ca-certificates curl software-properties-common -y
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+RUN apt install docker-ce -y
+RUN systemctl enable docker
+# RUN sudo usermod -aG docker ${USER}
+# RUN su - ${USER}
+RUN apt install default-jre -y
+RUN java -version
+RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+RUN tar -xvf apache-maven-3.9.6-bin.tar.gz
+RUN mv  apache-maven-3.9.6 /opt/
+RUN M2_HOME='/opt/apache-maven-3.9.6'
+RUN PATH="$M2_HOME/bin:$PATH"
+RUN export PATH
+RUN apt install openjdk-17-jdk openjdk-17-jre -y
+WORKDIR /backend/
+COPY . ./
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+
+# # build stage
+# FROM maven  as build-stage
+# WORKDIR /backend/
+# COPY . ./
+# RUN mvn clean install -DskipTests 
+# ENTRYPOINT ["tail", "-f", "/dev/null"]

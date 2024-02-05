@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.github.dockerjava.transport.DockerHttpClient.Request;
 import com.github.dockerjava.transport.DockerHttpClient.Response;
 import java.io.*;
+import java.net.URI;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,22 +40,35 @@ public class VmConnectorDocker extends VmConnector {
         }
 
       DockerClientConfig dockerConfiguration = DefaultDockerClientConfig.createDefaultConfigBuilder()
-              .withDockerHost("tcp://localhost:2375")
+              .withDockerHost(dockerHost)
               .withDockerTlsVerify(false)
               .withApiVersion("1.43")
               .build();
 
 
-
     logger.info("dockerConfiguration: "+ dockerConfiguration.toString());
-      DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
-              .dockerHost(dockerConfiguration.getDockerHost())
-              .sslConfig(dockerConfiguration.getSSLConfig())
-              .maxConnections(100)
-              .connectionTimeout(Duration.ofSeconds(30))
-              .responseTimeout(Duration.ofSeconds(45))
-              .build();
+    logger.info("test docker host: "+ dockerConfiguration.getDockerHost());
+    logger.info("change test");
+      DockerHttpClient httpClient=null;
+try {
+    httpClient = new ApacheDockerHttpClient.Builder()
+            .dockerHost(dockerConfiguration.getDockerHost())
+            .sslConfig(dockerConfiguration.getSSLConfig())
+            .maxConnections(100)
+            .connectionTimeout(Duration.ofSeconds(30))
+            .responseTimeout(Duration.ofSeconds(45))
+            .build();
 
+
+
+      logger.info("httpClient: "+ httpClient);
+}
+catch(Exception ex)
+{
+    logger.error("Error creating http client");
+    ex.printStackTrace();
+    throw ex;
+}
         Request request = Request.builder()
                 .method(Request.Method.GET)
                 .path("/_ping")
@@ -71,7 +85,7 @@ public class VmConnectorDocker extends VmConnector {
             logger.info("successfully established connection docker api");
         }
         dockerClient = DockerClientImpl.getInstance(dockerConfiguration, httpClient);
-
+        logger.info("dockerClient: "+ dockerClient);
     }
 
     @Override
