@@ -69,17 +69,24 @@ backend-junit-dev-docker:
 
 
 
-backend-junit-prod-docker:
+vue-cypress-prod:
   tags:
     - docker-executor
-  image: docker:18.0.1-dind
+  image: docker
   stage: integrational-test
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
   before_script:
     - cd ProjectSource
-    - apt update
-    - apt install npm
-    - apt install cypress
-    - docker compose up -d
+    - apk update
+    - apk add --update npm
+    - apk add libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+    - cd RedoCode_frontend
+    - npm install --save-dev cypress
+    - cd ../
+    - docker-compose up 
     - cd RedoCode_frontend
     
   script:
