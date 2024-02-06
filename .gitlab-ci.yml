@@ -44,7 +44,7 @@ vue-vitest:
 vue-cypress-dev:
   tags:
   - docker-executor 
-  image: node:20
+  image: cypress/included
   stage: unit-test 
   coverage: '/% Coverage report from v8/'
   before_script:
@@ -58,11 +58,15 @@ vue-cypress-dev:
 backend-junit-dev-docker:
   tags:
     - docker-executor
-  image: docker:18.0.1-dind
+  image: docker
+  # variables:
+    # DOCKER_HOST: tcp://docker:2375
+    # DOCKER_TLS_CERTDIR: ""
+    # DOCKER_DRIVER: overlay2
   stage: unit-test 
   before_script:
     - cd ProjectSource
-    - docker compose -f docker-compose-dev.yml up -d   
+    - docker-compose -f docker-compose-dev.yml up -d   
     
   script:
     -  docker exec -it  projectsource-api-1 mvn clean install
