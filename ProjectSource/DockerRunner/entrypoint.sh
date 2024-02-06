@@ -10,6 +10,6 @@ until docker info &>/dev/null; do
     sleep 10
 done
 docker pull nginx
-docker pull hello-world
 docker pull filipredocode/redocode:inputoutput
+docker pull hello-world
 tail -f /dev/null

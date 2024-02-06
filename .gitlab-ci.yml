@@ -1,6 +1,7 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - unit-test
+  - integrational-test
   
   
 frontend-build:
@@ -52,38 +53,38 @@ vue-cypress-dev:
     - yarn
     
   script:
-   - npm run test:dev:e2e
+    - npm run test:dev:e2e
 
 backend-junit-dev-docker:
   tags:
     - docker-executor
-  image: docker
-  
-  variables:
-    POSTGRES_DB: RedoCode-database
-    POSTGRES_USER: admin
-    POSTGRES_PASSWORD: admin
-    CONTAINER_MANGER: docker
+  image: docker:18.0.1-dind
   stage: unit-test 
   before_script:
-    - apt update -y
-    - apt-get update -qy
-    - apt-get install wget -y  
-    - apt install default-jre -y
-    - java -version
-    - wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
-    - tar -xvf apache-maven-3.9.6-bin.tar.gz
-    - mv  apache-maven-3.9.6 /opt/
-    - M2_HOME='/opt/apache-maven-3.9.6'
-    - PATH="$M2_HOME/bin:$PATH"
-    - export PATH
+    - cd ProjectSource
+    - docker compose -f docker-compose-dev.yml up -d   
     
   script:
-   - mvn -v
-   - export PGPASSWORD=$POSTGRES_PASSWORD
-   - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 'OK' AS status;"
-   - cd ProjectSource/RedoCode_backend
-   - mvn test 
+    -  docker exec -it  projectsource-api-1 mvn clean install
+
+
+
+backend-junit-prod-docker:
+  tags:
+    - docker-executor
+  image: docker:18.0.1-dind
+  stage: integrational-test
+  before_script:
+    - cd ProjectSource
+    - apt update
+    - apt install npm
+    - apt install cypress
+    - docker compose up -d
+    - cd RedoCode_frontend
+    
+  script:
+    -  npm run test:prod:e2e
+
 
 
 
