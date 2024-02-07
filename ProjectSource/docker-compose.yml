@@ -41,10 +41,10 @@ services:
       CONTAINER_MANGER: docker
       DOCKER_HOST: tcp://dockerrunner:2376
     healthcheck:
-      test: "curl --fail --silent localhost:9090/exercises | grep UP || exit 1"
-      interval: 20s
-      timeout: 5s
-      retries: 5
+      test: "curl --fail --silent localhost:9090/actuator/health | grep UP || exit 1"
+      interval: 40s
+      timeout: 10s
+      retries: 10
       start_period: 180s
     depends_on:
       db:
