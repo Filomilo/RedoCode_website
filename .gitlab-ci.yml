@@ -55,47 +55,52 @@ stages:          # List of stages for jobs, and their order of execution
 #   script:
 #     - npm run test:dev:e2e
 
-backend-junit-dev-docker:
+# backend-junit-dev-docker:
+#   tags:
+#     - test
+#   image: docker
+#   # variables:
+#     # DOCKER_HOST: tcp://docker:2375
+#     # DOCKER_TLS_CERTDIR: ""
+#     # DOCKER_DRIVER: overlay2
+#   stage: unit-test 
+#   # before_script:
+#   #   - cd ProjectSource
+#   #   - docker-compose -f docker-compose-dev.yml up -d   
+    
+#   script:
+#     # -  docker exec -it  projectsource-api-1 mvn clean install
+#     - docker info
+
+
+
+vue-cypress-prod:
   tags:
     - test
   image: docker
-  # variables:
-    # DOCKER_HOST: tcp://docker:2375
-    # DOCKER_TLS_CERTDIR: ""
-    # DOCKER_DRIVER: overlay2
-  stage: unit-test 
+  stage: integrational-test
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
+  script: 
+    - docker info
+    - docker ps
   # before_script:
   #   - cd ProjectSource
-  #   - docker-compose -f docker-compose-dev.yml up -d   
+  #   - apk update
+  #   - apk add --update npm
+  #   - apk add libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+  #   - cd RedoCode_frontend
+  #   - npm install --save-dev cypress
+  #   - cd ../
+  #   - docker-compose up 
+  #   - cd RedoCode_frontend
     
-  script:
-    # -  docker exec -it  projectsource-api-1 mvn clean install
-    - docker info
-
-
-
-# vue-cypress-prod:
-#   tags:
-#     - docker-executor
-#   image: docker
-#   stage: integrational-test
-#   variables:
-#     DOCKER_HOST: tcp://docker:2375
-#     DOCKER_TLS_CERTDIR: ""
-#     DOCKER_DRIVER: overlay2
-#   before_script:
-#     - cd ProjectSource
-#     - apk update
-#     - apk add --update npm
-#     - apk add libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-#     - cd RedoCode_frontend
-#     - npm install --save-dev cypress
-#     - cd ../
-#     - docker-compose up 
-#     - cd RedoCode_frontend
-    
-#   script:
-#     -  npm run test:prod:e2e
+  # script:
+  #   -  npm run test:prod:e2e
 
 
 
