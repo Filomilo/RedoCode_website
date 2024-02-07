@@ -64,7 +64,8 @@ backend-junit-dev-docker:
     # DOCKER_TLS_CERTDIR: ""
     # DOCKER_DRIVER: overlay2
   stage: unit-test 
-  # before_script:
+  before_script:
+      - modload ip_tables
   #   - cd ProjectSource
   #   - docker-compose -f docker-compose-dev.yml up -d   
     
