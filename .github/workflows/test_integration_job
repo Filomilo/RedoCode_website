@@ -7,6 +7,10 @@ jobs:
         defaults:
             run:
             working-directory: ./ProjectSource
+        needs: 
+            - vue-vitest
+            - vue-e2e-dev
+            - backend-junit-dev-docker
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository

@@ -144,11 +144,12 @@ jobs:
         run: |
           docker compose up -d
           docker ps
-      - name: Set up Node.js
-        working-directory: ./ProjectSource/RedoCode_frontend
+
+      - name: Set up Nodejs
         uses: actions/setup-node@v3
         with:
           node-version: 20
+        
       - name: install node dependencies
         working-directory: ./ProjectSource/RedoCode_frontend
         run: |
