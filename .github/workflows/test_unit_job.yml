@@ -9,9 +9,6 @@ jobs:
 
 
   vue-vitest:
-    needs: 
-      - build-backend
-      - build-frontend
     defaults:
       run:
         working-directory: ./ProjectSource/RedoCode_frontend
@@ -29,9 +26,6 @@ jobs:
 
 
   vue-e2e-dev:
-    needs: 
-      - build-backend
-      - build-frontend
     defaults:
       run:
         working-directory: ./ProjectSource/RedoCode_frontend
@@ -56,9 +50,6 @@ jobs:
           npm run test:dev:e2e
     
   backend-junit-dev-docker:
-    needs: 
-      - build-backend
-      - build-frontend
     defaults:
       run:
         working-directory: ./ProjectSource
