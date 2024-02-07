@@ -80,7 +80,7 @@ vue-cypress-prod:
   image: docker
   stage: integrational-test
   services:
-    - docker:dind
+    - docker:23-dind
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
