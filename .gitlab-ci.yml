@@ -57,7 +57,7 @@ stages:          # List of stages for jobs, and their order of execution
 
 backend-junit-dev-docker:
   tags:
-    - docker-executor
+    - test
   image: docker
   # variables:
     # DOCKER_HOST: tcp://docker:2375
