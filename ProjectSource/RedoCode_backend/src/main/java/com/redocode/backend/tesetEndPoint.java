@@ -20,7 +20,8 @@ public class tesetEndPoint {
     @GetMapping("/hello")
     public String hello()
     {
-        return " helllo3 ";
+        // health check
+        return "hello";
     }
     @GetMapping("/users")
     public List<User> users()

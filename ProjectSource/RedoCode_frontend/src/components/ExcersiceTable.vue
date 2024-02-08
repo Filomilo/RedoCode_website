@@ -1,10 +1,5 @@
 <template>
   <div class="excercise-table-container" v-if="data.length>0">
-
-
-
-
-
 <table class="table">
     <thead>
         <tr>

@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VmConnectorDockerTest {
 
+
     static Logger logger = LoggerFactory.getLogger(VmConnectorDockerTest.class);
     static VmConnector vmConnectorDocker;
 
@@ -22,7 +23,8 @@ class VmConnectorDockerTest {
         logger.info("before all");
         assertDoesNotThrow(()-> {
             vmConnectorDocker = VmConnectorFactory.getVmConnector();
-            assertNotNull(vmConnectorDocker);
+            logger.info("created vm mangager: "+ vmConnectorDocker);
+            assertNotNull(vmConnectorDocker,"vmConnectorDocker is null, could not be initialized");
         });
     }
 

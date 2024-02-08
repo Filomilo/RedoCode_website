@@ -1,0 +1,65 @@
+version: '3'
+networks:
+  backend:
+    driver: bridge
+  docker_net:
+    driver: bridge
+
+services:
+  api:
+    build: 
+        context: ./RedoCode_backend
+        dockerfile: Dockerfile.dev.docker
+    ports:
+      - "9090:9090"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1G
+    environment:
+      DATABASE_HOST: db
+      CONTAINER_MANGER: docker
+      DOCKER_HOST: tcp://dockerrunner:2376
+    depends_on:
+      db:
+        condition: service_healthy
+    hostname: api
+    networks:
+      - backend
+      - docker_net
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"  
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: RedoCode-database
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -q -U admin -d RedoCode-database" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s  
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1G
+    networks:
+      - backend
+    hostname: db
+  dockerrunner:
+    platform: linux/amd64
+    container_name: dockerrunner
+    build: ./DockerRunner
+    networks:
+      - docker_net
+    ports:
+      - "2376:2376"
+    privileged: true
+    entrypoint:
+    environment:
+      - DOCKER_HOST=tcp://localhost:2376
