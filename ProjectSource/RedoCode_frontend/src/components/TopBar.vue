@@ -21,6 +21,11 @@
                     <b-nav-text>Excersices</b-nav-text>
                     </router-link> 
               </li>
+              <li class="nav-item">
+                <router-link to="/PlayGround" class="nav-link">
+                    <b-nav-text>PlayGround</b-nav-text>
+                    </router-link> 
+              </li>
   
             </ul>
           </div>
