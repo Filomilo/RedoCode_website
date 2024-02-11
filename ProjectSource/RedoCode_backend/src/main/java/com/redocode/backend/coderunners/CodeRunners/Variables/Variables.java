@@ -1,7 +1,7 @@
 package com.redocode.backend.coderunners.CodeRunners.Variables;
 
 public abstract class Variables<T> {
-    enum VARIABLES_TYPES {
+   public enum VARIABLES_TYPES {
         SINGLE_INTEGER,
         SINGLE_STRING,
         SINGLE_FLOAT,

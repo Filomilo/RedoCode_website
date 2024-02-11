@@ -1,6 +1,6 @@
 package com.redocode.backend.coderunners.CodeRunners.Variables;
 
-public class ArrayOfFloats  extends Variables<Float[]>{
+public class ArrayOfFloats  extends Variables<Float[]> {
     public ArrayOfFloats(Float[] value) {
         super(value);
     }

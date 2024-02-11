@@ -11,6 +11,7 @@ import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
+import com.redocode.backend.coderunners.CodeRunners.ConsoleOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.github.dockerjava.transport.DockerHttpClient.Request;
@@ -89,7 +90,7 @@ catch(Exception ex)
     }
 
     @Override
-    String createVm(String Image) {
+    public String createVm(String Image) {
 
         CreateContainerResponse response;
         logger.info("attempting to create new vm in docker: "+ Image);
@@ -114,7 +115,7 @@ catch(Exception ex)
     }
 
     @Override
-    void pullImageSync(String image) throws InterruptedException {
+    public void pullImageSync(String image) throws InterruptedException {
         PullImageCmd pullImageCmd = dockerClient.pullImageCmd(image);
         PullImageResultCallback callback = pullImageCmd.exec(new PullImageResultCallback());
         callback.awaitCompletion();
@@ -122,7 +123,7 @@ catch(Exception ex)
 
 
     @Override
-    List<String> getRunningVmList() {
+    public List<String> getRunningVmList() {
             List<Container> conatinerList= dockerClient.listContainersCmd().exec();
             //todo: switch to trace
             logger.trace("returned this container list: "+ Arrays.toString(conatinerList.toArray()));
@@ -134,18 +135,18 @@ catch(Exception ex)
 
 
     @Override
-    void startVm(String id) {
+    public void startVm(String id) {
     this.dockerClient.startContainerCmd(id).exec();
     }
 
     @Override
-    void stopVm(String id) {
+    public void stopVm(String id) {
         logger.info("stopping container "+ id);
     dockerClient.stopContainerCmd(id).exec();
     }
 
     @Override
-    void destroyVm(String id) {
+    public void destroyVm(String id) {
         logger.info("destroying vm with id: "+ id);
 try {
     dockerClient.removeContainerCmd(id).exec();
@@ -173,7 +174,7 @@ catch (ConflictException ex)
 
 
     @Override
-    String getVmStatus(String id) {
+    public String getVmStatus(String id) {
         return getContianerFromID(id).getStatus();
     }
 
@@ -216,25 +217,30 @@ return        contiaenrList.stream()
 
 
     @Override
-    String executeCommandInVm(String id, String... command) {
+    public ConsoleOutput executeCommandInVm(String id, String... command) {
         logger.info("Executing command :\n"+ Arrays.toString(Arrays.stream(command).toList().toArray())+"\n in conaitner: "+ id);
 
         String execResponseId = execCreate(id, command);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         OutputStream errorStream = new ByteArrayOutputStream();
-
+// TODO: 11/02/2024 check for possiblity of getting exit code
+        int exitCode=0;
         try {
-            this.dockerClient.execStartCmd(execResponseId).withDetach(false)
+            ExecStartResultCallback ret=  this.dockerClient.execStartCmd(execResponseId).withDetach(false)
                     .exec(new ExecStartResultCallback(outputStream, errorStream)).awaitCompletion();
+
         } catch (Exception e) {
-            return null;
+            throw new RuntimeException("couldnt execute command in vm: "+ e.getMessage());
+
         }
 
         logger.info("returned: "+outputStream.toString().trim());
-        return outputStream.toString().trim();
+        //return outputStream.toString().trim();
+        return new ConsoleOutput(exitCode,outputStream.toString().trim(),errorStream.toString().trim());
+
 
     }
-    String executeCommandInVmWithInput(String id, String command,String input) {
+    public ConsoleOutput executeCommandInVmWithInput(String id, String command,String input) {
         logger.info("Executing command :\n"+ command+" with input: \n"+input+"\n in conaitner: "+ id);
 
         String execResponseId = execCreate(id, command);
@@ -242,16 +248,18 @@ return        contiaenrList.stream()
         OutputStream errorStream = new ByteArrayOutputStream();
 
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
-
+        int exitCode=0;
+        // TODO: 11/02/2024 check for possiblity of getting exit code
         try {
             this.dockerClient.execStartCmd(execResponseId).withDetach(false).withStdIn(inputStream)
                     .exec(new ExecStartResultCallback(outputStream, errorStream)).awaitCompletion();
         } catch (Exception e) {
-            return null;
+            throw new RuntimeException("couldn't execute command in vm with input: "+ e.getMessage());
         }
 
         logger.info("rturned: "+outputStream.toString().trim());
-        return outputStream.toString().trim();
+      //  return outputStream.toString().trim();
+        return new ConsoleOutput(exitCode,outputStream.toString().trim(),errorStream.toString().trim());
 
     }
 //todo add exception when ocmamnd or program doesnt exist

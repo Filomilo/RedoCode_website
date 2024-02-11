@@ -1,6 +1,6 @@
 package com.redocode.backend.coderunners.CodeRunners.Variables;
 
-public class ArrayOfIntegers  extends Variables<Integer[]>{
+public class ArrayOfIntegers  extends Variables<Integer[]> {
     public ArrayOfIntegers(Integer[] value) {
         super(value);
     }

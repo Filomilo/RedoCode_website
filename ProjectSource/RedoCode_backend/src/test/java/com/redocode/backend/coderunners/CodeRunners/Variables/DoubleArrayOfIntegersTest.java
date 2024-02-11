@@ -1,9 +1,6 @@
 package com.redocode.backend.coderunners.CodeRunners.Variables;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.junit.jupiter.api.Test;
-
-import java.awt.datatransfer.FlavorEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
 

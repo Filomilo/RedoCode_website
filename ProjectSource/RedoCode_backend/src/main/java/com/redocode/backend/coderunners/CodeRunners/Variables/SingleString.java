@@ -1,6 +1,6 @@
 package com.redocode.backend.coderunners.CodeRunners.Variables;
 
-public class SingleString  extends Variables<String>{
+public class SingleString  extends Variables<String> {
     public SingleString(String value) {
         super(value);
     }

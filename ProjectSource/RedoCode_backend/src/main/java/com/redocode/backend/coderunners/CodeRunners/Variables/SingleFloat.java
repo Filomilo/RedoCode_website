@@ -1,6 +1,6 @@
 package com.redocode.backend.coderunners.CodeRunners.Variables;
 
-public class SingleFloat extends Variables<Float>{
+public class SingleFloat extends Variables<Float> {
     public SingleFloat(Float value) {
         super(value);
     }

@@ -7,7 +7,7 @@ public class VmConnectorFactory {
     static Logger logger= LoggerFactory.getLogger(VmConnectorFactory.class);
 
     static VmConnector instance=null;
-    static VmConnector getVmConnector()
+   public static VmConnector getVmConnector()
     {
         if(instance!=null)
             return instance;

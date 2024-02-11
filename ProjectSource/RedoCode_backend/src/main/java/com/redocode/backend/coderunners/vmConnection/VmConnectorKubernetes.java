@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import com.redocode.backend.coderunners.CodeRunners.ConsoleOutput;
 import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder;
@@ -59,7 +61,7 @@ catch (Exception ex)
     }
 
     @Override
-    String createVm(String image) {
+    public String createVm(String image) {
         String name=UUID.randomUUID().toString();
 
         Deployment deployment = new DeploymentBuilder()
@@ -92,12 +94,12 @@ catch (Exception ex)
     }
 
     @Override
-    void startVm(String id) {
+    public void startVm(String id) {
 
     }
 
     @Override
-    void stopVm(String id) {
+    public void stopVm(String id) {
 
     }
 
@@ -120,7 +122,7 @@ catch (Exception ex)
  }
 
     @Override
-    void destroyVm(String id) {
+    public void destroyVm(String id) {
 
 
 
@@ -180,7 +182,7 @@ catch (Exception ex)
     }
 
     @Override
-    String executeCommandInVm(String id, String... command) {
+    public ConsoleOutput executeCommandInVm(String id, String... command) {
         logger.info("Executign command in "+ id+" : \n"+Arrays.toString(Arrays.stream(command).toArray()));
 
 
@@ -200,19 +202,19 @@ try {
     int exitCode=exec.exitCode().get();  //todo: exit code might be useful or not in the future, might need delete, need closelook in  later stages of development
     logger.info("EXIT CODE: "+ exitCode);
 
-  String  outputString = outputStream.toString();
-    return outputString.trim();
+ // String  outputString = outputStream.toString();
+    return new ConsoleOutput(exitCode,outputStream.toString().trim(),outputError.toString().trim());
 }
 catch (Exception ex)
 {
     ex.printStackTrace();
     // TODO: 02/02/2024 add better exception handling
-    return "";
+    return null;
 }
     }
 
     @Override
-    String executeCommandInVmWithInput(String id, String command, String input) {
+    public ConsoleOutput executeCommandInVmWithInput(String id, String command, String input) {
         logger.info("Executign command in "+ id+" : \n"+command+" with input: "+ input);
 
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
@@ -242,8 +244,8 @@ catch (Exception ex)
             int exitCode = exec.exitCode().get();  //todo: exit code might be useful or not in the future, might need delete, need closelook in  later stages of development
             logger.info("EXIT CODE: " + exitCode);
 
-            String outputString = outputStream.toString();
-            return outputString.trim();
+           // String outputString = outputStream.toString();
+            return new ConsoleOutput(exitCode,outputStream.toString().trim(),outputError.toString().trim());
         }
         catch(Exception ex)
             {
@@ -251,7 +253,7 @@ catch (Exception ex)
                 // TODO: 02/02/2024 neeed better eexception
             }
 
-        return  "";
+        return  null;
     }
 
     void destroyEveryThing()
