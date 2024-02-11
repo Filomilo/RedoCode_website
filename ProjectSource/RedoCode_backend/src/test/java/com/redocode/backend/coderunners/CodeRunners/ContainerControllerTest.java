@@ -37,14 +37,11 @@ class ContainerControllerTest {
     }
 
 
-    @Test
-    void runProgram() {
 
-    }
 
 
     @AfterEach
-    void destroyControlelr()
+    public void destroy()
     {
       containerController.destroy();
     }

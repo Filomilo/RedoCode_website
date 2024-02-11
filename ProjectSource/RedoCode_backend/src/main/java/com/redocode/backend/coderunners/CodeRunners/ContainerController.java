@@ -31,11 +31,11 @@ public class ContainerController {
         vmConnector.startVm(containerId);
     }
 
-    private ConsoleOutput executeCommand(String... commad)
+    protected ConsoleOutput executeCommand(String... commad)
     {
         return vmConnector.executeCommandInVm(containerId,commad);
     }
-    ConsoleOutput executeBash(String command)
+    protected ConsoleOutput executeBash(String command)
     {
         return  vmConnector.executeCommandInVm(containerId,"bash", "-c",command);
     }
@@ -52,10 +52,12 @@ public class ContainerController {
     }
 
     private String parseCode(String fileContent) {
-        return fileContent.replace("\n","\\n");
+        fileContent=    fileContent.replace("\n","\\n");
+        fileContent=fileContent.replace("\"","\\\"");
+        return fileContent;
     }
 
-    String[] listFiles()
+   protected String[] listFiles()
     {
      ConsoleOutput consoleOutput=  executeCommand("ls");
      return consoleOutput.output.split("\n");
@@ -68,13 +70,6 @@ public class ContainerController {
         executeCommand("unlink",fileName);
     }
 
-    ConsoleOutput runProgram(String programFile)
-    {
-        return executeCommand("./"+programFile);
-    }
-
-
-
 
     public void start() {
         vmConnector.startVm(containerId);
@@ -84,6 +79,11 @@ public class ContainerController {
         logger.info("getting file conent: "+ fileName);
         ConsoleOutput consoleOutput=executeCommand("cat",fileName);
         return consoleOutput.output;
+    }
+
+    public void stop()
+    {
+        vmConnector.stopVm(containerId);
     }
 
     public void destroy() {

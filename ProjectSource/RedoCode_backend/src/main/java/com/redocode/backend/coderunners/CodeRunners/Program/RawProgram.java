@@ -2,15 +2,20 @@ package com.redocode.backend.coderunners.CodeRunners.Program;
 
 public class RawProgram extends Program {
 
-    String Code="";
+    String code="";
+
+    public RawProgram(String code) {
+        super();
+        this.code=code;
+    }
 
     @Override
-    String getProgramCode() {
-        return Code;
+    public String getProgramCode() {
+        return code;
     }
 
     void setCode(String code)
     {
-        this.Code=code;
+        this.code=code;
     }
 }
