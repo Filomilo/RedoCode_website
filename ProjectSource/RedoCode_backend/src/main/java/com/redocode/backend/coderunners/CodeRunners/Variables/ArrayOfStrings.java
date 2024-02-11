@@ -1,0 +1,15 @@
+package com.redocode.backend.coderunners.CodeRunners.Variables;
+
+public class ArrayOfStrings  extends Variables<String[]>{
+    public ArrayOfStrings(String[] value) {
+        super(value);
+    }
+    public ArrayOfStrings() {
+        super();
+    }
+    @Override
+    VARIABLES_TYPES getType() {
+        return VARIABLES_TYPES.ARRAY_STRINGS;
+    }
+
+}
