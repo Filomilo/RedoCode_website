@@ -48,7 +48,7 @@ public class CodeRunnerRequestMessage implements Comparable {
     @Override
     public int compareTo( Object o) {
         CodeRunnerRequestMessage crm=(CodeRunnerRequestMessage)o;
-        if(this.userRequesting.getUserType()==crm.getUserRequesting().getUserType()) {
+        if(this.userRequesting.getUserType()==crm.getUserRequesting().getUserType() && this.requestTime!=null && crm.requestTime!=null) {
             log.info("Comapring "+this.requestTime.getTime()+" with "+ crm.getRequestTime()+": "+ this.requestTime.compareTo(crm.getRequestTime()));
             if( this.requestTime.compareTo(crm.getRequestTime())==0)
                 return (int) (this.requestTime.getTime()-crm.getRequestTime().getTime());
