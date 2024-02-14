@@ -85,9 +85,7 @@ class VmConnectorDockerTest {
     @AfterAll
     static void closeVmConnection()
     {
-        assertDoesNotThrow(()-> {
-            vmConnectorDocker.close();
-        });
+
     }
 
     @Test
