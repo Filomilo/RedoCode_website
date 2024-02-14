@@ -24,7 +24,7 @@ public abstract class User implements Comparable {
         this.id = id;
     }
 
-    abstract USER_TYPE getUserType();
+    public abstract USER_TYPE getUserType();
 
     @Override
     public boolean equals(Object o) {

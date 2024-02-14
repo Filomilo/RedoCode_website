@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
+import com.redocode.backend.VmAcces.VmStatus;
 import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder;
@@ -155,9 +156,10 @@ catch (Exception ex)
     }
 
     @Override
-    String getVmStatus(String id) {
-     return   getDeploymentFromId(id).getStatus().toString();
-        // TODO: 02/02/2024 probably status need to be standarized with name space for both docker na kubernetes
+    public VmStatus getVmStatus(String id) {
+//     return   getDeploymentFromId(id).getStatus().toString();
+       return null;
+        // TODO: 14/02/2024 create enum statsu hadnler for kubernetes
     }
 
     @Override
@@ -167,7 +169,7 @@ catch (Exception ex)
     }
 
     @Override
-    List<String> getVmList() {
+    public List<String> getVmList() {
        return kubernetesClient.apps()
                .deployments()
                .inNamespace(codeRunnersNamespace)

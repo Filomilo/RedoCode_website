@@ -1,5 +1,6 @@
 package com.redocode.backend.VmAcces.vmConnection;
 
+import com.redocode.backend.VmAcces.VmStatus;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -64,11 +65,11 @@ class VmConnectorDockerTest {
         assertDoesNotThrow(()->{
             int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
             String id= vmConnectorDocker.createVm(testContainerNeverEnding);
-            String containerStatusBeforeRunnginh= vmConnectorDocker.getVmStatus(id);
+            VmStatus containerStatusBeforeRunnginh= vmConnectorDocker.getVmStatus(id);
             vmConnectorDocker.startVm(id);
-            String containerStatusAfterRunning= vmConnectorDocker.getVmStatus(id);
+            VmStatus containerStatusAfterRunning= vmConnectorDocker.getVmStatus(id);
             vmConnectorDocker.stopVm(id);
-            String contianerstatusAfterStopping= vmConnectorDocker.getVmStatus(id);
+            VmStatus contianerstatusAfterStopping= vmConnectorDocker.getVmStatus(id);
             vmConnectorDocker.destroyVm(id);
             int amtOfConatinersAfterestrcution= vmConnectorDocker.getVmList().size();
 

@@ -14,16 +14,6 @@ public abstract class CodeRunner extends ContainerController {
         CPP_RUNNER,
         JS_RUNNER
     }
-    public enum STATUS{
-        AWAITING_ACCES,
-        CREATING_VM,
-        STARTING_MACHINE,
-        STOPPING_MACHINE,
-        RUNNING_MACHINE,
-        MACHINE_STOPPED,
-        NOT_REQUESTED,
-        DESTROYING_MACHINE
-    }
 
 
 

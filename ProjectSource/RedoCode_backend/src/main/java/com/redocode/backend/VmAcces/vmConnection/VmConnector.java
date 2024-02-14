@@ -1,6 +1,7 @@
 package com.redocode.backend.VmAcces.vmConnection;
 
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
+import com.redocode.backend.VmAcces.VmStatus;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ public abstract String createVm(String vmName);
     public abstract void startVm(String id);
     public abstract void stopVm(String id);
     public abstract void destroyVm(String id);
-    abstract String getVmStatus(String id);
+    abstract public VmStatus getVmStatus(String id);
     abstract List<String> getRunningVmList();
-    abstract List<String> getVmList();
+    public abstract List<String> getVmList();
     public abstract ConsoleOutput executeCommandInVm(String id, String... command);
     public abstract ConsoleOutput executeCommandInVmWithInput(String id, String command,String input);
 

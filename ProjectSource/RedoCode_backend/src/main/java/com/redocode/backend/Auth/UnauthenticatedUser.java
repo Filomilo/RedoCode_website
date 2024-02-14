@@ -11,7 +11,7 @@ public UnauthenticatedUser(String id)
 }
 
     @Override
-    USER_TYPE getUserType() {
+    public USER_TYPE getUserType() {
         return USER_TYPE.UNAUTHENTICATED;
     }
 }

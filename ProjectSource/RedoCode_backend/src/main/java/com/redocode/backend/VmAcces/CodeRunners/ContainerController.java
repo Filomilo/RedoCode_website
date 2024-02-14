@@ -1,5 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
+import com.github.dockerjava.api.exception.NotFoundException;
+import com.redocode.backend.VmAcces.VmStatus;
 import com.redocode.backend.VmAcces.vmConnection.VmConnector;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
 import org.slf4j.Logger;
@@ -87,6 +89,16 @@ public class ContainerController {
     }
 
     public void destroy() {
-        vmConnector.destroyVm(containerId);
+        try {
+            vmConnector.destroyVm(containerId);
+        }
+        catch (NotFoundException ex)
+        {
+            logger.warn("Conatiner doesnt exist: "+ ex.getMessage());
+        }
+    }
+
+    public VmStatus getStatus() {
+        return vmConnector.getVmStatus(containerId);
     }
 }

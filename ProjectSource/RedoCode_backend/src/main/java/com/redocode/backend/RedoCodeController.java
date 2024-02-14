@@ -3,9 +3,8 @@ package com.redocode.backend;
 import com.redocode.backend.Auth.UnauthenticatedUser;
 import com.redocode.backend.Auth.User;
 
-import jakarta.inject.Singleton;
+import com.redocode.backend.VmAcces.CodeRunnersController;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -46,7 +45,12 @@ public class RedoCodeController {
 
 
 //    testing purpuses only
-    void reset() {
+public void reset() {
+        connectedUsers.keySet().stream()
+                .forEach(user ->    CodeRunnersController.getInstance().deregisterUser(user));
+
         connectedUsers.clear();
     }
+
+
 }

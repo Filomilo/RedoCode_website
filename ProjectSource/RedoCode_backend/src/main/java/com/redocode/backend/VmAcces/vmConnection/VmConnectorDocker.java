@@ -12,6 +12,7 @@ import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
+import com.redocode.backend.VmAcces.VmStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.github.dockerjava.transport.DockerHttpClient.Request;
@@ -164,17 +165,33 @@ catch (ConflictException ex)
 
     Container getContianerFromID(String id)
     {
-        return dockerClient.listContainersCmd()
-                .withShowAll(true)
-                .withFilter("id",new ArrayList<>(Collections.singletonList(id)))
-                .exec()
-                .get(0);
+        try {
+            return dockerClient.listContainersCmd()
+                    .withShowAll(true)
+                    .withFilter("id", new ArrayList<>(Collections.singletonList(id)))
+                    .exec()
+                    .get(0);
+        }
+        catch (IndexOutOfBoundsException ex) {
+            return null;
+        }
     }
 
 
     @Override
-    public String getVmStatus(String id) {
-        return getContianerFromID(id).getStatus();
+    public VmStatus getVmStatus(String id) {
+      try {
+          String status = getContianerFromID(id).getStatus();
+          logger.info("gettign status: " + status);
+          if (status.contains("Up"))
+              return VmStatus.RUNNING_MACHINE;
+          if (status.contains("Exited"))
+              return VmStatus.MACHINE_STOPPED;
+      }
+      catch (NullPointerException ex) {
+          return VmStatus.DESTROYED;
+      }
+      return VmStatus.DESTROYED;
     }
 
     List<String> contianerListToIdList(List<Container> contiaenrList)
@@ -185,7 +202,7 @@ return        contiaenrList.stream()
 
 
     @Override
-    List<String> getVmList() {
+    public List<String> getVmList() {
        List<Container> conatinerList= dockerClient.listContainersCmd().withShowAll(true).exec();
         //todo: switch to trace
        logger.trace("returned this container list: "+ Arrays.toString(conatinerList.toArray()));
