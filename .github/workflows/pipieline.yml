@@ -160,7 +160,4 @@ jobs:
       - name: run test
         working-directory: ./ProjectSource/RedoCode_frontend
         run: |
-          curl localhost
-          curl http://localhost:9090/exercises
-          ls
           npm run test:prod:e2e
