@@ -27,13 +27,13 @@ public class RedoCodeController {
 
     public void removeConnectedUser(User user)
     {
-        log.info("Removing user : "+ user+ " from connected users");
+//        log.info("Removing user : "+ user+ " from connected users");
 
         this.connectedUsers.remove(user);
     }
     public void removeConnectedUser(String id)
     {
-        log.info("Removing user of id: "+ id+ " from connected users");
+//        log.info("Removing user of id: "+ id+ " from connected users");
         this.removeConnectedUser(new UnauthenticatedUser(id));
     }
 

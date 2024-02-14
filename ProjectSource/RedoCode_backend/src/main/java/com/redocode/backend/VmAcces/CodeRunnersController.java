@@ -115,5 +115,12 @@ public class CodeRunnersController {
     public CodeRunner getUserCodeRunner(User user) {
         return this.usersCodeRunenrs.get(user);
     }
+
+//    testing purpioses only
+    public void reset() {
+        requestMessageSet.clear();
+        requestQueue.clear();
+        usersCodeRunenrs.clear();
+    }
     // TODO: 14/02/2024 Wokr on proper synchornizaion aroudn collenction 
 }

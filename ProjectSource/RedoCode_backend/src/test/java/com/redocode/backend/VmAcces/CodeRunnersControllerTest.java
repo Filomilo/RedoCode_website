@@ -81,6 +81,7 @@ class CodeRunnersControllerTest {
         premiumUsers.clear();
         allUsers.clear();
         redoCodeController.reset();
+        codeRunnersController.reset();
         log.info("finshed teradown");
     }
 
@@ -173,6 +174,7 @@ class CodeRunnersControllerTest {
                 CodeRunnerRequestMessage req=   CodeRunnerRequestMessage.builder()
                         .userRequesting(user)
                         .codeRunnerType(getRandomCodeRunnerType())
+                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
 
@@ -188,7 +190,7 @@ class CodeRunnersControllerTest {
                         .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
-                Thread.sleep(10);
+                Thread.sleep(100);
             }
 
             for (User user: adminsUsers
@@ -200,7 +202,7 @@ class CodeRunnersControllerTest {
                         .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
-                Thread.sleep(10);
+                Thread.sleep(100);
             }
 
             for (User user: athenicatedUsers
@@ -212,7 +214,7 @@ class CodeRunnersControllerTest {
                         .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
-                Thread.sleep(10);
+                Thread.sleep(100);
             }
             for (User user: premiumUsers
             ) {
@@ -223,7 +225,7 @@ class CodeRunnersControllerTest {
                         .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
-                Thread.sleep(10);
+                Thread.sleep(100);
             }
 
 
@@ -316,7 +318,7 @@ class CodeRunnersControllerTest {
                 .build();
 
         try {
-            Thread.sleep(10);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
