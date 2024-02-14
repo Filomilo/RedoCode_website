@@ -40,7 +40,7 @@ export function makeServer({ environment = "development" } = {}) {
       // this.namespace = "http://localhost:9090"
 
 
-      this.get("http://localhost:9090/exercises", exerciseListHandler);
+      this.get("http://localhost:8080/exercises", exerciseListHandler);
     },
   })
 
