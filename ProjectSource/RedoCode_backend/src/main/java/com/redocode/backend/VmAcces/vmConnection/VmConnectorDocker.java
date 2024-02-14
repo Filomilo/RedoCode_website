@@ -203,6 +203,7 @@ return        contiaenrList.stream()
 
     @Override
     public List<String> getVmList() {
+        logger.info("executing list conatien cmd");
        List<Container> conatinerList= dockerClient.listContainersCmd().withShowAll(true).exec();
         //todo: switch to trace
        logger.trace("returned this container list: "+ Arrays.toString(conatinerList.toArray()));

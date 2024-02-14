@@ -6,6 +6,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
 import com.redocode.backend.VmAcces.Messages.CodeRunnerRequestMessage;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
@@ -14,6 +15,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Slf4j
 class CodeRunnersControllerTest {
 
 
@@ -29,6 +31,7 @@ class CodeRunnersControllerTest {
 
     @BeforeEach
     void setUp() {
+        log.info("code runner controllwe test");
         int amountOfUnauth=random.nextInt(10,20);
         int authenticated=random.nextInt(10,20);
         int amountPremieum=random.nextInt(10,20);
@@ -61,13 +64,13 @@ class CodeRunnersControllerTest {
             redoCodeController.addConnectedUser(user);
             allUsers.add(user);
         }
-
+    log.info("finshed setup");
 
     }
 
     @AfterEach
     void tearDown() {
-
+        log.info("Startign teradown");
         for (User user: allUsers
              ) {
             redoCodeController.removeConnectedUser(user);
@@ -78,6 +81,7 @@ class CodeRunnersControllerTest {
         premiumUsers.clear();
         allUsers.clear();
         redoCodeController.reset();
+        log.info("finshed teradown");
     }
 
     CodeRunner.CoderunnerTypes getRandomCodeRunnerType()
@@ -93,10 +97,11 @@ class CodeRunnersControllerTest {
     @Test
     void requestVmSingle() {
         assertDoesNotThrow(()->{
-
+            log.info(" gett mat of vms before");
             int amountOFVmsBefore= VmConnectorFactory.getVmConnector().getVmList().size();
 
             User user=allUsers.get(random.nextInt(allUsers.size()));
+            log.info("creating vm fo single rnadom ser");
             CodeRunnerRequestMessage codeRunnerRequestMessage= CodeRunnerRequestMessage.builder()
                     .codeRunnerType(getRandomCodeRunnerType())
                     .userRequesting(user)
@@ -104,6 +109,7 @@ class CodeRunnersControllerTest {
 
 
             VmStatus statusBeforeRequest=codeRunnersController.getUserVmStatus(user);
+            log.info("requesting vm: "+ codeRunnerRequestMessage);
             codeRunnersController.requestVm(codeRunnerRequestMessage);
 
             long timeout=5000;
@@ -115,7 +121,7 @@ class CodeRunnersControllerTest {
                     break;
             }
             VmStatus statusAfterRequest=codeRunnersController.getUserVmStatus(user);
-
+            ;
             CodeRunner codeRunner=codeRunnersController.getUserCodeRunner(user);
             codeRunner.stop();
 
