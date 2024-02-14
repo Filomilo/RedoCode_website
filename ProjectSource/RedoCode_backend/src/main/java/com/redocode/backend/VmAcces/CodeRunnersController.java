@@ -45,10 +45,13 @@ public class CodeRunnersController {
         this.usersCodeRunenrs.remove(user);
     }
 
+    @Synchronized
     private void updateQueue()
     {
+        log.info("updating queue");
         if(requestQueue.size()>0)
         {
+            log.info("removing request from queue and creating new vm");
             CodeRunnerRequestMessage rq= requestQueue.poll();
             this.requestMessageSet.remove(rq);
             this.createNewVm(rq);
@@ -89,6 +92,7 @@ public class CodeRunnersController {
     @Synchronized
     private void createNewVm(CodeRunnerRequestMessage codeRunnerRequestMessage)
     {
+        log.info("creating new vm per request: "+ codeRunnerRequestMessage);
        CodeRunner codeRunner= CodeRunnerBuilder.build(codeRunnerRequestMessage);
        this.usersCodeRunenrs.put(codeRunnerRequestMessage.getUserRequesting(),codeRunner);
        codeRunner.start();

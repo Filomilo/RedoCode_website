@@ -2,10 +2,7 @@ package com.redocode.backend.VmAcces.Messages;
 
 import com.redocode.backend.Auth.User;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
@@ -16,6 +13,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @Builder
+@ToString
 public class CodeRunnerRequestMessage implements Comparable {
 
     private User userRequesting;
@@ -49,11 +47,13 @@ public class CodeRunnerRequestMessage implements Comparable {
     public int compareTo( Object o) {
         CodeRunnerRequestMessage crm=(CodeRunnerRequestMessage)o;
         if(this.userRequesting.getUserType()==crm.getUserRequesting().getUserType() && this.requestTime!=null && crm.requestTime!=null) {
-            log.info("Comapring "+this.requestTime.getTime()+" with "+ crm.getRequestTime()+": "+ this.requestTime.compareTo(crm.getRequestTime()));
+//            log.info("Comapring "+this.requestTime.getTime()+" with "+ crm.getRequestTime()+": "+ this.requestTime.compareTo(crm.getRequestTime()));
             if( this.requestTime.compareTo(crm.getRequestTime())==0)
                 return (int) (this.requestTime.getTime()-crm.getRequestTime().getTime());
             return this.requestTime.compareTo(crm.getRequestTime());
         }
         return -1*this.userRequesting.compareTo(crm.getUserRequesting());
     }
+
+
 }
