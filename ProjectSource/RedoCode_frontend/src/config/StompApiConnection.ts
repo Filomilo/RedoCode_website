@@ -3,9 +3,9 @@ import type OnConnectFunc from '../types/StompConnection'
 import type { IfStatement } from 'typescript';
 
 
-let userName: String| null=null;
+let userName: String|null=null;
 
-const stompClient = new Client({
+export const stompClient = new Client({
     brokerURL: 'ws://localhost:8080/web-socket'
 });
 
@@ -49,6 +49,6 @@ export const onConnectStomp=(func :OnConnectFunc)=>{
 }
 
 
-export const getConnetedUserName=(): String=>{
+export const getConnetedUserName=(): String|null=>{
     return userName;
 }
