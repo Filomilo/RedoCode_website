@@ -11,5 +11,6 @@ until docker info &>/dev/null; do
 done
 docker pull nginx
 docker pull filipredocode/redocode:inputoutput
+docker pull filipredocode/redocode:CppRunner
 docker pull hello-world
 tail -f /dev/null

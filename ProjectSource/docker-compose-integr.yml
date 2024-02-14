@@ -27,20 +27,20 @@ services:
     hostname: frontend
     privileged: true
     environment:
-      - API_HOST=http://api:9090
+      - API_HOST=http://api:8080
   api:
     build: 
       context: ./RedoCode_backend
       dockerfile: Dockerfile
     ports:
-      - "9090:9090"
+      - "8080:8080"
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 1G
     environment:
-      DATABASE_HOST: db
+      DATABASE_HOST: db:5432
       CONTAINER_MANGER: docker
       DOCKER_HOST: tcp://dockerrunner:2376
     # healthcheck:

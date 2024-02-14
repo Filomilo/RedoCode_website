@@ -11,14 +11,14 @@ services:
         context: ./RedoCode_backend
         dockerfile: Dockerfile.dev.docker
     ports:
-      - "9090:9090"
+      - "8080:8080"
     deploy:
       resources:
         limits:
           cpus: '0.1'
           memory: 1G
     environment:
-      DATABASE_HOST: db
+      DATABASE_HOST: db:5432
       CONTAINER_MANGER: docker
       DOCKER_HOST: tcp://dockerrunner:2376
     depends_on:

@@ -1,7 +1,7 @@
 <template>
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar  navbar-dark bg-dark">
         <router-link to="/Home" class="nav-link">
         <a class="navbar-brand" href="#">
          
@@ -10,7 +10,7 @@
         </a>
     </router-link>
 
-          <div class="collapse navbar-collapse " id="navbarNav">
+          <div class="" id="navbarNav">
             <ul class="navbar-nav topbar-navigation">
               <li class="nav-item ">
                 <router-link to="/Exercises" class="nav-link" id="Excersices_button">

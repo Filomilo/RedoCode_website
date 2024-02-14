@@ -25,7 +25,7 @@ const exerciseData =ref<ExerciseType[]>([]);
 onMounted(()=>{
   console.log("On mounted")
     axios
-      .get('http://localhost:9090/exercises')
+      .get('http://localhost:8080/exercises')
       .then(response => {
     
         if(response===undefined){
