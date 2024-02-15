@@ -1,5 +1,11 @@
 <template>
-    <div style="height: 10rem;">
+    <div style="
+    height: 10rem;
+    width: 10rem;
+    min-width: 50rem;
+    min-height: 5rem;
+    <!-- display: flex; -->
+    ">
     <vue-monaco-editor
       v-model:value="code"
       theme="vs-dark"
@@ -7,6 +13,7 @@
       @mount="handleMount"
       language="sql"
     />
+
 </div>
   </template>
   

@@ -1,6 +1,6 @@
 <template>
 
-<CodeRunnerPanel />
+<CodeRunnerPanel :connectAtStart="false" />
 </template>
 
 

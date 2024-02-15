@@ -1,4 +1,4 @@
-package com.redocode.backend.EventListiners;
+package com.redocode.backend.StompConnectionControl;
 
 import com.redocode.backend.RedoCodeController;
 import lombok.extern.slf4j.Slf4j;

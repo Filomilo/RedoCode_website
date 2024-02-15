@@ -6,7 +6,8 @@ import router from './router'
 import { makeServer } from "./server"
 import "bootstrap"
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
-
+import DropdownMenu from 'v-dropdown-menu'
+import 'v-dropdown-menu/css'
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server');
@@ -20,6 +21,6 @@ app.use(VueMonacoEditorPlugin, {
     vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
   },
 })
-
+app.use(DropdownMenu)
 
 app.mount('#app')

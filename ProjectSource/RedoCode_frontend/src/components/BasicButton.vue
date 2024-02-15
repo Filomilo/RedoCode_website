@@ -1,7 +1,9 @@
 <template>
-    button
-<div :style="buttonStyle" >
-{{ height }}
+  
+<div class="BasicButton"  v-on:click="onClickMethod">
+  <div class="buttonContent">
+  <slot></slot>
+</div>
 </div>
 </template>
 
@@ -10,20 +12,16 @@
 import { computed } from 'vue';
 
 
-defineProps<{
-  label?: string|null,
-  width: string,
-  height: string
-}>()
-
-
-const buttonStyle=computed(()=>{
-    return "background-color: "+"red"+";"+
-    "height: "+"4rem" +";"+
-    "width: "+"1rem" +";";
-    // return 'background-color: '+'red'+';'+
-    // 'height: '+this.height+';'+
-    // 'width: '+this.width+';'
+const props = defineProps({
+  onClick: {type: Function, required: true}
 })
+
+const onClickMethod=()=>{
+  console.log("click")
+  props.onClick();
+}
+
+
+
 
 </script>

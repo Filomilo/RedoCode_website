@@ -1,6 +1,26 @@
 <template>
     playground
+    <LanguageDropdown />
+
+
+    <div :class="{ 'lock': !establishedConnection }">
     <CodeEditor language="javascript"/>
+</div>
+<div v-if="!establishedConnection">
+<div style="position:static; 
+width: 5rem;
+ height: 5rem;
+  background-color: red">
+    loading
+</div>
+
+<div v-if="!props.connectAtStart&&!tryingToEstablishConnection">
+    <BasicButton :onClick="connectToCodeRunner">
+        start
+    </BasicButton>
+</div>
+
+</div>
     <!-- <BasicButton width="1rem" height="2rem"/> -->
 
     <!-- <Button @click="subscribeButton">
@@ -25,41 +45,31 @@
 import CodeEditor from '@/components/CodeEditorPanel.vue';
 import BasicButton from '@/components/BasicButton.vue';
 import type { Button } from 'bootstrap';
-import { ref,onMounted } from 'vue';
+import { ref,onMounted, type Ref } from 'vue';
 import { onBeforeRouteLeave,onBeforeRouteUpdate} from 'vue-router'
 import axios from "axios";
 import {connectStomp,disconnectStomp,onConnectStomp, getConnetedUserName} from "../config/StompApiConnection"
 import type { IFrame } from '@stomp/stompjs';
+import LanguageDropdown from './LanguageDropdown.vue';
+const props = defineProps({
+  connectAtStart: {type: Boolean, required: false}
+})
 
-// const stompClient = new Client({
-//     brokerURL: 'ws://localhost:8080/web-socket'
-// });
-
-// stompClient.onConnect = (frame) => {
-//     console.log("conected")
-//     console.log('Connected: ' + frame);
-//     subscribeStatus.value=true;
-//     stompClient.subscribe('/topic/messages', (message) => {
-//         meaages.value+=", "+message.body
-
-//     });
-//     stompClient.subscribe('/user/topic/private-messages', (message) => {
-//         meaages.value+=", "+"#"+message.body+"#"
-//         console.log("Greeting: ##"+ JSON.parse(message.body).content+"##")
-//     });
-// };
 
 const subscribeStatus=ref(false);
 const meaages=ref('');
+const tryingToEstablishConnection: Ref<boolean>= ref(false);
 
+const establishedConnection: Ref<boolean>= ref(false);
 
 const connectToCodeRunner=()=>{
     
     onConnectStomp((frame: IFrame)=>{
     console.log("connectino result: "+ JSON.stringify(frame));
     console.log("Username: "+getConnetedUserName())
+    establishedConnection.value=true;
 })
-
+tryingToEstablishConnection.value=true;
     connectStomp();
     
 }
@@ -73,7 +83,10 @@ const diconnectFromCodeRunners=()=>{
 
 
 onMounted(()=>{
+    console.log("props: "+JSON.stringify(props))
+    if(props.connectAtStart){
     connectToCodeRunner();
+    }
 })
 
 onBeforeRouteLeave(async (to, from ,next)=>{
