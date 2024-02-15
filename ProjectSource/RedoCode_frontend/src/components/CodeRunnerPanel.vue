@@ -1,7 +1,7 @@
 <template>
     playground
     <LanguageDropdown
-    :chosenValue="chosenLangague"
+    :chosenValue="String(chosenLangague)"
     @select="onSelectLanguage"
     />
 

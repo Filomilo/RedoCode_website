@@ -12,6 +12,10 @@
     }
   ],
   "compilerOptions": {
-    "module": "NodeNext"
-  }
+    "module": "NodeNext",
+    "noImplicitAny": false,
+    "allowJs": true,
+    "checkJs": false,
+    },
+
 }

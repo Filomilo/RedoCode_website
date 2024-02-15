@@ -30,7 +30,7 @@ import { ref,onMounted, type Ref } from 'vue';
 
 
   defineProps({
-    chosenValue: Object as Ref<String>
+    chosenValue: Object as ()=> strinSg
 
   })
 const emit=defineEmits(['select'])
