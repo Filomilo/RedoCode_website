@@ -1,6 +1,9 @@
 <template>
     playground
-    <LanguageDropdown />
+    <LanguageDropdown
+    :chosenValue="chosenLangague"
+    @select="onSelectLanguage"
+    />
 
 
     <div :class="{ 'lock': !establishedConnection }">
@@ -61,7 +64,7 @@ const meaages=ref('');
 const tryingToEstablishConnection: Ref<boolean>= ref(false);
 
 const establishedConnection: Ref<boolean>= ref(false);
-
+const chosenLangague: Ref<String>=ref("Cpp")
 const connectToCodeRunner=()=>{
     
     onConnectStomp((frame: IFrame)=>{
@@ -95,5 +98,10 @@ onBeforeRouteLeave(async (to, from ,next)=>{
 
     next();
 })
+
+const onSelectLanguage=(lang: string)=>{
+    console.log("info selcted:" + lang)
+    chosenLangague.value=lang;
+}
 
 </script>
