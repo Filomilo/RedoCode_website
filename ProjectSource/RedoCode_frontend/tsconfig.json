@@ -16,6 +16,11 @@
     "noImplicitAny": false,
     "allowJs": true,
     "checkJs": false,
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types/",
+    ]
     },
+
 
 }
