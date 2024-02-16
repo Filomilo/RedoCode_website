@@ -1,12 +1,7 @@
-package com.redocode.backend;
+package com.redocode.backend.ConnectionCotrollers;
 
 
-import com.redocode.backend.database.Excersize;
-import com.redocode.backend.database.ExcersizeListEntry;
 import com.redocode.backend.database.ExerciseRepository;
-import com.redocode.backend.database.User;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

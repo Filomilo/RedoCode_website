@@ -3,8 +3,7 @@ package com.redocode.backend.VmAcces;
 import com.redocode.backend.Auth.*;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
-import com.redocode.backend.VmAcces.Messages.CodeRunnerRequestMessage;
+import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
-class CodeRunnersControllerTest {
+class CodeRunnersConnectionControllerTest {
 
 
     CodeRunnersController codeRunnersController= CodeRunnersController.getInstance();
@@ -103,15 +102,15 @@ class CodeRunnersControllerTest {
 
             User user=allUsers.get(random.nextInt(allUsers.size()));
             log.info("creating vm fo single rnadom ser");
-            CodeRunnerRequestMessage codeRunnerRequestMessage= CodeRunnerRequestMessage.builder()
+            CodeRunnerRequest codeRunnerRequest = CodeRunnerRequest.builder()
                     .codeRunnerType(getRandomCodeRunnerType())
                     .userRequesting(user)
                     .build();
 
 
             VmStatus statusBeforeRequest=codeRunnersController.getUserVmStatus(user);
-            log.info("requesting vm: "+ codeRunnerRequestMessage);
-            codeRunnersController.requestVm(codeRunnerRequestMessage);
+            log.info("requesting vm: "+ codeRunnerRequest);
+            codeRunnersController.requestVm(codeRunnerRequest);
 
             long timeout=5000;
             long sleep=500;
@@ -171,7 +170,7 @@ class CodeRunnersControllerTest {
                 User user=new UnauthenticatedUser(UUID.randomUUID().toString());
                 bufferFillUser.add(user);
                 redoCodeController.addConnectedUser(user);
-                CodeRunnerRequestMessage req=   CodeRunnerRequestMessage.builder()
+                CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .userRequesting(user)
                         .codeRunnerType(getRandomCodeRunnerType())
                         .requestTime(new Date())
@@ -184,7 +183,7 @@ class CodeRunnersControllerTest {
             for (User user: unathenicatedUsers
             ) {
                 redoCodeController.addConnectedUser(user);
-                CodeRunnerRequestMessage req=   CodeRunnerRequestMessage.builder()
+                CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .userRequesting(user)
                         .codeRunnerType(getRandomCodeRunnerType())
                         .requestTime(new Date())
@@ -196,7 +195,7 @@ class CodeRunnersControllerTest {
             for (User user: adminsUsers
             ) {
                 redoCodeController.addConnectedUser(user);
-                CodeRunnerRequestMessage req=   CodeRunnerRequestMessage.builder()
+                CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .userRequesting(user)
                         .codeRunnerType(getRandomCodeRunnerType())
                         .requestTime(new Date())
@@ -208,7 +207,7 @@ class CodeRunnersControllerTest {
             for (User user: athenicatedUsers
             ) {
                 redoCodeController.addConnectedUser(user);
-                CodeRunnerRequestMessage req=   CodeRunnerRequestMessage.builder()
+                CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .userRequesting(user)
                         .codeRunnerType(getRandomCodeRunnerType())
                         .requestTime(new Date())
@@ -219,7 +218,7 @@ class CodeRunnersControllerTest {
             for (User user: premiumUsers
             ) {
                 redoCodeController.addConnectedUser(user);
-                CodeRunnerRequestMessage req=   CodeRunnerRequestMessage.builder()
+                CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .userRequesting(user)
                         .codeRunnerType(getRandomCodeRunnerType())
                         .requestTime(new Date())
@@ -229,7 +228,7 @@ class CodeRunnersControllerTest {
             }
 
 
-            PriorityBlockingQueue<CodeRunnerRequestMessage> queue= CodeRunnersController.getInstance().requestQueue;
+            PriorityBlockingQueue<CodeRunnerRequest> queue= CodeRunnersController.getInstance().requestQueue;
             int queueSizeAfterAding=queue.size();
 
 
@@ -258,7 +257,7 @@ class CodeRunnersControllerTest {
 
             for (User user: premiumUsers
             ) {
-                CodeRunnerRequestMessage rq=queue.poll();
+                CodeRunnerRequest rq=queue.poll();
                 assert rq != null;
                 User retrivedUser=rq.getUserRequesting();
                 assertEquals(user,retrivedUser,"expected first added premium: ");
@@ -297,7 +296,7 @@ class CodeRunnersControllerTest {
             User user=new UnauthenticatedUser(UUID.randomUUID().toString());
             bufferFillUser.add(user);
             redoCodeController.addConnectedUser(user);
-            CodeRunnerRequestMessage req=   CodeRunnerRequestMessage.builder()
+            CodeRunnerRequest req=   CodeRunnerRequest.builder()
                     .userRequesting(user)
                     .codeRunnerType(getRandomCodeRunnerType())
                     .build();
@@ -311,7 +310,7 @@ class CodeRunnersControllerTest {
         RedoCodeController.getInstance().addConnectedUser(user1);
         RedoCodeController.getInstance().addConnectedUser(user2);
 
-        CodeRunnerRequestMessage req1= CodeRunnerRequestMessage.builder()
+        CodeRunnerRequest req1= CodeRunnerRequest.builder()
                 .codeRunnerType(getRandomCodeRunnerType())
                 .requestTime(new Date())
                 .userRequesting(user1)
@@ -322,7 +321,7 @@ class CodeRunnersControllerTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        CodeRunnerRequestMessage req2= CodeRunnerRequestMessage.builder()
+        CodeRunnerRequest req2= CodeRunnerRequest.builder()
                 .codeRunnerType(getRandomCodeRunnerType())
                 .requestTime(new Date())
                 .userRequesting(user2)

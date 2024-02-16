@@ -1,6 +1,5 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
-import com.redocode.backend.VmAcces.Messages.CodeRunnerRequestMessage;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,9 +24,9 @@ public class CodeRunnerBuilder {
     }
 
 
-    public static CodeRunner build(CodeRunnerRequestMessage codeRunnerRequestMessage)
+    public static CodeRunner build(CodeRunnerRequest codeRunnerRequest)
     {
-        return new CodeRunnerBuilder(codeRunnerRequestMessage.getCodeRunnerType())
+        return new CodeRunnerBuilder(codeRunnerRequest.getCodeRunnerType())
                 .build();
     }
 

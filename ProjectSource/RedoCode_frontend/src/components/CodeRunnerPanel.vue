@@ -54,6 +54,9 @@ import axios from "axios";
 import {connectStomp,disconnectStomp,onConnectStomp, getConnetedUserName} from "../config/StompApiConnection"
 import type { IFrame } from '@stomp/stompjs';
 import LanguageDropdown from './LanguageDropdown.vue';
+import {requstDefaultVmMachine, subcribeToVmStatus} from '../config/CodeRunnerConnection'
+import { stat } from 'fs';
+import type CodeRunnerState from '@/types/CodeRunnerState';
 const props = defineProps({
   connectAtStart: {type: Boolean, required: false}
 })
@@ -62,15 +65,21 @@ const props = defineProps({
 const subscribeStatus=ref(false);
 const meaages=ref('');
 const tryingToEstablishConnection: Ref<boolean>= ref(false);
-
 const establishedConnection: Ref<boolean>= ref(false);
 const chosenLangague: Ref<String>=ref("Cpp")
+
+const updateVmStatus=(state: CodeRunnerState)=>{
+    console.log("status: "+ state);
+}
+
 const connectToCodeRunner=()=>{
     
     onConnectStomp((frame: IFrame)=>{
-    console.log("connectino result: "+ JSON.stringify(frame));
-    console.log("Username: "+getConnetedUserName())
-    establishedConnection.value=true;
+        console.log("connectino result: "+ JSON.stringify(frame));
+        console.log("Username: "+getConnetedUserName())
+        establishedConnection.value=true;
+        requstDefaultVmMachine(String(chosenLangague.value));
+        subcribeToVmStatus(updateVmStatus);
 })
 tryingToEstablishConnection.value=true;
     connectStomp();

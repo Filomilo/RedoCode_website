@@ -1,29 +1,37 @@
 package com.redocode.backend.VmAcces;
 
 import com.redocode.backend.Auth.User;
+import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
+import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
-import com.redocode.backend.VmAcces.Messages.CodeRunnerRequestMessage;
+import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Synchronized;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
 
 @Slf4j
+@Component
 public class CodeRunnersController {
 
     @Getter
     private static CodeRunnersController instance =new CodeRunnersController();
     private CodeRunnersController() {
     }
+    @Autowired
+    private CodeRunnerSender codeRunnerSender;
 
     static final int maxAmountOfVm=5;
 
     private Map<User, CodeRunner> usersCodeRunenrs=new Hashtable<>(maxAmountOfVm);
-    private Set<CodeRunnerRequestMessage> requestMessageSet=new HashSet<>();
-    PriorityBlockingQueue<CodeRunnerRequestMessage> requestQueue=new  PriorityBlockingQueue<>();
+    private Set<CodeRunnerRequest> requestMessageSet=new HashSet<>();
+    PriorityBlockingQueue<CodeRunnerRequest> requestQueue=new  PriorityBlockingQueue<>();
 
 
     public VmStatus getUserVmStatus(User user)
@@ -33,7 +41,7 @@ public class CodeRunnersController {
         {
             return codeRunner.getStatus();
         }
-        if(requestMessageSet.contains(new CodeRunnerRequestMessage(user, CodeRunner.CoderunnerTypes.JS_RUNNER)))
+        if(requestMessageSet.contains(new CodeRunnerRequest(user, CodeRunner.CoderunnerTypes.JS_RUNNER)))
             return  VmStatus.AWAITING_ACCES;
        return VmStatus.NOT_REQUESTED;
     }
@@ -52,7 +60,7 @@ public class CodeRunnersController {
         if(requestQueue.size()>0)
         {
             log.info("removing request from queue and creating new vm");
-            CodeRunnerRequestMessage rq= requestQueue.poll();
+            CodeRunnerRequest rq= requestQueue.poll();
             this.requestMessageSet.remove(rq);
             this.createNewVm(rq);
         }
@@ -66,7 +74,7 @@ public class CodeRunnersController {
             codeRunner.destroy();
 
 
-        Optional<CodeRunnerRequestMessage> requestMessage=requestMessageSet
+        Optional<CodeRunnerRequest> requestMessage=requestMessageSet
                 .stream()
                 .filter((req)-> req.getUserRequesting().equals(user))
 
@@ -81,25 +89,29 @@ public class CodeRunnersController {
     }
 
     @Synchronized
-    private void addToQueue(CodeRunnerRequestMessage codeRunnerRequestMessage)
+    private void addToQueue(CodeRunnerRequest codeRunnerRequest)
     {
-        log.info("adding to rquest queue: "+ codeRunnerRequestMessage);
-        requestMessageSet.add(codeRunnerRequestMessage);
-        requestQueue.add(codeRunnerRequestMessage);
+        log.info("adding to rquest queue: "+ codeRunnerRequest);
+        requestMessageSet.add(codeRunnerRequest);
+        requestQueue.add(codeRunnerRequest);
+        log.info("added to queue: "+ codeRunnerRequest);
+        updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
     }
 
 
     @Synchronized
-    private void createNewVm(CodeRunnerRequestMessage codeRunnerRequestMessage)
+    private void createNewVm(CodeRunnerRequest codeRunnerRequest)
     {
-        log.info("creating new vm per request: "+ codeRunnerRequestMessage);
-       CodeRunner codeRunner= CodeRunnerBuilder.build(codeRunnerRequestMessage);
-       this.usersCodeRunenrs.put(codeRunnerRequestMessage.getUserRequesting(),codeRunner);
+        log.info("creating new vm per request: "+ codeRunnerRequest);
+       CodeRunner codeRunner= CodeRunnerBuilder.build(codeRunnerRequest);
+       this.usersCodeRunenrs.put(codeRunnerRequest.getUserRequesting(),codeRunner);
        codeRunner.start();
+        log.info("created new vm per request: "+ codeRunnerRequest);
+       updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
     }
 
 
-    public void requestVm(CodeRunnerRequestMessage codeRunnerRequest)
+    public void requestVm(CodeRunnerRequest codeRunnerRequest)
     {
         if(usersCodeRunenrs.size()<maxAmountOfVm)
         {
@@ -115,6 +127,15 @@ public class CodeRunnersController {
     public CodeRunner getUserCodeRunner(User user) {
         return this.usersCodeRunenrs.get(user);
     }
+
+    public void updateCodeRunnerState(User user)
+    {
+    VmStatus status=this.getUserVmStatus(user);
+        codeRunnerSender.sendMessageToUser(CodeRunnersConnectionController.codeRunnerStateEndPoint,status,user);
+    }
+
+
+
 
 //    testing purpioses only
     public void reset() {

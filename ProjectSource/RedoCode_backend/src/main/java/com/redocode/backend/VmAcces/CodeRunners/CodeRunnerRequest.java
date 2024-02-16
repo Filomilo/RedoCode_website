@@ -1,9 +1,12 @@
-package com.redocode.backend.VmAcces.Messages;
+package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.redocode.backend.Auth.User;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
+import com.redocode.backend.Messages.CodeRunnerRequestMessage;
+import com.redocode.backend.RedoCodeController;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Objects;
@@ -14,27 +17,38 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @ToString
-public class CodeRunnerRequestMessage implements Comparable {
+public class CodeRunnerRequest implements Comparable {
 
     private User userRequesting;
     private CodeRunner.CoderunnerTypes codeRunnerType;
     private Date requestTime;
 
 
-
-    public CodeRunnerRequestMessage(User userRequesting, CodeRunner.CoderunnerTypes codeRunnerType) {
+    public CodeRunnerRequest(User userRequesting, CodeRunner.CoderunnerTypes codeRunnerType) {
         this.userRequesting = userRequesting;
         this.codeRunnerType = codeRunnerType;
         requestTime=new Date();
     }
 
+    public CodeRunnerRequest(String userId, CodeRunnerRequestMessage requestMessageSource) {
+
+       switch (requestMessageSource.getCodeRunnerType())
+       {
+           case "Cpp": this.codeRunnerType= CodeRunner.CoderunnerTypes.CPP_RUNNER; break;
+           case "Java script": this.codeRunnerType= CodeRunner.CoderunnerTypes.JS_RUNNER; break;
+           default: throw new RuntimeException("Wrong code runner specified");
+       }
+
+       this.userRequesting= RedoCodeController.getInstance().getUserById(userId);
+
+    }
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CodeRunnerRequestMessage that = (CodeRunnerRequestMessage) o;
+        CodeRunnerRequest that = (CodeRunnerRequest) o;
         return Objects.equals(userRequesting, that.userRequesting);
     }
 
@@ -45,7 +59,7 @@ public class CodeRunnerRequestMessage implements Comparable {
 
     @Override
     public int compareTo( Object o) {
-        CodeRunnerRequestMessage crm=(CodeRunnerRequestMessage)o;
+        CodeRunnerRequest crm=(CodeRunnerRequest)o;
         if(this.userRequesting.getUserType()==crm.getUserRequesting().getUserType() && this.requestTime!=null && crm.requestTime!=null) {
 //            log.info("Comapring "+this.requestTime.getTime()+" with "+ crm.getRequestTime()+": "+ this.requestTime.compareTo(crm.getRequestTime()));
             if( this.requestTime.compareTo(crm.getRequestTime())==0)
