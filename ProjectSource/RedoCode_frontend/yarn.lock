@@ -4786,6 +4786,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"primevue@npm:^3.48.1":
+  version: 3.48.1
+  resolution: "primevue@npm:3.48.1"
+  peerDependencies:
+    vue: ^3.0.0
+  checksum: 6927ac62c8957af90ce9ab3a917febafc9c17763f065739e050cdfafe3c6a3f13833483ed24756ab95c218203b2ed5c52620140ec88b8bb4045999090a9e40d9
+  languageName: node
+  linkType: hard
+
 "proc-log@npm:^3.0.0":
   version: 3.0.0
   resolution: "proc-log@npm:3.0.0"
@@ -6185,6 +6194,7 @@ __metadata:
     npm-run-all2: "npm:^6.1.1"
     pinia: "npm:^2.1.7"
     prettier: "npm:^3.0.3"
+    primevue: "npm:^3.48.1"
     sass: "npm:^1.70.0"
     start-server-and-test: "npm:^2.0.3"
     typescript: "npm:~5.3.0"

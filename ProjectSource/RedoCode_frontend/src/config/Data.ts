@@ -1,4 +1,19 @@
-export const languageChoices : string[]=[
-    "Cpp",
-    "Java Script"
+import  type {programingLanguageChoice} from '../types/ProgramingLanguageChoice'
+import type CodeResult from '@/types/CodeResultsType';
+
+export const languageChoices : programingLanguageChoice[]=[
+    {"name":  "Cpp"},
+    {"name":  "Java Script"}
 ];
+
+
+
+export const basicResultTemplate:CodeResult[] =[
+    {
+    Console_output: "",
+    Error_output: "",
+    Solution_type: "none",
+    correct_solution: null,
+    achived_solution: null
+    }
+]

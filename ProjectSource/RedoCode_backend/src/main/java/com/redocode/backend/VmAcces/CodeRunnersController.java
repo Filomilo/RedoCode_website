@@ -6,6 +6,8 @@ import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
+import jakarta.annotation.PreDestroy;
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Synchronized;
@@ -139,6 +141,7 @@ public class CodeRunnersController {
 
 
 //    testing purpioses only
+    @PreDestroy
     public void reset() {
         requestMessageSet.clear();
         requestQueue.clear();

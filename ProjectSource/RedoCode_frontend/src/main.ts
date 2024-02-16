@@ -6,8 +6,9 @@ import router from './router'
 import { makeServer } from "./server"
 import "bootstrap"
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
-import DropdownMenu from 'v-dropdown-menu'
-import 'v-dropdown-menu/css'
+import PrimeVue from 'primevue/config';
+
+
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server');
@@ -15,12 +16,10 @@ if (import.meta.env.MODE === 'development') {
 }
 
 app.use(router)
-
-app.use(VueMonacoEditorPlugin, {
+.use(VueMonacoEditorPlugin, {
   paths: {
     vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
   },
 })
-app.use(DropdownMenu)
-
+.use(PrimeVue);
 app.mount('#app')

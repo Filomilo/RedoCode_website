@@ -8,6 +8,8 @@ import jakarta.annotation.PreDestroy;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import java.util.*;
 
 @Slf4j
 @Component
+@Scope(value= ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class RedoCodeController {
 
     @Getter
@@ -56,6 +59,7 @@ public class RedoCodeController {
 //    testing purpuses only
     @PreDestroy
 public void reset() {
+        log.info("Destrying Redocode controller");
         connectedUsers.keySet().stream()
                 .forEach(user ->    codeRunnersController.deregisterUser(user));
 

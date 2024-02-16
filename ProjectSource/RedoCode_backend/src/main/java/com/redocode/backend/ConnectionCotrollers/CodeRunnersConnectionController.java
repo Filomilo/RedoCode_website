@@ -2,6 +2,7 @@ package com.redocode.backend.ConnectionCotrollers;
 
 import com.redocode.backend.Auth.User;
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
+import com.redocode.backend.Messages.CodeToRunMessage;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.CodeRunnersController;
@@ -54,6 +55,12 @@ public class CodeRunnersConnectionController {
         return status;
     }
 
+    @MessageMapping("/CodeToRun")
+    public void runCode(Principal principal, CodeToRunMessage codeToRunMessage)
+    {
+        String userId=principal.getName();
+        log.info("user: "+ userId +" runs: "+codeToRunMessage);
+    }
 
 
 }

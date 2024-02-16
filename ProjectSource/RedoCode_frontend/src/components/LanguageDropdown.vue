@@ -1,6 +1,6 @@
 <template>
     <div>
-    <dropdown-menu 
+    <!-- <dropdown-menu 
     :withDropdownCloser="true"
     >
       <template #trigger>
@@ -17,17 +17,26 @@
        
       </template>
       
-    </dropdown-menu>
+    </dropdown-menu> -->
+
+    <Dropdown 
+      :v-model="chosenValue"
+     :options="languageChoices"
+      optionLabel="name"
+      optionValue="name" 
+      class="w-full md:w-14rem"
+      :placeholder="chosenValue"
+      v-on:update:modelValue="onValueClick"
+       />
 </div>
   </template>
   
   <script lang="ts" setup>
-
-  import DropdownMenu from 'v-dropdown-menu'
-import 'v-dropdown-menu/css'
+import Dropdown from 'primevue/dropdown';
  import {languageChoices} from '../config/Data'
 import { ref,onMounted, type Ref } from 'vue';
 
+const selectedCity: Ref<string>= ref("")
 
   defineProps({
     chosenValue: Object as ()=> string

@@ -3,6 +3,7 @@ import {stompClient} from './StompApiConnection'
 import type CodeRunnerRequestMessage from '@/types/CodeRunnerRequestMessage'
 import type CodeRunnerStateCallBack from '@/types/CodeRunnerStateCallBack'
 import type CoderunnerState from '@/types/CodeRunnerState'
+import type CodeToRunMessage from '@/types/CodeToRunMessage'
 export const requstDefaultVmMachine=(type: string)=>{
 
     const request:CodeRunnerRequestMessage={
@@ -26,4 +27,14 @@ export const subcribeToVmStatus=(func: CodeRunnerStateCallBack)=>{
         const state: CoderunnerState=JSON.parse(mesage.body);
         func(state)
     })
+}
+
+export const sendToCompile=(code: CodeToRunMessage)=>{
+    console.log("codde: "+ code)
+    const message: IPublishParams={
+        destination: "/app/CodeToRun",
+        body: JSON.stringify(code)
+    }
+    console.log("sending code to run: "+ JSON.stringify(message))
+    stompClient.publish(message)
 }

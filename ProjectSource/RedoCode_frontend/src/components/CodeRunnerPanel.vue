@@ -9,39 +9,32 @@
     <div :class="{ 'lock': !establishedConnection }">
     <CodeEditor language="javascript"/>
 </div>
-<div v-if="!establishedConnection">
+
+<div v-if="VmAcces">
+    <BasicButton :onClick="onRunCode">
+        run
+    </BasicButton>
+</div>
+
+<div v-if="!establishedConnection&&tryingToEstablishConnection">
 <div style="position:static; 
 width: 5rem;
  height: 5rem;
   background-color: red">
     loading
 </div>
-
+</div>
 <div v-if="!props.connectAtStart&&!tryingToEstablishConnection">
     <BasicButton :onClick="connectToCodeRunner">
         start
     </BasicButton>
 </div>
 
-</div>
-<div :class="{ 'lock': !VmAcces }">
-    <ResultsPanel />
-</div>
-    <!-- <BasicButton width="1rem" height="2rem"/> -->
-
-    <!-- <Button @click="subscribeButton">
-        {{ subscribeStatus }}
-    </Button>
-    <Button @click="postButton">
-        post
-    </Button>
-    <Button @click="postButtonPrivate">
-        post-private
-    </Button>
-    
-    <div style="height: 12rem;">
-        {{ meaages }}
-        </div> -->
+<!-- <div :class="{ 'lock': !VmAcces }"> -->
+    <ResultsPanel
+    :resultData="resultData"
+    />
+<!-- </div> -->
 
 </template>
 
@@ -57,10 +50,11 @@ import axios from "axios";
 import {connectStomp,disconnectStomp,onConnectStomp, getConnetedUserName} from "../config/StompApiConnection"
 import type { IFrame } from '@stomp/stompjs';
 import LanguageDropdown from './LanguageDropdown.vue';
-import {requstDefaultVmMachine, subcribeToVmStatus} from '../config/CodeRunnerConnection'
+import {requstDefaultVmMachine, subcribeToVmStatus,sendToCompile } from '../config/CodeRunnerConnection'
 import type CodeRunnerState from '@/types/CodeRunnerState';
+import type CodeToRunMessage from '@/types/CodeToRunMessage';
 import ResultsPanel from './ResultsPanel.vue';
-
+import {basicResultTemplate} from '../config/Data'
 
 
 const props = defineProps({
@@ -75,8 +69,20 @@ const establishedConnection: Ref<boolean>= ref(false);
 const VmAcces: Ref<boolean>= ref(false);
 const chosenLangague: Ref<String>=ref("Cpp")
 
+
+const resultData=ref(basicResultTemplate)
+
+
+
 const updateVmStatus=(state: CodeRunnerState)=>{
     console.log("status: "+ state);
+    if(state=="STOPPED"||state=="RUNNING_MACHINE")
+    {
+        console.log("vmacces")
+        VmAcces.value=true;
+    }
+    else
+    VmAcces.value=false;
 }
 
 const connectToCodeRunner=()=>{
@@ -118,6 +124,13 @@ onBeforeRouteLeave(async (to, from ,next)=>{
 const onSelectLanguage=(lang: string)=>{
     console.log("info selcted:" + lang)
     chosenLangague.value=lang;
+}
+
+const onRunCode=()=>{
+    const toCompielMes: CodeToRunMessage={
+        code: "test"
+    }
+    sendToCompile(toCompielMes);
 }
 
 </script>
