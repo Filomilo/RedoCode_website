@@ -22,8 +22,14 @@ public class CodeRunnerSender {
 
     public void sendToUser( String id,String dir, Object payload)
     {
-        log.info("sending to user: "+ id+" in direction: "+ dir +" with data: "+ payload);
-        template.convertAndSendToUser(id,dir,payload);
+        try {
+            log.info("sending to user: " + id + " in direction: " + dir + " with data: " + payload);
+            template.convertAndSendToUser(id, dir, payload);
+        }
+        catch (Exception ex)
+        {
+            log.warn("failed to send message to "+ id + " exepction: "+ ex.getMessage());
+        }
     }
 
 

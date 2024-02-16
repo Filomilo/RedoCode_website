@@ -55,7 +55,6 @@ import {connectStomp,disconnectStomp,onConnectStomp, getConnetedUserName} from "
 import type { IFrame } from '@stomp/stompjs';
 import LanguageDropdown from './LanguageDropdown.vue';
 import {requstDefaultVmMachine, subcribeToVmStatus} from '../config/CodeRunnerConnection'
-import { stat } from 'fs';
 import type CodeRunnerState from '@/types/CodeRunnerState';
 const props = defineProps({
   connectAtStart: {type: Boolean, required: false}
