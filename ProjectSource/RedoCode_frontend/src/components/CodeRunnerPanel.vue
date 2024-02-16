@@ -24,6 +24,9 @@ width: 5rem;
 </div>
 
 </div>
+<div :class="{ 'lock': !VmAcces }">
+    <ResultsPanel />
+</div>
     <!-- <BasicButton width="1rem" height="2rem"/> -->
 
     <!-- <Button @click="subscribeButton">
@@ -56,6 +59,10 @@ import type { IFrame } from '@stomp/stompjs';
 import LanguageDropdown from './LanguageDropdown.vue';
 import {requstDefaultVmMachine, subcribeToVmStatus} from '../config/CodeRunnerConnection'
 import type CodeRunnerState from '@/types/CodeRunnerState';
+import ResultsPanel from './ResultsPanel.vue';
+
+
+
 const props = defineProps({
   connectAtStart: {type: Boolean, required: false}
 })
@@ -65,6 +72,7 @@ const subscribeStatus=ref(false);
 const meaages=ref('');
 const tryingToEstablishConnection: Ref<boolean>= ref(false);
 const establishedConnection: Ref<boolean>= ref(false);
+const VmAcces: Ref<boolean>= ref(false);
 const chosenLangague: Ref<String>=ref("Cpp")
 
 const updateVmStatus=(state: CodeRunnerState)=>{

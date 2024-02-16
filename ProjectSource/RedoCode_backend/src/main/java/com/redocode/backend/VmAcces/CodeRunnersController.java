@@ -131,6 +131,7 @@ public class CodeRunnersController {
     public void updateCodeRunnerState(User user)
     {
     VmStatus status=this.getUserVmStatus(user);
+    if(codeRunnerSender!=null)
         codeRunnerSender.sendMessageToUser(CodeRunnersConnectionController.codeRunnerStateEndPoint,status,user);
     }
 
