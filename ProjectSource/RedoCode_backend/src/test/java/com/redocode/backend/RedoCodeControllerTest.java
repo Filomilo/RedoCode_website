@@ -19,12 +19,12 @@ class RedoCodeControllerTest {
         redoCodeController.reset();
     }
 
-    @Test
-    void getInstance() {
-        RedoCodeController redoCodeController=RedoCodeController.getInstance();
-        RedoCodeController redoCodeController1=RedoCodeController.getInstance();
-        assertEquals(redoCodeController,redoCodeController1);
-    }
+//    @Test
+//    void getInstance() {
+//        RedoCodeController redoCodeController=RedoCodeController.getInstance();
+//        RedoCodeController redoCodeController1=RedoCodeController.getInstance();
+//        assertEquals(redoCodeController,redoCodeController1);
+//    }
 
     @Test
     void addConnectedUser() {

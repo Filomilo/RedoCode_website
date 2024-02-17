@@ -21,8 +21,6 @@ import java.util.*;
 @Scope(value= ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class RedoCodeController {
 
-    @Getter
-    private static RedoCodeController instance=new RedoCodeController();
 
     @Autowired
     private CodeRunnersController codeRunnersController;
