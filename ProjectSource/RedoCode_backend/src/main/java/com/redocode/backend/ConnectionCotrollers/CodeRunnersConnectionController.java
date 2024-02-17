@@ -62,7 +62,8 @@ public class CodeRunnersConnectionController {
         String userId=principal.getName();
         log.info("user: "+ userId +" runs: "+codeToRunMessage);
         codeRunnersController.runCode(
-                RedoCodeController.getInstance().getUserById(userId),
+
+                redoCodeController.getUserById(userId),
                 codeToRunMessage
         );
     }

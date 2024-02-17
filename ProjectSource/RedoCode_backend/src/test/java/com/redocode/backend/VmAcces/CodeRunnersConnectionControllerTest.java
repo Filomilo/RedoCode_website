@@ -313,8 +313,9 @@ class CodeRunnersConnectionControllerTest {
         User user1 = new UnauthenticatedUser(UUID.randomUUID().toString());
         User user2 = new UnauthenticatedUser(UUID.randomUUID().toString());
 
-        RedoCodeController.getInstance().addConnectedUser(user1);
-        RedoCodeController.getInstance().addConnectedUser(user2);
+
+        redoCodeController.addConnectedUser(user1);
+        redoCodeController.addConnectedUser(user2);
 
         CodeRunnerRequest req1= CodeRunnerRequest.builder()
                 .codeRunnerType(getRandomCodeRunnerType())
