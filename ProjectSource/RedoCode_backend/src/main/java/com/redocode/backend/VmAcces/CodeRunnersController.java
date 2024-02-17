@@ -3,10 +3,15 @@ package com.redocode.backend.VmAcces;
 import com.redocode.backend.Auth.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
+import com.redocode.backend.Messages.CodeToRunMessage;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
+import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
+import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
+import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
 import jakarta.annotation.PreDestroy;
+import javassist.compiler.ast.Variable;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +30,11 @@ public class CodeRunnersController {
     @Getter
     private static CodeRunnersController instance =new CodeRunnersController();
     private CodeRunnersController() {
+        if(instance!=null)
+        {
+            log.error("only one inxtnace of code runern controller");
+            throw new RuntimeException("only one isntance");
+        }
     }
     @Autowired
     private CodeRunnerSender codeRunnerSender;
@@ -127,6 +137,12 @@ public class CodeRunnersController {
 
 
     public CodeRunner getUserCodeRunner(User user) {
+        log.info("retriving code runner from: "+ user);
+        log.info("code runners: "+this.usersCodeRunenrs.size()+" ---- "+
+                Arrays.toString(this.usersCodeRunenrs.entrySet().toArray())+
+                "------"+
+                Arrays.toString(this.usersCodeRunenrs.keySet().toArray())
+        );
         return this.usersCodeRunenrs.get(user);
     }
 
@@ -141,11 +157,26 @@ public class CodeRunnersController {
 
 
 //    testing purpioses only
-    @PreDestroy
+
     public void reset() {
         requestMessageSet.clear();
         requestQueue.clear();
         usersCodeRunenrs.clear();
+    }
+
+    public void runCode(User userById, CodeToRunMessage codeToRunMessage) {
+        CodeRunner codeRunner= this.getUserCodeRunner(userById);
+        if(codeRunner==null)
+            throw  new RuntimeException("user doesnt have code runner");
+        Program pr=new RawProgram("");
+        List<Variable> variablesInput=new ArrayList<>();
+        if(codeToRunMessage.getExercise_id()==null)
+        {
+            pr=new RawProgram(codeToRunMessage.getCode());
+        }
+        List<ProgramResult> results= codeRunner.runProgram(pr,variablesInput);
+
+
     }
     // TODO: 14/02/2024 Wokr on proper synchornizaion aroudn collenction 
 }

@@ -3,6 +3,11 @@ package com.redocode.backend.VmAcces.CodeRunners;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import javassist.compiler.ast.Variable;
+import lombok.Synchronized;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class CodeRunner extends ContainerController {
 
@@ -29,7 +34,8 @@ public abstract class CodeRunner extends ContainerController {
         }
     }
 
-    ProgramResult runProgram(Program program)
+    @Synchronized
+    public ProgramResult runProgram(Program program)
     {
         logger.info("running program: "+program.getProgramCode());
        String fileName= createProgramCodeFile(program);
@@ -46,6 +52,24 @@ public abstract class CodeRunner extends ContainerController {
         return new ProgramResult(consoleOutput,programOutput);
     }
 
-
+    public ProgramResult runProgram(Program program, Variable variablesInput)
+    {
+        return null;
+    }
+    public List<ProgramResult> runProgram(Program program, List<Variable> variablesInput)
+    {
+        List<ProgramResult> results=new ArrayList<>();
+        if(variablesInput.size()==0)
+        {
+            results.add(this.runProgram(program));
+        }
+        else {
+            for (Variable var: variablesInput
+                 ) {
+                results.add(this.runProgram(program,var));
+            }
+        }
+        return results;
+    }
 
 }
