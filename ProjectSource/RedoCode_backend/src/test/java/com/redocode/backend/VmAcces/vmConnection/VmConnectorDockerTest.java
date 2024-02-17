@@ -98,7 +98,7 @@ class VmConnectorDockerTest {
 
             String checkpharase="Hello, execute";
 
-            String res= vmConnectorDocker.executeCommandInVm(id,"echo",checkpharase).output;
+            String res= vmConnectorDocker.executeCommandInVm(id,"echo",checkpharase).getOutput();
 
 
             vmConnectorDocker.destroyVm(id);
@@ -122,7 +122,7 @@ class VmConnectorDockerTest {
 
             String argumentsInput="Test\nTest2\nTest3\n1\n2\n3\n4\n5\n6\nexit\n";
 
-            String res= vmConnectorDocker.executeCommandInVmWithInput(id,"/inputOutput",argumentsInput).output;
+            String res= vmConnectorDocker.executeCommandInVmWithInput(id,"/inputOutput",argumentsInput).getOutput();
 
             vmConnectorDocker.destroyVm(id);
             int amtOfConatinersAfterestrcution= vmConnectorDocker.getVmList().size();

@@ -62,7 +62,7 @@ public class ContainerController {
    protected String[] listFiles()
     {
      ConsoleOutput consoleOutput=  executeCommand("ls");
-     return consoleOutput.output.split("\n");
+     return consoleOutput.getOutput().split("\n");
     }
 
 
@@ -80,7 +80,7 @@ public class ContainerController {
     public String getFileContnt(String fileName) {
         logger.info("getting file conent: "+ fileName);
         ConsoleOutput consoleOutput=executeCommand("cat",fileName);
-        return consoleOutput.output;
+        return consoleOutput.getOutput();
     }
 
     public void stop()

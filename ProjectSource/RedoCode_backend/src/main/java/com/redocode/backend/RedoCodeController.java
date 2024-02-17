@@ -18,7 +18,7 @@ import java.util.*;
 
 @Slf4j
 @Component
-@Scope(value= ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Scope("singleton")
 public class RedoCodeController {
 
 

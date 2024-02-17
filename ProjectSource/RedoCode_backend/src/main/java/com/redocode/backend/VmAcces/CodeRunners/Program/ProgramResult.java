@@ -2,25 +2,17 @@ package com.redocode.backend.VmAcces.CodeRunners.Program;
 
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Builder
+@Data
+@AllArgsConstructor
 public class ProgramResult {
-    public ConsoleOutput consoleOutput;
-    public Variables variables;
+    private ConsoleOutput consoleOutput;
+    private Variables variables;
 
-    public ProgramResult(ConsoleOutput consoleOutput, Variables variables) {
-        this.consoleOutput = consoleOutput;
-        this.variables = variables;
-    }
-
-    public ProgramResult(ConsoleOutput consoleOutput) {
-        this.consoleOutput = consoleOutput;
-    }
-
-    @Override
-    public String toString() {
-        return "CodeResult{" +
-                "consoleOutput=" + consoleOutput +
-                ", variables=" + variables +
-                '}';
-    }
 }

@@ -1,7 +1,10 @@
 package com.redocode.backend;
 
+import lombok.ToString;
+
 import java.security.Principal;
 
+@ToString
 class StompPrincipal implements Principal {
     String name;
 
@@ -13,4 +16,6 @@ class StompPrincipal implements Principal {
     public String getName() {
         return name;
     }
+
+
 }

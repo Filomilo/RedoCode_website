@@ -17,14 +17,14 @@ import java.util.UUID;
 @Component
 public class CustomHandshakeHandler extends DefaultHandshakeHandler {
 
-    @Autowired
-    private RedoCodeController redoCodeController;
+//    @Autowired
+//    private RedoCodeController redoCodeController;
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
        String uuid=UUID.randomUUID().toString();
       log.info("new user connected: "+ uuid);
         UnauthenticatedUser user= new UnauthenticatedUser(uuid);
-        redoCodeController.addConnectedUser(user);
+//        redoCodeController.addConnectedUser(user);
         return new StompPrincipal(uuid);
     }
 }

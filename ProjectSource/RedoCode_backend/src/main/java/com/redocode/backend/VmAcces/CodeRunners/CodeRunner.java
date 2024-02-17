@@ -37,19 +37,30 @@ public abstract class CodeRunner extends ContainerController {
     @Synchronized
     public ProgramResult runProgram(Program program)
     {
-        logger.info("running program: "+program+"--------"+program.getProgramCode());
-       String fileName= createProgramCodeFile(program);
-       String programName= compileProgram(fileName);
-       String runCommand=getRunCommand(programName);
-        ConsoleOutput consoleOutput=executeBash(runCommand);
-        Variables programOutput=null;
-        if(program.getOutuputType()!=null)
-        {
-            logger.warn("reading file result is not implemented");
-            // TODO: 11/02/2024 add reading file with result
+        try {
+            logger.info("running program: " + program + "--------" + program.getProgramCode());
+            String fileName = createProgramCodeFile(program);
+            String programName = compileProgram(fileName);
+            String runCommand = getRunCommand(programName);
+            ConsoleOutput consoleOutput = executeBash(runCommand);
+            Variables programOutput = null;
+            if (program.getOutuputType() != null) {
+                logger.warn("reading file result is not implemented");
+                // TODO: 11/02/2024 add reading file with result
+            }
+            cleanup();
+            return new ProgramResult(consoleOutput, programOutput);
         }
-        cleanup();
-        return new ProgramResult(consoleOutput,programOutput);
+        catch (Exception ex)
+        {
+            return ProgramResult.builder()
+                    .consoleOutput(
+                            ConsoleOutput.builder()
+                                    .errorOutput(ex.getMessage())
+                                    .build()
+                    )
+                    .build();
+        }
     }
 
     public ProgramResult runProgram(Program program, Variable variablesInput)
