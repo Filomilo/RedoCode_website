@@ -17,6 +17,8 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -25,16 +27,11 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 @Slf4j
 @Component
+@Scope("singleton")
 public class CodeRunnersController {
 
-    @Getter
-    private static CodeRunnersController instance =new CodeRunnersController();
+
     private CodeRunnersController() {
-        if(instance!=null)
-        {
-            log.error("only one inxtnace of code runern controller");
-            throw new RuntimeException("only one isntance");
-        }
     }
     @Autowired
     private CodeRunnerSender codeRunnerSender;
@@ -164,19 +161,28 @@ public class CodeRunnersController {
         usersCodeRunenrs.clear();
     }
 
-    public void runCode(User userById, CodeToRunMessage codeToRunMessage) {
-        CodeRunner codeRunner= this.getUserCodeRunner(userById);
+    public void runCode(User user, CodeToRunMessage codeToRunMessage) {
+        CodeRunner codeRunner= this.getUserCodeRunner(user);
         if(codeRunner==null)
             throw  new RuntimeException("user doesnt have code runner");
         Program pr=new RawProgram("");
         List<Variable> variablesInput=new ArrayList<>();
         if(codeToRunMessage.getExercise_id()==null)
         {
+
             pr=new RawProgram(codeToRunMessage.getCode());
         }
+        log.info("program to run: "+ pr);
         List<ProgramResult> results= codeRunner.runProgram(pr,variablesInput);
-
+        this.sendResults(user,results);
 
     }
+
+    public void sendResults(User user, List<ProgramResult> results)
+    {
+        log.info("sending resutls: "+ Arrays.toString(results.toArray())+" to user "+ user);
+        this.codeRunnerSender.sendMessageToUser(CodeRunnersConnectionController.codeRunnerResultEndPoint,results,user);
+    }
+
     // TODO: 14/02/2024 Wokr on proper synchornizaion aroudn collenction 
 }

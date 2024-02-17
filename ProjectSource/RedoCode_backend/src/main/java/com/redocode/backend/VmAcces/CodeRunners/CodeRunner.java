@@ -37,7 +37,7 @@ public abstract class CodeRunner extends ContainerController {
     @Synchronized
     public ProgramResult runProgram(Program program)
     {
-        logger.info("running program: "+program.getProgramCode());
+        logger.info("running program: "+program+"--------"+program.getProgramCode());
        String fileName= createProgramCodeFile(program);
        String programName= compileProgram(fileName);
        String runCommand=getRunCommand(programName);

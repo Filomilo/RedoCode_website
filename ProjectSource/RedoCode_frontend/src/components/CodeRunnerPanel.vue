@@ -1,20 +1,24 @@
 <template>
-    playground
+    playground: 
+    {{ code }}
     <LanguageDropdown
     :chosenValue="String(chosenLangague)"
     @select="onSelectLanguage"
     />
 
 
-    <div :class="{ 'lock': !establishedConnection }">
-    <CodeEditor language="javascript"/>
-</div>
+    <!-- <div :class="{ 'lock': !establishedConnection }"> -->
+    <CodeEditor 
+    v-model="code"
+    :code="code"
+    />
+<!-- </div> -->
 
-<div v-if="VmAcces">
+<!-- <div v-if="VmAcces"> -->
     <BasicButton :onClick="onRunCode">
         run
     </BasicButton>
-</div>
+<!-- </div> -->
 
 <div v-if="!establishedConnection&&tryingToEstablishConnection">
 <div style="position:static; 
@@ -50,12 +54,12 @@ import axios from "axios";
 import {connectStomp,disconnectStomp,onConnectStomp, getConnetedUserName} from "../config/StompApiConnection"
 import type { IFrame } from '@stomp/stompjs';
 import LanguageDropdown from './LanguageDropdown.vue';
-import {requstDefaultVmMachine, subcribeToVmStatus,sendToCompile } from '../config/CodeRunnerConnection'
+import {requstDefaultVmMachine, subcribeToVmStatus,sendToCompile, subscribeToCodeResults } from '../config/CodeRunnerConnection'
 import type CodeRunnerState from '@/types/CodeRunnerState';
 import type CodeToRunMessage from '@/types/CodeToRunMessage';
 import ResultsPanel from './ResultsPanel.vue';
 import {basicResultTemplate} from '../config/Data'
-
+import CodeResultsType from '@/types/CodeResultsType';
 
 const props = defineProps({
   connectAtStart: {type: Boolean, required: false}
@@ -68,7 +72,7 @@ const tryingToEstablishConnection: Ref<boolean>= ref(false);
 const establishedConnection: Ref<boolean>= ref(false);
 const VmAcces: Ref<boolean>= ref(false);
 const chosenLangague: Ref<String>=ref("Cpp")
-
+const code: Ref<string>=ref("Write Code")
 
 const resultData=ref(basicResultTemplate)
 
@@ -85,6 +89,11 @@ const updateVmStatus=(state: CodeRunnerState)=>{
     VmAcces.value=false;
 }
 
+const updateResults=(results: CodeResultsType[])=>{
+    console.log("results recived: "+ JSON.stringify(results))
+    resultData.value=results;
+}
+
 const connectToCodeRunner=()=>{
     
     onConnectStomp((frame: IFrame)=>{
@@ -93,6 +102,7 @@ const connectToCodeRunner=()=>{
         establishedConnection.value=true;
         requstDefaultVmMachine(String(chosenLangague.value));
         subcribeToVmStatus(updateVmStatus);
+        subscribeToCodeResults(updateResults);
 })
 tryingToEstablishConnection.value=true;
     connectStomp();
@@ -127,8 +137,9 @@ const onSelectLanguage=(lang: string)=>{
 }
 
 const onRunCode=()=>{
+    console.log("on run code: "+ code.value)
     const toCompielMes: CodeToRunMessage={
-        code: "test"
+        code: code.value
     }
     sendToCompile(toCompielMes);
 }

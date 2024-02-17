@@ -7,7 +7,8 @@
     <!-- display: flex; -->
     ">
     <vue-monaco-editor
-      v-model:value="code"
+      
+      v-model:value="model"
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
@@ -19,14 +20,19 @@
   
   <script lang="ts" setup>
   import { ref, shallowRef } from 'vue'
-  
+  const model = defineModel()
+  defineProps({
+    code: Object as ()=> string
+  })
+  const codeRef=ref('ss')
+
   const MONACO_EDITOR_OPTIONS = {
     automaticLayout: true,
     formatOnType: true,
     formatOnPaste: true,
   }
   
-  const code = ref('// some code...')
+  // const code = ref('// some code...')
   const editorRef = shallowRef()
   const handleMount = (editor: any) => (editorRef.value = editor)
   

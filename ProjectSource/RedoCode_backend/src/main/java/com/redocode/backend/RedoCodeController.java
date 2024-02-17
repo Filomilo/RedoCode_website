@@ -24,7 +24,8 @@ public class RedoCodeController {
     @Getter
     private static RedoCodeController instance=new RedoCodeController();
 
-    private CodeRunnersController codeRunnersController= CodeRunnersController.getInstance();
+    @Autowired
+    private CodeRunnersController codeRunnersController;
     private RedoCodeController()
     {}
 

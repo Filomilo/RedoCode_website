@@ -20,6 +20,6 @@ public class RawProgram extends Program {
 
     @Override
     public String getProgramCode() {
-        return null;
+        return code;
     }
 }

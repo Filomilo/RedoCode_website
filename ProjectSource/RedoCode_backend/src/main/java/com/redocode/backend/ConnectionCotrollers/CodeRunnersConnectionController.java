@@ -22,6 +22,7 @@ public class CodeRunnersConnectionController {
 
     private final SimpMessagingTemplate template;
     public static final String  codeRunnerStateEndPoint="/topic/codeRunnerState";
+    public static final String  codeRunnerResultEndPoint="/topic/codeRunnerResults";
 
     @Autowired
     private CodeRunnersController codeRunnersController;
@@ -60,7 +61,7 @@ public class CodeRunnersConnectionController {
     {
         String userId=principal.getName();
         log.info("user: "+ userId +" runs: "+codeToRunMessage);
-        CodeRunnersController.getInstance().runCode(
+        codeRunnersController.runCode(
                 RedoCodeController.getInstance().getUserById(userId),
                 codeToRunMessage
         );
