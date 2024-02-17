@@ -31,7 +31,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class CodeRunnersController {
 
 
-    private CodeRunnersController() {
+    CodeRunnersController() {
     }
     @Autowired
     private CodeRunnerSender codeRunnerSender;

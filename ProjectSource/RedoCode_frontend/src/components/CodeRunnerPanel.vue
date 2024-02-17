@@ -59,7 +59,7 @@ import type CodeRunnerState from '@/types/CodeRunnerState';
 import type CodeToRunMessage from '@/types/CodeToRunMessage';
 import ResultsPanel from './ResultsPanel.vue';
 import {basicResultTemplate} from '../config/Data'
-import CodeResultsType from '@/types/CodeResultsType';
+import type CodeResultsType from '@/types/CodeResultsType';
 
 const props = defineProps({
   connectAtStart: {type: Boolean, required: false}
@@ -80,7 +80,7 @@ const resultData=ref(basicResultTemplate)
 
 const updateVmStatus=(state: CodeRunnerState)=>{
     console.log("status: "+ state);
-    if(state=="STOPPED"||state=="RUNNING_MACHINE")
+    if(state.state=="STOPPED"||state.state=="RUNNING_MACHINE")
     {
         console.log("vmacces")
         VmAcces.value=true;
@@ -139,7 +139,8 @@ const onSelectLanguage=(lang: string)=>{
 const onRunCode=()=>{
     console.log("on run code: "+ code.value)
     const toCompielMes: CodeToRunMessage={
-        code: code.value
+        code: code.value,
+        exercise_id: null
     }
     sendToCompile(toCompielMes);
 }

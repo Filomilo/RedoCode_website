@@ -7,6 +7,8 @@ import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -15,11 +17,15 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
+@SpringBootTest
 class CodeRunnersConnectionControllerTest {
 
 
-    CodeRunnersController codeRunnersController= CodeRunnersController.getInstance();
-    RedoCodeController redoCodeController=RedoCodeController.getInstance();
+
+    @Autowired
+    CodeRunnersController codeRunnersController;
+    @Autowired
+    RedoCodeController redoCodeController;
     List<User> unathenicatedUsers=new ArrayList<User>();
     List<User> athenicatedUsers=new ArrayList<User>();
     List<User> premiumUsers=new ArrayList<User>();
@@ -228,7 +234,7 @@ class CodeRunnersConnectionControllerTest {
             }
 
 
-            PriorityBlockingQueue<CodeRunnerRequest> queue= CodeRunnersController.getInstance().requestQueue;
+            PriorityBlockingQueue<CodeRunnerRequest> queue= codeRunnersController.requestQueue;
             int queueSizeAfterAding=queue.size();
 
 
@@ -329,8 +335,8 @@ class CodeRunnersConnectionControllerTest {
 
 
 
-        CodeRunnersController.getInstance().requestVm(req1);
-        CodeRunnersController.getInstance().requestVm(req2);
+        codeRunnersController.requestVm(req1);
+        codeRunnersController.requestVm(req2);
 
         VmStatus statusBeforeStarting1= codeRunnersController.getUserVmStatus(user1);
         VmStatus statusBeforeStarting2= codeRunnersController.getUserVmStatus(user2);
@@ -359,11 +365,11 @@ class CodeRunnersConnectionControllerTest {
 
 
 
-    @Test
-    void getInstnace() {
-        CodeRunnersController codeRunnersController1= CodeRunnersController.getInstance();
-        CodeRunnersController codeRunnersController2= CodeRunnersController.getInstance();
-        assertEquals(this.codeRunnersController,codeRunnersController1);
-        assertEquals(this.codeRunnersController,codeRunnersController2 );
-    }
+//    @Test
+//    void getInstnace() {
+//        CodeRunnersController codeRunnersController1= CodeRunnersController.getInstance();
+//        CodeRunnersController codeRunnersController2= CodeRunnersController.getInstance();
+//        assertEquals(this.codeRunnersController,codeRunnersController1);
+//        assertEquals(this.codeRunnersController,codeRunnersController2 );
+//    }
 }

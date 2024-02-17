@@ -14,6 +14,7 @@ export const basicResultTemplate:CodeResult[] =[
     Error_output: "",
     Solution_type: "none",
     correct_solution: null,
-    achived_solution: null
+    achived_solution: null,
+    error: null
     }
 ]
