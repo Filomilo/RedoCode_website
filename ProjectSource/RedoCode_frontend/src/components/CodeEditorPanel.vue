@@ -12,7 +12,7 @@
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
-      language="sql"
+      :language="chosenLangague"
     />
 
 </div>
@@ -22,7 +22,8 @@
   import { ref, shallowRef } from 'vue'
   const model = defineModel()
   defineProps({
-    code: Object as ()=> string
+    code: Object as ()=> string,
+    chosenLangague: Object as ()=> String
   })
   const codeRef=ref('ss')
 

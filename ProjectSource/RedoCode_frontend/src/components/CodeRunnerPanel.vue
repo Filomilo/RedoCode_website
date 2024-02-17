@@ -11,6 +11,7 @@
     <CodeEditor 
     v-model="code"
     :code="code"
+    :chosenLangague="chosenLangague"
     />
 <!-- </div> -->
 
@@ -28,11 +29,11 @@ width: 5rem;
     loading
 </div>
 </div>
-<div v-if="!props.connectAtStart&&!tryingToEstablishConnection">
+<!-- <div v-if="!props.connectAtStart&&!tryingToEstablishConnection"> -->
     <BasicButton :onClick="connectToCodeRunner">
         start
     </BasicButton>
-</div>
+<!-- </div> -->
 
 <!-- <div :class="{ 'lock': !VmAcces }"> -->
     <ResultsPanel
@@ -58,7 +59,7 @@ import {requstDefaultVmMachine, subcribeToVmStatus,sendToCompile, subscribeToCod
 import type CodeRunnerState from '@/types/CodeRunnerState';
 import type CodeToRunMessage from '@/types/CodeToRunMessage';
 import ResultsPanel from './ResultsPanel.vue';
-import {basicResultTemplate} from '../config/Data'
+import {basicResultTemplate, languageChoices} from '../config/Data'
 import type CodeResultsType from '@/types/CodeResultsType';
 
 const props = defineProps({
@@ -71,7 +72,7 @@ const meaages=ref('');
 const tryingToEstablishConnection: Ref<boolean>= ref(false);
 const establishedConnection: Ref<boolean>= ref(false);
 const VmAcces: Ref<boolean>= ref(false);
-const chosenLangague: Ref<String>=ref("Cpp")
+const chosenLangague: Ref<String>=ref(languageChoices[0].name)
 const code: Ref<string>=ref("Write Code")
 
 const resultData=ref(basicResultTemplate)
@@ -134,6 +135,8 @@ onBeforeRouteLeave(async (to, from ,next)=>{
 const onSelectLanguage=(lang: string)=>{
     console.log("info selcted:" + lang)
     chosenLangague.value=lang;
+    if(establishedConnection.value)
+    requstDefaultVmMachine(lang);
 }
 
 const onRunCode=()=>{

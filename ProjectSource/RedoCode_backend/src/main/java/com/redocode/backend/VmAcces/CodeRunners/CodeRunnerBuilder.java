@@ -13,7 +13,7 @@ public class CodeRunnerBuilder {
         switch (type)
         {
             case CPP_RUNNER -> instance=new CppCodeRunner();
-            case JS_RUNNER -> instance=new CppCodeRunner();
+            case JS_RUNNER -> instance=new JsCodeRunner();
         }
     }
 

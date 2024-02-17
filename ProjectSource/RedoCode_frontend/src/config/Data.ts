@@ -2,8 +2,8 @@ import  type {programingLanguageChoice} from '../types/ProgramingLanguageChoice'
 import type CodeResult from '@/types/CodeResultsType';
 
 export const languageChoices : programingLanguageChoice[]=[
-    {"name":  "Cpp"},
-    {"name":  "Java Script"}
+    {"name":  "cpp"},
+    {"name":  "javascript"}
 ];
 
 

@@ -122,6 +122,11 @@ public class CodeRunnersController {
 
     public void requestVm(CodeRunnerRequest codeRunnerRequest)
     {
+        if(usersCodeRunenrs.containsKey(codeRunnerRequest.getUserRequesting()))
+        {
+            deregisterUser(codeRunnerRequest.getUserRequesting());
+        }
+
         if(usersCodeRunenrs.size()<maxAmountOfVm)
         {
             createNewVm(codeRunnerRequest);
