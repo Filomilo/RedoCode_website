@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
     <!-- <dropdown-menu 
     :withDropdownCloser="true"
     >
@@ -19,35 +19,28 @@
       
     </dropdown-menu> -->
 
-    <Dropdown 
-      :v-model="chosenValue"
-     :options="languageChoices"
-      optionLabel="name"
-      optionValue="name" 
-      class="w-full md:w-14rem"
-      :placeholder="chosenValue"
-      v-on:update:modelValue="onValueClick"
-       />
-</div>
-  </template>
+    <Dropdown :v-model="chosenValue" :options="languageChoices" optionLabel="name" optionValue="name"
+      class="w-full md:w-14rem" :placeholder="chosenValue" v-on:update:modelValue="onValueClick" />
+  </div>
+</template>
   
-  <script lang="ts" setup>
+<script lang="ts" setup>
 import Dropdown from 'primevue/dropdown';
- import {languageChoices} from '../config/Data'
-import { ref,onMounted, type Ref } from 'vue';
+import { languageChoices } from '../config/Data'
+import { ref, onMounted, type Ref } from 'vue';
 
-const selectedCity: Ref<string>= ref("")
+const selectedCity: Ref<string> = ref("")
 
-  defineProps({
-    chosenValue: Object as ()=> string
+defineProps({
+  chosenValue: Object as () => string
 
-  })
-const emit=defineEmits(['select'])
+})
+const emit = defineEmits(['select'])
 
-  const onValueClick=(val: String)=>{
-            console.log("clicked: "+ val);
-       emit('select',val)
-  }
+const onValueClick = (val: String) => {
+  console.log("clicked: " + val);
+  emit('select', val)
+}
 
 
-  </script>
+</script>

@@ -1,21 +1,17 @@
 <template>
-<div style="
+    <div style="
 background-color: pink
 ">
-    result Panel
+        result Panel
 
-    <div 
-    v-for="(result,index) in resultData"
-    :key="index"
-    style="
+        <div v-for="(result, index) in resultData" :key="index" style="
     background-color: green;
     margin: 1rem;
     
-    "
-    >
-        {{ JSON.stringify(result) }}
+    ">
+            {{ JSON.stringify(result) }}
+        </div>
     </div>
-</div>
 </template>
 
 <script setup lang="ts">
@@ -23,7 +19,7 @@ background-color: pink
 import type CodeResult from '@/types/CodeResultsType';
 
 defineProps({
-    resultData: Object as ()=> CodeResult[]
+    resultData: Object as () => CodeResult[]
 })
 
 

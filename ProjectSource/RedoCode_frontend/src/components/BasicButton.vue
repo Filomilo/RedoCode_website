@@ -1,10 +1,9 @@
 <template>
-  
-<div class="BasicButton"  v-on:click="onClickMethod">
-  <div class="buttonContent">
-  <slot></slot>
-</div>
-</div>
+  <div class="BasicButton" v-on:click="onClickMethod">
+    <div class="buttonContent">
+      <slot></slot>
+    </div>
+  </div>
 </template>
 
 
@@ -13,10 +12,10 @@ import { computed } from 'vue';
 
 
 const props = defineProps({
-  onClick: {type: Function, required: true}
+  onClick: { type: Function, required: true }
 })
 
-const onClickMethod=()=>{
+const onClickMethod = () => {
   console.log("click")
   props.onClick();
 }

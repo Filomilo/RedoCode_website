@@ -1,10 +1,10 @@
 <template>
-    <div style="height: 10rem; background-color:black">
+  <div style="height: 10rem; background-color:black">
 
 
-</div>
-  </template>
+  </div>
+</template>
   
-  <script lang="ts" setup>
+<script lang="ts" setup>
 
-  </script>
+</script>

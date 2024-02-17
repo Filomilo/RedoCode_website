@@ -1,46 +1,36 @@
 <template>
-    playground: 
+    playground:
     {{ code }}
-    <LanguageDropdown
-    :chosenValue="String(chosenLangague)"
-    @select="onSelectLanguage"
-    />
+    <LanguageDropdown :chosenValue="String(chosenLangague)" @select="onSelectLanguage" />
 
 
     <!-- <div :class="{ 'lock': !establishedConnection }"> -->
-    <CodeEditor 
-    v-model="code"
-    :code="code"
-    :chosenLangague="chosenLangague"
-    />
-<!-- </div> -->
+    <CodeEditor v-model="code" :code="code" :chosenLangague="chosenLangague" />
+    <!-- </div> -->
 
-<!-- <div v-if="VmAcces"> -->
+    <!-- <div v-if="VmAcces"> -->
     <BasicButton :onClick="onRunCode">
         run
     </BasicButton>
-<!-- </div> -->
+    <!-- </div> -->
 
-<div v-if="!establishedConnection&&tryingToEstablishConnection">
-<div style="position:static; 
+    <div v-if="!establishedConnection && tryingToEstablishConnection">
+        <div style="position:static; 
 width: 5rem;
  height: 5rem;
   background-color: red">
-    loading
-</div>
-</div>
-<!-- <div v-if="!props.connectAtStart&&!tryingToEstablishConnection"> -->
+            loading
+        </div>
+    </div>
+    <!-- <div v-if="!props.connectAtStart&&!tryingToEstablishConnection"> -->
     <BasicButton :onClick="connectToCodeRunner">
         start
     </BasicButton>
-<!-- </div> -->
+    <!-- </div> -->
 
-<!-- <div :class="{ 'lock': !VmAcces }"> -->
-    <ResultsPanel
-    :resultData="resultData"
-    />
-<!-- </div> -->
-
+    <!-- <div :class="{ 'lock': !VmAcces }"> -->
+    <ResultsPanel :resultData="resultData" />
+    <!-- </div> -->
 </template>
 
 
@@ -49,68 +39,67 @@ width: 5rem;
 import CodeEditor from '@/components/CodeEditorPanel.vue';
 import BasicButton from '@/components/BasicButton.vue';
 import type { Button } from 'bootstrap';
-import { ref,onMounted, type Ref } from 'vue';
-import { onBeforeRouteLeave,onBeforeRouteUpdate} from 'vue-router'
+import { ref, onMounted, type Ref } from 'vue';
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 import axios from "axios";
-import {connectStomp,disconnectStomp,onConnectStomp, getConnetedUserName} from "../config/StompApiConnection"
+import { connectStomp, disconnectStomp, onConnectStomp, getConnetedUserName } from "../config/StompApiConnection"
 import type { IFrame } from '@stomp/stompjs';
 import LanguageDropdown from './LanguageDropdown.vue';
-import {requstDefaultVmMachine, subcribeToVmStatus,sendToCompile, subscribeToCodeResults } from '../config/CodeRunnerConnection'
+import { requstDefaultVmMachine, subcribeToVmStatus, sendToCompile, subscribeToCodeResults } from '../config/CodeRunnerConnection'
 import type CodeRunnerState from '@/types/CodeRunnerState';
 import type CodeToRunMessage from '@/types/CodeToRunMessage';
 import ResultsPanel from './ResultsPanel.vue';
-import {basicResultTemplate, languageChoices} from '../config/Data'
+import { basicResultTemplate, languageChoices } from '../config/Data'
 import type CodeResultsType from '@/types/CodeResultsType';
 
 const props = defineProps({
-  connectAtStart: {type: Boolean, required: false}
+    connectAtStart: { type: Boolean, required: false }
 })
 
 
-const subscribeStatus=ref(false);
-const meaages=ref('');
-const tryingToEstablishConnection: Ref<boolean>= ref(false);
-const establishedConnection: Ref<boolean>= ref(false);
-const VmAcces: Ref<boolean>= ref(false);
-const chosenLangague: Ref<String>=ref(languageChoices[0].name)
-const code: Ref<string>=ref("Write Code")
+const subscribeStatus = ref(false);
+const meaages = ref('');
+const tryingToEstablishConnection: Ref<boolean> = ref(false);
+const establishedConnection: Ref<boolean> = ref(false);
+const VmAcces: Ref<boolean> = ref(false);
+const chosenLangague: Ref<String> = ref(languageChoices[0].name)
+const code: Ref<string> = ref("Write Code")
 
-const resultData=ref(basicResultTemplate)
+const resultData = ref(basicResultTemplate)
 
 
 
-const updateVmStatus=(state: CodeRunnerState)=>{
-    console.log("status: "+ state);
-    if(state.state=="STOPPED"||state.state=="RUNNING_MACHINE")
-    {
+const updateVmStatus = (state: CodeRunnerState) => {
+    console.log("status: " + state);
+    if (state.state == "STOPPED" || state.state == "RUNNING_MACHINE") {
         console.log("vmacces")
-        VmAcces.value=true;
+        VmAcces.value = true;
     }
     else
-    VmAcces.value=false;
+        VmAcces.value = false;
 }
 
-const updateResults=(results: CodeResultsType[])=>{
-    console.log("results recived: "+ JSON.stringify(results))
-    resultData.value=results;
+const updateResults = (results: CodeResultsType[]) => {
+    console.log("results recived: " + JSON.stringify(results))
+    resultData.value = results;
 }
 
-const connectToCodeRunner=()=>{
-    
-    onConnectStomp((frame: IFrame)=>{
-        console.log("connectino result: "+ JSON.stringify(frame));
-        console.log("Username: "+getConnetedUserName())
-        establishedConnection.value=true;
+const connectToCodeRunner = () => {
+
+    onConnectStomp((frame: IFrame) => {
+        console.log("connectino result: " + JSON.stringify(frame));
+        console.log("Username: " + getConnetedUserName())
+        establishedConnection.value = true;
         requstDefaultVmMachine(String(chosenLangague.value));
         subcribeToVmStatus(updateVmStatus);
         subscribeToCodeResults(updateResults);
-})
-tryingToEstablishConnection.value=true;
+    })
+    tryingToEstablishConnection.value = true;
     connectStomp();
-    
+
 }
 
-const diconnectFromCodeRunners=()=>{
+const diconnectFromCodeRunners = () => {
     // console.log("diconnect from code runners")
     disconnectStomp();
 }
@@ -118,30 +107,30 @@ const diconnectFromCodeRunners=()=>{
 
 
 
-onMounted(()=>{
-    console.log("props: "+JSON.stringify(props))
-    if(props.connectAtStart){
-    connectToCodeRunner();
+onMounted(() => {
+    console.log("props: " + JSON.stringify(props))
+    if (props.connectAtStart) {
+        connectToCodeRunner();
     }
 })
 
-onBeforeRouteLeave(async (to, from ,next)=>{
+onBeforeRouteLeave(async (to, from, next) => {
     diconnectFromCodeRunners();
-    
+
 
     next();
 })
 
-const onSelectLanguage=(lang: string)=>{
+const onSelectLanguage = (lang: string) => {
     console.log("info selcted:" + lang)
-    chosenLangague.value=lang;
-    if(establishedConnection.value)
-    requstDefaultVmMachine(lang);
+    chosenLangague.value = lang;
+    if (establishedConnection.value)
+        requstDefaultVmMachine(lang);
 }
 
-const onRunCode=()=>{
-    console.log("on run code: "+ code.value)
-    const toCompielMes: CodeToRunMessage={
+const onRunCode = () => {
+    console.log("on run code: " + code.value)
+    const toCompielMes: CodeToRunMessage = {
         code: code.value,
         exercise_id: null
     }
