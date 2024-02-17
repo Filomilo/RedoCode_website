@@ -1,14 +1,19 @@
 package com.redocode.backend.VmAcces;
 
 import com.redocode.backend.Auth.*;
+import com.redocode.backend.RedoCodeBackendApplication;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -16,8 +21,9 @@ import java.util.concurrent.PriorityBlockingQueue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Slf4j
 @SpringBootTest
+@ContextConfiguration
+    @Slf4j
 class CodeRunnersConnectionControllerTest {
 
 

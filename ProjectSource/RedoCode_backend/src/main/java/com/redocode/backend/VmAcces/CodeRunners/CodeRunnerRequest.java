@@ -16,16 +16,12 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @Builder
-@ToString
-@Component
-public class CodeRunnerRequest implements Comparable {
+@ToString public class CodeRunnerRequest implements Comparable {
 
     private User userRequesting;
     private CodeRunner.CoderunnerTypes codeRunnerType;
     private Date requestTime;
 
-    @Autowired
-    private RedoCodeController redoCodeController;
 
     public CodeRunnerRequest(User userRequesting, CodeRunner.CoderunnerTypes codeRunnerType) {
         this.userRequesting = userRequesting;
@@ -33,7 +29,7 @@ public class CodeRunnerRequest implements Comparable {
         requestTime=new Date();
     }
 
-    public CodeRunnerRequest(String userId, CodeRunnerRequestMessage requestMessageSource) {
+    public CodeRunnerRequest(User user, CodeRunnerRequestMessage requestMessageSource) {
 
        switch (requestMessageSource.getCodeRunnerType())
        {
@@ -42,7 +38,7 @@ public class CodeRunnerRequest implements Comparable {
            default: throw new RuntimeException("Wrong code runner specified");
        }
 
-       this.userRequesting=redoCodeController.getUserById(userId);
+       this.userRequesting=user;
 
     }
 
