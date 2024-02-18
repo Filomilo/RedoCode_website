@@ -8,7 +8,7 @@ public class DoubleArrayOfStrings extends Variables<String[][]> {
         super();
     }
     @Override
-    VARIABLES_TYPES getType() {
+    public VARIABLES_TYPES getType() {
         return VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
     }
 

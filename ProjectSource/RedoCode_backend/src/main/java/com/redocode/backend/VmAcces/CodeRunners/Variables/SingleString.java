@@ -8,7 +8,7 @@ public class SingleString  extends Variables<String> {
         super();
     }
     @Override
-    VARIABLES_TYPES getType() {
+    public VARIABLES_TYPES getType() {
         return VARIABLES_TYPES.SINGLE_STRING;
     }
 

@@ -15,10 +15,6 @@ public abstract class CodeRunner extends ContainerController {
         super(image);
     }
 
-    public enum CoderunnerTypes{
-        CPP_RUNNER,
-        JS_RUNNER
-    }
 
 
 

@@ -2,11 +2,15 @@ package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
 class CppCodeRunnerTest {
 
 
@@ -46,5 +50,14 @@ class CppCodeRunnerTest {
         cppCodeRunner.destroy();
         assertTrue(programResult.getConsoleOutput().getErrorOutput().contains(" error: 'coutga'"));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"test", "test2"})
+    void provideStringAsArgument(String txt)
+    {
+        log.info("argument: "+ txt);
+
+    }
+
 
 }

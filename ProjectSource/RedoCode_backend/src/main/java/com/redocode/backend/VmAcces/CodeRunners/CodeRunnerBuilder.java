@@ -9,7 +9,7 @@ public class CodeRunnerBuilder {
 
     CodeRunner instance;
 
-    public CodeRunnerBuilder(CodeRunner.CoderunnerTypes type) {
+    public CodeRunnerBuilder(CODE_RUNNER_TYPE type) {
         switch (type)
         {
             case CPP_RUNNER -> instance=new CppCodeRunner();

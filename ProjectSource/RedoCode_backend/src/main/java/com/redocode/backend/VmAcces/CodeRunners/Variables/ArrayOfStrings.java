@@ -8,7 +8,7 @@ public class ArrayOfStrings  extends Variables<String[]> {
         super();
     }
     @Override
-    VARIABLES_TYPES getType() {
+    public VARIABLES_TYPES getType() {
         return VARIABLES_TYPES.ARRAY_STRINGS;
     }
 

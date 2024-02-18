@@ -3,6 +3,7 @@ package com.redocode.backend.VmAcces;
 import com.redocode.backend.Auth.*;
 import com.redocode.backend.RedoCodeBackendApplication;
 import com.redocode.backend.RedoCodeController;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
@@ -96,14 +97,14 @@ class CodeRunnersConnectionControllerTest {
         log.info("finshed teradown");
     }
 
-    CodeRunner.CoderunnerTypes getRandomCodeRunnerType()
+    CODE_RUNNER_TYPE getRandomCodeRunnerType()
     {
         int i= random.nextInt(0,2);
         switch (i){
-            case 0: return CodeRunner.CoderunnerTypes.CPP_RUNNER;
-            case 1: return CodeRunner.CoderunnerTypes.JS_RUNNER;
+            case 0: return CODE_RUNNER_TYPE.CPP_RUNNER;
+            case 1: return CODE_RUNNER_TYPE.JS_RUNNER;
         }
-        return CodeRunner.CoderunnerTypes.CPP_RUNNER;
+        return CODE_RUNNER_TYPE.CPP_RUNNER;
     }
 
     @Test

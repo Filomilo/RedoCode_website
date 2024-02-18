@@ -4,6 +4,7 @@ import com.redocode.backend.Auth.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
 import com.redocode.backend.Messages.CodeToRunMessage;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
@@ -50,7 +51,7 @@ public class CodeRunnersController {
         {
             return codeRunner.getStatus();
         }
-        if(requestMessageSet.contains(new CodeRunnerRequest(user, CodeRunner.CoderunnerTypes.JS_RUNNER)))
+        if(requestMessageSet.contains(new CodeRunnerRequest(user, CODE_RUNNER_TYPE.JS_RUNNER)))
             return  VmStatus.AWAITING_ACCES;
        return VmStatus.NOT_REQUESTED;
     }

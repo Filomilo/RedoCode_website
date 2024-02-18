@@ -1,5 +1,8 @@
 package com.redocode.backend.VmAcces.CodeRunners.Variables;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArrayOfFloats  extends Variables<Float[]> {
     public ArrayOfFloats(Float[] value) {
         super(value);
@@ -7,8 +10,11 @@ public class ArrayOfFloats  extends Variables<Float[]> {
     public ArrayOfFloats() {
         super();
     }
+
+
+
     @Override
-    VARIABLES_TYPES getType() {
+    public VARIABLES_TYPES getType() {
         return VARIABLES_TYPES.ARRAY_OF_FLOATS;
     }
 

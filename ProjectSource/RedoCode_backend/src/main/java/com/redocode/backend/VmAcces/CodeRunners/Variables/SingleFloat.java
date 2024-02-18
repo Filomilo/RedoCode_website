@@ -8,7 +8,7 @@ public class SingleFloat extends Variables<Float> {
         super();
     }
     @Override
-    VARIABLES_TYPES getType() {
+    public VARIABLES_TYPES getType() {
         return VARIABLES_TYPES.SINGLE_FLOAT;
     }
 

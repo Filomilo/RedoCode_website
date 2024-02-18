@@ -25,10 +25,10 @@ public abstract class Variables<T> {
     }
 
 
-    abstract VARIABLES_TYPES getType();
+    public abstract VARIABLES_TYPES getType();
     public void setValue(T value)
      {
-         this.value=value;
+         this.value=  value;
      }
     public T getValue()
     {

@@ -19,11 +19,11 @@ import java.util.Objects;
 @ToString public class CodeRunnerRequest implements Comparable {
 
     private User userRequesting;
-    private CodeRunner.CoderunnerTypes codeRunnerType;
+    private CODE_RUNNER_TYPE codeRunnerType;
     private Date requestTime;
 
 
-    public CodeRunnerRequest(User userRequesting, CodeRunner.CoderunnerTypes codeRunnerType) {
+    public CodeRunnerRequest(User userRequesting, CODE_RUNNER_TYPE codeRunnerType) {
         this.userRequesting = userRequesting;
         this.codeRunnerType = codeRunnerType;
         requestTime=new Date();
@@ -33,8 +33,8 @@ import java.util.Objects;
 
        switch (requestMessageSource.getCodeRunnerType())
        {
-           case "cpp": this.codeRunnerType= CodeRunner.CoderunnerTypes.CPP_RUNNER; break;
-           case "javascript": this.codeRunnerType= CodeRunner.CoderunnerTypes.JS_RUNNER; break;
+           case "cpp": this.codeRunnerType= CODE_RUNNER_TYPE.CPP_RUNNER; break;
+           case "javascript": this.codeRunnerType= CODE_RUNNER_TYPE.JS_RUNNER; break;
            default: throw new RuntimeException("Wrong code runner specified");
        }
 

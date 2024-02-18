@@ -8,9 +8,12 @@ public class SingleInteger extends Variables<Integer> {
         super();
     }
     @Override
-    VARIABLES_TYPES getType() {
+    public VARIABLES_TYPES getType() {
        return VARIABLES_TYPES.SINGLE_INTEGER;
     }
 
-
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

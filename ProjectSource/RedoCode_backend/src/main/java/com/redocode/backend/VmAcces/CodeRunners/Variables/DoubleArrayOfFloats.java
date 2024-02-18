@@ -8,7 +8,7 @@ public class DoubleArrayOfFloats  extends Variables<Float[][]> {
         super();
     }
     @Override
-    VARIABLES_TYPES getType() {
+    public VARIABLES_TYPES getType() {
         return VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS;
     }
 
