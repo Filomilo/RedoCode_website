@@ -2,9 +2,7 @@ package com.redocode.backend.VmAcces.CodeRunners.Program;
 
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
-import com.redocode.backend.VmAcces.CodeRunners.Variables.ArrayOfIntegers;
-import com.redocode.backend.VmAcces.CodeRunners.Variables.DoubleArrayOfIntegers;
-import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleInteger;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,7 +38,7 @@ class CppSolutionProgramTest {
     String inputCodeGenerationExpected=
             "int "+program.getInputGeneratorFunctionName()+"()\n" +
             "{\n" +
-            "    return "+var+";\n" +
+            "return "+var+";\n" +
             "}";
         assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
@@ -101,6 +99,87 @@ class CppSolutionProgramTest {
         log.info("code: \n"+inputCodeGenerationExpected);
         assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
+
+
+
+
+
+    @ParameterizedTest
+    @MethodSource("com.redocode.backend.ValuesProvider#singleFloatProvider")
+    void getInputGeneratorCodeSingleFloat(Float var) {
+        log.info("argemnt value: "+ var);
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setInputVaraiable(new SingleFloat(var))
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "float "+program.getInputGeneratorFunctionName()+"()\n" +
+                        "{\n" +
+                        "return "+var+";\n" +
+                        "}";
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
+    }
+
+
+
+    @ParameterizedTest
+    @MethodSource("com.redocode.backend.ValuesProvider#arrayFloatProvider")
+    void getInputGeneratorCodeArrayFloat(Float[] var) {
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setInputVaraiable(new ArrayOfFloats(var))
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "float* "+program.getInputGeneratorFunctionName()+"()\n" +
+                        "{\n" +
+                        "return new float["+var.length+"] {";
+
+        for (int i = 0; i < var.length; i++) {
+            inputCodeGenerationExpected+=var[i];
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
+        }
+        inputCodeGenerationExpected+="};\n" +
+                "}";
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayFloatProvider")
+    void getInputGeneratorCodeDoubleArrayFloat(Float[][] var) {
+        log.info("var: "+ Arrays.deepToString(var));
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setInputVaraiable(new DoubleArrayOfFloats(var))
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "float** "+program.getInputGeneratorFunctionName()+"()\n" +
+                        "{\n" +
+                        "float** arr = new float*["+var.length+"];\n";
+        for (int i = 0; i <var.length ; i++) {
+            inputCodeGenerationExpected+="arr["+i+"]"+" = new float["+var[0].length+"];\n";
+        }
+        for (int i = 0; i <var.length ; i++) {
+            for (int j = 0; j < var[0].length; j++) {
+                inputCodeGenerationExpected+="arr["+i+"]["+j+"]="+var[i][j]+";\n";
+            }
+
+        }
+        inputCodeGenerationExpected+="return arr;\n}";
+        log.info("code: \n"+inputCodeGenerationExpected);
+
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
+    }
+
 
 
     @Test

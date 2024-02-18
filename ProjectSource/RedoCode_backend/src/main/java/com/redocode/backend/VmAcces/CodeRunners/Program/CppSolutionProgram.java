@@ -58,7 +58,7 @@ public class CppSolutionProgram extends SolutionProgram {
 
             }
             case SINGLE_FLOAT,SINGLE_INTEGER,SINGLE_STRING ->  {
-                yield "retunrn "+ var.toString()+";";
+                yield "return "+ var.toString()+";";
             }
             case DOUBLE_ARRAY_OF_FLOATS,DOUBLE_ARRAY_OF_INTEGERS,DOUBLE_ARRAY_OF_STRINGS ->  {
                 Object[][] arr=(Object[][])var.getValue();

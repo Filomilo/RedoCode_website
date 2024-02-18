@@ -12,4 +12,9 @@ public class SingleFloat extends Variables<Float> {
         return VARIABLES_TYPES.SINGLE_FLOAT;
     }
 
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }
