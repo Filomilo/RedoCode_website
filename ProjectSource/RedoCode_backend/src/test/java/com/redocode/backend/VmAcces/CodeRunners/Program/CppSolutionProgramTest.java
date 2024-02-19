@@ -267,10 +267,236 @@ class CppSolutionProgramTest {
     }
 
     @Test
-    void getOutputGeneratorCode() {
+    void getOutputGeneratorCodeSingleString() {
+
+
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setOutputBase(new SingleString())
+                .build()
+                ;
+
+
+        String ouputGenerationCode=
+                "#include <fstream>\n" +
+                        "#include <iostream>\n" +
+                        "#include <sstream>\n" +
+                        "void "+program.getOutputGeneratorFunctionName()+"(std::string a)\n" +
+                        "{\n" +
+                        "std::ofstream myfile;\n" +
+                        "myfile.open (\""+program.getOutputFileName()+"\");\n" +
+                        "std::stringstream ss;\n" +
+                        "ss<< a;\n" +
+                        "std::string s=ss.str();\n" +
+                        "for (size_t i = 0; i < s.size(); i++)\n" +
+                        "{\n" +
+                        "std::string str;\n" +
+                        "switch (s[i])\n" +
+                        "{\n" +
+                        "case '\\\\':\n" +
+                        "str=\"\\\\\\\\\";\n" +
+                        "break;\n" +
+                        "case '\\n':\n" +
+                        "str=\"\\\\n\";\n" +
+                        "break;\n" +
+                        "case '\\t':\n" +
+                        "str= \"\\\\t\";\n" +
+                        "break;\n" +
+                        "default:\n" +
+                        "str=std::string(1,s[i]);\n" +
+                        "};\n" +
+                        "myfile << str;\n" +
+                        "}\n" +
+                        "myfile.close();\n" +
+                        "}";
+assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
+
     }
 
     @Test
-    void getActivationFunction() {
+    void getOutputGeneratorCodeArrayString() {
+
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setOutputBase(new ArrayOfStrings())
+                .build()
+                ;
+
+
+        String ouputGenerationCode=
+                "#include <fstream>\n" +
+                        "#include <iostream>\n" +
+                        "#include <sstream>\n" +
+                        "void "+program.getOutputGeneratorFunctionName()+"(std::string* a)\n" +
+                        "{\n" +
+                        "std::ofstream myfile;\n" +
+                        "myfile.open (\""+program.getOutputFileName()+"\");\n" +
+                        "int l="+program.getOutput().getW()+";\n" +
+                        "for (size_t i = 0; i < l; i++)\n" +
+                        "{\n" +
+                        "std::stringstream ss;\n" +
+                        "ss<< a[i];\n" +
+                        "std::string s=ss.str();\n" +
+                        "for (size_t j = 0; j < s.size(); j++)\n" +
+                        "{\n" +
+                        "std::string str;\n" +
+                        "switch (s[j])\n" +
+                        "{\n" +
+                        "case '\\\\':\n" +
+                        "str=\"\\\\\\\\\";\n" +
+                        "break;\n" +
+                        "case '\\n':\n" +
+                        "str=\"\\\\n\";\n" +
+                        "break;\n" +
+                        "case '\\t':\n" +
+                        "str= \"\\\\t\";\n" +
+                        "break;\n" +
+                        "default:\n" +
+                        "str=std::string(1,s[j]);\n" +
+                        "};\n" +
+                        "myfile << str;\n" +
+                        "}\n" +
+                        "myfile <<\"\\t\";\n" +
+                        "}\n" +
+                        "myfile.close();\n" +
+                        "}";
+
+        log.info("Code: \n"+ ouputGenerationCode);
+        assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
     }
+
+    @Test
+    void getOutputGeneratorCodeMultiArrayString() {
+
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setOutputBase(new DoubleArrayOfStrings())
+                .build()
+                ;
+
+        String code =
+                " void "+program.getOutputGeneratorFunctionName()+"(std::string** a)\n" +
+                        "{\n" +
+                        "std::ofstream myfile;\n" +
+                        "myfile.open (\""+program.getOutputFileName()+"\");\n" +
+                        "int w="+program.getOutput().getW()+";\n" +
+                        "int h="+program.getOutput().getH()+";\n" +
+                        "for (size_t i = 0; i < h; i++)\n" +
+                        "{\n" +
+                        "for (size_t j = 0; j < w; j++)\n" +
+                        "{\n" +
+                        "std::stringstream ss;\n" +
+                        "ss<< a[i][j];\n" +
+                        "std::string s=ss.str();\n" +
+                        "for (size_t k = 0; k < s.size(); k++)\n" +
+                        "{\n" +
+                        "std::string str;\n" +
+                        "switch (s[k])\n" +
+                        "{\n" +
+                        "case '\\\\':\n" +
+                        "str=\"\\\\\\\\\";\n" +
+                        "break;\n" +
+                        "case '\\n':\n" +
+                        "str=\"\\\\n\";\n" +
+                        "break;\n" +
+                        "case '\\t':\n" +
+                        "str= \"\\\\t\";\n" +
+                        "break;\n" +
+                        "default:\n" +
+                        "str=std::string(1,s[k]);\n" +
+                        "};\n" +
+                        "myfile << str;\n" +
+                        "}\n" +
+                        "myfile <<\"\\t\";\n" +
+                        "}\n" +
+                        "myfile <<\"\\n\";\n" +
+                        "}\n" +
+                        "myfile.close();\n" +
+                        "}";
+    }
+
+    @Test
+    void getActivationFunctionNOArumgument() {
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .build()
+                ;
+
+        String code=
+                "int main()\n" +
+                        "{\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution());\n" +
+                        "return 0;\n" +
+                        "}";
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
+    }
+
+    @Test
+    void getActivationFunctionSingleArumgument() {
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setInputVaraiable(new SingleInteger(1))
+                .build()
+                ;
+
+        String code=
+                "int main()\n" +
+                        "{\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));\n" +
+                        "return 0;\n" +
+                        "}";
+        log.info("code: \n"+ code);
+        assertEquals(code,program.getActivationFunction());
+
+    }
+
+    @Test
+    void getActivationFunctionArrayAsArumgument() {
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setInputVaraiable(new ArrayOfIntegers(new Integer[]{1, 8, 5, 4}))
+                .build()
+                ;
+
+        String code=
+                "int main()\n" +
+                        "{\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"(),4));\n" +
+                        "return 0;\n" +
+                        "}";
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
+    }
+
+
+    @Test
+    void getActivationFunctionMultiArrayAsArumgument() {
+        SolutionProgram program=ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setInputVaraiable(new DoubleArrayOfIntegers(new Integer[][]{{1, 8, 5, 4},{1, 8, 5, 4}}))
+                .build()
+                ;
+
+        String code=
+                "int main()\n" +
+                        "{\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"(),4,2));\n" +
+                        "return 0;\n" +
+                        "}";
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
+    }
+
+
+
+
+
 }

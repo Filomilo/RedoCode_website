@@ -98,13 +98,142 @@ public class CppSolutionProgram extends SolutionProgram {
 
     @Override
     String getOutputGeneratorCode() {
-        log.error("not impelementet");
-        return null;
+       String code=
+               "#include <fstream>\n" +
+                       "#include <iostream>\n" +
+                       "#include <sstream>\n" +
+                       "void "+this.getOutputGeneratorFunctionName()+"("+getVarName(this.getOutput().getType())+" a)\n" +
+                       "{\n"+
+        "std::ofstream myfile;\n" +
+                "myfile.open (\""+this.getOutputFileName()+"\");\n";
+        code+=this.getOutputgeneartionBody();
+        code+= "myfile.close();\n" +
+                "}";
+        return code;
+    }
+
+    private String getOutputgeneartionBody() {
+        String returnfunc=switch (this.getOutput().getType()){
+            case ARRAY_STRINGS,ARRAY_OF_FLOATS,ARRAY_OF_INTEGERS -> {
+           yield   "int l="+this.getOutput().getW()+";\n" +
+                   "for (size_t i = 0; i < l; i++)\n" +
+                   "{\n" +
+                   "std::stringstream ss;\n" +
+                   "ss<< a[i];\n" +
+                   "std::string s=ss.str();\n" +
+                   "for (size_t j = 0; j < s.size(); j++)\n" +
+                   "{\n" +
+                   "std::string str;\n" +
+                   "switch (s[j])\n" +
+                   "{\n" +
+                   "case '\\\\':\n" +
+                   "str=\"\\\\\\\\\";\n" +
+                   "break;\n" +
+                   "case '\\n':\n" +
+                   "str=\"\\\\n\";\n" +
+                   "break;\n" +
+                   "case '\\t':\n" +
+                   "str= \"\\\\t\";\n" +
+                   "break;\n" +
+                   "default:\n" +
+                   "str=std::string(1,s[j]);\n" +
+                   "};\n" +
+                   "myfile << str;\n" +
+                   "}\n" +
+                   "myfile <<\"\\t\";\n" +
+                   "}\n";
+
+            }
+            case SINGLE_FLOAT,SINGLE_INTEGER,SINGLE_STRING ->  {
+                yield  "std::stringstream ss;\n"+
+                        "ss<< a;\n" +
+                        "std::string s=ss.str();\n" +
+                        "for (size_t i = 0; i < s.size(); i++)\n" +
+                        "{\n" +
+                        "std::string str;\n" +
+                        "switch (s[i])\n" +
+                        "{\n" +
+                        "case '\\\\':\n" +
+                        "str=\"\\\\\\\\\";\n" +
+                        "break;\n" +
+                        "case '\\n':\n" +
+                        "str=\"\\\\n\";\n" +
+                        "break;\n" +
+                        "case '\\t':\n" +
+                        "str= \"\\\\t\";\n" +
+                        "break;\n" +
+                        "default:\n" +
+                        "str=std::string(1,s[i]);\n" +
+                        "};\n" +
+                        "myfile << str;\n" +
+                        "}\n";
+            }
+            case DOUBLE_ARRAY_OF_FLOATS,DOUBLE_ARRAY_OF_INTEGERS,DOUBLE_ARRAY_OF_STRINGS ->  {
+
+                yield   "int w="+this.getOutput().getW()+";\n" +
+                        "int h="+this.getOutput().getH()+";\n" +
+                        "for (size_t i = 0; i < h; i++)\n" +
+                        "{\n" +
+                        "for (size_t j = 0; j < w; j++)\n" +
+                        "{\n" +
+                        "std::stringstream ss;\n" +
+                        "ss<< a[i][j];\n" +
+                        "std::string s=ss.str();\n" +
+                        "for (size_t k = 0; k < s.size(); k++)\n" +
+                        "{\n" +
+                        "std::string str;\n" +
+                        "switch (s[k])\n" +
+                        "{\n" +
+                        "case '\\\\':\n" +
+                        "str=\"\\\\\\\\\";\n" +
+                        "break;\n" +
+                        "case '\\n':\n" +
+                        "str=\"\\\\n\";\n" +
+                        "break;\n" +
+                        "case '\\t':\n" +
+                        "str= \"\\\\t\";\n" +
+                        "break;\n" +
+                        "default:\n" +
+                        "str=std::string(1,s[k]);\n" +
+                        "};\n" +
+                        "myfile << str;\n" +
+                        "}\n" +
+                        "myfile <<\"\\t\";\n" +
+                        "}\n" +
+                        "myfile <<\"\\n\";\n" +
+                        "}\n" ;
+            }
+        };
+        return returnfunc;
     }
 
     @Override
     String getActivationFunction() {
-        log.error("not impelementet");
-        return null;
+        String code=   "int main()\n" +
+                "{\n" +
+        this.getOutputGeneratorFunctionName() +"(solution(";
+        log.info("activation: \n"+ code);
+        if(this.getInput()!=null)
+        {
+            code+=this.getInputGeneratorFunctionName()+"()";
+
+            if(this.getInput().getW()>0)
+            {
+                code+=","+ getInput().getW();
+                if(this.getInput().getH()>0)
+                {
+                    code+=","+ getInput().getH();
+                }
+            }
+        }
+
+
+//
+        code +="));\n" +
+                "return 0;\n" +
+                "}";
+
+
+        return code;
     }
 }

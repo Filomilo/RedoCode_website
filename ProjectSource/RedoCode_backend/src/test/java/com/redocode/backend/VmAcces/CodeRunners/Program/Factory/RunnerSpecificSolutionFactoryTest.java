@@ -3,6 +3,7 @@ package com.redocode.backend.VmAcces.CodeRunners.Program.Factory;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.ArrayOfFloats;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.DoubleArrayOfStrings;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class RunnerSpecificSolutionFactoryTest {
         SolutionProgram solutionProgram= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
-                .setOutputType(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
+                .setOutputBase(new ArrayOfFloats())
                 .build();
         assertEquals(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS,solutionProgram.getOutput());
     }

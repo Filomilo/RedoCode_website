@@ -20,8 +20,10 @@ public abstract class SolutionProgram  extends Program{
 
     private final String inputGeneratorFunctionName= "inputGenerator_"+UUID.randomUUID().toString().replace("-","");
     private final String outputGeneratorFunctionName= "outputGenerator_"+UUID.randomUUID().toString().replace("-","");
+    private final String outputFileName= "outputResult_"+UUID.randomUUID().toString().replace("-","");
+
     private Variables input;
-    private Variables.VARIABLES_TYPES output;
+    private Variables output;
     private String SolutionCode;
     private List<String> imports=new ArrayList<>();
 
