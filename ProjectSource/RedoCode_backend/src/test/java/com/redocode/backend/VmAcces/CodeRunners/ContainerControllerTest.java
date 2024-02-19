@@ -38,7 +38,7 @@ class ContainerControllerTest {
         assertEquals(fileListBeforeCreation.length,fileListAfterRemoval.length);
     }
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#fileContentProvider")
+    @MethodSource("com.redocode.backend.ValuesProvider#singleStringProvider")
     void createFile(String content) {
         containerController.createFile("test.txt",content);
         String fileContentCreated=containerController.getFileContnt("test.txt");

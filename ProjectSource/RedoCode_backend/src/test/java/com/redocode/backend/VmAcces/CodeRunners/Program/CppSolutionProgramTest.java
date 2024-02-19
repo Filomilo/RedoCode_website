@@ -8,12 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import com.redocode.backend.ValuesProvider;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -203,7 +199,7 @@ class CppSolutionProgramTest {
                 "#include <iostream>\n"+
                 "std::string "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
-                        "return \""+var+"\";\n" +
+                        "return \""+StringFormatter.removeWhiteCharacterss(var)+"\";\n" +
                         "}";
         log.info("code: \n"+ inputCodeGenerationExpected);
         assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
