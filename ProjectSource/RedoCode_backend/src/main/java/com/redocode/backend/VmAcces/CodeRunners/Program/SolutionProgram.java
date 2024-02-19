@@ -1,5 +1,6 @@
 package com.redocode.backend.VmAcces.CodeRunners.Program;
 
+import com.redocode.backend.Tools.StringFormatter;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,13 @@ public abstract class SolutionProgram  extends Program{
         programCode+=getActivationFunction();
         return programCode;
     }
-
+    protected String getValueString(Object o)
+    {
+        if(o.getClass().isAssignableFrom(String.class))
+        {
+            return "\""+ StringFormatter.removeWhiteCharacterss(o.toString())+"\"";
+        }
+        return o.toString();
+    }
 
 }
