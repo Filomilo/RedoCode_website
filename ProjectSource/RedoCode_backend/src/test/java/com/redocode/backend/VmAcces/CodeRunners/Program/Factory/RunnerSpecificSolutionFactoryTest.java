@@ -31,7 +31,7 @@ class RunnerSpecificSolutionFactoryTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(new ArrayOfFloats())
                 .build();
-        assertEquals(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS,solutionProgram.getOutput());
+        assertEquals(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS,solutionProgram.getOutput().getType());
     }
 
     @Test
