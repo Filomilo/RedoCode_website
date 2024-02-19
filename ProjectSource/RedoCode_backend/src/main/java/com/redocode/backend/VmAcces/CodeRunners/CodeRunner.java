@@ -2,7 +2,9 @@ package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
+import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.VariablesParser;
 import javassist.compiler.ast.Variable;
 import lombok.Synchronized;
 
@@ -41,8 +43,9 @@ public abstract class CodeRunner extends ContainerController {
             ConsoleOutput consoleOutput = executeBash(runCommand);
             Variables programOutput = null;
             if (program.getOutuputType() != null) {
-                logger.warn("reading file result is not implemented");
-                // TODO: 11/02/2024 add reading file with result
+                String resultFileContent=getFileContnt(((SolutionProgram)program).getOutputFileName());
+                logger.info("Program outoput file: \n"+resultFileContent);
+                programOutput= VariablesParser.parseVaraiables(program.getOutuputType(),resultFileContent);
             }
             cleanup();
             return new ProgramResult(consoleOutput, programOutput);

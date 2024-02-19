@@ -37,6 +37,7 @@ public abstract class SolutionProgram  extends Program{
     public String getProgramCode() {
         validate();
         String programCode="";
+        programCode+=this.getSolutionCode()+"\n";
         programCode+=getImports()+"\n\n";
         programCode+=getInputGeneratorCode()+"\n\n";
         programCode+=getOutputGeneratorCode()+"\n\n";
@@ -52,4 +53,8 @@ public abstract class SolutionProgram  extends Program{
         return o.toString();
     }
 
+    @Override
+    public Variables.VARIABLES_TYPES getOutuputType() {
+        return output.getType();
+    }
 }

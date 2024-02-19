@@ -1,6 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.github.dockerjava.api.exception.NotFoundException;
+import com.redocode.backend.Tools.StringFormatter;
 import com.redocode.backend.VmAcces.VmStatus;
 import com.redocode.backend.VmAcces.vmConnection.VmConnector;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
@@ -45,19 +46,20 @@ public class ContainerController {
 
     void createFile(String fileName,String fileContent)
     {
-        String command="printf ";
-        command+="\""+ parseCode(fileContent)+"\"";
-        command+=" > ";
-        command+="\""+fileName+"\"";
-        logger.info("creating file "+ fileName+ "with content\n"+ fileContent);
-        executeBash(command);
+//        String[] fileContentSection=StringFormatter.prepreForFileSaving(fileContent).split("'");
+//        for (int i = 0; i <fileContentSection.length ; i++)
+//        {
+            String command="echo ";
+            command+="\""+ StringFormatter.prepreForFileSaving(fileContent)+"\"";
+            command+=" > ";
+            command+="\""+fileName+"\"";
+            logger.info("creating file "+ fileName+ "with content\n"+ fileContent);
+            executeBash(command);
+
+
     }
 
-    private String parseCode(String fileContent) {
-        fileContent=    fileContent.replace("\n","\\n");
-        fileContent=fileContent.replace("\"","\\\"");
-        return fileContent;
-    }
+
 
    protected String[] listFiles()
     {

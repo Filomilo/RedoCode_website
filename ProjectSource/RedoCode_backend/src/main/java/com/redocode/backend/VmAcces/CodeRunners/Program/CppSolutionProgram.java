@@ -18,7 +18,7 @@ public class CppSolutionProgram extends SolutionProgram {
     @Override
     String getImports() {
         log.error("not impelementet");
-        return null;
+        return "";
     }
 
     @Override

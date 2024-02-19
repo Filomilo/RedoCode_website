@@ -1,6 +1,8 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +37,13 @@ class ContainerControllerTest {
         assertEquals(fileContent.trim(),recivedFileConenent);
         assertEquals(fileListBeforeCreation.length,fileListAfterRemoval.length);
     }
-
+    @ParameterizedTest
+    @MethodSource("com.redocode.backend.ValuesProvider#fileContentProvider")
+    void createFile(String content) {
+        containerController.createFile("test.txt",content);
+        String fileContentCreated=containerController.getFileContnt("test.txt");
+        assertEquals(content,fileContentCreated,"Created file contend do not match");
+    }
 
 
 
@@ -43,8 +51,9 @@ class ContainerControllerTest {
     @AfterEach
     public void destroy()
     {
-      containerController.destroy();
+     containerController.destroy();
     }
+
 
 
 }

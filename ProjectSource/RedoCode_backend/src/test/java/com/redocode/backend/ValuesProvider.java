@@ -160,4 +160,90 @@ public class ValuesProvider {
         Stream<Arguments> args=argeumnets.stream().map((arg)->{return  Arguments.of((Object) arg);});
         return args;
     }
+
+    public static Stream<String> fileContentProvider()
+    {
+        List<String> fileContents=new ArrayList<>();
+        fileContents.add("TEST");
+        fileContents.add("a\n\nb");
+        fileContents.add("\\n'\n\\nb");
+        fileContents.add("-aaa-");
+        fileContents.add("-\n\naaad'aaa-");
+        fileContents.add("-\"naaa\"d'a\"aa-");
+        fileContents.add("-\"naaa\\d'a\"aa-");
+        fileContents.add("-\"naaa\\\\d'a\"aa-");
+        fileContents.add("-\"naaa\\\"d'a\"aa-");
+        fileContents.add("-\"naaa\\\"d'a\"aa-");
+        fileContents.add("switch (s[i])\n" +
+                "{\n" +
+                "case '\\\\':\n" +
+                "str=\"\\\\\\\\\";\n" +
+                "break;\n" +
+                "case '\\n':\n" +
+                "str=\"\\\\n\";\n" +
+                "break;\n" +
+                "case '\\t':\n" +
+                "str= \"\\\\t\";\n" +
+                "break;\n" +
+                "default:\n" +
+                "str=std::string(1,s[i]);\n" +
+                "};");
+        fileContents.add("int main()\n" +
+                "{\n" +
+                "outputGenerator_b89f0990be99412b84016b6ee03bf951(solution(\n" +
+                "21:14:00.464 [main] INFO com.redocode.backend.VmAcces.CodeRunners.CodeRunnerTest -- Code to run: \n" +
+                "\n" +
+                "\n" +
+                "int solution(int val){return val;}\n" +
+                "\n" +
+                "\n" +
+                "#include <iostream>\n" +
+                "int inputGenerator_c1d93977e0744521bd01971e37806965()\n" +
+                "{\n" +
+                "return 5;\n" +
+                "}\n" +
+                "\n" +
+                "#include <fstream>\n" +
+                "#include <iostream>\n" +
+                "#include <sstream>\n" +
+                "void outputGenerator_b89f0990be99412b84016b6ee03bf951(int a)\n" +
+                "{\n" +
+                "std::ofstream myfile;\n" +
+                "myfile.open (\"outputResult_2b9e0ab6e925447e8c872f3b7a1b8cf3\");\n" +
+                "std::stringstream ss;\n" +
+                "ss<< a;\n" +
+                "std::string s=ss.str();\n" +
+                "for (size_t i = 0; i < s.size(); i++)\n" +
+                "{\n" +
+                "std::string str;\n" +
+                "switch (s[i])\n" +
+                "{\n" +
+                "case '\\\\':\n" +
+                "str=\"\\\\\\\\\";\n" +
+                "break;\n" +
+                "case '\\n':\n" +
+                "str=\"\\\\n\";\n" +
+                "break;\n" +
+                "case '\\t':\n" +
+                "str= \"\\\\t\";\n" +
+                "break;\n" +
+                "default:\n" +
+                "str=std::string(1,s[i]);\n" +
+                "};\n" +
+                "myfile << str;\n" +
+                "}\n" +
+                "myfile.close();\n" +
+                "}\n" +
+                "\n" +
+                "int main()\n" +
+                "{\n" +
+                "outputGenerator_b89f0990be99412b84016b6ee03bf951(solution(inputGenerator_c1d93977e0744521bd01971e37806965()));\n" +
+                "return 0;\n" +
+                "}");
+
+        return fileContents.stream();
+
+    }
+
+
 }
