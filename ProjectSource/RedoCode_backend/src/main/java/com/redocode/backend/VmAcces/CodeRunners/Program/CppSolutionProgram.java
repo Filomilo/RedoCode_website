@@ -115,7 +115,7 @@ public class CppSolutionProgram extends SolutionProgram {
     private String getOutputgeneartionBody() {
         String returnfunc=switch (this.getOutput().getType()){
             case ARRAY_STRINGS,ARRAY_OF_FLOATS,ARRAY_OF_INTEGERS -> {
-           yield   "int l="+this.getOutput().getW()+";\n" +
+           yield   "size_t l="+this.getOutput().getW()+";\n" +
                    "for (size_t i = 0; i < l; i++)\n" +
                    "{\n" +
                    "std::stringstream ss;\n" +
@@ -170,8 +170,8 @@ public class CppSolutionProgram extends SolutionProgram {
             }
             case DOUBLE_ARRAY_OF_FLOATS,DOUBLE_ARRAY_OF_INTEGERS,DOUBLE_ARRAY_OF_STRINGS ->  {
 
-                yield   "int w="+this.getOutput().getW()+";\n" +
-                        "int h="+this.getOutput().getH()+";\n" +
+                yield   "size_t w="+this.getOutput().getW()+";\n" +
+                        "size_t h="+this.getOutput().getH()+";\n" +
                         "for (size_t i = 0; i < h; i++)\n" +
                         "{\n" +
                         "for (size_t j = 0; j < w; j++)\n" +

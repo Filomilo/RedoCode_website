@@ -102,6 +102,8 @@ public class ValuesProvider {
         int height=rand.nextInt(1,20);
         argeumnets.add(generateRadnomIntDoubleArray(height,width));
         argeumnets.add(generateRadnomIntDoubleArray(height,width));
+        argeumnets.add(generateRadnomIntDoubleArray(2,3));
+        argeumnets.add(new Integer[][]{{1,2,3},{4,5,6}});
         Stream<Arguments> args=argeumnets.stream().map((arg)->{return  Arguments.of((Object) arg);});
         return args;
     }
