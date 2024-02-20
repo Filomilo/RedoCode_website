@@ -329,7 +329,7 @@ assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
                         "{\n" +
                         "std::ofstream myfile;\n" +
                         "myfile.open (\""+program.getOutputFileName()+"\");\n" +
-                        "int l="+program.getOutput().getW()+";\n" +
+                        "size_t l="+program.getOutput().getW()+";\n" +
                         "for (size_t i = 0; i < l; i++)\n" +
                         "{\n" +
                         "std::stringstream ss;\n" +
@@ -378,8 +378,8 @@ assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
                         "{\n" +
                         "std::ofstream myfile;\n" +
                         "myfile.open (\""+program.getOutputFileName()+"\");\n" +
-                        "int w="+program.getOutput().getW()+";\n" +
-                        "int h="+program.getOutput().getH()+";\n" +
+                        "size_t w="+program.getOutput().getW()+";\n" +
+                        "size_t h="+program.getOutput().getH()+";\n" +
                         "for (size_t i = 0; i < h; i++)\n" +
                         "{\n" +
                         "for (size_t j = 0; j < w; j++)\n" +
