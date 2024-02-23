@@ -5,8 +5,15 @@ import TopBar from '@/components/TopBar.vue'
 
 <template>
   <html lang="pl" data-bs-theme="dark">
-  <TopBar />
-  <RouterView />
+
+  <div id="MainPageContainer">
+    <TopBar id="NavigationConatiner"/>
+     
+  <RouterView id="ContentConatiner"/>
+  <!-- <div "  />
+  <div id="ContentConatiner"  /> -->
+    <!-- <div style="height: 100vh; width: 100vw; background-color: rgb(30, 114, 89)" /> -->
+  </div>
   </html>
 </template>
 

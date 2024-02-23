@@ -1,11 +1,5 @@
 <template>
-  <div style="
-    height: 10rem;
-    width: 10rem;
-    min-width: 50rem;
-    min-height: 5rem;
-    <!-- display: flex; -->
-    ">
+  <div>
     <vue-monaco-editor v-model:value="model" theme="vs-dark" :options="MONACO_EDITOR_OPTIONS" @mount="handleMount"
       :language="chosenLangague" />
 
