@@ -2,12 +2,14 @@ package com.redocode.backend.database;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name ="excersizes")
+@Data
 public class Excersize {
 
 
@@ -39,6 +41,10 @@ public class Excersize {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize" )
     private Set<ExerciseAttempts> attempts = new HashSet<>();
 
+    @Column(
+            name = "description"
+    )
+    private String description;
 
     public Long getId() {
         return id;
