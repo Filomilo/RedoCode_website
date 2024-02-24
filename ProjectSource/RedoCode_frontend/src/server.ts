@@ -10,20 +10,23 @@ export function makeServer({ environment = "development" } = {}) {
             difficulty: "hard",
             popularity: 222,
             id: 1,
+            description: "task1 description"
         },
         {
             name: "task2",
             language: ["any"],
             difficulty: "hard",
             popularity: 222122,
-            id: 2
+            id: 2,
+            description: "task2 description"
         },
         {
             name: "task3",
             language: ["c++","java"],
             difficulty: "easy",
             popularity: 23,
-            id: 3
+            id: 3,
+            description: "task3 description"
         }
     ]
     

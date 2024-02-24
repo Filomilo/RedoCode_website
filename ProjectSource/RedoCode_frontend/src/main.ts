@@ -1,5 +1,4 @@
-import '@/assets/styles/styles.scss'
-import '@/assets/styles/base.css'
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -7,27 +6,29 @@ import { makeServer } from "./server"
 // import "bootstrap"
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import PrimeVue from 'primevue/config';
-import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
+import Vue3EasyDataTable from "vue3-easy-data-table";
+import "vue3-easy-data-table/dist/style.css";
+import Button from 'primevue/button';
 
-
-
-
-
-// import 'primevue/resources/themes/saga-blue/theme.css';
-// import 'primevue/resources/primevue.min.css';
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primevue/resources/primevue.min.css';
 // import 'primeicons/primeicons.css';      
-// import 'primevue/resources/primevue.css'    
+import 'primevue/resources/primevue.css'    
 
 
 
 // import './assets/main.css'
-import 'primevue/resources/themes/saga-blue/theme.css';
-import 'primevue/resources/primevue.min.css';
+// import 'primevue/resources/themes/saga-blue/theme.css';
+// import 'primevue/resources/primevue.min.css';
 // import 'primeicons/primeicons.css';      
+import 'primevue/resources/themes/aura-light-green/theme.css'
+import '@/assets/styles/styles.scss'
+import '@/assets/styles/base.css'
+
 
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
@@ -44,4 +45,6 @@ app.use(router)
 .use(PrimeVue);
 app.component('Splitter',Splitter);
 app.component('SplitterPanel',SplitterPanel);
+app.component("EasyDataTable", Vue3EasyDataTable);
+// app.component('Button', Button);
 app.mount('#app')

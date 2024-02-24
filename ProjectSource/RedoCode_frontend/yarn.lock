@@ -5243,12 +5243,12 @@ __metadata:
   linkType: hard
 
 "socks@npm:^2.7.1":
-  version: 2.8.0
-  resolution: "socks@npm:2.8.0"
+  version: 2.8.1
+  resolution: "socks@npm:2.8.1"
   dependencies:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
-  checksum: 208fa5d5ae47857653c4fc039d47e4c1e76313b24052151a949aa98f027f9aaba8fc6c5dc0f7f2d9ceeb94e9940217581f2d9798436563c1494b67a6cb68611f
+  checksum: ac77b515c260473cc7c4452f09b20939e22510ce3ae48385c516d1d5784374d5cc75be3cb18ff66cc985a7f4f2ef8fef84e984c5ec70aad58355ed59241f40a8
   languageName: node
   linkType: hard
 
@@ -5962,7 +5962,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue@npm:^3.3.11":
+"vue3-easy-data-table@npm:^1.5.47":
+  version: 1.5.47
+  resolution: "vue3-easy-data-table@npm:1.5.47"
+  dependencies:
+    vue: "npm:^3.2.45"
+  checksum: 1e44f877d79217743cec6b777ad4abe91fa4a3d60f4f54c7039dd0dccee828a1f33641e845d2b2d9fe3985735ad8c54206db10787af4c7062d9da357fde43c76
+  languageName: node
+  linkType: hard
+
+"vue@npm:^3.2.45, vue@npm:^3.3.11":
   version: 3.4.18
   resolution: "vue@npm:3.4.18"
   dependencies:
@@ -6198,6 +6207,7 @@ __metadata:
     vue: "npm:^3.3.11"
     vue-router: "npm:^4.2.5"
     vue-tsc: "npm:^1.8.25"
+    vue3-easy-data-table: "npm:^1.5.47"
   languageName: unknown
   linkType: soft
 

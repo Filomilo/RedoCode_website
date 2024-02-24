@@ -3,5 +3,6 @@ export default interface ExerciseType{
     name: string,
     language: Array<string>,
     difficulty: string,
-    popularity: number
+    popularity: number,
+    description: string
 }
