@@ -1,0 +1,68 @@
+@import "../variables.scss";
+
+
+
+.promotionScrollPanel{
+    height: 40rem;
+    width: fit-content;
+
+    margin-bottom: 2rem;
+    // background-color: rgb(161, 120, 113);
+    flex-direction: row;
+    display: flex;
+}
+
+.promotionExcerciseCard{
+    // height: 100%;
+    // margin-bottom: 2rem;
+    background-color: rgb(43, 43, 43);
+    width: 30rem;
+    border-radius: 2rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    overflow-y: hidden;
+    // flex: 1;
+    
+}
+.promotionExcerciseCard .titleContainer{
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.3rem solid $primary; 
+}
+
+.promotionExcerciseCard .title{
+    height: 4rem;
+    // margin-bottom: 2rem;
+    // background-color: rgb(61, 63, 156);
+    justify-content: end;
+    font-size: 2rem;
+    color: $primary;
+    text-align: center;
+    align-items:flex-end;
+    margin-left: 1rem;
+    display: flex;
+}
+
+.promotionExcerciseCard .button{
+
+    // background-color: rgb(156, 61, 97);
+    height: 100%;
+    
+    margin-right:2rem ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+}
+
+.promotionExcerciseCard .button .svg-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .promotionExcerciseCard .content{
+// background-color: crimson;
+overflow-y: scroll;
+height: 80%
+}

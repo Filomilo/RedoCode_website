@@ -28,8 +28,11 @@ import 'primevue/resources/primevue.css'
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import '@/assets/styles/styles.scss'
 import '@/assets/styles/base.css'
-
-
+import 'primevue/inputtext'
+import InputText from 'primevue/inputtext'
+import Image from 'primevue/image';
+import ScrollPanel from 'primevue/scrollpanel'
+import Password from 'primevue/password'
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server');
@@ -46,5 +49,9 @@ app.use(router)
 app.component('Splitter',Splitter);
 app.component('SplitterPanel',SplitterPanel);
 app.component("EasyDataTable", Vue3EasyDataTable);
-// app.component('Button', Button);
+app.component("InputText", InputText);
+app.component("Button", Button);
+app.component("Image", Image);
+app.component("ScrollPanel", ScrollPanel);
+app.component("Password", Password);
 app.mount('#app')

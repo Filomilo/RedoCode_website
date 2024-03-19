@@ -7,13 +7,11 @@ import TopBar from '@/components/TopBar.vue'
   <html lang="pl" data-bs-theme="dark">
 
   <div id="MainPageContainer">
-    <TopBar id="NavigationConatiner"/>
-     
+    <TopBar id="TopBarContainer"/>
+     <div class="BackGroundContainer">
   <RouterView id="ContentConatiner"/>
-  <!-- <div "  />
-  <div id="ContentConatiner"  /> -->
-    <!-- <div style="height: 100vh; width: 100vw; background-color: rgb(30, 114, 89)" /> -->
-  </div>
+</div>
+   </div>
   </html>
 </template>
 

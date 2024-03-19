@@ -1,0 +1,38 @@
+@import "../variables.scss";
+
+.TopBarContainer {
+    display: flex; 
+    background-color: $backgroundColor;
+    align-items: center;
+    justify-content: space-between; 
+    position: fixed;
+    width: 100%;
+}
+
+.TopBarList {
+    display: flex;
+    // background-color: blue;
+    align-items: center;
+    flex-direction: row;
+    margin: 20px;
+    width: 100%;
+}
+
+
+.TopBarItemContainer {
+    // background-color: green;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.TopBarItemIcon {
+
+}
+
+.TopBarItemTitle {
+color: $primary;
+text-decoration: none;
+}

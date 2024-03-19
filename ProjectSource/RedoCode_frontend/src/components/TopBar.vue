@@ -1,32 +1,34 @@
 <template>
-  <nav class="navbar  navbar-dark bg-dark">
-    <router-link to="/Home" class="nav-link">
-      <a class="navbar-brand" href="#">
+  <nav class="">
 
-        <img src="../assets/logo/logo_noBackground.png" height="30" alt="">
+    <div class="TopBarContainer">
+      <div class="TopBarList">
 
-      </a>
+          <router-link to="/Home" class="TopBarItemContainer" id="Home_Button">
+              <IconHome class="TopBarItemIcon"/>
+            <label class="TopBarItemTitle"
+            >Excersices</label>
+          </router-link>
+
+          <router-link to="/PlayGround" class="TopBarItemContainer" id="Home_Button">
+            <IconPlayground class="TopBarItemIcon"/>
+          <label class="TopBarItemTitle"
+          >PlayGorund</label>
+        </router-link>
+
+        <router-link to="/Exercises" class="TopBarItemContainer" id="Home_Button">
+          <IconExcerisce class="TopBarItemIcon"/>
+        <label class="TopBarItemTitle"
+        >Exercises</label>
+      </router-link>
+
+      <router-link to="/Account" class="TopBarItemContainer" id="Home_Button">
+        <IconAccount class="TopBarItemIcon"/>
+      <label class="TopBarItemTitle"
+      >My account</label>
     </router-link>
 
-    <div class="" id="navbarNav">
-      <ul class="navbar-nav topbar-navigation">
-        <li class="nav-item ">
-          <router-link to="/Exercises" class="nav-link" id="Excersices_button">
-            <b-nav-text>Excersices</b-nav-text>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/Exercises" class="nav-link">
-            <b-nav-text>Excersices</b-nav-text>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/PlayGround" class="nav-link">
-            <b-nav-text>PlayGround</b-nav-text>
-          </router-link>
-        </li>
-
-      </ul>
+      </div>
     </div>
 
   </nav>
@@ -34,4 +36,9 @@
 
 
 <script setup lang="ts">
+import "../assets/icons/IconHome.vue"
+import IconPlayground from "@/assets/icons/IconPlayground.vue";
+import IconHome from "@/assets/icons/IconHome.vue";
+import IconExcerisce from "@/assets/icons/IconExcerisce.vue";
+import IconAccount from "@/assets/icons/IconAccount.vue";
 </script>

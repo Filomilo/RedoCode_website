@@ -1,2 +1,12 @@
 $primary: #754481;
 $primary-dark: #37203d;
+
+$InputBackGround: #111111;
+$textInputColor: #f3f3f3;
+
+$backgroundColor: rgb(29, 29, 29);
+
+
+:root {
+    --color-background: #{$backgroundColor};
+}
