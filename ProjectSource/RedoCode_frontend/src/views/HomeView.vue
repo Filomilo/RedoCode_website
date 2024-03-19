@@ -12,7 +12,7 @@
   </div>
   <div class="LoginPanelConatiner">
     <InputText type="text" v-model="inputLogin" class="TextInputConainer AuthPanelElement" ca placeholder="nick/email"/>
-    <Password v-model="inputPass"  class="TextInputConainer AuthPanelElement"  placeholder="password"/>a
+    <Password v-model="inputPass"  class="TextInputConainer AuthPanelElement"  placeholder="password"/>
     <div class="AuthPanelElement boldText" >Don't have an account?</div>
     <router-link to="/Register" class="AuthPanelElement linkText">
       sign up

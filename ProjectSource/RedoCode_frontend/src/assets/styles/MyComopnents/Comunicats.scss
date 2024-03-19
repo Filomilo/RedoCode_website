@@ -17,7 +17,7 @@ display: flex;
 .CommunicatImage{
    flex: 1;
 //    background-color: rgb(173, 121, 51);
-//    width: 100vw;
+   width: 100vw;
    height: 100vh;
     }
     .CommunicatImage .p-image{
@@ -41,4 +41,14 @@ display: flex;
          .CommunicatTextTitle{
             // background-color: rgb(172, 137, 94);
             font-size: 4rem;
+         }
+
+
+        @media (max-width: 60rem) {
+            .CommunicatInfoContainer{
+                // background-color: rgb(172, 137, 94);
+                flex-direction: column;
+                height: fit-content;
+            }
+    
         }

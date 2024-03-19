@@ -1,58 +1,15 @@
 <template>
-    <!-- playground:
-    {{ code }}
-    <LanguageDropdown :chosenValue="String(chosenLangague)" @select="onSelectLanguage" />
+    <Splitter style="height: 100%">
+        <SplitterPanel v-if="showLeftPanel">
 
-
-    <div :class="{ 'lock': !establishedConnection }">
-    <CodeEditor v-model="code" :code="code" :chosenLangague="chosenLangague" />
-    </div>
-
-    <div v-if="VmAcces">
-    <BasicButton :onClick="onRunCode">
-        run
-    </BasicButton>
-    </div>
-
-    <div v-if="!establishedConnection && tryingToEstablishConnection">
-        <div style="position:static; 
-width: 5rem;
- height: 5rem;
-  background-color: red">
-            loading
-        </div>
-    </div>
-    <div v-if="!props.connectAtStart&&!tryingToEstablishConnection">
-    <BasicButton :onClick="connectToCodeRunner">
-        start
-    </BasicButton>
-    </div>
-
-    <div :class="{ 'lock': !VmAcces }">
-    <ResultsPanel :resultData="resultData" />
-    </div> -->
-    <!-- code runner panel -->
-
-    <Splitter style="height: 100vh; width:100vw; background-color: red">
-        <SplitterPanel style="background-color: rgba(35, 255, 189, 0.514); display: flex; flex-direction: column" >
-            <LanguageDropdown :chosenValue="String(chosenLangague)" @select="onSelectLanguage" />
-            <!-- <div :class="{ 'lock': !establishedConnection }"> -->
-            <CodeEditor v-model="code" :code="code" :chosenLangague="chosenLangague" class="CodeEditor"/>
-            <!-- </div> -->
+        <Splitter layout="vertical" >
+            <SplitterPanel  > Panel 1 </SplitterPanel>
+            <SplitterPanel v-if="showCreatorPanel" > Panel 2 </SplitterPanel>
+        </Splitter>
         </SplitterPanel>
-        <SplitterPanel style="background-color: rgba(252, 222, 52, 0.514);" :size="10" :minSize="10">test</SplitterPanel>
-        <!-- <SplitterPanel class="flex align-items-center justify-content-center" :size="20" :minSize="10"> Panel 1 </SplitterPanel>
-        <SplitterPanel :size="80">
-            <Splitter layout="vertical">
-                <SplitterPanel class="flex align-items-center justify-content-center" :size="15"> Panel 2 </SplitterPanel>
-                <SplitterPanel :size="85">
-                    <Splitter>
-                        <SplitterPanel class="flex align-items-center justify-content-center" :size="20"> Panel 3 </SplitterPanel>
-                        <SplitterPanel class="flex align-items-center justify-content-center" :size="80"> Panel 4 </SplitterPanel>
-                    </Splitter>
-                </SplitterPanel>
-            </Splitter>
-        </SplitterPanel> -->
+
+        <SplitterPanel  > Panel 3 </SplitterPanel>
+        <SplitterPanel > Panel 4 </SplitterPanel>
     </Splitter>
 </template>
 
@@ -76,7 +33,9 @@ import { basicResultTemplate, languageChoices } from '../config/Data'
 import type CodeResultsType from '@/types/CodeResultsType';
 
 const props = defineProps({
-    connectAtStart: { type: Boolean, required: false }
+    connectAtStart: { type: Boolean, required: false },
+    showLeftPanel: { type: Boolean, required: false },
+    showCreatorPanel: { type: Boolean, required: false }
 })
 
 

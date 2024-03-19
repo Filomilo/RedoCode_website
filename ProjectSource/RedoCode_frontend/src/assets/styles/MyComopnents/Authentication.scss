@@ -17,6 +17,7 @@
     
 }
 
+
 .CommunicatContainer{
     //background-color: rgb(200, 255, 127);
     margin-top: 8rem;
@@ -49,6 +50,17 @@
     justify-content: center;
     flex-direction:      column;
 margin-right: 3rem;
+}
+
+@media (max-width: 70rem) {
+    .CommunicatPanel {
+        // background-color: red;
+        display: none;
+    }
+    .AuthLoginScreenConatiner{
+        align-items: center;
+        justify-content:center; 
+    }
 }
 
 .AuthPanelElement{

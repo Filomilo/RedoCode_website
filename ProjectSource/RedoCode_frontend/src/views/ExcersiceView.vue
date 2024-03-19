@@ -1,14 +1,15 @@
 <template>
-   <main>
-      {{ JSON.stringify(text) }}
-        </main>
+
+<main class="PlayGroundBase">
+<CodeRunnerPanel :showLeftPanel="true" :connectAtStart="false" />
+</main>
 </template>
 
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-
+import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue';
 const text=ref("")
 
 

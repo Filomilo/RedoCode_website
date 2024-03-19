@@ -1,6 +1,6 @@
 <template>
-<main>
-<CodeRunnerPanel :connectAtStart="false" />
+<main class="PlayGroundBase">
+<CodeRunnerPanel :showLeftPanel="false" :connectAtStart="false" />
 </main>
 <!-- <div style="background-color: red; width: 100%; height: 100%"> -->
 

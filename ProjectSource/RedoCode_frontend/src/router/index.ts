@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ExcersicesView from '@/views/ExcersicesView.vue'
 import ExcersiceView from '@/views/ExcersiceView.vue'
 import PlayGroundView from '@/views/PlayGroundView.vue'
+import CreateView from '@/views/CreateView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,6 +32,12 @@ component: ExcersiceView
       path: '/PlayGround',
       name: 'PlayGround',
       component: PlayGroundView
+    }
+    ,
+    {
+      path: '/create',
+      name: 'Create',
+      component: CreateView
     }
   ]
 })
