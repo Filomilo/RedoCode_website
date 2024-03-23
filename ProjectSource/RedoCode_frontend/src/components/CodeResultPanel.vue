@@ -1,10 +1,81 @@
 <template>
-  <div style="height: 10rem; background-color:black">
+  <div class="CodeResultContainer" >
+    <div class="EngineStatusContianer">
+      <div class="EngineStatusPanel">
+        <div class="EngineStatusTitle">
+            Machine:
+        </div>
+        <div class="EngineStatusStatus">
+          Cpp
+      </div>
+      </div>
 
 
+
+      <div class="EngineStatusPanel">
+        <div class="EngineStatusTitle">
+            Status:
+        </div>
+        <div class="EngineStatusStatus">
+          Ruuning
+      </div>
+      </div>
+      
+    </div>
+    <div class="ConsoleResultConsoleCOntainer">
+      <div class="ConsoleResultConsoleCOntainerText" v-html="formatted">
+
+      </div>
+    </div>
+    
   </div>
-</template>
   
-<script lang="ts" setup>
+  
+  </template>
+  
+  
+  <script setup lang="ts">
+import { computed } from 'vue';
+const console = `
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        >> hello world
+        `;
 
-</script>
+   
+      const formatted=computed<string>(()=> console.replace(/\n/g, '<br>'))
+
+  </script>

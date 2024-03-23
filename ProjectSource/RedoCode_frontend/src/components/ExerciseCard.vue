@@ -4,7 +4,7 @@
         {{excerciseData.title}}
     </div>
     <div class="button">
-        <IconPlay width="6rem" class="svg-icon" />
+        <IconPlay width="6rem" class="svg-icon" style="fill: white;" />
     </div>
 </div>
 <div class="content">

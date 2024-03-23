@@ -8,8 +8,13 @@
         </Splitter>
         </SplitterPanel>
 
-        <SplitterPanel  > Panel 3 </SplitterPanel>
-        <SplitterPanel > Panel 4 </SplitterPanel>
+        <SplitterPanel  > 
+            
+        <CodeEditor class="CodeEditorContainer" />    
+        </SplitterPanel>
+        <SplitterPanel > 
+        <CodeResultPanel />
+        </SplitterPanel>
     </Splitter>
 </template>
 
@@ -31,7 +36,7 @@ import type CodeToRunMessage from '@/types/CodeToRunMessage';
 import ResultsPanel from './ResultsPanel.vue';
 import { basicResultTemplate, languageChoices } from '../config/Data'
 import type CodeResultsType from '@/types/CodeResultsType';
-
+import CodeResultPanel from './CodeResultPanel.vue';
 const props = defineProps({
     connectAtStart: { type: Boolean, required: false },
     showLeftPanel: { type: Boolean, required: false },

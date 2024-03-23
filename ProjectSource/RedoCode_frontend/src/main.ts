@@ -33,6 +33,7 @@ import InputText from 'primevue/inputtext'
 import Image from 'primevue/image';
 import ScrollPanel from 'primevue/scrollpanel'
 import Password from 'primevue/password'
+import Dropdown from 'primevue/dropdown';
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server');
@@ -54,4 +55,5 @@ app.component("Button", Button);
 app.component("Image", Image);
 app.component("ScrollPanel", ScrollPanel);
 app.component("Password", Password);
+app.component("Dropdown", Dropdown);
 app.mount('#app')
