@@ -1,4 +1,4 @@
-export default interface CodeResult{
+export default interface CodeResultType{
     Console_output: string,
     Error_output: string,
     Solution_type: string,

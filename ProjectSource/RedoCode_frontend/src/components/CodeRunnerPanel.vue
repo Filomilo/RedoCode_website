@@ -15,7 +15,7 @@
         <CodeEditor class="CodeEditorContainer" />    
         </SplitterPanel>
         <SplitterPanel > 
-        <CodeResultPanel />
+        <CodeResultPanel :isDataResult="showLeftPanel" />
         </SplitterPanel>
     </Splitter>
 </template>
