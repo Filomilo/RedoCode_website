@@ -6,7 +6,9 @@
             <SplitterPanel  >
             <ExerciseDescriptionPanel/>    
             </SplitterPanel>
-            <SplitterPanel v-if="showCreatorPanel" > Panel 2 </SplitterPanel>
+            <SplitterPanel v-if="showCreatorPanel" >
+                 <ExerciseSetupPanel />
+                 </SplitterPanel>
         </Splitter>
         </SplitterPanel>
 
@@ -40,6 +42,7 @@ import { basicResultTemplate, languageChoices } from '../config/Data'
 import type CodeResultsType from '@/types/CodeResultsType';
 import CodeResultPanel from './CodeResultPanel.vue';
 import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue';
+import ExerciseSetupPanel from './ExerciseSetupPanel.vue';
 const props = defineProps({
     connectAtStart: { type: Boolean, required: false },
     showLeftPanel: { type: Boolean, required: false },

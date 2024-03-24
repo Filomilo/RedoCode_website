@@ -6007,6 +6007,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-slider-component@npm:^4.1.0-beta.7":
+  version: 4.1.0-beta.7
+  resolution: "vue-slider-component@npm:4.1.0-beta.7"
+  checksum: 1362d7ee5ab955f4d25809a84eacc35551e7f90170a2cf1159a340b47ecda90cf110fb6063cd5824f35ef4394701e1a779979a760d65f60150ae60f814ec813d
+  languageName: node
+  linkType: hard
+
 "vue-template-compiler@npm:^2.7.14":
   version: 2.7.16
   resolution: "vue-template-compiler@npm:2.7.16"
@@ -6278,6 +6285,7 @@ __metadata:
     vitest: "npm:^1.0.4"
     vue: "npm:^3.3.11"
     vue-router: "npm:^4.2.5"
+    vue-slider-component: "npm:^4.1.0-beta.7"
     vue-tsc: "npm:^1.8.25"
     vue3-easy-data-table: "npm:^1.5.47"
   languageName: unknown

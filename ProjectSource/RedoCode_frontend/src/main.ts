@@ -36,6 +36,13 @@ import Password from 'primevue/password'
 import Dropdown from 'primevue/dropdown';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
+import MultiSelect from "primevue/multiselect";
+import Slider from 'primevue/slider';
+import InputNumber from 'primevue/inputnumber';
+
+import "primevue/resources/themes/saga-blue/theme.css";
+import "primevue/resources/primevue.min.css";
+
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server');
@@ -60,4 +67,8 @@ app.component("Password", Password);
 app.component("Dropdown", Dropdown);
 app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
+app.component("MultiSelect", MultiSelect);
+app.component("Slider", Slider);
+app.component("InputNumber", InputNumber);
+
 app.mount('#app')

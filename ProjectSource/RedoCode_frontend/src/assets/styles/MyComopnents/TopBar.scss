@@ -34,7 +34,19 @@
 
 }
 
-.TopBarItemTitle {
+.TopBarItemTitle  {
 color: $primary;
 text-decoration: none;
+}
+.TopBarItemTitle {
+    text-decoration: none !important;
+}
+
+.TopBarItemTitle:hover {
+    /* Remove underline on hover */
+    text-decoration: none !important;
+}
+
+a {
+    text-decoration: none !important;
 }

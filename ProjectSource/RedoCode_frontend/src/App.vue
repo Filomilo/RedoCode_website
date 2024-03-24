@@ -19,5 +19,4 @@ import TopBar from '@/components/TopBar.vue'
 <style lang="scss">
 
 
-
 </style>

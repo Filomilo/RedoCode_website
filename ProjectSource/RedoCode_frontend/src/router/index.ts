@@ -4,6 +4,7 @@ import ExcersicesView from '@/views/ExcersicesView.vue'
 import ExcersiceView from '@/views/ExcersiceView.vue'
 import PlayGroundView from '@/views/PlayGroundView.vue'
 import CreateView from '@/views/CreateView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -38,6 +39,11 @@ component: ExcersiceView
       path: '/create',
       name: 'Create',
       component: CreateView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
     }
   ]
 })
