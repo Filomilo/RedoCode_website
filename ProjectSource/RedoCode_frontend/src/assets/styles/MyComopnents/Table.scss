@@ -1,0 +1,65 @@
+@import "../variables.scss";
+
+.tablePageConatiner{
+    background-color: rgb(142, 161, 119);
+    margin-top: $headerHeight;
+    // border: 2px solid #0000ff;
+    // height: 100%; 
+    // height: calc(100% - $headerHeight * 2 );
+    // overflow: hidden;
+    max-height: calc(100% - $headerHeight);
+    
+}
+
+
+.datatable-container {
+    height: 100%; 
+    // overflow: auto; /* Enable scrolling if necessary */
+    // background-color: red;
+}
+
+.vue3-easy-data-table{
+    height: 100rem;
+}
+.vue3-easy-data-table__main{
+    background-color: rgb(51, 51, 51);
+}
+.vue3-easy-data-table__header *{
+    // background-color: red;
+    // color: red;
+    // height: 7rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+
+}
+
+.vue3-easy-data-table__body{
+    // background-color: red;
+    // height: 7rem;
+    
+}
+.paginatorButtons{
+    margin-right: 30vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.paginatorButtons .p-button{
+    background-color: rgb(179, 179, 179);
+    border-color: transparent;
+    border-radius: 15rem;
+   height: 70%;
+   width: 3rem;
+}
+
+.createButton{
+    
+}
+
+.createButton .p-button{
+    background-color: $primary;
+    border-color: transparent;
+    border-radius: 0.5rem;
+}

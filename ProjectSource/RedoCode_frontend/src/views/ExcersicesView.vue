@@ -1,7 +1,7 @@
 <template>
-
+  <main class="PlayGroundBase">
 <ExcersiceTable :data="exerciseData" :onRowClick="onExcersiceButton"></ExcersiceTable>
-    
+</main>
 
 </template>
 

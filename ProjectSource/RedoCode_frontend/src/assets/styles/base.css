@@ -24,6 +24,26 @@
     --primary-color: #dbc234; /* Replace with your desired color value */
     --darker-primary-color: #4e4432; /* Replace with your desired color value */
 
+
+/* easy dat atbae; */
+--easy-table-header-font-color: rgb(235, 210, 233);
+--easy-table-header-background-color: #222222;
+
+--easy-table-body-even-row-font-color: #ffe6e6;
+  --easy-table-body-even-row-background-color: rgb(53, 43, 50);
+
+--easy-table-body-row-font-color: #dbe6f7;
+--easy-table-body-row-background-color: #000000;
+--easy-table-body-row-hover-font-color: #dbe4f3;
+  --easy-table-body-row-hover-background-color: rgb(67, 54, 80);
+--easy-table-footer-background-color: #333333;
+--easy-table-footer-font-color: #eaf2ff;
+--easy-table-body-row-background-color: rgb(58, 58, 58);
+--easy-table-scrollbar-track-color: #2d3a4f;
+--easy-table-scrollbar-color: #2d3a4f;
+--easy-table-scrollbar-thumb-color: #4c5d7a;;
+--easy-table-scrollbar-corner-color: rgb(44, 44, 44);
+--easy-table-loading-mask-background-color: #2d3a4f;
     }
 
 /* semantic color variables for this project */
@@ -95,3 +115,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+

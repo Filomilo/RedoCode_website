@@ -1,10 +1,12 @@
 <template>
-    
+    <div class="datatable-container">
                 <EasyDataTable
               :headers="fields"
               :items="data"
               alternating
               buttons-pagination
+              
+              class="dataTableStyle"
             >
         
             <template #expand="item">
@@ -15,40 +17,39 @@
                 <LoadingIndicator/>
             </template>
             <template #item-actions="item">
-                <Button  v-on:click="onRowClick(item.id)" style="background-color: transparent;  border-color: transparent;" >
-                  <Play />
+                <Button  v-on:click="onRowClick(item.id)" style="background-color: transparent;  border-color: transparent; fill: white;" >
+                  <IconPlay height="1.3rem" />
                 </Button>
             </template>
 
             
+            <template #pagination="{ prevPage, nextPage, isFirstPage, isLastPage }">
+                <div class="paginatorButtons">
+                <Button :disabled="isFirstPage" @click="prevPage">
+                  <IconNextLeft />
+                </Button>
+                <Button :disabled="isLastPage" @click="nextPage">
+                    <IconNextRight />
+                </Button>
+            </div>
+
+
+
+            <router-link to="/Create" class="createButton" id="Home_Button">
+                <Button >
+                    Create
+                </Button>
+            </router-link>
+    
+          
+              </template>
+            
         </EasyDataTable>
-       
+    </div>
           
 
 
-    <!-- <div class="excercise-table-container" v-if="data.length > 0">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th v-for="(item, index) in  Object.keys(data[0])" scope="col" :key="index">
-                        {{ item }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <tr v-for="item in  data" :key="item.id" v-on:click="onRowClick(item.id)" class="excercise-table-row">
-                    <th v-for="(elemnt, index) in  item" scope="col" :key="index">
-                        {{ elemnt }}
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="excercise-table-container" v-else>
-        <LoadingIndicator />
-    </div> -->
 </template>
 
 
@@ -60,7 +61,10 @@ import LoadingIndicator from "./LoadingIndicator.vue";
 import type { ref } from "vue";
 import type { Header, Item } from "vue3-easy-data-table";
 import Button from 'primevue/button';
-import Play from '../assets/icons/play.vue'
+import IconNextRight from  '../assets/icons/IconNextRight.vue'
+import IconNextLeft from  '../assets/icons/IconNextLeft.vue'
+import IconPlay from '@/assets/icons/IconPlay.vue';
+
 const fields: any[] = [
     { text: "Name", value: "name" },
     { text: "language", value: "language" },
@@ -100,3 +104,22 @@ defineProps<{
 
 
 </script>
+
+<style>
+
+
+.dataTableStyle{
+    height: 5rem;
+    overflow: hidden;
+}
+
+.vue3-easy-data-table{
+    background-color:  blue;
+    height: 4rem;
+    max-height: 100%;
+}
+.vue3-easy-data-table__main{
+  height: calc(100% - 2.1rem)
+}
+
+</style>
