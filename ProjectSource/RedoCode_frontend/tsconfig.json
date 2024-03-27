@@ -16,6 +16,7 @@
     "noImplicitAny": false,
     "allowJs": true,
     "checkJs": false,
+    "verbatimModuleSyntax": false,
     "typeRoots": [
       "./src/types",
       "./node_modules/@types/",

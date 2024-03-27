@@ -1,6 +1,6 @@
 <template>
     <div class="DataResultContainer" >
-  <TestResultCard v-for="(item, index) in results" v-bind="index" :data="item" />
+  <TestResultCard v-for="(item, index) in results" :key="index" :data="item" />
 </div>
 </template>
 

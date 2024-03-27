@@ -92,7 +92,7 @@ const console = `
 
     const results: CodeResultType[]=[
       {
-      Console_output: formatted,
+      Console_output: formatted.value,
       Error_output: "Couldnt find x",
       Solution_type: "Array",
       correct_solution: 1,
