@@ -39,7 +39,7 @@ import TabPanel from 'primevue/tabpanel';
 import MultiSelect from "primevue/multiselect";
 import Slider from 'primevue/slider';
 import InputNumber from 'primevue/inputnumber';
-
+import Chart from 'primevue/chart'
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 
@@ -70,5 +70,6 @@ app.component("TabPanel", TabPanel);
 app.component("MultiSelect", MultiSelect);
 app.component("Slider", Slider);
 app.component("InputNumber", InputNumber);
+app.component("Chart", Chart);
 
 app.mount('#app')

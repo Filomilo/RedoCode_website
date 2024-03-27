@@ -21,6 +21,7 @@
     "@guolao/vue-monaco-editor": "^1.5.1",
     "@stomp/stompjs": "^7.0.0",
     "bootstrap": "^5.3.2",
+    "chart.js": "^4.4.2",
     "markdown-it": "^14.1.0",
     "pinia": "^2.1.7",
     "primevue": "^3.48.1",
