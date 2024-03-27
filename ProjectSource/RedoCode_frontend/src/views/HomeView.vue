@@ -32,7 +32,7 @@
       <div class="CommunicatInfoContainer">
         <div class="CommunicatImage">
           <Image
-            :src="'src/assets/Images/fronImage1.png'"
+            :src=FrontImage1
             alt="info iamge 1"
             :max-width="'100%'"
             :max-height="'100%'"
@@ -54,7 +54,7 @@
         </div>
         <div class="CommunicatImage">
           <Image
-            :src="'src/assets/Images/fronImage2.png'"
+            :src=FrontImage2
             alt="info iamge 1"
             :max-width="'100%'"
             :max-height="'100%'"
@@ -65,7 +65,7 @@
       <div class="CommunicatInfoContainer">
         <div class="CommunicatImage">
           <Image
-            :src="'src/assets/Images/fronImage3.png'"
+            :src=FrontImage3
             alt="info iamge 1"
             :max-width="'100%'"
             :max-height="'100%'"
@@ -86,7 +86,9 @@ import InputText from 'primevue/inputtext'
 import { ref } from 'vue'
 import BasicButton from '@/components/BasicButton.vue'
 import ExcerciseListPromotion from '../components/ExcerciseListPromotion.vue'
-
+import FrontImage1 from '@/assets/Images/fronImage1.png'
+import FrontImage2 from '@/assets/Images/fronImage2.png'
+import FrontImage3 from '@/assets/Images/fronImage3.png'
 const inputLogin = ref('')
 const inputPass = ref('')
 </script>
