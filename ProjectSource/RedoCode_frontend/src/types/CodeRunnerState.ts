@@ -1,3 +1,3 @@
-export default interface CoderunnerState{
-    state: string
+export default interface CoderunnerState {
+  state: string
 }

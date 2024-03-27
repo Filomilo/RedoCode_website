@@ -1,39 +1,37 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
-.TextInputConainer{
-    background-color: $InputBackGround;
-    width: 100%;
-    height: 3rem;
-    color: $textInputColor;
-    align-items: centers;
-    text-align: center;
-    font-size: 1.2rem;
-    border-radius: 0.4rem;
-    border: 0rem;
+.TextInputConainer {
+  background-color: $InputBackGround;
+  width: 100%;
+  height: 3rem;
+  color: $textInputColor;
+  align-items: centers;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 0.4rem;
+  border: 0rem;
 }
 
-
-
-.TextInputConainer .p-password-input{
-    background-color: $InputBackGround;
-    width: 100%;
-    height: 3rem;
-    color: $textInputColor;
-    align-items: centers;
-    text-align: center;
-    font-size: 1.2rem;
-    border-radius: 0.4rem;
-    border: 0rem;
+.TextInputConainer .p-password-input {
+  background-color: $InputBackGround;
+  width: 100%;
+  height: 3rem;
+  color: $textInputColor;
+  align-items: centers;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 0.4rem;
+  border: 0rem;
 }
 
-.p-password-panel{
-    background-color: $InputBackGround;
+.p-password-panel {
+  background-color: $InputBackGround;
 }
 
-.p-password-info{
-    color: white;
+.p-password-info {
+  color: white;
 }
 
-.p-password-meter{
-    background-color: grey;
+.p-password-meter {
+  background-color: grey;
 }

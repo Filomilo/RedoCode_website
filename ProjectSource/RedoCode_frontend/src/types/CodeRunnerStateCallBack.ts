@@ -1,5 +1,5 @@
-import type CoderunnerState from "./CodeRunnerState";
+import type CoderunnerState from './CodeRunnerState'
 
 export default interface CodeRunnerStateCallBack {
-    (state: CoderunnerState): void;
-  }
+  (state: CoderunnerState): void
+}

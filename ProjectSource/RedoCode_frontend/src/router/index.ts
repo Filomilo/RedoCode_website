@@ -25,17 +25,15 @@ const router = createRouter({
       component: ExcersicesView
     },
     {
-path: '/Exercises/:id',
-name: 'Exercise',
-component: ExcersiceView
-    }
-    ,
+      path: '/Exercises/:id',
+      name: 'Exercise',
+      component: ExcersiceView
+    },
     {
       path: '/PlayGround',
       name: 'PlayGround',
       component: PlayGroundView
-    }
-    ,
+    },
     {
       path: '/create',
       name: 'Create',
@@ -52,8 +50,6 @@ component: ExcersiceView
       component: AccountView
     }
   ]
-
-  
 })
 
 export default router

@@ -1,82 +1,75 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
-
-.AuthLoginScreenConatiner{
-    // background-color: yellowgreen;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    flex-direction: row;
-    display: flex; 
-    justify-content: space-between; 
+.AuthLoginScreenConatiner {
+  // background-color: yellowgreen;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
 }
 
-.CommunicatPanel{
-    // background-color: aquamarine;
-    height: 100%;
-    
+.CommunicatPanel {
+  // background-color: aquamarine;
+  height: 100%;
 }
 
-
-.CommunicatContainer{
-    //background-color: rgb(200, 255, 127);
-    margin-top: 8rem;
-    margin-left: 6rem;
-    height: fit-content;
-    display: flex; 
-    flex-direction: column;
+.CommunicatContainer {
+  //background-color: rgb(200, 255, 127);
+  margin-top: 8rem;
+  margin-left: 6rem;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
 }
-.CommunicatTitle{
- color: $primary;
- font-size: 5rem;
+.CommunicatTitle {
+  color: $primary;
+  font-size: 5rem;
 }
-.CommunicatDesc{
-    color: white;
-    font-size: large;
-    width: 23rem;
-    margin-left: 2rem;
-   }
-   
+.CommunicatDesc {
+  color: white;
+  font-size: large;
+  width: 23rem;
+  margin-left: 2rem;
+}
 
-
-.LoginPanelConatiner{
-    // background-color: cadetblue;
-    min-width: 30rem;
-    max-width: 30rem;
-    height: 100%;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction:      column;
-margin-right: 3rem;
+.LoginPanelConatiner {
+  // background-color: cadetblue;
+  min-width: 30rem;
+  max-width: 30rem;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-right: 3rem;
 }
 
 @media (max-width: 70rem) {
-    .CommunicatPanel {
-        // background-color: red;
-        display: none;
-    }
-    .AuthLoginScreenConatiner{
-        align-items: center;
-        justify-content:center; 
-    }
+  .CommunicatPanel {
+    // background-color: red;
+    display: none;
+  }
+  .AuthLoginScreenConatiner {
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.AuthPanelElement{
-    margin-top: 0.5rem;
+.AuthPanelElement {
+  margin-top: 0.5rem;
 }
 
-.boldText{
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: $textInputColor;
+.boldText {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: $textInputColor;
 }
 
-.linkText{
-    font-size: 1.1rem;
-    font-style: italic;
-    color: $primary;
+.linkText {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: $primary;
 }
-
-

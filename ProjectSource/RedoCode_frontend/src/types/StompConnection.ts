@@ -1,5 +1,5 @@
-import type { IFrame } from "@stomp/stompjs";
+import type { IFrame } from '@stomp/stompjs'
 
 export default interface OnConnectFunc {
-    (frame: IFrame): void;
-  }
+  (frame: IFrame): void
+}

@@ -1,117 +1,109 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
-.exerciseSetupPanel{
-background-color: aqua;
-
+.exerciseSetupPanel {
+  background-color: aqua;
 }
 
-
-.setupPanel{
-    background-color: yellow;
-    height: 100%;
+.setupPanel {
+  background-color: yellow;
+  height: 100%;
 }
 
-.manualTestPanel{
-    // background-color: blue;
-    height: 100%;
+.manualTestPanel {
+  // background-color: blue;
+  height: 100%;
 }
 
-.autoTestPanel{
-    background-color: green;
-    height: 100%;
+.autoTestPanel {
+  background-color: green;
+  height: 100%;
 }
 
-.languageDropDown{
-    background-color: rgb(56, 56, 56);
-    color: white;
+.languageDropDown {
+  background-color: rgb(56, 56, 56);
+  color: white;
 }
 
-.languageDropDown .p-multiselect-label{
-    color: white;
+.languageDropDown .p-multiselect-label {
+  color: white;
 }
 
-.languageDropDown .p-multiselect-item{
-    background-color: red;
+.languageDropDown .p-multiselect-item {
+  background-color: red;
 }
 
-.languageDropDown .p-multiselect-panel{
-    background-color: red;
+.languageDropDown .p-multiselect-panel {
+  background-color: red;
 }
 
-.languageDropDown .p-hidden-accessible{
-    background-color: red;
+.languageDropDown .p-hidden-accessible {
+  background-color: red;
 }
-.p-multiselect-panel .p-component .p-ripple-disabled{
-    background-color: red;
-}
-
-.p-multiselect-items-wrapper
-{
-    background-color: rgb(43, 43, 43);
-}
-.p-multiselect-header{
-    background-color: rgb(34, 34, 34); 
+.p-multiselect-panel .p-component .p-ripple-disabled {
+  background-color: red;
 }
 
-.p-multiselect-item{
-    background-color: rgb(31, 31, 31); 
-    color: white;
+.p-multiselect-items-wrapper {
+  background-color: rgb(43, 43, 43);
 }
-.p-checkbox-input{
-    background-color: red;
-    color: red;
+.p-multiselect-header {
+  background-color: rgb(34, 34, 34);
 }
 
-.p-highlight{
-    fill: red;
+.p-multiselect-item {
+  background-color: rgb(31, 31, 31);
+  color: white;
+}
+.p-checkbox-input {
+  background-color: red;
+  color: red;
 }
 
-.p-multiselect-token{
-    background-color: rgb(114, 114, 114);
-    color: white;
+.p-highlight {
+  fill: red;
 }
 
+.p-multiselect-token {
+  background-color: rgb(114, 114, 114);
+  color: white;
+}
 
 .p-checkbox.p-component.p-highlight * {
-    background-color: $primary; 
-    border-color: $primary;
+  background-color: $primary;
+  border-color: $primary;
 }
 
-
-.panelSection{
-    // background-color: blue;
-    margin-top: 1rem;
-    width: 100%;
+.panelSection {
+  // background-color: blue;
+  margin-top: 1rem;
+  width: 100%;
 }
 
-.SubPanelSection{
-    display: flex;
-    flex-direction: row;
+.SubPanelSection {
+  display: flex;
+  flex-direction: row;
 }
 
-.panelVerticalSection{
-    // background-color: rgb(0, 255, 136);
-    margin-left: 0.5rem;
-    width: 100%;
-    
+.panelVerticalSection {
+  // background-color: rgb(0, 255, 136);
+  margin-left: 0.5rem;
+  width: 100%;
 }
 
-.vue-slider-process *{
-    height: 3rem;
-    border-color: red;
-    fill: red;
-
+.vue-slider-process * {
+  height: 3rem;
+  border-color: red;
+  fill: red;
 }
 
-.vue-slider-ltr{
-    height: 3rem;
- 
+.vue-slider-ltr {
+  height: 3rem;
 }
-.numberInputRam *{
-    width: 8rem; 
+.numberInputRam * {
+  width: 8rem;
 }
 
-.numberInput *{
-    width: 8rem;
-    margin: 0.5rem;
+.numberInput * {
+  width: 8rem;
+  margin: 0.5rem;
 }

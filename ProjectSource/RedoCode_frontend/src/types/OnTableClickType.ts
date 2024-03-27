@@ -1,3 +1,3 @@
 export default interface OnTableClickType {
-    (id: number): void;
-  }
+  (id: number): void
+}

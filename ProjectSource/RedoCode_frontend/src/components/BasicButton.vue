@@ -6,21 +6,15 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { computed } from 'vue';
-
+import { computed } from 'vue'
 
 const props = defineProps({
   onClick: { type: Function, required: true }
 })
 
 const onClickMethod = () => {
-  console.log("click")
-  props.onClick();
+  console.log('click')
+  props.onClick()
 }
-
-
-
-
 </script>

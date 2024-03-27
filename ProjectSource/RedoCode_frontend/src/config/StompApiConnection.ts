@@ -1,54 +1,50 @@
-import { Client, type IFrame } from '@stomp/stompjs';
+import { Client, type IFrame } from '@stomp/stompjs'
 import type OnConnectFunc from '../types/StompConnection'
-import type { IfStatement } from 'typescript';
+import type { IfStatement } from 'typescript'
 
-
-let userName: String|null=null;
+let userName: String | null = null
 
 export const stompClient = new Client({
-    brokerURL: 'ws://localhost:8080/web-socket'
-});
+  brokerURL: 'ws://localhost:8080/web-socket'
+})
 
 stompClient.onWebSocketError = (error) => {
-    console.error('Error with websocket', error);
-};
+  console.error('Error with websocket', error)
+}
 stompClient.onStompError = (frame) => {
-    console.error('Broker reported error: ' + frame.headers['message']);
-    console.error('Additional details: ' + frame.body);
-};
-
-export const connectStomp=()=>{
-    console.log("connecting to Stomp ")
-    stompClient.activate();
+  console.error('Broker reported error: ' + frame.headers['message'])
+  console.error('Additional details: ' + frame.body)
 }
 
-export const disconnectStomp=()=>{
-    console.log("disconnect from stomp")
-    stompClient.deactivate();
-    userName=null;
+export const connectStomp = () => {
+  console.log('connecting to Stomp ')
+  stompClient.activate()
 }
 
-
-const deafultOnConnection=(frame: IFrame)=>{
-    console.log("default conneciton")
-    userName=frame.headers["user-name"];
-    console.log(userName)
+export const disconnectStomp = () => {
+  console.log('disconnect from stomp')
+  stompClient.deactivate()
+  userName = null
 }
 
-stompClient.onConnect=(frame:IFrame)=>{
-    deafultOnConnection(frame);
-    
-};
-
-export const onConnectStomp=(func :OnConnectFunc)=>{
-    console.log("on connection")
-    stompClient.onConnect = (frame: IFrame) => {
-        deafultOnConnection(frame);
-        func(frame);
-    }
+const deafultOnConnection = (frame: IFrame) => {
+  console.log('default conneciton')
+  userName = frame.headers['user-name']
+  console.log(userName)
 }
 
+stompClient.onConnect = (frame: IFrame) => {
+  deafultOnConnection(frame)
+}
 
-export const getConnetedUserName=(): String|null=>{
-    return userName;
+export const onConnectStomp = (func: OnConnectFunc) => {
+  console.log('on connection')
+  stompClient.onConnect = (frame: IFrame) => {
+    deafultOnConnection(frame)
+    func(frame)
+  }
+}
+
+export const getConnetedUserName = (): String | null => {
+  return userName
 }

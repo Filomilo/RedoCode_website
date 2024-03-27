@@ -1,52 +1,50 @@
-@import "../variables.scss";
+@import '../variables.scss';
 
 .TopBarContainer {
-    display: flex; 
-    background-color: $backgroundColor;
-    align-items: center;
-    justify-content: space-between; 
-    position: fixed;
-    width: 100%;
-    z-index: 6;
-    height: $headerHeight;
+  display: flex;
+  background-color: $backgroundColor;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  z-index: 6;
+  height: $headerHeight;
 }
 
 .TopBarList {
-    display: flex;
-    // background-color: blue;
-    align-items: center;
-    flex-direction: row;
-    margin: 20px;
-    width: 100%;
+  display: flex;
+  // background-color: blue;
+  align-items: center;
+  flex-direction: row;
+  margin: 20px;
+  width: 100%;
 }
 
-
 .TopBarItemContainer {
-    // background-color: green;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    flex-direction: column;
-    flex-grow: 1;
+  // background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .TopBarItemIcon {
-
 }
 
-.TopBarItemTitle  {
-color: $primary;
-text-decoration: none;
+.TopBarItemTitle {
+  color: $primary;
+  text-decoration: none;
 }
 .TopBarItemTitle {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 
 .TopBarItemTitle:hover {
-    /* Remove underline on hover */
-    text-decoration: none !important;
+  /* Remove underline on hover */
+  text-decoration: none !important;
 }
 
 a {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }

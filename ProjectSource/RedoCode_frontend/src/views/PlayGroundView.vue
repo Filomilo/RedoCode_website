@@ -1,16 +1,12 @@
 <template>
-<main class="PlayGroundBase">
-<CodeRunnerPanel :showLeftPanel="false" :connectAtStart="false" />
-</main>
-<!-- <div style="background-color: red; width: 100%; height: 100%"> -->
+  <main class="PlayGroundBase">
+    <CodeRunnerPanel :showLeftPanel="false" :connectAtStart="false" />
+  </main>
+  <!-- <div style="background-color: red; width: 100%; height: 100%"> -->
 
-<!-- </div> -->
+  <!-- </div> -->
 </template>
-
-
 
 <script lang="ts" setup>
 import CodeRunnerPanel from '../components/CodeRunnerPanel.vue'
-
-
 </script>

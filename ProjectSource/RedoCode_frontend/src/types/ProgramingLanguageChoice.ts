@@ -1,5 +1,3 @@
-
-
-  export interface programingLanguageChoice{
-    name: string
+export interface programingLanguageChoice {
+  name: string
 }

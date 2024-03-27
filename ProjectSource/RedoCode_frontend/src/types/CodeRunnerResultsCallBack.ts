@@ -1,8 +1,5 @@
-
-
-
-import type CodeResultsType from "./CodeResultsType";
+import type CodeResultsType from './CodeResultsType'
 
 export default interface CodeRunnerResultsCallBack {
-    (results: CodeResultsType[]): void;
-  }
+  (results: CodeResultsType[]): void
+}

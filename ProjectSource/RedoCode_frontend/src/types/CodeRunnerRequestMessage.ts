@@ -1,3 +1,3 @@
-export default interface CodeRunnerRequestMessage{
-    CodeRunnerType: String
+export default interface CodeRunnerRequestMessage {
+  CodeRunnerType: String
 }

@@ -1,70 +1,60 @@
-@import "variables.scss";
-@import "./MyComopnents/langaugeSelector.scss";
-@import "./MyComopnents/Buttons.scss";
-@import "./MyComopnents/MainPage.scss";
-@import "./MyComopnents/CodeEditorPanel.scss";
-@import "./MyComopnents/TopBar.scss";
-@import "./MyComopnents/Authentication.scss";
-@import "./MyComopnents/Inputs.scss";
-@import "./MyComopnents/Comunicats.scss";
-@import  "./MyComopnents/ExercisePromotino.scss";
-@import  "./MyComopnents/Coderunner.scss";
-@import "./MyComopnents/Dropdown.scss";
-@import "./MyComopnents/CodeResult.scss";
-@import "./MyComopnents/DescriptionPanel.scss";
-@import "./MyComopnents/ExerciseSetupPanel.scss";
-@import "./MyComopnents/Table.scss";
-@import "./MyComopnents/AccountView.scss";
+@import 'variables.scss';
+@import './MyComopnents/langaugeSelector.scss';
+@import './MyComopnents/Buttons.scss';
+@import './MyComopnents/MainPage.scss';
+@import './MyComopnents/CodeEditorPanel.scss';
+@import './MyComopnents/TopBar.scss';
+@import './MyComopnents/Authentication.scss';
+@import './MyComopnents/Inputs.scss';
+@import './MyComopnents/Comunicats.scss';
+@import './MyComopnents/ExercisePromotino.scss';
+@import './MyComopnents/Coderunner.scss';
+@import './MyComopnents/Dropdown.scss';
+@import './MyComopnents/CodeResult.scss';
+@import './MyComopnents/DescriptionPanel.scss';
+@import './MyComopnents/ExerciseSetupPanel.scss';
+@import './MyComopnents/Table.scss';
+@import './MyComopnents/AccountView.scss';
 
-.excercise-table-container{
- width: auto;
- justify-self: center;
- align-items: center;
+.excercise-table-container {
+  width: auto;
+  justify-self: center;
+  align-items: center;
   align-content: center;
-
 }
 
-.excercise-table-wrapper{
-
-    width: 90%;
-    margin-left: 5%;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
+.excercise-table-wrapper {
+  width: 90%;
+  margin-left: 5%;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
 }
 
-
-
-
-.topbar-navigation{
-
+.topbar-navigation {
 }
 
 .topbar-navigation .nav-item {
+  font-size: 1rem;
+  transition: font-size 0.1s ease-in-out;
+}
 
-    font-size: 1rem; 
-  transition: font-size 0.1s ease-in-out; 
-    }
-    
-    .topbar-navigation .nav-item:hover {
-        font-size: 1.2rem; 
-
-        }
-
+.topbar-navigation .nav-item:hover {
+  font-size: 1.2rem;
+}
 
 .excercise-table-row {
-    transition: background-color 0.05s linear
+  transition: background-color 0.05s linear;
 }
 
 .excercise-table-row:hover {
-    background-color: $primary-dark;
+  background-color: $primary-dark;
 }
-.excercise-table-row:active  {
-    background-color: $primary;
+.excercise-table-row:active {
+  background-color: $primary;
 }
 
-
-  
-  .table td, .table th {
-    background-color: transparent; 
-  }
+.table td,
+.table th {
+  background-color: transparent;
+}
