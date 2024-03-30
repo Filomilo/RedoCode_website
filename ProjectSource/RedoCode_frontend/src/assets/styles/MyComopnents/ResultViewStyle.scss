@@ -1,0 +1,73 @@
+@import '../variables.scss';
+
+.VerticalLine {
+  width: 100%;
+}
+
+.rateButton {
+  border-color: transparent;
+  margin: 0.1rem;
+  border-radius: 0.2rem;
+  align-self: flex-end;
+  background-color: $primary;
+}
+
+.level1 {
+  height: 0.1rem;
+}
+.level2 {
+  height: 2rem;
+}
+.level3 {
+  height: 3rem;
+}
+.level4 {
+  height: 4rem;
+}
+.level5 {
+  height: 5rem;
+}
+.algainBottom {
+  display: flex;
+  flex-direction: row;
+}
+.saveButton {
+  background-color: $primary;
+  border-radius: 0.2rem;
+  border-color: transparent;
+}
+.commentButton {
+  background-color: $primary;
+  border-radius: 0.2rem;
+  border-color: transparent;
+  align-self: flex-end;
+}
+
+.CommentArea {
+  width: 95%;
+  background-color: rgb(49, 49, 49);
+  height: 10rem;
+  width: 95%;
+  color: white;
+}
+
+.ProfilePicContainer {
+  width: 5rem;
+  max-width: 5rem;
+  margin-left: 2rem;
+}
+.profilePic {
+  width: 100%;
+  border-radius: 50rem;
+  max-width: 100%;
+  height: 5rem;
+}
+
+.CommentContainer {
+  background-color: rgb(22, 22, 22);
+  border-radius: 2rem;
+  width: 95%;
+  height: fit-content;
+  margin: 2rem;
+  color: white;
+}

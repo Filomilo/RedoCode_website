@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100% ; max-height: 100%; max-width:100%">
+  <div style="width: 100%; height: 100%; max-height: 100%; max-width: 100%">
     <div class="dimensionsPanel">
       <div :v-if="dimension >= 1">
         <label>X size: </label>
@@ -101,13 +101,11 @@ const onYDimChange = (value) => {
 
 <style>
 .dimensionsPanel {
-
   display: flex;
   width: 100%;
 }
 
 .rowContainer {
-
   margin: 0.5rem;
   display: flex;
   flex-direction: row;
@@ -129,10 +127,8 @@ const onYDimChange = (value) => {
 }
 
 .inputCotainer {
-
   width: 100%;
   height: 85%;
   overflow-y: scroll;
 }
-
 </style>

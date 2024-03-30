@@ -41,6 +41,7 @@ import RadioButton from 'primevue/radiobutton'
 import Checkbox from 'primevue/checkbox'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
+import Textarea from 'primevue/textarea'
 
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
@@ -73,4 +74,5 @@ app.component('InputNumber', InputNumber)
 app.component('Chart', Chart)
 app.component('RadioButton', RadioButton)
 app.component('Checkbox', Checkbox)
+app.component('Textarea', Textarea)
 app.mount('#app')

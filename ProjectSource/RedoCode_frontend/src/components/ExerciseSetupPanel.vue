@@ -355,8 +355,8 @@
 import { ref } from 'vue'
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/antd.css'
-import InputSetupInput from './InputSetupInput.vue';
-import ManualTestPnael from './ManualTestPnael.vue';
+import InputSetupInput from './InputSetupInput.vue'
+import ManualTestPnael from './ManualTestPnael.vue'
 
 const langOptions = [
   { label: 'Cpp', value: 'cpp' },

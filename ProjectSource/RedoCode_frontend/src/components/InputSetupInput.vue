@@ -1,7 +1,5 @@
 <template>
-
   <InputNumber v-model="val" inputId="integeronly" class="InputSizeContainer" />
-
 </template>
 
 <script lang="ts" setup>
@@ -11,12 +9,10 @@ const val = ref(0)
 
 <style>
 .dimensionsPanel {
-
   display: flex;
 }
 
 .rowContainer {
-
   margin: 0.5rem;
   display: flex;
   flex-direction: row;
@@ -27,17 +23,15 @@ const val = ref(0)
 }
 
 .InputSizeContainer {
-    margin-right: -5rem;
+  margin-right: -5rem;
 }
 
 .InputSizeContainer * {
-
-
   width: 2rem;
   margin-right: -1rem;
 }
 
 .inputCotainer {
-overflow: scroll;
+  overflow: scroll;
 }
 </style>
