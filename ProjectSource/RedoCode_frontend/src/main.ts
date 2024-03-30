@@ -37,6 +37,8 @@ import MultiSelect from 'primevue/multiselect'
 import Slider from 'primevue/slider'
 import InputNumber from 'primevue/inputnumber'
 import Chart from 'primevue/chart'
+import RadioButton from 'primevue/radiobutton'
+import Checkbox from 'primevue/checkbox'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
 
@@ -69,5 +71,6 @@ app.component('MultiSelect', MultiSelect)
 app.component('Slider', Slider)
 app.component('InputNumber', InputNumber)
 app.component('Chart', Chart)
-
+app.component('RadioButton', RadioButton)
+app.component('Checkbox', Checkbox)
 app.mount('#app')

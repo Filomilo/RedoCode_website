@@ -1,22 +1,28 @@
 @import '../variables.scss';
 
 .exerciseSetupPanel {
-  background-color: aqua;
+  background-color: rgb(32, 32, 32);
+  color: rgb(248, 248, 248);
 }
 
 .setupPanel {
-  background-color: yellow;
+  // background-color: rgb(255, 187, 0);
   height: 100%;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .manualTestPanel {
   // background-color: blue;
   height: 100%;
+  overflow: scroll;
 }
 
 .autoTestPanel {
-  background-color: green;
+  // background-color: green;
   height: 100%;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .languageDropDown {
@@ -29,18 +35,18 @@
 }
 
 .languageDropDown .p-multiselect-item {
-  background-color: red;
+  // background-color: red;
 }
 
 .languageDropDown .p-multiselect-panel {
-  background-color: red;
+  // background-color: red;
 }
 
 .languageDropDown .p-hidden-accessible {
-  background-color: red;
+  // background-color: red;
 }
 .p-multiselect-panel .p-component .p-ripple-disabled {
-  background-color: red;
+  // background-color: red;
 }
 
 .p-multiselect-items-wrapper {
@@ -55,12 +61,12 @@
   color: white;
 }
 .p-checkbox-input {
-  background-color: red;
-  color: red;
+  // background-color: red;
+  // color: red;
 }
 
 .p-highlight {
-  fill: red;
+  // fill: red;
 }
 
 .p-multiselect-token {
@@ -92,8 +98,8 @@
 
 .vue-slider-process * {
   height: 3rem;
-  border-color: red;
-  fill: red;
+  // border-color: red;
+  // fill: red;
 }
 
 .vue-slider-ltr {
@@ -106,4 +112,33 @@
 .numberInput * {
   width: 8rem;
   margin: 0.5rem;
+}
+
+.horizontalSection {
+  // background-color: red;
+  margin: 1rem;
+  display: flex;
+}
+
+.RadioButtonSection {
+  // background-color: blue;
+  margin-right: 0.5rem;
+}
+
+.smallNumberInput * {
+  width: 4rem;
+  margin: 0.5rem;
+}
+
+.sliderContaienr {
+}
+.sliderContaienr .p-slider {
+}
+.sliderContaienr .p-slider-handle {
+  margin-top: -0.5rem;
+}
+
+.checkBoxContainer {
+  // background-color: aqua;
+  margin-left: 1rem;
 }
