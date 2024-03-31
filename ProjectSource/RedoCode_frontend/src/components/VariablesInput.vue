@@ -46,7 +46,7 @@ const xSize = ref(1)
 const ySize = ref(1)
 const data = ref([[0]])
 
-const onXDimChange = (value) => {
+const onXDimChange = (value: number) => {
   console.log('change x: ' + value)
   if (data.value[0].length < value) {
     let toIncrease = value - data.value[0].length
@@ -73,7 +73,7 @@ const onXDimChange = (value) => {
     }
   }
 }
-const onYDimChange = (value) => {
+const onYDimChange = (value: number) => {
   console.log('change y: ' + value)
   if (data.value[0].length < value) {
     let toIncrease = value - data.value.length

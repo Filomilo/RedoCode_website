@@ -185,7 +185,7 @@
                 :min="1"
                 :max="10"
                 :unstyled="false"
-                @change="onXChange"
+                @update:modelValue="(event) => onXChange(event)"
               />
             </div>
           </div>
@@ -314,7 +314,7 @@
                   :max="30"
                   :step="1"
                   :unstyled="false"
-                  @change="onLengthChange"
+                  @update:modelValue="(change) => onLengthChange(change)"
                 />
               </div>
               <div class="SubPanelSection">
@@ -379,7 +379,7 @@ const yArrayInputRange = ref([1, 10])
 const lengthRange = ref([1, 10])
 const stringGenParam = ref([true, true, true, true, true, true])
 
-const onXChange = (val: number[]) => {
+const onXChange = (val: any) => {
   // console.log("X vlaue chnaged: "+JSON.stringify(val));
   if (val[0] > val[1]) {
     val[0] = val[1]
@@ -387,7 +387,7 @@ const onXChange = (val: number[]) => {
   xArrayInputRange.value = val
 }
 
-const onYChange = (val: number[]) => {
+const onYChange = (val: any) => {
   // console.log("X vlaue chnaged: "+JSON.stringify(val));
   if (val[0] > val[1]) {
     val[0] = val[1]
@@ -395,7 +395,7 @@ const onYChange = (val: number[]) => {
   yArrayInputRange.value = val
 }
 
-const onLengthChange = (val: number[]) => {
+const onLengthChange = (val: any) => {
   // console.log("X vlaue chnaged: "+JSON.stringify(val));
   if (val[0] > val[1]) {
     val[0] = val[1]
