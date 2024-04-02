@@ -1,276 +1,119 @@
 <template>
   <main class="PlayGroundBase">
-    <ExcersiceTable :data="exerciseData" :onRowClick="onExcersiceButton"></ExcersiceTable>
+    <div class="datatable-container">
+      <EasyDataTable
+        :headers="fields"
+        :items="exerciseData"
+        alternating
+        buttons-pagination
+        class="dataTableStyle"
+        :server-items-length="555"
+        v-model:server-options="serverOptions"
+      >
+        <template #expand="item">
+          {{ item.description }}
+        </template>
+  
+        <template #loading>
+          <LoadingIndicator />
+        </template>
+        <template #item-actions="item">
+          <Button
+            v-on:click="onExcersiceButton(item.id)"
+            style="background-color: transparent; border-color: transparent; fill: white"
+          >
+            <IconPlay height="1.3rem" />
+          </Button>
+        </template>
+  
+        <template #pagination="{ prevPage, nextPage, isFirstPage, isLastPage }">
+          <div class="paginatorButtons">
+            <Button :disabled="isFirstPage" @click="prevPage">
+              <IconNextLeft />
+            </Button>
+            <Button :disabled="isLastPage" @click="nextPage">
+              <IconNextRight />
+            </Button>
+          </div>
+  
+          <router-link to="/Create" class="createButton" id="Home_Button">
+            <Button> Create </Button>
+          </router-link>
+        </template>
+      </EasyDataTable>
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import type ExerciseType from '@/types/ExerciseType'
-import ExcersiceTable from '@/components/ExcersiceTable.vue'
-import { onBeforeRouteUpdate, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import {  useRouter } from 'vue-router'
+import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
+import type ExerciseType from '@/types/ExerciseType'
+import type OnTableClickType from '@/types/OnTableClickType'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
+import type { Header, Item,ServerOptions } from 'vue3-easy-data-table'
+import Button from 'primevue/button'
+import IconNextRight from '../assets/icons/IconNextRight.vue'
+import IconNextLeft from '../assets/icons/IconNextLeft.vue'
+import IconPlay from '@/assets/icons/IconPlay.vue'
+import ExerciseListRequestMessage from '@/types/ExerciseListRequestMessage'
+import { isArray } from 'chart.js/helpers'
+
 
 const router = useRouter()
+
+
+const fields: any[] = [
+  { text: 'Name', value: 'name' },
+  { text: 'language', value: 'language' },
+  { text: 'difficulty', value: 'difficulty' },
+  { text: '', value: 'actions', width: 30 }
+]
+
 
 const onExcersiceButton = (id: number) => {
   router.push({ name: 'Exercise', params: { id: id } })
 }
 const exerciseData = ref<ExerciseType[]>([])
 
-const exerciseDataInput: ExerciseType[] = [
-  {
-    name: 'task1',
-    language: ['c++'],
-    difficulty: 'hard',
-    popularity: 222,
-    id: 1,
-    description: 'task1 description'
-  },
-  {
-    name: 'task2',
-    language: ['any'],
-    difficulty: 'hard',
-    popularity: 222122,
-    id: 2,
-    description: 'task2 description'
-  },
-  {
-    name: 'task3',
-    language: ['c++', 'java'],
-    difficulty: 'easy',
-    popularity: 23,
-    id: 3,
-    description: 'task3 description'
-  },
-  {
-    name: 'task4',
-    language: ['python'],
-    difficulty: 'medium',
-    popularity: 320,
-    id: 4,
-    description: 'task4 description'
-  },
-  {
-    name: 'task5',
-    language: ['javascript'],
-    difficulty: 'medium',
-    popularity: 543,
-    id: 5,
-    description: 'task5 description'
-  },
-  {
-    name: 'task6',
-    language: ['java'],
-    difficulty: 'easy',
-    popularity: 421,
-    id: 6,
-    description: 'task6 description'
-  },
-  {
-    name: 'task7',
-    language: ['python', 'javascript'],
-    difficulty: 'hard',
-    popularity: 654,
-    id: 7,
-    description: 'task7 description'
-  },
-  {
-    name: 'task8',
-    language: ['c++', 'python'],
-    difficulty: 'medium',
-    popularity: 342,
-    id: 8,
-    description: 'task8 description'
-  },
-  {
-    name: 'task9',
-    language: ['java', 'javascript'],
-    difficulty: 'easy',
-    popularity: 233,
-    id: 9,
-    description: 'task9 description'
-  },
-  {
-    name: 'task10',
-    language: ['c++'],
-    difficulty: 'medium',
-    popularity: 122,
-    id: 10,
-    description: 'task10 description'
-  },
-  {
-    name: 'task11',
-    language: ['python'],
-    difficulty: 'hard',
-    popularity: 423,
-    id: 11,
-    description: 'task11 description'
-  },
-  {
-    name: 'task12',
-    language: ['javascript'],
-    difficulty: 'easy',
-    popularity: 555,
-    id: 12,
-    description: 'task12 description'
-  },
-  {
-    name: 'task13',
-    language: ['java'],
-    difficulty: 'medium',
-    popularity: 312,
-    id: 13,
-    description: 'task13 description'
-  },
-  {
-    name: 'task14',
-    language: ['c++', 'javascript'],
-    difficulty: 'hard',
-    popularity: 654,
-    id: 14,
-    description: 'task14 description'
-  },
-  {
-    name: 'task15',
-    language: ['python', 'java'],
-    difficulty: 'easy',
-    popularity: 111,
-    id: 15,
-    description: 'task15 description'
-  },
-  {
-    name: 'task16',
-    language: ['c++'],
-    difficulty: 'medium',
-    popularity: 432,
-    id: 16,
-    description: 'task16 description'
-  },
-  {
-    name: 'task17',
-    language: ['python', 'javascript'],
-    difficulty: 'hard',
-    popularity: 765,
-    id: 17,
-    description: 'task17 description'
-  },
-  {
-    name: 'task18',
-    language: ['c++', 'java'],
-    difficulty: 'easy',
-    popularity: 234,
-    id: 18,
-    description: 'task18 description'
-  },
-  {
-    name: 'task19',
-    language: ['javascript'],
-    difficulty: 'medium',
-    popularity: 654,
-    id: 19,
-    description: 'task19 description'
-  },
-  {
-    name: 'task20',
-    language: ['python'],
-    difficulty: 'hard',
-    popularity: 987,
-    id: 20,
-    description: 'task20 description'
-  },
-  {
-    name: 'task21',
-    language: ['java'],
-    difficulty: 'easy',
-    popularity: 222,
-    id: 21,
-    description: 'task21 description'
-  },
-  {
-    name: 'task22',
-    language: ['c++', 'python'],
-    difficulty: 'medium',
-    popularity: 543,
-    id: 22,
-    description: 'task22 description'
-  },
-  {
-    name: 'task23',
-    language: ['javascript', 'java'],
-    difficulty: 'hard',
-    popularity: 876,
-    id: 23,
-    description: 'task23 description'
-  },
-  {
-    name: 'task24',
-    language: ['python', 'c++'],
-    difficulty: 'easy',
-    popularity: 333,
-    id: 24,
-    description: 'task24 description'
-  },
-  {
-    name: 'task25',
-    language: ['java'],
-    difficulty: 'medium',
-    popularity: 543,
-    id: 25,
-    description: 'task25 description'
-  },
-  {
-    name: 'task26',
-    language: ['c++', 'javascript'],
-    difficulty: 'hard',
-    popularity: 987,
-    id: 26,
-    description: 'task26 description'
-  },
-  {
-    name: 'task27',
-    language: ['python', 'java'],
-    difficulty: 'easy',
-    popularity: 234,
-    id: 27,
-    description: 'task27 description'
-  },
-  {
-    name: 'task28',
-    language: ['c++'],
-    difficulty: 'medium',
-    popularity: 543,
-    id: 28,
-    description: 'task28 description'
-  },
-  {
-    name: 'task29',
-    language: ['python', 'javascript'],
-    difficulty: 'hard',
-    popularity: 876,
-    id: 29,
-    description: 'task29 description'
-  },
-  {
-    name: 'task30',
-    language: ['c++', 'java'],
-    difficulty: 'easy',
-    popularity: 333,
-    id: 30,
-    description: 'task30 description'
-  }
-]
+const serverOptions = ref<ServerOptions>({
+  page: 1,
+  rowsPerPage: 25,
+  sortBy: 'name',
+  sortType: 'desc',
+});
 
-// onMounted(() => {
-console.log('On mounted')
-// axios.get('http://localhost:8080/exercises').then((response) => {
-//   if (response === undefined) {
-//     console.error("couldn't retrieve excercise list from server")
-//     throw "couldn't retrieve excercise list from server"
-//   }
-exerciseData.value = exerciseDataInput
-// })
-// })
+
+const loadFromServer=()=>{
+  const sortby: string=serverOptions.value.sortBy===undefined?'name':isArray( serverOptions.value.sortBy)?serverOptions.value.sortBy[0]:serverOptions.value.sortBy;
+
+  const request: ExerciseListRequestMessage={
+    sortBy: sortby,
+    rowsPerPage:  serverOptions.value.rowsPerPage,
+    page: serverOptions.value.page,
+    sortDirection: serverOptions.value.sortType==='desc' 
+  } ;
+
+
+  axios.get('exercises',{params: request}).then((response)=>{
+
+  if (response === undefined) {
+    console.error("couldn't retrieve excercise list from server")
+    throw "couldn't retrieve excercise list from server"
+  }
+  exerciseData.value = response.data
+  });
+
+}
+
+
+
+watch(serverOptions, (newValue, oldValue) => {
+  console.log(`load : count changed from ${JSON.stringify (oldValue)} to ${JSON.stringify (newValue)}`);
+  loadFromServer();
+}, { immediate: true, deep: true });
+
 
 /*
 onBeforeRouteUpdate(()=>{
@@ -279,4 +122,18 @@ onBeforeRouteUpdate(()=>{
 */
 const HeadType: string = 'Dark'
 </script>
-@/types/ExerciseType
+<style>
+.dataTableStyle {
+  height: 5rem;
+  overflow: hidden;
+}
+
+.vue3-easy-data-table {
+  background-color: blue;
+  height: 4rem;
+  max-height: 100%;
+}
+.vue3-easy-data-table__main {
+  height: calc(100% - 2.1rem);
+}
+</style>

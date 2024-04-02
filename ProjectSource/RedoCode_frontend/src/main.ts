@@ -43,10 +43,11 @@ import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
 import Textarea from 'primevue/textarea'
 
+import "./interceptors/axios"
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
-  makeServer()
+  // makeServer()
 }
 
 app

@@ -1,4 +1,4 @@
-package com.redocode.backend.databse;
+package com.redocode.backend.database;
 
 import com.redocode.backend.database.User;
 import com.redocode.backend.database.UsersRepository;

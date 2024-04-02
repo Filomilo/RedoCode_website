@@ -28,8 +28,29 @@ INSERT INTO public.excersizes (author_id, excersize_name)
 VALUES (1,  'Hello world'),
        (2, 'Fibonacci'),
        (3,'Sorting'),
-       (3,'linked list implementation'),
-    (2,'prime number generator');
+       (6,'linked list implementation'),
+    (2,'prime number generator'),
+       (4, 'Palindrome Checker'),
+       (5, 'Binary Search Tree Implementation'),
+       (6, 'Matrix Multiplication'),
+       (7, 'Stack Implementation'),
+       (8, 'Queue Implementation'),
+       (1, 'Graph Traversal (BFS/DFS)'),
+       (1, 'String Reversal'),
+       (1, 'Merge Sort'),
+       (2, 'Tree Traversal'),
+       (4, 'Hash Map Implementation'),
+       (5, 'Binary Tree Height Calculation'),
+       (6, 'Depth-First Search (DFS)'),
+       (7, 'Breadth-First Search (BFS)'),
+       (8, 'Binary Search Algorithm'),
+       (9, 'Recursion Exercises'),
+       (5, 'Linked List Reversal'),
+       (1, 'Trie Data Structure Implementation'),
+       (2, 'Dijkstra Algorithm Implementation'),
+       (3, 'Topological Sorting Algorithm Implementation'),
+       (4, 'Heap Implementation'),
+       (5, 'Binary Tree Diameter Calculation');
 
 
 
