@@ -1,8 +1,10 @@
 package com.redocode.backend.database;
 
+import lombok.Data;
+
 import java.util.Set;
 
-
+@Data
 public class ExcersizeListEntry {
     private  Long id;
     private  String name;
@@ -15,7 +17,7 @@ public class ExcersizeListEntry {
         this.id = e.getId();
         this.name = e.getExcersizeName();
         this.languages = e.getLanguages();
-        this.difficulty = e.getRatings().stream().mapToInt(element -> element.getRating()).sum()/e.getRatings().size();
+        this.difficulty =e.getRatings().size()!=0?e.getRatings().stream().mapToInt(element -> element.getRating()).sum()/e.getRatings().size():0;
         this.popularity = (long) e.getAttempts().size();
     }
     public Long getId() {

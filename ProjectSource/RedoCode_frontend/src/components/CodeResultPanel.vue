@@ -18,7 +18,9 @@
     <DataResultPanel v-if="isDataResult" :results="results" />
 
     <div class="ExerciseControlPanle" v-if="isDataResult">
-      <Button class="submitButton"> Submit </Button>
+      <router-link to="/Results" class="TopBarItemContainer" id="Result_burron">
+        <Button class="submitButton"> Submit </Button>
+      </router-link>
     </div>
   </div>
 </template>

@@ -31,12 +31,7 @@
     <div class="CommunicatsListContainer">
       <div class="CommunicatInfoContainer">
         <div class="CommunicatImage">
-          <Image
-            :src=FrontImage1
-            alt="info iamge 1"
-            :max-width="'100%'"
-            :max-height="'100%'"
-          />
+          <Image :src="FrontImage1" alt="info iamge 1" :max-width="'100%'" :max-height="'100%'" />
         </div>
 
         <div class="CommunicatTextContainer">
@@ -53,23 +48,13 @@
           <div class="CommunicatText">Get acces to alrge databse of programinng excersices</div>
         </div>
         <div class="CommunicatImage">
-          <Image
-            :src=FrontImage2
-            alt="info iamge 1"
-            :max-width="'100%'"
-            :max-height="'100%'"
-          />
+          <Image :src="FrontImage2" alt="info iamge 1" :max-width="'100%'" :max-height="'100%'" />
         </div>
       </div>
 
       <div class="CommunicatInfoContainer">
         <div class="CommunicatImage">
-          <Image
-            :src=FrontImage3
-            alt="info iamge 1"
-            :max-width="'100%'"
-            :max-height="'100%'"
-          />
+          <Image :src="FrontImage3" alt="info iamge 1" :max-width="'100%'" :max-height="'100%'" />
         </div>
         <div class="CommunicatTextContainer">
           <div class="CommunicatTextTitle">Statistics</div>

@@ -1,6 +1,7 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 
+import com.redocode.backend.Messages.ExerciseListRequestMessage;
 import com.redocode.backend.database.ExerciseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,9 @@ public class ExercisesController {
 
     Logger logger= LoggerFactory.getLogger(ExercisesController.class);
     @GetMapping("/exercises")
-    public List<?> getExercises()
+    public List<?> getExercises(ExerciseListRequestMessage mes)
     {
-    logger.info("experiences list request");
+    logger.info("experiences list request: "+ mes);
 
         return  exerciseRepository.getSimpleExcersizeList();
     }

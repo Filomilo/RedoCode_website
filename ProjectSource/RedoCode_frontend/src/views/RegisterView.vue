@@ -1,15 +1,9 @@
 <template>
   <main>
-    <div class="AuthLoginScreenConatiner">
-      <div class="CommunicatPanel">
-        <div class="CommunicatContainer">
-          <label class="CommunicatTitle">Join us</label>
-          <label class="CommunicatDesc">
-            create acount to have better priority in container queue and to create your own
-            excerscies
-          </label>
-        </div>
-      </div>
+    <div
+      class="AuthLoginScreenConatiner"
+      style="align-items: center; display: flex; justify-content: center"
+    >
       <div class="LoginPanelConatiner">
         <InputText
           type="text"

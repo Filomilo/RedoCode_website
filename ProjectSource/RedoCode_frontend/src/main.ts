@@ -37,9 +37,13 @@ import MultiSelect from 'primevue/multiselect'
 import Slider from 'primevue/slider'
 import InputNumber from 'primevue/inputnumber'
 import Chart from 'primevue/chart'
+import RadioButton from 'primevue/radiobutton'
+import Checkbox from 'primevue/checkbox'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
+import Textarea from 'primevue/textarea'
 
+import "./interceptors/axios"
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
@@ -69,5 +73,7 @@ app.component('MultiSelect', MultiSelect)
 app.component('Slider', Slider)
 app.component('InputNumber', InputNumber)
 app.component('Chart', Chart)
-
+app.component('RadioButton', RadioButton)
+app.component('Checkbox', Checkbox)
+app.component('Textarea', Textarea)
 app.mount('#app')

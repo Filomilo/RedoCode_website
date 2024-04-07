@@ -6,6 +6,7 @@ import PlayGroundView from '@/views/PlayGroundView.vue'
 import CreateView from '@/views/CreateView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AccountView from '@/views/AccountView.vue'
+import ResultsView from '@/views/ResultsView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -48,6 +49,11 @@ const router = createRouter({
       path: '/Account',
       name: 'Account',
       component: AccountView
+    },
+    {
+      path: '/Results',
+      name: 'Results',
+      component: ResultsView
     }
   ]
 })
