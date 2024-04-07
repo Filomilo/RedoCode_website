@@ -34,8 +34,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
-          memory: 1G
+          cpus: '0.3'
+          memory: 4G
     environment:
       DATABASE_HOST: db:5432
       CONTAINER_MANGER: docker
@@ -77,8 +77,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
-          memory: 1G
+          cpus: '0.3'
+          memory: 4G
     networks:
       - backend
     hostname: db
