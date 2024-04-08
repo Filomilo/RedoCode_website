@@ -2,11 +2,13 @@
 
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
+
     <Dropdown
-      v-model="chosenLangague"
+    :modelValue="codeRunnerStore.codeRunnerActive.codeRunnerType"
       :options="langaugesOptions"
       placeholder="Select programming langauge"
       class="dropDown"
+      @change="onChangeLnageugeDropDown"
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
@@ -21,16 +23,17 @@
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
-      :language="chosenLangague"
+      :change="chosenLangague"
+    :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
     />
+
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, shallowRef } from 'vue'
+import { ref, shallowRef,computed } from 'vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
 import {useCodeRunnerStore} from '../stores/CodeRunnerStore'
-import { useConfirm } from "primevue/useconfirm";
 const codeRunnerStore=useCodeRunnerStore();
 const model = defineModel()
 defineProps({
@@ -44,13 +47,13 @@ const MONACO_EDITOR_OPTIONS = {
   formatOnPaste: true
 }
 const chosenLangague = ref('Cpp')
-const langaugesOptions = ['cpp', 'js']
+const langaugesOptions = ['cpp', 'Js']
 interface EditorLanguagesMap {
   [key: string]: string;
 }
 const editrLangesMap: EditorLanguagesMap={
   cpp: "cpp",
-  js: "javascript"
+  Js: "javascript"
 }
 const editorLang=computed(()=>{
 
@@ -63,34 +66,12 @@ const handleMount = (editor: any) => (editorRef.value = editor)
 
 const onChangeLnageugeDropDown=(lang: any)=>{
   if(lang.value!!== codeRunnerStore.codeRunnerActive.codeRunnerType)
-{ 
-  console.log("test change: "+ lang.value)
   confirmChangeOFCodeRuner(lang.value)
 }
-}
 
-const confirmChangeOFCodeRuner = (type: string) => {
-    confirm.require({
-        message: 'Changing code runner may take a while',
-        header: 'Are you sure?',
-        rejectClass: 'CancelButton',
-        acceptClass: 'AcceptButton',
-        rejectLabel: 'Cancel',
-        acceptLabel: 'Change',
-        accept: () => {
-            console.log(" confirm change: "+type)
-            codeRunnerStore.requestCodeRunner(type)
-        },
-        reject: () => {
-          console.log(" reject change: "+type)
-
-        }
-    });
-
-
-
-  // console.log("lang: "+ type)
-  // codeRunnerStore.requestCodeRunner(type)
+const confirmChangeOFCodeRuner=(type: string)=>{
+  console.log("lang: "+ type)
+  codeRunnerStore.requestCodeRunner(type)
 }
 
 // your action

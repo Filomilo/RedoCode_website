@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="AuthLoginScreenConatiner">
+    <div class="AuthLoginScreenConatiner" v-if="!activeUserStore.isLogged">
       <div class="CommunicatPanel">
         <div class="CommunicatContainer">
           <label class="CommunicatTitle">Join us</label>
@@ -10,7 +10,7 @@
           </label>
         </div>
       </div>
-      <div class="LoginPanelConatiner">
+      <div class="LoginPanelConatiner" >
         <InputText
           type="text"
           v-model="inputLogin"
@@ -25,7 +25,7 @@
         />
         <div class="AuthPanelElement boldText">Don't have an account?</div>
         <router-link to="/Register" class="AuthPanelElement linkText"> sign up </router-link>
-        <Button class="BasicButton" label="Sign in" />
+        <Button class="BasicButton" label="Sign in" @click="onSginInButton" />
       </div>
     </div>
     <div class="CommunicatsListContainer">
@@ -74,6 +74,14 @@ import ExcerciseListPromotion from '../components/ExcerciseListPromotion.vue'
 import FrontImage1 from '@/assets/Images/fronImage1.png'
 import FrontImage2 from '@/assets/Images/fronImage2.png'
 import FrontImage3 from '@/assets/Images/fronImage3.png'
+import {useActiveUserStore} from '../stores/ActiveUserStore'
+
+const activeUserStore= useActiveUserStore();
 const inputLogin = ref('')
 const inputPass = ref('')
+
+const onSginInButton=()=>{
+  activeUserStore.setIsLogged(true);
+}
+
 </script>

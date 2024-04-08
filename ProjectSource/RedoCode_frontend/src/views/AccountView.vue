@@ -12,7 +12,7 @@
       <div class="NickContainer">Nick</div>
       <div class="DescriptionContainer">OPIS OPIS OPIS</div>
       <div class="LogoutButtonContainer">
-        <Button> Logout </Button>
+        <Button @click="onLogOutButton"> Logout </Button>
       </div>
     </div>
     <div class="BottomPanel">
@@ -73,6 +73,10 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
 import IconEdit from '../assets/icons/IconEdit.vue'
+import {useActiveUserStore} from '../stores/ActiveUserStore'
+import router from '@/router';
+
+const activeUserStore= useActiveUserStore();
 
 const imgURL = ref('https://thispersondoesnotexist.com/')
 
@@ -112,6 +116,13 @@ const setPanel = (type: Panels) => {
   console.log('select')
   screenSelected.value = type
 }
+
+
+const onLogOutButton=()=>{
+  activeUserStore.setIsLogged(false);
+  router.push("/home");
+}
+
 </script>
 
 <style></style>
