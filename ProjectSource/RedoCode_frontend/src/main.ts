@@ -44,9 +44,6 @@ import 'primevue/resources/primevue.min.css'
 import Textarea from 'primevue/textarea'
 import { createPinia } from 'pinia'
 import Dialog from 'primevue/dialog';
-
-import { createPinia } from 'pinia'
-import Dialog from 'primevue/dialog';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
 import "./interceptors/axios"
@@ -86,7 +83,9 @@ app.component('Checkbox', Checkbox)
 app.component('Textarea', Textarea)
 app.component('Dialog', Dialog )
 
+app.component('ConfirmDialog', ConfirmDialog )
 
+app.use(ConfirmationService);
 
 
 const pinia = createPinia()

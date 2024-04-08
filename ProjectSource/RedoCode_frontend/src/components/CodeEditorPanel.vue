@@ -2,7 +2,6 @@
 
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
-
     <Dropdown
     :modelValue="codeRunnerStore.codeRunnerActive.codeRunnerType"
       :options="langaugesOptions"
@@ -12,19 +11,22 @@
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
-      <Button>
+      <Button @click="onRunCode" v-if="!codeRunnerStore.isAwaitingCompilation">
         <IconPlay style="z-index: 9" />
       </Button>
+      <div v-else>
+        <LoadingIndicator style="max-height: 2rem; max-width: 2rem"/>
+      </div>
     </div>
   </div>
   <div class="CodeEditorContainer">
     <vue-monaco-editor
-      v-model:value="model"
+      v-model:value="codeRef"
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
       :change="chosenLangague"
-    :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
+      :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
     />
 
   </div>
@@ -34,12 +36,13 @@
 import { ref, shallowRef,computed } from 'vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
 import {useCodeRunnerStore} from '../stores/CodeRunnerStore'
+import { useConfirm } from "primevue/useconfirm";
+import LoadingIndicator from './LoadingIndicator.vue';
 const codeRunnerStore=useCodeRunnerStore();
-const model = defineModel()
 defineProps({
   code: Object as () => string
 })
-const codeRef = ref('ss')
+const codeRef = ref(codeRunnerStore.exerciseData.startingFunction)
 const confirm = useConfirm();
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true,
@@ -56,8 +59,6 @@ const editrLangesMap: EditorLanguagesMap={
   Js: "javascript"
 }
 const editorLang=computed(()=>{
-
-
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
 })
 
@@ -66,16 +67,38 @@ const handleMount = (editor: any) => (editorRef.value = editor)
 
 const onChangeLnageugeDropDown=(lang: any)=>{
   if(lang.value!!== codeRunnerStore.codeRunnerActive.codeRunnerType)
+{ 
+  console.log("test change: "+ lang.value)
   confirmChangeOFCodeRuner(lang.value)
 }
-
-const confirmChangeOFCodeRuner=(type: string)=>{
-  console.log("lang: "+ type)
-  codeRunnerStore.requestCodeRunner(type)
 }
+const confirmChangeOFCodeRuner = (type: string) => {
+    confirm.require({
+        message: 'Changing code runner may take a while',
+        header: 'Are you sure?',
+        rejectClass: 'CancelButton',
+        acceptClass: 'AcceptButton',
+        rejectLabel: 'Cancel',
+        acceptLabel: 'Change',
+        accept: () => {
+            console.log(" confirm change: "+type)
+            codeRunnerStore.requestCodeRunner(type)
+        },
+        reject: () => {
+          console.log(" reject change: "+type)
 
-// your action
+        }
+    });
+  }
+
 function formatCode() {
   editorRef.value?.getAction('editor.action.formatDocument').run()
 }
+
+
+const onRunCode=()=>{
+  console.log("running code: \n" + JSON.stringify(codeRef.value))
+codeRunnerStore.runCode(codeRef.value);
+}
+
 </script>
