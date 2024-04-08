@@ -1,5 +1,5 @@
 <template>
-  <main class="PlayGroundBase">
+  <main class="PlayGroundBase locked"  >
     <div class="datatable-container">
       <EasyDataTable
         :headers="fields"

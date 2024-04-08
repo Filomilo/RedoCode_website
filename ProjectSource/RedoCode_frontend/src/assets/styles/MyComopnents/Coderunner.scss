@@ -1,6 +1,6 @@
 @import '../variables.scss';
 .PlayGroundBase {
-  background-color: rgb(142, 161, 119);
+  //background-color: rgb(61, 61, 61);
   margin-top: $headerHeight;
   // border: 2px solid #0000ff;
   // height: 100%;
@@ -10,5 +10,19 @@
 }
 
 .PlayGroundBase .splitter {
-  background-color: rgb(118, 241, 200);
+  //background-color: rgb(118, 241, 200);
 }
+
+.CodeRunnerLoadingPanel{
+  background-color: rgb(26, 26, 26);
+margin: -1rem;
+align-items: center;
+justify-content: center;
+display: flex;
+flex-direction: column;
+}
+.CodeRunnerLoadingPanel *{
+margin: 3rem;
+text-align: center;
+}
+

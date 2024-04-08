@@ -17,7 +17,7 @@
           <label class="TopBarItemTitle">Exercises</label>
         </router-link>
 
-        <router-link to="/Account" class="TopBarItemContainer" id="Home_Button">
+        <router-link to="/Account" class="TopBarItemContainer" id="Home_Button" v-if="activeUserStore.isLogged">
           <IconAccount class="TopBarItemIcon" />
           <label class="TopBarItemTitle">My account</label>
         </router-link>
@@ -32,4 +32,8 @@ import IconPlayground from '@/assets/icons/IconPlayground.vue'
 import IconHome from '@/assets/icons/IconHome.vue'
 import IconExcerisce from '@/assets/icons/IconExcerisce.vue'
 import IconAccount from '@/assets/icons/IconAccount.vue'
+import {useActiveUserStore} from '../stores/ActiveUserStore'
+
+const activeUserStore= useActiveUserStore();
+
 </script>

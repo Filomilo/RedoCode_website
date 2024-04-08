@@ -1,4 +1,18 @@
 <template>
+
+  <Dialog :visible="codeRunnerStore.isAwaitngCodeRunner" modal  header="Edit Profile" :style="{ width: '25rem' }">
+    <template #container>
+      <div class="CodeRunnerLoadingPanel">
+         <LoadingIndicator />
+         <div>
+          Awiating acces to code runner, plase be patient. Consider Creating and account to have priority in queue
+         </div>
+      </div>
+  </template>
+  </Dialog>
+  
+
+  <div v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner">
   <Splitter style="height: 100%">
     <SplitterPanel v-if="showLeftPanel">
       <Splitter layout="vertical">
@@ -18,6 +32,11 @@
       <CodeResultPanel :isDataResult="showLeftPanel" />
     </SplitterPanel>
   </Splitter>
+</div>
+<div v-else style="height: 100%;">
+  <ConnectToCodeRunnerPanel/>
+</div>
+
 </template>
 
 <script lang="ts" setup>
@@ -27,6 +46,7 @@ import type { Button } from 'bootstrap'
 import { ref, onMounted, type Ref } from 'vue'
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 import axios from 'axios'
+import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
 import {
   connectStomp,
   disconnectStomp,
@@ -49,11 +69,15 @@ import type CodeResultsType from '@/types/CodeResultsType'
 import CodeResultPanel from './CodeResultPanel.vue'
 import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
 import ExerciseSetupPanel from './ExerciseSetupPanel.vue'
+import {useCodeRunnerStore} from '../stores/CodeRunnerStore'
+import LoadingIndicator from './LoadingIndicator.vue'
 const props = defineProps({
   connectAtStart: { type: Boolean, required: false },
   showLeftPanel: { type: Boolean, required: false },
   showCreatorPanel: { type: Boolean, required: false }
 })
+
+const codeRunnerStore=useCodeRunnerStore();
 
 const subscribeStatus = ref(false)
 const meaages = ref('')
@@ -62,7 +86,6 @@ const establishedConnection: Ref<boolean> = ref(false)
 const VmAcces: Ref<boolean> = ref(false)
 const chosenLangague: Ref<String> = ref(languageChoices[0].name)
 const code: Ref<string> = ref('Write Code')
-
 const resultData = ref(basicResultTemplate)
 
 const updateVmStatus = (state: CodeRunnerState) => {
@@ -123,4 +146,9 @@ const onRunCode = () => {
   }
   sendToCompile(toCompielMes)
 }
+
+
+
+
+
 </script>
