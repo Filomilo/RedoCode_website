@@ -3,19 +3,17 @@
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
-        <div class="EngineStatusStatus">{{codeRunnerStore.codeRunnerActive.codeRunnerType}}</div>
+        <div class="EngineStatusStatus">{{ codeRunnerStore.codeRunnerActive.codeRunnerType }}</div>
       </div>
 
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Status:</div>
-        <div class="EngineStatusStatus">{{codeRunnerStore.codeRunnerActive.state}}</div>
+        <div class="EngineStatusStatus">{{ codeRunnerStore.codeRunnerActive.state }}</div>
       </div>
     </div>
-    <div class="ConsoleResultConsoleCOntainer" v-if="!isDataResult"  >
-
-      <div class="ConsoleResultConsoleCOntainerText"  style="overflow: scroll;  color: red;">
-{{ formattedEror }}
-
+    <div class="ConsoleResultConsoleCOntainer" v-if="!isDataResult">
+      <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; color: red">
+        {{ formattedEror }}
       </div>
       <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; height: 100%">
         {{ formattedConsole }}
@@ -23,7 +21,7 @@
     </div>
 
     <DataResultPanel v-if="isDataResult" :results="results" />
-    
+
     <div class="ExerciseControlPanle" v-if="isDataResult">
       <router-link to="/Results" class="TopBarItemContainer" id="Result_burron">
         <Button class="submitButton"> Submit </Button>
@@ -36,8 +34,8 @@
 import { computed } from 'vue'
 import DataResultPanel from './DataResultPanel.vue'
 import type CodeResultType from '@/types/CodeResultsType'
-import {useCodeRunnerStore} from '../stores/CodeRunnerStore'
-const codeRunnerStore=useCodeRunnerStore();
+import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+const codeRunnerStore = useCodeRunnerStore()
 const props = defineProps({
   isDataResult: { type: Boolean, required: false }
 })
@@ -120,8 +118,12 @@ const console = `
         >> hello world
         >> hello world
         `
-const formattedConsole = computed<string>(() =>  codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(/\n/g, '<br>'))
-const formattedEror = computed<string>(() =>  codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>'))
+const formattedConsole = computed<string>(() =>
+  codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(/\n/g, '<br>')
+)
+const formattedEror = computed<string>(() =>
+  codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
+)
 
 const results: CodeResultType[] = [
   {

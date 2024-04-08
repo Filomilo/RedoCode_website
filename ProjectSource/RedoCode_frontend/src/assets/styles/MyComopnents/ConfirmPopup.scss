@@ -1,29 +1,25 @@
 @import '../variables.scss';
-.p-confirm-dialog *{
-    background-color: rgb(59, 59, 59);
-    color: white;
+.p-confirm-dialog * {
+  background-color: rgb(59, 59, 59);
+  color: white;
 }
 
-.CancelButton{
-    background-color: red;
-    border-color: transparent;
-    border-radius: 0.4rem;
+.CancelButton {
+  background-color: red;
+  border-color: transparent;
+  border-radius: 0.4rem;
 }
 
-.AcceptButton{
-    background-color: $primary;
-    border-color: transparent;
-    border-radius: 0.4rem;
+.AcceptButton {
+  background-color: $primary;
+  border-color: transparent;
+  border-radius: 0.4rem;
 }
 
-
-.CancelButton *{
-    background-color: transparent;
-
+.CancelButton * {
+  background-color: transparent;
 }
 
-.AcceptButton *{
-    background-color: transparent;
-
+.AcceptButton * {
+  background-color: transparent;
 }
-

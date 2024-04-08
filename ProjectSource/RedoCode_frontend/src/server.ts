@@ -5,7 +5,7 @@ export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
       name: 'task1',
-      language: ['c++','js'],
+      language: ['c++', 'js'],
       difficulty: 'hard',
       popularity: 222,
       id: 1,
@@ -246,11 +246,11 @@ export function makeServer({ environment = 'development' } = {}) {
   ]
 
   const exerciseListHandler = (schema: any, request: any) => {
-    const req:ExerciseListRequestMessage=request.queryParams
-    const start: number=(req.page-1)*req.rowsPerPage
-    const end: number=parseInt(String(start)) + parseInt(String(req.rowsPerPage));
-    console.log("list: "+ start+", "+ end)
-    return exerciseData.slice(start,end);
+    const req: ExerciseListRequestMessage = request.queryParams
+    const start: number = (req.page - 1) * req.rowsPerPage
+    const end: number = parseInt(String(start)) + parseInt(String(req.rowsPerPage))
+    console.log('list: ' + start + ', ' + end)
+    return exerciseData.slice(start, end)
   }
 
   const server = createServer({

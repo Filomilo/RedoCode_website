@@ -1,9 +1,8 @@
 <template>
-
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
-    :modelValue="codeRunnerStore.codeRunnerActive.codeRunnerType"
+      :modelValue="codeRunnerStore.codeRunnerActive.codeRunnerType"
       :options="langaugesOptions"
       placeholder="Select programming langauge"
       class="dropDown"
@@ -15,7 +14,7 @@
         <IconPlay style="z-index: 9" />
       </Button>
       <div v-else>
-        <LoadingIndicator style="max-height: 2rem; max-width: 2rem"/>
+        <LoadingIndicator style="max-height: 2rem; max-width: 2rem" />
       </div>
     </div>
   </div>
@@ -28,22 +27,21 @@
       :change="chosenLangague"
       :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
     />
-
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, shallowRef,computed } from 'vue'
+import { ref, shallowRef, computed } from 'vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
-import {useCodeRunnerStore} from '../stores/CodeRunnerStore'
-import { useConfirm } from "primevue/useconfirm";
-import LoadingIndicator from './LoadingIndicator.vue';
-const codeRunnerStore=useCodeRunnerStore();
+import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+import { useConfirm } from 'primevue/useconfirm'
+import LoadingIndicator from './LoadingIndicator.vue'
+const codeRunnerStore = useCodeRunnerStore()
 defineProps({
   code: Object as () => string
 })
 const codeRef = ref(codeRunnerStore.exerciseData.startingFunction)
-const confirm = useConfirm();
+const confirm = useConfirm()
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true,
   formatOnType: true,
@@ -52,53 +50,49 @@ const MONACO_EDITOR_OPTIONS = {
 const chosenLangague = ref('Cpp')
 const langaugesOptions = ['cpp', 'Js']
 interface EditorLanguagesMap {
-  [key: string]: string;
+  [key: string]: string
 }
-const editrLangesMap: EditorLanguagesMap={
-  cpp: "cpp",
-  Js: "javascript"
+const editrLangesMap: EditorLanguagesMap = {
+  cpp: 'cpp',
+  Js: 'javascript'
 }
-const editorLang=computed(()=>{
+const editorLang = computed(() => {
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
 })
 
 const editorRef = shallowRef()
 const handleMount = (editor: any) => (editorRef.value = editor)
 
-const onChangeLnageugeDropDown=(lang: any)=>{
-  if(lang.value!!== codeRunnerStore.codeRunnerActive.codeRunnerType)
-{ 
-  console.log("test change: "+ lang.value)
-  confirmChangeOFCodeRuner(lang.value)
-}
+const onChangeLnageugeDropDown = (lang: any) => {
+  if (lang.value! !== codeRunnerStore.codeRunnerActive.codeRunnerType) {
+    console.log('test change: ' + lang.value)
+    confirmChangeOFCodeRuner(lang.value)
+  }
 }
 const confirmChangeOFCodeRuner = (type: string) => {
-    confirm.require({
-        message: 'Changing code runner may take a while',
-        header: 'Are you sure?',
-        rejectClass: 'CancelButton',
-        acceptClass: 'AcceptButton',
-        rejectLabel: 'Cancel',
-        acceptLabel: 'Change',
-        accept: () => {
-            console.log(" confirm change: "+type)
-            codeRunnerStore.requestCodeRunner(type)
-        },
-        reject: () => {
-          console.log(" reject change: "+type)
-
-        }
-    });
-  }
+  confirm.require({
+    message: 'Changing code runner may take a while',
+    header: 'Are you sure?',
+    rejectClass: 'CancelButton',
+    acceptClass: 'AcceptButton',
+    rejectLabel: 'Cancel',
+    acceptLabel: 'Change',
+    accept: () => {
+      console.log(' confirm change: ' + type)
+      codeRunnerStore.requestCodeRunner(type)
+    },
+    reject: () => {
+      console.log(' reject change: ' + type)
+    }
+  })
+}
 
 function formatCode() {
   editorRef.value?.getAction('editor.action.formatDocument').run()
 }
 
-
-const onRunCode=()=>{
-  console.log("running code: \n" + JSON.stringify(codeRef.value))
-codeRunnerStore.runCode(codeRef.value);
+const onRunCode = () => {
+  console.log('running code: \n' + JSON.stringify(codeRef.value))
+  codeRunnerStore.runCode(codeRef.value)
 }
-
 </script>

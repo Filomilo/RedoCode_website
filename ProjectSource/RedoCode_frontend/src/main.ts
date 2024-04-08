@@ -43,10 +43,10 @@ import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
 import Textarea from 'primevue/textarea'
 import { createPinia } from 'pinia'
-import Dialog from 'primevue/dialog';
-import ConfirmDialog from 'primevue/confirmdialog';
-import ConfirmationService from 'primevue/confirmationservice';
-import "./interceptors/axios"
+import Dialog from 'primevue/dialog'
+import ConfirmDialog from 'primevue/confirmdialog'
+import ConfirmationService from 'primevue/confirmationservice'
+import './interceptors/axios'
 
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
@@ -81,16 +81,14 @@ app.component('Chart', Chart)
 app.component('RadioButton', RadioButton)
 app.component('Checkbox', Checkbox)
 app.component('Textarea', Textarea)
-app.component('Dialog', Dialog )
+app.component('Dialog', Dialog)
 
-app.component('ConfirmDialog', ConfirmDialog )
+app.component('ConfirmDialog', ConfirmDialog)
 
-app.use(ConfirmationService);
-
+app.use(ConfirmationService)
 
 const pinia = createPinia()
 
 app.use(pinia)
-
 
 app.mount('#app')

@@ -10,7 +10,7 @@
           </label>
         </div>
       </div>
-      <div class="LoginPanelConatiner" >
+      <div class="LoginPanelConatiner">
         <InputText
           type="text"
           v-model="inputLogin"
@@ -74,14 +74,13 @@ import ExcerciseListPromotion from '../components/ExcerciseListPromotion.vue'
 import FrontImage1 from '@/assets/Images/fronImage1.png'
 import FrontImage2 from '@/assets/Images/fronImage2.png'
 import FrontImage3 from '@/assets/Images/fronImage3.png'
-import {useActiveUserStore} from '../stores/ActiveUserStore'
+import { useActiveUserStore } from '../stores/ActiveUserStore'
 
-const activeUserStore= useActiveUserStore();
+const activeUserStore = useActiveUserStore()
 const inputLogin = ref('')
 const inputPass = ref('')
 
-const onSginInButton=()=>{
-  activeUserStore.setIsLogged(true);
+const onSginInButton = () => {
+  activeUserStore.setIsLogged(true)
 }
-
 </script>

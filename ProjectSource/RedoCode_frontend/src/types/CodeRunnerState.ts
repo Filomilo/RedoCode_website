@@ -3,11 +3,8 @@ export default interface CoderunnerState {
   state: string
 }
 
-// states: 
+// states:
 // inactive
 //   awaitng
 //   active
 //   closing
-
-
-

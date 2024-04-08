@@ -1,42 +1,45 @@
 <template>
-
-  <Dialog :visible="codeRunnerStore.isAwaitngCodeRunner" modal  header="Edit Profile" :style="{ width: '25rem' }">
+  <Dialog
+    :visible="codeRunnerStore.isAwaitngCodeRunner"
+    modal
+    header="Edit Profile"
+    :style="{ width: '25rem' }"
+  >
     <template #container>
       <div class="CodeRunnerLoadingPanel">
-         <LoadingIndicator />
-         <div>
-          Awiating acces to code runner, plase be patient. Consider Creating and account to have priority in queue
-         </div>
+        <LoadingIndicator />
+        <div>
+          Awiating acces to code runner, plase be patient. Consider Creating and account to have
+          priority in queue
+        </div>
       </div>
-  </template>
+    </template>
   </Dialog>
-  
 
   <div v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner">
-  <Splitter style="height: 100%">
-    <SplitterPanel v-if="showLeftPanel">
-      <Splitter layout="vertical">
-        <SplitterPanel>
-          <ExerciseDescriptionPanel />
-        </SplitterPanel>
-        <SplitterPanel v-if="showCreatorPanel">
-          <ExerciseSetupPanel />
-        </SplitterPanel>
-      </Splitter>
-    </SplitterPanel>
+    <Splitter style="height: 100%">
+      <SplitterPanel v-if="showLeftPanel">
+        <Splitter layout="vertical">
+          <SplitterPanel>
+            <ExerciseDescriptionPanel />
+          </SplitterPanel>
+          <SplitterPanel v-if="showCreatorPanel">
+            <ExerciseSetupPanel />
+          </SplitterPanel>
+        </Splitter>
+      </SplitterPanel>
 
-    <SplitterPanel>
-      <CodeEditor class="CodeEditorContainer" />
-    </SplitterPanel>
-    <SplitterPanel>
-      <CodeResultPanel :isDataResult="showLeftPanel" />
-    </SplitterPanel>
-  </Splitter>
-</div>
-<div v-else style="height: 100%;">
-  <ConnectToCodeRunnerPanel/>
-</div>
-
+      <SplitterPanel>
+        <CodeEditor class="CodeEditorContainer" />
+      </SplitterPanel>
+      <SplitterPanel>
+        <CodeResultPanel :isDataResult="showLeftPanel" />
+      </SplitterPanel>
+    </Splitter>
+  </div>
+  <div v-else style="height: 100%">
+    <ConnectToCodeRunnerPanel />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -69,7 +72,7 @@ import type CodeResultsType from '@/types/CodeResultsType'
 import CodeResultPanel from './CodeResultPanel.vue'
 import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
 import ExerciseSetupPanel from './ExerciseSetupPanel.vue'
-import {useCodeRunnerStore} from '../stores/CodeRunnerStore'
+import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import LoadingIndicator from './LoadingIndicator.vue'
 const props = defineProps({
   connectAtStart: { type: Boolean, required: false },
@@ -77,7 +80,7 @@ const props = defineProps({
   showCreatorPanel: { type: Boolean, required: false }
 })
 
-const codeRunnerStore=useCodeRunnerStore();
+const codeRunnerStore = useCodeRunnerStore()
 
 const subscribeStatus = ref(false)
 const meaages = ref('')
@@ -146,9 +149,4 @@ const onRunCode = () => {
   }
   sendToCompile(toCompielMes)
 }
-
-
-
-
-
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <main class="PlayGroundBase locked"  >
+  <main class="PlayGroundBase locked">
     <div class="datatable-container">
       <EasyDataTable
         :headers="fields"
@@ -13,7 +13,7 @@
         <template #expand="item">
           {{ item.description }}
         </template>
-  
+
         <template #loading>
           <LoadingIndicator />
         </template>
@@ -25,7 +25,7 @@
             <IconPlay height="1.3rem" />
           </Button>
         </template>
-  
+
         <template #pagination="{ prevPage, nextPage, isFirstPage, isLastPage }">
           <div class="paginatorButtons">
             <Button :disabled="isFirstPage" @click="prevPage">
@@ -35,7 +35,7 @@
               <IconNextRight />
             </Button>
           </div>
-  
+
           <router-link to="/Create" class="createButton" id="Home_Button">
             <Button> Create </Button>
           </router-link>
@@ -46,13 +46,13 @@
 </template>
 
 <script setup lang="ts">
-import {  useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 import type ExerciseType from '@/types/ExerciseType'
 import type OnTableClickType from '@/types/OnTableClickType'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
-import type { Header, Item,ServerOptions } from 'vue3-easy-data-table'
+import type { Header, Item, ServerOptions } from 'vue3-easy-data-table'
 import Button from 'primevue/button'
 import IconNextRight from '../assets/icons/IconNextRight.vue'
 import IconNextLeft from '../assets/icons/IconNextLeft.vue'
@@ -60,9 +60,7 @@ import IconPlay from '@/assets/icons/IconPlay.vue'
 import ExerciseListRequestMessage from '@/types/ExerciseListRequestMessage'
 import { isArray } from 'chart.js/helpers'
 
-
 const router = useRouter()
-
 
 const fields: any[] = [
   { text: 'Name', value: 'name' },
@@ -70,7 +68,6 @@ const fields: any[] = [
   { text: 'difficulty', value: 'difficulty' },
   { text: '', value: 'actions', width: 30 }
 ]
-
 
 const onExcersiceButton = (id: number) => {
   router.push({ name: 'Exercise', params: { id: id } })
@@ -81,39 +78,43 @@ const serverOptions = ref<ServerOptions>({
   page: 1,
   rowsPerPage: 25,
   sortBy: 'name',
-  sortType: 'desc',
-});
+  sortType: 'desc'
+})
 
+const loadFromServer = () => {
+  const sortby: string =
+    serverOptions.value.sortBy === undefined
+      ? 'name'
+      : isArray(serverOptions.value.sortBy)
+        ? serverOptions.value.sortBy[0]
+        : serverOptions.value.sortBy
 
-const loadFromServer=()=>{
-  const sortby: string=serverOptions.value.sortBy===undefined?'name':isArray( serverOptions.value.sortBy)?serverOptions.value.sortBy[0]:serverOptions.value.sortBy;
-
-  const request: ExerciseListRequestMessage={
+  const request: ExerciseListRequestMessage = {
     sortBy: sortby,
-    rowsPerPage:  serverOptions.value.rowsPerPage,
+    rowsPerPage: serverOptions.value.rowsPerPage,
     page: serverOptions.value.page,
-    sortDirection: serverOptions.value.sortType==='desc' 
-  } ;
-
-
-  axios.get('exercises',{params: request}).then((response)=>{
-
-  if (response === undefined) {
-    console.error("couldn't retrieve excercise list from server")
-    throw "couldn't retrieve excercise list from server"
+    sortDirection: serverOptions.value.sortType === 'desc'
   }
-  exerciseData.value = response.data
-  });
 
+  axios.get('exercises', { params: request }).then((response) => {
+    if (response === undefined) {
+      console.error("couldn't retrieve excercise list from server")
+      throw "couldn't retrieve excercise list from server"
+    }
+    exerciseData.value = response.data
+  })
 }
 
-
-
-watch(serverOptions, (newValue, oldValue) => {
-  console.log(`load : count changed from ${JSON.stringify (oldValue)} to ${JSON.stringify (newValue)}`);
-  loadFromServer();
-}, { immediate: true, deep: true });
-
+watch(
+  serverOptions,
+  (newValue, oldValue) => {
+    console.log(
+      `load : count changed from ${JSON.stringify(oldValue)} to ${JSON.stringify(newValue)}`
+    )
+    loadFromServer()
+  },
+  { immediate: true, deep: true }
+)
 
 /*
 onBeforeRouteUpdate(()=>{

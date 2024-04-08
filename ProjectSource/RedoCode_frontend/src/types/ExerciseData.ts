@@ -1,10 +1,9 @@
-import type ExerciseTest from "./ExcericseTest";
+import type ExerciseTest from './ExcericseTest'
 export default interface ExerciseData {
-    availbleCodeRunners:string[];
-    outputType: string;
-    inputType: string;
-    tests: ExerciseTest[]
-    automaticTests: ExerciseTest[]
-    startingFunction: string
-  }
-  
+  availbleCodeRunners: string[]
+  outputType: string
+  inputType: string
+  tests: ExerciseTest[]
+  automaticTests: ExerciseTest[]
+  startingFunction: string
+}

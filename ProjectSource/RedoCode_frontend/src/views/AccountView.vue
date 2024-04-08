@@ -73,10 +73,10 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
 import IconEdit from '../assets/icons/IconEdit.vue'
-import {useActiveUserStore} from '../stores/ActiveUserStore'
-import router from '@/router';
+import { useActiveUserStore } from '../stores/ActiveUserStore'
+import router from '@/router'
 
-const activeUserStore= useActiveUserStore();
+const activeUserStore = useActiveUserStore()
 
 const imgURL = ref('https://thispersondoesnotexist.com/')
 
@@ -117,12 +117,10 @@ const setPanel = (type: Panels) => {
   screenSelected.value = type
 }
 
-
-const onLogOutButton=()=>{
-  activeUserStore.setIsLogged(false);
-  router.push("/home");
+const onLogOutButton = () => {
+  activeUserStore.setIsLogged(false)
+  router.push('/home')
 }
-
 </script>
 
 <style></style>
