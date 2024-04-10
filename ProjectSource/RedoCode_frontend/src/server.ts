@@ -1,6 +1,7 @@
 import { createServer, Model } from 'miragejs'
 import type ExerciseType from './types/ExerciseType'
 import type ExerciseListRequestMessage from './types/ExerciseListRequestMessage'
+import ExerciseData from './types/ExerciseData'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -245,6 +246,50 @@ export function makeServer({ environment = 'development' } = {}) {
     }
   ]
 
+  const activeExerciseData: ExerciseData = {
+    inputType: 'int',
+    title: 'Fibonacci',
+    desc: 'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
+    outputType: 'int[]',
+    availbleCodeRunners: ['js'],
+    tests: [
+      {
+        input: 1,
+        output: null,
+        expectedOutput: [0],
+        errorOutput: '',
+        consoleOutput: '',
+        isSolved: null
+      },
+      {
+        input: 2,
+        output: null,
+        expectedOutput: [0,1],
+        errorOutput: '',
+        consoleOutput: '',
+        isSolved: null
+      },
+      {
+        input: 3,
+        output: null,
+        expectedOutput: [0,1,1],
+        errorOutput: '',
+        consoleOutput: '',
+        isSolved: null
+      },
+      {
+        input: 4,
+        output: null,
+        expectedOutput: [0,1,1,2],
+        errorOutput: '',
+        consoleOutput: '',
+        isSolved: null
+      },
+    ],
+    automaticTests: [],
+    startingFunction: 'function result(val){\n\n}'
+  }
+
   const exerciseListHandler = (schema: any, request: any) => {
     const req: ExerciseListRequestMessage = request.queryParams
     const start: number = (req.page - 1) * req.rowsPerPage
@@ -260,6 +305,9 @@ export function makeServer({ environment = 'development' } = {}) {
       // this.namespace = "http://localhost:9090"
 
       this.get('http://localhost:8080/exercises', exerciseListHandler)
+      
+      this.get('http://localhost:8080/exerciseData/', activeExerciseData)
+
     }
   })
 

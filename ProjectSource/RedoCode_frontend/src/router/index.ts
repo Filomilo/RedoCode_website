@@ -7,6 +7,8 @@ import CreateView from '@/views/CreateView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AccountView from '@/views/AccountView.vue'
 import ResultsView from '@/views/ResultsView.vue'
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,7 +35,10 @@ const router = createRouter({
     {
       path: '/PlayGround',
       name: 'PlayGround',
-      component: PlayGroundView
+      component: PlayGroundView,
+      // beforeEnter: (to,from,next)=>{
+      //   codeRunnerStore.setExceriseDataToPlayground();
+      // }
     },
     {
       path: '/create',

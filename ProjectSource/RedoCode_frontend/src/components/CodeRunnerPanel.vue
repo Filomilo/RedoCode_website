@@ -1,5 +1,21 @@
 <template>
   <Dialog
+  :visible="codeRunnerStore.exerciseLoading"
+  modal
+  header="Edit Profile"
+  :style="{ width: '25rem' }"
+>
+  <template #container>
+    <div class="CodeRunnerLoadingPanel">
+      <LoadingIndicator />
+      <div>
+        Loading data
+      </div>
+    </div>
+  </template>
+</Dialog>
+
+  <Dialog
     :visible="codeRunnerStore.isAwaitngCodeRunner"
     modal
     header="Edit Profile"
@@ -149,4 +165,10 @@ const onRunCode = () => {
   }
   sendToCompile(toCompielMes)
 }
+
+
+onBeforeRouteLeave(async (to, from) => {
+  console.log("leave************************************************")
+codeRunnerStore.disconnetWithCodeRunner();
+})
 </script>

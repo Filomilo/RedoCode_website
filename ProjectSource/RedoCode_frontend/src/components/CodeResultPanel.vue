@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="ConsoleResultConsoleCOntainer" v-if="!isDataResult">
-      <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; color: red">
+      <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; color: red; height: fit-content">
         {{ formattedEror }}
       </div>
       <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; height: 100%">

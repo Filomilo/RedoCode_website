@@ -31,11 +31,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, shallowRef, computed } from 'vue'
+import { ref, shallowRef, computed, watch } from 'vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import { useConfirm } from 'primevue/useconfirm'
 import LoadingIndicator from './LoadingIndicator.vue'
+import { onBeforeRouteLeave } from 'vue-router'
+import { languageChoices } from '@/config/Data'
 const codeRunnerStore = useCodeRunnerStore()
 defineProps({
   code: Object as () => string
@@ -48,13 +50,14 @@ const MONACO_EDITOR_OPTIONS = {
   formatOnPaste: true
 }
 const chosenLangague = ref('Cpp')
-const langaugesOptions = ['cpp', 'Js']
+// const langaugesOptions = ['cpp', 'Js']
+const langaugesOptions=computed (()=> codeRunnerStore.exerciseData.title===''?languageChoices:codeRunnerStore.exerciseData.availbleCodeRunners)
 interface EditorLanguagesMap {
   [key: string]: string
 }
 const editrLangesMap: EditorLanguagesMap = {
   cpp: 'cpp',
-  Js: 'javascript'
+  js: 'javascript'
 }
 const editorLang = computed(() => {
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
@@ -91,8 +94,21 @@ function formatCode() {
   editorRef.value?.getAction('editor.action.formatDocument').run()
 }
 
+watch(
+    () => codeRunnerStore.exerciseLoading,
+    () => {
+      console.log("updatedexercise data########################")
+      if(!codeRunnerStore.exerciseLoading)
+      codeRef.value=codeRunnerStore.exerciseData.startingFunction
+    },
+  )
+
 const onRunCode = () => {
   console.log('running code: \n' + JSON.stringify(codeRef.value))
   codeRunnerStore.runCode(codeRef.value)
 }
+
+onBeforeRouteLeave((to, from) => {
+  codeRef.value=""
+})
 </script>

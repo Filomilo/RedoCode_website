@@ -9,10 +9,9 @@
       </div>
       <Dropdown
         v-model="chosenLangague"
-        :options="languageChoices"
+        :options="langaugesOptions"
         placeholder="Select programming langauge"
         class="dropDown"
-        optionLabel="name"
         style="height: 3rem"
       />
       <Button class="BasicButton" label="Connect" @click="onConnectButton" />
@@ -23,13 +22,13 @@
 <script setup lang="ts">
 import LanguageDropdown from './LanguageDropdown.vue'
 import { languageChoices } from '../config/Data'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
-const chosenLangague = ref({ name: 'cpp' })
+const chosenLangague = ref('')
 const codeRunnerStore = useCodeRunnerStore()
-
+const langaugesOptions=computed (()=> codeRunnerStore.exerciseData.title===''?languageChoices:codeRunnerStore.exerciseData.availbleCodeRunners)
 const connectToCodeRunner = async (codeRunner: string) => {
-  codeRunnerStore.requestCodeRunner('cpp')
+  codeRunnerStore.requestCodeRunner(chosenLangague.value)
   // codeRunnerStore.increment()
   console.log('Json log: ' + JSON.stringify(codeRunnerStore))
 }

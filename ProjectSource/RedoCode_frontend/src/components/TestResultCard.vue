@@ -1,32 +1,51 @@
 <template>
   <div class="resultPanelContainer">
-    <div class="testInputContiner">11</div>
+    <div class="testInputContiner" >
+      <div style="margin: 0.4rem;">
+     input: {{ JSON.stringify(data.input) }}
+    </div>
+    </div>
     <div class="testOuputSection">
       <TabView>
         <TabPanel header="Console">
-          <div class="consoleOutputCard" v-html="console"></div>
+          <div >
+            <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; color: red" v-html="formattedEror">
+            </div>
+            <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; height: 100%" v-html="formattedConsole">
+            </div>
+          </div>
         </TabPanel>
         <TabPanel header="Result">
-          <div class="TypeResultContainer">
+          <div class="TypeResultContainer" st>
             <div class="TypeResultContainerPanel" style="text-wrap: wrap">
-              {{ JSON.stringify(data.correct_solution) }}
+             expeteced: {{ JSON.stringify(data.expectedOutput) }}
             </div>
             <div class="TypeResultContainerPanel">
-              {{ JSON.stringify(data.achived_solution) }}
+             achived: {{ JSON.stringify(data.output) }}
             </div>
           </div>
         </TabPanel>
       </TabView>
     </div>
-    <div class="testValidationSection">Correct</div>
+    <div class="testValidationSection">{{ data.isSolved!==null?data.isSolved===true?"Correct":"Failed":"" }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type CodeResultsType from '@/types/CodeResultsType'
+import type ExerciseTest from '@/types/ExcericseTest';
+import {formatToHtml } from '@/config/Tools'
+import { computed } from 'vue';
 const props = defineProps<{
-  data: CodeResultsType
+  data: ExerciseTest
 }>()
 
-const console: string = props.data.Console_output
+const formattedConsole = computed<string>(() =>
+// "bbbbbbbbbbbbbbbbbbbbb"
+  formatToHtml(props.data.consoleOutput)
+)
+const formattedEror = computed<string>(() =>
+// "aaaaaaaaaaaaaaaaaaaaa"
+  formatToHtml(props.data.errorOutput)
+)
+
 </script>
