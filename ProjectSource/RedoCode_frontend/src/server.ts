@@ -298,6 +298,11 @@ export function makeServer({ environment = 'development' } = {}) {
     return exerciseData.slice(start, end)
   }
 
+  const exerciseDataHandler = (schema: any, request: any) => {
+    
+    return activeExerciseData;
+  }
+
   const server = createServer({
     environment,
 
@@ -306,7 +311,7 @@ export function makeServer({ environment = 'development' } = {}) {
 
       this.get('http://localhost:8080/exercises', exerciseListHandler)
       
-      this.get('http://localhost:8080/exerciseData/', activeExerciseData)
+      this.get('http://localhost:8080/exerciseData/', exerciseDataHandler)
 
     }
   })

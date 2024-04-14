@@ -35,7 +35,8 @@ const fetchExerciseData=(id: number)=>{
 onMounted(() => {
   console.log('axios')
   console.log(route.params.id)
-  fetchExerciseData(route.params.id)
+  let exerciseId: number=parseInt (typeof route.params.id==="string"?route.params.id:route.params.id[0]);
+  fetchExerciseData(exerciseId)
   
 })
 </script>

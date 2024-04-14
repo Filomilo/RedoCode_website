@@ -19,13 +19,14 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     title: '',
     desc: '',
     outputType: '',
-    availbleCodeRunners: languageChoices.map((element) => element.name),
+    availbleCodeRunners: languageChoices.map((element) => element),
     tests: [
       {
         input: '',
         output: '',
         errorOutput: '',
         consoleOutput: '',
+        expectedOutput: '',
         isSolved: null
       }
     ],
@@ -127,7 +128,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
           exerciseData.value.tests.forEach((value)=>{
           value.errorOutput=""
-          value.output=fibonachi(value.input)
+          value.output=fibonachi(typeof value.input==="number"?value.input:0)
           value.isSolved=true;
          })
         } else {

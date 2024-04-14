@@ -103,7 +103,7 @@ const meaages = ref('')
 const tryingToEstablishConnection: Ref<boolean> = ref(false)
 const establishedConnection: Ref<boolean> = ref(false)
 const VmAcces: Ref<boolean> = ref(false)
-const chosenLangague: Ref<String> = ref(languageChoices[0].name)
+const chosenLangague: Ref<String> = ref(languageChoices[0])
 const code: Ref<string> = ref('Write Code')
 const resultData = ref(basicResultTemplate)
 

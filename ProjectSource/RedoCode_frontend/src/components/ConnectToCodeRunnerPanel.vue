@@ -33,8 +33,8 @@ const connectToCodeRunner = async (codeRunner: string) => {
   console.log('Json log: ' + JSON.stringify(codeRunnerStore))
 }
 const onConnectButton = () => {
-  console.log('connect ' + JSON.stringify(chosenLangague.value.name))
-  connectToCodeRunner(chosenLangague.value.name)
+  console.log('connect ' + JSON.stringify(chosenLangague.value))
+  connectToCodeRunner(chosenLangague.value)
 }
 </script>
 

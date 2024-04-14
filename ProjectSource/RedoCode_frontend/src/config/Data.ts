@@ -1,7 +1,7 @@
 import type { programingLanguageChoice } from '../types/ProgramingLanguageChoice'
 import type CodeResult from '@/types/CodeResultsType'
 
-export const languageChoices: programingLanguageChoice[] = [ 'cpp',  'js' ]
+export const languageChoices: string[] = [ 'cpp',  'js' ]
 
 export const basicResultTemplate: CodeResult[] = [
   {
