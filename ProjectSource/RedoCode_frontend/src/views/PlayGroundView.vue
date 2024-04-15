@@ -17,7 +17,7 @@ import { setTimeout } from 'timers';
 
 
 const setupPlayground=()=>{
-  console.log("-----------------")
+  // console.log("-----------------")
   codeRunnerStore.setExerciseLoading(true)
   codeRunnerStore.setExceriseDataToPlayground();
   codeRunnerStore.setExerciseLoading(false)

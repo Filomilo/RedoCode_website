@@ -9,6 +9,7 @@ public class CppCodeRunner extends CodeRunner{
 
     protected CppCodeRunner() {
         super("filipredocode/redocode:CppRunner");
+        type=CODE_RUNNER_TYPE.CPP_RUNNER;
     }
 
     @Override

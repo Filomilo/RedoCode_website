@@ -34,8 +34,8 @@ import java.util.Objects;
        switch (requestMessageSource.getCodeRunnerType())
        {
            case "cpp": this.codeRunnerType= CODE_RUNNER_TYPE.CPP_RUNNER; break;
-           case "javascript": this.codeRunnerType= CODE_RUNNER_TYPE.JS_RUNNER; break;
-           default: throw new RuntimeException("Wrong code runner specified");
+           case "js": this.codeRunnerType= CODE_RUNNER_TYPE.JS_RUNNER; break;
+           default: throw new RuntimeException("Wrong code runner specified: "+requestMessageSource.getCodeRunnerType() );
        }
 
        this.userRequesting=user;

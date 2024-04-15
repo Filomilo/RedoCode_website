@@ -4,6 +4,7 @@ import com.redocode.backend.Auth.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
 import com.redocode.backend.Messages.CodeToRunMessage;
+import com.redocode.backend.Messages.CoderunnerStateMessage;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
@@ -153,7 +154,24 @@ public class CodeRunnersController {
     {
     VmStatus status=this.getUserVmStatus(user);
     if(codeRunnerSender!=null)
-        codeRunnerSender.sendMessageToUser(CodeRunnersConnectionController.codeRunnerStateEndPoint,status,user);
+    {
+        CodeRunner userCodeRunner=getUserCodeRunner(user);
+        CodeRunnerState state;
+        switch (status)
+        {
+            case RUNNING_MACHINE -> state=CodeRunnerState.ACTIVE;
+            case AWAITING_ACCES -> state=CodeRunnerState.AWAITING;
+            case DESTROYING_MACHINE -> state=CodeRunnerState.CLOSING;
+            default -> state=CodeRunnerState.INACTIVE;
+        }
+
+        CoderunnerStateMessage coderunnerStateMessage=   CoderunnerStateMessage.builder()
+                .state(state)
+                .codeRunnerType(userCodeRunner.getType())
+                .build();
+        log.info("user: "+ user+" requested status: "+ coderunnerStateMessage);
+        codeRunnerSender.sendToUser(user.getId(),  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);
+    }
     }
 
 

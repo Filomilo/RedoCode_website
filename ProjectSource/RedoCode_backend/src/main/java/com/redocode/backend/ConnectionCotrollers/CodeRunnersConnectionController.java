@@ -3,7 +3,10 @@ package com.redocode.backend.ConnectionCotrollers;
 import com.redocode.backend.Auth.User;
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
 import com.redocode.backend.Messages.CodeToRunMessage;
+import com.redocode.backend.Messages.CoderunnerStateMessage;
 import com.redocode.backend.RedoCodeController;
+import com.redocode.backend.VmAcces.CodeRunnerState;
+import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.VmAcces.VmStatus;
@@ -45,16 +48,7 @@ public class CodeRunnersConnectionController {
     }
 
 
-    @MessageMapping("/codeRunnerState")
-    @SendToUser
-    public VmStatus updateStatuss(Principal principal)
-    {
-        String userId=principal.getName();
-        VmStatus status = codeRunnersController.getUserVmStatus(redoCodeController.getUserById(userId));
-        log.info("user: "+ userId+" requested status: "+ status);
-        codeRunnerSender.sendToUser(userId, codeRunnerStateEndPoint,status);
-        return status;
-    }
+
 
     @MessageMapping("/CodeToRun")
     public void runCode(Principal principal, CodeToRunMessage codeToRunMessage)

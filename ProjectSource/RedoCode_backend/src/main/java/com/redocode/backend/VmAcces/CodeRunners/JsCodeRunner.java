@@ -9,6 +9,7 @@ public class JsCodeRunner extends CodeRunner{
 
     protected JsCodeRunner() {
         super("filipredocode/redocode:JsRunner");
+        type=CODE_RUNNER_TYPE.JS_RUNNER;
     }
 
     @Override

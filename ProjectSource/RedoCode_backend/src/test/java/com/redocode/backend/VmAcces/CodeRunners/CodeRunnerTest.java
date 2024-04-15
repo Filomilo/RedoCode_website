@@ -249,11 +249,5 @@ class CodeRunnerTest {
         }
     }
 
-    @Test
-    void testRunProgram() {
-    }
 
-    @Test
-    void testRunProgram1() {
-    }
 }

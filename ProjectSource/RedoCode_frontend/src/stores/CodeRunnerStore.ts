@@ -6,13 +6,22 @@ import axios from 'axios'
 import '../interceptors/axios'
 import { languageChoices } from '../config/Data'
 import ExerciseTest from '@/types/ExcericseTest'
+import {connectStomp,onConnectStomp} from '@/config/StompApiConnection'
+import {
+  requstDefaultVmMachine,
+  subcribeToVmStatus,
+  sendToCompile,
+  subscribeToCodeResults
+} from '../config/CodeRunnerConnection'
+import CoderunnerState from '../types/CodeRunnerState'
+import { IFrame } from '@stomp/stompjs'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const codeRunnerActive: Ref<CodeRunnerState> = ref({
     codeRunnerType: '',
     state: ''
   })
   const doesHaveACtiveToCodeRunner = computed(() => {
-    return codeRunnerActive.value.state === 'active'
+    return codeRunnerActive.value.state === 'ACTIVE'
   })
   const playGroundBase: ExerciseData = {
     inputType: '',
@@ -36,20 +45,9 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const exerciseData: Ref<ExerciseData> = ref(playGroundBase)
 
-  const isAwaitngCodeRunner = computed(() => codeRunnerActive.value.state == 'awaiting')
+  const isAwaitngCodeRunner = computed(() => codeRunnerActive.value.state == 'AWAITING')
   const setExerciseData=(exerciseDataRecived: ExerciseData)=>{
     exerciseData.value=exerciseDataRecived
-  }
-  const requestCodeRunner = (codeRunnerName: string) => {
-    console.log('new type: ' + codeRunnerName)
-    codeRunnerActive.value.state = 'awaiting'
-
-    // codeRunnerActive.value=  codeRunnerName;
-    setTimeout(() => {
-      codeRunnerActive.value.codeRunnerType = codeRunnerName
-      console.log('type: ' + codeRunnerActive.value.codeRunnerType)
-      codeRunnerActive.value.state = 'active'
-    }, 5000)
   }
 
   const setExceriseDataToPlayground = () => {
@@ -151,8 +149,30 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   }
 
+///////////// STOMP CONNECTION
+// import { onConnectStomp } from '@/config/StompApiConnection'
 
 
+
+  const VmMachineStatusCallBack=(state: CoderunnerState)=>{
+    console.log("new vm machine status: "+JSON.stringify(state))
+    codeRunnerActive.value=state;
+  }
+
+  
+
+  const requestCodeRunner = (codeRunnerName: string) => {
+    // connectStomp();
+    // onConnectStomp((frame: IFrame)=>{
+    //   subcribeToVmStatus(VmMachineStatusCallBack);
+    //   requstDefaultVmMachine(codeRunnerName);
+    // });
+    // console.log("connecting to vm mahicne state callback");
+    subcribeToVmStatus(VmMachineStatusCallBack);
+    requstDefaultVmMachine(codeRunnerName);
+    
+    // console.log("connecting to vm mahicne state callback");
+  }
 
 
 
@@ -169,6 +189,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     setExerciseData,
     exerciseLoading,
     setExerciseLoading,
-    disconnetWithCodeRunner
+    disconnetWithCodeRunner,
+    
   }
 })

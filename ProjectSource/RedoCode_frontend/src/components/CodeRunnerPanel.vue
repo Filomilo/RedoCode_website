@@ -120,29 +120,21 @@ const updateResults = (results: CodeResultsType[]) => {
   resultData.value = results
 }
 
-const connectToCodeRunner = () => {
-  onConnectStomp((frame: IFrame) => {
-    console.log('connectino result: ' + JSON.stringify(frame))
-    console.log('Username: ' + getConnetedUserName())
-    establishedConnection.value = true
-    requstDefaultVmMachine(String(chosenLangague.value))
-    subcribeToVmStatus(updateVmStatus)
-    subscribeToCodeResults(updateResults)
-  })
-  tryingToEstablishConnection.value = true
-  connectStomp()
-}
+
 
 const diconnectFromCodeRunners = () => {
   // console.log("diconnect from code runners")
+  //TODO: dicconrt requstDefaultVmMachine
   disconnectStomp()
+  // codeRunnerStore.disconnetWithCodeRunner();
 }
 
 onMounted(() => {
   console.log('props: ' + JSON.stringify(props))
-  if (props.connectAtStart) {
-    connectToCodeRunner()
-  }
+  // if (props.connectAtStart) {
+    connectStomp();
+    //connectToCodeRunner()
+  // }
 })
 
 onBeforeRouteLeave(async (to, from, next) => {
@@ -168,7 +160,8 @@ const onRunCode = () => {
 
 
 onBeforeRouteLeave(async (to, from) => {
-  console.log("leave************************************************")
-codeRunnerStore.disconnetWithCodeRunner();
+  // console.log("leave************************************************")
+// codeRunnerStore.disconnetWithCodeRunner();
+diconnectFromCodeRunners();
 })
 </script>

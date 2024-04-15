@@ -1,4 +1,4 @@
-import { Client, type IFrame } from '@stomp/stompjs'
+import { ActivationState, Client, type IFrame } from '@stomp/stompjs'
 import type OnConnectFunc from '../types/StompConnection'
 import type { IfStatement } from 'typescript'
 
@@ -18,8 +18,15 @@ stompClient.onStompError = (frame) => {
 
 export const connectStomp = () => {
   console.log('connecting to Stomp ')
+  if(!isStompConnected())
   stompClient.activate()
 }
+
+export const isStompConnected = (): boolean => {
+  console.log('isStompConnected ')
+  return stompClient.state===ActivationState.ACTIVE;
+}
+
 
 export const disconnectStomp = () => {
   console.log('disconnect from stomp')
