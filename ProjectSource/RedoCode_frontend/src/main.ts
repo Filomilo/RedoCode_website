@@ -56,11 +56,7 @@ if (import.meta.env.MODE === 'development') {
 
 app
   .use(router)
-  .use(VueMonacoEditorPlugin, {
-    paths: {
-      vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
-    }
-  })
+
   .use(PrimeVue)
 
 app.component('Splitter', Splitter)
@@ -90,5 +86,13 @@ app.use(ConfirmationService)
 const pinia = createPinia()
 
 app.use(pinia)
+
+
+app.use(VueMonacoEditorPlugin, {
+  paths: {
+    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+  },
+})
+
 
 app.mount('#app')

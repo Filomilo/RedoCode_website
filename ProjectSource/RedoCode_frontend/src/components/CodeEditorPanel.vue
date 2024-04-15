@@ -2,7 +2,7 @@
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
-      :modelValue="codeRunnerStore.codeRunnerActive.codeRunnerType"
+      :modelValue="lnagaugeDropdownVaule"
       :options="langaugesOptions"
       placeholder="Select programming langauge"
       class="dropDown"
@@ -20,9 +20,10 @@
   </div>
   <div class="CodeEditorContainer">
     <vue-monaco-editor
+    style="width: 100%;height: 100%"
       v-model:value="codeRef"
       theme="vs-dark"
-      :options="MONACO_EDITOR_OPTIONS"
+      options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
       :change="chosenLangague"
       :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
@@ -45,9 +46,7 @@ defineProps({
 const codeRef = ref(codeRunnerStore.exerciseData.startingFunction)
 const confirm = useConfirm()
 const MONACO_EDITOR_OPTIONS = {
-  automaticLayout: true,
-  formatOnType: true,
-  formatOnPaste: true
+  automaticLayout: true
 }
 const chosenLangague = ref('Cpp')
 // const langaugesOptions = ['cpp', 'Js']
@@ -56,8 +55,14 @@ interface EditorLanguagesMap {
   [key: string]: string
 }
 const editrLangesMap: EditorLanguagesMap = {
-  cpp: 'cpp',
-  js: 'javascript'
+  CPP_RUNNER: 'cpp',
+  JS_RUNNER: 'javascript'
+}
+const lnagaugeDropdownVaule=computed (()=> dropDownLangaugeMap[codeRunnerStore.codeRunnerActive.codeRunnerType])
+
+const dropDownLangaugeMap: EditorLanguagesMap = {
+  CPP_RUNNER: 'cpp',
+  JS_RUNNER: 'js'
 }
 const editorLang = computed(() => {
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]

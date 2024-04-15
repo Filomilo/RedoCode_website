@@ -137,6 +137,8 @@ public class CodeRunnersController {
         {
             addToQueue(codeRunnerRequest);
         }
+        updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
+
     }
 
 
@@ -167,7 +169,7 @@ public class CodeRunnersController {
 
         CoderunnerStateMessage coderunnerStateMessage=   CoderunnerStateMessage.builder()
                 .state(state)
-                .codeRunnerType(userCodeRunner.getType())
+                .codeRunnerType(userCodeRunner==null?CODE_RUNNER_TYPE.UUIANDTIFIED:userCodeRunner.getType())
                 .build();
         log.info("user: "+ user+" requested status: "+ coderunnerStateMessage);
         codeRunnerSender.sendToUser(user.getId(),  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);

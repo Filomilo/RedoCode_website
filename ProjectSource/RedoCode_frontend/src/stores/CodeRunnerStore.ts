@@ -21,6 +21,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     state: ''
   })
   const doesHaveACtiveToCodeRunner = computed(() => {
+    // return true;
     return codeRunnerActive.value.state === 'ACTIVE'
   })
   const playGroundBase: ExerciseData = {
@@ -168,6 +169,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     //   requstDefaultVmMachine(codeRunnerName);
     // });
     // console.log("connecting to vm mahicne state callback");
+    codeRunnerActive.value.state="AWAITING"
     subcribeToVmStatus(VmMachineStatusCallBack);
     requstDefaultVmMachine(codeRunnerName);
     
