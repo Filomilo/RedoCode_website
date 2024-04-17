@@ -264,7 +264,7 @@ export function makeServer({ environment = 'development' } = {}) {
       {
         input: 2,
         output: null,
-        expectedOutput: [0,1],
+        expectedOutput: [0, 1],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null
@@ -272,7 +272,7 @@ export function makeServer({ environment = 'development' } = {}) {
       {
         input: 3,
         output: null,
-        expectedOutput: [0,1,1],
+        expectedOutput: [0, 1, 1],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null
@@ -280,11 +280,11 @@ export function makeServer({ environment = 'development' } = {}) {
       {
         input: 4,
         output: null,
-        expectedOutput: [0,1,1,2],
+        expectedOutput: [0, 1, 1, 2],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null
-      },
+      }
     ],
     automaticTests: [],
     startingFunction: 'function result(val){\n\n}'
@@ -299,8 +299,7 @@ export function makeServer({ environment = 'development' } = {}) {
   }
 
   const exerciseDataHandler = (schema: any, request: any) => {
-    
-    return activeExerciseData;
+    return activeExerciseData
   }
 
   const server = createServer({
@@ -310,9 +309,8 @@ export function makeServer({ environment = 'development' } = {}) {
       // this.namespace = "http://localhost:9090"
 
       this.get('http://localhost:8080/exercises', exerciseListHandler)
-      
-      this.get('http://localhost:8080/exerciseData/', exerciseDataHandler)
 
+      this.get('http://localhost:8080/exerciseData/', exerciseDataHandler)
     }
   })
 

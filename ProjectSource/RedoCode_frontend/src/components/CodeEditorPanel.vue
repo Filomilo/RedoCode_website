@@ -51,7 +51,11 @@ const MONACO_EDITOR_OPTIONS = {
 }
 const chosenLangague = ref('Cpp')
 // const langaugesOptions = ['cpp', 'Js']
-const langaugesOptions=computed (()=> codeRunnerStore.exerciseData.title===''?languageChoices:codeRunnerStore.exerciseData.availbleCodeRunners)
+const langaugesOptions = computed(() =>
+  codeRunnerStore.exerciseData.title === ''
+    ? languageChoices
+    : codeRunnerStore.exerciseData.availbleCodeRunners
+)
 interface EditorLanguagesMap {
   [key: string]: string
 }
@@ -95,13 +99,13 @@ function formatCode() {
 }
 
 watch(
-    () => codeRunnerStore.exerciseLoading,
-    () => {
-      console.log("updatedexercise data########################")
-      if(!codeRunnerStore.exerciseLoading)
-      codeRef.value=codeRunnerStore.exerciseData.startingFunction
-    },
-  )
+  () => codeRunnerStore.exerciseLoading,
+  () => {
+    console.log('updatedexercise data########################')
+    if (!codeRunnerStore.exerciseLoading)
+      codeRef.value = codeRunnerStore.exerciseData.startingFunction
+  }
+)
 
 const onRunCode = () => {
   console.log('running code: \n' + JSON.stringify(codeRef.value))
@@ -109,6 +113,6 @@ const onRunCode = () => {
 }
 
 onBeforeRouteLeave((to, from) => {
-  codeRef.value=""
+  codeRef.value = ''
 })
 </script>

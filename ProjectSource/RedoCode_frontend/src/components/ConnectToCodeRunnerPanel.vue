@@ -26,7 +26,11 @@ import { computed, ref } from 'vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 const chosenLangague = ref('')
 const codeRunnerStore = useCodeRunnerStore()
-const langaugesOptions=computed (()=> codeRunnerStore.exerciseData.title===''?languageChoices:codeRunnerStore.exerciseData.availbleCodeRunners)
+const langaugesOptions = computed(() =>
+  codeRunnerStore.exerciseData.title === ''
+    ? languageChoices
+    : codeRunnerStore.exerciseData.availbleCodeRunners
+)
 const connectToCodeRunner = async (codeRunner: string) => {
   codeRunnerStore.requestCodeRunner(chosenLangague.value)
   // codeRunnerStore.increment()

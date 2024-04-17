@@ -9,34 +9,31 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
-import LoadingIndicator from '@/components/LoadingIndicator.vue';
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-const codeRunnerStore= useCodeRunnerStore()
+const codeRunnerStore = useCodeRunnerStore()
 const text = ref('')
 const route = useRoute()
 
+const fetchExerciseData = (id: number) => {
+  codeRunnerStore.exerciseLoading = true
 
-const fetchExerciseData=(id: number)=>{
-  codeRunnerStore.exerciseLoading=true;
-
-  const params={
+  const params = {
     id: route.params.id
-  };
-  axios.get('http://localhost:8080/exerciseData/',{params: params})
-  .then((response) => 
-  {
+  }
+  axios.get('http://localhost:8080/exerciseData/', { params: params }).then((response) => {
     codeRunnerStore.setExerciseData(response.data)
-    console.log("data: "+JSON.stringify(response))
-    codeRunnerStore.exerciseLoading=false;
+    console.log('data: ' + JSON.stringify(response))
+    codeRunnerStore.exerciseLoading = false
   })
 }
-
 
 onMounted(() => {
   console.log('axios')
   console.log(route.params.id)
-  let exerciseId: number=parseInt (typeof route.params.id==="string"?route.params.id:route.params.id[0]);
+  let exerciseId: number = parseInt(
+    typeof route.params.id === 'string' ? route.params.id : route.params.id[0]
+  )
   fetchExerciseData(exerciseId)
-  
 })
 </script>
