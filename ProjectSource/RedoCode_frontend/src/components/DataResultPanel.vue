@@ -7,10 +7,10 @@
 <script setup lang="ts">
 import type CodeResultsType from '@/types/CodeResultsType'
 import TestResultCard from './TestResultCard.vue'
-import { useCodeRunnerStore } from '@/stores/CodeRunnerStore';
-import { computed } from 'vue';
-const codeRunnerStore=useCodeRunnerStore();
-const tests=computed(()=> codeRunnerStore.exerciseData.tests.concat(
-  codeRunnerStore.exerciseData.automaticTests
-))
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+import { computed } from 'vue'
+const codeRunnerStore = useCodeRunnerStore()
+const tests = computed(() =>
+  codeRunnerStore.exerciseData.tests.concat(codeRunnerStore.exerciseData.automaticTests)
+)
 </script>

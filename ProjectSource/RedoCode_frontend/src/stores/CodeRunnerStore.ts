@@ -58,34 +58,30 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const isAwaitingCompilation: Ref<boolean> = ref(false)
   const exerciseLoading: Ref<boolean> = ref(false)
-  const setExerciseLoading=(state:boolean)=>{
-    exerciseLoading.value=state
+  const setExerciseLoading = (state: boolean) => {
+    exerciseLoading.value = state
   }
 
-  const disconnetWithCodeRunner=()=>{
-    console.log("setting code unner to none")
-    codeRunnerActive.value={
+  const disconnetWithCodeRunner = () => {
+    console.log('setting code unner to none')
+    codeRunnerActive.value = {
       state: '',
       codeRunnerType: ''
     }
   }
 
-  const fibonachi=(val: number)=>{
-    const out=[]
-    if(val>0)
-    out.push(0)
-    if(val>1)
-    out.push(1)
-    for(let i=2;i<val;i++)
-    {
-          out.push(out[i-1]+out[i-2])
+  const fibonachi = (val: number) => {
+    const out = []
+    if (val > 0) out.push(0)
+    if (val > 1) out.push(1)
+    for (let i = 2; i < val; i++) {
+      out.push(out[i - 1] + out[i - 2])
     }
-    
+
     return out
   }
 
-
-    const expectedResult: string=`function result(val) {
+  const expectedResult: string = `function result(val) {
       out = []
       if (val > 0)
           out.push(0)
@@ -97,7 +93,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   
       return out
   }`
-
 
   // const runCode = async (code: string) => {
   //   // await axios.post('/runCode',code, {

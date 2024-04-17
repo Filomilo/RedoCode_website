@@ -1,19 +1,17 @@
 <template>
   <Dialog
-  :visible="codeRunnerStore.exerciseLoading"
-  modal
-  header="Edit Profile"
-  :style="{ width: '25rem' }"
->
-  <template #container>
-    <div class="CodeRunnerLoadingPanel">
-      <LoadingIndicator />
-      <div>
-        Loading data
+    :visible="codeRunnerStore.exerciseLoading"
+    modal
+    header="Edit Profile"
+    :style="{ width: '25rem' }"
+  >
+    <template #container>
+      <div class="CodeRunnerLoadingPanel">
+        <LoadingIndicator />
+        <div>Loading data</div>
       </div>
-    </div>
-  </template>
-</Dialog>
+    </template>
+  </Dialog>
 
   <Dialog
     :visible="codeRunnerStore.isAwaitngCodeRunner"
@@ -32,7 +30,7 @@
     </template>
   </Dialog>
 
-  <div v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner">
+  <div v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner" class="heightLimit">
     <Splitter style="height: 100%">
       <SplitterPanel v-if="showLeftPanel">
         <Splitter layout="vertical">
@@ -44,7 +42,7 @@
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
-
+  
       <SplitterPanel>
         <CodeEditor class="CodeEditorContainer" />
       </SplitterPanel>
@@ -158,10 +156,15 @@ const onRunCode = () => {
   sendToCompile(toCompielMes)
 }
 
-
 onBeforeRouteLeave(async (to, from) => {
   // console.log("leave************************************************")
 // codeRunnerStore.disconnetWithCodeRunner();
 diconnectFromCodeRunners();
 })
 </script>
+
+<style>
+.heightLimit * {
+  max-height: 100vh;
+}
+</style>
