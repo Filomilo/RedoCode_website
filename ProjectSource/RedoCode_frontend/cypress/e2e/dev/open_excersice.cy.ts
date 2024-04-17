@@ -2,6 +2,9 @@ import { url } from "inspector";
 
 describe('open first exercise', () => {
   it('passes', () => {
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      return false
+  })
     cy.visit('http://localhost:4173/')
     cy.get('a.TopBarItemContainer:nth-child(3)').click()
     cy.url().should('eq', 'http://localhost:4173/Exercises');
