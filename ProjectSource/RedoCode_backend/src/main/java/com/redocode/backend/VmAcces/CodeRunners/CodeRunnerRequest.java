@@ -30,7 +30,7 @@ import java.util.Objects;
     }
 
     public CodeRunnerRequest(User user, CodeRunnerRequestMessage requestMessageSource) {
-
+        log.info("handling code runner request: "+ requestMessageSource );
        switch (requestMessageSource.getCodeRunnerType())
        {
            case "cpp": this.codeRunnerType= CODE_RUNNER_TYPE.CPP_RUNNER; break;

@@ -2275,6 +2275,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^2.6.5":
+  version: 2.6.12
+  resolution: "core-js@npm:2.6.12"
+  checksum: 00128efe427789120a06b819adc94cc72b96955acb331cb71d09287baf9bd37bebd191d91f1ee4939c893a050307ead4faea08876f09115112612b6a05684b63
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:1.0.2":
   version: 1.0.2
   resolution: "core-util-is@npm:1.0.2"
@@ -6093,6 +6100,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"v-hotkey@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "v-hotkey@npm:0.9.0"
+  dependencies:
+    core-js: "npm:^2.6.5"
+  peerDependencies:
+    vue: ^2.x
+  checksum: 9be9a5f3f771fe8bfa87c18aed74821de1cf36215b83ab3f0d6e5548a7e1c1ec09d98c6ffddaabff33d50dffc6fe4ee1ed18ac767222de9b73c29445d3553735
+  languageName: node
+  linkType: hard
+
 "verror@npm:1.10.0":
   version: 1.10.0
   resolution: "verror@npm:1.10.0"
@@ -6539,6 +6557,7 @@ __metadata:
     start-server-and-test: "npm:^2.0.3"
     typescript: "npm:~5.3.0"
     v-dropdown-menu: "npm:^2.0.4"
+    v-hotkey: "npm:^0.9.0"
     vite: "npm:^5.2.7"
     vitest: "npm:^1.0.4"
     vue: "npm:^3.3.11"

@@ -18,21 +18,22 @@
       </div>
     </div>
   </div>
-  <div class="CodeEditorContainer">
+  <div class="CodeEditorContainer" >
     <vue-monaco-editor
     style="width: 100%;height: 100%"
       v-model:value="codeRef"
       theme="vs-dark"
-      options="MONACO_EDITOR_OPTIONS"
+      :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
       :change="chosenLangague"
       :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
-    />
+      @keyup.ctrl.enter.prevent="onShortCutRun"
+      />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, shallowRef, computed, watch } from 'vue'
+import { ref, shallowRef, computed, watch,onMounted  } from 'vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import { useConfirm } from 'primevue/useconfirm'
@@ -119,5 +120,16 @@ const onRunCode = () => {
 
 onBeforeRouteLeave((to, from) => {
   codeRef.value = ''
+
 })
+
+
+
+const onShortCutRun=()=>{
+  console.log("onShortCutRun")
+  onRunCode()
+}
+
+
+
 </script>

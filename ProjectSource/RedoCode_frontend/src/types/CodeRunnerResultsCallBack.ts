@@ -1,5 +1,5 @@
-import type CodeResultsType from './CodeResultsType'
+import type ProgramResults from './ProgramResults'
 
 export default interface CodeRunnerResultsCallBack {
-  (results: CodeResultsType[]): void
+  (results: ProgramResults[]): void
 }

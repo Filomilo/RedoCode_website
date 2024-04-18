@@ -31,6 +31,7 @@
     "pinia": "^2.1.7",
     "primevue": "^3.48.1",
     "v-dropdown-menu": "^2.0.4",
+    "v-hotkey": "^0.9.0",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5",
     "vue-slider-component": "^4.1.0-beta.7",

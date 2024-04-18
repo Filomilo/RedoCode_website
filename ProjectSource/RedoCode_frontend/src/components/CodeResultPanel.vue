@@ -11,15 +11,23 @@
         <div class="EngineStatusStatus">{{ codeRunnerStore.codeRunnerActive.state }}</div>
       </div>
     </div>
-    <div class="ConsoleResultConsoleCOntainer" v-if="!isDataResult">
+    <div class="ConsoleResultConsoleCOntainer"
+     v-if="!isDataResult"
+     style="display: flex;
+     overflow: scroll
+     "
+     >
       <div
         class="ConsoleResultConsoleCOntainerText"
-        style="overflow: scroll; color: red; height: fit-content"
-      >
-        {{ formattedEror }}
+        style="color: red; height: fit-content; max-height: fit-content"
+        v-html="formattedEror"
+        >
       </div>
-      <div class="ConsoleResultConsoleCOntainerText" style="overflow: scroll; height: 100%">
-        {{ formattedConsole }}
+      <div
+      class="ConsoleResultConsoleCOntainerText" 
+      style=" height: fit-content; max-height: fit-content"
+      v-html="formattedConsole"
+      >
       </div>
     </div>
 
@@ -43,86 +51,9 @@ const props = defineProps({
   isDataResult: { type: Boolean, required: false }
 })
 
-const console = `
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        >> hello world
-        `
+
 const formattedConsole = computed<string>(() =>
-  codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(/\n/g, '<br>')
+  ">> " + codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(/\n/g, '<br> >> ')
 )
 const formattedEror = computed<string>(() =>
   codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
