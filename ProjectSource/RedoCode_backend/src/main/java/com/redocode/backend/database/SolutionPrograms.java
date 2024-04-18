@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class SolutionPrograms {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     String code;
     @OneToOne
@@ -16,6 +16,5 @@ public class SolutionPrograms {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "excersize_id")
-    @Id
     private Excersize excersize;
 }

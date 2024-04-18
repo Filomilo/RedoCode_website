@@ -7,8 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.Range;
 
+import java.sql.Time;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @Entity
@@ -28,6 +31,47 @@ public class Excersize {
             name = "excersize_name"
     )
     String excersizeName;
+    @Column(
+            name = "ram_Mb"
+    )
+    Integer ram_mb;
+
+    @Column(
+            name = "time_for_task"
+    )
+    Time timeForTask;
+    @Column(
+            name = "amount_of_auto_tests"
+    )
+    int amountOfAutoTests;
+    @Column(
+            name = "array_x_length_range_min"
+    )
+    Integer arrayXLengthRange;
+    @Column(
+            name = "array_x_length_range_max"
+    )
+    Integer arrayXLengthRangeMax;
+    @Column(
+            name = "array_y_length_range_min"
+    )
+    Integer arrayYLengthRangeMin;
+    @Column(
+            name = "array_y_length_range_max"
+    )
+    Integer arrayYLengthRangeMax;
+    @Column(
+            name = "value_range_min"
+    )
+    Float valueLengthRangeMin;
+    @Column(
+            name = "value_range_max"
+    )
+    Float valueLengthRangeMax;
+    @Column(
+            name = "string_format_mask"
+    )
+    Byte stringFormat;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +88,7 @@ public class Excersize {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize")
-   private Set<ExcersizeDiffucultyRating> ratings = new HashSet<>();
+    private Set<ExcersizeDiffucultyRating> ratings = new HashSet<>();
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize" )
     private Set<ExerciseAttempts> attempts = new HashSet<>();
 
