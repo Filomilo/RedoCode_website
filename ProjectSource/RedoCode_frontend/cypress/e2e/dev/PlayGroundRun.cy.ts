@@ -9,6 +9,6 @@ describe('template spec', () => {
     cy.get('#pv_id_5').click()   
     cy.get('div.p-dropdown-panel.p-component.p-ripple-disabled div.p-dropdown-items-wrapper').click()
     cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div div.AuthLoginScreenConatiner div.LoginPanelConatiner button.p-button.p-component.BasicButton').click()
-    cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContianer div.EngineStatusPanel div.EngineStatusStatus').contains('awaiting')
+    cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContianer div.EngineStatusPanel div.EngineStatusStatus').contains('AWAITING')
   })
 })
