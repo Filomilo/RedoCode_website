@@ -5,7 +5,7 @@ import type CodeRunnerStateCallBack from '@/types/CodeRunnerStateCallBack'
 import type CoderunnerState from '@/types/CodeRunnerState'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import type CodeRunnerResultsCallBack from '@/types/CodeRunnerResultsCallBack'
-import type CodeResultsType from '@/types/CodeResultsType'
+import type ProgramResult from '@/types/ProgramResults'
 
 export const requstDefaultVmMachine = (type: string) => {
   const request: CodeRunnerRequestMessage = {
@@ -46,7 +46,7 @@ export const subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
   console.log('subscribing tor results')
   stompClient.subscribe('/user/topic/codeRunnerResults', (mesage: IMessage) => {
     console.log('staee code resulr: ' + JSON.stringify(mesage.body))
-    const results: CodeResultsType[] = JSON.parse(mesage.body)
+    const results: ProgramResult[] = JSON.parse(mesage.body)
     func(results)
   })
 }

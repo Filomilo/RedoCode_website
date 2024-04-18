@@ -8,6 +8,7 @@ import { languageChoices } from '../config/Data'
 import ExerciseTest from '@/types/ExcericseTest'
 import {connectStomp,onConnectStomp} from '@/config/StompApiConnection'
 import type ProgramResult from '@/types/ProgramResults'
+import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import {
   requstDefaultVmMachine,
   subcribeToVmStatus,
