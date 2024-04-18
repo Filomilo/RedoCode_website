@@ -195,7 +195,6 @@ public class CodeRunnersController {
         List<Variable> variablesInput=new ArrayList<>();
         if(codeToRunMessage.getExercise_id()==null)
         {
-
             pr=new RawProgram(codeToRunMessage.getCode());
         }
         log.info("program to run: "+ pr);

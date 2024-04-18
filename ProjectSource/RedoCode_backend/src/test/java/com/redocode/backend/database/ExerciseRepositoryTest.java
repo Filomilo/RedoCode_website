@@ -1,6 +1,13 @@
 package com.redocode.backend.database;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redocode.backend.Messages.ExerciseListRequestMessage;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleString;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import javassist.compiler.ast.Variable;
 import lombok.extern.java.Log;
 import org.hibernate.query.Page;
 import org.junit.jupiter.api.Test;
@@ -12,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.redocode.backend.database.Excersize;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -45,5 +53,26 @@ class ExerciseRepositoryTest {
                 "id"
         ));
         log.info("list  "+ list.toString() );
+    }
+
+    @Test
+    void saveNewExerciseToDb() throws JsonProcessingException {
+        ObjectMapper objectMapper= new ObjectMapper();
+        ExerciseTests test1=ExerciseTests.builder()
+                .expectedOutput(objectMapper.writeValueAsString(new SingleString("Hello world!")) )
+                .build();
+        HashSet<ExerciseTests> exerciseTests=new HashSet<>();
+        exerciseTests.add(test1);
+        Excersize excersize= Excersize.builder()
+                .excersizeName("Test")
+                .inputType(null)
+                .outputType(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .build();
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

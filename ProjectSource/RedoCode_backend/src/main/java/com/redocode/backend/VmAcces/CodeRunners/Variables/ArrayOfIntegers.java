@@ -1,5 +1,12 @@
 package com.redocode.backend.VmAcces.CodeRunners.Variables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.extern.jackson.Jacksonized;
+
+import java.util.Arrays;
+import java.util.Objects;
+
+
 public class ArrayOfIntegers  extends Variables<Integer[]> {
     public ArrayOfIntegers(Integer[] value) {
         super(value);
@@ -8,8 +15,19 @@ public class ArrayOfIntegers  extends Variables<Integer[]> {
         super();
     }
     @Override
+    @JsonIgnore
     public VARIABLES_TYPES getType() {
         return VARIABLES_TYPES.ARRAY_OF_INTEGERS;
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayOfIntegers{"+ Arrays.toString(getValue()) +"}";
+    }
+    @Override
+    public boolean equals(Object o) {
+        ArrayOfIntegers variables = (ArrayOfIntegers) o;
+        return Arrays.equals(this.getValue(), variables.getValue());
     }
 
 }

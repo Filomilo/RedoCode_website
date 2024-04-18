@@ -1,13 +1,22 @@
 package com.redocode.backend.VmAcces.CodeRunners.Variables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
+
+import java.util.Objects;
 
 @Data
+@SuperBuilder
 public abstract class Variables<T> {
 
+    @JsonIgnore
     private int w=-1;
+    @JsonIgnore
     private int h=-1;
 
    public enum VARIABLES_TYPES {
@@ -24,7 +33,9 @@ public abstract class Variables<T> {
 
 
     @Getter
+    @JsonProperty
     T value;
+
 
     public void setValue(T value) {
         this.value=value;
@@ -48,4 +59,16 @@ public abstract class Variables<T> {
     }
     public abstract VARIABLES_TYPES getType();
 
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Variables<T> variables = (Variables<T>) o;
+        return Objects.equals(this.getValue(), variables.getValue());
+    }
 }
