@@ -3,24 +3,34 @@ package com.redocode.backend.VmAcces.CodeRunners.Program;
 import com.redocode.backend.Tools.StringFormatter;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
+import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.SolutionProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
+import com.redocode.backend.database.SolutionPrograms;
+import com.redocode.backend.database.SolutionProgramsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
+@SpringBootTest
+@ContextConfiguration
 class CppSolutionProgramTest {
 
 
 //    @Test
 //    void getImports() {
 //    }
-
+    @Autowired
+    SolutionProgramsRepository solutionProgramsRepository;
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.ValuesProvider#singleIntProvider")
@@ -492,6 +502,19 @@ assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
     }
 
 
+    @Test
+    void FibonachiSequanceRun()
+    {
+        List<SolutionPrograms> list=solutionProgramsRepository.findAll();
+                SolutionProgram solutionProgram=ProgramFactory
+                        .createSolutionProgram()
+                        .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)// TODO: add class mapping data base string to Code runner enum
+                        .setInputVaraiable(new SingleInteger(1))
+                        .setOutputBase(new ArrayOfIntegers())
+                        .setSolutionCode(list.get(1).getCode())
+                        .build();
+                log.info("Solution code: \n\n\n\n" +solutionProgram.getProgramCode()) ;
+    }
 
 
 

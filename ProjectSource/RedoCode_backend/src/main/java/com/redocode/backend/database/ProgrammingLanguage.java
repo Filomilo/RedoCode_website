@@ -1,9 +1,15 @@
 package com.redocode.backend.database;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name ="Programming_Languages")
+@ToString
+@Getter
+@Setter
 public class ProgrammingLanguage {
 
     @Id
@@ -12,19 +18,5 @@ public class ProgrammingLanguage {
     private Long id;
     private String name;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
