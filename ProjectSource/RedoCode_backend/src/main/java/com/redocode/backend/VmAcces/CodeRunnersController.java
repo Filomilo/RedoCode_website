@@ -187,20 +187,43 @@ public class CodeRunnersController {
         usersCodeRunenrs.clear();
     }
 
-    public void runCode(User user, CodeToRunMessage codeToRunMessage) {
+    public List<ProgramResult> runCode(User user, CodeToRunMessage codeToRunMessage) {
         CodeRunner codeRunner= this.getUserCodeRunner(user);
         if(codeRunner==null)
             throw  new RuntimeException("user doesnt have code runner");
-        Program pr=new RawProgram("");
-        List<Variable> variablesInput=new ArrayList<>();
+
+        log.info("running program form meesage: "+ codeToRunMessage);
+        List<ProgramResult> results=runProgramFromMessage(codeRunner,codeToRunMessage);
+        this.sendResults(user,results);
+        return results;
+    }
+    // running raw program based on message send by user
+
+    public List<ProgramResult> runProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    {
+        List<ProgramResult> results=new ArrayList<>();
         if(codeToRunMessage.getExercise_id()==null)
         {
-            pr=new RawProgram(codeToRunMessage.getCode());
+            results=this.runRawProgramFromMessage(codeRunner,codeToRunMessage);
         }
-        log.info("program to run: "+ pr);
-        List<ProgramResult> results= codeRunner.runProgram(pr,variablesInput);
-        this.sendResults(user,results);
+        else {
+            results=this.runExerciseSoultionFromMessage(codeRunner,codeToRunMessage);
+        }
 
+        return results;
+    }
+
+    private List<ProgramResult> runRawProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    {
+        Program pr;
+        pr=new RawProgram(codeToRunMessage.getCode());
+        List<Variable> variablesInput=new ArrayList<>();
+        return codeRunner.runProgram(pr,variablesInput);
+    }
+    // running exercise program based on message send by user
+    private List<ProgramResult> runExerciseSoultionFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    {
+    return null;
     }
 
     public void sendResults(User user, List<ProgramResult> results)
