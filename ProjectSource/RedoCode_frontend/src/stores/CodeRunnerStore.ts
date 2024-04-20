@@ -112,6 +112,25 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     isAwaitingCompilation.value = true
   }
 
+  const dropDownLangaugeMap = {
+    CPP_RUNNER: 'cpp',
+    JS_RUNNER: 'js',
+    UNIDENTIFIED: ''
+  }
+const startingMethod=computed(()=>{
+  if(exerciseData.value.id!=null)
+  {
+    console.log("--------------------------id is not null")
+    if(codeRunnerActive.value.state==='ACTIVE')
+    {
+      console.log("--------------------------codeRunnerType is not UNIDENTIFIED: "+ JSON.stringify(codeRunnerActive.value))
+      return exerciseData.value.startingFunction[dropDownLangaugeMap[codeRunnerActive.value.codeRunnerType]]
+    }
+  }
+  console.log("retune non")
+  return "";
+})
+
   return {
     codeRunnerActive,
     doesHaveACtiveToCodeRunner,
@@ -124,6 +143,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     setExerciseData,
     exerciseLoading,
     setExerciseLoading,
-    disconnetWithCodeRunner
+    disconnetWithCodeRunner,
+    startingMethod
   }
 })

@@ -125,7 +125,7 @@ const diconnectFromCodeRunners = () => {
   // console.log("diconnect from code runners")
   //TODO: dicconrt requstDefaultVmMachine
   disconnectStomp()
-  // codeRunnerStore.disconnetWithCodeRunner();
+  codeRunnerStore.disconnetWithCodeRunner();
 }
 
 onMounted(() => {

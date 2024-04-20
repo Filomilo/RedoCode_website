@@ -49,7 +49,7 @@ const dropDownLangaugeMap: EditorLanguagesMap = {
   JS_RUNNER: 'js',
   UNIDENTIFIED: ''
 }
-const codeRef = ref('')
+const codeRef = ref(codeRunnerStore.startingMethod)
 const confirm = useConfirm()
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true
@@ -69,14 +69,15 @@ const editrLangesMap: EditorLanguagesMap = {
   JS_RUNNER: 'javascript',
   UNIDENTIFIED: ''
 }
+watch(()=>codeRunnerStore.startingMethod,()=>{
+codeRef.value=codeRunnerStore.startingMethod;
+})
+
 const lnagaugeDropdownVaule = computed(
   () => dropDownLangaugeMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
 )
 
-watch(lnagaugeDropdownVaule, (newValue: string, oldValue) => {
-  if(newValue!== "")
-  codeRef.value = codeRunnerStore.exerciseData.startingFunction[newValue]
-})
+
 const editorLang = computed(() => {
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
 })
