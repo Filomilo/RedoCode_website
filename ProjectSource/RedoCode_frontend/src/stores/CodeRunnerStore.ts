@@ -70,15 +70,14 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       state: '',
       codeRunnerType: ''
     }
-    
   }
 
   const VmMachineStatusCallBack = (state: CoderunnerState) => {
     console.log('new vm machine status: ' + JSON.stringify(state.codeRunnerType))
     codeRunnerActive.value.state = state.state
-    codeRunnerActive.value.codeRunnerType="CPP_RUNNER"
+    codeRunnerActive.value.codeRunnerType = 'CPP_RUNNER'
     // codeRunnerActive.value.codeRunnerType=state.codeRunnerType==="UUIANDTIFIED"?"":state.codeRunnerType
-    console.log("codeRunnerActive: "+JSON.stringify( codeRunnerActive))
+    console.log('codeRunnerActive: ' + JSON.stringify(codeRunnerActive))
   }
   const CodeRunnerResultsCallBack = (res: ProgramResult[]) => {
     isAwaitingCompilation.value = false
@@ -112,24 +111,27 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     isAwaitingCompilation.value = true
   }
 
-  const dropDownLangaugeMap:any = {
+  const dropDownLangaugeMap: any = {
     CPP_RUNNER: 'cpp',
     JS_RUNNER: 'js',
     UNIDENTIFIED: ''
   }
-const startingMethod=computed(()=>{
-  if(exerciseData.value.id!=null)
-  {
-    console.log("--------------------------id is not null")
-    if(codeRunnerActive.value.state==='ACTIVE')
-    {
-      console.log("--------------------------codeRunnerType is not UNIDENTIFIED: "+ JSON.stringify(codeRunnerActive.value))
-      return exerciseData.value.startingFunction[dropDownLangaugeMap[codeRunnerActive.value.codeRunnerType]]
+  const startingMethod = computed(() => {
+    if (exerciseData.value.id != null) {
+      console.log('--------------------------id is not null')
+      if (codeRunnerActive.value.state === 'ACTIVE') {
+        console.log(
+          '--------------------------codeRunnerType is not UNIDENTIFIED: ' +
+            JSON.stringify(codeRunnerActive.value)
+        )
+        return exerciseData.value.startingFunction[
+          dropDownLangaugeMap[codeRunnerActive.value.codeRunnerType]
+        ]
+      }
     }
-  }
-  console.log("retune non")
-  return "";
-})
+    console.log('retune non')
+    return ''
+  })
 
   return {
     codeRunnerActive,

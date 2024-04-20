@@ -31,11 +31,7 @@
     </div>
     <div class="testValidationSection">
       {{
-        data.isSolved !== null
-          ? data.expectedOutput == data.output
-            ? 'Correct'
-            : 'Failed'
-          : ''
+        data.isSolved !== null ? (data.expectedOutput == data.output ? 'Correct' : 'Failed') : ''
       }}
     </div>
   </div>

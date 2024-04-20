@@ -69,14 +69,16 @@ const editrLangesMap: EditorLanguagesMap = {
   JS_RUNNER: 'javascript',
   UNIDENTIFIED: ''
 }
-watch(()=>codeRunnerStore.startingMethod,()=>{
-codeRef.value=codeRunnerStore.startingMethod;
-})
+watch(
+  () => codeRunnerStore.startingMethod,
+  () => {
+    codeRef.value = codeRunnerStore.startingMethod
+  }
+)
 
 const lnagaugeDropdownVaule = computed(
   () => dropDownLangaugeMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
 )
-
 
 const editorLang = computed(() => {
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]

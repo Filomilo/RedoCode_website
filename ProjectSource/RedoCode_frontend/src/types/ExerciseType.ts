@@ -1,7 +1,7 @@
 export default interface ExerciseType {
   id: number
   name: string
-  language: Array<string>
+  languages: { name: string }[]
   difficulty: string
   popularity: number
   description: string
