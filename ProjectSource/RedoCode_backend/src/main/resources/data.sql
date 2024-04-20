@@ -59,14 +59,14 @@ VALUES (1, --author_id
        );
 
 INSERT INTO public.exercise_tests (excersize, id, expected_output, input)
-VALUES (1, DEFAULT, '{"value":[0}', '{"value":1}'),
-       (1, DEFAULT, '{"value":[0,1]}', '{"value":2}'),
-       (1, DEFAULT, '{"value":[0,1,1]}', '{"value":3}'),
-       (1, DEFAULT, '{"value":[0,1,1,2]}', '{"value":4}'),
-       (1, DEFAULT, '{"value":[0,1,1,2,3]}', '{"value":5}'),
-       (1, DEFAULT, '{"value":[0,1,1,2,3,5]}', '{"value":6}'),
-       (1, DEFAULT, '{"value":[0,1,1,2,3,5,8]}', '{"value":7}');
-INSERT INTO public.solution_programs (id, excersize_id, language_id, code)
+VALUES (1, DEFAULT, '{"value":0}', '{"value":1}'),
+       (1, DEFAULT, '{"value":1}', '{"value":2}'),
+       (1, DEFAULT, '{"value":1}', '{"value":3}'),
+       (1, DEFAULT, '{"value":2}', '{"value":4}'),
+       (1, DEFAULT, '{"value":3}', '{"value":5}'),
+       (1, DEFAULT, '{"value":5}', '{"value":6}'),
+       (1, DEFAULT, '{"value":8}', '{"value":7}');
+INSERT INTO public.solution_programs (id, excersize, language_id, code)
 VALUES
 --     (
 --         DEFAULT,

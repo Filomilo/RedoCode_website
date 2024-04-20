@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ExerciseRepository extends JpaRepository<Excersize,Long> {
 
-    @Query( "SELECT distinct   new com.redocode.backend.database.ExcersizeListEntry (e )  FROM Excersize e   left JOIN fetch e.languages left join e.ratings left join e.attempts")
+    @Query( "SELECT distinct   new com.redocode.backend.database.ExcersizeListEntry (e )  FROM Excersize e   left JOIN  e.solutions left join e.ratings left join e.attempts")
     List<ExcersizeListEntry> getSimpleExcersizeList();
 //    @Query("SELECT e FROM MyEntity e WHERE e.someProperty = :somePropertyValue AND e.anotherProperty = :anotherPropertyValue")
 //    List<ExcersizeListEntry> findBySomePropertyAndAnotherPropertyNamed(@Param("somePropertyValue") String somePropertyValue, @Param("anotherPropertyValue") String anotherPropertyValue);

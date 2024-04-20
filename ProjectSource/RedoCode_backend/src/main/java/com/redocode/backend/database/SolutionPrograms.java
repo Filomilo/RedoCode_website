@@ -21,7 +21,7 @@ public class SolutionPrograms {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "excersize_id")
+    @JoinColumn(name = "excersize")
     @ToString.Exclude
     private Excersize excersize;
 

@@ -44,7 +44,11 @@ const codeRunnerStore = useCodeRunnerStore()
 defineProps({
   code: Object as () => string
 })
-const codeRef = ref(codeRunnerStore.exerciseData.startingFunction)
+const dropDownLangaugeMap: EditorLanguagesMap = {
+  CPP_RUNNER: 'cpp',
+  JS_RUNNER: 'js'
+}
+const codeRef = ref( "")
 const confirm = useConfirm()
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true
@@ -65,10 +69,9 @@ const editrLangesMap: EditorLanguagesMap = {
 }
 const lnagaugeDropdownVaule=computed (()=> dropDownLangaugeMap[codeRunnerStore.codeRunnerActive.codeRunnerType])
 
-const dropDownLangaugeMap: EditorLanguagesMap = {
-  CPP_RUNNER: 'cpp',
-  JS_RUNNER: 'js'
-}
+watch(lnagaugeDropdownVaule, (newValue, oldValue) => {
+  codeRef.value=codeRunnerStore.exerciseData.startingFunction[newValue];
+})
 const editorLang = computed(() => {
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
 })

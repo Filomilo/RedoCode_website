@@ -2,6 +2,7 @@ import type ExerciseTest from './ExcericseTest'
 export default interface ExerciseData {
   availbleCodeRunners: string[]
   title: string
+  id: number
   desc: string
   outputType: string
   inputType: string

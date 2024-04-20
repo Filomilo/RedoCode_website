@@ -3,6 +3,8 @@ package com.redocode.backend.VmAcces.CodeRunners;
 import com.redocode.backend.Messages.CodeToRunMessage;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunnersController;
+import com.redocode.backend.database.ExerciseRepository;
+import com.redocode.backend.database.ExerciseTests;
 import lombok.extern.java.Log;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterAll;
@@ -25,6 +27,7 @@ public class FromMessageProgramRun {
 
     @Autowired
     CodeRunnersController codeRunnersController;
+
 
     static CodeRunner cppCodeRunner;
 
@@ -62,7 +65,28 @@ public class FromMessageProgramRun {
         log.info(" program hello world resutls: "+ Arrays.toString(resultList.toArray()));
         assertEquals("Hello World!",resultList.get(0).getConsoleOutput().getOutput());
     }
+    @Test
+    public void cppFibianchiTestRun()
+    {
+        log.info("runnign cpp Fibonachi nubmer test");
 
+        String anwserCode="int solution(int n) {\n" +
+                "    if (n <= 2)\n" +
+                "        return n-1;\n" +
+                "    return solution(n - 1) + solution(n - 2);\n" +
+                "}";
+
+        CodeToRunMessage codeToRunMessage = CodeToRunMessage
+                .builder()
+                .code(anwserCode)
+                .exercise_id("1")
+                .build();
+
+                List<ProgramResult> resultList= codeRunnersController.
+                runProgramFromMessage(cppCodeRunner,codeToRunMessage);
+        log.info(" program fibonachi resutls: "+ Arrays.toString(resultList.toArray()));
+//        assertEquals("Hello World!",resultList.get(0).getConsoleOutput().getOutput());
+    }
 
 
 }

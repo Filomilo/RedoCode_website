@@ -66,24 +66,6 @@ public abstract class CodeRunner extends ContainerController {
         }
     }
 
-    public ProgramResult runProgram(Program program, Variable variablesInput)
-    {
-        return null;
-    }
-    public List<ProgramResult> runProgram(Program program, List<Variable> variablesInput)
-    {
-        List<ProgramResult> results=new ArrayList<>();
-        if(variablesInput.size()==0)
-        {
-            results.add(this.runProgram(program));
-        }
-        else {
-            for (Variable var: variablesInput
-                 ) {
-                results.add(this.runProgram(program,var));
-            }
-        }
-        return results;
-    }
+
 
 }

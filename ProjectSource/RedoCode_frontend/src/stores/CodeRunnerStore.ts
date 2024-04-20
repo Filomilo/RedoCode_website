@@ -79,6 +79,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     codeRunnerActive.value=state;
   }
   const CodeRunnerResultsCallBack=(res: ProgramResult[])=>{
+    isAwaitingCompilation.value=false;
+
     console.log("new code runner resutls: "+JSON.stringify(res))
     exerciseData.value.tests.forEach((test: ExerciseTest,index: number)=>{
       test.consoleOutput=  res[index].consoleOutput.output===null?"": res[index].consoleOutput.output;
@@ -86,7 +88,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       test.output=res[index].variables;
     test.isSolved=res[index].variables===test.expectedOutput
     })
-    isAwaitingCompilation.value=false;
   }
 
   
@@ -104,7 +105,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     console.log("sending code to run: "+code)
     const message: CodeToRunMessage={
       code: code,
-      exercise_id: null
+      exercise_id: exerciseData.value.id
     }
 sendToCompile(message);
 isAwaitingCompilation.value = true

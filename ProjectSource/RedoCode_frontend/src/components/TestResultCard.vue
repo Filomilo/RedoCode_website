@@ -6,15 +6,15 @@
     <div class="testOuputSection">
       <TabView>
         <TabPanel header="Console">
-          <div>
+          <div style="overflow: scroll;">
             <div
               class="ConsoleResultConsoleCOntainerText"
-              style="overflow: scroll; color: red"
+              style="height: fit-content; max-height: fit-content; color: red"
               v-html="formattedEror"
             ></div>
             <div
               class="ConsoleResultConsoleCOntainerText"
-              style="overflow: scroll; height: 100%"
+              style=" height: fit-content; max-height: fit-content"
               v-html="formattedConsole"
             ></div>
           </div>
@@ -22,7 +22,7 @@
         <TabPanel header="Result">
           <div class="TypeResultContainer" st>
             <div class="TypeResultContainerPanel" style="text-wrap: wrap">
-              expeteced: {{ JSON.stringify(data.expectedOutput) }}
+              expeteced: {{ JSON.stringify(data.expectedOutput.value) }}
             </div>
             <div class="TypeResultContainerPanel">achived: {{ JSON.stringify(data.output) }}</div>
           </div>
@@ -30,7 +30,7 @@
       </TabView>
     </div>
     <div class="testValidationSection">
-      {{ data.isSolved !== null ? (data.isSolved === true ? 'Correct' : 'Failed') : '' }}
+      {{ data.isSolved !== null ? (data.expectedOutput.value == data.output.value ? 'Correct' : 'Failed') : '' }}
     </div>
   </div>
 </template>
