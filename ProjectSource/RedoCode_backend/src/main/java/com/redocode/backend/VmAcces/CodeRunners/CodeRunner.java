@@ -5,19 +5,15 @@ import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.VariablesParser;
-import javassist.compiler.ast.Variable;
 import lombok.Getter;
 import lombok.Synchronized;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public abstract class CodeRunner extends ContainerController {
 
     protected CodeRunner(String image) {
         super(image);
-        type=CODE_RUNNER_TYPE.UUIANDTIFIED;
+        type=CODE_RUNNER_TYPE.UNIDENTIFIED;
     }
 
     protected CODE_RUNNER_TYPE  type;

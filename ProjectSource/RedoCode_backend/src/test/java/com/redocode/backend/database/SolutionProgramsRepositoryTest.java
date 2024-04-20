@@ -36,7 +36,7 @@ public class SolutionProgramsRepositoryTest {
                 "}\n" +
                 "    return arr[val-1];\n" +
                 "}";
-        SolutionPrograms solutionCpp=list.get(1);
+        SolutionPrograms solutionCpp=list.get(0);
         log.info("solution cpp: "+solutionCpp.toString());
 
         assertEquals("cpp",solutionCpp.getLanguage().getName());

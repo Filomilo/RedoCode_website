@@ -12,7 +12,7 @@ import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 import { setTimeout } from 'timers'
 
-const setupPlayground=()=>{
+const setupPlayground = () => {
   // console.log("-----------------")
   codeRunnerStore.setExerciseLoading(true)
   codeRunnerStore.setExceriseDataToPlayground()

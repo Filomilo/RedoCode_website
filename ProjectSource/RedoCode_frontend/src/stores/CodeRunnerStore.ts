@@ -6,15 +6,14 @@ import axios from 'axios'
 import '../interceptors/axios'
 import { languageChoices } from '../config/Data'
 import ExerciseTest from '@/types/ExcericseTest'
-import {connectStomp,onConnectStomp} from '@/config/StompApiConnection'
+import { connectStomp, onConnectStomp } from '@/config/StompApiConnection'
 import type ProgramResult from '@/types/ProgramResults'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import {
   requstDefaultVmMachine,
   subcribeToVmStatus,
   sendToCompile,
-  subscribeToCodeResults,
-
+  subscribeToCodeResults
 } from '../config/CodeRunnerConnection'
 import CoderunnerState from '../types/CodeRunnerState'
 import { IFrame } from '@stomp/stompjs'
@@ -31,6 +30,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     inputType: '',
     title: '',
     desc: '',
+    id: null,
     outputType: '',
     availbleCodeRunners: languageChoices.map((element) => element),
     tests: [
@@ -50,8 +50,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const exerciseData: Ref<ExerciseData> = ref(playGroundBase)
 
   const isAwaitngCodeRunner = computed(() => codeRunnerActive.value.state == 'AWAITING')
-  const setExerciseData=(exerciseDataRecived: ExerciseData)=>{
-    exerciseData.value=exerciseDataRecived
+  const setExerciseData = (exerciseDataRecived: ExerciseData) => {
+    exerciseData.value = exerciseDataRecived
   }
 
   const setExceriseDataToPlayground = () => {
@@ -70,48 +70,47 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       state: '',
       codeRunnerType: ''
     }
+    
   }
 
-
-
-  const VmMachineStatusCallBack=(state: CoderunnerState)=>{
-    console.log("new vm machine status: "+JSON.stringify(state))
-    codeRunnerActive.value=state;
+  const VmMachineStatusCallBack = (state: CoderunnerState) => {
+    console.log('new vm machine status: ' + JSON.stringify(state.codeRunnerType))
+    codeRunnerActive.value.state = state.state
+    codeRunnerActive.value.codeRunnerType="CPP_RUNNER"
+    // codeRunnerActive.value.codeRunnerType=state.codeRunnerType==="UUIANDTIFIED"?"":state.codeRunnerType
+    console.log("codeRunnerActive: "+JSON.stringify( codeRunnerActive))
   }
-  const CodeRunnerResultsCallBack=(res: ProgramResult[])=>{
-    isAwaitingCompilation.value=false;
+  const CodeRunnerResultsCallBack = (res: ProgramResult[]) => {
+    isAwaitingCompilation.value = false
 
-    console.log("new code runner resutls: "+JSON.stringify(res))
-    exerciseData.value.tests.forEach((test: ExerciseTest,index: number)=>{
-      test.consoleOutput=  res[index].consoleOutput.output===null?"": res[index].consoleOutput.output;
-      test.errorOutput=  res[index].consoleOutput.errorOutput===null?"": res[index].consoleOutput.errorOutput;
-      test.output=res[index].variables;
-    test.isSolved=res[index].variables===test.expectedOutput
+    console.log('new code runner resutls: ' + JSON.stringify(res))
+    exerciseData.value.tests.forEach((test: ExerciseTest, index: number) => {
+      test.consoleOutput =
+        res[index].consoleOutput.output === null ? '' : res[index].consoleOutput.output
+      test.errorOutput =
+        res[index].consoleOutput.errorOutput === null ? '' : res[index].consoleOutput.errorOutput
+      test.output = res[index].variables
+      test.isSolved = res[index].variables === test.expectedOutput
     })
   }
 
-  
-
   const requestCodeRunner = (codeRunnerName: string) => {
-
-    codeRunnerActive.value.state="AWAITING"
-    subcribeToVmStatus(VmMachineStatusCallBack);
+    codeRunnerActive.value.state = 'AWAITING'
+    subcribeToVmStatus(VmMachineStatusCallBack)
     subscribeToCodeResults(CodeRunnerResultsCallBack)
-    requstDefaultVmMachine(codeRunnerName);
-    
+    requstDefaultVmMachine(codeRunnerName)
+
     // console.log("connecting to vm mahicne state callback");
   }
   const runCode = async (code: string) => {
-    console.log("sending code to run: "+code)
-    const message: CodeToRunMessage={
+    console.log('sending code to run: ' + code)
+    const message: CodeToRunMessage = {
       code: code,
       exercise_id: exerciseData.value.id
     }
-sendToCompile(message);
-isAwaitingCompilation.value = true
+    sendToCompile(message)
+    isAwaitingCompilation.value = true
   }
-
-
 
   return {
     codeRunnerActive,
@@ -125,7 +124,6 @@ isAwaitingCompilation.value = true
     setExerciseData,
     exerciseLoading,
     setExerciseLoading,
-    disconnetWithCodeRunner,
-    
+    disconnetWithCodeRunner
   }
 })

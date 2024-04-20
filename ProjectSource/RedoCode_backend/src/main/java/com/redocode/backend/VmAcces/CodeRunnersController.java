@@ -16,24 +16,16 @@ import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.VariablesFactory;
-import com.redocode.backend.VmAcces.CodeRunners.Variables.VariablesParser;
 import com.redocode.backend.database.Excersize;
 import com.redocode.backend.database.ExerciseRepository;
 import com.redocode.backend.database.ExerciseTests;
-import jakarta.annotation.PreDestroy;
 import javassist.compiler.ast.Variable;
-import lombok.Cleanup;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Synchronized;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -180,7 +172,7 @@ public class CodeRunnersController {
 
         CoderunnerStateMessage coderunnerStateMessage=   CoderunnerStateMessage.builder()
                 .state(state)
-                .codeRunnerType(userCodeRunner==null?CODE_RUNNER_TYPE.UUIANDTIFIED:userCodeRunner.getType())
+                .codeRunnerType(userCodeRunner==null?CODE_RUNNER_TYPE.UNIDENTIFIED :userCodeRunner.getType())
                 .build();
         log.info("user: "+ user+" requested status: "+ coderunnerStateMessage);
         codeRunnerSender.sendToUser(user.getId(),  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);

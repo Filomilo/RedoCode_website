@@ -18,9 +18,9 @@
       </div>
     </div>
   </div>
-  <div class="CodeEditorContainer" >
+  <div class="CodeEditorContainer">
     <vue-monaco-editor
-    style="width: 100%;height: 100%"
+      style="width: 100%; height: 100%"
       v-model:value="codeRef"
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
@@ -28,12 +28,12 @@
       :change="chosenLangague"
       :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
       @keyup.ctrl.enter.prevent="onShortCutRun"
-      />
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, shallowRef, computed, watch,onMounted  } from 'vue'
+import { ref, shallowRef, computed, watch, onMounted } from 'vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import { useConfirm } from 'primevue/useconfirm'
@@ -46,9 +46,10 @@ defineProps({
 })
 const dropDownLangaugeMap: EditorLanguagesMap = {
   CPP_RUNNER: 'cpp',
-  JS_RUNNER: 'js'
+  JS_RUNNER: 'js',
+  UNIDENTIFIED: ''
 }
-const codeRef = ref( "")
+const codeRef = ref('')
 const confirm = useConfirm()
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true
@@ -65,12 +66,16 @@ interface EditorLanguagesMap {
 }
 const editrLangesMap: EditorLanguagesMap = {
   CPP_RUNNER: 'cpp',
-  JS_RUNNER: 'javascript'
+  JS_RUNNER: 'javascript',
+  UNIDENTIFIED: ''
 }
-const lnagaugeDropdownVaule=computed (()=> dropDownLangaugeMap[codeRunnerStore.codeRunnerActive.codeRunnerType])
+const lnagaugeDropdownVaule = computed(
+  () => dropDownLangaugeMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
+)
 
-watch(lnagaugeDropdownVaule, (newValue, oldValue) => {
-  codeRef.value=codeRunnerStore.exerciseData.startingFunction[newValue];
+watch(lnagaugeDropdownVaule, (newValue: string, oldValue) => {
+  if(newValue!== "")
+  codeRef.value = codeRunnerStore.exerciseData.startingFunction[newValue]
 })
 const editorLang = computed(() => {
   return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
@@ -123,16 +128,10 @@ const onRunCode = () => {
 
 onBeforeRouteLeave((to, from) => {
   codeRef.value = ''
-
 })
 
-
-
-const onShortCutRun=()=>{
-  console.log("onShortCutRun")
+const onShortCutRun = () => {
+  console.log('onShortCutRun')
   onRunCode()
 }
-
-
-
 </script>

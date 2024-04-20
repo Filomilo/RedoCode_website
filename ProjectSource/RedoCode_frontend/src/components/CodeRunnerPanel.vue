@@ -30,7 +30,10 @@
     </template>
   </Dialog>
 
-  <div v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner" class="heightLimit">
+  <div
+    v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner"
+    class="heightLimit"
+  >
     <Splitter style="height: 100%">
       <SplitterPanel v-if="showLeftPanel">
         <Splitter layout="vertical">
@@ -42,7 +45,7 @@
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
-  
+
       <SplitterPanel>
         <CodeEditor class="CodeEditorContainer" />
       </SplitterPanel>
@@ -118,8 +121,6 @@ const updateResults = (results: CodeResultsType[]) => {
   resultData.value = results
 }
 
-
-
 const diconnectFromCodeRunners = () => {
   // console.log("diconnect from code runners")
   //TODO: dicconrt requstDefaultVmMachine
@@ -130,8 +131,8 @@ const diconnectFromCodeRunners = () => {
 onMounted(() => {
   console.log('props: ' + JSON.stringify(props))
   // if (props.connectAtStart) {
-    connectStomp();
-    //connectToCodeRunner()
+  connectStomp()
+  //connectToCodeRunner()
   // }
 })
 
@@ -158,8 +159,8 @@ const onRunCode = () => {
 
 onBeforeRouteLeave(async (to, from) => {
   // console.log("leave************************************************")
-// codeRunnerStore.disconnetWithCodeRunner();
-diconnectFromCodeRunners();
+  // codeRunnerStore.disconnetWithCodeRunner();
+  diconnectFromCodeRunners()
 })
 </script>
 

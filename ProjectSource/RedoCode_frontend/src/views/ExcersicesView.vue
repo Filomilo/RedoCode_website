@@ -18,7 +18,7 @@
           <LoadingIndicator />
         </template>
         <template #item-lang="item">
-            {{ item.languages.map((elemnt)=> elemnt.name)}}
+          {{ item.languages.map((elemnt) => elemnt.name) }}
         </template>
         <template #item-actions="item">
           <Button
@@ -104,7 +104,7 @@ const loadFromServer = () => {
       console.error("couldn't retrieve excercise list from server")
       throw "couldn't retrieve excercise list from server"
     }
-    console.log("Exercises respones: "+ JSON.stringify( response));
+    console.log('Exercises respones: ' + JSON.stringify(response))
     exerciseData.value = response.data
   })
 }
