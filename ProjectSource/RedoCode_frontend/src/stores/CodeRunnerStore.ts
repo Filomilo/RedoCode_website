@@ -112,7 +112,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     isAwaitingCompilation.value = true
   }
 
-  const dropDownLangaugeMap = {
+  const dropDownLangaugeMap:any = {
     CPP_RUNNER: 'cpp',
     JS_RUNNER: 'js',
     UNIDENTIFIED: ''

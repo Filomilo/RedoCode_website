@@ -18,7 +18,7 @@
           <LoadingIndicator />
         </template>
         <template #item-lang="item">
-          {{ item.languages.map((elemnt) => elemnt.name) }}
+          {{ item.languages.map((elemnt: any) => elemnt.name) }}
         </template>
         <template #item-actions="item">
           <Button
