@@ -51,7 +51,7 @@ import './interceptors/axios'
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
-  // makeServer()
+  makeServer()
 }
 
 app
