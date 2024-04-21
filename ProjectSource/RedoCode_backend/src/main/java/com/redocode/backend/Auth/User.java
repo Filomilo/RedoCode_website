@@ -43,8 +43,12 @@ public abstract class User implements Comparable {
 
     @Override
     public int compareTo(@org.jetbrains.annotations.NotNull Object o) {
-        User user=(User) o;
 
-        return this.id.compareTo(user.getId());
+        if(!(o instanceof User))
+        {
+            throw  new ClassCastException("This class can only be compared with other classes derived from User class, not with "+ o.getClass());
+        }
+        User user= (User) o;
+        return this.getUserType().compareTo(user.getUserType());
     }
 }
