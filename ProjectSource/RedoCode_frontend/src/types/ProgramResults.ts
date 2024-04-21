@@ -5,5 +5,5 @@ interface ConsoleOutput {
 }
 export default interface ExerciseTest {
   consoleOutput: ConsoleOutput
-  variables: number[] | number | string | string[]
+  variables: number[] | number | string | string[] | null
 }

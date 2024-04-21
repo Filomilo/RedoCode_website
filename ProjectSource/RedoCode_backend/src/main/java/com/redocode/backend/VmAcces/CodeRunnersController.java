@@ -84,8 +84,15 @@ public class CodeRunnersController {
     public void deregisterUser(User user)
     {
         CodeRunner codeRunner= this.usersCodeRunenrs.get(user);
-        if(codeRunner!=null)
+
+        if(codeRunner!=null) {
+            log.info("removing code runner: "+ codeRunner+" from desrigset user : "+ user);
+            this.usersCodeRunenrs.remove(user);
             codeRunner.destroy();
+        }
+        else{
+            log.info("dereigster user: "+ user+ " didnt ave any code runenrs");
+        }
 
 
         Optional<CodeRunnerRequest> requestMessage=requestMessageSet

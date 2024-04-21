@@ -159,16 +159,16 @@ export function makeServer({ environment = 'development' } = {}) {
     availbleCodeRunners: ['js'],
     tests: [
       {
-        input: 1,
-        output: null,
-        expectedOutput: [0],
+        input:  1,
+        output:  null,
+        expectedOutput:  [0],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null
       },
       {
         input: 2,
-        output: null,
+        output:  null,
         expectedOutput: [0, 1],
         errorOutput: '',
         consoleOutput: '',
@@ -176,8 +176,8 @@ export function makeServer({ environment = 'development' } = {}) {
       },
       {
         input: 3,
-        output: null,
-        expectedOutput: [0, 1, 1],
+        output:  null,
+        expectedOutput:  [0, 1, 1],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null

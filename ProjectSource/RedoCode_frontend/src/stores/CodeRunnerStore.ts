@@ -35,11 +35,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     availbleCodeRunners: languageChoices.map((element) => element),
     tests: [
       {
-        input: '',
-        output: '',
+        input:   '',
+        output:   '',
         errorOutput: '',
         consoleOutput: '',
-        expectedOutput: '',
+        expectedOutput:  '',
         isSolved: null
       }
     ],
@@ -74,8 +74,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const VmMachineStatusCallBack = (state: CoderunnerState) => {
     console.log('new vm machine status: ' + JSON.stringify(state.codeRunnerType))
-    codeRunnerActive.value.state = state.state
-    codeRunnerActive.value.codeRunnerType = 'CPP_RUNNER'
+    codeRunnerActive.value = state
+    // codeRunnerActive.value.codeRunnekkrType = 'CPP_RUNNER'
     // codeRunnerActive.value.codeRunnerType=state.codeRunnerType==="UUIANDTIFIED"?"":state.codeRunnerType
     console.log('codeRunnerActive: ' + JSON.stringify(codeRunnerActive))
   }
