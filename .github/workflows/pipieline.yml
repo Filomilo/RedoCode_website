@@ -160,4 +160,4 @@ jobs:
       - name: run test
         working-directory: ./ProjectSource/RedoCode_frontend
         run: |
-          docker run  --network="host" -it -v $PWD:/e2e -w /e2e cypress/included:12.3.0
+          docker run  --network="host" -v $PWD:/e2e -w /e2e cypress/included:12.3.0
