@@ -10,6 +10,8 @@ describe('template spec', () => {
         cy.url().should('eq', Cypress.config().baseUrl+'/PlayGround');
         cy.get('#pv_id_5').click()   
         cy.get('#pv_id_5_1').click()
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(1000);
         cy.get('.p-button-label').click()
         cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div.heightLimit div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContianer div.EngineStatusPanel div.EngineStatusStatus').contains('ACTIVE')
         cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div.heightLimit div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeEditorContainer div div div.monaco-editor.no-user-select.showUnused.showDeprecated.vs-dark div.overflow-guard div.monaco-scrollable-element.editor-scrollable.vs-dark div.lines-content.monaco-editor-background div.view-lines.monaco-mouse-cursor-text div.view-line').type("console.log('Hello World!')")
