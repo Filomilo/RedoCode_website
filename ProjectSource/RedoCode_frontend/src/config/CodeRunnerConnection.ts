@@ -23,11 +23,11 @@ export const requstDefaultVmMachine = (type: string) => {
 export const subcribeToVmStatus = (func: CodeRunnerStateCallBack) => {
   console.log('subscribing')
   stompClient.subscribe('/user/topic/codeRunnerState', (mesage: IMessage) => {
-    console.log("subcribeToVmStatus activated---");
+    console.log('subcribeToVmStatus activated---')
     console.log('staee: ' + JSON.stringify(mesage.body))
-    console.log("parsed beofre pasrisng");
+    console.log('parsed beofre pasrisng')
     const state: CoderunnerState = JSON.parse(mesage.body)
-    console.log("parsed: "+ JSON.stringify(state))
+    console.log('parsed: ' + JSON.stringify(state))
     func(state)
   })
 }
@@ -46,7 +46,14 @@ export const subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
   console.log('subscribing tor results')
   stompClient.subscribe('/user/topic/codeRunnerResults', (mesage: IMessage) => {
     console.log('staee code resulr: ' + JSON.stringify(mesage.body))
-    const results: ProgramResult[] = JSON.parse(mesage.body)
+    const results: ProgramResult[] = JSON.parse(mesage.body).map((elem: any)=>{
+        if(elem.variables===null)
+        return elem;
+      return {
+        ...elem,
+        "variables": elem.variables.value
+      };
+    })
     func(results)
   })
 }

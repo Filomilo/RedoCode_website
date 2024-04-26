@@ -87,12 +87,10 @@ const pinia = createPinia()
 
 app.use(pinia)
 
-
 app.use(VueMonacoEditorPlugin, {
   paths: {
     vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
-  },
+  }
 })
-
 
 app.mount('#app')

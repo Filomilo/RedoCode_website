@@ -17,6 +17,9 @@
         <template #loading>
           <LoadingIndicator />
         </template>
+        <template #item-lang="item">
+          {{ item.languages.map((elemnt: any) => elemnt.name) }}
+        </template>
         <template #item-actions="item">
           <Button
             v-on:click="onExcersiceButton(item.id)"
@@ -64,7 +67,7 @@ const router = useRouter()
 
 const fields: any[] = [
   { text: 'Name', value: 'name' },
-  { text: 'language', value: 'language' },
+  { text: 'language', value: 'lang' },
   { text: 'difficulty', value: 'difficulty' },
   { text: '', value: 'actions', width: 30 }
 ]
@@ -95,13 +98,15 @@ const loadFromServer = () => {
     page: serverOptions.value.page,
     sortDirection: serverOptions.value.sortType === 'desc'
   }
-
+  console.log('Getting exercises')
   axios.get('exercises', { params: request }).then((response) => {
     if (response === undefined) {
       console.error("couldn't retrieve excercise list from server")
       throw "couldn't retrieve excercise list from server"
     }
+    console.log('Exercises respones: ' + JSON.stringify(response))
     exerciseData.value = response.data
+    console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
   })
 }
 

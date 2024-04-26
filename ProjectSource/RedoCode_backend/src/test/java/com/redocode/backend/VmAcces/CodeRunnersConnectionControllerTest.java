@@ -366,7 +366,7 @@ class CodeRunnersConnectionControllerTest {
         assertEquals(VmStatus.AWAITING_ACCES,statusBeforeStarting2);
         assertEquals(VmStatus.RUNNING_MACHINE,statusAfterFirstStartStarting1);
         assertEquals(VmStatus.AWAITING_ACCES,statusAfterFirstStartStarting2);
-        assertEquals(VmStatus.DESTROYED,statusAfterSecondStart1);
+        assertEquals(VmStatus.NOT_REQUESTED,statusAfterSecondStart1);
         assertEquals(VmStatus.RUNNING_MACHINE,statusAfterSecondStart2);
 
     }

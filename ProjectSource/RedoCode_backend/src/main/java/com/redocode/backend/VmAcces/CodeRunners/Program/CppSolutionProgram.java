@@ -26,7 +26,7 @@ public class CppSolutionProgram extends SolutionProgram {
         log.error("not impelementet");
     }
 
-    private String getVarName(Variables.VARIABLES_TYPES type){
+    public static String getVarName(Variables.VARIABLES_TYPES type){
         String output=switch (type){
             case SINGLE_INTEGER -> "int";
             case SINGLE_STRING -> "std::string";

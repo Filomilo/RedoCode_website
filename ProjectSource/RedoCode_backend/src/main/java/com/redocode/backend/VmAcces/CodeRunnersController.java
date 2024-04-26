@@ -1,5 +1,6 @@
 package com.redocode.backend.VmAcces;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Auth.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
@@ -9,20 +10,21 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
+import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
-import jakarta.annotation.PreDestroy;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.VariablesFactory;
+import com.redocode.backend.database.Excersize;
+import com.redocode.backend.database.ExerciseRepository;
+import com.redocode.backend.database.ExerciseTests;
 import javassist.compiler.ast.Variable;
-import lombok.Cleanup;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -37,7 +39,8 @@ public class CodeRunnersController {
     }
     @Autowired
     private CodeRunnerSender codeRunnerSender;
-
+    @Autowired
+    ExerciseRepository exerciseRepository;
     static final int maxAmountOfVm=5;
 
     private Map<User, CodeRunner> usersCodeRunenrs=new Hashtable<>(maxAmountOfVm);
@@ -81,8 +84,15 @@ public class CodeRunnersController {
     public void deregisterUser(User user)
     {
         CodeRunner codeRunner= this.usersCodeRunenrs.get(user);
-        if(codeRunner!=null)
+
+        if(codeRunner!=null) {
+            log.info("removing code runner: "+ codeRunner+" from desrigset user : "+ user);
+            this.usersCodeRunenrs.remove(user);
             codeRunner.destroy();
+        }
+        else{
+            log.info("dereigster user: "+ user+ " didnt ave any code runenrs");
+        }
 
 
         Optional<CodeRunnerRequest> requestMessage=requestMessageSet
@@ -169,7 +179,7 @@ public class CodeRunnersController {
 
         CoderunnerStateMessage coderunnerStateMessage=   CoderunnerStateMessage.builder()
                 .state(state)
-                .codeRunnerType(userCodeRunner==null?CODE_RUNNER_TYPE.UUIANDTIFIED:userCodeRunner.getType())
+                .codeRunnerType(userCodeRunner==null?CODE_RUNNER_TYPE.UNIDENTIFIED :userCodeRunner.getType())
                 .build();
         log.info("user: "+ user+" requested status: "+ coderunnerStateMessage);
         codeRunnerSender.sendToUser(user.getId(),  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);
@@ -187,20 +197,82 @@ public class CodeRunnersController {
         usersCodeRunenrs.clear();
     }
 
-    public void runCode(User user, CodeToRunMessage codeToRunMessage) {
+    public List<ProgramResult> runCode(User user, CodeToRunMessage codeToRunMessage) {
         CodeRunner codeRunner= this.getUserCodeRunner(user);
         if(codeRunner==null)
             throw  new RuntimeException("user doesnt have code runner");
-        Program pr=new RawProgram("");
-        List<Variable> variablesInput=new ArrayList<>();
+
+        log.info("running program form meesage: "+ codeToRunMessage);
+        List<ProgramResult> results=runProgramFromMessage(codeRunner,codeToRunMessage);
+        this.sendResults(user,results);
+        return results;
+    }
+    // running raw program based on message send by user
+
+    public List<ProgramResult> runProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    {
+        List<ProgramResult> results=new ArrayList<>();
         if(codeToRunMessage.getExercise_id()==null)
         {
-            pr=new RawProgram(codeToRunMessage.getCode());
+            results=this.runRawProgramFromMessage(codeRunner,codeToRunMessage);
         }
-        log.info("program to run: "+ pr);
-        List<ProgramResult> results= codeRunner.runProgram(pr,variablesInput);
-        this.sendResults(user,results);
+        else {
+            results=this.runExerciseSoultionFromMessage(codeRunner,codeToRunMessage);
+        }
 
+        return results;
+    }
+
+    private List<ProgramResult> runRawProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    {
+        Program pr;
+        pr=new RawProgram(codeToRunMessage.getCode());
+        List<Variable> variablesInput=new ArrayList<>();
+        List<ProgramResult> programResults=new ArrayList<>();
+        programResults.add(codeRunner.runProgram(pr));
+        return programResults;
+    }
+    // running exercise program based on message send by user
+
+    private List<ProgramResult> runExerciseSoultionFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    {
+        List<ProgramResult> results=new ArrayList<>();
+        log.info("Ruunnign code to run on exercise of id: "+codeToRunMessage.getExercise_id() );
+        Excersize exercise= exerciseRepository.findById(Long.parseLong(codeToRunMessage.getExercise_id())).orElse(null);
+    List<ExerciseTests>     tests=exercise.getExerciseTests();
+        log.info("Exercise Tests: "+ Arrays.toString(tests.toArray()));
+
+        //MANULA TES INPUT
+        try {
+        for (ExerciseTests test: tests
+             ) {
+            Variables input = (test.getParsedInput(exercise.getInputType()));
+            Variables output = (test.getParsedOutput(exercise.getOutputType()));
+            Program program= ProgramFactory
+                    .createSolutionProgram()
+                    .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                    .setOutputBase(VariablesFactory.getVeraibleFromType(exercise.getOutputType()))
+                    .setInputVaraiable(input)
+                    .setSolutionCode(codeToRunMessage.getCode())
+                    .build();
+            log.info("Ruunign test: "+ program);
+            ProgramResult result=codeRunner.runProgram(program);
+            results.add(result);
+            if(result.getVariables()== null || result.getVariables().getValue()!=output.getValue())
+            {
+                log.info("wrong result so stopping : "+result.getVariables()+" != "+ output);
+                break;
+            }
+
+        }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+//todo: add outomatic test if all manual ereuslt were correct
+
+
+    return results;
     }
 
     public void sendResults(User user, List<ProgramResult> results)

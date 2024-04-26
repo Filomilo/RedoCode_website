@@ -18,15 +18,13 @@ stompClient.onStompError = (frame) => {
 
 export const connectStomp = () => {
   console.log('connecting to Stomp ')
-  if(!isStompConnected())
-  stompClient.activate()
+  if (!isStompConnected()) stompClient.activate()
 }
 
 export const isStompConnected = (): boolean => {
   console.log('isStompConnected ')
-  return stompClient.state===ActivationState.ACTIVE;
+  return stompClient.state === ActivationState.ACTIVE
 }
-
 
 export const disconnectStomp = () => {
   console.log('disconnect from stomp')

@@ -1,4 +1,4 @@
-package com.redocode.backend.ConnectionCotrollers;
+package com.redocode.backend.endpoints;
 
 
 import com.redocode.backend.Messages.ExerciseListRequestMessage;
@@ -23,7 +23,7 @@ public class ExercisesController {
     public List<?> getExercises(ExerciseListRequestMessage mes)
     {
     logger.info("experiences list request: "+ mes);
-
+    logger.info("sending exercse list: "+ exerciseRepository.getSimpleExcersizeList());
         return  exerciseRepository.getSimpleExcersizeList();
     }
 

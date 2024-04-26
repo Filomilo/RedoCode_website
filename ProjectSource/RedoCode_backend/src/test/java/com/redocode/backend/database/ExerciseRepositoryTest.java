@@ -34,6 +34,7 @@ class ExerciseRepositoryTest {
     void getSimpleExcersizeList() {
         List<ExcersizeListEntry> list=exerciseRepository.getSimpleExcersizeList();
         log.info("list size: "+ Arrays.toString(list.toArray()));
+        //todo: add asserts
     }
 
     @Test

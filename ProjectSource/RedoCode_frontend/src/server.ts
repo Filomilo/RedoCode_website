@@ -5,112 +5,16 @@ import ExerciseData from './types/ExerciseData'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
-      name: 'task1',
-      language: ['c++', 'js'],
-      difficulty: 'hard',
-      popularity: 222,
-      id: 1,
-      description: 'task1 description'
-    },
-    {
-      name: 'task2',
-      language: ['any'],
-      difficulty: 'hard',
-      popularity: 222122,
-      id: 2,
-      description: 'task2 description'
-    },
-    {
-      name: 'task3',
-      language: ['c++', 'java'],
-      difficulty: 'easy',
-      popularity: 23,
-      id: 3,
-      description: 'task3 description'
-    },
-    {
-      name: 'task4',
-      language: ['python'],
-      difficulty: 'medium',
-      popularity: 320,
-      id: 4,
-      description: 'task4 description'
-    },
-    {
-      name: 'task5',
-      language: ['javascript'],
-      difficulty: 'medium',
-      popularity: 543,
-      id: 5,
-      description: 'task5 description'
-    },
-    {
-      name: 'task6',
-      language: ['java'],
-      difficulty: 'easy',
-      popularity: 421,
-      id: 6,
-      description: 'task6 description'
-    },
-    {
-      name: 'task7',
-      language: ['python', 'javascript'],
-      difficulty: 'hard',
-      popularity: 654,
-      id: 7,
-      description: 'task7 description'
-    },
-    {
-      name: 'task8',
-      language: ['c++', 'python'],
-      difficulty: 'medium',
-      popularity: 342,
-      id: 8,
-      description: 'task8 description'
-    },
-    {
-      name: 'task9',
-      language: ['java', 'javascript'],
-      difficulty: 'easy',
-      popularity: 233,
-      id: 9,
-      description: 'task9 description'
-    },
-    {
-      name: 'task10',
-      language: ['c++'],
-      difficulty: 'medium',
-      popularity: 122,
-      id: 10,
-      description: 'task10 description'
-    },
-    {
-      name: 'task11',
-      language: ['python'],
-      difficulty: 'hard',
-      popularity: 423,
-      id: 11,
-      description: 'task11 description'
-    },
-    {
-      name: 'task12',
-      language: ['javascript'],
-      difficulty: 'easy',
-      popularity: 555,
-      id: 12,
-      description: 'task12 description'
-    },
-    {
       name: 'task13',
-      language: ['java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'medium',
       popularity: 312,
-      id: 13,
+      id: 1,
       description: 'task13 description'
     },
     {
       name: 'task14',
-      language: ['c++', 'javascript'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'hard',
       popularity: 654,
       id: 14,
@@ -118,7 +22,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task15',
-      language: ['python', 'java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'easy',
       popularity: 111,
       id: 15,
@@ -126,7 +30,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task16',
-      language: ['c++'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'medium',
       popularity: 432,
       id: 16,
@@ -134,7 +38,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task17',
-      language: ['python', 'javascript'],
+      languages:[{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'hard',
       popularity: 765,
       id: 17,
@@ -142,7 +46,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task18',
-      language: ['c++', 'java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'easy',
       popularity: 234,
       id: 18,
@@ -150,7 +54,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task19',
-      language: ['javascript'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'medium',
       popularity: 654,
       id: 19,
@@ -158,7 +62,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task20',
-      language: ['python'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'hard',
       popularity: 987,
       id: 20,
@@ -166,7 +70,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task21',
-      language: ['java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'easy',
       popularity: 222,
       id: 21,
@@ -174,7 +78,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task22',
-      language: ['c++', 'python'],
+      languages:[{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'medium',
       popularity: 543,
       id: 22,
@@ -182,7 +86,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task23',
-      language: ['javascript', 'java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'hard',
       popularity: 876,
       id: 23,
@@ -190,7 +94,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task24',
-      language: ['python', 'c++'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'easy',
       popularity: 333,
       id: 24,
@@ -198,7 +102,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task25',
-      language: ['java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'medium',
       popularity: 543,
       id: 25,
@@ -206,7 +110,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task26',
-      language: ['c++', 'javascript'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'hard',
       popularity: 987,
       id: 26,
@@ -214,7 +118,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task27',
-      language: ['python', 'java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'easy',
       popularity: 234,
       id: 27,
@@ -222,7 +126,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task28',
-      language: ['c++'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'medium',
       popularity: 543,
       id: 28,
@@ -230,7 +134,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task29',
-      language: ['python', 'javascript'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'hard',
       popularity: 876,
       id: 29,
@@ -238,7 +142,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task30',
-      language: ['c++', 'java'],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'easy',
       popularity: 333,
       id: 30,
@@ -248,22 +152,23 @@ export function makeServer({ environment = 'development' } = {}) {
 
   const activeExerciseData: ExerciseData = {
     inputType: 'int',
+    id: 1,
     title: 'Fibonacci',
     desc: 'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
     outputType: 'int[]',
     availbleCodeRunners: ['js'],
     tests: [
       {
-        input: 1,
-        output: null,
-        expectedOutput: [0],
+        input:  1,
+        output:  null,
+        expectedOutput:  [0],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null
       },
       {
         input: 2,
-        output: null,
+        output:  null,
         expectedOutput: [0, 1],
         errorOutput: '',
         consoleOutput: '',
@@ -271,8 +176,8 @@ export function makeServer({ environment = 'development' } = {}) {
       },
       {
         input: 3,
-        output: null,
-        expectedOutput: [0, 1, 1],
+        output:  null,
+        expectedOutput:  [0, 1, 1],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null

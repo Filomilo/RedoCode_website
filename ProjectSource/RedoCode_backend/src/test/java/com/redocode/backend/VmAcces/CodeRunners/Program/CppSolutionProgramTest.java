@@ -3,24 +3,34 @@ package com.redocode.backend.VmAcces.CodeRunners.Program;
 import com.redocode.backend.Tools.StringFormatter;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
+import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.SolutionProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
+import com.redocode.backend.database.SolutionPrograms;
+import com.redocode.backend.database.SolutionProgramsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
+@SpringBootTest
+@ContextConfiguration
 class CppSolutionProgramTest {
 
 
 //    @Test
 //    void getImports() {
 //    }
-
+    @Autowired
+    SolutionProgramsRepository solutionProgramsRepository;
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.ValuesProvider#singleIntProvider")
@@ -492,6 +502,78 @@ assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
     }
 
 
+//    @Test
+//    void FibonachiSequanceRun()
+//    {
+//        List<SolutionPrograms> list=solutionProgramsRepository.findAll();
+//                SolutionProgram solutionProgram=ProgramFactory
+//                        .createSolutionProgram()
+//                        .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)// TODO: add class mapping data base string to Code runner enum
+//                        .setInputVaraiable(new SingleInteger(1))
+//                        .setOutputBase(new SingleInteger())
+//                        .setSolutionCode(list.get(0).getCode())
+//                        .build();
+//        String correctCode="int solution(int val)\n" +
+//                "{\n" +
+//                "    int* arr=new int[val];\n" +
+//                "\n" +
+//                "if(val>=0)\n" +
+//                "  arr[0]=0;\n" +
+//                "if (val>=2)\n" +
+//                "   arr[1]=1;\n" +
+//                "for(int i=2;i<val;i++)\n" +
+//                "    {\n" +
+//                "        arr[i]=arr[i-1]+arr[i-2];\n" +
+//                "}\n" +
+//                "    return arr[val-1];\n" +
+//                "}\n" +
+//                "\n" +
+//                "\n" +
+//                "#include <iostream>\n" +
+//                "int inputGenerator_f07be04313144f63aeb40fc50bc147fc()\n" +
+//                "{\n" +
+//                "return 1;\n" +
+//                "}\n" +
+//                "\n" +
+//                "#include <fstream>\n" +
+//                "#include <iostream>\n" +
+//                "#include <sstream>\n" +
+//                "void outputGenerator_974d78a66ff941b6b0e72a060acbb142(int a)\n" +
+//                "{\n" +
+//                "std::ofstream myfile;\n" +
+//                "myfile.open (\"outputResult_9308b4273a81453bb39d09ef5fc00749\");\n" +
+//                "std::stringstream ss;\n" +
+//                "ss<< a;\n" +
+//                "std::string s=ss.str();\n" +
+//                "for (size_t i = 0; i < s.size(); i++)\n" +
+//                "{\n" +
+//                "std::string str;\n" +
+//                "switch (s[i])\n" +
+//                "{\n" +
+//                "case '\\\\':\n" +
+//                "str=\"\\\\\\\\\";\n" +
+//                "break;\n" +
+//                "case '\\n':\n" +
+//                "str=\"\\\\n\";\n" +
+//                "break;\n" +
+//                "case '\\t':\n" +
+//                "str= \"\\\\t\";\n" +
+//                "break;\n" +
+//                "default:\n" +
+//                "str=std::string(1,s[i]);\n" +
+//                "};\n" +
+//                "myfile << str;\n" +
+//                "}\n" +
+//                "myfile.close();\n" +
+//                "}\n" +
+//                "\n" +
+//                "int main()\n" +
+//                "{\n" +
+//                "outputGenerator_974d78a66ff941b6b0e72a060acbb142(solution(inputGenerator_f07be04313144f63aeb40fc50bc147fc()));\n" +
+//                "return 0;\n" +
+//                "}";
+//        assertEquals(correctCode,solutionProgram.getProgramCode());
+//    }
 
 
 

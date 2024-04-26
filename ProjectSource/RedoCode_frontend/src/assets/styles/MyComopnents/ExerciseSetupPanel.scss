@@ -142,25 +142,24 @@
   // background-color: aqua;
   margin-left: 1rem;
 }
-.RadioButtonSection .p-highlight *{
+.RadioButtonSection .p-highlight * {
   background-color: $primary;
   // width: 10rem;
-  
 }
-.RadioButtonSection *{
+.RadioButtonSection * {
   border-color: $primary;
 }
 
-.p-inputtext{
+.p-inputtext {
   background-color: rgb(23, 23, 23);
   color: white;
 }
-.addButton *{
+.addButton * {
   background-color: $primary;
   width: 100rem;
 }
 
-.p-slider-range{
+.p-slider-range {
   // height: 100rem;
   background-color: $primary;
 }
