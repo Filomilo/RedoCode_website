@@ -13,7 +13,13 @@ export const useToastStore = defineStore('toastStore', () => {
         toast.add({ severity: 'success', summary: 'Info', detail: 'signed in', life: 2000 });
     }
 
-  return { shotWrongLogin,
-    shotCorrectLogin
+    const featureNotImplemented=()=>{
+        toast.add({ severity: 'warn', summary: 'Info', detail: 'feature not implemented', life: 2000 });
+    }
+
+  return { 
+    shotWrongLogin,
+    shotCorrectLogin,
+    featureNotImplemented
    }
 })
