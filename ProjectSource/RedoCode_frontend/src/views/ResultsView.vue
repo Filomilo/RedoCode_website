@@ -102,12 +102,10 @@ const comments = ref([
   flex-direction: row;
 }
 .saveButton {
-  background-color: red;
   border-radius: 0.2rem;
   border-color: transparent;
 }
 .commentButton {
-  background-color: red;
   border-radius: 0.2rem;
   border-color: transparent;
   align-self: flex-end;

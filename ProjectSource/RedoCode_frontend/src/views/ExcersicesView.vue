@@ -135,7 +135,6 @@ const HeadType: string = 'Dark'
 }
 
 .vue3-easy-data-table {
-  background-color: blue;
   height: 4rem;
   max-height: 100%;
 }

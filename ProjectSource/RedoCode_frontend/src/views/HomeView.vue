@@ -89,11 +89,5 @@ const onSginInButton = () => {
 
 <style>
 
-.passwordCont{
-  background-color: red;
-}
-.passwordCont .p-inputtext{
-  background-color: red;
-}
 
 </style>
