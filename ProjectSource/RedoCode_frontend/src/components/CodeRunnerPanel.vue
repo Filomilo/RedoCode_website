@@ -165,7 +165,8 @@ onBeforeRouteLeave(async (to, from) => {
 </script>
 
 <style>
-.heightLimit * {
-  max-height: 100vh;
+.heightLimit  {
+  max-height: 100%;
+  height: 100%;
 }
 </style>

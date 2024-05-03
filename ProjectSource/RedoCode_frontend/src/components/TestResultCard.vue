@@ -29,7 +29,7 @@
         </TabPanel>
       </TabView>
     </div>
-    <div class="testValidationSection" :class="data.isSolved !== null ? (data.expectedOutput == data.output ? 'correct' : 'wrong') : 'unkown'"> 
+    <div class="testValidationSection" :class="data.isSolved !== null ? (data.expectedOutput == data.output ? 'correct' : 'wrong') : 'unknown'"> 
       {{
         data.isSolved !== null ? (data.expectedOutput == data.output ? 'Correct' : 'Failed') : ''
       }}
@@ -66,7 +66,8 @@ color: lime
   color: red;
 }
 
-.unkown{
+.unknown{
   border-color: transparent;
+  height: 10rem;
 }
 </style>

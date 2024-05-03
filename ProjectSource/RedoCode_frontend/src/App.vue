@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import TopBar from '@/components/TopBar.vue'
+import { RouterLink, RouterView } from "vue-router";
+import TopBar from "@/components/TopBar.vue";
 </script>
 
 <template>
@@ -8,7 +8,8 @@ import TopBar from '@/components/TopBar.vue'
     <div id="MainPageContainer">
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
-        <Toast style="margin-top: 4rem;"/>
+        <Toast style="margin-top: 4rem" />
+        <!-- <div  id="ContentConatiner" style="background-color: red;"></div> -->
         <RouterView id="ContentConatiner" />
       </div>
     </div>

@@ -14,7 +14,7 @@
     <div
       class="ConsoleResultConsoleCOntainer"
       v-if="!isDataResult"
-      style="display: flex; overflow: scroll"
+      style="display: flex; overflow: hidden"
     >
       <div
         class="ConsoleResultConsoleCOntainerText"

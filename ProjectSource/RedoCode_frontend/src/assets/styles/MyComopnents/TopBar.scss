@@ -11,6 +11,13 @@
   height: $headerHeight;
 }
 
+
+.topBarDummy{
+  height: $headerHeight;
+  max-height: $headerHeight;
+  min-height: $headerHeight;
+}
+
 .TopBarList {
   display: flex;
   // background-color: blue;
