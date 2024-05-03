@@ -4,7 +4,7 @@
       <div class="TopBarList">
         <router-link to="/Home" class="TopBarItemContainer" id="Home_Button">
           <IconHome class="TopBarItemIcon" />
-          <label class="TopBarItemTitle">Excersices</label>
+          <label class="TopBarItemTitle">Home</label>
         </router-link>
 
         <router-link to="/PlayGround" class="TopBarItemContainer" id="Home_Button">

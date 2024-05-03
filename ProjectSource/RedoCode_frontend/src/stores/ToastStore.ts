@@ -7,14 +7,14 @@ export const useToastStore = defineStore('toastStore', () => {
     const toast = useToast();
 
     const shotWrongLogin=()=>{
-        toast.add({ severity: 'error', summary: 'Info', detail: 'Wrong e-mail or passowrd', life: 2000 });
+        toast.add({ severity: 'error', summary: 'error', detail: 'Wrong e-mail or passowrd', life: 2000 });
     }
     const shotCorrectLogin=()=>{
-        toast.add({ severity: 'success', summary: 'Info', detail: 'signed in', life: 2000 });
+        toast.add({ severity: 'success', summary: 'signed in', detail: 'signed in', life: 2000 });
     }
 
     const featureNotImplemented=()=>{
-        toast.add({ severity: 'warn', summary: 'Info', detail: 'feature not implemented', life: 2000 });
+        toast.add({ severity: 'warn', summary: 'unsuported', detail: 'feature not implemented', life: 7000 });
     }
 
   return { 

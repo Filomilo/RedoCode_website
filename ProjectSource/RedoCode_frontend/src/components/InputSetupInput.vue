@@ -18,7 +18,6 @@ const val = ref(0)
   flex-direction: row;
 }
 .signleValContainer {
-  background-color: rgb(43, 29, 13);
   margin: 0.5rem;
 }
 

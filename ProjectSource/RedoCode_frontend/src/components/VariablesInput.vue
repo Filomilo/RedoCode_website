@@ -112,7 +112,6 @@ const onYDimChange = (value: number) => {
   width: fit-content;
 }
 .signleValContainer {
-  background-color: rgb(43, 29, 13);
   margin: 0.1rem;
   width: fit-content;
 }
