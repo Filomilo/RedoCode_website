@@ -185,9 +185,9 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const removeTest = (index: number) => {
     console.log('remove: test: ' + index)
-    console.log("tests before: "+ JSON.stringify(exerciseData.value.tests))
+    console.log('tests before: ' + JSON.stringify(exerciseData.value.tests))
     exerciseData.value.tests.splice(index, 1)
-    console.log("tests after: "+ JSON.stringify(exerciseData.value.tests))
+    console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
   }
 
   const setupCreatingExercise = () => {

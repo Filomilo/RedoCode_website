@@ -28,7 +28,7 @@
       ></div>
     </div>
 
-    <DataResultPanel v-if="isDataResult" :results="results" />
+    <DataResultPanel v-if="isDataResult" />
 
     <div
       class="ExerciseControlPanle"
@@ -61,8 +61,6 @@ const formattedEror = computed<string>(() =>
 const isCorrect = computed<boolean>(() => {
   return false
 })
-
-
 </script>
 
 <style>
