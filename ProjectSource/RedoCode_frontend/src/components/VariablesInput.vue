@@ -127,6 +127,12 @@ const validateData = (jsonString: string, type: VarType, size: VarSize): boolean
   if ((isAnArray && value.length == 0) || (isAn2DArray && value[0].length == 0))
     throw new Error('Array should have at least on value')
 
+  if(isAn2DArray && !value.every((elem: any[])=> elem.length===value[0].length))
+  {
+    throw new Error('Every row should have the same dimeniosns')
+  }
+
+
   switch (size) {
     case 'single_value':
       validateType(value, type)
