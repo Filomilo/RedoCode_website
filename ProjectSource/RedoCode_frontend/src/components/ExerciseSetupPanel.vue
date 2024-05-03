@@ -135,7 +135,12 @@
     <SplitterPanel>
       <div class="manualTestPanel">
         <h1>Manual tests</h1>
-        <ManualTestPnael />
+        <ManualTestPnael
+          :inputType="inputType"
+          :outputype="outputype"
+          :inputSize="inputSize"
+          :outputSize="outputSize"
+        />
       </div>
     </SplitterPanel>
     <SplitterPanel>
@@ -352,25 +357,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, Ref, ref } from 'vue'
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/antd.css'
 import InputSetupInput from './InputSetupInput.vue'
 import ManualTestPnael from './ManualTestPnael.vue'
+import VarType from '@/types/VarType'
+import VarSize from '@/types/VarSize'
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+
+const codeRunnerStore = useCodeRunnerStore()
 
 const langOptions = [
   { label: 'Cpp', value: 'cpp' },
   { label: 'Js', value: 'js' }
 ]
 const selectedLagn = ref('')
-const sliderVal = ref(55)
-const minuteVal = ref(55)
-const hourVal = ref(55)
+const sliderVal = ref(128)
+const minuteVal = ref(10)
+const hourVal = ref(0)
 
-const inputType = ref('int')
-const outputype = ref('single_value')
-const inputSize = ref('int')
-const outputSize = ref('single_value')
+const inputType: Ref<VarType> = ref('int')
+const outputype = ref<VarType>('int')
+const inputSize = ref<VarSize>('single_value')
+const outputSize = ref<VarSize>('single_value')
 
 const amountOfAutoTests = ref(1)
 const xArrayInputRange = ref([1, 10])
@@ -402,6 +412,11 @@ const onLengthChange = (val: any) => {
   }
   lengthRange.value = val
 }
+
+onMounted(() => {
+  codeRunnerStore.setupCreatingExercise()
+})
 </script>
 
 <style></style>
+../types/VarType

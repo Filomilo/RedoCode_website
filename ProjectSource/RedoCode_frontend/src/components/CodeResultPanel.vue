@@ -62,72 +62,7 @@ const isCorrect = computed<boolean>(() => {
   return false
 })
 
-const results: CodeResultType[] = [
-  {
-    Console_output: formattedConsole.value,
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  }
-]
+
 </script>
 
 <style>
