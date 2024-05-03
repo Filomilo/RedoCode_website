@@ -8,6 +8,7 @@ import TopBar from '@/components/TopBar.vue'
     <div id="MainPageContainer">
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
+        <Toast style="margin-top: 4rem;"/>
         <RouterView id="ContentConatiner" />
       </div>
     </div>

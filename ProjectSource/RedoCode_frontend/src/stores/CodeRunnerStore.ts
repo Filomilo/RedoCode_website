@@ -133,6 +133,12 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     return ''
   })
 
+
+  const areResultCorrect= computed(()=>{
+   return  exerciseData.value.tests.every((x)=> x.expectedOutput===x.output)
+
+  })
+
   return {
     codeRunnerActive,
     doesHaveACtiveToCodeRunner,
@@ -146,6 +152,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     exerciseLoading,
     setExerciseLoading,
     disconnetWithCodeRunner,
-    startingMethod
+    startingMethod,
+    areResultCorrect
   }
 })

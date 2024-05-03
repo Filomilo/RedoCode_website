@@ -6,7 +6,6 @@ import { makeServer } from './server'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import PrimeVue from 'primevue/config'
 import Toast from 'primevue/toast'
-import ToastService from 'primevue/toastservice'
 import Splitter from 'primevue/splitter'
 import SplitterPanel from 'primevue/splitterpanel'
 import Vue3EasyDataTable from 'vue3-easy-data-table'
@@ -31,6 +30,7 @@ import Image from 'primevue/image'
 import ScrollPanel from 'primevue/scrollpanel'
 import Password from 'primevue/password'
 import Dropdown from 'primevue/dropdown'
+import Toast from 'primevue/toast'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import MultiSelect from 'primevue/multiselect'
@@ -47,11 +47,11 @@ import Dialog from 'primevue/dialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import './interceptors/axios'
-
+import ToastService from 'primevue/toastservice';
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
-  makeServer()
+  //makeServer()
 }
 
 app
@@ -78,11 +78,11 @@ app.component('RadioButton', RadioButton)
 app.component('Checkbox', Checkbox)
 app.component('Textarea', Textarea)
 app.component('Dialog', Dialog)
-
+app.component('Dialog', Dialog)
 app.component('ConfirmDialog', ConfirmDialog)
-
+app.component('Toast', Toast)
 app.use(ConfirmationService)
-
+app.use(ToastService);
 const pinia = createPinia()
 
 app.use(pinia)

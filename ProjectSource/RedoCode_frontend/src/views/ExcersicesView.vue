@@ -7,7 +7,7 @@
         alternating
         buttons-pagination
         class="dataTableStyle"
-        :server-items-length="555"
+        :server-items-length="1"
         v-model:server-options="serverOptions"
       >
         <template #expand="item">

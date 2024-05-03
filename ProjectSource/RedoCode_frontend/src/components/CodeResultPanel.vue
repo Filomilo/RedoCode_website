@@ -30,9 +30,9 @@
 
     <DataResultPanel v-if="isDataResult" :results="results" />
 
-    <div class="ExerciseControlPanle" v-if="isDataResult">
+    <div class="ExerciseControlPanle" v-if="isDataResult" :style="codeRunnerStore.areResultCorrect?'':'pointer-events: none'" >
       <router-link to="/Results" class="TopBarItemContainer" id="Result_burron">
-        <Button class="submitButton"> Submit </Button>
+        <Button class="submitButton" :disabled="!codeRunnerStore.areResultCorrect"> Submit </Button>
       </router-link>
     </div>
   </div>
@@ -54,6 +54,7 @@ const formattedConsole = computed<string>(
 const formattedEror = computed<string>(() =>
   codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
 )
+const isCorrect=computed<boolean>(()=>{return false})
 
 const results: CodeResultType[] = [
   {
@@ -122,3 +123,10 @@ const results: CodeResultType[] = [
   }
 ]
 </script>
+
+<style>
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+</style>

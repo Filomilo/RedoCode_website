@@ -9,7 +9,7 @@
           <IconEdit />
         </Button>
       </div>
-      <div class="NickContainer">Nick</div>
+      <div class="NickContainer">{{activeUserStore.acoountInfo.nick.value}}</div>
       <div class="DescriptionContainer">OPIS OPIS OPIS</div>
       <div class="LogoutButtonContainer">
         <Button @click="onLogOutButton"> Logout </Button>
@@ -118,7 +118,7 @@ const setPanel = (type: Panels) => {
 }
 
 const onLogOutButton = () => {
-  activeUserStore.setIsLogged(false)
+  activeUserStore.logout()
   router.push('/home')
 }
 </script>
