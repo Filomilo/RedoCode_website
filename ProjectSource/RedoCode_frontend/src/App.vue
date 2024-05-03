@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import TopBar from "@/components/TopBar.vue";
+import { RouterLink, RouterView } from 'vue-router'
+import TopBar from '@/components/TopBar.vue'
 </script>
 
 <template>

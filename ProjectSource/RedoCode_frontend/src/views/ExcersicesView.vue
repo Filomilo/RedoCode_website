@@ -142,5 +142,4 @@ const HeadType: string = 'Dark'
 .vue3-easy-data-table__main {
   height: calc(100% - 2.1rem);
 }
-
 </style>

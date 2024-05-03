@@ -76,18 +76,15 @@ import FrontImage1 from '@/assets/Images/fronImage1.png'
 import FrontImage2 from '@/assets/Images/fronImage2.png'
 import FrontImage3 from '@/assets/Images/fronImage3.png'
 import { useActiveUserStore } from '../stores/ActiveUserStore'
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
+import { useToast } from 'primevue/usetoast'
+const toast = useToast()
 const activeUserStore = useActiveUserStore()
 const inputLogin = ref('')
 const inputPass = ref('')
 
 const onSginInButton = () => {
-  activeUserStore.login(inputLogin.value,inputPass.value)
+  activeUserStore.login(inputLogin.value, inputPass.value)
 }
 </script>
 
-<style>
-
-
-</style>
+<style></style>

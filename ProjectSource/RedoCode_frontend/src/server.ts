@@ -38,7 +38,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task17',
-      languages:[{ name: 'python' }, { name: 'javascript' }],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'hard',
       popularity: 765,
       id: 17,
@@ -78,7 +78,7 @@ export function makeServer({ environment = 'development' } = {}) {
     },
     {
       name: 'task22',
-      languages:[{ name: 'python' }, { name: 'javascript' }],
+      languages: [{ name: 'python' }, { name: 'javascript' }],
       difficulty: 'medium',
       popularity: 543,
       id: 22,
@@ -159,16 +159,16 @@ export function makeServer({ environment = 'development' } = {}) {
     availbleCodeRunners: ['js'],
     tests: [
       {
-        input:  1,
-        output:  null,
-        expectedOutput:  [0],
+        input: 1,
+        output: null,
+        expectedOutput: [0],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null
       },
       {
         input: 2,
-        output:  null,
+        output: null,
         expectedOutput: [0, 1],
         errorOutput: '',
         consoleOutput: '',
@@ -176,8 +176,8 @@ export function makeServer({ environment = 'development' } = {}) {
       },
       {
         input: 3,
-        output:  null,
-        expectedOutput:  [0, 1, 1],
+        output: null,
+        expectedOutput: [0, 1, 1],
         errorOutput: '',
         consoleOutput: '',
         isSolved: null

@@ -10,69 +10,79 @@
       <h2>Rate diffuciulty</h2>
     </div>
     <div class="VerticalLine algainBottom" style="margin-top: 5rem">
-      <Button class="rateButton level1" 
-      :disabled="alreadyRated"
-      :class="(alreadyRated?selectedRating:ratingLevelShow)>=1?'filledBar':'unfilledBar'"
-      @mouseover="ratingLevelShow=1"
-      @mouseleave="ratingLevelShow=selectedRating"
-      @click="selectedRating=1"
+      <Button
+        class="rateButton level1"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 1 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 1"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 1"
       />
-      <Button class="rateButton level2" 
-      :disabled="alreadyRated"
-      :class="(alreadyRated?selectedRating:ratingLevelShow)>=2?'filledBar':'unfilledBar'"
-      @mouseover="ratingLevelShow=2"
-      @mouseleave="ratingLevelShow=selectedRating"
-      @click="selectedRating=2"
+      <Button
+        class="rateButton level2"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 2 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 2"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 2"
       />
-      <Button class="rateButton level3" 
-      :disabled="alreadyRated"
-      :class="(alreadyRated?selectedRating:ratingLevelShow)>=3?'filledBar':'unfilledBar'"
-      @mouseover="ratingLevelShow=3"
-      @mouseleave="ratingLevelShow=selectedRating"
-      @click="selectedRating=3"
+      <Button
+        class="rateButton level3"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 3 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 3"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 3"
       />
-      <Button class="rateButton level4" 
-      :disabled="alreadyRated"
-      :class="(alreadyRated?selectedRating:ratingLevelShow)>=4?'filledBar':'unfilledBar'"
-      @mouseover="ratingLevelShow=4"
-      @mouseleave="ratingLevelShow=selectedRating"
-      @click="selectedRating=4"
+      <Button
+        class="rateButton level4"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 4 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 4"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 4"
       />
-      <Button class="rateButton level5" 
-      :disabled="alreadyRated"
-      :class="(alreadyRated?selectedRating:ratingLevelShow)>=5?'filledBar':'unfilledBar'"
-      @mouseover="ratingLevelShow=5"
-      @mouseleave="ratingLevelShow=selectedRating"
-      @click="selectedRating=5"
+      <Button
+        class="rateButton level5"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 5 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 5"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 5"
       />
     </div>
     <div class="VerticalLine" style="margin-top: 5rem" v-if="!alreadyRated">
-      <Button
-       class="saveButton"
-       @click="onSaveRate"
-       > save Rate </Button>
+      <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
     </div>
 
     <div class="VerticalLine" style="margin-top: 5rem">
       <Textarea
-       class="CommentArea"
-       :disabled="!ActiveUserStore.isLogged"
-       v-model="commentInput"
-       :invalid="!validatedComment"
-        />
+        class="CommentArea"
+        :disabled="!ActiveUserStore.isLogged"
+        v-model="commentInput"
+        :invalid="!validatedComment"
+      />
     </div>
-    <div style="margin-left: 3rem;">
-      {{ commentInput.length +"/3000" }}
-      </div>
+    <div style="margin-left: 3rem">
+      {{ commentInput.length + '/3000' }}
+    </div>
     <div class="VerticalLine" style="margin-top: 0.5rem; display: flex">
-      <Button 
-      class="commentButton"
-      :disabled="!ActiveUserStore.isLogged"
-      @click="onCommentButton"
-      > comment </Button>
+      <Button class="commentButton" :disabled="!ActiveUserStore.isLogged" @click="onCommentButton">
+        comment
+      </Button>
     </div>
     <div v-for="(data, index) in comments" v-bind:key="index">
-      <div class="VerticalLine" style="margin-top: 0.5rem" >
+      <div class="VerticalLine" style="margin-top: 0.5rem">
         <div class="ProfilePicContainer">
           <img :src="data.profilePic" class="profilePic" />
         </div>
@@ -91,10 +101,10 @@
 
 <script setup lang="ts">
 import { computed, Ref, ref } from 'vue'
-import { useActiveUserStore } from '@/stores/ActiveUserStore';
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
-const ActiveUserStore= useActiveUserStore();
-const commentInput: Ref<string>=ref('')
+const ActiveUserStore = useActiveUserStore()
+const commentInput: Ref<string> = ref('')
 const comments = ref([
   {
     nick: 'nick',
@@ -118,26 +128,27 @@ const comments = ref([
   }
 ])
 
-const ratingLevelShow: Ref<number>=ref(0)
+const ratingLevelShow: Ref<number> = ref(0)
 
-const selectedRating: Ref<number>=ref(0)
-const alreadyRated: Ref<boolean>=ref(!ActiveUserStore.isLogged)
-const validatedComment=computed(() => {return commentInput.value.length>0 && commentInput.value.length<3000})
+const selectedRating: Ref<number> = ref(0)
+const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
+const validatedComment = computed(() => {
+  return commentInput.value.length > 0 && commentInput.value.length < 3000
+})
 
-const onCommentButton=()=>{
-  if(validatedComment.value){
-  comments.value.unshift({
-    nick: ActiveUserStore.acoountInfo.nick.value,
-    profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    content: commentInput.value
-  })
-  commentInput.value=""
-}
-}
-  const onSaveRate=()=>{
-    alreadyRated.value=true;
+const onCommentButton = () => {
+  if (validatedComment.value) {
+    comments.value.unshift({
+      nick: ActiveUserStore.acoountInfo.nick.value,
+      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
+      content: commentInput.value
+    })
+    commentInput.value = ''
   }
-
+}
+const onSaveRate = () => {
+  alreadyRated.value = true
+}
 </script>
 
 <style>
@@ -209,7 +220,4 @@ const onCommentButton=()=>{
   margin: 2rem;
   color: white;
 }
-
-
-
 </style>

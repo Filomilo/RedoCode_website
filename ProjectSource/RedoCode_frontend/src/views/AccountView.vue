@@ -5,14 +5,11 @@
         <img :src="imgURL" class="ProfileImgStyle" />
       </div>
       <div class="editButtonContinaer">
-        <Button 
-        class="IconEditImg"
-        @click="onChangeProfilePic"
-        >
+        <Button class="IconEditImg" @click="onChangeProfilePic">
           <IconEdit />
         </Button>
       </div>
-      <div class="NickContainer">{{activeUserStore.acoountInfo.nick.value}}</div>
+      <div class="NickContainer">{{ activeUserStore.acoountInfo.nick.value }}</div>
       <div class="DescriptionContainer">Account description</div>
       <div class="LogoutButtonContainer">
         <Button @click="onLogOutButton"> Logout </Button>
@@ -62,16 +59,10 @@
           <div class="SettingContentRow">E-mail: e****@gmail.com</div>
           <div class="SettingContentRow">
             Password: *******
-            <Button 
-            class="changeButton"
-            @click="onChangePassword"
-            > change </Button>
+            <Button class="changeButton" @click="onChangePassword"> change </Button>
           </div>
           <div class="SettingContentRow center">
-            <Button 
-            class="removeAccountButton"
-            @click="onRemoveAccount"
-            > Remove account </Button>
+            <Button class="removeAccountButton" @click="onRemoveAccount"> Remove account </Button>
           </div>
         </div>
       </div>
@@ -86,7 +77,7 @@ import { useActiveUserStore } from '../stores/ActiveUserStore'
 import router from '@/router'
 import { useToastStore } from '@/stores/ToastStore'
 const activeUserStore = useActiveUserStore()
-const ToastStore= useToastStore();
+const ToastStore = useToastStore()
 const imgURL = ref('https://i.imgur.com/Z6fpYPD.png')
 
 const data = {
@@ -131,18 +122,17 @@ const onLogOutButton = () => {
   router.push('/home')
 }
 
-const onChangePassword=()=>{
-  ToastStore.featureNotImplemented();
+const onChangePassword = () => {
+  ToastStore.featureNotImplemented()
 }
 
-const onRemoveAccount=()=>{
-  ToastStore.featureNotImplemented();
+const onRemoveAccount = () => {
+  ToastStore.featureNotImplemented()
 }
 
-const onChangeProfilePic=()=>{
-  ToastStore.featureNotImplemented();
+const onChangeProfilePic = () => {
+  ToastStore.featureNotImplemented()
 }
-
 </script>
 
 <style></style>

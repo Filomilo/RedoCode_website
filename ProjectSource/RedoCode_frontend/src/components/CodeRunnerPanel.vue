@@ -35,12 +35,10 @@
     class="heightLimit"
   >
     <Splitter style="height: 100%; width: 100%">
-      <SplitterPanel v-if="showLeftPanel" style="max-width: 100%; width: 100%;" >
-        <Splitter layout="vertical" style=" width: 100%" >
+      <SplitterPanel v-if="showLeftPanel" style="max-width: 100%; width: 100%">
+        <Splitter layout="vertical" style="width: 100%">
           <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
-            <ExerciseDescriptionPanel
-            :isInEdit="showCreatorPanel"
-            />
+            <ExerciseDescriptionPanel :isInEdit="showCreatorPanel" />
           </SplitterPanel>
           <SplitterPanel v-if="showCreatorPanel">
             <ExerciseSetupPanel />
@@ -167,7 +165,7 @@ onBeforeRouteLeave(async (to, from) => {
 </script>
 
 <style>
-.heightLimit  {
+.heightLimit {
   max-height: 100%;
   height: 100%;
 }

@@ -73,18 +73,18 @@
   max-width: 70%;
 }
 
-.commentContent{
+.commentContent {
   text-wrap: wrap;
   max-width: 80%;
   text-align: left;
-  word-wrap:break-word;
+  word-wrap: break-word;
   margin-left: 3rem;
   margin-bottom: 1rem;
 }
-.filledBar{
+.filledBar {
   background-color: $primary;
 }
 
-.unfilledBar{
+.unfilledBar {
   background-color: rgb(88, 88, 88);
 }

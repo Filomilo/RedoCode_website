@@ -29,7 +29,16 @@
         </TabPanel>
       </TabView>
     </div>
-    <div class="testValidationSection" :class="data.isSolved !== null ? (data.expectedOutput == data.output ? 'correct' : 'wrong') : 'unknown'"> 
+    <div
+      class="testValidationSection"
+      :class="
+        data.isSolved !== null
+          ? data.expectedOutput == data.output
+            ? 'correct'
+            : 'wrong'
+          : 'unknown'
+      "
+    >
       {{
         data.isSolved !== null ? (data.expectedOutput == data.output ? 'Correct' : 'Failed') : ''
       }}
@@ -45,28 +54,22 @@ const props = defineProps<{
   data: ExerciseTest
 }>()
 
-const formattedConsole = computed<string>(() =>
-  formatToHtml(props.data.consoleOutput)
-)
-const formattedEror = computed<string>(() =>
-  formatToHtml(props.data.errorOutput)
-)
+const formattedConsole = computed<string>(() => formatToHtml(props.data.consoleOutput))
+const formattedEror = computed<string>(() => formatToHtml(props.data.errorOutput))
 </script>
 
-
 <style>
-
-.correct{
-border-color: lime;
-color: lime
+.correct {
+  border-color: lime;
+  color: lime;
 }
 
-.wrong{
+.wrong {
   border-color: red;
   color: red;
 }
 
-.unknown{
+.unknown {
   border-color: transparent;
   height: 10rem;
 }

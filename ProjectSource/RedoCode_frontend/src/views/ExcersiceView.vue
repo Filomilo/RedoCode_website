@@ -23,12 +23,12 @@ const fetchExerciseData = (id: number) => {
     id: route.params.id
   }
   axios.get('http://localhost:8080/exerciseData/', { params: params }).then((response) => {
-    const data: ExerciseData=response.data;
-    data.tests=data.tests.map((elem: any)=>{
-      return{
-      ...elem,
-      input: elem.input.value,
-      expectedOutput: elem.expectedOutput.value
+    const data: ExerciseData = response.data
+    data.tests = data.tests.map((elem: any) => {
+      return {
+        ...elem,
+        input: elem.input.value,
+        expectedOutput: elem.expectedOutput.value
       }
     })
     codeRunnerStore.setExerciseData(data)

@@ -35,11 +35,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     availbleCodeRunners: languageChoices.map((element) => element),
     tests: [
       {
-        input:   '',
-        output:   '',
+        input: '',
+        output: '',
         errorOutput: '',
         consoleOutput: '',
-        expectedOutput:  '',
+        expectedOutput: '',
         isSolved: null
       }
     ],
@@ -133,10 +133,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     return ''
   })
 
-
-  const areResultCorrect= computed(()=>{
-   return  exerciseData.value.tests.every((x)=> x.expectedOutput===x.output)
-
+  const areResultCorrect = computed(() => {
+    return exerciseData.value.tests.every((x) => x.expectedOutput === x.output)
   })
 
   return {

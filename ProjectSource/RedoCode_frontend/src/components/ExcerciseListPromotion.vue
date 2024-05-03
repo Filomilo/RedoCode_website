@@ -17,29 +17,27 @@ import type CodeExerciseTab from '../types/CodeExerciseTab'
 const data: CodeExerciseTab[] = [
   {
     title: 'example task',
-    description:
-      'example task, panel functionality not yet implemented',
+    description: 'example task, panel functionality not yet implemented',
     id: 2
   },
   {
     title: 'example task',
-    description:
-      'example task, panel functionality not yet implemented',
+    description: 'example task, panel functionality not yet implemented',
     id: 2
-  },  {
+  },
+  {
     title: 'example task',
-    description:
-      'example task, panel functionality not yet implemented',
+    description: 'example task, panel functionality not yet implemented',
     id: 2
-  },  {
+  },
+  {
     title: 'example task',
-    description:
-      'example task, panel functionality not yet implemented',
+    description: 'example task, panel functionality not yet implemented',
     id: 2
-  },  {
+  },
+  {
     title: 'example task',
-    description:
-      'example task, panel functionality not yet implemented',
+    description: 'example task, panel functionality not yet implemented',
     id: 2
   }
 ]

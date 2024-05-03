@@ -46,13 +46,12 @@ export const subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
   console.log('subscribing tor results')
   stompClient.subscribe('/user/topic/codeRunnerResults', (mesage: IMessage) => {
     console.log('staee code resulr: ' + JSON.stringify(mesage.body))
-    const results: ProgramResult[] = JSON.parse(mesage.body).map((elem: any)=>{
-        if(elem.variables===null)
-        return elem;
+    const results: ProgramResult[] = JSON.parse(mesage.body).map((elem: any) => {
+      if (elem.variables === null) return elem
       return {
         ...elem,
-        "variables": elem.variables.value
-      };
+        variables: elem.variables.value
+      }
     })
     func(results)
   })
