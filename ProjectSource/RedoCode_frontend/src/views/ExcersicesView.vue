@@ -40,15 +40,13 @@
             </Button>
           </div>
 
-          <router-link 
-          to="/Create"
-           class="createButton"
+          <router-link
+            to="/Create"
+            class="createButton"
             id="Home_Button"
-            :class="ActiveUserStore.isLogged?'':'diabled'"
-            >
-            <Button
-            :disabled="!ActiveUserStore.isLogged"
-            > Create </Button>
+            :class="ActiveUserStore.isLogged ? '' : 'diabled'"
+          >
+            <Button :disabled="!ActiveUserStore.isLogged"> Create </Button>
           </router-link>
         </template>
       </EasyDataTable>
@@ -73,8 +71,8 @@ import { isArray } from 'chart.js/helpers'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
-const ActiveUserStore=useActiveUserStore();
-const CodeRunnerStore=useCodeRunnerStore();
+const ActiveUserStore = useActiveUserStore()
+const CodeRunnerStore = useCodeRunnerStore()
 const router = useRouter()
 
 const fields: any[] = [
@@ -154,7 +152,7 @@ const HeadType: string = 'Dark'
   height: calc(100% - 2.1rem);
 }
 
-.diabled{
-  pointer-events:none;
+.diabled {
+  pointer-events: none;
 }
 </style>
