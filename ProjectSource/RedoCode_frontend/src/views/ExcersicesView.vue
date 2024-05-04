@@ -7,7 +7,8 @@
         alternating
         buttons-pagination
         class="dataTableStyle"
-        :server-items-length="555"
+        :server-items-length="1"
+        theme-color="var(--primary)"
         v-model:server-options="serverOptions"
       >
         <template #expand="item">
@@ -39,8 +40,13 @@
             </Button>
           </div>
 
-          <router-link to="/Create" class="createButton" id="Home_Button">
-            <Button> Create </Button>
+          <router-link
+            to="/Create"
+            class="createButton"
+            id="Home_Button"
+            :class="ActiveUserStore.isLogged ? '' : 'diabled'"
+          >
+            <Button :disabled="!ActiveUserStore.isLogged"> Create </Button>
           </router-link>
         </template>
       </EasyDataTable>
@@ -62,7 +68,11 @@ import IconNextLeft from '../assets/icons/IconNextLeft.vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
 import ExerciseListRequestMessage from '@/types/ExerciseListRequestMessage'
 import { isArray } from 'chart.js/helpers'
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
+const ActiveUserStore = useActiveUserStore()
+const CodeRunnerStore = useCodeRunnerStore()
 const router = useRouter()
 
 const fields: any[] = [
@@ -135,11 +145,14 @@ const HeadType: string = 'Dark'
 }
 
 .vue3-easy-data-table {
-  background-color: blue;
   height: 4rem;
   max-height: 100%;
 }
 .vue3-easy-data-table__main {
   height: calc(100% - 2.1rem);
+}
+
+.diabled {
+  pointer-events: none;
 }
 </style>

@@ -5,12 +5,12 @@
         <img :src="imgURL" class="ProfileImgStyle" />
       </div>
       <div class="editButtonContinaer">
-        <Button class="IconEditImg">
+        <Button class="IconEditImg" @click="onChangeProfilePic">
           <IconEdit />
         </Button>
       </div>
-      <div class="NickContainer">Nick</div>
-      <div class="DescriptionContainer">OPIS OPIS OPIS</div>
+      <div class="NickContainer">{{ activeUserStore.acoountInfo.nick.value }}</div>
+      <div class="DescriptionContainer">Account description</div>
       <div class="LogoutButtonContainer">
         <Button @click="onLogOutButton"> Logout </Button>
       </div>
@@ -59,10 +59,10 @@
           <div class="SettingContentRow">E-mail: e****@gmail.com</div>
           <div class="SettingContentRow">
             Password: *******
-            <Button class="changeButton"> change </Button>
+            <Button class="changeButton" @click="onChangePassword"> change </Button>
           </div>
           <div class="SettingContentRow center">
-            <Button class="removeAccountButton"> Remove account </Button>
+            <Button class="removeAccountButton" @click="onRemoveAccount"> Remove account </Button>
           </div>
         </div>
       </div>
@@ -75,10 +75,10 @@ import { ref, type Ref } from 'vue'
 import IconEdit from '../assets/icons/IconEdit.vue'
 import { useActiveUserStore } from '../stores/ActiveUserStore'
 import router from '@/router'
-
+import { useToastStore } from '@/stores/ToastStore'
 const activeUserStore = useActiveUserStore()
-
-const imgURL = ref('https://thispersondoesnotexist.com/')
+const ToastStore = useToastStore()
+const imgURL = ref('https://i.imgur.com/Z6fpYPD.png')
 
 const data = {
   labels: ['c++', 'JavaScrip', 'Python', 'Java'],
@@ -118,8 +118,20 @@ const setPanel = (type: Panels) => {
 }
 
 const onLogOutButton = () => {
-  activeUserStore.setIsLogged(false)
+  activeUserStore.logout()
   router.push('/home')
+}
+
+const onChangePassword = () => {
+  ToastStore.featureNotImplemented()
+}
+
+const onRemoveAccount = () => {
+  ToastStore.featureNotImplemented()
+}
+
+const onChangeProfilePic = () => {
+  ToastStore.featureNotImplemented()
 }
 </script>
 

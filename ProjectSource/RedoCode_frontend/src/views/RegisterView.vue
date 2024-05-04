@@ -21,12 +21,12 @@
         />
         <Password
           v-model="inputPass"
-          class="TextInputConainer AuthPanelElement"
+          class="TextInputConainer AuthPanelElement passwordCont"
           placeholder="password"
         />
         <Password
           v-model="inputPassRepeat"
-          class="TextInputConainer AuthPanelElement"
+          class="TextInputConainer AuthPanelElement passwordCont"
           placeholder="repeat password"
         />
 

@@ -5,22 +5,43 @@
       <label class="VerticalLineElement">expected Output</label>
     </div>
     <div>
-      <div v-for="(item, index) in manualTests" v-bind:key="index" class="VerticalLine">
+      <div
+        v-for="(item, index) in codeRunnerStore.exerciseData.tests"
+        v-bind:key="index"
+        class="VerticalLine"
+      >
         <div class="TestContainer">
-          <VariablesInput />
+          <VariablesInput
+            :Type="inputType"
+            :Size="inputSize"
+            :isInput="true"
+            :manualTestInputIndex="index"
+          />
         </div>
         <div class="TestContainer">
-          <VariablesInput />
+          <VariablesInput
+            :Type="outputype"
+            :Size="outputSize"
+            :isInput="false"
+            :manualTestInputIndex="index"
+          />
         </div>
         <div class="TrashButtonContainer">
-          <Button class="trashButton">
+          <Button
+            class="trashButton"
+            @click="
+              () => {
+                onRemoveButton(index)
+              }
+            "
+          >
             <IconTrash />
           </Button>
         </div>
       </div>
     </div>
     <div class="VerticalLine">
-      <Button class="addButton"> add </Button>
+      <Button class="addButton" @click="onAddButton"> add </Button>
     </div>
   </div>
 </template>
@@ -28,24 +49,29 @@
 <script setup lang="ts">
 import IconTrash from '../assets/icons/IconTrash.vue'
 import VariablesInput from './VariablesInput.vue'
-const manualTests = [
-  {
-    input: [[0]],
-    output: [[0]]
-  },
-  {
-    input: [[0]],
-    output: [[0]]
-  },
-  {
-    input: [[0]],
-    output: [[0]]
-  },
-  {
-    input: [[0]],
-    output: [[0]]
-  }
-]
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+import VarType from '@/types/VarType'
+import VarSize from '@/types/VarSize'
+import { onMounted, PropType } from 'vue'
+const codeRunnerStore = useCodeRunnerStore()
+const props = defineProps({
+  inputType: { type: String as PropType<VarType>, required: true, default: 'int' },
+  outputype: { type: String as PropType<VarType>, required: true, default: 'int' },
+  inputSize: { type: String as PropType<VarSize>, required: true, default: '2d_array' },
+  outputSize: { type: String as PropType<VarSize>, required: true, default: 'single_value' }
+})
+
+const onAddButton = () => {
+  codeRunnerStore.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
+}
+const onRemoveButton = (index: number) => {
+  codeRunnerStore.removeTest(index)
+}
+onMounted(() => {
+  codeRunnerStore.setupCreatingExercise()
+  codeRunnerStore.clearTests()
+  codeRunnerStore.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
+})
 </script>
 
 <style>

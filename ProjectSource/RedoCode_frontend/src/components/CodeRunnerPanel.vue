@@ -34,11 +34,11 @@
     v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner"
     class="heightLimit"
   >
-    <Splitter style="height: 100%">
-      <SplitterPanel v-if="showLeftPanel">
-        <Splitter layout="vertical">
-          <SplitterPanel>
-            <ExerciseDescriptionPanel />
+    <Splitter style="height: 100%; width: 100%">
+      <SplitterPanel v-if="showLeftPanel" style="max-width: 100%; width: 100%">
+        <Splitter layout="vertical" style="width: 100%">
+          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
+            <ExerciseDescriptionPanel :isInEdit="showCreatorPanel" />
           </SplitterPanel>
           <SplitterPanel v-if="showCreatorPanel">
             <ExerciseSetupPanel />
@@ -165,7 +165,8 @@ onBeforeRouteLeave(async (to, from) => {
 </script>
 
 <style>
-.heightLimit * {
-  max-height: 100vh;
+.heightLimit {
+  max-height: 100%;
+  height: 100%;
 }
 </style>

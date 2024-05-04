@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: pink">
+  <div>
     result Panel
 
     <div

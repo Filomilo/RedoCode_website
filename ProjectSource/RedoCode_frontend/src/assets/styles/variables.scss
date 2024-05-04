@@ -9,7 +9,8 @@ $backgroundColor: rgb(29, 29, 29);
 $LightInputBackGround: #535353;
 
 $headerHeight: 5rem;
-
+$themeColor: #a0a8ad;
 :root {
   --color-background: #{$backgroundColor};
+  --primary: #{$primary};
 }

@@ -17,6 +17,8 @@ import {
 } from '../config/CodeRunnerConnection'
 import CoderunnerState from '../types/CodeRunnerState'
 import { IFrame } from '@stomp/stompjs'
+import VarType from '@/types/VarType'
+import VarSize from '@/types/VarSize'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const codeRunnerActive: Ref<CodeRunnerState> = ref({
     codeRunnerType: '',
@@ -35,11 +37,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     availbleCodeRunners: languageChoices.map((element) => element),
     tests: [
       {
-        input:   '',
-        output:   '',
+        input: '',
+        output: '',
         errorOutput: '',
         consoleOutput: '',
-        expectedOutput:  '',
+        expectedOutput: '',
         isSolved: null
       }
     ],
@@ -133,6 +135,81 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     return ''
   })
 
+  const areResultCorrect = computed(() => {
+    return exerciseData.value.tests.every((x) => x.expectedOutput === x.output)
+  })
+
+  const getVarAcording: any = (type: VarType, size: VarSize) => {
+    if (type === 'string') {
+      switch (size) {
+        case 'single_value':
+          return ''
+        case 'array':
+          return ['']
+        case '2d_array':
+          return [['']]
+      }
+    } else {
+      switch (size) {
+        case 'single_value':
+          return 0
+        case 'array':
+          return [0]
+        case '2d_array':
+          return [[0]]
+      }
+    }
+    return 0
+  }
+
+  const addblankTest = (
+    inputType: VarType,
+    outputype: VarType,
+    inputSize: VarSize,
+    outputSize: VarSize
+  ) => {
+    const input = getVarAcording(inputType, inputSize)
+    const output = getVarAcording(outputype, outputSize)
+    console.log('ading ' + inputType + ' _ ' + inputSize + ' :: ' + JSON.stringify(input))
+    exerciseData.value.tests.push({
+      input: input,
+      expectedOutput: output,
+      output: null,
+      errorOutput: '',
+      consoleOutput: '',
+      isSolved: null
+    })
+
+    console.log('excerise tests: ' + JSON.stringify(exerciseData.value.tests))
+  }
+
+  const removeTest = (index: number) => {
+    console.log('remove: test: ' + index)
+    console.log('tests before: ' + JSON.stringify(exerciseData.value.tests))
+    exerciseData.value.tests.splice(index, 1)
+    console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
+  }
+
+  const setupCreatingExercise = () => {
+    console.log('setigin creating test')
+
+    exerciseData.value = {
+      availbleCodeRunners: [],
+      title: '',
+      id: -1,
+      desc: '',
+      outputType: '',
+      inputType: '',
+      tests: [],
+      automaticTests: [],
+      startingFunction: ''
+    }
+  }
+
+  const clearTests = () => {
+    exerciseData.value.tests = []
+  }
+
   return {
     codeRunnerActive,
     doesHaveACtiveToCodeRunner,
@@ -146,6 +223,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     exerciseLoading,
     setExerciseLoading,
     disconnetWithCodeRunner,
-    startingMethod
+    startingMethod,
+    areResultCorrect,
+    addblankTest,
+    removeTest,
+    setupCreatingExercise,
+    clearTests
   }
 })

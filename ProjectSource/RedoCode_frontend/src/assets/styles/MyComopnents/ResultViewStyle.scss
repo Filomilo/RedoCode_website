@@ -57,17 +57,34 @@
   margin-left: 2rem;
 }
 .profilePic {
-  width: 100%;
+  width: 5rem;
   border-radius: 50rem;
-  max-width: 100%;
+  max-width: 5rem;
   height: 5rem;
 }
 
 .CommentContainer {
   background-color: rgb(22, 22, 22);
   border-radius: 2rem;
-  width: 95%;
+  width: 70%;
   height: fit-content;
   margin: 2rem;
   color: white;
+  max-width: 70%;
+}
+
+.commentContent {
+  text-wrap: wrap;
+  max-width: 80%;
+  text-align: left;
+  word-wrap: break-word;
+  margin-left: 3rem;
+  margin-bottom: 1rem;
+}
+.filledBar {
+  background-color: $primary;
+}
+
+.unfilledBar {
+  background-color: rgb(88, 88, 88);
 }

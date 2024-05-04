@@ -14,7 +14,7 @@
     <div
       class="ConsoleResultConsoleCOntainer"
       v-if="!isDataResult"
-      style="display: flex; overflow: scroll"
+      style="display: flex; overflow: hidden"
     >
       <div
         class="ConsoleResultConsoleCOntainerText"
@@ -28,11 +28,15 @@
       ></div>
     </div>
 
-    <DataResultPanel v-if="isDataResult" :results="results" />
+    <DataResultPanel v-if="isDataResult" />
 
-    <div class="ExerciseControlPanle" v-if="isDataResult">
+    <div
+      class="ExerciseControlPanle"
+      v-if="isDataResult"
+      :style="codeRunnerStore.areResultCorrect ? '' : 'pointer-events: none'"
+    >
       <router-link to="/Results" class="TopBarItemContainer" id="Result_burron">
-        <Button class="submitButton"> Submit </Button>
+        <Button class="submitButton" :disabled="!codeRunnerStore.areResultCorrect"> Submit </Button>
       </router-link>
     </div>
   </div>
@@ -54,71 +58,14 @@ const formattedConsole = computed<string>(
 const formattedEror = computed<string>(() =>
   codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
 )
-
-const results: CodeResultType[] = [
-  {
-    Console_output: formattedConsole.value,
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  },
-  {
-    Console_output: '>> hello world',
-    Error_output: 'Couldnt find x',
-    Solution_type: 'Array',
-    correct_solution: 1,
-    achived_solution: 2,
-    error: 'invalid output'
-  }
-]
+const isCorrect = computed<boolean>(() => {
+  return false
+})
 </script>
+
+<style>
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+</style>

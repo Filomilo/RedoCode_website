@@ -6,7 +6,6 @@ import { makeServer } from './server'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import PrimeVue from 'primevue/config'
 import Toast from 'primevue/toast'
-import ToastService from 'primevue/toastservice'
 import Splitter from 'primevue/splitter'
 import SplitterPanel from 'primevue/splitterpanel'
 import Vue3EasyDataTable from 'vue3-easy-data-table'
@@ -47,7 +46,7 @@ import Dialog from 'primevue/dialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import './interceptors/axios'
-
+import ToastService from 'primevue/toastservice'
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
@@ -78,11 +77,11 @@ app.component('RadioButton', RadioButton)
 app.component('Checkbox', Checkbox)
 app.component('Textarea', Textarea)
 app.component('Dialog', Dialog)
-
+app.component('Dialog', Dialog)
 app.component('ConfirmDialog', ConfirmDialog)
-
+app.component('Toast', Toast)
 app.use(ConfirmationService)
-
+app.use(ToastService)
 const pinia = createPinia()
 
 app.use(pinia)

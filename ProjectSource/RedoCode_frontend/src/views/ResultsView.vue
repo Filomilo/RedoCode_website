@@ -1,39 +1,94 @@
 <template>
   <main style="margin-top: 15rem">
     <div class="VerticalLine">
-      <h1>Time for task: 5:33</h1>
+      <h1>Time for task: x:xx</h1>
     </div>
     <div class="VerticalLine" style="margin-top: 5rem">
-      <h1>Execution Time: 0:03:22</h1>
+      <h1>Execution Time: x:xx:xx</h1>
     </div>
     <div class="VerticalLine" style="margin-top: 5rem">
       <h2>Rate diffuciulty</h2>
     </div>
     <div class="VerticalLine algainBottom" style="margin-top: 5rem">
-      <Button class="rateButton level1" />
-      <Button class="rateButton level2" />
-      <Button class="rateButton level3" />
-      <Button class="rateButton level4" />
-      <Button class="rateButton level5" />
+      <Button
+        class="rateButton level1"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 1 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 1"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 1"
+      />
+      <Button
+        class="rateButton level2"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 2 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 2"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 2"
+      />
+      <Button
+        class="rateButton level3"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 3 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 3"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 3"
+      />
+      <Button
+        class="rateButton level4"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 4 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 4"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 4"
+      />
+      <Button
+        class="rateButton level5"
+        :disabled="alreadyRated"
+        :class="
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 5 ? 'filledBar' : 'unfilledBar'
+        "
+        @mouseover="ratingLevelShow = 5"
+        @mouseleave="ratingLevelShow = selectedRating"
+        @click="selectedRating = 5"
+      />
     </div>
-    <div class="VerticalLine" style="margin-top: 5rem">
-      <Button class="saveButton"> save Rate </Button>
+    <div class="VerticalLine" style="margin-top: 5rem" v-if="!alreadyRated">
+      <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
     </div>
 
     <div class="VerticalLine" style="margin-top: 5rem">
-      <Textarea class="CommentArea" />
+      <Textarea
+        class="CommentArea"
+        :disabled="!ActiveUserStore.isLogged"
+        v-model="commentInput"
+        :invalid="!validatedComment"
+      />
+    </div>
+    <div style="margin-left: 3rem">
+      {{ commentInput.length + '/3000' }}
     </div>
     <div class="VerticalLine" style="margin-top: 0.5rem; display: flex">
-      <Button class="commentButton"> comment </Button>
+      <Button class="commentButton" :disabled="!ActiveUserStore.isLogged" @click="onCommentButton">
+        comment
+      </Button>
     </div>
-    <div v-for="(data, index) in comments" v-bind:index="index">
+    <div v-for="(data, index) in comments" v-bind:key="index">
       <div class="VerticalLine" style="margin-top: 0.5rem">
         <div class="ProfilePicContainer">
           <img :src="data.profilePic" class="profilePic" />
         </div>
         <div class="CommentContainer">
           <h3 style="margin-left: 2rem; margin-top: 1rem">{{ data.nick }}</h3>
-          <div style="margin: 1rem">
+          <div class="commentContent">
             {{ data.content }}
           </div>
         </div>
@@ -45,29 +100,55 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, Ref, ref } from 'vue'
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
+
+const ActiveUserStore = useActiveUserStore()
+const commentInput: Ref<string> = ref('')
 const comments = ref([
   {
     nick: 'nick',
     content: 'Great exercise',
-    profilePic: 'https://thispersondoesnotexist.com/'
+    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
   },
   {
     nick: 'nick',
     content: 'Great exercise',
-    profilePic: 'https://thispersondoesnotexist.com/'
+    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
   },
   {
     nick: 'nick',
     content: 'Great exercise',
-    profilePic: 'https://thispersondoesnotexist.com/'
+    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
   },
   {
     nick: 'nick',
     content: 'Great exercise',
-    profilePic: 'https://thispersondoesnotexist.com/'
+    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
   }
 ])
+
+const ratingLevelShow: Ref<number> = ref(0)
+
+const selectedRating: Ref<number> = ref(0)
+const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
+const validatedComment = computed(() => {
+  return commentInput.value.length > 0 && commentInput.value.length < 3000
+})
+
+const onCommentButton = () => {
+  if (validatedComment.value) {
+    comments.value.unshift({
+      nick: ActiveUserStore.acoountInfo.nick.value,
+      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
+      content: commentInput.value
+    })
+    commentInput.value = ''
+  }
+}
+const onSaveRate = () => {
+  alreadyRated.value = true
+}
 </script>
 
 <style>
@@ -102,12 +183,10 @@ const comments = ref([
   flex-direction: row;
 }
 .saveButton {
-  background-color: red;
   border-radius: 0.2rem;
   border-color: transparent;
 }
 .commentButton {
-  background-color: red;
   border-radius: 0.2rem;
   border-color: transparent;
   align-self: flex-end;
