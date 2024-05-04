@@ -15,7 +15,7 @@
         <div class="panelSection SubPanelSection">
           <div class="panelVerticalSection">
             Ram
-            <vue-slider v-model="sliderVal" :min="128" :max="2048" />
+            <vue-slider v-model="sliderVal" :min="128" :max="2048" class="slider" />
             <InputNumber
               v-model="sliderVal"
               inputId="integeronly"
@@ -359,7 +359,6 @@
 <script setup lang="ts">
 import { onMounted, Ref, ref } from 'vue'
 import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/antd.css'
 import InputSetupInput from './InputSetupInput.vue'
 import ManualTestPnael from './ManualTestPnael.vue'
 import VarType from '@/types/VarType'

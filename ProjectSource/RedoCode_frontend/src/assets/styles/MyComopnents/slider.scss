@@ -1,0 +1,55 @@
+@import '../variables.scss';
+@import 'vue-slider-component/theme/antd.css';
+.dotStyle {
+  background-color: red;
+  width: 100rem;
+  background-color: red;
+  margin-top: 5rem;
+}
+.railStyle {
+  width: 100rem;
+  background-color: red;
+  margin-top: 5rem;
+}
+.vue-slider-dot * {
+  // width: 100rem;
+  border-color: $primary;
+  // margin-top: 5rem;
+}
+.vue-slider-process {
+  background-color: $primary;
+}
+
+.vue-slider-process:hover {
+  background-color: $primary;
+}
+.vue-slider-process {
+  background-color: $primary;
+}
+.vue-slider:hover .vue-slider-process {
+  background-color: $primary;
+}
+
+.vue-slider-mark-step-active {
+  box-shadow: $primary;
+}
+.vue-slider:hover .vue-slider-mark-step-active {
+  box-shadow: $primary;
+}
+.vue-slider:hover .vue-slider-dot-handle {
+  border-color: $primary;
+}
+
+.vue-slider-dot-handle-focus {
+  border-color: $primary;
+}
+.vue-slider:hover .vue-slider-dot-handle-focus {
+  border-color: $primary;
+}
+
+.vue-slider-dot-handle:hover {
+  border-color: $primary;
+}
+.vue-slider:hover .vue-slider-dot-handle:hover {
+  border-color: $primary;
+}
