@@ -31,12 +31,12 @@ public class CppSolutionProgram extends SolutionProgram {
             case SINGLE_INTEGER -> "int";
             case SINGLE_STRING -> "std::string";
             case SINGLE_FLOAT -> "float";
-            case ARRAY_OF_INTEGERS -> "int*";
-            case ARRAY_STRINGS -> "std::string*";
-            case ARRAY_OF_FLOATS -> "float*";
-            case DOUBLE_ARRAY_OF_INTEGERS -> "int**";
-            case DOUBLE_ARRAY_OF_FLOATS -> "float**";
-            case DOUBLE_ARRAY_OF_STRINGS -> "std::string**";
+            case ARRAY_OF_INTEGERS -> "std::vector<int>";
+            case ARRAY_STRINGS -> "std::vector<std::string>";
+            case ARRAY_OF_FLOATS -> "std::vector<float>";
+            case DOUBLE_ARRAY_OF_INTEGERS -> "std::vector<std::vector<int>>";
+            case DOUBLE_ARRAY_OF_FLOATS -> "std::vector<std::vector<float>>";
+            case DOUBLE_ARRAY_OF_STRINGS -> "std::vector<std::vector<std::string>>";
         };
         return output;
     }
@@ -47,8 +47,8 @@ public class CppSolutionProgram extends SolutionProgram {
         String returnfunc=switch (var.getType()){
             case ARRAY_STRINGS,ARRAY_OF_FLOATS,ARRAY_OF_INTEGERS -> {
                 Object[] arr=(Object[])var.getValue();
-                String tmp="return new "+
-                        getVarName(var.getType()).replace("*","["+arr.length+"]")
+                String tmp="return "+
+                        getVarName(var.getType())
                         +" {";
                 for (int i = 0; i < arr.length; i++) {
                     tmp+=getValueString(arr[i]);
@@ -65,16 +65,20 @@ public class CppSolutionProgram extends SolutionProgram {
             case DOUBLE_ARRAY_OF_FLOATS,DOUBLE_ARRAY_OF_INTEGERS,DOUBLE_ARRAY_OF_STRINGS ->  {
                 Object[][] arr=(Object[][])var.getValue();
                 String singleVar=getVarName(var.getType()).substring(0,getVarName(var.getType()).length()-2);
-              String tmp=   getVarName(var.getType())+ " arr = new "+
-                      singleVar+"*"+
-                "["+arr.length+"];\n";
+                Variables.VARIABLES_TYPES singleArrType=switch (var.getType()){
+                    case DOUBLE_ARRAY_OF_FLOATS -> Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS;
+                    case DOUBLE_ARRAY_OF_STRINGS -> Variables.VARIABLES_TYPES.ARRAY_STRINGS;
+                    case DOUBLE_ARRAY_OF_INTEGERS -> Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS;
+                    default -> throw new IllegalStateException("Unexpected value: " + var.getType());
+                };
+              String tmp=   getVarName(var.getType())+ " arr;\n";
 
                 for (int i = 0; i <arr.length ; i++) {
-                    tmp+="arr["+i+"]"+" = new "+singleVar+"["+arr[0].length+"];\n";
+                    tmp+="arr.push_back("+getVarName(singleArrType)+"());\n";
                 }
                 for (int i = 0; i <arr.length ; i++) {
                     for (int j = 0; j < arr[0].length; j++) {
-                        tmp+="arr["+i+"]["+j+"]="+getValueString(arr[i][j])+";\n";
+                        tmp+="arr["+i+"].push_back("+getValueString(arr[i][j])+");\n";
                     }
 
                 }
@@ -86,9 +90,10 @@ public class CppSolutionProgram extends SolutionProgram {
     }
 
     @Override
-    String getInputGeneratorCode() {
+    public String getInputGeneratorCode() {
         String inputCodeGenerationExpected=
                 "#include <iostream>\n"+
+                        "#include <vector>\n"+
                 getVarName(getInput().getType())+" "+this.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         getReturnInputVar(getInput())+
@@ -97,11 +102,12 @@ public class CppSolutionProgram extends SolutionProgram {
     }
 
     @Override
-    String getOutputGeneratorCode() {
+    public String getOutputGeneratorCode() {
        String code=
                "#include <fstream>\n" +
                        "#include <iostream>\n" +
                        "#include <sstream>\n" +
+                       "#include <vector>\n" +
                        "void "+this.getOutputGeneratorFunctionName()+"("+getVarName(this.getOutput().getType())+" a)\n" +
                        "{\n"+
         "std::ofstream myfile;\n" +
@@ -115,7 +121,7 @@ public class CppSolutionProgram extends SolutionProgram {
     private String getOutputgeneartionBody() {
         String returnfunc=switch (this.getOutput().getType()){
             case ARRAY_STRINGS,ARRAY_OF_FLOATS,ARRAY_OF_INTEGERS -> {
-           yield   "size_t l="+this.getOutput().getW()+";\n" +
+           yield   "size_t l=a.size();\n" +
                    "for (size_t i = 0; i < l; i++)\n" +
                    "{\n" +
                    "std::stringstream ss;\n" +
@@ -170,8 +176,8 @@ public class CppSolutionProgram extends SolutionProgram {
             }
             case DOUBLE_ARRAY_OF_FLOATS,DOUBLE_ARRAY_OF_INTEGERS,DOUBLE_ARRAY_OF_STRINGS ->  {
 
-                yield   "size_t w="+this.getOutput().getW()+";\n" +
-                        "size_t h="+this.getOutput().getH()+";\n" +
+                yield   "size_t w=a[0].size();\n" +
+                        "size_t h=a.size();\n" +
                         "for (size_t i = 0; i < h; i++)\n" +
                         "{\n" +
                         "for (size_t j = 0; j < w; j++)\n" +
@@ -208,7 +214,7 @@ public class CppSolutionProgram extends SolutionProgram {
     }
 
     @Override
-    String getActivationFunction() {
+    public String getActivationFunction() {
         String code=   "int main()\n" +
                 "{\n" +
         this.getOutputGeneratorFunctionName() +"(solution(";
@@ -216,15 +222,6 @@ public class CppSolutionProgram extends SolutionProgram {
         if(this.getInput()!=null)
         {
             code+=this.getInputGeneratorFunctionName()+"()";
-
-            if(this.getInput().getW()>0)
-            {
-                code+=","+ getInput().getW();
-                if(this.getInput().getH()>0)
-                {
-                    code+=","+ getInput().getH();
-                }
-            }
         }
 
 

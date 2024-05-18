@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class CppCodeRunner extends CodeRunner{
 
-    protected CppCodeRunner() {
+    public CppCodeRunner() {
         super("filipredocode/redocode:CppRunner");
         type=CODE_RUNNER_TYPE.CPP_RUNNER;
     }

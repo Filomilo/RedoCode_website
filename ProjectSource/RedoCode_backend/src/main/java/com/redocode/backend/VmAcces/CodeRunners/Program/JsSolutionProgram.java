@@ -16,19 +16,19 @@ public class JsSolutionProgram extends SolutionProgram {
     }
 
     @Override
-    String getInputGeneratorCode() {
+    public String getInputGeneratorCode() {
         log.error("not impelementet");
         return null;
     }
 
     @Override
-    String getOutputGeneratorCode() {
+    public String getOutputGeneratorCode() {
         log.error("not impelementet");
         return null;
     }
 
     @Override
-    String getActivationFunction() {
+    public String getActivationFunction() {
         log.error("not impelementet");
         return null;
     }
