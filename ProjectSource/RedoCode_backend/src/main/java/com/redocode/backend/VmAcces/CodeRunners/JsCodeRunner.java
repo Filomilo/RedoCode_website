@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class JsCodeRunner extends CodeRunner{
 
-    protected JsCodeRunner() {
+    public JsCodeRunner() {
         super("filipredocode/redocode:JsRunner");
         type=CODE_RUNNER_TYPE.JS_RUNNER;
     }
