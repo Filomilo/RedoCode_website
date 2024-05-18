@@ -90,7 +90,7 @@ for(int i=2;i<val;i++)
 (
     DEFAULT,
     1,
-    1,
+    3,
     e'function solution(val) {
     let arr = new Array(val);
 
