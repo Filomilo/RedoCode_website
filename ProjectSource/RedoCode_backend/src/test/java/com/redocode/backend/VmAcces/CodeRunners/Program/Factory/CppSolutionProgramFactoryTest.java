@@ -481,7 +481,7 @@ public class CppSolutionProgramFactoryTest {
         String code=
                 "int main()\n" +
                         "{\n" +
-                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"(),4));\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));\n" +
                         "return 0;\n" +
                         "}";
         log.info("Code: \n"+code);
@@ -501,7 +501,7 @@ public class CppSolutionProgramFactoryTest {
         String code=
                 "int main()\n" +
                         "{\n" +
-                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"(),4,2));\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));\n" +
                         "return 0;\n" +
                         "}";
         log.info("Code: \n"+code);
@@ -518,7 +518,7 @@ public class CppSolutionProgramFactoryTest {
                 .setOutputBase(new SingleInteger())
                 .setSolutionCode(list.get(0).getCode())
                 .build();
-        String correctCode="int solutin(int val)\n" +
+        String correctCode="int solution(int val)\n" +
                 "{\n" +
                 "    int* arr=new int[val];\n" +
                 "\n" +
