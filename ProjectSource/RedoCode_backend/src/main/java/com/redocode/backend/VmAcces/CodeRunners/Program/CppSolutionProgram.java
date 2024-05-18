@@ -176,8 +176,8 @@ public class CppSolutionProgram extends SolutionProgram {
             }
             case DOUBLE_ARRAY_OF_FLOATS,DOUBLE_ARRAY_OF_INTEGERS,DOUBLE_ARRAY_OF_STRINGS ->  {
 
-                yield   "size_t w=a.size();\n" +
-                        "size_t h=a[0].size();\n" +
+                yield   "size_t w=a[0].size();\n" +
+                        "size_t h=a.size();\n" +
                         "for (size_t i = 0; i < h; i++)\n" +
                         "{\n" +
                         "for (size_t j = 0; j < w; j++)\n" +
@@ -222,15 +222,6 @@ public class CppSolutionProgram extends SolutionProgram {
         if(this.getInput()!=null)
         {
             code+=this.getInputGeneratorFunctionName()+"()";
-
-            if(this.getInput().getW()>0)
-            {
-                code+=","+ getInput().getW();
-                if(this.getInput().getH()>0)
-                {
-                    code+=","+ getInput().getH();
-                }
-            }
         }
 
 
