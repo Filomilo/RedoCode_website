@@ -29,9 +29,9 @@ public abstract class SolutionProgram  extends Program{
 
     abstract String getImports();
     abstract void validate();
-    abstract String getInputGeneratorCode();
-    abstract String getOutputGeneratorCode();
-    abstract String getActivationFunction();
+    public abstract String getInputGeneratorCode();
+    public abstract String getOutputGeneratorCode();
+    public abstract String getActivationFunction();
 
     @Override
     public String getProgramCode() {
