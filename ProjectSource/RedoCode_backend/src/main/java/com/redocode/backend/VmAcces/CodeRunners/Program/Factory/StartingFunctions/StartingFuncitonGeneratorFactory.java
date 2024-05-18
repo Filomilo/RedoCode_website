@@ -7,6 +7,9 @@ public class StartingFuncitonGeneratorFactory {
              case "cpp"-> {
                  return new StartingFunctionGeneratorCpp();
              }
+             case "js"-> {
+                 return new StartingFunctionGeneratorJs();
+             }
          }
          return null;
      }

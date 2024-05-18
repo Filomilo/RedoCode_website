@@ -6,10 +6,7 @@ import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
 import com.redocode.backend.Messages.CodeToRunMessage;
 import com.redocode.backend.Messages.CoderunnerStateMessage;
-import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerBuilder;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
+import com.redocode.backend.VmAcces.CodeRunners.*;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
@@ -250,7 +247,7 @@ public class CodeRunnersController {
             Variables output = (test.getParsedOutput(exercise.getOutputType()));
             Program program= ProgramFactory
                     .createSolutionProgram()
-                    .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                    .setSolutionCodeRunner(codeRunner.getType())
                     .setOutputBase(VariablesFactory.getVeraibleFromType(exercise.getOutputType()))
                     .setInputVaraiable(input)
                     .setSolutionCode(codeToRunMessage.getCode())
