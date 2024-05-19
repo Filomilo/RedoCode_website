@@ -19,6 +19,7 @@ import CoderunnerState from '../types/CodeRunnerState'
 import { IFrame } from '@stomp/stompjs'
 import VarType from '@/types/VarType'
 import VarSize from '@/types/VarSize'
+import ExerciseParametersType from '@/types/ExerciseParametersType'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const codeRunnerActive: Ref<CodeRunnerState> = ref({
     codeRunnerType: '',
@@ -48,6 +49,9 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     automaticTests: [],
     startingFunction: ''
   }
+
+
+  
 
   const exerciseData: Ref<ExerciseData> = ref(playGroundBase)
 
@@ -190,6 +194,28 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
   }
 
+  const startupExerciseParams: ExerciseParametersType={
+    ram: 128,
+    timeForTaskM: 10,
+    timeForTaskH: 0,
+    executionTimeMs: 100,
+    inputType: ('int' as VarType),
+    inputSize: ('single_value' as VarSize),
+    outputType: ('int' as VarType),
+    outputSize: ('single_value' as VarSize),
+    amountOfAutoTests: 1,
+    autoTestminValue: -1,
+    autoTestMaxValue: 1,
+    upperCaseInput: true,
+    lowerCaseInput: true,
+    numberInput: true,
+    specialCharacterInput: true,
+    breakCharacterInupt: true,
+    languages: [],
+    xArrayRange: {min: 1, max: 10},
+    yArrayRange: {min: 1, max: 10}
+  }
+
   const setupCreatingExercise = () => {
     console.log('setigin creating test')
 
@@ -204,11 +230,21 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       automaticTests: [],
       startingFunction: ''
     }
+
+    exerciseSetupParams.value=startupExerciseParams;
+
+
   }
 
   const clearTests = () => {
     exerciseData.value.tests = []
   }
+
+
+
+  const exerciseSetupParams: Ref<ExerciseParametersType>= ref(startupExerciseParams);
+
+
 
   return {
     codeRunnerActive,
@@ -228,6 +264,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     addblankTest,
     removeTest,
     setupCreatingExercise,
-    clearTests
+    clearTests,
+    exerciseSetupParams
   }
 })

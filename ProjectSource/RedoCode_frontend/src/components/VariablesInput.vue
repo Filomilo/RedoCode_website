@@ -1,45 +1,5 @@
 <template>
   <div style="width: 100%; height: 100%; max-height: 100%; max-width: 100%; overflow: hidden">
-    <!-- <div class="dimensionsPanel">
-      <div v-if="props.Size === '2d_array' || props.Size === 'array'">
-        <label>X size: </label>
-        <InputNumber
-          :model-value="xSize"
-          @update:model-value="onXDimChange"
-          inputId="integeronly"
-          class="InputSizeContainer"
-          :min="0"
-          :max="20"
-        />
-      </div>
-      <div v-if="props.Size === '2d_array'">
-        <label>Y size: </label>
-        <InputNumber
-          v-model="ySize"
-          inputId="integeronly"
-          class="InputSizeContainer"
-          :min="1"
-          :max="20"
-        />
-      </div>
-    </div>
-
-    <div class="inputCotainer">
-      <div v-for="(row, indexRow) in props.isInput?CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input:CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput" class="rowContainer" v-bind:key="indexRow">
-        <div v-for="(val, indexColumn) in row" class="signleValContainer" v-bind:key="indexColumn">
-          <InputSetupInput
-            :type="props.Type"
-            :manualTestInputIndex="props.manualTestInputIndex"
-            :xIndex="indexColumn"
-            :yIndex="indexRow"
-            :isInput="props.isInput"
-          />
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <InputNumber  inputId="integeronly" /> -->
-
     <InputText v-model="jsonInput" style="width: 100%" />
 
     <br />
@@ -60,6 +20,7 @@ import VarSize from '@/types/VarSize'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import test from 'node:test'
 import { isArray, isNumber } from 'chart.js/helpers'
+import { json } from 'agent-base'
 
 const jsonInput: Ref<string> = ref('')
 const value = computed(() => {
@@ -159,13 +120,13 @@ const validationofData = computed(() => {
   }
   return ''
 })
-watch(validationofData, (newVal, oldVal) => {
+watch(value, (newVal, oldVal) => {
   try {
-    if (newVal === '') {
+    if (validationofData.value === '') {
       if (props.isInput) {
-        CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input = value.value
+        CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input =newVal
       } else {
-        CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput = value.value
+        CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput = newVal
       }
     }
   } catch (error) {
@@ -173,11 +134,6 @@ watch(validationofData, (newVal, oldVal) => {
   }
 })
 const CodeRunnerStore = useCodeRunnerStore()
-// const dimension = ref(2)
-// const xSize = computed(() => {
-//   return CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input.length
-// })
-// const ySize = ref(1)
 
 const props = defineProps({
   Type: { type: String as PropType<VarType>, required: true, default: 'int' },
@@ -186,63 +142,7 @@ const props = defineProps({
   isInput: { type: Boolean, required: true }
 })
 
-// watch(xSize, (newValue: number, oldValue: number) => {
-//   onXDimChange(newValue)
-// })
-// watch(ySize, (newValue: number, oldValue: number) => {
-//   onYDimChange(newValue)
-// })
-// const onXDimChange = (value: number) => {
-//   let data = props.isInput
-//     ? CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input
-//     : CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput
 
-//   if (data.length >= value) {
-//     data = data.slice(0, value)
-//   } else {
-//     while (data.length < value) {
-//       data.push([0])
-//     }
-//   }
-
-//   if (props.isInput) {
-//     CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input = data
-//   } else {
-//     CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput = data
-//   }
-// }
-// const onYDimChange = (value: number) => {
-//   let data = props.isInput
-//     ? CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input
-//     : CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput
-//   console.log('change y: ' + value)
-//   if (data[0].length < value) {
-//     let toIncrease = value - data.length
-//     console.log('toIncrease: ' + toIncrease)
-//     for (let i = 0; i < toIncrease; i++) {
-//       console.log('data.value[0].length: ' + data[0].length)
-//       data.push([])
-//       for (let j = 0; j < xSize.value; j++) {
-//         console.log('j: ' + j)
-//         data[data.length - 1].push(0)
-//       }
-//     }
-//   } else {
-//     if (data[0].length > value) {
-//       let toDecrease = data.length - value
-//       // console.log("toIncrease: "+ toIncrease)
-//       for (let i = 0; i < toDecrease; i++) {
-//         console.log('data.value[0].length: ' + data[0].length)
-//         data.pop()
-//       }
-//     }
-//   }
-//   if (props.isInput) {
-//     CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input = data
-//   } else {
-//     CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput = data
-//   }
-// }
 </script>
 
 <style>
