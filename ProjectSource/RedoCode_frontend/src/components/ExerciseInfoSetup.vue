@@ -17,11 +17,12 @@
  placeholder="Exercise dexcription"
  maxlength="2500"
  class="descritptionConatiner" 
+ style="height: 100%;"
 />
 </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
@@ -53,7 +54,7 @@ const value = ref(null);
     background-color: red;
     }
 .descritptionConatiner{
- height: 100%; 
+ height: 100rem; 
  font-size: 1.2rem; 
 }
 </style>
