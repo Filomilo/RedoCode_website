@@ -2,7 +2,7 @@
 <template>
     <div class="panelsContainer">
         <InputText
-        :v-model="codeRunnerStore.exerciseSetupParams.name"
+        v-model="codeRunnerStore.exerciseCreatorController.name"
         placeholder="Exercise name"
         class="titleContainer"
         style="height: 3rem"
@@ -11,12 +11,12 @@
         />
         
 <Textarea 
-v-model="codeRunnerStore.exerciseSetupParams.description" 
+ v-model="codeRunnerStore.exerciseCreatorController.description"
  rows="5"
  cols="30" 
  placeholder="Exercise dexcription"
  maxlength="2500"
-class="descritptionConatiner" 
+ class="descritptionConatiner" 
 />
 </div>
 </template>
@@ -45,7 +45,7 @@ const value = ref(null);
     width: 100%;
     height: 100%;
     min-width: 100%;
-    background-color: rgb(30, 99, 136);
+    background-color: rgb(81, 133, 161);
 }
 .titleContainer *{
     height: 1rem;
@@ -53,7 +53,8 @@ const value = ref(null);
     background-color: red;
     }
 .descritptionConatiner{
-   
+ height: 100%; 
+ font-size: 1.2rem; 
 }
 </style>
         

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref } from 'vue'
+import { ref, computed, type Ref, reactive } from 'vue'
 import type CodeRunnerState from '../types/CodeRunnerState'
 import ExerciseData from '@/types/ExerciseData'
 import axios from 'axios'
@@ -9,6 +9,7 @@ import ExerciseTest from '@/types/ExcericseTest'
 import { connectStomp, onConnectStomp } from '@/config/StompApiConnection'
 import type ProgramResult from '@/types/ProgramResults'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
+import ExerciseCreatorController from '@/controllers/ExerciseCreatorControlller'
 import {
   requstDefaultVmMachine,
   subcribeToVmStatus,
@@ -194,51 +195,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
   }
 
-  const startupExerciseParams: ExerciseParametersType={
-    ram: 128,
-    timeForTaskM: 10,
-    timeForTaskH: 0,
-    executionTimeMs: 100,
-    inputType: ('int' as VarType),
-    inputSize: ('single_value' as VarSize),
-    outputType: ('int' as VarType),
-    outputSize: ('single_value' as VarSize),
-    amountOfAutoTests: 1,
-    autoTestminValue: -1,
-    autoTestMaxValue: 1,
-    upperCaseInput: true,
-    lowerCaseInput: true,
-    numberInput: true,
-    specialCharacterInput: true,
-    breakCharacterInupt: true,
-    languages: [],
-    xArrayRange: { min: 1, max: 10 },
-    yArrayRange: { min: 1, max: 10 },
-    name: '',
-    description: '',
-    lengthRange: { min: 1, max: 10 },
-    spaceInupt: false
-  }
-
-  const setupCreatingExercise = () => {
-    console.log('setigin creating test')
-
-    exerciseData.value = {
-      availbleCodeRunners: [],
-      title: '',
-      id: -1,
-      desc: '',
-      outputType: '',
-      inputType: '',
-      tests: [],
-      automaticTests: [],
-      startingFunction: ''
-    }
-
-    exerciseSetupParams.value=startupExerciseParams;
-
-
-  }
 
   const clearTests = () => {
     exerciseData.value.tests = []
@@ -246,8 +202,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
 
 
-  const exerciseSetupParams: Ref<ExerciseParametersType>= ref(startupExerciseParams);
 
+  const exerciseCreatorController= reactive(new ExerciseCreatorController());
 
 
   return {
@@ -267,8 +223,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     areResultCorrect,
     addblankTest,
     removeTest,
-    setupCreatingExercise,
     clearTests,
-    exerciseSetupParams
+    exerciseCreatorController
   }
 })

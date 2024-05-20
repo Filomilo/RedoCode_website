@@ -68,7 +68,6 @@ const onRemoveButton = (index: number) => {
   codeRunnerStore.removeTest(index)
 }
 onMounted(() => {
-  codeRunnerStore.setupCreatingExercise()
   codeRunnerStore.clearTests()
   codeRunnerStore.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
 })

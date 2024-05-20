@@ -1,0 +1,65 @@
+import ExerciseParametersType from '@/types/ExerciseParametersType'
+import RangeType from '@/types/RangeType';
+import VarSize from '@/types/VarSize';
+import VarType from '@/types/VarType';
+
+export default class ExerciseCreatorController implements ExerciseParametersType{
+    name!: string;
+    description!: string;
+    languages!: string[];
+    ram!: number;
+    timeForTaskM!: number;
+    timeForTaskH!: number;
+    executionTimeMs!: number;
+    inputType!: VarType;
+    inputSize!: VarSize;
+    outputType!: VarType;
+    outputSize!: VarSize;
+    amountOfAutoTests!: number;
+    autoTestminValue!: number;
+    autoTestMaxValue!: number;
+    lengthRange!: RangeType;
+    xArrayRange!: RangeType;
+    yArrayRange!: RangeType;
+    upperCaseInput!: boolean;
+    lowerCaseInput!: boolean;
+    numberInput!: boolean;
+    specialCharacterInput!: boolean;
+    breakCharacterInupt!: boolean;
+    spaceInupt!: boolean;
+
+
+    resetParams(this: any):void{
+        this.ram= 128,
+        this.timeForTaskM= 10,
+        this.timeForTaskH= 0,
+        this.executionTimeMs= 100,
+        this.inputType= ('int' as VarType),
+        this.inputSize= ('single_value' as VarSize),
+        this.outputType= ('int' as VarType),
+        this.outputSize= ('single_value' as VarSize),
+        this.amountOfAutoTests= 1,
+        this.autoTestminValue= -1,
+        this.autoTestMaxValue= 1,
+        this.upperCaseInput= true,
+        this.lowerCaseInput= true,
+        this.numberInput= true,
+        this.specialCharacterInput= true,
+        this.breakCharacterInupt= true,
+        this.languages= [],
+        this.xArrayRange= { min: 1, max: 10 },
+        this.yArrayRange= { min: 1, max: 10 },
+        this.name= '',
+        this.description= '',
+        this.lengthRange= { min: 1, max: 10 },
+        this.spaceInupt= false
+    }
+
+constructor(){
+    this.resetParams();
+}
+
+
+
+
+}
