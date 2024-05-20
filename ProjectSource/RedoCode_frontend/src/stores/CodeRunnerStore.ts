@@ -212,8 +212,12 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     specialCharacterInput: true,
     breakCharacterInupt: true,
     languages: [],
-    xArrayRange: {min: 1, max: 10},
-    yArrayRange: {min: 1, max: 10}
+    xArrayRange: { min: 1, max: 10 },
+    yArrayRange: { min: 1, max: 10 },
+    name: '',
+    description: '',
+    lengthRange: { min: 1, max: 10 },
+    spaceInupt: false
   }
 
   const setupCreatingExercise = () => {

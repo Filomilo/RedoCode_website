@@ -3,6 +3,8 @@ import VarSize from "./VarSize"
 import VarType from "./VarType"
 
 export default interface ExerciseParametersType {
+    name: string,
+    description: string,
     languages: string[]
     ram: number
     timeForTaskM: number
@@ -15,6 +17,7 @@ export default interface ExerciseParametersType {
     amountOfAutoTests: number
     autoTestminValue: number
     autoTestMaxValue: number
+    lengthRange: RangeType
     xArrayRange: RangeType
     yArrayRange: RangeType
     upperCaseInput: boolean
@@ -22,5 +25,5 @@ export default interface ExerciseParametersType {
     numberInput: boolean 
     specialCharacterInput: boolean
     breakCharacterInupt: boolean 
+    spaceInupt: boolean 
 }
-  

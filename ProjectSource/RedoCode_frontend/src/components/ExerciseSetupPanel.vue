@@ -282,28 +282,29 @@
               <h5>int range</h5>
               <div>
                 <InputNumber
-                  v-model="lengthRange[0]"
+
+                  v-model="codeRunnerStore.exerciseSetupParams.lengthRange.min"
                   :min="-Math.pow(10, 10)"
                   :max="Math.pow(10, 10)"
                   :maxFractionDigits="0"
-                  @update:modelValue="(event) => onLengthChange([event, lengthRange[1]])"
+                  @update:modelValue="(event) => onLengthChange([event, codeRunnerStore.exerciseSetupParams.lengthRange.max])"
                 />
                 <InputNumber
-                  v-model="lengthRange[1]"
+                  v-model="codeRunnerStore.exerciseSetupParams.lengthRange.max"
                   :min="-Math.pow(10, 10)"
                   :max="Math.pow(10, 10)"
                   :maxFractionDigits="0"
-                  @update:modelValue="(event) => onLengthChange([lengthRange[0], event])"
+                  @update:modelValue="(event) => onLengthChange([codeRunnerStore.exerciseSetupParams.lengthRange.min, event])"
                 />
               </div>
               <div class="sliderContaienr" style="width: 100%; height: 3rem; margin-top: 1rem">
                 <Slider
-                :model-value="[codeRunnerStore.exerciseSetupParams.yArrayRange.min,codeRunnerStore.exerciseSetupParams.yArrayRange.max]"
+                :model-value="[codeRunnerStore.exerciseSetupParams.lengthRange.min,codeRunnerStore.exerciseSetupParams.lengthRange.max]"
                   range
                   :min="-Math.pow(10, 10)"
                   :max="Math.pow(10, 10)"
                   :unstyled="false"
-                  @change="(value:any)=>{codeRunnerStore.exerciseSetupParams.yArrayRange.min=value[0];codeRunnerStore.exerciseSetupParams.yArrayRange.max=value[1]}"
+                  @change="(value:any)=>{codeRunnerStore.exerciseSetupParams.lengthRange.min=value[0];codeRunnerStore.exerciseSetupParams.lengthRange.max=value[1]}"
                   />
               </div>
             </div>
@@ -314,21 +315,21 @@
               <h5>float range</h5>
               <div>
                 <InputNumber
-                  v-model="lengthRange[0]"
+                  v-model="codeRunnerStore.exerciseSetupParams.lengthRange.min"
                   :min="-Math.pow(10, 10)"
                   :max="Math.pow(10, 10)"
-                  @update:modelValue="(event) => onLengthChange([event, lengthRange[1]])"
+                  @update:modelValue="(event) => onLengthChange([event, codeRunnerStore.exerciseSetupParams.lengthRange.max])"
                 />
                 <InputNumber
-                  v-model="lengthRange[1]"
+                  v-model="codeRunnerStore.exerciseSetupParams.lengthRange.max"
                   :min="-Math.pow(10, 10)"
                   :max="Math.pow(10, 10)"
-                  @update:modelValue="(event) => onLengthChange([lengthRange[0], event])"
+                  @update:modelValue="(event) => onLengthChange([codeRunnerStore.exerciseSetupParams.lengthRange.min, event])"
                 />
               </div>
               <div class="sliderContaienr" style="width: 100%; height: 3rem; margin-top: 1rem">
                 <Slider
-                  v-model="lengthRange"
+                  :model-value="[codeRunnerStore.exerciseSetupParams.lengthRange.min,codeRunnerStore.exerciseSetupParams.lengthRange.max]"
                   range
                   :min="-Math.pow(10, 10)"
                   :max="Math.pow(10, 10)"
@@ -345,23 +346,23 @@
               <h5>string range</h5>
               <div style="display: flex; justify-content: center">
                 <InputNumber
-                  v-model="lengthRange[0]"
+                  v-model="codeRunnerStore.exerciseSetupParams.lengthRange.min"
                   :min="0"
                   :max="30"
                   :maxFractionDigits="0"
-                  @update:modelValue="(event) => onLengthChange([event, lengthRange[1]])"
+                  @update:modelValue="(event) => onLengthChange([event, codeRunnerStore.exerciseSetupParams.lengthRange.max])"
                 />
                 <InputNumber
-                  v-model="lengthRange[1]"
+                  v-model="codeRunnerStore.exerciseSetupParams.lengthRange.max"
                   :min="0"
                   :max="30"
                   :maxFractionDigits="0"
-                  @update:modelValue="(event) => onLengthChange([lengthRange[0], event])"
+                  @update:modelValue="(event) => onLengthChange([codeRunnerStore.exerciseSetupParams.lengthRange.min, event])"
                 />
               </div>
               <div class="sliderContaienr" style="width: 100%; height: 3rem; margin-top: 1rem">
                 <Slider
-                  v-model="lengthRange"
+                  :model-value="[codeRunnerStore.exerciseSetupParams.lengthRange.min,codeRunnerStore.exerciseSetupParams.lengthRange.max]"
                   range
                   :min="0"
                   :max="30"
@@ -372,27 +373,27 @@
               </div>
               <div class="SubPanelSection">
                 <div class="checkBoxContainer">
-                  <Checkbox v-model="stringGenParam[0]" invalid binary />
+                  <Checkbox v-model="codeRunnerStore.exerciseSetupParams.upperCaseInput" invalid binary />
                   <label> A, B, C, D, ... </label>
                 </div>
                 <div class="checkBoxContainer">
-                  <Checkbox v-model="stringGenParam[1]" invalid binary />
+                  <Checkbox v-model="codeRunnerStore.exerciseSetupParams.lowerCaseInput" invalid binary />
                   <label> a, b, c, d, ... </label>
                 </div>
                 <div class="checkBoxContainer">
-                  <Checkbox v-model="stringGenParam[2]" invalid binary />
+                  <Checkbox v-model="codeRunnerStore.exerciseSetupParams.numberInput" invalid binary />
                   <label> 1, 2, 3, 4 ... </label>
                 </div>
                 <div class="checkBoxContainer">
-                  <Checkbox v-model="stringGenParam[3]" invalid binary />
+                  <Checkbox v-model="codeRunnerStore.exerciseSetupParams.specialCharacterInput" invalid binary />
                   <label> +, (, ), %, # ... </label>
                 </div>
                 <div class="checkBoxContainer">
-                  <Checkbox v-model="stringGenParam[4]" invalid binary />
+                  <Checkbox v-model="codeRunnerStore.exerciseSetupParams.breakCharacterInupt" invalid binary />
                   <label> \n \t </label>
                 </div>
                 <div class="checkBoxContainer">
-                  <Checkbox v-model="stringGenParam[5]" invalid binary />
+                  <Checkbox v-model="codeRunnerStore.exerciseSetupParams.spaceInupt" invalid binary />
                   <label> [_] </label>
                 </div>
               </div>
@@ -421,8 +422,7 @@ const langOptions = [
 
 
 
-const lengthRange = ref([1, 10])
-const stringGenParam = ref([true, true, true, true, true, true])
+// const stringGenParam = ref([true, true, true, true, true, true])
 
 const onXChange = (val: any) => {
   if (val[0] > val[1]) {
@@ -444,7 +444,8 @@ const onLengthChange = (val: any) => {
   if (val[0] > val[1]) {
     val[0] = val[1]
   }
-  lengthRange.value = val
+  codeRunnerStore.exerciseSetupParams.lengthRange.min=val[0];
+  codeRunnerStore.exerciseSetupParams.lengthRange.max=val[1];
 }
 
 onMounted(() => {
