@@ -1,5 +1,5 @@
 <template>
-  <Dialog
+<Dialog
     :visible="codeRunnerStore.exerciseLoading"
     modal
     header="Edit Profile"
@@ -14,7 +14,7 @@
   </Dialog>
 
   <Dialog
-    :visible="codeRunnerStore.isAwaitngCodeRunner"
+    :visible="ApiConnectionStore.isAwaitngCodeRunner"
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
@@ -31,7 +31,7 @@
   </Dialog>
 
   <div
-    v-if="codeRunnerStore.doesHaveACtiveToCodeRunner || codeRunnerStore.isAwaitngCodeRunner"
+    v-if="ApiConnectionStore.doesHaveACtiveToCodeRunner || ApiConnectionStore.isAwaitngCodeRunner"
     class="heightLimit"
   >
     <Splitter style="height: 100%; width: 100%">
@@ -57,6 +57,7 @@
   <div v-else style="height: 100%">
     <ConnectToCodeRunnerPanel />
   </div>
+ 
 </template>
 
 <script lang="ts" setup>
@@ -91,6 +92,7 @@ import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
 import ExerciseSetupPanel from './ExerciseSetupPanel.vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import LoadingIndicator from './LoadingIndicator.vue'
+import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 const props = defineProps({
   connectAtStart: { type: Boolean, required: false },
   showLeftPanel: { type: Boolean, required: false },
@@ -98,7 +100,7 @@ const props = defineProps({
 })
 
 const codeRunnerStore = useCodeRunnerStore()
-
+const ApiConnectionStore= useApiConnectionStore();
 const subscribeStatus = ref(false)
 const meaages = ref('')
 const tryingToEstablishConnection: Ref<boolean> = ref(false)
@@ -125,7 +127,7 @@ const diconnectFromCodeRunners = () => {
   // console.log("diconnect from code runners")
   //TODO: dicconrt requstDefaultVmMachine
   disconnectStomp()
-  codeRunnerStore.disconnetWithCodeRunner()
+  ApiConnectionStore.codeRunnerConnectionControler.disconnetWithCodeRunner()
 }
 
 onMounted(() => {

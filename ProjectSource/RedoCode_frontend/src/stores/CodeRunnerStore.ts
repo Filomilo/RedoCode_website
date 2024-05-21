@@ -21,15 +21,10 @@ import { IFrame } from '@stomp/stompjs'
 import VarType from '@/types/VarType'
 import VarSize from '@/types/VarSize'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
+import { useApiConnectionStore } from './ApiConnectionStore'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
-  const codeRunnerActive: Ref<CodeRunnerState> = ref({
-    codeRunnerType: '',
-    state: ''
-  })
-  const doesHaveACtiveToCodeRunner = computed(() => {
-    // return true;
-    return codeRunnerActive.value.state === 'ACTIVE'
-  })
+const apiConnectionStore= useApiConnectionStore();
+
   const playGroundBase: ExerciseData = {
     inputType: '',
     title: '',
@@ -56,7 +51,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const exerciseData: Ref<ExerciseData> = ref(playGroundBase)
 
-  const isAwaitngCodeRunner = computed(() => codeRunnerActive.value.state == 'AWAITING')
   const setExerciseData = (exerciseDataRecived: ExerciseData) => {
     exerciseData.value = exerciseDataRecived
   }
@@ -65,49 +59,17 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     exerciseData.value = playGroundBase
   }
 
-  const isAwaitingCompilation: Ref<boolean> = ref(false)
   const exerciseLoading: Ref<boolean> = ref(false)
   const setExerciseLoading = (state: boolean) => {
     exerciseLoading.value = state
   }
 
-  const disconnetWithCodeRunner = () => {
-    console.log('setting code unner to none')
-    codeRunnerActive.value = {
-      state: '',
-      codeRunnerType: ''
-    }
-  }
 
-  const VmMachineStatusCallBack = (state: CoderunnerState) => {
-    console.log('new vm machine status: ' + JSON.stringify(state.codeRunnerType))
-    codeRunnerActive.value = state
-    // codeRunnerActive.value.codeRunnekkrType = 'CPP_RUNNER'
-    // codeRunnerActive.value.codeRunnerType=state.codeRunnerType==="UUIANDTIFIED"?"":state.codeRunnerType
-    console.log('codeRunnerActive: ' + JSON.stringify(codeRunnerActive))
-  }
-  const CodeRunnerResultsCallBack = (res: ProgramResult[]) => {
-    isAwaitingCompilation.value = false
 
-    console.log('new code runner resutls: ' + JSON.stringify(res))
-    exerciseData.value.tests.forEach((test: ExerciseTest, index: number) => {
-      test.consoleOutput =
-        res[index].consoleOutput.output === null ? '' : res[index].consoleOutput.output
-      test.errorOutput =
-        res[index].consoleOutput.errorOutput === null ? '' : res[index].consoleOutput.errorOutput
-      test.output = res[index].variables
-      test.isSolved = res[index].variables === test.expectedOutput
-    })
-  }
+  
 
-  const requestCodeRunner = (codeRunnerName: string) => {
-    codeRunnerActive.value.state = 'AWAITING'
-    subcribeToVmStatus(VmMachineStatusCallBack)
-    subscribeToCodeResults(CodeRunnerResultsCallBack)
-    requstDefaultVmMachine(codeRunnerName)
 
-    // console.log("connecting to vm mahicne state callback");
-  }
+ 
   const runCode = async (code: string) => {
     console.log('sending code to run: ' + code)
     const message: CodeToRunMessage = {
@@ -126,13 +88,13 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const startingMethod = computed(() => {
     if (exerciseData.value.id != null) {
       console.log('--------------------------id is not null')
-      if (codeRunnerActive.value.state === 'ACTIVE') {
+      if (apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.state === 'ACTIVE') {
         console.log(
           '--------------------------codeRunnerType is not UNIDENTIFIED: ' +
-            JSON.stringify(codeRunnerActive.value)
+            JSON.stringify(apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive)
         )
         return exerciseData.value.startingFunction[
-          dropDownLangaugeMap[codeRunnerActive.value.codeRunnerType]
+          dropDownLangaugeMap[apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
         ]
       }
     }
@@ -143,6 +105,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const areResultCorrect = computed(() => {
     return exerciseData.value.tests.every((x) => x.expectedOutput === x.output)
   })
+  const isAwaitingCompilation: Ref<boolean> = ref(false)
 
   const getVarAcording: any = (type: VarType, size: VarSize) => {
     if (type === 'string') {
@@ -207,10 +170,10 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
 
   return {
-    codeRunnerActive,
-    doesHaveACtiveToCodeRunner,
-    requestCodeRunner,
-    isAwaitngCodeRunner,
+    // codeRunnerActive,
+    // doesHaveACtiveToCodeRunner,
+    // requestCodeRunner,
+    // isAwaitngCodeRunner,
     exerciseData,
     isAwaitingCompilation,
     setExceriseDataToPlayground,
@@ -218,7 +181,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     setExerciseData,
     exerciseLoading,
     setExerciseLoading,
-    disconnetWithCodeRunner,
+    // disconnetWithCodeRunner,
     startingMethod,
     areResultCorrect,
     addblankTest,

@@ -3,12 +3,12 @@
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
-        <div class="EngineStatusStatus">{{ codeRunnerStore.codeRunnerActive.codeRunnerType }}</div>
+        <div class="EngineStatusStatus">{{ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType }}</div>
       </div>
 
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Status:</div>
-        <div class="EngineStatusStatus">{{ codeRunnerStore.codeRunnerActive.state }}</div>
+        <div class="EngineStatusStatus">{{ ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.state }}</div>
       </div>
     </div>
     <div
@@ -47,7 +47,9 @@ import { computed } from 'vue'
 import DataResultPanel from './DataResultPanel.vue'
 import type CodeResultType from '@/types/CodeResultsType'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+import { useApiConnectionStore } from '@/stores/ApiConnectionStore';
 const codeRunnerStore = useCodeRunnerStore()
+const ApiConnectionStore= useApiConnectionStore();
 const props = defineProps({
   isDataResult: { type: Boolean, required: false }
 })

@@ -26,7 +26,7 @@
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
       :change="chosenLangague"
-      :language="editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]"
+      :language="editrLangesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
       @keyup.ctrl.enter.prevent="onShortCutRun"
     />
   </div>
@@ -40,7 +40,9 @@ import { useConfirm } from 'primevue/useconfirm'
 import LoadingIndicator from './LoadingIndicator.vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { languageChoices } from '@/config/Data'
-const codeRunnerStore = useCodeRunnerStore()
+import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+const codeRunnerStore = useCodeRunnerStore();
+const ApiConnectionStore= useApiConnectionStore();
 defineProps({
   code: Object as () => string
 })
@@ -77,18 +79,18 @@ watch(
 )
 
 const lnagaugeDropdownVaule = computed(
-  () => dropDownLangaugeMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
+  () => dropDownLangaugeMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
 )
 
 const editorLang = computed(() => {
-  return editrLangesMap[codeRunnerStore.codeRunnerActive.codeRunnerType]
+  return editrLangesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
 })
 
 const editorRef = shallowRef()
 const handleMount = (editor: any) => (editorRef.value = editor)
 
 const onChangeLnageugeDropDown = (lang: any) => {
-  if (lang.value! !== codeRunnerStore.codeRunnerActive.codeRunnerType) {
+  if (lang.value! !== ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType) {
     console.log('test change: ' + lang.value)
     confirmChangeOFCodeRuner(lang.value)
   }
@@ -103,7 +105,7 @@ const confirmChangeOFCodeRuner = (type: string) => {
     acceptLabel: 'Change',
     accept: () => {
       console.log(' confirm change: ' + type)
-      codeRunnerStore.requestCodeRunner(type)
+      ApiConnectionStore.codeRunnerConnectionControler.requestCodeRunner(type)
     },
     reject: () => {
       console.log(' reject change: ' + type)
