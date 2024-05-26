@@ -14,7 +14,7 @@ class ContainerControllerTest {
     void createController()
     {
         assertDoesNotThrow(()->{
-            containerController=new ContainerController("nginx");
+            containerController=new ContainerController("nginx:alpine-slim");
         });
         assertNotNull(containerController);
         containerController.start();
