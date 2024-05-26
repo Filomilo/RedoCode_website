@@ -1,3 +1,5 @@
+<!-- eslint-disable vue/no-mutating-props -->
+
 <template>
 <Dialog
     :visible="codeRunnerStore.exerciseLoading"
@@ -38,24 +40,33 @@
       <SplitterPanel v-if="showLeftPanel" style="max-width: 100%; width: 100%">
         <Splitter layout="vertical" style="width: 100%">
           <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
-            <ExerciseDescriptionPanel :isInEdit="showCreatorPanel" />
+            <ExerciseDescriptionPanel 
+            :exerciseInfo="props.exerciseInfo"
+            />
           </SplitterPanel>
-          <SplitterPanel v-if="showCreatorPanel">
-            <ExerciseSetupPanel />
-          </SplitterPanel>
+
         </Splitter>
       </SplitterPanel>
 
       <SplitterPanel>
-        <CodeEditor class="CodeEditorContainer" />
+        <CodeEditor 
+        class="CodeEditorContainer"
+        :starting="props.starting"
+        :codeUpdateMethod="props.codeContainerUpdate"
+        />
       </SplitterPanel>
       <SplitterPanel>
-        <CodeResultPanel :isDataResult="showLeftPanel" />
+        <CodeResultPanel
+        :isDataResult="showLeftPanel" 
+        
+        />
       </SplitterPanel>
     </Splitter>
   </div>
   <div v-else style="height: 100%">
-    <ConnectToCodeRunnerPanel />
+    <ConnectToCodeRunnerPanel 
+    :languageChoices="languageChoices"
+    />
   </div>
  
 </template>
@@ -85,7 +96,7 @@ import {
 import type CodeRunnerState from '@/types/CodeRunnerState'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import ResultsPanel from './ResultsPanel.vue'
-import { basicResultTemplate, languageChoices } from '../config/Data'
+import { basicResultTemplate,} from '../config/Data'
 import type CodeResultsType from '@/types/CodeResultsType'
 import CodeResultPanel from './CodeResultPanel.vue'
 import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
@@ -93,10 +104,14 @@ import ExerciseSetupPanel from './ExerciseSetupPanel.vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import LoadingIndicator from './LoadingIndicator.vue'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 const props = defineProps({
   connectAtStart: { type: Boolean, required: false },
   showLeftPanel: { type: Boolean, required: false },
-  showCreatorPanel: { type: Boolean, required: false }
+  languageChoices: {type: Array as () => string[], required: true },
+  exerciseInfo: { type: Object as ()=> IExerciseDescriptionI, required: true }, 
+  codeContainerUpdate: { type: Function, required: true }, 
+  starting: {type: String, required: true},
 })
 
 const codeRunnerStore = useCodeRunnerStore()
@@ -106,7 +121,7 @@ const meaages = ref('')
 const tryingToEstablishConnection: Ref<boolean> = ref(false)
 const establishedConnection: Ref<boolean> = ref(false)
 const VmAcces: Ref<boolean> = ref(false)
-const chosenLangague: Ref<String> = ref(languageChoices[0])
+const chosenLangague: Ref<String> = ref(props.languageChoices[0])
 const code: Ref<string> = ref('Write Code')
 const resultData = ref(basicResultTemplate)
 

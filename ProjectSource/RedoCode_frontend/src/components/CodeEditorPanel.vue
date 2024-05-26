@@ -1,4 +1,7 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
+  test:
+  {{ props.starting }}
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
@@ -7,6 +10,7 @@
       placeholder="Select programming langauge"
       class="dropDown"
       @change="onChangeLnageugeDropDown"
+      
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
@@ -22,18 +26,19 @@
     <vue-monaco-editor
       style="width: 100%; height: 100%"
       v-model:value="codeRef"
+      
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
-      :change="chosenLangague"
       :language="editrLangesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
       @keyup.ctrl.enter.prevent="onShortCutRun"
+      :onChange="onCodeChnaage"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, shallowRef, computed, watch, onMounted } from 'vue'
+import { ref, shallowRef, computed, watch, onMounted, Ref } from 'vue'
 import IconPlay from '@/assets/icons/IconPlay.vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import { useConfirm } from 'primevue/useconfirm'
@@ -41,17 +46,24 @@ import LoadingIndicator from './LoadingIndicator.vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+const props = defineProps({
+  starting: { type: String, required: true }, 
+  codeUpdateMethod: {type: Function, required: true}
+})
+
 const codeRunnerStore = useCodeRunnerStore();
 const ApiConnectionStore= useApiConnectionStore();
-defineProps({
-  code: Object as () => string
-})
+
 const dropDownLangaugeMap: EditorLanguagesMap = {
   CPP_RUNNER: 'cpp',
   JS_RUNNER: 'js',
   UNIDENTIFIED: ''
 }
-const codeRef = ref(codeRunnerStore.startingMethod)
+const codeRef = ref(props.starting)
+
+const onCodeChnaage=(text:string)=>{
+  props.codeUpdateMethod(text);
+}
 const confirm = useConfirm()
 const MONACO_EDITOR_OPTIONS = {
   automaticLayout: true
@@ -72,9 +84,10 @@ const editrLangesMap: EditorLanguagesMap = {
   UNIDENTIFIED: ''
 }
 watch(
-  () => codeRunnerStore.startingMethod,
-  () => {
-    codeRef.value = codeRunnerStore.startingMethod
+  () => props.starting,
+  (first,second) => {
+    console.log("props chahned-----------------------: "+ second+" -> "+first )
+    codeRef.value = first
   }
 )
 
@@ -120,9 +133,9 @@ function formatCode() {
 watch(
   () => codeRunnerStore.exerciseLoading,
   () => {
-    console.log('updatedexercise data########################')
-    if (!codeRunnerStore.exerciseLoading)
-      codeRef.value = codeRunnerStore.exerciseData.startingFunction
+    // console.log('updatedexercise data########################')
+    // if (!codeRunnerStore.exerciseLoading)
+    //   codeRef.value = codeRunnerStore.exerciseData.startingFunction
   }
 )
 

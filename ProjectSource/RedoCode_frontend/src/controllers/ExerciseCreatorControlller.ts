@@ -1,11 +1,16 @@
+import ExerciseTest from '@/types/ExcericseTest';
+import ExerciseData from '@/types/ExerciseData';
 import ExerciseParametersType from '@/types/ExerciseParametersType'
+import IExerciseDescriptionI from '@/types/IExerciseDescriptionI';
 import RangeType from '@/types/RangeType';
 import VarSize from '@/types/VarSize';
 import VarType from '@/types/VarType';
-
-export default class ExerciseCreatorController implements ExerciseParametersType{
-    name!: string;
-    description!: string;
+interface StringIndexed {
+    [index: string]: string;
+  }
+export default class ExerciseCreatorController implements  IExerciseDescriptionI{
+    title!: string;
+    desc!: string;
     languages!: string[];
     ram!: number;
     timeForTaskM!: number;
@@ -27,6 +32,7 @@ export default class ExerciseCreatorController implements ExerciseParametersType
     specialCharacterInput!: boolean;
     breakCharacterInupt!: boolean;
     spaceInupt!: boolean;
+    solutions!:StringIndexed;
 
 
     resetParams(this: any):void{
@@ -49,16 +55,16 @@ export default class ExerciseCreatorController implements ExerciseParametersType
         this.languages= [],
         this.xArrayRange= { min: 1, max: 10 },
         this.yArrayRange= { min: 1, max: 10 },
-        this.name= '',
-        this.description= '',
+        this.title= '',
+        this.desc= '',
         this.lengthRange= { min: 1, max: 10 },
         this.spaceInupt= false
-    }
+        this.solutions={};
+}
 
 constructor(){
     this.resetParams();
 }
-
 
 
 

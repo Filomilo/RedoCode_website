@@ -1,4 +1,7 @@
 <template>
+  info: 
+  {{ JSON.stringify(codeRunnerStore.exerciseCreatorController) }}
+  <!-- {{ JSON.stringify(codeRunnerStore.exerciseCreatorController.languages.map((x)=> x.value)) }} -->
   <Splitter layout="vertical" style="height: 100%" class="exerciseSetupPanel">
     <SplitterPanel>
       <div class="setupPanel">

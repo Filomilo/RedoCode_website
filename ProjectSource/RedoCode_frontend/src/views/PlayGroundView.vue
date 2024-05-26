@@ -1,6 +1,11 @@
 <template>
   <main class="PlayGroundBase">
-    <CodeRunnerPanel :showLeftPanel="false" :connectAtStart="false" :functionAtStart="false" />
+    <CodeRunnerPanel 
+    :showLeftPanel="false" 
+    :connectAtStart="false" 
+    :functionAtStart="false"
+    :languageChoices="languageChoices"
+    />
   </main>
 </template>
 
@@ -11,7 +16,7 @@ import { onMounted, ref } from 'vue'
 import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 import { setTimeout } from 'timers'
-
+import { languageChoices } from '@/config/Data'
 const setupPlayground = () => {
   // console.log("-----------------")
   codeRunnerStore.setExerciseLoading(true)

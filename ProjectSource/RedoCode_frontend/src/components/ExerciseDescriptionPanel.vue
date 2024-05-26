@@ -1,15 +1,10 @@
 <template>
   <div class="DesciptionPanelContainer">
     <div class="DesciptionTitleContainer">
-      <div class="DesciptionTitle" v-if="!isInEdit">{{ codeRunnerStore.exerciseData.title }}</div>
-      <div v-else class="DesciptionTitle titleEdit">
-        <InputText class="DesciptionTitle titleEdit" />
-      </div>
+      <div class="DesciptionTitle">{{ exerciseInfo.title }}</div>
     </div>
-    <div v-if="!isInEdit" class="DescriptioNContainer" v-html="desc"></div>
-    <div class="descriptorEdit" v-else>
-      <Textarea class="descriptorEdit" />
-    </div>
+    <div class="DescriptioNContainer" v-html="desc"></div>
+    
   </div>
 </template>
 
@@ -17,13 +12,17 @@
 import MarkdownIt from 'markdown-it'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import { computed } from 'vue'
-const codeRunnerStore = useCodeRunnerStore()
-const markdown = new MarkdownIt()
+import ExerciseData from '@/types/ExerciseData';
+import IExerciseDescriptionI from '@/types/IExerciseDescriptionI';
+
 const props = defineProps({
-  isInEdit: { type: Boolean, required: false }
+  exerciseInfo: { type: Object as ()=> IExerciseDescriptionI, required: true },
 })
 
-const desc = computed(() => codeRunnerStore.exerciseData.desc.replace('\n', '<br>'))
+const codeRunnerStore = useCodeRunnerStore()
+const markdown = new MarkdownIt();
+
+const desc = computed(() => props.exerciseInfo.desc.replace('\n', '<br>'))
 
 const mdSrc = `# tile
         descitpiron of taks, create fibonachi sewaunce`

@@ -1,4 +1,8 @@
 <template>
+  data solutions:{{JSON.stringify( codeRunnerStore.exerciseCreatorController) }}
+  <br>  <br>  
+
+  
   <main class="PlayGroundBase" >
     <TabView >
       <div class="childHeight">
@@ -11,7 +15,16 @@
       </TabPanel>
 
       <TabPanel header="Solution">
-        <CodeRunnerPanel :showLeftPanel="true" :show-creator-panel="true" :connectAtStart="false" />
+        <CodeRunnerPanel 
+        :showLeftPanel="true" 
+        :show-creator-panel="true" 
+        :connectAtStart="false" 
+        :languageChoices="exerciseLnageus"
+        :exerciseInfo="codeRunnerStore.exerciseCreatorController"
+        :codeContianer="codeRunnerStore.exerciseCreatorController.solutions"
+        :starting=" codeRunnerStore.exerciseCreatorController.solutions[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
+        :codeContainerUpdate="codeUpdate"
+        />
       </TabPanel>
   </TabView>
   
@@ -19,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
 import { useToastStore } from '@/stores/ToastStore'
@@ -27,8 +40,24 @@ import { onBeforeRouteUpdate } from 'vue-router'
 import ExerciseSetupPanel from '@/components/ExerciseSetupPanel.vue'
 import ExerciseDescriptionPanel from '@/components/ExerciseDescriptionPanel.vue'
 import ExerciseInfoSetup from '@/components/ExerciseInfoSetup.vue'
-const text = ref('')
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+import { languageChoices } from '@/config/Data'
+import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+import { text } from 'stream/consumers'
 const ToastStore = useToastStore()
+const codeRunnerStore = useCodeRunnerStore()
+const ApiConnectionStore=useApiConnectionStore();
+
+const codeUpdate=(code:string)=>{
+  console.log("codee update: "+ code)
+  // codeRunnerStore.exerciseCreatorController.solutions
+  codeRunnerStore.exerciseCreatorController.solutions[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]=code;
+  console.log("update: "+JSON.stringify(codeRunnerStore.exerciseCreatorController.solutions))  
+}
+
+
+const exerciseLnageus=computed(()=>{
+  return (codeRunnerStore.exerciseCreatorController.languages as any).map((x:any)=> x.value)})
 
 onMounted(() => {
   ToastStore.featureNotImplemented()

@@ -1,8 +1,9 @@
+import IExerciseDescriptionI from "./IExerciseDescriptionI"
 import RangeType from "./RangeType"
 import VarSize from "./VarSize"
 import VarType from "./VarType"
 
-export default interface ExerciseParametersType {
+export default interface ExerciseParametersType extends IExerciseDescriptionI{
     name: string,
     description: string,
     languages: string[]

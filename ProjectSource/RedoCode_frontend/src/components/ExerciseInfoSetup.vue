@@ -2,7 +2,7 @@
 <template>
     <div class="panelsContainer">
         <InputText
-        v-model="codeRunnerStore.exerciseCreatorController.name"
+        v-model="codeRunnerStore.exerciseCreatorController.title"
         placeholder="Exercise name"
         class="titleContainer"
         style="height: 3rem"
@@ -11,7 +11,7 @@
         />
         
 <Textarea 
- v-model="codeRunnerStore.exerciseCreatorController.description"
+ v-model="codeRunnerStore.exerciseCreatorController.desc"
  rows="5"
  cols="30" 
  placeholder="Exercise dexcription"

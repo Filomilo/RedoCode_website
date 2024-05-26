@@ -1,7 +1,7 @@
 import type ExerciseTest from './ExcericseTest'
-export default interface ExerciseData {
+import IExerciseDescriptionI from './IExerciseDescriptionI'
+export default interface ExerciseData extends IExerciseDescriptionI {
   availbleCodeRunners: string[]
-  title: string
   id: number | null
   desc: string
   outputType: string
