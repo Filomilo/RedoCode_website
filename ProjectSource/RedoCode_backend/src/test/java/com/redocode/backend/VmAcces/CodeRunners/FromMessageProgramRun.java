@@ -1,12 +1,9 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
-import com.redocode.backend.Messages.CodeToRunMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunnersController;
-import com.redocode.backend.database.ExerciseRepository;
-import com.redocode.backend.database.ExerciseTests;
 import lombok.extern.java.Log;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -55,13 +52,13 @@ public class FromMessageProgramRun {
             "    std::cout << \"Hello World!\";\n" +
             "    return 0;\n" +
             "}";
-        CodeToRunMessage codeToRunMessage = CodeToRunMessage
+        ExerciseIdToRunMessage exerciseIdToRunMessage = ExerciseIdToRunMessage
                 .builder()
                 .code(helloWorldCode)
                 .build();
 
         List<ProgramResult> resultList= codeRunnersController.
-                runProgramFromMessage(cppCodeRunner,codeToRunMessage);
+                runProgramFromMessage(cppCodeRunner, exerciseIdToRunMessage);
         log.info(" program hello world resutls: "+ Arrays.toString(resultList.toArray()));
         assertEquals("Hello World!",resultList.get(0).getConsoleOutput().getOutput());
     }
@@ -76,14 +73,14 @@ public class FromMessageProgramRun {
                 "    return solution(n - 1) + solution(n - 2);\n" +
                 "}";
 
-        CodeToRunMessage codeToRunMessage = CodeToRunMessage
+        ExerciseIdToRunMessage exerciseIdToRunMessage = ExerciseIdToRunMessage
                 .builder()
                 .code(anwserCode)
                 .exercise_id("1")
                 .build();
 
                 List<ProgramResult> resultList= codeRunnersController.
-                runProgramFromMessage(cppCodeRunner,codeToRunMessage);
+                runProgramFromMessage(cppCodeRunner, exerciseIdToRunMessage);
         log.info(" program fibonachi resutls: "+ Arrays.toString(resultList.toArray()));
 //        assertEquals("Hello World!",resultList.get(0).getConsoleOutput().getOutput());
     }

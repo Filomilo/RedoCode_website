@@ -13,7 +13,6 @@ import ExerciseCreatorController from '@/controllers/ExerciseCreatorControlller'
 import {
   requstDefaultVmMachine,
   subcribeToVmStatus,
-  sendToCompile,
   subscribeToCodeResults
 } from '../config/CodeRunnerConnection'
 import CoderunnerState from '../types/CodeRunnerState'

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Auth.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
-import com.redocode.backend.Messages.CodeToRunMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
 import com.redocode.backend.Messages.CoderunnerStateMessage;
 import com.redocode.backend.VmAcces.CodeRunners.*;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
@@ -194,36 +194,36 @@ public class CodeRunnersController {
         usersCodeRunenrs.clear();
     }
 
-    public List<ProgramResult> runCode(User user, CodeToRunMessage codeToRunMessage) {
+    public List<ProgramResult> runCode(User user, ExerciseIdToRunMessage exerciseIdToRunMessage) {
         CodeRunner codeRunner= this.getUserCodeRunner(user);
         if(codeRunner==null)
             throw  new RuntimeException("user doesnt have code runner");
 
-        log.info("running program form meesage: "+ codeToRunMessage);
-        List<ProgramResult> results=runProgramFromMessage(codeRunner,codeToRunMessage);
+        log.info("running program form meesage: "+ exerciseIdToRunMessage);
+        List<ProgramResult> results=runProgramFromMessage(codeRunner, exerciseIdToRunMessage);
         this.sendResults(user,results);
         return results;
     }
     // running raw program based on message send by user
 
-    public List<ProgramResult> runProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    public List<ProgramResult> runProgramFromMessage(CodeRunner codeRunner, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         List<ProgramResult> results=new ArrayList<>();
-        if(codeToRunMessage.getExercise_id()==null)
+        if(exerciseIdToRunMessage.getExercise_id()==null)
         {
-            results=this.runRawProgramFromMessage(codeRunner,codeToRunMessage);
+            results=this.runRawProgramFromMessage(codeRunner, exerciseIdToRunMessage);
         }
         else {
-            results=this.runExerciseSoultionFromMessage(codeRunner,codeToRunMessage);
+            results=this.runExerciseSoultionFromMessage(codeRunner, exerciseIdToRunMessage);
         }
 
         return results;
     }
 
-    private List<ProgramResult> runRawProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    private List<ProgramResult> runRawProgramFromMessage(CodeRunner codeRunner, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         Program pr;
-        pr=new RawProgram(codeToRunMessage.getCode());
+        pr=new RawProgram(exerciseIdToRunMessage.getCode());
         List<Variable> variablesInput=new ArrayList<>();
         List<ProgramResult> programResults=new ArrayList<>();
         programResults.add(codeRunner.runProgram(pr));
@@ -231,11 +231,11 @@ public class CodeRunnersController {
     }
     // running exercise program based on message send by user
 
-    private List<ProgramResult> runExerciseSoultionFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    private List<ProgramResult> runExerciseSoultionFromMessage(CodeRunner codeRunner, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         List<ProgramResult> results=new ArrayList<>();
-        log.info("Ruunnign code to run on exercise of id: "+codeToRunMessage.getExercise_id() );
-        Excersize exercise= exerciseRepository.findById(Long.parseLong(codeToRunMessage.getExercise_id())).orElse(null);
+        log.info("Ruunnign code to run on exercise of id: "+ exerciseIdToRunMessage.getExercise_id() );
+        Excersize exercise= exerciseRepository.findById(Long.parseLong(exerciseIdToRunMessage.getExercise_id())).orElse(null);
     List<ExerciseTests>     tests=exercise.getExerciseTests();
         log.info("Exercise Tests: "+ Arrays.toString(tests.toArray()));
 
@@ -250,7 +250,7 @@ public class CodeRunnersController {
                     .setSolutionCodeRunner(codeRunner.getType())
                     .setOutputBase(VariablesFactory.getVeraibleFromType(exercise.getOutputType()))
                     .setInputVaraiable(input)
-                    .setSolutionCode(codeToRunMessage.getCode())
+                    .setSolutionCode(exerciseIdToRunMessage.getCode())
                     .build();
             log.info("Ruunign test: "+ program);
             ProgramResult result=codeRunner.runProgram(program);

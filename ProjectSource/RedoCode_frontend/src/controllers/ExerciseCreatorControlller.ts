@@ -1,14 +1,20 @@
+import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage';
 import ExerciseTest from '@/types/ExcericseTest';
 import ExerciseData from '@/types/ExerciseData';
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI';
+import ITestParameters from '@/types/ITestParameters';
 import RangeType from '@/types/RangeType';
 import VarSize from '@/types/VarSize';
 import VarType from '@/types/VarType';
+import { reactive } from 'vue';
 interface StringIndexed {
     [index: string]: string;
   }
-export default class ExerciseCreatorController implements  IExerciseDescriptionI{
+  interface TestsIndexed {
+    [index: string]: ExerciseTest[];
+  }
+export default class ExerciseCreatorController implements  IExerciseDescriptionI,ExercsieCreatorValidationMesage{
     title!: string;
     desc!: string;
     languages!: string[];
@@ -33,7 +39,59 @@ export default class ExerciseCreatorController implements  IExerciseDescriptionI
     breakCharacterInupt!: boolean;
     spaceInupt!: boolean;
     solutions!:StringIndexed;
+    manualTestsSolutions!: TestsIndexed;
+    autoTests!: TestsIndexed;
 
+
+
+    manualTestBuffer:any= reactive([]);
+
+    addblankTest = (
+      inputType: VarType,
+      outputype: VarType,
+      inputSize: VarSize,
+      outputSize: VarSize
+    ) => {
+      const input = this.getVarAcording(inputType, inputSize)
+      const output = this.getVarAcording(outputype, outputSize)
+      console.log('ading ' + inputType + ' _ ' + inputSize + ' :: ' + JSON.stringify(input))
+      this.manualTestBuffer.push({
+        input: input,
+        expectedOutput: output,
+        output: null,
+        errorOutput: '',
+        consoleOutput: '',
+        isSolved: null
+      }
+     )
+     console.log("added: "+this.manualTestBuffer )
+    }
+    clearTests = () => {
+      this.manualTestBuffer = []
+    }
+    getVarAcording: any = (type: VarType, size: VarSize) => {
+      if (type === 'string') {
+        switch (size) {
+          case 'single_value':
+            return ''
+          case 'array':
+            return ['']
+          case '2d_array':
+            return [['']]
+        }
+      } else {
+        switch (size) {
+          case 'single_value':
+            return 0
+          case 'array':
+            return [0]
+          case '2d_array':
+            return [[0]]
+        }
+      }
+      return 0
+    }
+  
 
     resetParams(this: any):void{
         this.ram= 128,
@@ -60,12 +118,12 @@ export default class ExerciseCreatorController implements  IExerciseDescriptionI
         this.lengthRange= { min: 1, max: 10 },
         this.spaceInupt= false
         this.solutions={};
+        this.manualTestsSolutions={}
 }
 
 constructor(){
     this.resetParams();
 }
-
 
 
 }

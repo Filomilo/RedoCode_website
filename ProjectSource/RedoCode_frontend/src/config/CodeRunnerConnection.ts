@@ -6,6 +6,10 @@ import type CoderunnerState from '@/types/CodeRunnerState'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import type CodeRunnerResultsCallBack from '@/types/CodeRunnerResultsCallBack'
 import type ProgramResult from '@/types/ProgramResults'
+import ExerciseIdToRunMessage from '@/types/ApiMesseages/ExerciseIdToRunMessage'
+import RawCodeToRunMessage from '@/types/ApiMesseages/RawCodeToRunMessage'
+import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
+import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
 
 export const requstDefaultVmMachine = (type: string) => {
   const request: CodeRunnerRequestMessage = {
@@ -32,15 +36,52 @@ export const subcribeToVmStatus = (func: CodeRunnerStateCallBack) => {
   })
 }
 
-export const sendToCompile = (code: CodeToRunMessage) => {
-  console.log('codde: ' + code)
+export const sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
+  console.log('sendToExerciseIdRun: ' + content)
   const message: IPublishParams = {
-    destination: '/app/CodeToRun',
-    body: JSON.stringify(code)
+    destination: '/app//CodeRun/ExerciseIdRun',
+    body: JSON.stringify(content)
   }
-  console.log('sending code to run: ' + JSON.stringify(message))
   stompClient.publish(message)
 }
+
+export const sendToRawCodeRun = (content: RawCodeToRunMessage) => {
+  console.log('sendToRawCodeRun: ' + content)
+  const message: IPublishParams = {
+    destination: '/app//CodeRun/RawCodeRun',
+    body: JSON.stringify(content)
+  }
+  stompClient.publish(message)
+}
+
+export const sendToExerciseIdValidation = (content: ExerciseIdToRunMessage) => {
+  console.log('sendToExerciseIdRun: ' + content)
+  const message: IPublishParams = {
+    destination: '/app//CodeRun/ExerciseIdValidation',
+    body: JSON.stringify(content)
+  }
+  stompClient.publish(message)
+}
+
+export const sendToExerciseCreationValidation = (content: ExercsieCreatorValidationMesage) => {
+  console.log('sendToExerciseCodeTests: ' + content)
+  const message: IPublishParams = {
+    destination: '/app//CodeRun/ExerciseCreationValidation',
+    body: JSON.stringify(content)
+  }
+  stompClient.publish(message)
+}
+export const sendToExerciseCodeTests = (content: ExerciseTestToRunMesseage) => {
+  console.log('sendToExerciseExerciseCodeTests: ' + JSON.stringify( content))
+  const message: IPublishParams = {
+    destination: '/app//CodeRun/ExerciseCodeTests',
+    body: JSON.stringify(content)
+  }
+  stompClient.publish(message)
+}
+
+
+
 
 export const subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
   console.log('subscribing tor results')

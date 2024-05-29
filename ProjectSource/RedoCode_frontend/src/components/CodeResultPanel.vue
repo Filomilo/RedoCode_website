@@ -1,4 +1,6 @@
 <template>
+  type:
+  {{ typeof props.AutoTests }}
   <div class="CodeResultContainer">
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
@@ -28,16 +30,24 @@
       ></div>
     </div>
 
-    <DataResultPanel v-if="isDataResult" />
+    <DataResultPanel 
+    v-if="props.ManualTests!==undefined"
+    :ManualTests= "props.ManualTests"
+    :AutoTests= "props.ManualTests"
+    />
 
     <div
       class="ExerciseControlPanle"
-      v-if="isDataResult"
-      :style="codeRunnerStore.areResultCorrect ? '' : 'pointer-events: none'"
+      v-if="props.AutoTests===undefined"
+      :style="true ? '' : 'pointer-events: none'"
     >
-      <router-link to="/Results" class="TopBarItemContainer" id="Result_burron">
-        <Button class="submitButton" :disabled="!codeRunnerStore.areResultCorrect"> Submit </Button>
-      </router-link>
+     
+        <Button 
+        class="submitButton" 
+        :disabled="!codeRunnerStore.areResultCorrect"
+        @click="props.onSubmit"
+        > Submit </Button>
+
     </div>
   </div>
 </template>
@@ -48,10 +58,14 @@ import DataResultPanel from './DataResultPanel.vue'
 import type CodeResultType from '@/types/CodeResultsType'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore';
+import ExerciseTest from '@/types/ExcericseTest';
 const codeRunnerStore = useCodeRunnerStore()
 const ApiConnectionStore= useApiConnectionStore();
 const props = defineProps({
-  isDataResult: { type: Boolean, required: false }
+  isDataResult: { type: Boolean, required: false },
+  onSubmit: {type: Function, required: true},
+  ManualTests: {type: Array as () => ExerciseTest[], required: false},
+  AutoTests: {type: Array as () => ExerciseTest[], required: false}
 })
 
 const formattedConsole = computed<string>(

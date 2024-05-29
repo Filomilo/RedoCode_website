@@ -14,7 +14,7 @@
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
-      <Button @click="onRunCode" v-if="!codeRunnerStore.isAwaitingCompilation">
+      <Button @click="props.onRunCode" v-if="!codeRunnerStore.isAwaitingCompilation">
         <IconPlay style="z-index: 9" />
       </Button>
       <div v-else>
@@ -48,7 +48,8 @@ import { languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 const props = defineProps({
   starting: { type: String, required: true }, 
-  codeUpdateMethod: {type: Function, required: true}
+  codeUpdateMethod: {type: Function, required: true},
+  onRunCode: {type: Function, required: true}
 })
 
 const codeRunnerStore = useCodeRunnerStore();
@@ -139,10 +140,10 @@ watch(
   }
 )
 
-const onRunCode = () => {
-  console.log('running code: \n' + JSON.stringify(codeRef.value))
-  codeRunnerStore.runCode(codeRef.value)
-}
+// const onRunCode = () => {
+//   console.log('running code: \n' + JSON.stringify(codeRef.value))
+//   codeRunnerStore.runCode(codeRef.value)
+// }
 
 onBeforeRouteLeave((to, from) => {
   codeRef.value = ''
@@ -150,6 +151,6 @@ onBeforeRouteLeave((to, from) => {
 
 const onShortCutRun = () => {
   console.log('onShortCutRun')
-  onRunCode()
+  props.onRunCode()
 }
 </script>

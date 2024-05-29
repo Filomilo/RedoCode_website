@@ -16,14 +16,13 @@
 
       <TabPanel header="Solution">
         <CodeRunnerPanel 
-        :showLeftPanel="true" 
-        :show-creator-panel="true" 
-        :connectAtStart="false" 
         :languageChoices="exerciseLnageus"
         :exerciseInfo="codeRunnerStore.exerciseCreatorController"
         :codeContianer="codeRunnerStore.exerciseCreatorController.solutions"
         :starting=" codeRunnerStore.exerciseCreatorController.solutions[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
         :codeContainerUpdate="codeUpdate"
+        :onRunCode="onRunCode"
+        :onSumbit="onSubmit"
         />
       </TabPanel>
   </TabView>
@@ -55,6 +54,15 @@ const codeUpdate=(code:string)=>{
   console.log("update: "+JSON.stringify(codeRunnerStore.exerciseCreatorController.solutions))  
 }
 
+const onRunCode=()=>{
+  console.log("On run code");
+  ApiConnectionStore.codeRunnerConnectionControler.runExercsieTestsCode(codeRunnerStore.exerciseCreatorController)
+}
+
+
+const onSubmit=()=>{
+  console.log("On sumbit");
+}
 
 const exerciseLnageus=computed(()=>{
   return (codeRunnerStore.exerciseCreatorController.languages as any).map((x:any)=> x.value)})

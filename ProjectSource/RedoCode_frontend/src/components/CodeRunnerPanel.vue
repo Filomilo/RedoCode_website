@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/no-mutating-props -->
 
 <template>
+  test:
+  {{JSON.stringify(props.ManualTests)}}
 <Dialog
     :visible="codeRunnerStore.exerciseLoading"
     modal
@@ -37,9 +39,9 @@
     class="heightLimit"
   >
     <Splitter style="height: 100%; width: 100%">
-      <SplitterPanel v-if="showLeftPanel" style="max-width: 100%; width: 100%">
-        <Splitter layout="vertical" style="width: 100%">
-          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
+      <SplitterPanel v-if="props.ManualTests===undefined" style="max-width: 100%; width: 100%" :size="1">
+        <Splitter layout="vertical" style="width: 100%" >
+          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%" :size="1">
             <ExerciseDescriptionPanel 
             :exerciseInfo="props.exerciseInfo"
             />
@@ -48,17 +50,19 @@
         </Splitter>
       </SplitterPanel>
 
-      <SplitterPanel>
+      <SplitterPanel :size="30">
         <CodeEditor 
         class="CodeEditorContainer"
         :starting="props.starting"
         :codeUpdateMethod="props.codeContainerUpdate"
+        :onRunCode="props.onRunCode"
         />
       </SplitterPanel>
-      <SplitterPanel>
-        <CodeResultPanel
-        :isDataResult="showLeftPanel" 
-        
+      <SplitterPanel :size="1">
+        <CodeResultPanel 
+        :onSubmit="props.onSubmit"
+        :ManualTests= "props.ManualTests"
+        :AutoTests= "props.ManualTests"
         />
       </SplitterPanel>
     </Splitter>
@@ -90,7 +94,6 @@ import LanguageDropdown from './LanguageDropdown.vue'
 import {
   requstDefaultVmMachine,
   subcribeToVmStatus,
-  sendToCompile,
   subscribeToCodeResults
 } from '../config/CodeRunnerConnection'
 import type CodeRunnerState from '@/types/CodeRunnerState'
@@ -105,13 +108,16 @@ import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import LoadingIndicator from './LoadingIndicator.vue'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
+import ExerciseTest from '@/types/ExcericseTest'
 const props = defineProps({
-  connectAtStart: { type: Boolean, required: false },
-  showLeftPanel: { type: Boolean, required: false },
-  languageChoices: {type: Array as () => string[], required: true },
   exerciseInfo: { type: Object as ()=> IExerciseDescriptionI, required: true }, 
+  languageChoices: {type: Array as ()=>string[], required: true},
   codeContainerUpdate: { type: Function, required: true }, 
   starting: {type: String, required: true},
+  onRunCode: {type: Function, required: true},
+  onSubmit: {type: Function, required: true},
+  ManualTests: {type: Array as () => ExerciseTest[], required: false},
+  AutoTests: {type: Array as () => ExerciseTest[], required: false},
 })
 
 const codeRunnerStore = useCodeRunnerStore()
@@ -165,14 +171,14 @@ const onSelectLanguage = (lang: string) => {
   if (establishedConnection.value) requstDefaultVmMachine(lang)
 }
 
-const onRunCode = () => {
-  console.log('on run code: ' + code.value)
-  const toCompielMes: CodeToRunMessage = {
-    code: code.value,
-    exercise_id: null
-  }
-  sendToCompile(toCompielMes)
-}
+// const onRunCode = () => {
+//   console.log('on run code: ' + code.value)
+//   const toCompielMes: CodeToRunMessage = {
+//     code: code.value,
+//     exercise_id: null
+//   }
+//   sendToCompile(toCompielMes)
+// }
 
 onBeforeRouteLeave(async (to, from) => {
   // console.log("leave************************************************")

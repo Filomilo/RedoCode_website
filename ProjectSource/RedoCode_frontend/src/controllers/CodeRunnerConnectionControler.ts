@@ -1,4 +1,4 @@
-import { requstDefaultVmMachine, subcribeToVmStatus, subscribeToCodeResults } from '@/config/CodeRunnerConnection';
+import { requstDefaultVmMachine, sendToExerciseCodeTests, sendToExerciseExerciseCodeTests, subcribeToVmStatus, subscribeToCodeResults } from '@/config/CodeRunnerConnection';
 import CoderunnerState from '@/types/CodeRunnerState';
 import CodeRunnerState from '@/types/CodeRunnerState';
 import ExerciseParametersType from '@/types/ExerciseParametersType'
@@ -9,6 +9,8 @@ import { computed, ref, Ref } from 'vue';
 import type ProgramResult from '@/types/ProgramResults'
 import { useActiveUserStore } from '@/stores/ActiveUserStore';
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore';
+import ExerciseCreatorController from './ExerciseCreatorControlller';
+import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage';
 
 export default class CodeRunnerConnectionControler {
   
@@ -56,6 +58,33 @@ export default class CodeRunnerConnectionControler {
     
         // console.log("connecting to vm mahicne state callback");
       
+
+
+        runExercsieTestsCode=(exerciseCreatorController: ExerciseCreatorController)=>{
+          console.log("runExercsieTestsCode: "+ JSON.stringify(exerciseCreatorController) )
+          const message: ExerciseTestToRunMesseage={
+            code: exerciseCreatorController.solutions[this.codeRunnerActive.codeRunnerType],
+            manualTests: exerciseCreatorController.manualTestsSolutions[this.codeRunnerActive.codeRunnerType],
+            inputType: exerciseCreatorController.inputType,
+            inputSize: exerciseCreatorController.inputSize,
+            outputType: exerciseCreatorController.outputType,
+            outputSize: exerciseCreatorController.outputSize,
+            amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
+            autoTestminValue: exerciseCreatorController.autoTestminValue,
+            autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
+            lengthRange: exerciseCreatorController.lengthRange,
+            xArrayRange: exerciseCreatorController.xArrayRange,
+            yArrayRange: exerciseCreatorController.yArrayRange,
+            upperCaseInput: exerciseCreatorController.upperCaseInput,
+            lowerCaseInput: exerciseCreatorController.lowerCaseInput,
+            numberInput: exerciseCreatorController.numberInput,
+            specialCharacterInput: exerciseCreatorController.specialCharacterInput,
+            breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
+            spaceInupt: exerciseCreatorController.spaceInupt
+          }
+          sendToExerciseCodeTests(message)
+        }
+
     
 }
 

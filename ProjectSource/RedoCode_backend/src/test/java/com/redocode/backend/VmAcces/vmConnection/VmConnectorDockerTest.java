@@ -16,7 +16,7 @@ class VmConnectorDockerTest {
     static VmConnector vmConnectorDocker;
 
     static final String testContainer="hello-world";
-    static final String testContainerNeverEnding="nginx:alpine-slim";
+    static final String testContainerNeverEnding="nginx:1.25";
     static final String testProgramInput="filipredocode/redocode:inputoutput";
     @BeforeAll
     static void initializeVmDockerConnector()

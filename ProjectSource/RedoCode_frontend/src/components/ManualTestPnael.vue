@@ -6,7 +6,7 @@
     </div>
     <div>
       <div
-        v-for="(item, index) in codeRunnerStore.exerciseData.tests"
+        v-for="(item, index) in codeRunnerStore.exerciseCreatorController.manualTestBuffer"
         v-bind:key="index"
         class="VerticalLine"
       >
@@ -53,23 +53,24 @@ import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import VarType from '@/types/VarType'
 import VarSize from '@/types/VarSize'
 import { onMounted, PropType } from 'vue'
+import ExerciseTest from '@/types/ExcericseTest'
 const codeRunnerStore = useCodeRunnerStore()
 const props = defineProps({
   inputType: { type: String as PropType<VarType>, required: true, default: 'int' },
   outputype: { type: String as PropType<VarType>, required: true, default: 'int' },
   inputSize: { type: String as PropType<VarSize>, required: true, default: '2d_array' },
-  outputSize: { type: String as PropType<VarSize>, required: true, default: 'single_value' }
-})
-
+  outputSize: { type: String as PropType<VarSize>, required: true, default: 'single_value' },
+  })
+  defineEmits(["update:tests"]);
 const onAddButton = () => {
-  codeRunnerStore.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
+  codeRunnerStore.exerciseCreatorController.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
 }
 const onRemoveButton = (index: number) => {
   codeRunnerStore.removeTest(index)
 }
 onMounted(() => {
-  codeRunnerStore.clearTests()
-  codeRunnerStore.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
+  codeRunnerStore.exerciseCreatorController.clearTests()
+  codeRunnerStore.exerciseCreatorController.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
 })
 </script>
 
