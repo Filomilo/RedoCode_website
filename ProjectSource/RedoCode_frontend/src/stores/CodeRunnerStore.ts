@@ -69,15 +69,7 @@ const apiConnectionStore= useApiConnectionStore();
 
 
  
-  const runCode = async (code: string) => {
-    console.log('sending code to run: ' + code)
-    const message: CodeToRunMessage = {
-      code: code,
-      exercise_id: exerciseData.value.id
-    }
-    sendToCompile(message)
-    isAwaitingCompilation.value = true
-  }
+
 
   const dropDownLangaugeMap: any = {
     CPP_RUNNER: 'cpp',
@@ -106,6 +98,23 @@ const apiConnectionStore= useApiConnectionStore();
   })
   const isAwaitingCompilation: Ref<boolean> = ref(false)
 
+
+
+
+
+
+
+
+  const exerciseCreatorController= reactive(new ExerciseCreatorController());
+  const removeTestFromBuffer = (index: number) => {
+    console.log('remove: test: ' + index)
+    console.log('tests before: ' + JSON.stringify(exerciseData.value.tests))
+    manualTestBuffer.splice(index, 1)
+    console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
+  }
+
+
+
   const getVarAcording: any = (type: VarType, size: VarSize) => {
     if (type === 'string') {
       switch (size) {
@@ -129,7 +138,11 @@ const apiConnectionStore= useApiConnectionStore();
     return 0
   }
 
-  const addblankTest = (
+
+
+ const manualTestBuffer:any= reactive([]);
+
+ const addblankTestToBuffer = (
     inputType: VarType,
     outputype: VarType,
     inputSize: VarSize,
@@ -138,34 +151,29 @@ const apiConnectionStore= useApiConnectionStore();
     const input = getVarAcording(inputType, inputSize)
     const output = getVarAcording(outputype, outputSize)
     console.log('ading ' + inputType + ' _ ' + inputSize + ' :: ' + JSON.stringify(input))
-    exerciseData.value.tests.push({
+    manualTestBuffer.push({
       input: input,
       expectedOutput: output,
       output: null,
       errorOutput: '',
       consoleOutput: '',
       isSolved: null
-    })
+    }
+   )
+   console.log("added: "+manualTestBuffer )
 
-    console.log('excerise tests: ' + JSON.stringify(exerciseData.value.tests))
+  }
+  const clearTestsFromBuffer = () => {
+    manualTestBuffer.value = []
   }
 
-  const removeTest = (index: number) => {
-    console.log('remove: test: ' + index)
-    console.log('tests before: ' + JSON.stringify(exerciseData.value.tests))
-    exerciseData.value.tests.splice(index, 1)
-    console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
+  const transferTestFromBufferTpCreator=()=>{
+    console.log("test transfer2: "+JSON.stringify(manualTestBuffer))
+    exerciseCreatorController.languages.forEach((element) => {
+      exerciseCreatorController.manualTestsSolutions[element.value]=manualTestBuffer;
+    });
+    console.log("tests after: "+ JSON.stringify(exerciseCreatorController.manualTestsSolutions) )
   }
-
-
-  const clearTests = () => {
-    exerciseData.value.tests = []
-  }
-
-
-
-
-  const exerciseCreatorController= reactive(new ExerciseCreatorController());
 
 
   return {
@@ -176,16 +184,18 @@ const apiConnectionStore= useApiConnectionStore();
     exerciseData,
     isAwaitingCompilation,
     setExceriseDataToPlayground,
-    runCode,
     setExerciseData,
     exerciseLoading,
     setExerciseLoading,
     // disconnetWithCodeRunner,
     startingMethod,
-    areResultCorrect,
-    addblankTest,
-    removeTest,
-    clearTests,
-    exerciseCreatorController
+    // areResultCorsrect,
+    // removeTest,
+    exerciseCreatorController,
+    manualTestBuffer,
+    clearTestsFromBuffer,
+    addblankTestToBuffer,
+    removeTestFromBuffer,
+    transferTestFromBufferTpCreator
   }
 })

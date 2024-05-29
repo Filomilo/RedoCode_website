@@ -6,7 +6,7 @@
     </div>
     <div>
       <div
-        v-for="(item, index) in codeRunnerStore.exerciseCreatorController.manualTestBuffer"
+        v-for="(item, index) in codeRunnerStore.manualTestBuffer"
         v-bind:key="index"
         class="VerticalLine"
       >
@@ -61,16 +61,15 @@ const props = defineProps({
   inputSize: { type: String as PropType<VarSize>, required: true, default: '2d_array' },
   outputSize: { type: String as PropType<VarSize>, required: true, default: 'single_value' },
   })
-  defineEmits(["update:tests"]);
 const onAddButton = () => {
-  codeRunnerStore.exerciseCreatorController.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
+  codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype, props.inputSize, props.outputSize)
 }
 const onRemoveButton = (index: number) => {
-  codeRunnerStore.removeTest(index)
+  codeRunnerStore.removeTestFromBuffer(index)
 }
 onMounted(() => {
-  codeRunnerStore.exerciseCreatorController.clearTests()
-  codeRunnerStore.exerciseCreatorController.addblankTest(props.inputType, props.outputype, props.inputSize, props.outputSize)
+  codeRunnerStore.clearTestsFromBuffer()
+  codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype, props.inputSize, props.outputSize)
 })
 </script>
 

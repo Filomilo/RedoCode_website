@@ -44,8 +44,8 @@ const getFormatexample = (size: VarSize) => {
 
 const storedValue = computed(() => {
   return props.isInput
-    ? CodeRunnerStore.exerciseCreatorController.manualTestBuffer[props.manualTestInputIndex].input
-    : CodeRunnerStore.exerciseCreatorController.manualTestBuffer[props.manualTestInputIndex].expectedOutput
+    ? CodeRunnerStore.manualTestBuffer[props.manualTestInputIndex].input
+    : CodeRunnerStore.manualTestBuffer[props.manualTestInputIndex].expectedOutput
 })
 
 const validateType = (variable: any, type: VarType) => {
@@ -124,9 +124,9 @@ watch(value, (newVal, oldVal) => {
   try {
     if (validationofData.value === '') {
       if (props.isInput) {
-        CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input =newVal
+        CodeRunnerStore.manualTestBuffer [props.manualTestInputIndex].input =newVal
       } else {
-        CodeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput = newVal
+        CodeRunnerStore.manualTestBuffer[props.manualTestInputIndex].expectedOutput = newVal
       }
     }
   } catch (error) {

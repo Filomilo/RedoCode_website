@@ -44,53 +44,7 @@ export default class ExerciseCreatorController implements  IExerciseDescriptionI
 
 
 
-    manualTestBuffer:any= reactive([]);
 
-    addblankTest = (
-      inputType: VarType,
-      outputype: VarType,
-      inputSize: VarSize,
-      outputSize: VarSize
-    ) => {
-      const input = this.getVarAcording(inputType, inputSize)
-      const output = this.getVarAcording(outputype, outputSize)
-      console.log('ading ' + inputType + ' _ ' + inputSize + ' :: ' + JSON.stringify(input))
-      this.manualTestBuffer.push({
-        input: input,
-        expectedOutput: output,
-        output: null,
-        errorOutput: '',
-        consoleOutput: '',
-        isSolved: null
-      }
-     )
-     console.log("added: "+this.manualTestBuffer )
-    }
-    clearTests = () => {
-      this.manualTestBuffer = []
-    }
-    getVarAcording: any = (type: VarType, size: VarSize) => {
-      if (type === 'string') {
-        switch (size) {
-          case 'single_value':
-            return ''
-          case 'array':
-            return ['']
-          case '2d_array':
-            return [['']]
-        }
-      } else {
-        switch (size) {
-          case 'single_value':
-            return 0
-          case 'array':
-            return [0]
-          case '2d_array':
-            return [[0]]
-        }
-      }
-      return 0
-    }
   
 
     resetParams(this: any):void{

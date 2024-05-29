@@ -4,7 +4,9 @@
 
   
   <main class="PlayGroundBase" >
-    <TabView >
+    <TabView 
+    @tab-click="ontablClik"
+    >
       <div class="childHeight">
       <TabPanel header="Information" class="childHeight"  >
         <ExerciseInfoSetup class="childHeight" />
@@ -14,7 +16,9 @@
         <ExerciseSetupPanel />
       </TabPanel>
 
-      <TabPanel header="Solution">
+      <TabPanel 
+      header="Solution"
+      >
         <CodeRunnerPanel 
         :languageChoices="exerciseLnageus"
         :exerciseInfo="codeRunnerStore.exerciseCreatorController"
@@ -43,6 +47,7 @@ import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import { languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import { text } from 'stream/consumers'
+import { TabViewClickEvent } from 'primevue/tabview'
 const ToastStore = useToastStore()
 const codeRunnerStore = useCodeRunnerStore()
 const ApiConnectionStore=useApiConnectionStore();
@@ -70,6 +75,17 @@ const exerciseLnageus=computed(()=>{
 onMounted(() => {
   ToastStore.featureNotImplemented()
 })
+
+const ontablClik=(event:TabViewClickEvent)=>{
+console.log("event: "+ JSON.stringify(event))
+if(event.index===2)
+onOpenCodeRunner();
+}
+
+const onOpenCodeRunner=()=>{
+  console.log("coderunner opened")
+  codeRunnerStore.transferTestFromBufferTpCreator();
+}
 </script>
 
 <style>
