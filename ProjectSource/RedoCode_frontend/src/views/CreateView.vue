@@ -2,7 +2,6 @@
   data solutions:{{JSON.stringify( codeRunnerStore.exerciseCreatorController) }}
   <br>  <br>  
 
-  
   <main class="PlayGroundBase" >
     <TabView 
     @tab-click="ontablClik"
@@ -19,6 +18,7 @@
       <TabPanel 
       header="Solution"
       >
+      <!-- <CodeRunnerPanel /> -->
         <CodeRunnerPanel 
         :languageChoices="exerciseLnageus"
         :exerciseInfo="codeRunnerStore.exerciseCreatorController"
@@ -26,7 +26,9 @@
         :starting=" codeRunnerStore.exerciseCreatorController.solutions[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
         :codeContainerUpdate="codeUpdate"
         :onRunCode="onRunCode"
-        :onSumbit="onSubmit"
+        :onSubmit="onSubmit"
+        :ManualTests="codeRunnerStore.exerciseCreatorController.manualTestsSolutions[EditorLanguagesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]]"
+        :AutoTests="[]"
         />
       </TabPanel>
   </TabView>
@@ -44,7 +46,7 @@ import ExerciseSetupPanel from '@/components/ExerciseSetupPanel.vue'
 import ExerciseDescriptionPanel from '@/components/ExerciseDescriptionPanel.vue'
 import ExerciseInfoSetup from '@/components/ExerciseInfoSetup.vue'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-import { languageChoices } from '@/config/Data'
+import { EditorLanguagesMap, languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import { text } from 'stream/consumers'
 import { TabViewClickEvent } from 'primevue/tabview'

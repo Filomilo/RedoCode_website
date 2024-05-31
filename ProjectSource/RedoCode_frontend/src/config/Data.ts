@@ -13,3 +13,9 @@ export const basicResultTemplate: CodeResult[] = [
     error: null
   }
 ]
+
+export const EditorLanguagesMap: any = {
+  CPP_RUNNER: 'cpp',
+  JS_RUNNER: 'javascript',
+  UNIDENTIFIED: ''
+}

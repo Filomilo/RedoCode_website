@@ -2,7 +2,9 @@
 
 <template>
   test:
+  a
   {{JSON.stringify(props.ManualTests)}}
+  {{JSON.stringify(props.AutoTests)}}
 <Dialog
     :visible="codeRunnerStore.exerciseLoading"
     modal
@@ -39,7 +41,7 @@
     class="heightLimit"
   >
     <Splitter style="height: 100%; width: 100%">
-      <SplitterPanel v-if="props.ManualTests===undefined" style="max-width: 100%; width: 100%" :size="1">
+      <SplitterPanel v-if="props.ManualTests!==undefined" style="max-width: 100%; width: 100%" :size="1">
         <Splitter layout="vertical" style="width: 100%" >
           <SplitterPanel style="width: 100%; max-width: 100%; width: 100%" :size="1">
             <ExerciseDescriptionPanel 
@@ -62,7 +64,7 @@
         <CodeResultPanel 
         :onSubmit="props.onSubmit"
         :ManualTests= "props.ManualTests"
-        :AutoTests= "props.ManualTests"
+        :AutoTests= "props.AutoTests"
         />
       </SplitterPanel>
     </Splitter>

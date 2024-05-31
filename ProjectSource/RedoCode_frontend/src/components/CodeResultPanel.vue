@@ -1,6 +1,6 @@
 <template>
   type:
-  {{ typeof props.AutoTests }}
+  {{ JSON.stringify(props.ManualTests?.length)}}
   <div class="CodeResultContainer">
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
@@ -33,12 +33,12 @@
     <DataResultPanel 
     v-if="props.ManualTests!==undefined"
     :ManualTests= "props.ManualTests"
-    :AutoTests= "props.ManualTests"
+    :AutoTests= "props.AutoTests"
     />
 
     <div
       class="ExerciseControlPanle"
-      v-if="props.AutoTests===undefined"
+      v-if="props.ManualTests!==undefined"
       :style="true ? '' : 'pointer-events: none'"
     >
      

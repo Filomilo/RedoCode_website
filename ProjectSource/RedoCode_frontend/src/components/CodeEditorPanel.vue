@@ -30,7 +30,7 @@
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
-      :language="editrLangesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
+      :language="EditorLanguagesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
       @keyup.ctrl.enter.prevent="onShortCutRun"
       :onChange="onCodeChnaage"
     />
@@ -44,7 +44,7 @@ import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
 import { useConfirm } from 'primevue/useconfirm'
 import LoadingIndicator from './LoadingIndicator.vue'
 import { onBeforeRouteLeave } from 'vue-router'
-import { languageChoices } from '@/config/Data'
+import { EditorLanguagesMap, languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 const props = defineProps({
   starting: { type: String, required: true }, 
@@ -76,14 +76,8 @@ const langaugesOptions = computed(() =>
     ? languageChoices
     : codeRunnerStore.exerciseData.availbleCodeRunners
 )
-interface EditorLanguagesMap {
-  [key: string]: string
-}
-const editrLangesMap: EditorLanguagesMap = {
-  CPP_RUNNER: 'cpp',
-  JS_RUNNER: 'javascript',
-  UNIDENTIFIED: ''
-}
+
+
 watch(
   () => props.starting,
   (first,second) => {
@@ -97,7 +91,7 @@ const lnagaugeDropdownVaule = computed(
 )
 
 const editorLang = computed(() => {
-  return editrLangesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
+  return EditorLanguagesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
 })
 
 const editorRef = shallowRef()
