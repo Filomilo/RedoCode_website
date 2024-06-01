@@ -11,11 +11,15 @@ import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import { computed } from 'vue'
 import ExerciseTest from '@/types/ExcericseTest';
 const props = defineProps({
-  ManualTests: {type: Array as () => ExerciseTest[], required: true},
-  AutoTests: {type: Array as () => ExerciseTest[], required: true},
+  ManualTests: {type: Array as () => ExerciseTest[] | undefined, required: true},
+  AutoTests: {type: Array as () => ExerciseTest[]| undefined, required: true},
 })
-const tests = computed(() =>
-props.ManualTests.concat(props.AutoTests)
+const tests = computed(() =>{
+  if(props.ManualTests!==undefined && props.AutoTests!==undefined){
+return props.ManualTests.concat(props.AutoTests)
+  }
+  return []
+}
 
 )
 </script>

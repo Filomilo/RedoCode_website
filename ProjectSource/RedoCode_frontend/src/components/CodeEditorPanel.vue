@@ -55,11 +55,7 @@ const props = defineProps({
 const codeRunnerStore = useCodeRunnerStore();
 const ApiConnectionStore= useApiConnectionStore();
 
-const dropDownLangaugeMap: EditorLanguagesMap = {
-  CPP_RUNNER: 'cpp',
-  JS_RUNNER: 'js',
-  UNIDENTIFIED: ''
-}
+
 const codeRef = ref(props.starting)
 
 const onCodeChnaage=(text:string)=>{
@@ -87,7 +83,7 @@ watch(
 )
 
 const lnagaugeDropdownVaule = computed(
-  () => dropDownLangaugeMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
+  () => EditorLanguagesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
 )
 
 const editorLang = computed(() => {

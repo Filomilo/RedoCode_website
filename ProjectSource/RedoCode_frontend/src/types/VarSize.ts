@@ -1,2 +1,2 @@
-type VarSize = 'single_value' | 'array' | 'double_array'
+type VarSize = 'SINGLE_VALUE' | 'ARRAY' | 'DOUBLE_ARRAY'
 export default VarSize

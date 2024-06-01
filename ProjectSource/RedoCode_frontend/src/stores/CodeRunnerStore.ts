@@ -118,20 +118,20 @@ const apiConnectionStore= useApiConnectionStore();
   const getVarAcording: any = (type: VarType, size: VarSize) => {
     if (type === 'string') {
       switch (size) {
-        case 'single_value':
+        case 'SINGLE_VALUE':
           return ''
-        case 'array':
+        case 'ARRAY':
           return ['']
-        case '2d_array':
+        case 'DOUBLE_ARRAY':
           return [['']]
       }
     } else {
       switch (size) {
-        case 'single_value':
+        case 'SINGLE_VALUE':
           return 0
-        case 'array':
+        case 'ARRAY':
           return [0]
-        case '2d_array':
+        case 'DOUBLE_ARRAY':
           return [[0]]
       }
     }
@@ -169,8 +169,10 @@ const apiConnectionStore= useApiConnectionStore();
 
   const transferTestFromBufferTpCreator=()=>{
     console.log("test transfer2: "+JSON.stringify(manualTestBuffer))
-    exerciseCreatorController.languages.forEach((element) => {
-      exerciseCreatorController.manualTestsSolutions[element.value]=manualTestBuffer;
+  
+    exerciseCreatorController.languages.forEach((element: {label: string, value: string} | string) => {
+      const labelVal: {label: string, value: string}= (element as unknown as {label: string, value: string}); 
+      exerciseCreatorController.manualTestsSolutions[labelVal.value]=manualTestBuffer;
     });
     console.log("tests after: "+ JSON.stringify(exerciseCreatorController.manualTestsSolutions) )
   }

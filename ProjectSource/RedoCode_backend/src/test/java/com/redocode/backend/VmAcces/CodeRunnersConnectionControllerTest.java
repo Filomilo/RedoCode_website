@@ -1,20 +1,16 @@
 package com.redocode.backend.VmAcces;
 
 import com.redocode.backend.Auth.*;
-import com.redocode.backend.RedoCodeBackendApplication;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
+import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -117,7 +113,7 @@ class CodeRunnersConnectionControllerTest {
             log.info("creating vm fo single rnadom ser");
             CodeRunnerRequest codeRunnerRequest = CodeRunnerRequest.builder()
                     .codeRunnerType(getRandomCodeRunnerType())
-                    .userRequesting(user)
+                    .user(user)
                     .build();
 
 
@@ -184,9 +180,8 @@ class CodeRunnersConnectionControllerTest {
                 bufferFillUser.add(user);
                 redoCodeController.addConnectedUser(user);
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
-                        .userRequesting(user)
+                        .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
 
@@ -197,9 +192,8 @@ class CodeRunnersConnectionControllerTest {
             ) {
                 redoCodeController.addConnectedUser(user);
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
-                        .userRequesting(user)
+                        .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -209,9 +203,8 @@ class CodeRunnersConnectionControllerTest {
             ) {
                 redoCodeController.addConnectedUser(user);
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
-                        .userRequesting(user)
+                        .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -221,9 +214,8 @@ class CodeRunnersConnectionControllerTest {
             ) {
                 redoCodeController.addConnectedUser(user);
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
-                        .userRequesting(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
+
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -232,9 +224,8 @@ class CodeRunnersConnectionControllerTest {
             ) {
                 redoCodeController.addConnectedUser(user);
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
-                        .userRequesting(user)
+                        .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -264,7 +255,7 @@ class CodeRunnersConnectionControllerTest {
 
             for (User user: adminsUsers
             ) {
-                User retrivedUser=queue.poll().getUserRequesting();
+                User retrivedUser=queue.poll().getUser();
                 assertEquals(user,retrivedUser,"expected first added admin");
             }
 
@@ -272,18 +263,18 @@ class CodeRunnersConnectionControllerTest {
             ) {
                 CodeRunnerRequest rq=queue.poll();
                 assert rq != null;
-                User retrivedUser=rq.getUserRequesting();
+                User retrivedUser=rq.getUser();
                 assertEquals(user,retrivedUser,"expected first added premium: ");
             }
 
             for (User user: athenicatedUsers
             ) {
-                User retrivedUser=queue.poll().getUserRequesting();
+                User retrivedUser=queue.poll().getUser();
                 assertEquals(user,retrivedUser,"expected first added authenticated user");
             }
             for (User user: unathenicatedUsers
             ) {
-                User retrivedUser=queue.poll().getUserRequesting();
+                User retrivedUser=queue.poll().getUser();
                 assertEquals(user,retrivedUser,"expected first added una unauthenticated user");
             }
 
@@ -310,7 +301,7 @@ class CodeRunnersConnectionControllerTest {
             bufferFillUser.add(user);
             redoCodeController.addConnectedUser(user);
             CodeRunnerRequest req=   CodeRunnerRequest.builder()
-                    .userRequesting(user)
+                    .user(user)
                     .codeRunnerType(getRandomCodeRunnerType())
                     .build();
             codeRunnersController.requestVm(req);
@@ -326,8 +317,7 @@ class CodeRunnersConnectionControllerTest {
 
         CodeRunnerRequest req1= CodeRunnerRequest.builder()
                 .codeRunnerType(getRandomCodeRunnerType())
-                .requestTime(new Date())
-                .userRequesting(user1)
+                .user(user1)
                 .build();
 
         try {
@@ -337,8 +327,7 @@ class CodeRunnersConnectionControllerTest {
         }
         CodeRunnerRequest req2= CodeRunnerRequest.builder()
                 .codeRunnerType(getRandomCodeRunnerType())
-                .requestTime(new Date())
-                .userRequesting(user2)
+                .user(user2)
                 .build();
 
 

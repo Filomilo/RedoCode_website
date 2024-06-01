@@ -3,12 +3,14 @@ package com.redocode.backend.Auth;
 import javassist.CannotCompileException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
 @Slf4j
 @Getter
+@ToString
 public abstract class User implements Comparable {
     public enum USER_TYPE {
         UNAUTHENTICATED,

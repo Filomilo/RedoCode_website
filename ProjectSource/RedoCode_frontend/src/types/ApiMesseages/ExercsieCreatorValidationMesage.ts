@@ -2,6 +2,8 @@ import ExerciseTest from "../ExcericseTest";
 import RangeType from "../RangeType";
 import VarSize from "../VarSize";
 import VarType from "../VarType";
+import ITestParameters from '@/types/ITestParameters';
+
 interface StringIndexed {
     [index: string]: string;
 }
@@ -9,10 +11,10 @@ interface testsIndexed {
     [index: string]: ExerciseTest[];
 }
 
-export default interface ExercsieCreatorValidationMesage implements ITestParameters {
+export default interface ExercsieCreatorValidationMesage extends ITestParameters {
     title: string
     desc: string
-    languages: string[]
+    languages: string[] | {label: string, value: string}[]
     ram: number;
     executionTimeMs: number;
     inputType: VarType;

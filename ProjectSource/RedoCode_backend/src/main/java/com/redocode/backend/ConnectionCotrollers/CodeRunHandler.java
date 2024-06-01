@@ -10,7 +10,7 @@ import java.security.Principal;
 @Controller
 @Slf4j
 public class CodeRunHandler {
-    @MessageMapping("/CodeRun/ExerciseIdRun") //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
+    @MessageMapping({ConnectionTargets.INrunExerciseById}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseIdCode(Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         String userId=principal.getName();
@@ -20,26 +20,26 @@ public class CodeRunHandler {
 //                exerciseIdToRunMessage
 //        );
     }
-    @MessageMapping("/CodeRun/RawCodeRun") //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
+    @MessageMapping({ConnectionTargets.INrunRawCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage)
     {
         String userId=principal.getName();
         log.info("user: "+ userId +" runs rawCodeToRunMessage: "+ rawCodeToRunMessage);
     }
-    @MessageMapping("/CodeRun/ExerciseIdValidation") //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
+    @MessageMapping({ConnectionTargets.INrunExercsieIdValidationCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExercsieIdValidationCode(Principal principal, ExerciseIdToRunMessage exerciseIdValidationMessage)
     {
         String userId=principal.getName();
         log.info("user: "+ userId +" runs runExercsieIdValidationCode: "+ exerciseIdValidationMessage);
     }
-    @MessageMapping("/CodeRun/ExerciseCodeTests") //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
+    @MessageMapping({ConnectionTargets.INrunExercsieTestsCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExercsieTestsCode(Principal principal, ExerciseTestToRunMesseage exerciseTestToRunMesseage)
     {
         String userId=principal.getName();
         log.info("user: "+ userId +" runs runExercsieIdValidationCode: "+ exerciseTestToRunMesseage);
     }
 
-    @MessageMapping("/CodeRun/ExerciseCreationValidation") //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
+    @MessageMapping({ConnectionTargets.INrunExerciseCreatorValidationCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseCreatorValidationCode(Principal principal, ExerciseCreatorValidationMessage exerciseCreatorValidationMessage)
     {
         String userId=principal.getName();

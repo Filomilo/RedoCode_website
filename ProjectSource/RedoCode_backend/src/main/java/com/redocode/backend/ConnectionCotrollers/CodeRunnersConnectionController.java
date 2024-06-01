@@ -1,9 +1,8 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
-import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
 import com.redocode.backend.RedoCodeController;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunnerRequest;
+import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ public class CodeRunnersConnectionController {
     @Autowired
     private RedoCodeController redoCodeController;
 
-    @Autowired
-    CodeRunnerSender codeRunnerSender;
     @Autowired
     CodeRunnersConnectionController(SimpMessagingTemplate template){
         this.template = template;

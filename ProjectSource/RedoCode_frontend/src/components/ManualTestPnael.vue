@@ -58,8 +58,8 @@ const codeRunnerStore = useCodeRunnerStore()
 const props = defineProps({
   inputType: { type: String as PropType<VarType>, required: true, default: 'int' },
   outputype: { type: String as PropType<VarType>, required: true, default: 'int' },
-  inputSize: { type: String as PropType<VarSize>, required: true, default: '2d_array' },
-  outputSize: { type: String as PropType<VarSize>, required: true, default: 'single_value' },
+  inputSize: { type: String as PropType<VarSize>, required: true, default: 'DOUBLE_ARRAY' },
+  outputSize: { type: String as PropType<VarSize>, required: true, default: 'SINGLE_VALUE' },
   })
 const onAddButton = () => {
   codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype, props.inputSize, props.outputSize)

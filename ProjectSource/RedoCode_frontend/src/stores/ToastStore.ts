@@ -17,11 +17,11 @@ export const useToastStore = defineStore('toastStore', () => {
     toast.add({ severity: 'success', summary: 'signed in', detail: 'signed in', life: 2000 })
   }
 
-  const featureNotImplemented = () => {
+  const featureNotImplemented = (deatil: string="") => {
     toast.add({
       severity: 'warn',
       summary: 'unsuported',
-      detail: 'feature not implemented',
+      detail: 'feature not implemented: '+deatil,
       life: 7000
     })
   }

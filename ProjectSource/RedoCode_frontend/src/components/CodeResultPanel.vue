@@ -44,7 +44,7 @@
      
         <Button 
         class="submitButton" 
-        :disabled="!codeRunnerStore.areResultCorrect"
+        :disabled="isCorrect" 
         @click="props.onSubmit"
         > Submit </Button>
 
@@ -77,6 +77,8 @@ const formattedEror = computed<string>(() =>
 const isCorrect = computed<boolean>(() => {
   return false
 })
+
+
 </script>
 
 <style>

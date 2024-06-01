@@ -21,7 +21,7 @@
 
 // const props = defineProps({
 //   type: { type: String as PropType<VarType>, required: true, default: 'int' },
-//   size: { type: String as PropType<VarSize>, required: true, default: 'single_value' },
+//   size: { type: String as PropType<VarSize>, required: true, default: 'SINGLE_VALUE' },
 //   manualTestInputIndex: { type: Number, required: true },
 //   xIndex: { type: Number, required: true },
 //   yIndex: { type: Number, required: true },
@@ -38,11 +38,11 @@
 //   if (test === undefined) return 0
 //   console.log('values at ' + props.manualTestInputIndex + ' ::' + JSON.stringify(test))
 //   switch (props.size) {
-//     case 'single_value':
+//     case 'SINGLE_VALUE':
 //       return values
 //     case 'array':
 //       return values[xIndex]
-//     case '2d_array':
+//     case 'DOUBLE_ARRAY':
 //       return values[xIndex][yIndex]
 //   }
 //   return 0
@@ -54,25 +54,25 @@
 //   )
 //   if (props.isInput) {
 //     switch (props.size) {
-//       case 'single_value':
+//       case 'SINGLE_VALUE':
 //         codeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input = val
 //         break
 //       case 'array':
 //         codeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input[xIndex] = val
 //         break
-//       case '2d_array':
+//       case 'DOUBLE_ARRAY':
 //         codeRunnerStore.exerciseData.tests[props.manualTestInputIndex].input[xIndex][yIndex] = val
 //         break
 //     }
 //   } else {
 //     switch (props.size) {
-//       case 'single_value':
+//       case 'SINGLE_VALUE':
 //         codeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput = val
 //         break
 //       case 'array':
 //         codeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput[xIndex] = val
 //         break
-//       case '2d_array':
+//       case 'DOUBLE_ARRAY':
 //         codeRunnerStore.exerciseData.tests[props.manualTestInputIndex].expectedOutput[xIndex][
 //           yIndex
 //         ] = val

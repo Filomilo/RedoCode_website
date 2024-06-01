@@ -100,8 +100,8 @@
               <RadioButton
               v-model="codeRunnerStore.exerciseCreatorController.inputSize"
                 inputId="inputSize1"
-                name="single_value"
-                value="single_value"
+                name="SINGLE_VALUE"
+                value="SINGLE_VALUE"
               />
               <label>single value</label>
             </div>
@@ -109,8 +109,8 @@
               <RadioButton 
               v-model="codeRunnerStore.exerciseCreatorController.inputSize" 
               inputId="inputSize2" 
-              name="array" 
-              value="array" 
+              name="ARRAY" 
+              value="ARRAY" 
               />
               <label>array</label>
             </div>
@@ -118,8 +118,8 @@
               <RadioButton
                 v-model="codeRunnerStore.exerciseCreatorController.inputSize"
                 inputId="inputSize3"
-                name="2d_array"
-                value="2d_array"
+                name="DOUBLE_ARRAY"
+                value="DOUBLE_ARRAY"
               />
               <label>2d array</label>
             </div>
@@ -161,8 +161,8 @@
               <RadioButton
                 v-model="codeRunnerStore.exerciseCreatorController.outputSize"
                 inputId="outputSize1"
-                name="single_value"
-                value="single_value"
+                name="SINGLE_VALUE"
+                value="SINGLE_VALUE"
               />
               <label>single value</label>
             </div>
@@ -170,8 +170,8 @@
               <RadioButton 
               v-model="codeRunnerStore.exerciseCreatorController.outputSize" 
               inputId="outputSize2" 
-              name="array" 
-              value="array" 
+              name="ARRAY" 
+              value="ARRAY" 
               />
               <label>array</label>
             </div>
@@ -179,8 +179,8 @@
               <RadioButton
                 v-model="codeRunnerStore.exerciseCreatorController.outputSize"
                 inputId="outputSize3"
-                name="2d_array"
-                value="2d_array"
+                name="DOUBLE_ARRAY"
+                value="DOUBLE_ARRAY"
               />
               <label>2d array</label>
             </div>
@@ -219,7 +219,7 @@
           <div
             class="horizontalSection"
             style="flex-direction: column"
-            v-if="codeRunnerStore.exerciseCreatorController.inputSize === ('2d_array' as VarSize) || codeRunnerStore.exerciseCreatorController.inputSize === ('array' as VarSize)"
+            v-if="codeRunnerStore.exerciseCreatorController.inputSize === ('DOUBLE_ARRAY' as VarSize) || codeRunnerStore.exerciseCreatorController.inputSize === ('array' as VarSize)"
           >
             <h5>Array x length range</h5>
             <div>
@@ -250,7 +250,7 @@
           <div
             class="horizontalSection"
             style="flex-direction: column"
-            v-if="codeRunnerStore.exerciseCreatorController.inputSize === ('2d_array' as VarSize)"
+            v-if="codeRunnerStore.exerciseCreatorController.inputSize === ('DOUBLE_ARRAY' as VarSize)"
           >
             <h5>Array y length range</h5>
             <div>

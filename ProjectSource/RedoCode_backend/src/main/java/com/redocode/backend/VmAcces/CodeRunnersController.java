@@ -2,10 +2,11 @@ package com.redocode.backend.VmAcces;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Auth.User;
-import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
+import com.redocode.backend.ConnectionCotrollers.MessageSender;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
 import com.redocode.backend.Messages.CoderunnerStateMessage;
+import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.CodeRunners.*;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
@@ -21,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
 
 @Slf4j
-@Component
+@Service
 @Scope("singleton")
 public class CodeRunnersController {
 
@@ -35,10 +36,10 @@ public class CodeRunnersController {
     CodeRunnersController() {
     }
     @Autowired
-    private CodeRunnerSender codeRunnerSender;
+    private MessageSender messeageSender;
     @Autowired
     ExerciseRepository exerciseRepository;
-    static final int maxAmountOfVm=5;
+    static final int maxAmountOfVm=5; //todo move to global config
 
     private Map<User, CodeRunner> usersCodeRunenrs=new Hashtable<>(maxAmountOfVm);
     private Set<CodeRunnerRequest> requestMessageSet=new HashSet<>();
@@ -94,7 +95,7 @@ public class CodeRunnersController {
 
         Optional<CodeRunnerRequest> requestMessage=requestMessageSet
                 .stream()
-                .filter((req)-> req.getUserRequesting().equals(user))
+                .filter((req)-> req.getUser().equals(user))
 
                 .findFirst();
 
@@ -113,7 +114,7 @@ public class CodeRunnersController {
         requestMessageSet.add(codeRunnerRequest);
         requestQueue.add(codeRunnerRequest);
         log.info("added to queue: "+ codeRunnerRequest);
-        updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
+        updateCodeRunnerState(codeRunnerRequest.getUser());
     }
 
 
@@ -122,18 +123,18 @@ public class CodeRunnersController {
     {
         log.info("creating new vm per request: "+ codeRunnerRequest);
        CodeRunner codeRunner= CodeRunnerBuilder.build(codeRunnerRequest);
-       this.usersCodeRunenrs.put(codeRunnerRequest.getUserRequesting(),codeRunner);
+       this.usersCodeRunenrs.put(codeRunnerRequest.getUser(),codeRunner);
        codeRunner.start();
         log.info("created new vm per request: "+ codeRunnerRequest);
-       updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
+       updateCodeRunnerState(codeRunnerRequest.getUser());
     }
 
 
     public void requestVm(CodeRunnerRequest codeRunnerRequest)
     {
-        if(usersCodeRunenrs.containsKey(codeRunnerRequest.getUserRequesting()))
+        if(usersCodeRunenrs.containsKey(codeRunnerRequest.getUser()))
         {
-            deregisterUser(codeRunnerRequest.getUserRequesting());
+            deregisterUser(codeRunnerRequest.getUser());
         }
 
         if(usersCodeRunenrs.size()<maxAmountOfVm)
@@ -144,7 +145,7 @@ public class CodeRunnersController {
         {
             addToQueue(codeRunnerRequest);
         }
-        updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
+        updateCodeRunnerState(codeRunnerRequest.getUser());
 
     }
 
@@ -162,7 +163,7 @@ public class CodeRunnersController {
     public void updateCodeRunnerState(User user)
     {
     VmStatus status=this.getUserVmStatus(user);
-    if(codeRunnerSender!=null)
+    if(messeageSender!=null)
     {
         CodeRunner userCodeRunner=getUserCodeRunner(user);
         CodeRunnerState state;
@@ -179,7 +180,7 @@ public class CodeRunnersController {
                 .codeRunnerType(userCodeRunner==null?CODE_RUNNER_TYPE.UNIDENTIFIED :userCodeRunner.getType())
                 .build();
         log.info("user: "+ user+" requested status: "+ coderunnerStateMessage);
-        codeRunnerSender.sendToUser(user.getId(),  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);
+        messeageSender.sendMessage(user,  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);
     }
     }
 
@@ -275,7 +276,7 @@ public class CodeRunnersController {
     public void sendResults(User user, List<ProgramResult> results)
     {
         log.info("sending resutls: "+ Arrays.toString(results.toArray())+" to user "+ user);
-        this.codeRunnerSender.sendMessageToUser(CodeRunnersConnectionController.codeRunnerResultEndPoint,results,user);
+        this.messeageSender.sendMessage(user,CodeRunnersConnectionController.codeRunnerResultEndPoint,results);
     }
 
     // TODO: 14/02/2024 Wokr on proper synchornizaion aroudn collenction 

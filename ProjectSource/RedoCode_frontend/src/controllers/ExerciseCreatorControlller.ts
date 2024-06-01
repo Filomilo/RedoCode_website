@@ -17,7 +17,7 @@ interface StringIndexed {
 export default class ExerciseCreatorController implements  IExerciseDescriptionI,ExercsieCreatorValidationMesage{
     title!: string;
     desc!: string;
-    languages!: string[];
+    languages!: string[] | {label: string, value: string}[];
     ram!: number;
     timeForTaskM!: number;
     timeForTaskH!: number;
@@ -43,8 +43,6 @@ export default class ExerciseCreatorController implements  IExerciseDescriptionI
     autoTests!: TestsIndexed;
 
 
-
-
   
 
     resetParams(this: any):void{
@@ -53,9 +51,9 @@ export default class ExerciseCreatorController implements  IExerciseDescriptionI
         this.timeForTaskH= 0,
         this.executionTimeMs= 100,
         this.inputType= ('int' as VarType),
-        this.inputSize= ('single_value' as VarSize),
+        this.inputSize= ('SINGLE_VALUE' as VarSize),
         this.outputType= ('int' as VarType),
-        this.outputSize= ('single_value' as VarSize),
+        this.outputSize= ('SINGLE_VALUE' as VarSize),
         this.amountOfAutoTests= 1,
         this.autoTestminValue= -1,
         this.autoTestMaxValue= 1,
@@ -78,6 +76,9 @@ export default class ExerciseCreatorController implements  IExerciseDescriptionI
 constructor(){
     this.resetParams();
 }
+  manualTests!: ExerciseTest[]; //compatiblity reasons do not use
+
+
 
 
 }
