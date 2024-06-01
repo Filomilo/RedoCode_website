@@ -12,12 +12,12 @@ class UserTest {
         User authUser= new AuthenticatedUser("2");
         User premiumUser= new PremiumUser("333");
 
-        assertTrue(unauthUser.compareTo(authUser)<0);
-        assertTrue(unauthUser.compareTo(premiumUser)<0);
-        assertTrue(authUser.compareTo(unauthUser)>0);
-        assertTrue(authUser.compareTo(premiumUser)<0);
-        assertTrue(premiumUser.compareTo(unauthUser)>0);
-        assertTrue(premiumUser.compareTo(authUser)>0);
+        assertTrue(unauthUser.compareTo(authUser)>0);
+        assertTrue(unauthUser.compareTo(premiumUser)>0);
+        assertTrue(authUser.compareTo(unauthUser)<0);
+        assertTrue(authUser.compareTo(premiumUser)>0);
+        assertTrue(premiumUser.compareTo(unauthUser)<0);
+        assertTrue(premiumUser.compareTo(authUser)<0);
     }
 
 
