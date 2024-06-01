@@ -53,7 +53,7 @@ public class CodeRunnersController {
         {
             return codeRunner.getStatus();
         }
-        if(requestMessageSet.contains(new CodeRunnerRequest(user, CODE_RUNNER_TYPE.JS_RUNNER)))
+        if(requestMessageSet.contains(new CodeRunnerRequest(user,new Date(), CODE_RUNNER_TYPE.JS_RUNNER)))
             return  VmStatus.AWAITING_ACCES;
        return VmStatus.NOT_REQUESTED;
     }

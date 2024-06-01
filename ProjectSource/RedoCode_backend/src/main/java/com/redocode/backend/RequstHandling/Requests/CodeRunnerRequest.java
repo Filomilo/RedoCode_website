@@ -14,20 +14,26 @@ import java.util.Objects;
 @Getter
 @Setter
 @SuperBuilder
-@ToString
+@ToString(callSuper=true)
 public class CodeRunnerRequest extends RequestBase implements Comparable {
 
     protected CODE_RUNNER_TYPE codeRunnerType;
 
 
-    public CodeRunnerRequest(User user, CODE_RUNNER_TYPE codeRunnerType) {
-        super(user);
+
+    public CodeRunnerRequest(User user,Date requestTIme, CODE_RUNNER_TYPE codeRunnerType) {
+        super(user,requestTIme);
+
+
         this.codeRunnerType = codeRunnerType;
+
     }
 
 
-    public CodeRunnerRequest(User user, CodeRunnerRequestMessage requestMessageSource) {
-        super(user);
+
+    public CodeRunnerRequest(User user,Date requestTImr, CodeRunnerRequestMessage requestMessageSource) {
+
+        super(user,requestTImr);
         log.info("handling code runner request: "+ requestMessageSource );
        switch (requestMessageSource.getCodeRunnerType())
        {
@@ -46,7 +52,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CodeRunnerRequest that = (CodeRunnerRequest) o;
-        return Objects.equals(user, that.user);
+        return Objects.equals(user, that.user) ;
     }
 
     @Override
@@ -57,13 +63,16 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
     @Override
     public int compareTo( Object o) {
         CodeRunnerRequest crm=(CodeRunnerRequest)o;
+        log.info("Comparing: "+ this+" to "+ crm);
         if(this.user.getUserType()==crm.getUser().getUserType() && this.requestTime!=null && crm.requestTime!=null) {
-//            log.info("Comapring "+this.requestTime.getTime()+" with "+ crm.getRequestTime()+": "+ this.requestTime.compareTo(crm.getRequestTime()));
+            log.info("Comapring "+this.requestTime.getTime()+" with "+ crm.getRequestTime()+": "+ this.requestTime.compareTo(crm.getRequestTime()));
             if( this.requestTime.compareTo(crm.getRequestTime())==0)
                 return (int) (this.requestTime.getTime()-crm.getRequestTime().getTime());
+            log.info("user time comparison result: "+ this.requestTime.compareTo(crm.getRequestTime()));
             return this.requestTime.compareTo(crm.getRequestTime());
         }
-        return -1*this.user.compareTo(crm.getUser());
+        log.info("user type comparison result: "+ (this.user.compareTo(crm.getUser() )));
+        return this.user.compareTo(crm.getUser());
     }
 
 

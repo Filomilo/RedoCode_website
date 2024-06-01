@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -15,8 +16,8 @@ public class RawCodeRunRequest extends CodeRunnerRequest {
     String Code;
 
 
-    public RawCodeRunRequest(User user, CODE_RUNNER_TYPE codeRunnerType, String code) {
-        super(user,codeRunnerType);
+    public RawCodeRunRequest(User user, Date requesttime, CODE_RUNNER_TYPE codeRunnerType, String code) {
+        super(user,requesttime,codeRunnerType);
         Code = code;
     }
 }

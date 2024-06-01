@@ -10,13 +10,18 @@ import java.util.Objects;
 
 @Slf4j
 @Getter
-@ToString
 public abstract class User implements Comparable {
     public enum USER_TYPE {
-        UNAUTHENTICATED,
-        AUTHENTICATED,
-        PREMIUM,
-        ADMIN,
+        ADMIN(0),
+        PREMIUM (1),
+        AUTHENTICATED(2),
+        UNAUTHENTICATED(3),
+        ;
+
+        USER_TYPE(int i) {
+        }
+
+
     }
 
 
@@ -27,6 +32,14 @@ public abstract class User implements Comparable {
     }
 
     public abstract USER_TYPE getUserType();
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                "type = "+ getUserType()+
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -51,6 +64,7 @@ public abstract class User implements Comparable {
             throw  new ClassCastException("This class can only be compared with other classes derived from User class, not with "+ o.getClass());
         }
         User user= (User) o;
-        return this.getUserType().compareTo(user.getUserType());
+        int res=this.getUserType().compareTo(user.getUserType());
+        return res;
     }
 }

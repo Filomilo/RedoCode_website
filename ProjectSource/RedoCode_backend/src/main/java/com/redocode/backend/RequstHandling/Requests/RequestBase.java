@@ -1,22 +1,24 @@
 package com.redocode.backend.RequstHandling.Requests;
 
 import com.redocode.backend.Auth.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
-@Data
-@AllArgsConstructor
+
+@Slf4j
+@Getter
 @SuperBuilder
+@ToString
 public class RequestBase {
-   protected User user;
+   protected User user ;
     protected Date requestTime;
 
-    public RequestBase(User user ) {
+
+    public RequestBase(User user, Date requestTime) {
         this.user = user;
-        requestTime=new Date();;
+        this.requestTime = requestTime;
     }
 }
