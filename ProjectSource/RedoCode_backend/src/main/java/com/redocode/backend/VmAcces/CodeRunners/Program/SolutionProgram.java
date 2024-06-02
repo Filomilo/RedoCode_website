@@ -23,7 +23,7 @@ public abstract class SolutionProgram  extends Program{
     private final String outputFileName= "outputResult_"+UUID.randomUUID().toString().replace("-","");
 
     private Variables input;
-    private Variables output;
+    private Variables.VARIABLES_TYPES outputType;
     private String SolutionCode;
     private List<String> imports=new ArrayList<>();
 
@@ -55,6 +55,6 @@ public abstract class SolutionProgram  extends Program{
 
     @Override
     public Variables.VARIABLES_TYPES getOutuputType() {
-        return output.getType();
+        return outputType;
     }
 }

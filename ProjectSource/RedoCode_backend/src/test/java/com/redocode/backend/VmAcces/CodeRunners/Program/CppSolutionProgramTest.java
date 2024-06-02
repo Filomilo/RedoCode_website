@@ -37,7 +37,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
-                .setOutputBase(new SingleInteger())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("int solution(int val){" +
                         "return val;" +
                         "}")
@@ -62,7 +62,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
-                .setOutputBase(new SingleFloat())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
                 .setSolutionCode("float solution(float val){" +
                         "return val;" +
                         "}")
@@ -83,7 +83,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleString(val))
-                .setOutputBase(new SingleString())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .setSolutionCode("#include <string>\n" +
                         "std::string solution(std::string val){" +
                         "return val;" +
@@ -107,7 +107,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .setSolutionCode("#include <string>\n" +
                                 "#include <vector>\n"+
                         "std::vector<std::string> solution(std::vector<std::string> val){" +
@@ -133,7 +133,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<int> solution(std::vector<int> val){" +
                                 "return val;" +
@@ -157,7 +157,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "#include <vector>\n std::vector<float> solution(std::vector<float> val){" +
                                 "return val;" +
@@ -184,7 +184,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
                 .setSolutionCode("#include <string>\n" +
                         "#include <vector>\n"+
                         "std::vector<std::vector<std::string>> solution(std::vector<std::vector<std::string>> val){" +
@@ -215,7 +215,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<int>> solution(std::vector<std::vector<int>> val){" +
                                 "return val;" +
@@ -248,7 +248,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<float>> solution(std::vector<std::vector<float>> val){" +
                                 "return val;" +

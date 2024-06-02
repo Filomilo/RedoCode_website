@@ -16,6 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class RequestBase {
    protected User user ;
-    protected Date requestTime;
+    protected  final Date requestTime=new Date();
 
 }

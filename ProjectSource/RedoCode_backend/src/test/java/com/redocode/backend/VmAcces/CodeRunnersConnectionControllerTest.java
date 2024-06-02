@@ -187,7 +187,7 @@ class CodeRunnersConnectionControllerTest {
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
+//                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -200,7 +200,7 @@ class CodeRunnersConnectionControllerTest {
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
+//                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -212,7 +212,7 @@ class CodeRunnersConnectionControllerTest {
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
+//                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -224,7 +224,7 @@ class CodeRunnersConnectionControllerTest {
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .codeRunnerType(getRandomCodeRunnerType())
                         .user(user)
-                        .requestTime(new Date())
+//                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);
@@ -235,7 +235,7 @@ class CodeRunnersConnectionControllerTest {
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
                         .user(user)
                         .codeRunnerType(getRandomCodeRunnerType())
-                        .requestTime(new Date())
+//                        .requestTime(new Date())
                         .build();
                 codeRunnersController.requestVm(req);
                 Thread.sleep(100);

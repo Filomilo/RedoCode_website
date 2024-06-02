@@ -17,9 +17,9 @@ public class RunnerSpecificSolutionFactory {
     }
 
 
-    public RunnerSpecificSolutionFactory setOutputBase(Variables var)
+    public RunnerSpecificSolutionFactory setOutputBase(Variables.VARIABLES_TYPES varType)
     {
-        solutionProgram.setOutput(var);
+        solutionProgram.setOutputType(varType);
         return this;
     }
 

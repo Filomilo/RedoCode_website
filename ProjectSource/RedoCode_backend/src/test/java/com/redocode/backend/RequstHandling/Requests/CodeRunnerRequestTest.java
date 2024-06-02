@@ -23,14 +23,14 @@ class CodeRunnerRequestTest {
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new UnauthenticatedUser("2"))
-                .requestTime(new Date())
+//                .requestTime(new Date())
                 .build();
         Thread.sleep(100);
         CodeRunnerRequest secondInOrder=CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new AuthenticatedUser("2"))
-                .requestTime(new Date())
+                //.requestTime(new Date())
                 .build();
 
             Thread.sleep(100);
@@ -39,7 +39,7 @@ class CodeRunnerRequestTest {
                 .builder()
                         .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                                 .user(new PremiumUser("2"))
-                .requestTime(new Date())
+                //.requestTime(new Date())
                                         .build();
 
         assertTrue(firstInOrder.compareTo(secondInOrder)<0);
@@ -60,14 +60,14 @@ class CodeRunnerRequestTest {
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new UnauthenticatedUser("2"))
-                .requestTime(new Date())
+//                .requestTime(new Date())
                 .build();
         Thread.sleep(100);
         CodeRunnerRequest thridInORder=CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new AuthenticatedUser("2"))
-                .requestTime(new Date())
+//                .requestTime(new Date())
                 .build();
 
         Thread.sleep(100);
@@ -76,7 +76,7 @@ class CodeRunnerRequestTest {
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new PremiumUser("2"))
-                .requestTime(new Date())
+//                .requestTime(new Date())
                 .build();
 
         Thread.sleep(100);
@@ -84,7 +84,7 @@ class CodeRunnerRequestTest {
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new PremiumUser("22"))
-                .requestTime(new Date())
+//                .requestTime(new Date())
                 .build();
         PriorityBlockingQueue<CodeRunnerRequest> requestQueue=new  PriorityBlockingQueue<>();
         printQueuinOrder(requestQueue);
@@ -174,7 +174,7 @@ class CodeRunnerRequestTest {
             CodeRunnerRequest req=   CodeRunnerRequest.builder()
                     .user(user)
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
-                    .requestTime(new Date())
+//                    .requestTime(new Date())
                     .build();
             requestQueue.add(req);
             Thread.sleep(100);
@@ -186,7 +186,7 @@ class CodeRunnerRequestTest {
             CodeRunnerRequest req=   CodeRunnerRequest.builder()
                     .user(user)
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
-                    .requestTime(new Date())
+//                    .requestTime(new Date())
                     .build();
             requestQueue.add(req);
             printQueuinOrder(requestQueue);
@@ -198,7 +198,7 @@ class CodeRunnerRequestTest {
             CodeRunnerRequest req=   CodeRunnerRequest.builder()
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                     .user(user)
-                    .requestTime(new Date())
+//                    .requestTime(new Date())
                     .build();
             requestQueue.add(req);
             printQueuinOrder(requestQueue);
@@ -209,7 +209,7 @@ class CodeRunnerRequestTest {
             CodeRunnerRequest req=   CodeRunnerRequest.builder()
                     .user(user)
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
-                    .requestTime(new Date())
+//                    .requestTime(new Date())
                     .build();
             requestQueue.add(req);
             printQueuinOrder(requestQueue);

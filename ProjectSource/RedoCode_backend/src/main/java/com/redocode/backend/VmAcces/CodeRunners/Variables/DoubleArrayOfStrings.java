@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.extern.jackson.Jacksonized;
 
 
+
 public class DoubleArrayOfStrings extends Variables<String[][]> {
     public DoubleArrayOfStrings(String[][] value) {
         super(value);

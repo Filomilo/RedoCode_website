@@ -29,7 +29,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
-                .setOutputBase(new SingleInteger())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -54,7 +54,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
-                .setOutputBase(new SingleFloat())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
                 .setSolutionCode("float solution(float val){" +
                         "return val;" +
                         "}")
@@ -75,7 +75,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleString(val))
-                .setOutputBase(new SingleString())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -98,7 +98,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -121,7 +121,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -145,7 +145,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -172,7 +172,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
                 .setSolutionCode(
                         "function solution(val){" +
                         "return val;" +
@@ -202,7 +202,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -235,7 +235,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +

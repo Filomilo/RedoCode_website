@@ -24,7 +24,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
 
 
     public CodeRunnerRequest(User user,Date requestTIme, CODE_RUNNER_TYPE codeRunnerType) {
-        super(user,requestTIme);
+        super(user);
 
 
         this.codeRunnerType = codeRunnerType;
@@ -35,7 +35,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
 
     public CodeRunnerRequest(User user,Date requestTImr, CodeRunnerRequestMessage requestMessageSource) {
 
-        super(user,requestTImr);
+        super(user);
         log.info("handling code runner request: "+ requestMessageSource );
        switch (requestMessageSource.getCodeRunnerType())
        {

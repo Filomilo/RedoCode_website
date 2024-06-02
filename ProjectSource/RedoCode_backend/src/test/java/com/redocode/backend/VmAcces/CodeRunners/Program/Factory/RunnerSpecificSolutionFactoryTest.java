@@ -29,9 +29,9 @@ class RunnerSpecificSolutionFactoryTest {
         SolutionProgram solutionProgram= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
-                .setOutputBase(new ArrayOfFloats())
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
                 .build();
-        assertEquals(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS,solutionProgram.getOutput().getType());
+        assertEquals(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS,solutionProgram.getOutputType());
     }
 
     @Test

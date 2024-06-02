@@ -270,7 +270,7 @@ public class JsSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
-                .setOutputBase(new SingleString())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .build()
                 ;
         String ouputGenerationCode=
@@ -307,7 +307,7 @@ public class JsSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
-                .setOutputBase(new ArrayOfStrings())
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .build()
                 ;
        String ouputGenerationCode=
@@ -345,7 +345,7 @@ public class JsSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
-                .setOutputBase(new ArrayOfStrings())
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .build()
                 ;
         String ouputGenerationCode=
@@ -441,7 +441,7 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)// TODO: add class mapping data base string to Code runner enum
                 .setInputVaraiable(new SingleInteger(1))
-                .setOutputBase(new SingleInteger())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode(list.get(1).getCode())
                 .build();
         String correctCode="function solution(val) {\n" +

@@ -284,7 +284,7 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
-                .setOutputBase(new SingleString())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .build()
                 ;
 
@@ -332,7 +332,7 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
-                .setOutputBase(new ArrayOfStrings())
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .build()
                 ;
 
@@ -386,7 +386,7 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
-                .setOutputBase(new DoubleArrayOfStrings())
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
                 .build()
                 ;
 
@@ -395,8 +395,8 @@ public class CppSolutionProgramFactoryTest {
                         "{\n" +
                         "std::ofstream myfile;\n" +
                         "myfile.open (\""+program.getOutputFileName()+"\");\n" +
-                        "size_t w="+program.getOutput().getW()+";\n" +
-                        "size_t h="+program.getOutput().getH()+";\n" +
+//                        "size_t h="+program.getOutput().getH()+";\n" +
+//                        "size_t w="+program.getOutput().getW()+";\n" +
                         "for (size_t i = 0; i < h; i++)\n" +
                         "{\n" +
                         "for (size_t j = 0; j < w; j++)\n" +
@@ -515,7 +515,7 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)// TODO: add class mapping data base string to Code runner enum
                 .setInputVaraiable(new SingleInteger(1))
-                .setOutputBase(new SingleInteger())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .setSolutionCode(list.get(0).getCode())
                 .build();
         String correctCode="int solution(int val)\n" +

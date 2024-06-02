@@ -190,6 +190,7 @@ public class CodeRunnersController {
 //    testing purpioses only
 
     public void reset() {
+        removeAllCodeRunners();
         requestMessageSet.clear();
         requestQueue.clear();
         usersCodeRunenrs.clear();
@@ -249,7 +250,7 @@ public class CodeRunnersController {
             Program program= ProgramFactory
                     .createSolutionProgram()
                     .setSolutionCodeRunner(codeRunner.getType())
-                    .setOutputBase(VariablesFactory.getVeraibleFromType(exercise.getOutputType()))
+                    .setOutputBase((exercise.getOutputType()))
                     .setInputVaraiable(input)
                     .setSolutionCode(exerciseIdToRunMessage.getCode())
                     .build();
@@ -277,6 +278,14 @@ public class CodeRunnersController {
     {
         log.info("sending resutls: "+ Arrays.toString(results.toArray())+" to user "+ user);
         this.messeageSender.sendMessage(user,CodeRunnersConnectionController.codeRunnerResultEndPoint,results);
+    }
+
+
+    public void removeAllCodeRunners()
+    {
+        usersCodeRunenrs.forEach((User user, CodeRunner cosdeRuner)->{
+            cosdeRuner.destroy();
+        });
     }
 
     // TODO: 14/02/2024 Wokr on proper synchornizaion aroudn collenction 
