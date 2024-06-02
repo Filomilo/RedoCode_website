@@ -15,6 +15,8 @@ import java.util.Objects;
 @Setter
 @SuperBuilder
 @ToString(callSuper=true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class CodeRunnerRequest extends RequestBase implements Comparable {
 
     protected CODE_RUNNER_TYPE codeRunnerType;

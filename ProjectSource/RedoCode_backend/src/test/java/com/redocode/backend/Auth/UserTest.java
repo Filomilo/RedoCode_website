@@ -19,7 +19,4 @@ class UserTest {
         assertTrue(premiumUser.compareTo(unauthUser)<0);
         assertTrue(premiumUser.compareTo(authUser)<0);
     }
-
-
-
 }

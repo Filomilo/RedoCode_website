@@ -12,13 +12,10 @@ import java.util.Date;
 @Getter
 @SuperBuilder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class RequestBase {
    protected User user ;
     protected Date requestTime;
 
-
-    public RequestBase(User user, Date requestTime) {
-        this.user = user;
-        this.requestTime = requestTime;
-    }
 }
