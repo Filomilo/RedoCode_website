@@ -1,10 +1,13 @@
 package com.redocode.backend.RequstHandling.Requests;
 
 import com.redocode.backend.Messages.UtilContainers.Range;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.HashMap;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -27,6 +30,8 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     boolean specialCharacterInput;
     boolean breakCharacterInput;
     boolean spaceInput;
+
+    HashMap<CODE_RUNNER_TYPE,String> solutionCodes;
 
 
 }

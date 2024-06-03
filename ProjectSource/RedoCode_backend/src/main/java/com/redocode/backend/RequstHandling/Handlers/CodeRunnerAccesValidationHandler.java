@@ -30,9 +30,15 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
         CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(request.getUser());
         log.info("code unner: "+ codeRunner);
         CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(request.getUser());
+
         if(userCodeRunner.getType()==((CodeRunnerRequest) request).getCodeRunnerType() && codeRunner.getStatus()== VmStatus.RUNNING_MACHINE)
+        {
+            log.info("CodeRunnerAccesValidationHandler: succses");
             return  true;
-            else
-        return false;
+        }
+            else {
+            log.info("CodeRunnerAccesValidationHandler: FAilure");
+            return false;
+        }
     }
 }

@@ -14,6 +14,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class RawCodeRunRequest extends CodeRunnerRequest {
     String Code;
 

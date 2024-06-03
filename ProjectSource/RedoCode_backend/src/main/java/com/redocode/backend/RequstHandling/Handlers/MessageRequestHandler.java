@@ -6,6 +6,7 @@ import com.redocode.backend.ConnectionCotrollers.MessageSender;
 import com.redocode.backend.Messages.Handleres.ChainNodeStatusMessage;
 import com.redocode.backend.SpringContextUtil;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 
 
-
+@Slf4j
 public abstract class MessageRequestHandler extends BaseRequestHandler {
 
 
@@ -29,6 +30,6 @@ public abstract class MessageRequestHandler extends BaseRequestHandler {
     }
 
     void exceptionHandling(Exception exception) {
-
+        log.info("Expection on Test: "+ exception.getMessage());
     }
 }

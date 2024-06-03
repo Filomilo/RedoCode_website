@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CodeTestHandler extends  BaseRequestHandler {
 
-    static final CodeRunnersController codeRunnersController= (CodeRunnersController) SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
+   protected static final CodeRunnersController codeRunnersController= (CodeRunnersController) SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
     protected  void checkTest(ExerciseTests test,CodeTestRequest request,CodeRunner codeRunner ) throws RequestHadndlingException {
         log.info("Testing: " + test);
 
