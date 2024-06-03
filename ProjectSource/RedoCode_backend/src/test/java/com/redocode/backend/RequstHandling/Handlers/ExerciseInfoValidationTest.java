@@ -1,7 +1,7 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
-import com.redocode.backend.RequstHandling.Requests.ExerciseCretionRequest;
+import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExerciseInfoValidationTest {
     @Test
     void handleCorrect() {
-    ExerciseCretionRequest exerciseCretionRequest= ExerciseCretionRequest
+    ExerciseCreationRequest exerciseCretionRequest= ExerciseCreationRequest
             .builder()
             .Title("123457789")
             .Description("123456789")
@@ -32,7 +32,7 @@ class ExerciseInfoValidationTest {
     }
     @Test
     void handleIncorrect() {
-        ExerciseCretionRequest exerciseCretionRequest= ExerciseCretionRequest
+        ExerciseCreationRequest exerciseCretionRequest= ExerciseCreationRequest
                 .builder()
                 .Title("123457789012345678901234567890123456789012345678901234567890")
                 .Description("123456789")

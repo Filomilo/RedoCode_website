@@ -20,7 +20,7 @@ import java.util.Objects;
 public class CodeRunnerRequest extends RequestBase implements Comparable {
 
     protected CODE_RUNNER_TYPE codeRunnerType;
-
+    protected int ram;
 
 
     public CodeRunnerRequest(User user,Date requestTIme, CODE_RUNNER_TYPE codeRunnerType) {
