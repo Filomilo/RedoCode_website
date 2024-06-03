@@ -515,7 +515,7 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)// TODO: add class mapping data base string to Code runner enum
                 .setInputVaraiable(new SingleInteger(1))
-                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode(list.get(0).getCode())
                 .build();
         String correctCode="int solution(int val)\n" +
