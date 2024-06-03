@@ -11,7 +11,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
-import java.util.Date;
 
 @Controller
 @Slf4j
@@ -35,7 +34,7 @@ public class CodeRunnersConnectionController {
     public void test(Principal principal, CodeRunnerRequestMessage requestMessageSource) throws Exception{
         String userId=principal.getName();
         log.info("code runner reuqest from: "+ userId+" : "+requestMessageSource);
-        CodeRunnerRequest req= new CodeRunnerRequest(redoCodeController.getUserById(userId),new Date(), requestMessageSource);
+        CodeRunnerRequest req= new CodeRunnerRequest(redoCodeController.getUserByConnectionUUID(userId), requestMessageSource);
         codeRunnersController.requestVm(req);
     }
 

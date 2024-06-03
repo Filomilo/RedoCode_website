@@ -1,7 +1,7 @@
 package com.redocode.backend.VmAcces;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
 import com.redocode.backend.ConnectionCotrollers.MessageSender;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
@@ -53,7 +53,7 @@ public class CodeRunnersController {
         {
             return codeRunner.getStatus();
         }
-        if(requestMessageSet.contains(new CodeRunnerRequest(user,new Date(), CODE_RUNNER_TYPE.JS_RUNNER)))
+        if(requestMessageSet.contains(new CodeRunnerRequest(user, CODE_RUNNER_TYPE.JS_RUNNER)))
             return  VmStatus.AWAITING_ACCES;
        return VmStatus.NOT_REQUESTED;
     }

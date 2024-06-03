@@ -1,6 +1,5 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
-import com.redocode.backend.Auth.UnauthenticatedUser;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
@@ -64,7 +63,7 @@ class CodeTestHandlerTest {
         CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler= new CodeRunnerAccesValidationHandler();
         CodeTestHandler codeTestHandler=new CodeTestHandler();
 
-        UnauthenticatedUser user=new UnauthenticatedUser("1234");
+        User user=new User("1234");
 
 
         CodeTestRequest codeTestRequest=CodeTestRequest.builder()

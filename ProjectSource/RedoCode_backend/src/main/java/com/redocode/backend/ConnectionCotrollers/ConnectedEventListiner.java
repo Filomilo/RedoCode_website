@@ -1,8 +1,9 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 
-import com.redocode.backend.Auth.UnauthenticatedUser;
+
 import com.redocode.backend.RedoCodeController;
+import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -28,6 +29,6 @@ public class ConnectedEventListiner implements ApplicationListener<SessionConnec
 
         log.info("user: "+event.getMessage().getHeaders().get("simpUser"));
         Principal connected= (Principal) event.getMessage().getHeaders().get("simpUser");
-        redoCodeController.addConnectedUser(new UnauthenticatedUser(connected.getName()));
+        redoCodeController.addConnectedUser(new User(connected.getName()));
     }
 }

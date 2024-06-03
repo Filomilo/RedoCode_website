@@ -1,7 +1,6 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
-import com.redocode.backend.Auth.AuthenticatedUser;
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.database.Excersize;
 import com.redocode.backend.database.ExerciseRepository;
@@ -36,7 +35,7 @@ class SaveNewExerciseHandlerTest {
     void handleSaving() {
 
         int amountOfExercisesinBegning=exerciseRepository.findAll().size();
-        AuthenticatedUser user= new AuthenticatedUser("1",1);
+        User user= usersRepository.findAll().get(1);
         int ram=1024;
         int amountOfAutoTest=10;
 
@@ -56,7 +55,7 @@ class SaveNewExerciseHandlerTest {
         Excersize lastAdded=exerciseRepository.findAll().get(amountOfExercisesinAfter-1);
 
         assertEquals(ram,lastAdded.getRam_mb());
-        assertEquals(user.getDatabaseUserEntry(),lastAdded.getAuthor());
+        assertEquals(user,lastAdded.getAuthor());
         assertEquals(amountOfAutoTest,lastAdded.getAmountOfAutoTests());
         assertEquals(amountOfExercisesinBegning+1,amountOfExercisesinAfter);
     }

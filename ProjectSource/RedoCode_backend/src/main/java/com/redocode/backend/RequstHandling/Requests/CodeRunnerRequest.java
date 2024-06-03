@@ -1,8 +1,9 @@
 package com.redocode.backend.RequstHandling.Requests;
 
-import com.redocode.backend.Auth.User;
+
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
+import com.redocode.backend.database.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
     protected int ram;
 
 
-    public CodeRunnerRequest(User user,Date requestTIme, CODE_RUNNER_TYPE codeRunnerType) {
+    public CodeRunnerRequest(User user, CODE_RUNNER_TYPE codeRunnerType) {
         super(user);
 
 
@@ -33,7 +34,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
 
 
 
-    public CodeRunnerRequest(User user,Date requestTImr, CodeRunnerRequestMessage requestMessageSource) {
+    public CodeRunnerRequest(User user, CodeRunnerRequestMessage requestMessageSource) {
 
         super(user);
         log.info("handling code runner request: "+ requestMessageSource );

@@ -1,6 +1,6 @@
 package com.redocode.backend.ConnectionCotrollers;
 
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 import com.redocode.backend.VmAcces.CodeRunnerSocketController;
 import jakarta.inject.Singleton;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class MessageSender {
 
     public void sendMessage(User user, String dir, Object payload)
     {
-        sendMessage(user.getId(),dir,payload);
+        sendMessage(user.getSessionID(),dir,payload);
     }
 
 

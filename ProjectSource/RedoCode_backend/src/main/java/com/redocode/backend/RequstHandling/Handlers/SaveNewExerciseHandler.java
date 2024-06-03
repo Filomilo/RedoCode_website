@@ -1,6 +1,5 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
-import com.redocode.backend.Auth.AuthenticatedUser;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
@@ -22,7 +21,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
                 .outputType(exerciseCreationRequest.getOutputType())
                 .inputType(exerciseCreationRequest.getInputType())
                 .amountOfAutoTests(exerciseCreationRequest.getAmountOfAutoTests())
-                .author(((AuthenticatedUser) exerciseCreationRequest.getUser()).getDatabaseUserEntry())
+                .author( exerciseCreationRequest.getUser())
                 .build();
        exerciseRepository.save(excersize);
        return true;

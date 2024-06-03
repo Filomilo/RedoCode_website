@@ -1,6 +1,6 @@
 package com.redocode.backend.RequstHandling.Requests;
 
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;

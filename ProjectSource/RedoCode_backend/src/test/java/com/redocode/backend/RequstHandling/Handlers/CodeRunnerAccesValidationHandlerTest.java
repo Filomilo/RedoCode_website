@@ -1,7 +1,6 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
-import com.redocode.backend.Auth.UnauthenticatedUser;
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 import com.redocode.backend.RedoCodeBackendApplication;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
@@ -35,7 +34,7 @@ User user;
     @BeforeEach
     public void registerUser()
     {
-        user=new UnauthenticatedUser("555");
+        user=new User("555");
         redoCodeController.addConnectedUser(user);
     }
     @BeforeEach

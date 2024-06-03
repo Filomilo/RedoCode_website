@@ -6,6 +6,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
+import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.reflect.Code;
 import org.junit.jupiter.api.*;
@@ -51,28 +52,28 @@ class CodeRunnersConnectionControllerTest {
 //        int amountPremieum=random.nextInt(1,2);
 //        int amountAdmin=random.nextInt(1,2);
         for (int i = 0; i < amountOfUnauth; i++) {
-            UnauthenticatedUser user=new UnauthenticatedUser(UUID.randomUUID().toString());
+            User user=new User(UUID.randomUUID().toString(),"nick", User.USER_TYPE.UNAUTHENTICATED);
             unathenicatedUsers.add(user);
             redoCodeController.addConnectedUser(user);
             allUsers.add(user);
         }
 
         for (int i = 0; i < authenticated; i++) {
-            AuthenticatedUser user=new AuthenticatedUser(UUID.randomUUID().toString());
+            User user=new User(UUID.randomUUID().toString(),"1", User.USER_TYPE.AUTHENTICATED);
             athenicatedUsers.add(user);
             redoCodeController.addConnectedUser(user);
             allUsers.add(user);
         }
 
         for (int i = 0; i < amountPremieum ; i++) {
-            PremiumUser user=new PremiumUser(UUID.randomUUID().toString());
+            User user=new User(UUID.randomUUID().toString(),"1", User.USER_TYPE.PREMIUM);
             premiumUsers.add(user);
             redoCodeController.addConnectedUser(user);
             allUsers.add(user);
         }
 
         for (int i = 0; i < amountAdmin ; i++) {
-            AdminUser user=new AdminUser(UUID.randomUUID().toString());
+            User user=new User(UUID.randomUUID().toString(),"nick", User.USER_TYPE.ADMIN);
             adminsUsers.add(user);
             redoCodeController.addConnectedUser(user);
             allUsers.add(user);
@@ -174,14 +175,14 @@ class CodeRunnersConnectionControllerTest {
         });
     }
 
-    
+
     @Test
     void testQueue()
     {
         assertDoesNotThrow(()->{
             List<User> bufferFillUser= new ArrayList<>();
             for (int i = 0; i < CodeRunnersController.maxAmountOfVm; i++) {
-                User user=new UnauthenticatedUser(UUID.randomUUID().toString());
+                User user=new User(UUID.randomUUID().toString());
                 bufferFillUser.add(user);
                 redoCodeController.addConnectedUser(user);
                 CodeRunnerRequest req=   CodeRunnerRequest.builder()
@@ -307,7 +308,7 @@ class CodeRunnersConnectionControllerTest {
     {
         List<User> bufferFillUser= new ArrayList<>();
         for (int i = 0; i < CodeRunnersController.maxAmountOfVm; i++) {
-            User user=new UnauthenticatedUser(UUID.randomUUID().toString());
+            User user=new User(UUID.randomUUID().toString());
             bufferFillUser.add(user);
             redoCodeController.addConnectedUser(user);
             CodeRunnerRequest req=   CodeRunnerRequest.builder()
@@ -318,8 +319,8 @@ class CodeRunnersConnectionControllerTest {
 
         }
 
-        User user1 = new UnauthenticatedUser(UUID.randomUUID().toString());
-        User user2 = new UnauthenticatedUser(UUID.randomUUID().toString());
+        User user1 = new User(UUID.randomUUID().toString());
+        User user2 = new User(UUID.randomUUID().toString());
 
 
         redoCodeController.addConnectedUser(user1);

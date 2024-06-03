@@ -1,6 +1,6 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 import com.redocode.backend.ConnectionCotrollers.ConnectionTargets;
 import com.redocode.backend.ConnectionCotrollers.MessageSender;
 import com.redocode.backend.Messages.Handleres.ChainNodeStatusMessage;
