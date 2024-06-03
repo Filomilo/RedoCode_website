@@ -30,16 +30,18 @@ class CodeRunnerAccessValidationHandlerTest {
            RedoCodeController redoCodeController;
 @Autowired
     CodeRunnersController codeRunnersController;
-@Autowired CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler;
-
-//@Autowired
-//    CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler;
+    CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler;
 User user;
     @BeforeEach
     public void registerUser()
     {
         user=new UnauthenticatedUser("555");
         redoCodeController.addConnectedUser(user);
+    }
+    @BeforeEach
+    public void cerateHandler()
+    {
+      codeRunnerAccesValidationHandler=new CodeRunnerAccesValidationHandler();
     }
     @AfterEach
     public void deregisterUser()
@@ -49,6 +51,7 @@ User user;
 
     @Test
     void handleCppRequest() {
+
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
         RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest

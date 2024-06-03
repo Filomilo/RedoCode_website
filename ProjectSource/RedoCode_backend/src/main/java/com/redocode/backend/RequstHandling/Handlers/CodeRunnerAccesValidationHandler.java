@@ -4,6 +4,7 @@ import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
+import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.VmAcces.VmStatus;
@@ -13,11 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
-@Scope("singleton")
+
 @Slf4j
 public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
-    @Autowired private CodeRunnersController codeRunnersController;
+     private static final CodeRunnersController codeRunnersController= SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
 
 

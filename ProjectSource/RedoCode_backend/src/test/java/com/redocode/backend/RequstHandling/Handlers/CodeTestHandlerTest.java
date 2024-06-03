@@ -26,8 +26,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 class CodeTestHandlerTest {
 
-    @Autowired CodeTestHandler codeTestHandler;
-    @Autowired CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler;
     @Autowired CodeRunnersController codeRunnersController;
     ExerciseTests[] tests;
     @BeforeEach
@@ -63,7 +61,8 @@ class CodeTestHandlerTest {
 
     @Test
     void handleCpp() throws RequestHadndlingException {
-
+        CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler= new CodeRunnerAccesValidationHandler();
+        CodeTestHandler codeTestHandler=new CodeTestHandler();
 
         UnauthenticatedUser user=new UnauthenticatedUser("1234");
 
@@ -95,7 +94,7 @@ class CodeTestHandlerTest {
 
 
 
-       assertTrue(this.codeTestHandler.handle(codeTestRequest));
+       assertTrue(codeTestHandler.handle(codeTestRequest));
 
 
     }
