@@ -1,13 +1,14 @@
-package com.redocode.backend.RequstHandling.Handlers;
+package com.redocode.backend.RequstHandling;
 
 import com.redocode.backend.Messages.UtilContainers.Range;
-import com.redocode.backend.RequstHandling.ResponsibilityChainRepository;
+import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.*;
-import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +18,21 @@ import org.springframework.test.context.ContextConfiguration;
 import java.sql.Time;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+@Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Slf4j
-class SaveNewExerciseHandlerTest {
-    @Autowired
-    ExerciseRepository exerciseRepository;
+class ResponsibilityChainRepositoryTest {
     @Autowired
     UsersRepository usersRepository;
-    SaveNewExerciseHandler saveNewExerciseHandler;
+    @Autowired
+    CodeRunnersController codeRunnersController;
+    @Autowired
+    ExerciseRepository exerciseRepository;
     User user;
-    @BeforeEach
-    void prepareHadnler()
-    {
-        saveNewExerciseHandler=new SaveNewExerciseHandler();
-    }
-
 
     @BeforeEach
     void setupUser()
@@ -56,6 +54,7 @@ class SaveNewExerciseHandlerTest {
         int ram=1024;
         String title="Exercise";
         String decritpion="Descritpion";
+
         int amountOfAutoTests=8;
         boolean breakCharacterInput=true;
         Range lengthRange=new Range(0F,100F);
@@ -66,30 +65,32 @@ class SaveNewExerciseHandlerTest {
         boolean upperCaseInput=true;
         Range xArrayRange= new Range(1F,20F);
         Range yArrayRange=new Range(1F,20F);
-        Time timeForTask=new Time(1000);
+        Time timeForTask= new Time(20000);
+        int amountOfAutoTask=8;
+
         HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
         {{
             put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
-                    "#include <vector>\n" +
+                "#include <vector>\n" +
                     "#include <string>\n" +
-                    "\n" +
-                    "std::vector<std::vector<std::string>> solution(std::vector<std::vector<std::string>> in)\n" +
-                    "{\n" +
-                    "    return in;\n" +
-                    "}");
-            put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return array;}");
+                "\n" +
+                "std::vector<std::vector<std::string>> solution(std::vector<std::vector<std::string>> in)\n" +
+                "{\n" +
+                "    return in;\n" +
+                "}");
+        put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return array;}");
         }};
-        ExerciseTests[] tests= new ExerciseTests[]{
+       ExerciseTests[] tests= new ExerciseTests[]{
                 ExerciseTests.builder()
                         .expectedOutput("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
                         .input("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
                         .excersize(null)
                         .build(),
-                ExerciseTests.builder()
-                        .expectedOutput("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"],[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
-                        .input("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"],[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
-                        .excersize(null)
-                        .build(),
+               ExerciseTests.builder()
+                       .expectedOutput("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"],[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
+                       .input("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"],[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
+                       .excersize(null)
+                       .build(),
 
         };
 
@@ -102,7 +103,7 @@ class SaveNewExerciseHandlerTest {
                 .Title(title)
                 .Description(decritpion)
                 .solutionCodes(solutionCodes)
-                .autoTestAmount(amountOfAutoTests)
+                .autoTestAmount(amountOfAutoTask)
                 .amountOfAutoTests(amountOfAutoTests)
                 .breakCharacterInput(breakCharacterInput)
                 .lengthRange(lengthRange)
@@ -117,11 +118,11 @@ class SaveNewExerciseHandlerTest {
                 .timeForTask(timeForTask)
                 .build();
 
-        assertDoesNotThrow(
-                ()->{
-                    assertTrue(saveNewExerciseHandler.next(exerciseCreationRequest));
-                }
-        );
+assertDoesNotThrow(
+        ()->{
+            assertTrue(ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        }
+);
 
 
         Excersize lastAdded=exerciseRepository.findAll().get(exerciseRepository.findAll().size()-1);
@@ -131,18 +132,35 @@ class SaveNewExerciseHandlerTest {
         assertEquals(ram,lastAdded.getRam_mb());
         assertEquals(decritpion,lastAdded.getDescription());
         assertEquals(user.getId(),lastAdded.getAuthor().getId());
-        ;
-        assertEquals(tests.length,lastAdded.getExerciseTests().size());
-        for (int i = 0; i <  tests.length; i++) {
-            assertEquals(tests[i],lastAdded.getExerciseTests().get(i));
-        }
+        assertEquals(Arrays.stream(tests).toList(),lastAdded.getExerciseTests().stream().toList());
 
 
+        assertEquals(breakCharacterInput,lastAdded.getBreakCharacterInput());
+        assertEquals(lowerCaseInput,lastAdded.getLowerCaseInput());
+        assertEquals(breakCharacterInput,lastAdded.getLowerCaseInput());
+        assertEquals(numberInput,lastAdded.getNumberInput());
+        assertEquals(spaceInput,lastAdded.getSpaceInput());
+        assertEquals(specialCharacterInput,lastAdded.getSpecialCharacterInput());
+        assertEquals(upperCaseInput,lastAdded.getUpperCaseInput());
+
+        assertEquals(lengthRange,lastAdded.getLengthRange());
+        assertEquals(xArrayRange,lastAdded.getXArrayRange());
+        assertEquals(yArrayRange,lastAdded.getYArrayRange());
+
+        assertEquals(amountOfAutoTests,lastAdded.getAmountOfAutoTests());
+        assertEquals(timeForTask,lastAdded.getTimeForTask());
 
 //        try {
 //            Thread.sleep(100000);
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
+    }
+
+
+    @AfterEach
+    void clearCodeRunners()
+    {
+        codeRunnersController.reset();
     }
 }

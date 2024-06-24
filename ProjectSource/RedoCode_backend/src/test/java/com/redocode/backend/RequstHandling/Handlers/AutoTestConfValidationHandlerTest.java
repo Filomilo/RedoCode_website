@@ -29,8 +29,7 @@ class AutoTestConfValidationHandlerTest {
                 .ram(1024)
                 .amountOfAutoTests(5)
                 .Title("123")
-                .autoTestminValue(11)
-                .autoTestMaxValue(444)
+                .autoTestAmount(22)
                 .build();
 
         assertDoesNotThrow(()->{

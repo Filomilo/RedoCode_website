@@ -9,6 +9,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.ExerciseTests;
 import com.redocode.backend.database.User;
@@ -36,10 +37,13 @@ public class CodeTestHandler extends  BaseRequestHandler {
                     .build();
             log.info("solution program being tested: "+ solutionProgram.getInput());
             ProgramResult result=codeRunner.runProgram(solutionProgram);
-            log.info("program resuult: "+ result.getVariables());
-            if(!result.getVariables().equals(test.getParsedOutput(request.getOutputType())))
+            Variables recived=result.getVariables();
+            Variables expcected=test.getParsedOutput(request.getOutputType());
+            log.info("program resuult: "+recived);
+            log.info("expected program resuult: "+ expcected);
+            if(!recived.equals(expcected))
             {
-                throw new RequestHadndlingException("expected: "+ test.getParsedOutput(request.getOutputType())+" but recived: " + result.getVariables());
+                throw new RequestHadndlingException("expected: "+ test.getParsedOutput(request.getOutputType()).getValue()+" but recived: " + result.getVariables().getValue());
             }
         }
         catch (JsonProcessingException ex)
@@ -70,7 +74,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
         }
         CodeTestRequest codeTestRequest= (CodeTestRequest) request;
         CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(request.getUser());
-
+        log.info("Staring handler: CodeTestHandler+"+"for " + codeTestRequest );
         int i=0;
         for (ExerciseTests exTest: codeTestRequest.getTestsToRun()
         ) {

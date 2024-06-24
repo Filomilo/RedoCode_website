@@ -27,4 +27,12 @@ class ArrayOfStringsTest {
         var.setValue(arr2);
         assertEquals(arr2,var.getValue());
     }
+
+    @Test
+    void printValue()
+    {
+        String[] arr= {"1", "2","3","4","5","6","7"};
+        ArrayOfStrings var= new ArrayOfStrings(arr);
+        assertEquals("{\n1, 2, 3, 4, 5, 6, 7\n}",var.toString());
+    }
 }

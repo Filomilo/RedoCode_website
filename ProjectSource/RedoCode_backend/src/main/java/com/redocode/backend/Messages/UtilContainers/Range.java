@@ -6,6 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+import org.hibernate.dialect.PostgreSQLCastingInetJdbcType;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.usertype.UserType;
+
+import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Value
 @SuperBuilder
@@ -13,7 +21,12 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class Range {
-    float min;
-    float max;
+public class Range { //todo: change to postgres database  type mappign
+    Float min;
+    Float max;
+
+    public Range(Integer min, Integer max) {
+       this.min=Float.valueOf (min);
+        this.max=Float.valueOf (max);
+    }
 }

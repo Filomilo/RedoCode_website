@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.sql.Time;
 import java.util.HashMap;
 
 @SuperBuilder
@@ -19,8 +20,7 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     String Description;
 
     int amountOfAutoTests;
-    int autoTestminValue;
-    int autoTestMaxValue;
+    int autoTestAmount;
     Range lengthRange;
     Range xArrayRange;
     Range yArrayRange;
@@ -30,6 +30,7 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     boolean specialCharacterInput;
     boolean breakCharacterInput;
     boolean spaceInput;
+    Time timeForTask;
 
     HashMap<CODE_RUNNER_TYPE,String> solutionCodes;
 

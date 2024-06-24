@@ -1,8 +1,6 @@
 package com.redocode.backend.RequstHandling;
 
-import com.redocode.backend.RequstHandling.Handlers.BaseRequestHandler;
-import com.redocode.backend.RequstHandling.Handlers.CodeRunnerAccesValidationHandler;
-import com.redocode.backend.RequstHandling.Handlers.CodeTestHandler;
+import com.redocode.backend.RequstHandling.Handlers.*;
 
 public class ResponsibilityChainRepository {
 
@@ -12,6 +10,17 @@ public class ResponsibilityChainRepository {
             .setNextRequestHandler(
                     new CodeTestHandler()
             );
-
-
+//todo create builder for chain request hadnlers
+    public static final BaseRequestHandler createNewExercise=
+            new ExerciseInfoValidation().setNextRequestHandler(
+                    new AutoTestConfValidationHandler().setNextRequestHandler(
+                        new AutoTestGeneratorHandler().setNextRequestHandler(
+                                new MergeTestHandler().setNextRequestHandler(
+                                        new MultipleCodeTestHandler().setNextRequestHandler(
+                                                new SaveNewExerciseHandler()
+                                        )
+                                )
+                        )
+                    )
+            );
 }

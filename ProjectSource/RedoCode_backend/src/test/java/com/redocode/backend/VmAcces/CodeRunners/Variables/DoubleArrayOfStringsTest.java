@@ -41,4 +41,18 @@ class DoubleArrayOfStringsTest {
         assertEquals(arr2,var.getValue());
     }
 
+
+    @Test
+    void printValue()
+    {
+        String[][] arr = {
+                {"x1y1", "x2y1", "x3y1"},
+                {"x1y2", "x2y2", "x3y2"},
+                {"x1y3", "x2y3", "x3y3"}
+        };
+        DoubleArrayOfStrings var= new DoubleArrayOfStrings(arr);
+        assertEquals("{\nx1y1, x2y1, x3y1\n" +
+                "x1y2, x2y2, x3y2\n" +
+                "x1y3, x2y3, x3y3\n}",var.toString());
+    }
 }

@@ -76,14 +76,17 @@ public class User implements Comparable {
             return false;
         }
         User user=(User) o;
-        return Objects.equals(this.sessionID, user.sessionID);
+        if(this.type==USER_TYPE.UNAUTHENTICATED) {
+            return Objects.equals(this.sessionID, user.sessionID);
+        }
+        return this.id==user.id;
     }
 
 
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.sessionID);
+        return this.type==USER_TYPE.UNAUTHENTICATED?Objects.hashCode(this.sessionID):Objects.hashCode(this.id);
     }
 
     @Override

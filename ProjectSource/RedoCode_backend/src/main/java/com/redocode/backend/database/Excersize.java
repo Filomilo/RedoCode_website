@@ -3,12 +3,20 @@ package com.redocode.backend.database;
 
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.extern.java.Log;
-import org.apache.commons.lang3.Range;
+import com.redocode.backend.Messages.UtilContainers.Range;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import com.redocode.backend.database.RangeNumberType;
 
+import java.sql.SQLType;
 import java.sql.Time;
 import java.util.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name ="excersizes")
@@ -27,6 +35,7 @@ public class Excersize {
     @Column(
             name = "excersize_name"
     )
+    @NotNull
     String excersizeName;
     @Column(
             name = "ram_Mb"
@@ -36,15 +45,17 @@ public class Excersize {
     @Column(
             name = "time_for_task"
     )
+    @NotNull
     Time timeForTask;
     @Column(
             name = "amount_of_auto_tests"
     )
+    @NotNull
     int amountOfAutoTests;
     @Column(
             name = "array_x_length_range_min"
     )
-    Integer arrayXLengthRange;
+    Integer arrayXLengthRangeMin;
     @Column(
             name = "array_x_length_range_max"
     )
@@ -64,11 +75,8 @@ public class Excersize {
     @Column(
             name = "value_range_max"
     )
+    @NotNull
     Float valueLengthRangeMax;
-    @Column(
-            name = "string_format_mask"
-    )
-    Byte stringFormat;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -76,23 +84,24 @@ public class Excersize {
     private User author;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
     private Set<ExcersizeDiffucultyRating> ratings = new HashSet<>();
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize" )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
     private Set<ExerciseAttempts> attempts = new HashSet<>();
 
     @Column(
             name = "description"
     )
+    @NotNull
     private String description;
 
     Variables.VARIABLES_TYPES inputType;
     Variables.VARIABLES_TYPES outputType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
     private List<ExerciseTests> exerciseTests = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
     private Set<SolutionPrograms> solutions = new HashSet<>();
 
     @Override
@@ -108,31 +117,32 @@ public class Excersize {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        return "Excersize{" +
-                "id=" + id +
-                ", excersizeName='" + excersizeName + '\'' +
-                ", ram_mb=" + ram_mb +
-                ", timeForTask=" + timeForTask +
-                ", amountOfAutoTests=" + amountOfAutoTests +
-                ", arrayXLengthRange=" + arrayXLengthRange +
-                ", arrayXLengthRangeMax=" + arrayXLengthRangeMax +
-                ", arrayYLengthRangeMin=" + arrayYLengthRangeMin +
-                ", arrayYLengthRangeMax=" + arrayYLengthRangeMax +
-                ", valueLengthRangeMin=" + valueLengthRangeMin +
-                ", valueLengthRangeMax=" + valueLengthRangeMax +
-                ", stringFormat=" + stringFormat +
-                ", author=" + author +
-                ", ratings=" + ratings +
-                ", attempts=" + attempts +
-                ", description='" + description + '\'' +
-                ", inputType=" + inputType +
-                ", outputType=" + outputType +
-                ", exerciseTests=" + exerciseTests +
-                ", solutions=" + solutions +
-                '}';
-    }
+    @Column(
+            name = "break_character_input"
+    )
+    Boolean breakCharacterInput=false;
+    @Column(
+            name = "lower_case_input"
+    )
+        Boolean lowerCaseInput=false;
+    @Column(
+            name = "number_input"
+    )
+    Boolean numberInput=false;
+    @Column(
+            name = "space_input"
+    )
+    Boolean spaceInput=false;
+    @Column(
+            name = "special_character_input"
+    )
+    Boolean specialCharacterInput=false;
+    @Column(
+            name = "upper_case_input"
+    )
+    Boolean upperCaseInput=false;
+
+
 
     public Set<ProgrammingLanguage> getLanguages() {
         HashSet<ProgrammingLanguage> languages= new HashSet<>();
@@ -142,5 +152,17 @@ public class Excersize {
             languages.add(solutionPrograms.getLanguage());
         }
         return languages;
+    }
+
+    public Range getLengthRange() {
+        return new Range(valueLengthRangeMin,valueLengthRangeMax);
+    }
+
+    public Range getXArrayRange() {
+        return new Range(arrayXLengthRangeMin,arrayXLengthRangeMax);
+    }
+
+    public Range getYArrayRange() {
+        return new Range(arrayXLengthRangeMin,arrayYLengthRangeMax);
     }
 }

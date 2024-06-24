@@ -5,14 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Data
 @SuperBuilder
+@ToString
 public abstract class Variables<T> {
 
     @JsonIgnore
@@ -70,6 +73,47 @@ public abstract class Variables<T> {
     @Override
     public boolean equals(Object o) {
         Variables<T> variables = (Variables<T>) o;
+//
+        if(getValue() instanceof Object[] && variables.getValue() instanceof Object[]) {
+            Object[] arr= (Object[]) getValue();
+            Object[] arro= (Object[]) variables.getValue();
+            return  Arrays.deepEquals(arr,arro);
+        }
+
         return Objects.equals(this.getValue(), variables.getValue());
+    }
+
+    @Override
+    public String toString() {
+        if(getValue() instanceof Object[][]) {
+            Object[][] arr= (Object[][]) getValue();
+           StringBuilder builder=new StringBuilder("{\n");
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length ; j++) {
+                    builder.append(arr[i][j]);
+                    if(j<arr[i].length-1)
+                    builder.append(", ");
+                }
+                builder.append("\n");
+            }
+            builder.append("}");
+            return builder.toString();
+        }
+
+        if(getValue() instanceof Object[]) {
+            Object[] arr= (Object[]) getValue();
+            StringBuilder builder=new StringBuilder("{\n");
+            for (int i = 0; i < arr.length; i++) {
+                    builder.append(arr[i]);
+                    if(i<arr.length-1)
+                        builder.append(", ");
+                }
+                builder.append("\n");
+            builder.append("}");
+            return builder.toString();
+        }
+
+
+        return getValue().toString();
     }
 }

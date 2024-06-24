@@ -7,6 +7,7 @@ import com.redocode.backend.database.ExerciseTests;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 public class CodeTestRequest extends RawCodeRunRequest {
 
     ExerciseTests[] testsToRun;

@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 @Entity
 @Table(name ="exercise_tests")
 @Data
@@ -69,5 +71,16 @@ public class ExerciseTests {
         return parseVaraibles(this.getExpectedOutput(),outputType);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExerciseTests that = (ExerciseTests) o;
+        return Objects.equals(id, that.id) && Objects.equals(input, that.input) && Objects.equals(expectedOutput, that.expectedOutput);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, input, expectedOutput);
+    }
 }
