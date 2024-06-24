@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Time;
 import java.util.HashMap;
@@ -15,8 +16,9 @@ import java.util.HashMap;
 @NoArgsConstructor
 @Getter
 public class ExerciseCreationRequest extends CodeTestRequest{
-
+    @NotNull
     String Title;
+    @NotNull
     String Description;
 
     int amountOfAutoTests;
@@ -30,8 +32,11 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     boolean specialCharacterInput;
     boolean breakCharacterInput;
     boolean spaceInput;
+    @NotNull
     Time timeForTask;
-
+    @NotNull
+    Long timeForExecution;
+    @NotNull
     HashMap<CODE_RUNNER_TYPE,String> solutionCodes;
 
 

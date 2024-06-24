@@ -67,6 +67,7 @@ class SaveNewExerciseHandlerTest {
         Range xArrayRange= new Range(1F,20F);
         Range yArrayRange=new Range(1F,20F);
         Time timeForTask=new Time(1000);
+        Long timeForExecution=1000L;
         HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
         {{
             put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
@@ -115,6 +116,7 @@ class SaveNewExerciseHandlerTest {
                 .yArrayRange(yArrayRange)
                 .testsToRun(tests)
                 .timeForTask(timeForTask)
+                .timeForExecution(timeForExecution)
                 .build();
 
         assertDoesNotThrow(
@@ -131,6 +133,8 @@ class SaveNewExerciseHandlerTest {
         assertEquals(ram,lastAdded.getRam_mb());
         assertEquals(decritpion,lastAdded.getDescription());
         assertEquals(user.getId(),lastAdded.getAuthor().getId());
+        assertEquals(timeForExecution,lastAdded.getMaxExecutionTimeMS());
+
         ;
         assertEquals(tests.length,lastAdded.getExerciseTests().size());
         for (int i = 0; i <  tests.length; i++) {

@@ -68,6 +68,8 @@ class ResponsibilityChainRepositoryTest {
         Time timeForTask= new Time(20000);
         int amountOfAutoTask=8;
 
+        Long maxExecutionTimeMS=1000L;
+
         HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
         {{
             put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
@@ -116,6 +118,7 @@ class ResponsibilityChainRepositoryTest {
                 .yArrayRange(yArrayRange)
                 .testsToRun(tests)
                 .timeForTask(timeForTask)
+                .timeForExecution(maxExecutionTimeMS)
                 .build();
 
 assertDoesNotThrow(
@@ -150,6 +153,7 @@ assertDoesNotThrow(
         assertEquals(amountOfAutoTests,lastAdded.getAmountOfAutoTests());
         assertEquals(timeForTask,lastAdded.getTimeForTask());
 
+        assertEquals(maxExecutionTimeMS,lastAdded.getMaxExecutionTimeMS());
 //        try {
 //            Thread.sleep(100000);
 //        } catch (InterruptedException e) {

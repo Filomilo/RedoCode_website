@@ -40,6 +40,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
                 .arrayYLengthRangeMin(exerciseCreationRequest.getYArrayRange().getMin().intValue())
                 .arrayYLengthRangeMax(exerciseCreationRequest.getYArrayRange().getMax().intValue())
                 .timeForTask(exerciseCreationRequest.getTimeForTask())
+                .maxExecutionTimeMS(exerciseCreationRequest.getTimeForExecution())
                 .build();
         for (ExerciseTests test: exerciseCreationRequest.getTestsToRun()
         ) {

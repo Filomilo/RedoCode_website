@@ -142,7 +142,11 @@ public class Excersize {
     )
     Boolean upperCaseInput=false;
 
-
+    @Column(
+            name = "max_execution_time_ms"
+    )
+    @NotNull
+    Long maxExecutionTimeMS;
 
     public Set<ProgrammingLanguage> getLanguages() {
         HashSet<ProgrammingLanguage> languages= new HashSet<>();

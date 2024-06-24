@@ -39,7 +39,8 @@ INSERT INTO public.excersizes (
     array_y_length_range_min,
     array_y_length_range_max,
     value_range_min,
-    value_range_max
+    value_range_max,
+    max_execution_time_ms
 )
 VALUES (1, --author_id
         'fibonachi sequance', --excersize_name
@@ -54,7 +55,8 @@ VALUES (1, --author_id
         0, --array_y_length_range_min
         0, --array_y_length_range_max
         10, --value_range_min
-        40 --value_range_max
+        40, --value_range_max,
+        1000 -- max executin time ms
        );
 
 INSERT INTO public.exercise_tests (excersize, id, expected_output, input)
