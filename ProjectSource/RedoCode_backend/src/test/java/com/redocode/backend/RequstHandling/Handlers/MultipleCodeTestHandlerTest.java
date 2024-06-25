@@ -63,7 +63,7 @@ class MultipleCodeTestHandlerTest {
                 .testsToRun(tests)
                 .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .outputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
-                .timeForTask(new Time(1000))
+                .timeForTaskMin(60L)
                 .timeForExecution(1000L)
                 .solutionCodes(
                         new HashMap<CODE_RUNNER_TYPE, String>() {{

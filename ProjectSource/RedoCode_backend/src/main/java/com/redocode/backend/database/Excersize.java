@@ -43,10 +43,10 @@ public class Excersize {
     Integer ram_mb;
 
     @Column(
-            name = "time_for_task"
+            name = "time_for_task_min"
     )
     @NotNull
-    Time timeForTask;
+    Long timeForTaskMin;
     @Column(
             name = "amount_of_auto_tests"
     )

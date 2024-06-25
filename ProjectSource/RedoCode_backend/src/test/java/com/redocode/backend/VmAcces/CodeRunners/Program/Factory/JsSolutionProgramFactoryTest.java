@@ -28,7 +28,7 @@ public class JsSolutionProgramFactoryTest {
     SolutionProgramsRepository solutionProgramsRepository;
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void getInputGeneratorCodeSingleInt(Integer var) {
         log.info("argemnt value: "+ var);
         SolutionProgram program=ProgramFactory
@@ -47,7 +47,7 @@ public class JsSolutionProgramFactoryTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void getInputGeneratorCodeArrayInt(Integer[] var) {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
@@ -73,7 +73,7 @@ public class JsSolutionProgramFactoryTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void getInputGeneratorCodeDoubleArrayInt(Integer[][] var) {
         log.info("var: "+ Arrays.deepToString(var));
         SolutionProgram program=ProgramFactory
@@ -110,7 +110,7 @@ public class JsSolutionProgramFactoryTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void getInputGeneratorCodeSingleFloat(Float var) {
         log.info("argemnt value: "+ var);
         SolutionProgram program=ProgramFactory
@@ -130,7 +130,7 @@ public class JsSolutionProgramFactoryTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void getInputGeneratorCodeArrayFloat(Float[] var) {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
@@ -156,7 +156,7 @@ public class JsSolutionProgramFactoryTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void getInputGeneratorCodeDoubleArrayFloat(Float[][] var) {
         log.info("var: "+ Arrays.deepToString(var));
         SolutionProgram program=ProgramFactory
@@ -190,7 +190,7 @@ public class JsSolutionProgramFactoryTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void getInputGeneratorCodeSingleString(String var) {
         log.info("argemnt value: "+ var);
         SolutionProgram program=ProgramFactory
@@ -209,7 +209,7 @@ public class JsSolutionProgramFactoryTest {
     }
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void getInputGeneratorCodeArrayString(String[] var) {
         log.info("val: "+Arrays.toString(var));
         SolutionProgram program=ProgramFactory
@@ -234,7 +234,7 @@ public class JsSolutionProgramFactoryTest {
         assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     void getInputGeneratorCodeDoubleArrayString(String[][] var) {
         log.info("var: "+ Arrays.deepToString(var));
         SolutionProgram program=ProgramFactory

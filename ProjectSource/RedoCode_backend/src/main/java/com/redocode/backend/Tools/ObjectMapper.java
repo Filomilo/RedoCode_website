@@ -28,7 +28,7 @@ public class ObjectMapper {
                 .specialCharacterInput(exerciseCreatorValidationMessage.isSpecialCharacterInput())
                 .breakCharacterInput(exerciseCreatorValidationMessage.isBreakCharacterInupt())
                 .spaceInput(exerciseCreatorValidationMessage.isSpaceInupt())
-                .timeForTask(exerciseCreatorValidationMessage.getTimeForTask())
+                .timeForTaskMin(exerciseCreatorValidationMessage.getTimeForTaskMin())
                 .timeForExecution(exerciseCreatorValidationMessage.getTimeForExecutionMs())
                 .solutionCodes(exerciseCreatorValidationMessage.getSolutionCodes())
                 .testsToRun(exerciseCreatorValidationMessage.getManualTests())

@@ -69,7 +69,7 @@ class CodeRunHandlerTest {
 
         int amountOfAutoTests=8;
         boolean breakCharacterInput=true;
-        Range lengthRange=new Range(0F,100F);
+        Range lengthRange=new Range(0F,20F);
         boolean lowerCaseInput=true;
         boolean numberInput=true;
         boolean spaceInput=true;
@@ -77,7 +77,7 @@ class CodeRunHandlerTest {
         boolean upperCaseInput=true;
         Range xArrayRange= new Range(1F,20F);
         Range yArrayRange=new Range(1F,20F);
-        Time timeForTask= new Time(20000);
+        long timeForTask= 60L;
         int amountOfAutoTask=8;
 
         Long maxExecutionTimeMS=1000L;
@@ -129,7 +129,7 @@ class CodeRunHandlerTest {
         .specialCharacterInput(specialCharacterInput)
         .breakCharacterInupt(breakCharacterInput)
         .spaceInupt(spaceInput)
-        .timeForTask(timeForTask)
+        .timeForTaskMin(timeForTask)
         .timeForExecutionMs(maxExecutionTimeMS)
         .solutionCodes(solutionCodes)
         .manualTests(tests)
@@ -171,7 +171,7 @@ class CodeRunHandlerTest {
         assertEquals(yArrayRange,lastAdded.getYArrayRange());
 
         assertEquals(amountOfAutoTests,lastAdded.getAmountOfAutoTests());
-        assertEquals(timeForTask,lastAdded.getTimeForTask());
+        assertEquals(timeForTask,lastAdded.getTimeForTaskMin());
 
         assertEquals(maxExecutionTimeMS,lastAdded.getMaxExecutionTimeMS());
 

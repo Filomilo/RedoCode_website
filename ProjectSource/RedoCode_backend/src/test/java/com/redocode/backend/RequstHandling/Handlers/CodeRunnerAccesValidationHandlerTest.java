@@ -162,7 +162,7 @@ User authorizedUser;
         RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
-                .user(user)
+                .user(authorizedUser)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);

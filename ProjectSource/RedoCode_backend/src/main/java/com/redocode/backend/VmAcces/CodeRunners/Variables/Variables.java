@@ -24,16 +24,25 @@ public abstract class Variables<T> {
     private int h=-1;
 
    public enum VARIABLES_TYPES {
-        SINGLE_INTEGER,
-        SINGLE_STRING,
-        SINGLE_FLOAT,
-        ARRAY_OF_INTEGERS,
-        ARRAY_STRINGS,
-        ARRAY_OF_FLOATS,
-        DOUBLE_ARRAY_OF_INTEGERS,
-        DOUBLE_ARRAY_OF_FLOATS,
-        DOUBLE_ARRAY_OF_STRINGS
-    }
+        SINGLE_INTEGER(0),
+        SINGLE_STRING(1),
+        SINGLE_FLOAT(2),
+        ARRAY_OF_INTEGERS(3),
+        ARRAY_STRINGS(4),
+        ARRAY_OF_FLOATS(5),
+        DOUBLE_ARRAY_OF_INTEGERS(5),
+        DOUBLE_ARRAY_OF_FLOATS(6),
+        DOUBLE_ARRAY_OF_STRINGS(7);
+
+       private final int  id;
+       VARIABLES_TYPES(int i) {
+           id=i;
+       }
+      public int getId()
+       {
+           return id;
+       }
+   }
 
 
     @Getter

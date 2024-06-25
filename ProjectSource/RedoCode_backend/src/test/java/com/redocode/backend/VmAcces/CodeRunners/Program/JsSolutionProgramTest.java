@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JsSolutionProgramTest {
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void runProgramJsReturnInt(Integer val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
@@ -47,7 +47,7 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void runProgramJsReturnFloat(Float val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
@@ -68,7 +68,7 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void runProgramJsReturnString(String val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
@@ -89,7 +89,7 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void runProgramJSReturnStringArray(String[] val) {
         log.info("Code runner cpp return");
         ArrayOfStrings resultTemplate=new ArrayOfStrings();
@@ -112,7 +112,7 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void runProgramJsReturnIntArray(Integer[] val) {
         log.info("Code runner cpp return");
         ArrayOfIntegers resultTemplate=new ArrayOfIntegers();
@@ -136,7 +136,7 @@ public class JsSolutionProgramTest {
     }
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void runProgramJsReturnIntArray(Float[] val) {
         log.info("Code runner cpp return");
         ArrayOfFloats resultTemplate=new ArrayOfFloats();
@@ -162,7 +162,7 @@ public class JsSolutionProgramTest {
     }
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     void runProgramJsReturnStringDoubleArray(String[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfStrings resultTemplate=new DoubleArrayOfStrings();
@@ -192,7 +192,7 @@ public class JsSolutionProgramTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void runProgramJsReturnIntDoubleArray(Integer[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfIntegers resultTemplate=new DoubleArrayOfIntegers();
@@ -225,7 +225,7 @@ public class JsSolutionProgramTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void runProgramJsReturnFloatDoubleArray(Float[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfFloats resultTemplate=new DoubleArrayOfFloats();

@@ -37,7 +37,7 @@ public class ExerciseCreatorValidationMessage {
     private boolean specialCharacterInput;
     private boolean breakCharacterInupt;
     private boolean spaceInupt;
-    @NotNull private Time timeForTask;
+    @NotNull private Long timeForTaskMin;
     @NotNull  private Long timeForExecutionMs;
     @NotNull  private HashMap<CODE_RUNNER_TYPE,String> solutionCodes;
     @NotNull  private ExerciseTests[] manualTests;

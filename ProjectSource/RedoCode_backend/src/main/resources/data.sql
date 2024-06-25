@@ -32,7 +32,7 @@ INSERT INTO public.excersizes (
     input_type,
     output_type,
     ram_Mb,
-    time_for_task,
+    time_for_task_min,
     amount_of_auto_tests,
     array_x_length_range_min,
     array_x_length_range_max,
@@ -48,7 +48,7 @@ VALUES (1, --author_id
         0, --input_type
         0, -- output_type
         512, --ram_Mb
-        '01:30:00', --time_for_task
+        30, --time_for_task
         10, --amount_of_auto_tests
         0, --array_x_length_range_min
         0, --array_x_length_range_max

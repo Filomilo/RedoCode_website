@@ -5,6 +5,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,6 +16,7 @@ import java.util.HashMap;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class ExerciseCreationRequest extends CodeTestRequest{
     @NotNull
     String Title;
@@ -32,7 +34,7 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     boolean breakCharacterInput;
     boolean spaceInput;
     @NotNull
-    Time timeForTask;
+    Long timeForTaskMin;
     @NotNull
     Long timeForExecution;
     @NotNull

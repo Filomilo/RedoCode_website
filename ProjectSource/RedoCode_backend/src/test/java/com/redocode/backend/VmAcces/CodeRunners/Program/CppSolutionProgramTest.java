@@ -30,7 +30,7 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void runProgramCppReturnInt(Integer val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
@@ -55,7 +55,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void runProgramCppReturnFloat(Float val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
@@ -76,7 +76,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void runProgramCppReturnString(String val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
@@ -98,7 +98,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void runProgramCppReturnStringArray(String[] val) {
         log.info("Code runner cpp return");
         ArrayOfStrings resultTemplate=new ArrayOfStrings();
@@ -124,7 +124,7 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void runProgramCppReturnIntArray(Integer[] val) {
         log.info("Code runner cpp return");
         ArrayOfIntegers resultTemplate=new ArrayOfIntegers();
@@ -148,7 +148,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void runProgramCppReturnIntArray(Float[] val) {
         log.info("Code runner cpp return");
         ArrayOfFloats resultTemplate=new ArrayOfFloats();
@@ -174,7 +174,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     void runProgramCppReturnStringDoubleArray(String[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfStrings resultTemplate=new DoubleArrayOfStrings();
@@ -205,7 +205,7 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void runProgramCppReturnIntDoubleArray(Integer[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfIntegers resultTemplate=new DoubleArrayOfIntegers();
@@ -238,7 +238,7 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void runProgramCppReturnFloatDoubleArray(Float[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfFloats resultTemplate=new DoubleArrayOfFloats();

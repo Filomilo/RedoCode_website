@@ -66,7 +66,7 @@ class SaveNewExerciseHandlerTest {
         boolean upperCaseInput=true;
         Range xArrayRange= new Range(1F,20F);
         Range yArrayRange=new Range(1F,20F);
-        Time timeForTask=new Time(1000);
+        long timeForTask=60;
         Long timeForExecution=1000L;
         HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
         {{
@@ -114,7 +114,7 @@ class SaveNewExerciseHandlerTest {
                 .xArrayRange(xArrayRange)
                 .yArrayRange(yArrayRange)
                 .testsToRun(tests)
-                .timeForTask(timeForTask)
+                .timeForTaskMin(timeForTask)
                 .timeForExecution(timeForExecution)
                 .build();
 
