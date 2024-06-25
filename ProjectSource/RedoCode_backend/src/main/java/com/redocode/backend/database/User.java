@@ -86,7 +86,8 @@ public class User implements Comparable {
 
     @Override
     public int hashCode() {
-        return this.type==USER_TYPE.UNAUTHENTICATED?Objects.hashCode(this.sessionID):Objects.hashCode(this.id);
+            return Objects.hashCode(this.sessionID);
+//        return this.type==USER_TYPE.UNAUTHENTICATED?Objects.hashCode(this.sessionID):Objects.hashCode(this.id);
     }
 
     @Override
@@ -104,5 +105,6 @@ public class User implements Comparable {
     public USER_TYPE getUserType() {
             return type;
     }
+
 
 }

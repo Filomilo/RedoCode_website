@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.sql.Time;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,10 +58,13 @@ class MultipleCodeTestHandlerTest {
         ExerciseCreationRequest exerciseCreationRequest= ExerciseCreationRequest.builder()
                 .ram(1024)
                 .Title("test")
+                .Description("desription")
                 .user(user)
                 .testsToRun(tests)
                 .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .outputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
+                .timeForTask(new Time(1000))
+                .timeForExecution(1000L)
                 .solutionCodes(
                         new HashMap<CODE_RUNNER_TYPE, String>() {{
                             put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +

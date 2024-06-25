@@ -1,12 +1,16 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseCreatorValidationMessage;
+import com.redocode.backend.Messages.UtilContainers.InputSize;
 import com.redocode.backend.Messages.UtilContainers.Range;
+import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.StompPrincipal;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
-import com.redocode.backend.database.Excersize;
-import com.redocode.backend.database.ExerciseRepository;
+import com.redocode.backend.VmAcces.CodeRunnersController;
+import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.security.Principal;
 import java.sql.Time;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,6 +31,12 @@ class CodeRunHandlerTest {
     CodeRunHandler codeRunHandler;
 @Autowired
     ExerciseRepository exerciseRepository;
+@Autowired
+    RedoCodeController redoCodeController;
+@Autowired
+    UsersRepository usersRepository;
+@Autowired
+    CodeRunnersController codeRunnersController;
     @Test
     void runExerciseIdCode() {
         //todo: runExerciseIdCode
@@ -48,12 +59,14 @@ class CodeRunHandlerTest {
 
     @Test
     void runExerciseCreatorValidationCodeCorrect() {
-        String userId="1";
+        String userSessionId="sessionID";
+        Long userId=1L;
 ;        Variables.VARIABLES_TYPES inputType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
         Variables.VARIABLES_TYPES ouptutType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
         int ram=1024;
         String title="Exercise";
         String decritpion="Descritpion";
+
         int amountOfAutoTests=8;
         boolean breakCharacterInput=true;
         Range lengthRange=new Range(0F,100F);
@@ -66,24 +79,76 @@ class CodeRunHandlerTest {
         Range yArrayRange=new Range(1F,20F);
         Time timeForTask= new Time(20000);
         int amountOfAutoTask=8;
+
         Long maxExecutionTimeMS=1000L;
 
+        HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
+        {{
+            put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
+                    "#include <vector>\n" +
+                    "#include <string>\n" +
+                    "\n" +
+                    "std::vector<std::vector<std::string>> solution(std::vector<std::vector<std::string>> in)\n" +
+                    "{\n" +
+                    "    return in;\n" +
+                    "}");
+            put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return array;}");
+        }};
+        ExerciseTests[] tests= new ExerciseTests[]{
+                ExerciseTests.builder()
+                        .expectedOutput("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
+                        .input("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
+                        .excersize(null)
+                        .build(),
+                ExerciseTests.builder()
+                        .expectedOutput("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"],[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
+                        .input("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"],[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
+                        .excersize(null)
+                        .build(),
+
+        };
+
+
+        int amountOfExeciseBeforeAdding=exerciseRepository.findAll().size();
 
 
 
         ExerciseCreatorValidationMessage creatorValidationMessage=
                 ExerciseCreatorValidationMessage.builder()
+         .title(title)
+        .description(decritpion)
+        .inputType(inputType)
+        .outputType(ouptutType)
+        .amountOfAutoTests(amountOfAutoTests)
+        .lengthRange(lengthRange)
+        .xArrayRange(xArrayRange)
+        .yArrayRange(yArrayRange)
+        .upperCaseInput(upperCaseInput)
+        .lowerCaseInput(lowerCaseInput)
+        .numberInput(numberInput)
+        .specialCharacterInput(specialCharacterInput)
+        .breakCharacterInupt(breakCharacterInput)
+        .spaceInupt(spaceInput)
+        .timeForTask(timeForTask)
+        .timeForExecutionMs(maxExecutionTimeMS)
+        .solutionCodes(solutionCodes)
+        .manualTests(tests)
 
-
-
+        .ram(ram)
                         .build();
 
-        StompPrincipal principal=new StompPrincipal(userId);
-        codeRunHandler.runExerciseCreatorValidationCode(principal,creatorValidationMessage);
 
+        User user= usersRepository.getReferenceById(userId);
+        user.setSessionID(userSessionId);
+        StompPrincipal principal=new StompPrincipal(userSessionId);
+        redoCodeController.addConnectedUser(user);
+
+        codeRunHandler.runExerciseCreatorValidationCode(principal,creatorValidationMessage);
+        int amountOfExeciseAfterdding=exerciseRepository.findAll().size();
 
 
         Excersize lastAdded=exerciseRepository.findAll().get(exerciseRepository.findAll().size()-1);
+        assertEquals(amountOfExeciseBeforeAdding+1,amountOfExeciseAfterdding,"no new exercsie was added");
         assertEquals(title,lastAdded.getExcersizeName());
         assertEquals(inputType,lastAdded.getInputType());
         assertEquals(ouptutType,lastAdded.getOutputType());

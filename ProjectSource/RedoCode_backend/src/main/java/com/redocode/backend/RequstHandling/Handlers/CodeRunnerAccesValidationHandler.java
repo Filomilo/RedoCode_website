@@ -20,7 +20,6 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
      private static final CodeRunnersController codeRunnersController= SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
 
-
     @Override
     boolean handle(RequestBase request) throws RequestHadndlingException {
         log.info("messegeSender: " + this.messageSender);
@@ -31,7 +30,9 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
         log.info("code unner: "+ codeRunner);
         CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(request.getUser());
 
-        if(userCodeRunner.getType()==((CodeRunnerRequest) request).getCodeRunnerType() && codeRunner.getStatus()== VmStatus.RUNNING_MACHINE)
+        if(userCodeRunner!=null &&
+                userCodeRunner.getType()==((CodeRunnerRequest) request).getCodeRunnerType() &&
+                codeRunner.getStatus()== VmStatus.RUNNING_MACHINE)
         {
             log.info("CodeRunnerAccesValidationHandler: succses");
             return  true;

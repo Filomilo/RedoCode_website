@@ -1,15 +1,25 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 import com.redocode.backend.Messages.CodeRunningMessages.*;
+import com.redocode.backend.RedoCodeController;
+import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
+import com.redocode.backend.RequstHandling.ResponsibilityChainRepository;
+import com.redocode.backend.database.User;
+import com.redocode.backend.database.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
+import com.redocode.backend.Tools.ObjectMapper;
 
 import java.security.Principal;
 
 @Controller
 @Slf4j
 public class CodeRunHandler {
+
+@Autowired
+    RedoCodeController redoCodeController;
     @MessageMapping({ConnectionTargets.INrunExerciseById}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseIdCode(Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
@@ -42,7 +52,10 @@ public class CodeRunHandler {
     @MessageMapping({ConnectionTargets.INrunExerciseCreatorValidationCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseCreatorValidationCode(Principal principal, ExerciseCreatorValidationMessage exerciseCreatorValidationMessage)
     {
-        String userId=principal.getName();
-        log.info("user: "+ userId +" runs exerciseCreatorValidationMessage: "+ exerciseCreatorValidationMessage);
+        String useruuid=principal.getName();
+        log.info("user: "+ useruuid +" runs exerciseCreatorValidationMessage: "+ exerciseCreatorValidationMessage);
+        User user=redoCodeController.getUserByConnectionUUID(useruuid);
+        ExerciseCreationRequest exerciseCreationRequest= ObjectMapper.toExerciseCreationRequest(exerciseCreatorValidationMessage,user);
+        ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest);
     }
 }

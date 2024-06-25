@@ -105,7 +105,6 @@ class ResponsibilityChainRepositoryTest {
                 .Title(title)
                 .Description(decritpion)
                 .solutionCodes(solutionCodes)
-                .autoTestAmount(amountOfAutoTask)
                 .amountOfAutoTests(amountOfAutoTests)
                 .breakCharacterInput(breakCharacterInput)
                 .lengthRange(lengthRange)

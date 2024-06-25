@@ -22,7 +22,6 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     String Description;
 
     int amountOfAutoTests;
-    int autoTestAmount;
     Range lengthRange;
     Range xArrayRange;
     Range yArrayRange;
@@ -38,6 +37,8 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     Long timeForExecution;
     @NotNull
     HashMap<CODE_RUNNER_TYPE,String> solutionCodes;
+
+
 
 
 }

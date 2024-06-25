@@ -22,13 +22,12 @@ public class RedoCodeController {
     private RedoCodeController()
     {}
 
-     HashMap<User,User> connectedUsers=new HashMap<>();
-
+     HashMap<String,User> connectedUsers=new HashMap<>();
 
     public void addConnectedUser(User user)
     {
         log.info("adding connete user: "+ user);
-        connectedUsers.put(user,user);
+        connectedUsers.put(user.getSessionID(),user);
         log.info("connected user list: "+Arrays.toString(connectedUsers.keySet().toArray()));
     }
 
@@ -36,7 +35,7 @@ public class RedoCodeController {
     {
        log.info("Removing user : "+ user+ " from connected users : "+ Arrays.toString(connectedUsers.keySet().toArray()));
 
-        this.connectedUsers.remove(user);
+        this.connectedUsers.remove(user.getSessionID());
         log.info("Removed user : "+ user+ " from connected users : "+ Arrays.toString(connectedUsers.keySet().toArray()));
 
         codeRunnersController.deregisterUser(user);
@@ -49,8 +48,8 @@ public class RedoCodeController {
 
     public User getUserByConnectionUUID(String uuid)
     {
-        User usertmp=new User(uuid,null, User.USER_TYPE.UNAUTHENTICATED);
-        return (User) this.connectedUsers.get(usertmp);
+
+        return this.connectedUsers.get(uuid);
     }
 
 
@@ -58,7 +57,7 @@ public class RedoCodeController {
     @PreDestroy
 public void reset() {
         log.info("Destrying Redocode controller");
-        connectedUsers.keySet().stream()
+        connectedUsers.values().stream()
                 .forEach(user ->    codeRunnersController.deregisterUser(user));
 
         connectedUsers.clear();

@@ -50,8 +50,8 @@ class RedoCodeControllerTest {
         assertEquals(1, aomuntAfterFristAdditon);
         assertEquals(2, amountAfterSecondAddition);
         assertEquals(2, amountAfterAdingTheSame);
-        assertTrue(redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user1))));
-        assertTrue(redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user2))));
+        assertTrue(redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user1))));
+        assertTrue(redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user2))));
     }
 
     @Test
@@ -64,10 +64,10 @@ class RedoCodeControllerTest {
         redoCodeController.removeConnectedUser(user1);
         int amountOfUsersAfterRemoving = redoCodeController.connectedUsers.size();
         log.info("checking doesContainUser1: "+ Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
-        Boolean doesContainUser1 = redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user1)));
+        Boolean doesContainUser1 = redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user1)));
         log.info("checking doesContainUser2: "+ Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
 
-        Boolean doesContainUser2 = redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user2)));
+        Boolean doesContainUser2 = redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user2)));
         redoCodeController.removeConnectedUser("2");
         Boolean doesContainUser2AfterRemoval = redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user2)));
         int amountOfUsersAfterRemovingSecond = redoCodeController.connectedUsers.size();

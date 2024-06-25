@@ -103,7 +103,6 @@ class SaveNewExerciseHandlerTest {
                 .Title(title)
                 .Description(decritpion)
                 .solutionCodes(solutionCodes)
-                .autoTestAmount(amountOfAutoTests)
                 .amountOfAutoTests(amountOfAutoTests)
                 .breakCharacterInput(breakCharacterInput)
                 .lengthRange(lengthRange)

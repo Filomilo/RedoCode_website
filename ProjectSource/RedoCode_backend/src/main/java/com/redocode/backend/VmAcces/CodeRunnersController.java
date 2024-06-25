@@ -41,7 +41,7 @@ public class CodeRunnersController {
     ExerciseRepository exerciseRepository;
     static final int maxAmountOfVm=5; //todo move to global config
 
-    private Map<User, CodeRunner> usersCodeRunenrs=new Hashtable<>(maxAmountOfVm);
+    private HashMap<User, CodeRunner> usersCodeRunenrs=new HashMap<>(maxAmountOfVm);
     private Set<CodeRunnerRequest> requestMessageSet=new HashSet<>();
     PriorityBlockingQueue<CodeRunnerRequest> requestQueue=new  PriorityBlockingQueue<>();
 
@@ -157,6 +157,10 @@ public class CodeRunnersController {
                 "------"+
                 Arrays.toString(this.usersCodeRunenrs.keySet().toArray())
         );
+
+        log.info("user hash: "+ user.hashCode());
+        log.info("hashmap hashes: "+Arrays.toString(this.usersCodeRunenrs.keySet().stream().map(a-> a.hashCode()).toArray()));
+
         return this.usersCodeRunenrs.get(user);
     }
 
