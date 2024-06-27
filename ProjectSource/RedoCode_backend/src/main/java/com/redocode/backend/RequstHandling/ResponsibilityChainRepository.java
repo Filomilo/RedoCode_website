@@ -6,21 +6,19 @@ public class ResponsibilityChainRepository {
 
 
     public static final BaseRequestHandler testSingleCode=
-            new CodeRunnerAccesValidationHandler()
-            .setNextRequestHandler(
-                    new CodeTestHandler()
-            );
-//todo create builder for chain request hadnlers
+            new ResposibilityChainBuilder(new CodeRunnerAccesValidationHandler())
+                    .next(new CodeTestHandler())
+                    .build();
+
     public static final BaseRequestHandler createNewExercise=
-            new ExerciseInfoValidation().setNextRequestHandler(
-                    new AutoTestConfValidationHandler().setNextRequestHandler(
-                        new AutoTestGeneratorHandler().setNextRequestHandler(
-                                new MergeTestHandler().setNextRequestHandler(
-                                        new MultipleCodeTestHandler().setNextRequestHandler(
-                                                new SaveNewExerciseHandler()
-                                        )
-                                )
-                        )
-                    )
-            );
+        new ResposibilityChainBuilder(new ExerciseInfoValidation())
+                .next(new AutoTestGeneratorHandler())
+                .next(new MergeTestHandler())
+                .next( new MultipleCodeTestHandler())
+                .next(new SaveNewExerciseHandler())
+                .build();
+    public static final BaseRequestHandler runCodeWithSelfTest=
+            new ResposibilityChainBuilder(new CodeRunnerAccesValidationHandler())
+                    .next(new CodeTestHandler())
+                    .build();
 }

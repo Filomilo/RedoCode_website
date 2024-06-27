@@ -24,7 +24,7 @@ public class CodeRunHandler {
     public void runExerciseIdCode(Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         String userId=principal.getName();
-        log.info("user: "+ userId +" runs exerciseIdToRunMessage: "+ exerciseIdToRunMessage);
+        log.info("user: "+ userId +" runs runExerciseIdCode: "+ exerciseIdToRunMessage);
 //        codeRunnersController.runCode(
 //                redoCodeController.getUserById(userId),
 //                exerciseIdToRunMessage
@@ -34,7 +34,7 @@ public class CodeRunHandler {
     public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage)
     {
         String userId=principal.getName();
-        log.info("user: "+ userId +" runs rawCodeToRunMessage: "+ rawCodeToRunMessage);
+        log.info("user: "+ userId +" runs runRawCode: "+ rawCodeToRunMessage);
     }
     @MessageMapping({ConnectionTargets.INrunExercsieIdValidationCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExercsieIdValidationCode(Principal principal, ExerciseIdToRunMessage exerciseIdValidationMessage)
@@ -46,14 +46,15 @@ public class CodeRunHandler {
     public void runExercsieTestsCode(Principal principal, ExerciseTestToRunMesseage exerciseTestToRunMesseage)
     {
         String userId=principal.getName();
-        log.info("user: "+ userId +" runs runExercsieIdValidationCode: "+ exerciseTestToRunMesseage);
+        log.info("user: "+ userId +" runs runExercsieTestsCode: "+ exerciseTestToRunMesseage);
+
     }
 
     @MessageMapping({ConnectionTargets.INrunExerciseCreatorValidationCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseCreatorValidationCode(Principal principal, ExerciseCreatorValidationMessage exerciseCreatorValidationMessage)
     {
         String useruuid=principal.getName();
-        log.info("user: "+ useruuid +" runs exerciseCreatorValidationMessage: "+ exerciseCreatorValidationMessage);
+        log.info("user: "+ useruuid +" runs runExerciseCreatorValidationCode: "+ exerciseCreatorValidationMessage);
         User user=redoCodeController.getUserByConnectionUUID(useruuid);
         ExerciseCreationRequest exerciseCreationRequest= ObjectMapper.toExerciseCreationRequest(exerciseCreatorValidationMessage,user);
         ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest);

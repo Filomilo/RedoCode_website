@@ -187,9 +187,38 @@ assertDoesNotThrow(
         assertEquals(exerciseBefore,exerciseAfter);
     }
 
+    @Test
+    void testIncorrectSolutionJsExerciseCreation()
+    {
+        int exerciseBefore=exerciseRepository.findAll() .size();
+        ExerciseCreationRequest exerciseCreationRequest= this.exerciseCreationRequestCorrect;
+        HashMap<CODE_RUNNER_TYPE,String> solutions=solutionCodesCorrect;
+        solutions.put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return 0;}");
+        exerciseCreationRequest.setSolutionCodes(solutions);
+        assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        int exerciseAfter=exerciseRepository.findAll() .size();
+        assertEquals(exerciseBefore,exerciseAfter);
+    }
 
-
-
+    @Test
+    void testIncorrectSolutionCppExerciseCreation()
+    {
+        int exerciseBefore=exerciseRepository.findAll() .size();
+        ExerciseCreationRequest exerciseCreationRequest= this.exerciseCreationRequestCorrect;
+        HashMap<CODE_RUNNER_TYPE,String> solutions=solutionCodesCorrect;
+        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
+                "#include <vector>\n" +
+                "#include <string>\n" +
+                "\n" +
+                "std::vector<std::vector<std::string>> solution(std::vector<std::vector<std::string>> in)\n" +
+                "{\n" +
+                "    return null;\n" +
+                "}");
+        exerciseCreationRequest.setSolutionCodes(solutions);
+        assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        int exerciseAfter=exerciseRepository.findAll() .size();
+        assertEquals(exerciseBefore,exerciseAfter);
+    }
 
 
 

@@ -51,7 +51,11 @@ public class CodeTestHandler extends  BaseRequestHandler {
             log.error("json procesign error: "+ ex.getMessage());
             throw new RequestHadndlingException("unable to prooces json format");
         }
-
+        catch (NullPointerException ex)
+        {
+            log.error("varaible NULL: "+ ex.getMessage());
+            throw new RequestHadndlingException("returned value is null_");
+        }
 
 
 
