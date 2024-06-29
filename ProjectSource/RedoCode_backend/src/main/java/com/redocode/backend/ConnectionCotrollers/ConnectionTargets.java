@@ -8,4 +8,6 @@ public class ConnectionTargets {
     public final static String INrunExerciseCreatorValidationCode="/CodeRun/ExerciseCreationValidation";
 
     public final static String OUTNodeStatusUpdate="/NodeStatusUpdate";
+
+    public final static  String StompHealthCheck="/Health";
 }

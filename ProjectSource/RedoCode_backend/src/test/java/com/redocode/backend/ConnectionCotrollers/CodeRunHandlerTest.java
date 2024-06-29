@@ -176,4 +176,8 @@ class CodeRunHandlerTest {
         assertEquals(maxExecutionTimeMS,lastAdded.getMaxExecutionTimeMS());
 
     }
+
+    @Test
+    void testRunExerciseIdCode() {
+    }
 }

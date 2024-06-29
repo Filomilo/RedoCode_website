@@ -16,6 +16,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
+
 //        config.setUserDestinationPrefix("/user");
     }
 
@@ -25,7 +26,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setAllowedOriginPatterns("*")
                 .setHandshakeHandler(new CustomHandshakeHandler())
                 .addInterceptors()
-//                .withSockJS()
+
+               //  .withSockJS() //there were problems when connecting iwth vue
+
+        ;
+        registry.addEndpoint("/web-socket")
+                .setAllowedOriginPatterns("*")
+                .setHandshakeHandler(new CustomHandshakeHandler())
+                .addInterceptors()
+
+          .withSockJS() //there were problems when connecting iwth vue
+
         ;
     }
 

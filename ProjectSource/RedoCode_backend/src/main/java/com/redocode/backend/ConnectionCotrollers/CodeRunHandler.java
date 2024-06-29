@@ -1,9 +1,12 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 import com.redocode.backend.Messages.CodeRunningMessages.*;
+import com.redocode.backend.Messages.CoderunnerStateMessage;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.ResponsibilityChainRepository;
+import com.redocode.backend.VmAcces.CodeRunnerState;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.database.User;
 import com.redocode.backend.database.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,8 @@ public class CodeRunHandler {
 
 @Autowired
     RedoCodeController redoCodeController;
+@Autowired
+MessageSender messageSender;
     @MessageMapping({ConnectionTargets.INrunExerciseById}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseIdCode(Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
@@ -29,6 +34,8 @@ public class CodeRunHandler {
 //                redoCodeController.getUserById(userId),
 //                exerciseIdToRunMessage
 //        );
+
+        messageSender.sendMessage(principal.getName(), CodeRunnersConnectionController.codeRunnerStateEndPoint, CoderunnerStateMessage.builder().state(CodeRunnerState.ACTIVE).codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER).build() );
     }
     @MessageMapping({ConnectionTargets.INrunRawCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage)
