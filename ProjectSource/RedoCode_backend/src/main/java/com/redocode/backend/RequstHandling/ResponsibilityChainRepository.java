@@ -5,14 +5,10 @@ import com.redocode.backend.Messages.ExecutionResponses.ExecutionResponseBase;
 import com.redocode.backend.RequstHandling.Handlers.*;
 import com.redocode.backend.RequstHandling.Requests.ResposibilityChainBuilder;
 import com.redocode.backend.SpringContextUtil;
-import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Slf4j
 public class ResponsibilityChainRepository {
@@ -40,7 +36,7 @@ public class ResponsibilityChainRepository {
         new ResposibilityChainBuilder()
                 .setMessagehandler(sendExecutionMessage)
                 .setSteps()
-                .next(new AuthenticaredUsetValidationHandler())
+                .next(new AuthenticatedUserValidationHandler())
                 .next(new ExerciseInfoValidation())
                 .next(new AutoTestGeneratorHandler())
                 .next(new MergeTestHandler())

@@ -24,16 +24,6 @@ public abstract class MessageRequestHandler extends BaseRequestHandler {
 
 //todo: to remvoe classs
 
-    MessageSender messageSender= SpringContextUtil.getApplicationContext().getBean(MessageSender.class);
-    private Boolean isSilent=false;
-
-    public void sendChainNodeStatus(User user, ChainNodeStatusMessage statusMessage)
-    {
-        if(!isSilent)
-        {
-            messageSender.sendMessage(user, ConnectionTargets.OUTNodeStatusUpdate,statusMessage);
-        }
-    }
 
     void exceptionHandling(Exception exception) {
         log.info("Expection on Test: "+ exception.getMessage());

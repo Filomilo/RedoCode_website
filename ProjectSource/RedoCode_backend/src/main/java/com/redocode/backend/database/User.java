@@ -38,15 +38,16 @@ public class User implements Comparable {
         this(uuid,null,USER_TYPE.UNAUTHENTICATED);
     }
 
+    @Getter
+    @AllArgsConstructor
     public enum USER_TYPE {
         ADMIN(0),
         PREMIUM(1),
         AUTHENTICATED(2),
         UNAUTHENTICATED(3),
         ;
+        private int _nmType;
 
-        USER_TYPE(int i) {
-        }
 
     }
 
