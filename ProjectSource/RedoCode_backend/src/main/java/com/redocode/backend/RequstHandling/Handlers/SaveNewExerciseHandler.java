@@ -49,12 +49,12 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
         if(exerciseCreationRequest.getXArrayRange()!=null)
         {
             excersize.setArrayXLengthRangeMax(exerciseCreationRequest.getXArrayRange().getMax().intValue());
-            excersize.setArrayXLengthRangeMax(exerciseCreationRequest.getXArrayRange().getMin().intValue());
+            excersize.setArrayXLengthRangeMin(exerciseCreationRequest.getXArrayRange().getMin().intValue());
         }
         if(exerciseCreationRequest.getYArrayRange()!=null)
         {
             excersize.setArrayYLengthRangeMax(exerciseCreationRequest.getYArrayRange().getMax().intValue());
-            excersize.setArrayYLengthRangeMax(exerciseCreationRequest.getYArrayRange().getMin().intValue());
+            excersize.setArrayYLengthRangeMin(exerciseCreationRequest.getYArrayRange().getMin().intValue());
         }
 
         for (ExerciseTests test: exerciseCreationRequest.getTestsToRun()
@@ -71,8 +71,9 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
         if(user.getUserName()==null) {
             user.setUserName("tmp");
             usersRepository.save(user);
-            exerciseRepository.save(excersize);
+
         }
+        exerciseRepository.save(excersize);
         this.nodeUpdate(request,"saved to database", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
         return true;

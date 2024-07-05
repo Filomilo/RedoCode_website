@@ -1,6 +1,7 @@
 package com.redocode.backend.Messages.UtilContainers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Value;
@@ -22,7 +23,9 @@ import java.sql.SQLException;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class Range { //todo: change to postgres database  type mappign
+    @NotNull
     Float min;
+    @NotNull
     Float max;
 
     public Range(Integer min, Integer max) {
