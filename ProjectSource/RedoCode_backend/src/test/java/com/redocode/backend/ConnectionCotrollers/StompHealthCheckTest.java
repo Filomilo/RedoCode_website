@@ -1,5 +1,6 @@
 package com.redocode.backend.ConnectionCotrollers;
 
+import com.redocode.backend.WebSocketTestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,47 +24,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class StompHealthCheckTest {
+class StompHealthCheckTest extends WebSocketTestBase {
     WebSocketStompClient stompClient;
     static final String WEBSOCKET_TOPIC_HEALTH_RESPONSE = "/user/topic/health";
     static final String WEBSOCKET_TOPIC_HEALTH_DESTIN = "/app/Health";
-    static final String WEBSOCKET_URI = "ws://localhost:8080/web-socket";
-    BlockingQueue<String> blockingQueue;
     @BeforeEach
     public void setup() {
 
-        blockingQueue = new LinkedBlockingDeque<>();
-        stompClient =  new WebSocketStompClient(new SockJsClient(
-                asList(new WebSocketTransport(new StandardWebSocketClient()))
-        ));
+        assertDoesNotThrow(()->{
+            super.setup();
+        });
+
     }
 
     @Test
     public void healthCheck() throws Exception {
-        StompSession session = stompClient
-                .connect(WEBSOCKET_URI, new StompSessionHandlerAdapter() {})
-                .get(1, SECONDS);
-        session.subscribe(WEBSOCKET_TOPIC_HEALTH_RESPONSE, new DefaultStompFrameHandler());
-
+        subscribe(WEBSOCKET_TOPIC_HEALTH_RESPONSE);
         String message = "MESSAGE TEST";
         session.send(WEBSOCKET_TOPIC_HEALTH_DESTIN, message.getBytes());
-//
         assertEquals(message, blockingQueue.poll(1, SECONDS));
     }
 
 
-    class DefaultStompFrameHandler implements StompFrameHandler {
-        @Override
-        public Type getPayloadType(StompHeaders stompHeaders) {
-            log.info("getPayloadType: "+ stompHeaders.toString());
-            return byte[].class;
-        }
 
-        @Override
-        public void handleFrame(StompHeaders stompHeaders, Object o) {
-            log.info("handleFrame: "+ stompHeaders.toString());
-            blockingQueue.offer(new String((byte[]) o));
-        }
-    }
 
 }

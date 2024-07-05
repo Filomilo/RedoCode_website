@@ -1,6 +1,7 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
+import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
@@ -40,7 +41,13 @@ public class ExerciseInfoValidation extends MessageRequestHandler{
 
 
     @Override
+    String getChainNodeName() {
+        return "Validating exercise information";
+    }
+
+    @Override
     boolean handle(RequestBase request) throws RequestHadndlingException {
+        this.nodeUpdate(request,"Checking exercise information", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
         ExerciseCreationRequest exerciseCretionRequest= (ExerciseCreationRequest) request;
 
         if( !TitlePattern.matcher(exerciseCretionRequest.getTitle()).matches())
@@ -101,6 +108,9 @@ public class ExerciseInfoValidation extends MessageRequestHandler{
         {
             throw new RequestHadndlingException("there should be at least one solution to chekc");
         }
+        this.nodeUpdate(request,"Correct exercise setup", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+
+
         return true;
     }
 

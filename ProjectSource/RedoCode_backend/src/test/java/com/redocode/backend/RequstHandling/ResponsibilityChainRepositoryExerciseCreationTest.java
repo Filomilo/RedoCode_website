@@ -33,6 +33,7 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
     CodeRunnersController codeRunnersController;
     @Autowired
     ExerciseRepository exerciseRepository;
+
     User userCorrect;
 
     @BeforeEach

@@ -2,6 +2,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
+import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
@@ -13,6 +14,8 @@ import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.ExerciseTests;
 import com.redocode.backend.database.User;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ import org.springframework.stereotype.Component;
 public class CodeTestHandler extends  BaseRequestHandler {
 
    protected static final CodeRunnersController codeRunnersController= (CodeRunnersController) SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
+
+
     protected  void checkTest(ExerciseTests test,CodeTestRequest request,CodeRunner codeRunner ) throws RequestHadndlingException {
         log.info("Testing: " + test);
 
@@ -62,6 +67,11 @@ public class CodeTestHandler extends  BaseRequestHandler {
     }
 
     @Override
+    String getChainNodeName() {
+        return "testing code";
+    }
+
+    @Override
     boolean handle(RequestBase request) throws RequestHadndlingException {
 
         if(!(request instanceof CodeTestRequest))
@@ -69,6 +79,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
 
             try{
                 CodeTestRequest codeTestRequest= (CodeTestRequest) request;
+
             }
             catch (Exception ex)
             {
@@ -77,6 +88,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
             throw new RequestHadndlingException("Wrong reguest was privided to handler");
         }
         CodeTestRequest codeTestRequest= (CodeTestRequest) request;
+        this.nodeUpdate(request,"running "+codeTestRequest.getCodeRunnerType()+" tests", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);;
         CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(request.getUser());
         log.info("Staring handler: CodeTestHandler+"+"for " + codeTestRequest );
         int i=0;
@@ -92,6 +104,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
             i++;
         }
       log.info("CodeTestHandler handles: "+ codeTestRequest);
+        this.nodeUpdate(request,"correct "+codeTestRequest.getCodeRunnerType()+" tests", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
       return true;
     }

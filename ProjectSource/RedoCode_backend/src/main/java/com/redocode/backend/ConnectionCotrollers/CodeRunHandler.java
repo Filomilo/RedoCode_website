@@ -64,6 +64,8 @@ MessageSender messageSender;
         log.info("user: "+ useruuid +" runs runExerciseCreatorValidationCode: "+ exerciseCreatorValidationMessage);
         User user=redoCodeController.getUserByConnectionUUID(useruuid);
         ExerciseCreationRequest exerciseCreationRequest= ObjectMapper.toExerciseCreationRequest(exerciseCreatorValidationMessage,user);
-        ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest);
+        log.info("createNewExercise chain start");
+
+        ResponsibilityChainRepository.createNewExercise.startChain(exerciseCreationRequest);
     }
 }

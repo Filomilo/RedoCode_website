@@ -1,6 +1,7 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
+import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
@@ -16,12 +17,21 @@ import org.springframework.stereotype.Component;
 
 
 @Slf4j
+
 public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
      private static final CodeRunnersController codeRunnersController= SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
 
+
+    @Override
+    String getChainNodeName() {
+        return "validating access to coderunner";
+    }
+
     @Override
     boolean handle(RequestBase request) throws RequestHadndlingException {
+        this.nodeUpdate(request,"validating access to "+ ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+
         log.info("messegeSender: " + this.messageSender);
         log.info("CodeRunnerAccesValidationHandler hadnling: "+ request+" from "+request.getUser());
 
@@ -35,11 +45,14 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
                 codeRunner.getStatus()== VmStatus.RUNNING_MACHINE)
         {
             log.info("CodeRunnerAccesValidationHandler: succses");
+            this.nodeUpdate(request,"Validated access to "+ ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+
             return  true;
         }
             else {
             log.info("CodeRunnerAccesValidationHandler: FAilure");
             return false;
         }
+
     }
 }

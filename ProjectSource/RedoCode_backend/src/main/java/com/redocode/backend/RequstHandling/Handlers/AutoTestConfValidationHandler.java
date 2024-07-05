@@ -1,14 +1,24 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
+import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AutoTestConfValidationHandler extends MessageRequestHandler{
+
+
+    @Override
+    String getChainNodeName() {
+        return "depracted";
+    }
+
     @Override
     boolean handle(RequestBase request) throws RequestHadndlingException {
+        this.nodeUpdate(request,"Handling information", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+
         if(!(request instanceof ExerciseCreationRequest))
         {
 
@@ -33,6 +43,7 @@ public class AutoTestConfValidationHandler extends MessageRequestHandler{
         {
             throw new RequestHadndlingException("Wrong amount o auto test");
         }
+        this.nodeUpdate(request,"correct Auto test", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
         // todo Fill with test based o creatro panel in gui
         return true;
