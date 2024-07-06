@@ -1,100 +1,94 @@
-import {
-  requstDefaultVmMachine,
-  sendToExerciseCodeTests,
-  sendToRawCodeRun,
-  subcribeToVmStatus,
-  subscribeToCodeResults
-} from '@/config/CodeRunnerConnection'
-import CoderunnerState from '@/types/CodeRunnerState'
-import CodeRunnerState from '@/types/CodeRunnerState'
-import ExerciseParametersType from '@/types/ExerciseParametersType'
-import RangeType from '@/types/RangeType'
-import VarSize from '@/types/VarSize'
-import VarType from '@/types/VarType'
-import { computed, ref, Ref } from 'vue'
-import type ProgramResult from '@/types/ProgramResults'
-import { useActiveUserStore } from '@/stores/ActiveUserStore'
-import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
-import ExerciseCreatorController from './ExerciseCreatorControlller'
-import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
-import RawCodeToRunMessage from '@/types/ApiMesseages/RawCodeToRunMessage'
 
-export default class CodeRunnerConnectionControler {
-  codeRunnerActive: CodeRunnerState = {
-    codeRunnerType: '',
-    state: ''
-  }
+// import CoderunnerState from '@/types/CodeRunnerState'
+// import CodeRunnerState from '@/types/CodeRunnerState'
+// import ExerciseParametersType from '@/types/ExerciseParametersType'
+// import RangeType from '@/types/RangeType'
+// import VarSize from '@/types/VarSize'
+// import VarType from '@/types/VarType'
+// import { computed, ref, Ref } from 'vue'
+// import type ProgramResult from '@/types/ProgramResults'
+// import { useActiveUserStore } from '@/stores/ActiveUserStore'
+// import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+// import ExerciseCreatorController from './ExerciseCreatorControlller'
+// import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
+// import RawCodeToRunMessage from '@/types/ApiMesseages/RawCodeToRunMessage'
 
-  disconnetWithCodeRunner = () => {
-    console.log('setting code unner to none')
-    this.codeRunnerActive = {
-      state: '',
-      codeRunnerType: ''
-    }
-  }
+// export default class CodeRunnerConnectionControler {
+//   codeRunnerActive: CodeRunnerState = {
+//     codeRunnerType: '',
+//     state: ''
+//   }
 
-  CodeRunnerResultsCallBack = (res: ProgramResult[]) => {
-    // isAwaitingCompilation.value = false
+//   disconnetWithCodeRunner = () => {
+//     console.log('setting code unner to none')
+//     this.codeRunnerActive = {
+//       state: '',
+//       codeRunnerType: ''
+//     }
+//   }
 
-    console.log('new code runner resutls: ' + JSON.stringify(res))
-    // exerciseData.value.tests.forEach((test: ExerciseTest, index: number) => {
-    //   test.consoleOutput =
-    //     res[index].consoleOutput.output === null ? '' : res[index].consoleOutput.output
-    //   test.errorOutput =
-    //     res[index].consoleOutput.errorOutput === null ? '' : res[index].consoleOutput.errorOutput
-    //   test.output = res[index].variables
-    //   test.isSolved = res[index].variables === test.expectedOutput
-    // })
-  }
+//   CodeRunnerResultsCallBack = (res: ProgramResult[]) => {
+//     // isAwaitingCompilation.value = false
 
-  requestCodeRunner(codeRunnerName: string) {
-    this.codeRunnerActive.state = 'AWAITING'
-    subcribeToVmStatus((state: CoderunnerState) => {
-      console.log('callback: ' + JSON.stringify(state))
-      this.codeRunnerActive = state
-      // console.log("  this.codeRunnerActive: "+ JSON.stringify(  this.codeRunnerActive))
-      // console.log("doesHaveACtiveToCodeRunner:: "+ doe)
-    })
-    subscribeToCodeResults(this.CodeRunnerResultsCallBack)
-    requstDefaultVmMachine(codeRunnerName)
-  }
+//     console.log('new code runner resutls: ' + JSON.stringify(res))
+//     // exerciseData.value.tests.forEach((test: ExerciseTest, index: number) => {
+//     //   test.consoleOutput =
+//     //     res[index].consoleOutput.output === null ? '' : res[index].consoleOutput.output
+//     //   test.errorOutput =
+//     //     res[index].consoleOutput.errorOutput === null ? '' : res[index].consoleOutput.errorOutput
+//     //   test.output = res[index].variables
+//     //   test.isSolved = res[index].variables === test.expectedOutput
+//     // })
+//   }
 
-  // console.log("connecting to vm mahicne state callback");
+//   requestCodeRunner(codeRunnerName: string) {
+//     this.codeRunnerActive.state = 'AWAITING'
+//     subcribeToVmStatus((state: CoderunnerState) => {
+//       console.log('callback: ' + JSON.stringify(state))
+//       this.codeRunnerActive = state
+//       // console.log("  this.codeRunnerActive: "+ JSON.stringify(  this.codeRunnerActive))
+//       // console.log("doesHaveACtiveToCodeRunner:: "+ doe)
+//     })
+//     subscribeToCodeResults(this.CodeRunnerResultsCallBack)
+//     requstDefaultVmMachine(codeRunnerName)
+//   }
 
-  runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
-    console.log('runExercsieTestsCode: ' + JSON.stringify(exerciseCreatorController))
-    const message: ExerciseTestToRunMesseage = {
-      code: exerciseCreatorController.solutions[this.codeRunnerActive.codeRunnerType],
-      manualTests:
-        exerciseCreatorController.manualTestsSolutions[this.codeRunnerActive.codeRunnerType],
-      inputType: exerciseCreatorController.inputType,
-      inputSize: exerciseCreatorController.inputSize,
-      outputType: exerciseCreatorController.outputType,
-      outputSize: exerciseCreatorController.outputSize,
-      amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-      autoTestminValue: exerciseCreatorController.autoTestminValue,
-      autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
-      lengthRange: exerciseCreatorController.lengthRange,
-      xArrayRange: exerciseCreatorController.xArrayRange,
-      yArrayRange: exerciseCreatorController.yArrayRange,
-      upperCaseInput: exerciseCreatorController.upperCaseInput,
-      lowerCaseInput: exerciseCreatorController.lowerCaseInput,
-      numberInput: exerciseCreatorController.numberInput,
-      specialCharacterInput: exerciseCreatorController.specialCharacterInput,
-      breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
-      spaceInupt: exerciseCreatorController.spaceInupt
-    }
+//   // console.log("connecting to vm mahicne state callback");
 
-    sendToExerciseCodeTests(message)
-  }
-  runRawCode = (code: string) => {
-    const message: RawCodeToRunMessage = {
-      code: code
-    }
-    console.log('runRawCode: ' + JSON.stringify(message))
-    sendToRawCodeRun(message)
-  }
-}
+//   runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
+//     console.log('runExercsieTestsCode: ' + JSON.stringify(exerciseCreatorController))
+//     const message: ExerciseTestToRunMesseage = {
+//       code: exerciseCreatorController.solutions[this.codeRunnerActive.codeRunnerType],
+//       manualTests:
+//         exerciseCreatorController.manualTestsSolutions[this.codeRunnerActive.codeRunnerType],
+//       inputType: exerciseCreatorController.inputType,
+//       inputSize: exerciseCreatorController.inputSize,
+//       outputType: exerciseCreatorController.outputType,
+//       outputSize: exerciseCreatorController.outputSize,
+//       amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
+//       autoTestminValue: exerciseCreatorController.autoTestminValue,
+//       autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
+//       lengthRange: exerciseCreatorController.lengthRange,
+//       xArrayRange: exerciseCreatorController.xArrayRange,
+//       yArrayRange: exerciseCreatorController.yArrayRange,
+//       upperCaseInput: exerciseCreatorController.upperCaseInput,
+//       lowerCaseInput: exerciseCreatorController.lowerCaseInput,
+//       numberInput: exerciseCreatorController.numberInput,
+//       specialCharacterInput: exerciseCreatorController.specialCharacterInput,
+//       breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
+//       spaceInupt: exerciseCreatorController.spaceInupt
+//     }
+
+//     sendToExerciseCodeTests(message)
+//   }
+//   runRawCode = (code: string) => {
+//     const message: RawCodeToRunMessage = {
+//       code: code
+//     }
+//     console.log('runRawCode: ' + JSON.stringify(message))
+//     sendToRawCodeRun(message)
+//   }
+// }
 
 // const ApiConnectionStore=useApiConnectionStore();
 

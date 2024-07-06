@@ -21,7 +21,7 @@
           :codeContianer="codeRunnerStore.exerciseCreatorController.solutions"
           :starting="
             codeRunnerStore.exerciseCreatorController.solutions[
-              ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+              ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
             ]
           "
           :codeContainerUpdate="codeUpdate"
@@ -30,7 +30,7 @@
           :ManualTests="
             codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
               EditorLanguagesMap[
-                ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+                ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
               ]
             ]
           "
@@ -63,14 +63,14 @@ const codeUpdate = (code: string) => {
   console.log('codee update: ' + code)
   // codeRunnerStore.exerciseCreatorController.solutions
   codeRunnerStore.exerciseCreatorController.solutions[
-    ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+    ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
   ] = code
   console.log('update: ' + JSON.stringify(codeRunnerStore.exerciseCreatorController.solutions))
 }
 
 const onRunCode = () => {
   console.log('On run code')
-  ApiConnectionStore.codeRunnerConnectionControler.runExercsieTestsCode(
+  ApiConnectionStore.codeRunnerConnection .runExercsieTestsCode(
     codeRunnerStore.exerciseCreatorController
   )
 }

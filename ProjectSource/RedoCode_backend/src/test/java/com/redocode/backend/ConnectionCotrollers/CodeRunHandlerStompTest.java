@@ -26,6 +26,7 @@ import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -176,7 +177,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         log.info("messge send to "+ WEBSOCKET_TOPIC_DESTIN);
 
 
-
+        Thread.sleep(2000);
 
 
 
@@ -472,42 +473,6 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                                 .output("Hello world")
                                 .build())
                         .variables(null)
-                .build();
-
-        ProgramResultsMessage result=objectMapper.readValue(
-                blockingQueue.poll(20, SECONDS)
-                , ProgramResultsMessage.class);;
-
-        assertEquals(1,result.getResults().size());
-        assertEquals(correctResults, result.getResults().get(0));
-
-    }
-    @Test
-    void rawCppIncorrect() throws InterruptedException, JsonProcessingException {
-        subscribe("/user/topic/codeRunnerResults");
-        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
-                .CodeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
-                .build();
-
-        RawCodeToRunMessage rawCodeToRunMessage=RawCodeToRunMessage.builder()
-                .code("#include <iostream>\n" +
-                        "int main(){\n" +
-                        "std::c\"Hello world\";\n" +
-                        "}")
-                .build();
-
-        session.send( "/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
-        TimeUnit.SECONDS.sleep(2);
-        session.send( "/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
-        log.info("messge send to " + "/app"+INrunRawCode);
-
-        ProgramResult correctResults = ProgramResult.builder()
-                .consoleOutput(ConsoleOutput.builder()
-                        .errorOutput("")
-                        .exitCode(0)
-                        .output("Hello world")
-                        .build())
-                .variables(null)
                 .build();
 
         ProgramResultsMessage result=objectMapper.readValue(

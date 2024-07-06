@@ -6,15 +6,9 @@ import axios from 'axios'
 import '../interceptors/axios'
 import { languageChoices } from '../config/Data'
 import ExerciseTest from '@/types/ExcericseTest'
-import { connectStomp, onConnectStomp } from '@/controllers/StompApiConnection'
 import type ProgramResult from '@/types/ProgramResults'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import ExerciseCreatorController from '@/controllers/ExerciseCreatorControlller'
-import {
-  requstDefaultVmMachine,
-  subcribeToVmStatus,
-  subscribeToCodeResults
-} from '../config/CodeRunnerConnection'
 import CoderunnerState from '../types/CodeRunnerState'
 import { IFrame } from '@stomp/stompjs'
 import VarType from '@/types/VarType'
@@ -22,6 +16,7 @@ import VarSize from '@/types/VarSize'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { isNullOrUndef } from 'chart.js/helpers'
+
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
 
@@ -69,14 +64,14 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const startingMethod = computed(() => {
     if (exerciseData.value.id != null) {
       console.log('--------------------------id is not null')
-      if (apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.state === 'ACTIVE') {
+      if (apiConnectionStore.codeRunnerConnection.codeRunnerState.state === 'ACTIVE') {
         console.log(
           '--------------------------codeRunnerType is not UNIDENTIFIED: ' +
-            JSON.stringify(apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive)
+            JSON.stringify(apiConnectionStore.codeRunnerConnection.codeRunnerState)
         )
         return exerciseData.value.startingFunction[
           dropDownLangaugeMap[
-            apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+            apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
           ]
         ]
       }

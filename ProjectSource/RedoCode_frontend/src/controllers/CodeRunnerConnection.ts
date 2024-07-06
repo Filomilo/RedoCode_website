@@ -1,5 +1,4 @@
 import type { IMessage, IPublishParams, messageCallbackType } from '@stomp/stompjs'
-import { stompClient } from '../controllers/StompApiConnection'
 import type CodeRunnerRequestMessage from '@/types/CodeRunnerRequestMessage'
 import type CodeRunnerStateCallBack from '@/types/CodeRunnerStateCallBack'
 import type CoderunnerState from '@/types/CodeRunnerState'
@@ -15,6 +14,7 @@ import StompApiConnection from './StompApiConnection'
 import StompApiSubscription from './StompApiSubscription'
 import { computed, ComputedRef, Ref, ref } from 'vue'
 import { CodeRunnerMap } from '@/config/Data'
+import ExerciseCreatorController from './ExerciseCreatorControlller'
 
 export default class CodeRunnerConnection {
   private _stompApiConnection: StompApiConnection
@@ -61,54 +61,52 @@ export default class CodeRunnerConnection {
     this._stompApiConnection.sendMessage('/app/codeRunnerRequest', request)
   }
 
-  private readonly _vmStatusSubscription: StompApiSubscription
-}
 
-// export const sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
+  public readonly sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
 //   console.log('sendToExerciseIdRun: ' + content)
 //   const message: IPublishParams = {
 //     destination: '/app//CodeRun/ExerciseIdRun',
 //     body: JSON.stringify(content)
 //   }
 //   stompClient.publish(message)
-// }
+}
 
-// export const sendToRawCodeRun = (content: RawCodeToRunMessage) => {
+public readonly sendToRawCodeRun = (content: RawCodeToRunMessage) => {
 //   console.log('sendToRawCodeRun: ' + content)
 //   const message: IPublishParams = {
 //     destination: '/app//CodeRun/RawCodeRun',
 //     body: JSON.stringify(content)
 //   }
 //   stompClient.publish(message)
-// }
+}
 
-// export const sendToExerciseIdValidation = (content: ExerciseIdToRunMessage) => {
+public readonly sendToExerciseIdValidation = (content: ExerciseIdToRunMessage) => {
 //   console.log('sendToExerciseIdRun: ' + content)
 //   const message: IPublishParams = {
 //     destination: '/app//CodeRun/ExerciseIdValidation',
 //     body: JSON.stringify(content)
 //   }
 //   stompClient.publish(message)
-// }
+}
 
-// export const sendToExerciseCreationValidation = (content: ExercsieCreatorValidationMesage) => {
+public readonly sendToExerciseCreationValidation = (content: ExercsieCreatorValidationMesage) => {
 //   console.log('sendToExerciseCodeTests: ' + content)
 //   const message: IPublishParams = {
 //     destination: '/app//CodeRun/ExerciseCreationValidation',
 //     body: JSON.stringify(content)
 //   }
 //   stompClient.publish(message)
-// }
-// export const sendToExerciseCodeTests = (content: ExerciseTestToRunMesseage) => {
+}
+public readonly sendToExerciseCodeTests = (content: ExerciseTestToRunMesseage) => {
 //   console.log('sendToExerciseExerciseCodeTests: ' + JSON.stringify( content))
 //   const message: IPublishParams = {
 //     destination: '/app//CodeRun/ExerciseCodeTests',
 //     body: JSON.stringify(content)
 //   }
 //   stompClient.publish(message)
-// }
+}
 
-// export const subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
+public readonly subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
 //   console.log('subscribing tor results')
 //   stompClient.subscribe('/user/topic/codeRunnerResults', (mesage: IMessage) => {
 //     console.log('staee code resulr: ' + JSON.stringify(mesage.body))
@@ -121,4 +119,38 @@ export default class CodeRunnerConnection {
 //     })
 //     func(results)
 //   })
+}
+
+
+public readonly runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
+    // console.log('runExercsieTestsCode: ' + JSON.stringify(exerciseCreatorController))
+    // const message: ExerciseTestToRunMesseage = {
+    //   code: exerciseCreatorController.solutions[this.codeRunnerActive.codeRunnerType],
+    //   manualTests:
+    //     exerciseCreatorController.manualTestsSolutions[this.codeRunnerActive.codeRunnerType],
+    //   inputType: exerciseCreatorController.inputType,
+    //   inputSize: exerciseCreatorController.inputSize,
+    //   outputType: exerciseCreatorController.outputType,
+    //   outputSize: exerciseCreatorController.outputSize,
+    //   amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
+    //   autoTestminValue: exerciseCreatorController.autoTestminValue,
+    //   autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
+    //   lengthRange: exerciseCreatorController.lengthRange,
+    //   xArrayRange: exerciseCreatorController.xArrayRange,
+    //   yArrayRange: exerciseCreatorController.yArrayRange,
+    //   upperCaseInput: exerciseCreatorController.upperCaseInput,
+    //   lowerCaseInput: exerciseCreatorController.lowerCaseInput,
+    //   numberInput: exerciseCreatorController.numberInput,
+    //   specialCharacterInput: exerciseCreatorController.specialCharacterInput,
+    //   breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
+    //   spaceInupt: exerciseCreatorController.spaceInupt
+    }
+
+
+
+
+  private readonly _vmStatusSubscription: StompApiSubscription
+}
+
+
 // }

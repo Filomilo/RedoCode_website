@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed, Ref } from 'vue'
 import { useToastStore } from './ToastStore'
-import CodeRunnerConnectionControler from '@/controllers/CodeRunnerConnectionControler'
 import StompApiConnection from '@/controllers/StompApiConnection'
 import StompApiSubscription from '@/controllers/StompApiSubscription'
 import CodeRunnerConnection from '@/controllers/CodeRunnerConnection'
@@ -27,7 +26,8 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
 
   const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(stompApiConnection)
 
-  const _CodeRunnerResultsSubscriptions: StompApiConnection = stompApiConnection.subscribe(
+  // const _CodeRunnerResultsSubscriptions: StompApiConnection = 
+  stompApiConnection.subscribe(
     '/user/topic/codeRunnerResults',
     (response: Object) => {
       const results: ProgramResultsMessage = response as ProgramResultsMessage
