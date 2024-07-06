@@ -43,7 +43,7 @@ class AutoTestConfValidationHandlerTest {
                 .build();
 
         assertDoesNotThrow(()->{
-            assertTrue(autoTestConfValidationHandler.handle(exerciseCretionRequest));
+            assertNotNull(autoTestConfValidationHandler.handle(exerciseCretionRequest));
         });
     }
 

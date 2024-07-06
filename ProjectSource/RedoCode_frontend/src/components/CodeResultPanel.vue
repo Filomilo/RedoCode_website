@@ -6,14 +6,14 @@
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
         <div class="EngineStatusStatus">
-          {{ ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType }}
+          {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType }}
         </div>
       </div>
 
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Status:</div>
         <div class="EngineStatusStatus">
-          {{ ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.state }}
+          {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState.state }}
         </div>
       </div>
     </div>
@@ -66,8 +66,10 @@ const props = defineProps({
   AutoTests: { type: Array as () => ExerciseTest[], required: false }
 })
 
-const formattedConsole = computed<string>(
-  () => '>> ' + codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(/\n/g, '<br> >> ')
+const formattedConsole = computed<string>(() =>
+  '>> ' + codeRunnerStore.exerciseData.tests[0].consoleOutput == null
+    ? ''
+    : codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(/\n/g, '<br> >> ')
 )
 const formattedEror = computed<string>(() =>
   codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')

@@ -21,6 +21,7 @@ import VarType from '@/types/VarType'
 import VarSize from '@/types/VarSize'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import { useApiConnectionStore } from './ApiConnectionStore'
+import { isNullOrUndef } from 'chart.js/helpers'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
 
@@ -160,6 +161,20 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     console.log('tests after: ' + JSON.stringify(exerciseCreatorController.manualTestsSolutions))
   }
 
+  const updateTestData = (reuslts: ProgramResult[]) => {
+    console.log('----updateTestData')
+    exerciseData.value.tests.forEach((val: ExerciseTest, index: number) => {
+      val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
+        ? ''
+        : reuslts[index].consoleOutput.output
+      val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
+        ? ''
+        : reuslts[index].consoleOutput.errorOutput
+      val.output = isNullOrUndef(reuslts[index].variables) ? null : reuslts[index].variables
+      val.isSolved = val.expectedOutput === reuslts[index].variables
+    })
+  }
+
   return {
     // codeRunnerActive,
     // doesHaveACtiveToCodeRunner,
@@ -180,6 +195,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     clearTestsFromBuffer,
     addblankTestToBuffer,
     removeTestFromBuffer,
-    transferTestFromBufferTpCreator
+    transferTestFromBufferTpCreator,
+    updateTestData
   }
 })

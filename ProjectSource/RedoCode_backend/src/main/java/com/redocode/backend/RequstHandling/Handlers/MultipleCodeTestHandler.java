@@ -32,7 +32,7 @@ public class MultipleCodeTestHandler extends MessageRequestHandler{
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
 
         BaseRequestHandler  codeTester=ResponsibilityChainRepository.testSingleCode.clone();
         codeTester.setMehthodForChain((User user, ExecutionResponseBase executionResponseBase)->{
@@ -65,7 +65,7 @@ public class MultipleCodeTestHandler extends MessageRequestHandler{
         }
         this.nodeUpdate(request,"tests finished correctly", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-        return true;
+        return request;
     }
 
 

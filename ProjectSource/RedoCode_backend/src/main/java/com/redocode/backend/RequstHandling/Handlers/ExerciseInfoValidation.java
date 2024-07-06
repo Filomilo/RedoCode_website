@@ -46,7 +46,7 @@ public class ExerciseInfoValidation extends MessageRequestHandler{
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"Checking exercise information", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
         ExerciseCreationRequest exerciseCretionRequest= (ExerciseCreationRequest) request;
 
@@ -111,7 +111,7 @@ public class ExerciseInfoValidation extends MessageRequestHandler{
         this.nodeUpdate(request,"Correct exercise setup", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
 
-        return true;
+        return request;
     }
 
     @Override

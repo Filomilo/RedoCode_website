@@ -1,8 +1,10 @@
 package com.redocode.backend.Tools;
 
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseCreatorValidationMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.RawCodeToRunMessage;
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
+import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.database.User;
 import org.jetbrains.annotations.NotNull;
@@ -36,5 +38,14 @@ public class ObjectMapper {
                 .outputType(exerciseCreatorValidationMessage.getOutputType())
                 .ram(exerciseCreatorValidationMessage.getRam())
                 .build();
+    }
+
+    public static RawCodeRunRequest toRunRawCodeRequest(RawCodeToRunMessage rawCodeToRunMessage, User user, CODE_RUNNER_TYPE codeRunnerType) {
+        return RawCodeRunRequest.builder()
+                .user(user)
+                .Code(rawCodeToRunMessage.getCode())
+                .codeRunnerType(codeRunnerType)
+                .build();
+
     }
 }

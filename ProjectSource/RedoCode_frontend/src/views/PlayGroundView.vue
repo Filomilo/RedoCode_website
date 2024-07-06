@@ -5,7 +5,7 @@
       :exerciseInfo="{ title: 'no impelnted', desc: 'no implented' }"
       :languageChoices="['cpp', 'js']"
       :codeContainerUpdate="codeConatienrUpdate"
-      starting="not impented"
+      starting=""
       :onRunCode="onRunCode"
       :onSubmit="onSubmit"
     />
@@ -38,17 +38,17 @@ onMounted(() => {
 const activeCode: Ref<string> = ref('')
 
 const codeConatienrUpdate = (code: string) => {
-  toastStore.featureNotImplemented(code)
+  // toastStore.featureNotImplemented(code)
   activeCode.value = code
 }
 
 const onRunCode = () => {
-  toastStore.featureNotImplemented('onRunCode')
-  // ApiConnectionStore.codeRunnerConnectionControler.runRawCode(activeCode.value)
+  // toastStore.featureNotImplemented('onRunCode')
+  ApiConnectionStore.codeRunnerConnection.runRawCode(activeCode.value)
 }
 
 const onSubmit = () => {
-  toastStore.featureNotImplemented('onSubmit')
+  toastStore.featureNotImplemented('feature not related')
 }
 </script>
 

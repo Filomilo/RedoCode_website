@@ -90,23 +90,23 @@ public abstract class BaseRequestHandler implements IRequestHandler{
         return list;
     }
     abstract String getChainNodeName();
-    abstract boolean  handle(RequestBase request)throws RequestHadndlingException;
+    abstract RequestBase  handle(RequestBase request)throws RequestHadndlingException;
     abstract void exceptionHandling(Exception exception);
     @Override
     public boolean next(RequestBase request)  {
         log.info("next hadnler");
         try{
-        boolean result=handle(request);
+        RequestBase result=handle(request);
         log.info(getClass().getName()+ " request resutl: " + result);
-        if(result && nextRequestHandler!=null) {
+        if(result!=null && nextRequestHandler!=null) {
             log.info("  return nextRequestHandler.next(request);");
-            boolean res= nextRequestHandler.next(request);
-            log.info( nextRequestHandler.getClass().getName()+ " handling result of "+ (CodeTestRequest) request+ " resulted in "+ res);
+            boolean res= nextRequestHandler.next(result);
+//            log.info( nextRequestHandler.getClass().getName()+ " handling result of "+ (CodeTestRequest) request+ " resulted in "+ res);
             return res;
         }
         else{
             log.info("  return  result; "+ result);
-            return  result;
+            return  request!=null;
         }
     }
         catch (RequestHadndlingException e)

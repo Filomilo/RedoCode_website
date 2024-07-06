@@ -126,7 +126,7 @@ class ExerciseInfoValidationTest {
 
         AtomicBoolean res = new AtomicBoolean(false);
         assertDoesNotThrow(()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertTrue(res.get());
     }
@@ -141,7 +141,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setTitle(incorrectTitle);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -153,7 +153,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setDescription(incorrectdesc);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -166,7 +166,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setAmountOfAutoTests(incorrectAmountOfAutoTest);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -178,7 +178,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setLengthRange(incoorectLegnthRange);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -191,7 +191,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setXArrayRange(incorrectArrayRange);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -203,7 +203,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setYArrayRange(incorrectArrayRange);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -219,7 +219,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setBreakCharacterInput(false);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -233,7 +233,7 @@ class ExerciseInfoValidationTest {
       exerciseCreationRequest.setLengthRange(stringRange);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -245,7 +245,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setTimeForTaskMin(time);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -258,7 +258,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setTimeForExecution(executionTime);
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }
@@ -269,7 +269,7 @@ class ExerciseInfoValidationTest {
         exerciseCreationRequest.setSolutionCodes(new HashMap<>());
         AtomicBoolean res = new AtomicBoolean(false);
         assertThrows(RequestHadndlingException.class, ()->{
-            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect));
+            res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect)!=null);
         });
         assertFalse( res.get());
     }

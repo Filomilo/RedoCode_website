@@ -29,7 +29,7 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"validating access to "+ ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
 
@@ -47,11 +47,11 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
             log.info("CodeRunnerAccesValidationHandler: succses");
             this.nodeUpdate(request,"Validated access to "+ ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-            return  true;
+            return  request;
         }
             else {
             log.info("CodeRunnerAccesValidationHandler: FAilure");
-            return false;
+            return null;
         }
 
     }

@@ -1,7 +1,9 @@
 <!-- eslint-disable vue/no-mutating-props -->
 
 <template>
-  test: a
+  CoderunnerState:
+  {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState }}
+
   {{ JSON.stringify(props.ManualTests) }}
   {{ JSON.stringify(props.AutoTests) }}
   <Dialog
@@ -19,7 +21,7 @@
   </Dialog>
 
   <Dialog
-    :visible="ApiConnectionStore.isAwaitngCodeRunner"
+    :visible="ApiConnectionStore.codeRunnerConnection.isAwaitngCodeRunner"
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
@@ -36,7 +38,10 @@
   </Dialog>
 
   <div
-    v-if="ApiConnectionStore.doesHaveACtiveToCodeRunner || ApiConnectionStore.isAwaitngCodeRunner"
+    v-if="
+      ApiConnectionStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
+      ApiConnectionStore.codeRunnerConnection.isAwaitngCodeRunner
+    "
     class="heightLimit"
   >
     <Splitter style="height: 100%; width: 100%">

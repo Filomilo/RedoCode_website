@@ -20,6 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class CodeRunnerRequest extends RequestBase implements Comparable {
 
+    @NonNull
     protected CODE_RUNNER_TYPE codeRunnerType;
     protected int ram;
 
@@ -38,12 +39,13 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
 
         super(user);
         log.info("handling code runner request: "+ requestMessageSource );
-       switch (requestMessageSource.getCodeRunnerType())
-       {
-           case "cpp": this.codeRunnerType= CODE_RUNNER_TYPE.CPP_RUNNER; break;
-           case "js": this.codeRunnerType= CODE_RUNNER_TYPE.JS_RUNNER; break;
-           default: throw new RuntimeException("Wrong code runner specified: "+requestMessageSource.getCodeRunnerType() );
-       }
+        this.codeRunnerType=requestMessageSource.getCodeRunnerType();
+//       switch (requestMessageSource.getCodeRunnerType())
+//       {
+//           case "cpp": this.codeRunnerType= CODE_RUNNER_TYPE.CPP_RUNNER; break;
+//           case "js": this.codeRunnerType= CODE_RUNNER_TYPE.JS_RUNNER; break;
+//           default: throw new RuntimeException("Wrong code runner specified: "+requestMessageSource.getCodeRunnerType() );
+//       }
 
        this.user=user;
 

@@ -19,3 +19,7 @@ export const EditorLanguagesMap: any = {
   JS_RUNNER: 'javascript',
   UNIDENTIFIED: ''
 }
+export const CodeRunnerMap: any = {
+  cpp: 'CPP_RUNNER',
+  js: 'JS_RUNNER'
+}

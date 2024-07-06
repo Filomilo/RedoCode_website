@@ -82,7 +82,7 @@ class CodeTestHandlerTest {
                 .build();
 
 
-        assertTrue( codeRunnerAccesValidationHandler.handle(CodeRunnerRequest.builder()
+        assertNotNull( codeRunnerAccesValidationHandler.handle(CodeRunnerRequest.builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(user)
                 .build()
@@ -93,7 +93,7 @@ class CodeTestHandlerTest {
 
 
 
-       assertTrue(codeTestHandler.handle(codeTestRequest));
+        assertNotNull(codeTestHandler.handle(codeTestRequest));
 
 
     }

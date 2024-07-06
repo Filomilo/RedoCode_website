@@ -29,9 +29,7 @@
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
       :language="
-        EditorLanguagesMap[
-          ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
-        ]
+        EditorLanguagesMap[ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType]
       "
       @keyup.ctrl.enter.prevent="onShortCutRun"
       :onChange="onCodeChnaage"
@@ -83,25 +81,18 @@ watch(
 )
 
 const lnagaugeDropdownVaule = computed(
-  () =>
-    EditorLanguagesMap[
-      ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
-    ]
+  () => EditorLanguagesMap[ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType]
 )
 
 const editorLang = computed(() => {
-  return EditorLanguagesMap[
-    ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
-  ]
+  return EditorLanguagesMap[ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType]
 })
 
 const editorRef = shallowRef()
 const handleMount = (editor: any) => (editorRef.value = editor)
 
 const onChangeLnageugeDropDown = (lang: any) => {
-  if (
-    lang.value! !== ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
-  ) {
+  if (lang.value! !== ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType) {
     console.log('test change: ' + lang.value)
     confirmChangeOFCodeRuner(lang.value)
   }
@@ -116,7 +107,7 @@ const confirmChangeOFCodeRuner = (type: string) => {
     acceptLabel: 'Change',
     accept: () => {
       console.log(' confirm change: ' + type)
-      ApiConnectionStore.codeRunnerConnectionControler.requestCodeRunner(type)
+      ApiConnectionStore.codeRunnerConnection.requestCodeRunner(type)
     },
     reject: () => {
       console.log(' reject change: ' + type)

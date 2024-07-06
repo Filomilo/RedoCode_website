@@ -33,20 +33,20 @@ class AuthenticatedUserValidationHandlerTest extends WebSocketTestBase {
 
         AuthenticatedUserValidationHandler authenticatedUserValidationHandler = new AuthenticatedUserValidationHandler();
 
-           assertTrue(authenticatedUserValidationHandler.handle(
+           assertNotNull(authenticatedUserValidationHandler.handle(
                    RequestBase.builder().user(userAdmin).build()
            ));
-           assertTrue(authenticatedUserValidationHandler.handle(
+        assertNotNull(authenticatedUserValidationHandler.handle(
                    RequestBase.builder().user(userPremium).build()
            ));
-           assertTrue(authenticatedUserValidationHandler.handle(
+        assertNotNull(authenticatedUserValidationHandler.handle(
                    RequestBase.builder().user(userAuthenicated).build()
            ));
-           assertFalse(authenticatedUserValidationHandler.handle(
+        assertNull(authenticatedUserValidationHandler.handle(
                    RequestBase.builder().user(userUnathetniacted).build()
            ));
 
-            assertFalse(authenticatedUserValidationHandler.handle(
+        assertNull(authenticatedUserValidationHandler.handle(
                     RequestBase.builder().user(userUnsaved).build()
             ));
 

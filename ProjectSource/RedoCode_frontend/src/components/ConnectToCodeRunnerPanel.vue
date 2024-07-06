@@ -33,10 +33,9 @@ const chosenLangague = ref('')
 const codeRunnerStore = useCodeRunnerStore()
 const ApiConnectionStore = useApiConnectionStore()
 const connectToCodeRunner = async (codeRunner: string) => {
-  // ApiConnectionStore.codeRunnerConnectionControler.requestCodeRunner(chosenLangague.value)
+  ApiConnectionStore.codeRunnerConnection.requestCodeRunner(chosenLangague.value)
   // codeRunnerStore.increment()
   console.log('Json log: ' + JSON.stringify(codeRunnerStore))
-  ApiConnectionStore.sendHealthCheck()
 }
 const onConnectButton = () => {
   console.log('connect ' + JSON.stringify(chosenLangague.value))

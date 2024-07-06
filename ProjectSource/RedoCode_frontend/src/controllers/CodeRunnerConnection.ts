@@ -13,45 +13,56 @@ import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreato
 
 import StompApiConnection from './StompApiConnection'
 import StompApiSubscription from './StompApiSubscription'
-import { Ref, ref } from 'vue'
+import { computed, ComputedRef, Ref, ref } from 'vue'
+import { CodeRunnerMap } from '@/config/Data'
 
 export default class CodeRunnerConnection {
   private _stompApiConnection: StompApiConnection
-  
 
-  public readonly vmState:Ref<CoderunnerState>= ref({
-    codeRunnerType: "",
-    state:""
-  });
+  public readonly codeRunnerState: Ref<CoderunnerState> = ref({
+    codeRunnerType: '',
+    state: ''
+  })
+
+  public readonly doesHaveACtiveToCodeRunner: ComputedRef<Boolean> = computed(() => {
+    return this.codeRunnerState.value.state === 'ACTIVE'
+  })
+  public readonly isAwaitngCodeRunner = computed(
+    () => this.codeRunnerState.value.state == 'AWAITING'
+  )
 
   constructor(stompApiConnection: StompApiConnection) {
     this._stompApiConnection = stompApiConnection
 
-    this._vmStatusSubscription=
-  this._stompApiConnection.subscribe(
-    "/topic/codeRunnerState",
-    (message: Object)=>{
-        const state: CoderunnerState = JSON.parse(mesage.body);
-        this.vmState.value=state;
-    }
-  );
+    this._vmStatusSubscription = this._stompApiConnection.subscribe(
+      '/user/topic/codeRunnerState',
+      (message: Object) => {
+        console.log('codeRunnerState recived  ' + JSON.stringify(message))
+        const state: CoderunnerState = message as CoderunnerState
+        this.codeRunnerState.value = state
+      }
+    )
   }
 
-  public readonly requestDefaultVmMachine = (type: string) => {
+  public readonly runRawCode = (code: string) => {
+    const message: RawCodeToRunMessage = {
+      code: code
+    }
+    this._stompApiConnection.sendMessage('/app/CodeRun/RawCodeRun', message)
+    console.log('runRawCode: ' + JSON.stringify(message))
+  }
+
+  public readonly requestCodeRunner = (codeRunnerName: string) => {
+    this.codeRunnerState.value.state = 'AWAITING'
     const request: CodeRunnerRequestMessage = {
-      CodeRunnerType: type
+      CodeRunnerType: CodeRunnerMap[codeRunnerName]
     }
-    this._stompApiConnection.sendMessage('/app/codeRunnerRequest', request);
+    console.log('requestCodeRunner: ' + JSON.stringify(request))
+    this._stompApiConnection.sendMessage('/app/codeRunnerRequest', request)
   }
 
-
-  private readonly _vmStatusSubscription:StompApiSubscription;
-
-
-
+  private readonly _vmStatusSubscription: StompApiSubscription
 }
-
-
 
 // export const sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
 //   console.log('sendToExerciseIdRun: ' + content)

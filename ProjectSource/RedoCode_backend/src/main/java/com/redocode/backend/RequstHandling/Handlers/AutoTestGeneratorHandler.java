@@ -17,7 +17,7 @@ public class AutoTestGeneratorHandler extends  MessageRequestHandler{
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"generation", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
         ExerciseCreationRequest exerciseCreationRequest= (ExerciseCreationRequest) request;
@@ -25,6 +25,6 @@ public class AutoTestGeneratorHandler extends  MessageRequestHandler{
         //todo: auto test genrator
         this.nodeUpdate(request,"generated", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-                return true;
+                return request;
     }
 }

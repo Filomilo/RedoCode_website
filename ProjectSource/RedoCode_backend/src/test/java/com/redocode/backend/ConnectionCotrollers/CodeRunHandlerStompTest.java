@@ -3,15 +3,23 @@ package com.redocode.backend.ConnectionCotrollers;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redocode.backend.Messages.CodeRunnerRequestMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseCreatorValidationMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.ProgramResultsMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.RawCodeToRunMessage;
+import com.redocode.backend.Messages.CoderunnerStateMessage;
 import com.redocode.backend.Messages.ExecutionResponses.ExecutionChainScheme;
 import com.redocode.backend.Messages.ExecutionResponses.ExecutionResponseBase;
 import com.redocode.backend.Messages.ExecutionResponses.ExecutionResponseStatusUpdate;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.RedoCodeController;
+import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
 import com.redocode.backend.StompPrincipal;
+import com.redocode.backend.VmAcces.CodeRunnerState;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
+import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
+import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.WebSocketTestBase;
 import com.redocode.backend.database.*;
@@ -25,8 +33,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunExerciseCreatorValidationCode;
+import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunRawCode;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,12 +63,6 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     @Test
     void runExerciseCreatorValidationCode() throws InterruptedException, JsonProcessingException {
         subscribe("/user/topic/ExecutionResponses");
-
-
-
-
-
-
         Long userId=1L;
         Variables.VARIABLES_TYPES inputType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
         Variables.VARIABLES_TYPES ouptutType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
@@ -440,4 +444,113 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
 
     }
-}
+
+
+    @Test
+    void rawCppHelloWorld() throws InterruptedException, JsonProcessingException {
+        subscribe("/user/topic/codeRunnerResults");
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
+                .CodeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .build();
+
+        RawCodeToRunMessage rawCodeToRunMessage=RawCodeToRunMessage.builder()
+                .code("#include <iostream>\n" +
+                        "int main(){\n" +
+                        "std::cout<<\"Hello world\";\n" +
+                        "}")
+                .build();
+
+        session.send( "/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        TimeUnit.SECONDS.sleep(2);
+        session.send( "/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
+        log.info("messge send to " + "/app"+INrunRawCode);
+
+        ProgramResult correctResults = ProgramResult.builder()
+                        .consoleOutput(ConsoleOutput.builder()
+                                .errorOutput("")
+                                .exitCode(0)
+                                .output("Hello world")
+                                .build())
+                        .variables(null)
+                .build();
+
+        ProgramResultsMessage result=objectMapper.readValue(
+                blockingQueue.poll(20, SECONDS)
+                , ProgramResultsMessage.class);;
+
+        assertEquals(1,result.getResults().size());
+        assertEquals(correctResults, result.getResults().get(0));
+
+    }
+    @Test
+    void rawCppIncorrect() throws InterruptedException, JsonProcessingException {
+        subscribe("/user/topic/codeRunnerResults");
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
+                .CodeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .build();
+
+        RawCodeToRunMessage rawCodeToRunMessage=RawCodeToRunMessage.builder()
+                .code("#include <iostream>\n" +
+                        "int main(){\n" +
+                        "std::c\"Hello world\";\n" +
+                        "}")
+                .build();
+
+        session.send( "/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        TimeUnit.SECONDS.sleep(2);
+        session.send( "/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
+        log.info("messge send to " + "/app"+INrunRawCode);
+
+        ProgramResult correctResults = ProgramResult.builder()
+                .consoleOutput(ConsoleOutput.builder()
+                        .errorOutput("")
+                        .exitCode(0)
+                        .output("Hello world")
+                        .build())
+                .variables(null)
+                .build();
+
+        ProgramResultsMessage result=objectMapper.readValue(
+                blockingQueue.poll(20, SECONDS)
+                , ProgramResultsMessage.class);;
+
+        assertEquals(1,result.getResults().size());
+        assertEquals(correctResults, result.getResults().get(0));
+
+    }
+
+    @Test
+    void rawJsHelloWorld() throws InterruptedException, JsonProcessingException {
+        subscribe("/user/topic/codeRunnerResults");
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
+                .CodeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .build();
+
+        RawCodeToRunMessage rawCodeToRunMessage=RawCodeToRunMessage.builder()
+                .code("console.log(\"Hello world\")")
+                .build();
+
+        session.send( "/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        TimeUnit.SECONDS.sleep(2);
+        session.send( "/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
+        log.info("messge send to " + "/app"+INrunRawCode);
+
+        ProgramResult correctResults = ProgramResult.builder()
+                .consoleOutput(ConsoleOutput.builder()
+                        .errorOutput("")
+                        .exitCode(0)
+                        .output("Hello world")
+                        .build())
+                .variables(null)
+                .build();
+
+        ProgramResultsMessage result=objectMapper.readValue(
+                blockingQueue.poll(20, SECONDS)
+                , ProgramResultsMessage.class);;
+
+        assertEquals(1,result.getResults().size());
+        assertEquals(correctResults, result.getResults().get(0));
+
+    }
+
+    }

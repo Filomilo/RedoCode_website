@@ -16,7 +16,7 @@ public class AutoTestConfValidationHandler extends MessageRequestHandler{
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"Handling information", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
         if(!(request instanceof ExerciseCreationRequest))
@@ -46,6 +46,6 @@ public class AutoTestConfValidationHandler extends MessageRequestHandler{
         this.nodeUpdate(request,"correct Auto test", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
         // todo Fill with test based o creatro panel in gui
-        return true;
+        return request;
     }
 }

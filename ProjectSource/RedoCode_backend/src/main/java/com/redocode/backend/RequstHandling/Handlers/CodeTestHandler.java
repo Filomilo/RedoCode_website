@@ -72,7 +72,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
 
         if(!(request instanceof CodeTestRequest))
         {
@@ -106,7 +106,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
       log.info("CodeTestHandler handles: "+ codeTestRequest);
         this.nodeUpdate(request,"correct "+codeTestRequest.getCodeRunnerType()+" tests", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-      return true;
+      return request;
     }
 
     @Override

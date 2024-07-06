@@ -21,7 +21,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"saving to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
         ExerciseCreationRequest exerciseCreationRequest= (ExerciseCreationRequest) request;
@@ -76,6 +76,6 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
         exerciseRepository.save(excersize);
         this.nodeUpdate(request,"saved to database", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-        return true;
+        return request;
     }
 }

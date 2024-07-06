@@ -15,13 +15,13 @@ public class MergeTestHandler extends BaseRequestHandler{
     }
 
     @Override
-    boolean handle(RequestBase request) throws RequestHadndlingException {
+    RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"preparation", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
         log.error("MergeTestHandler: NOT IMPLEMENTED");
         this.nodeUpdate(request,"prepared tests", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-        return true;
+        return request;
     }
 
     @Override
