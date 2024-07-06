@@ -17,18 +17,46 @@ export const useToastStore = defineStore('toastStore', () => {
     toast.add({ severity: 'success', summary: 'signed in', detail: 'signed in', life: 2000 })
   }
 
-  const featureNotImplemented = (deatil: string="") => {
+  const featureNotImplemented = (deatil: string = '') => {
     toast.add({
       severity: 'warn',
       summary: 'unsuported',
-      detail: 'feature not implemented: '+deatil,
+      detail: 'feature not implemented: ' + deatil,
       life: 7000
+    })
+  }
+
+  const showSuccessMessage = (message: string) => {
+    toast.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: message,
+      life: 2000
+    })
+  }
+  const showErrorMessage = (message: string) => {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: message,
+      life: 2000
+    })
+  }
+  const showProccessingMessage = (message: string) => {
+    toast.add({
+      severity: 'info',
+      summary: 'Processing',
+      detail: message,
+      life: 2000
     })
   }
 
   return {
     shotWrongLogin,
     shotCorrectLogin,
-    featureNotImplemented
+    featureNotImplemented,
+    showSuccessMessage,
+    showErrorMessage,
+    showProccessingMessage
   }
 })

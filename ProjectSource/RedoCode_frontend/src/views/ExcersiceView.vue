@@ -1,14 +1,14 @@
 <template>
   <main class="PlayGroundBase">
-    <CodeRunnerPanel 
-    :exerciseInfo="{title: 'no impelnted', desc: 'no implented'}"
-    :languageChoices="['cpp','js']"
-    :codeContainerUpdate="codeConatienrUpdate"
-    starting="not impented"
-    :onRunCode="onRunCode" 
-    :onSubmit="onSubmit"
-    :ManualTests="[]"
-    :AutoTests="[]"
+    <CodeRunnerPanel
+      :exerciseInfo="{ title: 'no impelnted', desc: 'no implented' }"
+      :languageChoices="['cpp', 'js']"
+      :codeContainerUpdate="codeConatienrUpdate"
+      starting="not impented"
+      :onRunCode="onRunCode"
+      :onSubmit="onSubmit"
+      :ManualTests="[]"
+      :AutoTests="[]"
     />
   </main>
 </template>
@@ -23,7 +23,7 @@ import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import ExerciseData from '@/types/ExerciseData'
 import { useToastStore } from '@/stores/ToastStore'
 const codeRunnerStore = useCodeRunnerStore()
-const toastStore= useToastStore();
+const toastStore = useToastStore()
 
 const text = ref('')
 const route = useRoute()
@@ -58,19 +58,15 @@ onMounted(() => {
   fetchExerciseData(exerciseId)
 })
 
-
-
-const codeConatienrUpdate=(code :string)=>{
-  toastStore.featureNotImplemented(code);
+const codeConatienrUpdate = (code: string) => {
+  toastStore.featureNotImplemented(code)
 }
 
-const onRunCode=()=>{
-  toastStore.featureNotImplemented("onRunCode");
+const onRunCode = () => {
+  toastStore.featureNotImplemented('onRunCode')
 }
 
-const onSubmit=()=>{
-  toastStore.featureNotImplemented("onSubmit");
+const onSubmit = () => {
+  toastStore.featureNotImplemented('onSubmit')
 }
-
-
 </script>

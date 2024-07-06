@@ -1,16 +1,20 @@
 <template>
   type:
-  {{ JSON.stringify(props.ManualTests?.length)}}
+  {{ JSON.stringify(props.ManualTests?.length) }}
   <div class="CodeResultContainer">
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
-        <div class="EngineStatusStatus">{{ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType }}</div>
+        <div class="EngineStatusStatus">
+          {{ ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType }}
+        </div>
       </div>
 
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Status:</div>
-        <div class="EngineStatusStatus">{{ ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.state }}</div>
+        <div class="EngineStatusStatus">
+          {{ ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.state }}
+        </div>
       </div>
     </div>
     <div
@@ -30,24 +34,18 @@
       ></div>
     </div>
 
-    <DataResultPanel 
-    v-if="props.ManualTests!==undefined"
-    :ManualTests= "props.ManualTests"
-    :AutoTests= "props.AutoTests"
+    <DataResultPanel
+      v-if="props.ManualTests !== undefined"
+      :ManualTests="props.ManualTests"
+      :AutoTests="props.AutoTests"
     />
 
     <div
       class="ExerciseControlPanle"
-      v-if="props.ManualTests!==undefined"
+      v-if="props.ManualTests !== undefined"
       :style="true ? '' : 'pointer-events: none'"
     >
-     
-        <Button 
-        class="submitButton" 
-        :disabled="isCorrect" 
-        @click="props.onSubmit"
-        > Submit </Button>
-
+      <Button class="submitButton" :disabled="isCorrect" @click="props.onSubmit"> Submit </Button>
     </div>
   </div>
 </template>
@@ -57,15 +55,15 @@ import { computed } from 'vue'
 import DataResultPanel from './DataResultPanel.vue'
 import type CodeResultType from '@/types/CodeResultsType'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
-import { useApiConnectionStore } from '@/stores/ApiConnectionStore';
-import ExerciseTest from '@/types/ExcericseTest';
+import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+import ExerciseTest from '@/types/ExcericseTest'
 const codeRunnerStore = useCodeRunnerStore()
-const ApiConnectionStore= useApiConnectionStore();
+const ApiConnectionStore = useApiConnectionStore()
 const props = defineProps({
   isDataResult: { type: Boolean, required: false },
-  onSubmit: {type: Function, required: true},
-  ManualTests: {type: Array as () => ExerciseTest[], required: false},
-  AutoTests: {type: Array as () => ExerciseTest[], required: false}
+  onSubmit: { type: Function, required: true },
+  ManualTests: { type: Array as () => ExerciseTest[], required: false },
+  AutoTests: { type: Array as () => ExerciseTest[], required: false }
 })
 
 const formattedConsole = computed<string>(
@@ -77,8 +75,6 @@ const formattedEror = computed<string>(() =>
 const isCorrect = computed<boolean>(() => {
   return false
 })
-
-
 </script>
 
 <style>

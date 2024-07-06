@@ -18,5 +18,5 @@ import java.util.Dictionary;
 @AllArgsConstructor
 public class RawCodeToRunMessage {
     @JsonProperty
-    private Dictionary<String,String> solutions;
+    private String code;
 }

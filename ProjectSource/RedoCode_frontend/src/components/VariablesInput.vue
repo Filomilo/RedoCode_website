@@ -124,7 +124,7 @@ watch(value, (newVal, oldVal) => {
   try {
     if (validationofData.value === '') {
       if (props.isInput) {
-        CodeRunnerStore.manualTestBuffer [props.manualTestInputIndex].input =newVal
+        CodeRunnerStore.manualTestBuffer[props.manualTestInputIndex].input = newVal
       } else {
         CodeRunnerStore.manualTestBuffer[props.manualTestInputIndex].expectedOutput = newVal
       }
@@ -141,8 +141,6 @@ const props = defineProps({
   manualTestInputIndex: { type: Number, required: true },
   isInput: { type: Boolean, required: true }
 })
-
-
 </script>
 
 <style>

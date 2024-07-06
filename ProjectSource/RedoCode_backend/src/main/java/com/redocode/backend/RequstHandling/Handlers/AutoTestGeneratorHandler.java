@@ -22,6 +22,7 @@ public class AutoTestGeneratorHandler extends  MessageRequestHandler{
 
         ExerciseCreationRequest exerciseCreationRequest= (ExerciseCreationRequest) request;
                 log.error("AutoTestGeneratorHandler NOT IMPLEMENTED");
+        //todo: auto test genrator
         this.nodeUpdate(request,"generated", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
                 return true;

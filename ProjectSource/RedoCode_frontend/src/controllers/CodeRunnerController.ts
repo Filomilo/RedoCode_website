@@ -1,3 +1,1 @@
-export default class CodeRunnerController{
-
-}
+export default class CodeRunnerController {}

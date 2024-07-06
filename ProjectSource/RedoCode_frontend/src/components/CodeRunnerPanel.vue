@@ -1,11 +1,10 @@
 <!-- eslint-disable vue/no-mutating-props -->
 
 <template>
-  test:
-  a
-  {{JSON.stringify(props.ManualTests)}}
-  {{JSON.stringify(props.AutoTests)}}
-<Dialog
+  test: a
+  {{ JSON.stringify(props.ManualTests) }}
+  {{ JSON.stringify(props.AutoTests) }}
+  <Dialog
     :visible="codeRunnerStore.exerciseLoading"
     modal
     header="Edit Profile"
@@ -41,40 +40,38 @@
     class="heightLimit"
   >
     <Splitter style="height: 100%; width: 100%">
-      <SplitterPanel v-if="props.ManualTests!==undefined" style="max-width: 100%; width: 100%" :size="1">
-        <Splitter layout="vertical" style="width: 100%" >
+      <SplitterPanel
+        v-if="props.ManualTests !== undefined"
+        style="max-width: 100%; width: 100%"
+        :size="1"
+      >
+        <Splitter layout="vertical" style="width: 100%">
           <SplitterPanel style="width: 100%; max-width: 100%; width: 100%" :size="1">
-            <ExerciseDescriptionPanel 
-            :exerciseInfo="props.exerciseInfo"
-            />
+            <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
           </SplitterPanel>
-
         </Splitter>
       </SplitterPanel>
 
       <SplitterPanel :size="30">
-        <CodeEditor 
-        class="CodeEditorContainer"
-        :starting="props.starting"
-        :codeUpdateMethod="props.codeContainerUpdate"
-        :onRunCode="props.onRunCode"
+        <CodeEditor
+          class="CodeEditorContainer"
+          :starting="props.starting"
+          :codeUpdateMethod="props.codeContainerUpdate"
+          :onRunCode="props.onRunCode"
         />
       </SplitterPanel>
       <SplitterPanel :size="1">
-        <CodeResultPanel 
-        :onSubmit="props.onSubmit"
-        :ManualTests= "props.ManualTests"
-        :AutoTests= "props.AutoTests"
+        <CodeResultPanel
+          :onSubmit="props.onSubmit"
+          :ManualTests="props.ManualTests"
+          :AutoTests="props.AutoTests"
         />
       </SplitterPanel>
     </Splitter>
   </div>
   <div v-else style="height: 100%">
-    <ConnectToCodeRunnerPanel 
-    :languageChoices="languageChoices"
-    />
+    <ConnectToCodeRunnerPanel :languageChoices="languageChoices" />
   </div>
- 
 </template>
 
 <script lang="ts" setup>
@@ -85,23 +82,18 @@ import { ref, onMounted, type Ref } from 'vue'
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 import axios from 'axios'
 import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
-import {
-  connectStomp,
-  disconnectStomp,
-  onConnectStomp,
-  getConnetedUserName
-} from '../config/StompApiConnection'
+
 import type { IFrame } from '@stomp/stompjs'
 import LanguageDropdown from './LanguageDropdown.vue'
-import {
-  requstDefaultVmMachine,
-  subcribeToVmStatus,
-  subscribeToCodeResults
-} from '../config/CodeRunnerConnection'
+// import {
+//   requstDefaultVmMachine,
+//   subcribeToVmStatus,
+//   subscribeToCodeResults
+// } from '../config/CodeRunnerConnection'
 import type CodeRunnerState from '@/types/CodeRunnerState'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import ResultsPanel from './ResultsPanel.vue'
-import { basicResultTemplate,} from '../config/Data'
+import { basicResultTemplate } from '../config/Data'
 import type CodeResultsType from '@/types/CodeResultsType'
 import CodeResultPanel from './CodeResultPanel.vue'
 import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
@@ -112,18 +104,18 @@ import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 import ExerciseTest from '@/types/ExcericseTest'
 const props = defineProps({
-  exerciseInfo: { type: Object as ()=> IExerciseDescriptionI, required: true }, 
-  languageChoices: {type: Array as ()=>string[], required: true},
-  codeContainerUpdate: { type: Function, required: true }, 
-  starting: {type: String, required: true},
-  onRunCode: {type: Function, required: true},
-  onSubmit: {type: Function, required: true},
-  ManualTests: {type: Array as () => ExerciseTest[], required: false},
-  AutoTests: {type: Array as () => ExerciseTest[], required: false},
+  exerciseInfo: { type: Object as () => IExerciseDescriptionI, required: true },
+  languageChoices: { type: Array as () => string[], required: true },
+  codeContainerUpdate: { type: Function, required: true },
+  starting: { type: String, required: true },
+  onRunCode: { type: Function, required: true },
+  onSubmit: { type: Function, required: true },
+  ManualTests: { type: Array as () => ExerciseTest[], required: false },
+  AutoTests: { type: Array as () => ExerciseTest[], required: false }
 })
 
 const codeRunnerStore = useCodeRunnerStore()
-const ApiConnectionStore= useApiConnectionStore();
+const ApiConnectionStore = useApiConnectionStore()
 const subscribeStatus = ref(false)
 const meaages = ref('')
 const tryingToEstablishConnection: Ref<boolean> = ref(false)
@@ -132,6 +124,13 @@ const VmAcces: Ref<boolean> = ref(false)
 const chosenLangague: Ref<String> = ref(props.languageChoices[0])
 const code: Ref<string> = ref('Write Code')
 const resultData = ref(basicResultTemplate)
+
+const connectStomp = () => {
+  ApiConnectionStore.stompApiConnection.activate()
+}
+const disconnectStomp = () => {
+  ApiConnectionStore.stompApiConnection.deactivate()
+}
 
 const updateVmStatus = (state: CodeRunnerState) => {
   console.log('status: ' + state)
@@ -146,13 +145,6 @@ const updateResults = (results: CodeResultsType[]) => {
   resultData.value = results
 }
 
-const diconnectFromCodeRunners = () => {
-  // console.log("diconnect from code runners")
-  //TODO: dicconrt requstDefaultVmMachine
-  disconnectStomp()
-  ApiConnectionStore.codeRunnerConnectionControler.disconnetWithCodeRunner()
-}
-
 onMounted(() => {
   console.log('props: ' + JSON.stringify(props))
   // if (props.connectAtStart) {
@@ -162,15 +154,14 @@ onMounted(() => {
 })
 
 onBeforeRouteLeave(async (to, from, next) => {
-  diconnectFromCodeRunners()
-
+  disconnectStomp()
   next()
 })
 
 const onSelectLanguage = (lang: string) => {
   console.log('info selcted:' + lang)
   chosenLangague.value = lang
-  if (establishedConnection.value) requstDefaultVmMachine(lang)
+  // if (establishedConnection.value) requstDefaultVmMachine(lang)
 }
 
 // const onRunCode = () => {
@@ -185,7 +176,7 @@ const onSelectLanguage = (lang: string) => {
 onBeforeRouteLeave(async (to, from) => {
   // console.log("leave************************************************")
   // codeRunnerStore.disconnetWithCodeRunner();
-  diconnectFromCodeRunners()
+  disconnectStomp()
 })
 </script>
 
@@ -195,3 +186,4 @@ onBeforeRouteLeave(async (to, from) => {
   height: 100%;
 }
 </style>
+../controllers/StompApiConnection

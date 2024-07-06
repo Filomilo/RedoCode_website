@@ -1,5 +1,3 @@
 export default interface RawCodeToRunMessage {
-    code: String
+  code: String
 }
-
-

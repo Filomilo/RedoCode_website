@@ -10,7 +10,6 @@
       placeholder="Select programming langauge"
       class="dropDown"
       @change="onChangeLnageugeDropDown"
-      
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
@@ -26,11 +25,14 @@
     <vue-monaco-editor
       style="width: 100%; height: 100%"
       v-model:value="codeRef"
-      
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
       @mount="handleMount"
-      :language="EditorLanguagesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]"
+      :language="
+        EditorLanguagesMap[
+          ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+        ]
+      "
       @keyup.ctrl.enter.prevent="onShortCutRun"
       :onChange="onCodeChnaage"
     />
@@ -47,19 +49,18 @@ import { onBeforeRouteLeave } from 'vue-router'
 import { EditorLanguagesMap, languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 const props = defineProps({
-  starting: { type: String, required: true }, 
-  codeUpdateMethod: {type: Function, required: true},
-  onRunCode: {type: Function, required: true}
+  starting: { type: String, required: true },
+  codeUpdateMethod: { type: Function, required: true },
+  onRunCode: { type: Function, required: true }
 })
 
-const codeRunnerStore = useCodeRunnerStore();
-const ApiConnectionStore= useApiConnectionStore();
-
+const codeRunnerStore = useCodeRunnerStore()
+const ApiConnectionStore = useApiConnectionStore()
 
 const codeRef = ref(props.starting)
 
-const onCodeChnaage=(text:string)=>{
-  props.codeUpdateMethod(text);
+const onCodeChnaage = (text: string) => {
+  props.codeUpdateMethod(text)
 }
 const confirm = useConfirm()
 const MONACO_EDITOR_OPTIONS = {
@@ -73,28 +74,34 @@ const langaugesOptions = computed(() =>
     : codeRunnerStore.exerciseData.availbleCodeRunners
 )
 
-
 watch(
   () => props.starting,
-  (first,second) => {
-    console.log("props chahned-----------------------: "+ second+" -> "+first )
+  (first, second) => {
+    console.log('props chahned-----------------------: ' + second + ' -> ' + first)
     codeRef.value = first
   }
 )
 
 const lnagaugeDropdownVaule = computed(
-  () => EditorLanguagesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
+  () =>
+    EditorLanguagesMap[
+      ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+    ]
 )
 
 const editorLang = computed(() => {
-  return EditorLanguagesMap[ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
+  return EditorLanguagesMap[
+    ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+  ]
 })
 
 const editorRef = shallowRef()
 const handleMount = (editor: any) => (editorRef.value = editor)
 
 const onChangeLnageugeDropDown = (lang: any) => {
-  if (lang.value! !== ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType) {
+  if (
+    lang.value! !== ApiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+  ) {
     console.log('test change: ' + lang.value)
     confirmChangeOFCodeRuner(lang.value)
   }

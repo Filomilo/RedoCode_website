@@ -6,7 +6,7 @@ import axios from 'axios'
 import '../interceptors/axios'
 import { languageChoices } from '../config/Data'
 import ExerciseTest from '@/types/ExcericseTest'
-import { connectStomp, onConnectStomp } from '@/config/StompApiConnection'
+import { connectStomp, onConnectStomp } from '@/controllers/StompApiConnection'
 import type ProgramResult from '@/types/ProgramResults'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import ExerciseCreatorController from '@/controllers/ExerciseCreatorControlller'
@@ -22,7 +22,7 @@ import VarSize from '@/types/VarSize'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import { useApiConnectionStore } from './ApiConnectionStore'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
-const apiConnectionStore= useApiConnectionStore();
+  const apiConnectionStore = useApiConnectionStore()
 
   const playGroundBase: ExerciseData = {
     inputType: '',
@@ -45,9 +45,6 @@ const apiConnectionStore= useApiConnectionStore();
     startingFunction: ''
   }
 
-
-  
-
   const exerciseData: Ref<ExerciseData> = ref(playGroundBase)
 
   const setExerciseData = (exerciseDataRecived: ExerciseData) => {
@@ -63,14 +60,6 @@ const apiConnectionStore= useApiConnectionStore();
     exerciseLoading.value = state
   }
 
-
-
-  
-
-
- 
-
-
   const dropDownLangaugeMap: any = {
     CPP_RUNNER: 'cpp',
     JS_RUNNER: 'js',
@@ -85,7 +74,9 @@ const apiConnectionStore= useApiConnectionStore();
             JSON.stringify(apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive)
         )
         return exerciseData.value.startingFunction[
-          dropDownLangaugeMap[apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType]
+          dropDownLangaugeMap[
+            apiConnectionStore.codeRunnerConnectionControler.codeRunnerActive.codeRunnerType
+          ]
         ]
       }
     }
@@ -98,22 +89,13 @@ const apiConnectionStore= useApiConnectionStore();
   })
   const isAwaitingCompilation: Ref<boolean> = ref(false)
 
-
-
-
-
-
-
-
-  const exerciseCreatorController= reactive(new ExerciseCreatorController());
+  const exerciseCreatorController = reactive(new ExerciseCreatorController())
   const removeTestFromBuffer = (index: number) => {
     console.log('remove: test: ' + index)
     console.log('tests before: ' + JSON.stringify(exerciseData.value.tests))
     manualTestBuffer.splice(index, 1)
     console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
   }
-
-
 
   const getVarAcording: any = (type: VarType, size: VarSize) => {
     if (type === 'string') {
@@ -138,11 +120,9 @@ const apiConnectionStore= useApiConnectionStore();
     return 0
   }
 
+  const manualTestBuffer: any = reactive([])
 
-
- const manualTestBuffer:any= reactive([]);
-
- const addblankTestToBuffer = (
+  const addblankTestToBuffer = (
     inputType: VarType,
     outputype: VarType,
     inputSize: VarSize,
@@ -158,25 +138,27 @@ const apiConnectionStore= useApiConnectionStore();
       errorOutput: '',
       consoleOutput: '',
       isSolved: null
-    }
-   )
-   console.log("added: "+manualTestBuffer )
-
+    })
+    console.log('added: ' + manualTestBuffer)
   }
   const clearTestsFromBuffer = () => {
     manualTestBuffer.value = []
   }
 
-  const transferTestFromBufferTpCreator=()=>{
-    console.log("test transfer2: "+JSON.stringify(manualTestBuffer))
-  
-    exerciseCreatorController.languages.forEach((element: {label: string, value: string} | string) => {
-      const labelVal: {label: string, value: string}= (element as unknown as {label: string, value: string}); 
-      exerciseCreatorController.manualTestsSolutions[labelVal.value]=manualTestBuffer;
-    });
-    console.log("tests after: "+ JSON.stringify(exerciseCreatorController.manualTestsSolutions) )
-  }
+  const transferTestFromBufferTpCreator = () => {
+    console.log('test transfer2: ' + JSON.stringify(manualTestBuffer))
 
+    exerciseCreatorController.languages.forEach(
+      (element: { label: string; value: string } | string) => {
+        const labelVal: { label: string; value: string } = element as unknown as {
+          label: string
+          value: string
+        }
+        exerciseCreatorController.manualTestsSolutions[labelVal.value] = manualTestBuffer
+      }
+    )
+    console.log('tests after: ' + JSON.stringify(exerciseCreatorController.manualTestsSolutions))
+  }
 
   return {
     // codeRunnerActive,

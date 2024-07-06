@@ -1,6 +1,4 @@
 export default interface ExerciseIdToRunMessage {
-    code: String
-    exercise_id: String
-  }
-
-
+  code: String
+  exercise_id: String
+}
