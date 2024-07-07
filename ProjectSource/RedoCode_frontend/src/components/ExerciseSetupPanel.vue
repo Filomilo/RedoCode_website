@@ -1,5 +1,4 @@
 <template>
-  info:
   <div
     style="
       color: white;
@@ -9,6 +8,7 @@
       background-color: red;
       padding: 1rem;
       overflow: hidden;
+      display: none;
     "
   >
     {{ JSON.stringify(codeRunnerStore.exerciseCreatorController) }}
@@ -51,13 +51,12 @@
               <InputNumber
                 @update:model-value="
                   (newNum: number) => {
-                    codeRunnerStore.exerciseCreatorController.timeForTaskMin =
-                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin % 60) +
-                      +newNum * 60
+                    codeRunnerStore.exerciseCreatorController.timeForTaskMin =newNum*60 +
+                   ( codeRunnerStore.exerciseCreatorController.timeForTaskMin-(Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)*60))
                   }
                 "
                 :model-value="
-                  Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)
+                 Math.floor( codeRunnerStore.exerciseCreatorController.timeForTaskMin/60)
                 "
                 inputId="integeronly"
                 suffix=" H"
@@ -69,11 +68,13 @@
                 @update:model-value="
                   (newNum: number) => {
                     codeRunnerStore.exerciseCreatorController.timeForTaskMin =
-                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) +
+                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)*60 +
                       +newNum
                   }
                 "
-                :model-value="codeRunnerStore.exerciseCreatorController.timeForTaskMin % 60"
+                :model-value="codeRunnerStore.exerciseCreatorController.timeForTaskMin-
+                Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)*60
+                "
                 inputId="integeronly"
                 suffix=" M"
                 :min="0"
