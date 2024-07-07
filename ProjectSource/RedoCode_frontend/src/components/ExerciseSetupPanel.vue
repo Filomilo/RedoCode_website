@@ -51,12 +51,15 @@
               <InputNumber
                 @update:model-value="
                   (newNum: number) => {
-                    codeRunnerStore.exerciseCreatorController.timeForTaskMin =newNum*60 +
-                   ( codeRunnerStore.exerciseCreatorController.timeForTaskMin-(Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)*60))
+                    codeRunnerStore.exerciseCreatorController.timeForTaskMin =
+                      newNum * 60 +
+                      (codeRunnerStore.exerciseCreatorController.timeForTaskMin -
+                        Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) *
+                          60)
                   }
                 "
                 :model-value="
-                 Math.floor( codeRunnerStore.exerciseCreatorController.timeForTaskMin/60)
+                  Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)
                 "
                 inputId="integeronly"
                 suffix=" H"
@@ -68,12 +71,14 @@
                 @update:model-value="
                   (newNum: number) => {
                     codeRunnerStore.exerciseCreatorController.timeForTaskMin =
-                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)*60 +
+                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) *
+                        60 +
                       +newNum
                   }
                 "
-                :model-value="codeRunnerStore.exerciseCreatorController.timeForTaskMin-
-                Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)*60
+                :model-value="
+                  codeRunnerStore.exerciseCreatorController.timeForTaskMin -
+                  Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) * 60
                 "
                 inputId="integeronly"
                 suffix=" M"

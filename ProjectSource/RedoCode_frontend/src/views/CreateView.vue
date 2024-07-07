@@ -79,13 +79,19 @@ const onRunCode = () => {
 
 const onSubmit = () => {
   console.log('On sumbit')
- const request: ExercsieCreatorValidationMesage=JSON.parse(JSON.stringify(codeRunnerStore.exerciseCreatorController)) as ExercsieCreatorValidationMesage;
- request.manualTests=Object.values(codeRunnerStore.exerciseCreatorController.manualTestsSolutions)[0]as ExerciseTest[]
- request.manualTests.forEach((obj: ExerciseTest)=>{
-    obj.expectedOutput=obj.expectedOutput.toString();
-    obj.input=(obj.input).toString();
+  const request: ExercsieCreatorValidationMesage = JSON.parse(
+    JSON.stringify(codeRunnerStore.exerciseCreatorController)
+  ) as ExercsieCreatorValidationMesage
+  request.manualTests = Object.values(
+    codeRunnerStore.exerciseCreatorController.manualTestsSolutions
+  )[0] as ExerciseTest[]
+  request.manualTests.forEach((obj: ExerciseTest) => {
+    obj.expectedOutput = obj.expectedOutput.toString()
+    obj.input = obj.input.toString()
   })
-  const request2: ExercsieCreatorValidationMesage=JSON.parse(JSON.stringify(request)) as ExercsieCreatorValidationMesage;
+  const request2: ExercsieCreatorValidationMesage = JSON.parse(
+    JSON.stringify(request)
+  ) as ExercsieCreatorValidationMesage
 
   ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest(request)
 }
