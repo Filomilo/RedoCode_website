@@ -5,7 +5,6 @@ import ExerciseParametersType from '@/types/ExerciseParametersType'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 import ITestParameters from '@/types/ITestParameters'
 import RangeType from '@/types/RangeType'
-import VarSize from '@/types/VarSize'
 import VarType from '@/types/VarType'
 import { reactive } from 'vue'
 interface StringIndexed {
@@ -18,16 +17,13 @@ export default class ExerciseCreatorController
   implements IExerciseDescriptionI, ExercsieCreatorValidationMesage
 {
   title!: string
-  desc!: string
+  description!: string
   languages!: string[] | { label: string; value: string }[]
   ram!: number
-  timeForTaskM!: number
-  timeForTaskH!: number
-  executionTimeMs!: number
+  timeForTaskMin!: number
+  timeForExecutionMs!: number
   inputType!: VarType
-  inputSize!: VarSize
   outputType!: VarType
-  outputSize!: VarSize
   amountOfAutoTests!: number
   autoTestminValue!: number
   autoTestMaxValue!: number
@@ -40,7 +36,7 @@ export default class ExerciseCreatorController
   specialCharacterInput!: boolean
   breakCharacterInupt!: boolean
   spaceInupt!: boolean
-  solutions!: StringIndexed
+  solutionCodes!: StringIndexed
   manualTestsSolutions!: TestsIndexed
   autoTests!: TestsIndexed
 
@@ -49,10 +45,8 @@ export default class ExerciseCreatorController
       (this.timeForTaskM = 10),
       (this.timeForTaskH = 0),
       (this.executionTimeMs = 100),
-      (this.inputType = 'int' as VarType),
-      (this.inputSize = 'SINGLE_VALUE' as VarSize),
-      (this.outputType = 'int' as VarType),
-      (this.outputSize = 'SINGLE_VALUE' as VarSize),
+      (this.inputType = 'SINGLE_INT' as VarType),
+      (this.outputType = 'SINGLE_INT' as VarType),
       (this.amountOfAutoTests = 1),
       (this.autoTestminValue = -1),
       (this.autoTestMaxValue = 1),
@@ -68,7 +62,7 @@ export default class ExerciseCreatorController
       (this.desc = ''),
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
-    this.solutions = {}
+    this.solutionCodes = {}
     this.manualTestsSolutions = {}
   }
 

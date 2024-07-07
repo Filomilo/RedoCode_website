@@ -1,6 +1,6 @@
 <template>
-  data solutions:{{ JSON.stringify(codeRunnerStore.exerciseCreatorController) }} <br />
-  <br />
+  <!-- data solutions:{{ JSON.stringify(codeRunnerStore.exerciseCreatorController) }} <br />
+  <br /> -->
 
   <main class="PlayGroundBase">
     <TabView @tab-click="ontablClik">
@@ -18,9 +18,9 @@
         <CodeRunnerPanel
           :languageChoices="exerciseLnageus"
           :exerciseInfo="codeRunnerStore.exerciseCreatorController"
-          :codeContianer="codeRunnerStore.exerciseCreatorController.solutions"
+          :codeContianer="codeRunnerStore.exerciseCreatorController.solutionCodes"
           :starting="
-            codeRunnerStore.exerciseCreatorController.solutions[
+            codeRunnerStore.exerciseCreatorController.solutionCodes[
               ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
             ]
           "
@@ -62,21 +62,50 @@ const ApiConnectionStore = useApiConnectionStore()
 const codeUpdate = (code: string) => {
   console.log('codee update: ' + code)
   // codeRunnerStore.exerciseCreatorController.solutions
-  codeRunnerStore.exerciseCreatorController.solutions[
+  codeRunnerStore.exerciseCreatorController.solutionCodes[
     ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
   ] = code
-  console.log('update: ' + JSON.stringify(codeRunnerStore.exerciseCreatorController.solutions))
+  console.log('update: ' + JSON.stringify(codeRunnerStore.exerciseCreatorController.solutionCodes))
 }
 
 const onRunCode = () => {
   console.log('On run code')
-  ApiConnectionStore.codeRunnerConnection .runExercsieTestsCode(
+  ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
     codeRunnerStore.exerciseCreatorController
   )
 }
 
 const onSubmit = () => {
   console.log('On sumbit')
+
+  ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest({
+    title: '',
+    description: '',
+    ram: 0,
+    timeForExecutionMs: 0,
+    inputType: 'SINGLE_INTEGER',
+    outputType: 'SINGLE_INTEGER',
+    amountOfAutoTests: 0,
+    autoTestminValue: 0,
+    autoTestMaxValue: 0,
+    lengthRange: {
+      min: 0,
+      max: 0
+    },
+    xArrayRange: null,
+    yArrayRange: null,
+    upperCaseInput: false,
+    lowerCaseInput: false,
+    numberInput: false,
+    specialCharacterInput: false,
+    breakCharacterInupt: false,
+    spaceInupt: false,
+    solutionCodes: {
+      CPP_RUNNER: 'example_solution'
+    },
+    timeForTaskMin: 0,
+    manualTests: []
+  })
 }
 
 const exerciseLnageus = computed(() => {

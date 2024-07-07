@@ -112,6 +112,7 @@ public abstract class BaseRequestHandler implements IRequestHandler{
         catch (RequestHadndlingException e)
         {
             log.info("expectpppion; "+e.getMessage());
+            nodeUpdate(request, "Failed: "+e.getMessage(), ChainNodeInfo.CHAIN_NODE_STATUS.FAILED);
             exceptionHandling(e);
         }
 
@@ -126,6 +127,7 @@ public abstract class BaseRequestHandler implements IRequestHandler{
                             .message(updateMessage)
                             .stepUpdate(this._nodeLevel)
                             .lvlStatus(status)
+                            .messageType(ExecutionResponseBase.EXECUTION_RESPONSE_TYPE.STATUS_UPDATE)
                             .build()
             );
         }

@@ -47,6 +47,7 @@ import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import './interceptors/axios'
 import ToastService from 'primevue/toastservice'
+import Timeline from 'primevue/timeline'
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
@@ -80,6 +81,8 @@ app.component('Dialog', Dialog)
 app.component('Dialog', Dialog)
 app.component('ConfirmDialog', ConfirmDialog)
 app.component('Toast', Toast)
+app.component('Timeline', Timeline)
+
 app.use(ConfirmationService)
 app.use(ToastService)
 const pinia = createPinia()

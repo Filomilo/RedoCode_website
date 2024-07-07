@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.Time;
 import java.util.HashMap;
+import java.util.Map;
 
 @Value
 @SuperBuilder
@@ -39,7 +40,7 @@ public class ExerciseCreatorValidationMessage {
     private boolean spaceInupt;
     @NotNull private Long timeForTaskMin;
     @NotNull  private Long timeForExecutionMs;
-    @NotNull  private HashMap<CODE_RUNNER_TYPE,String> solutionCodes;
+    @NotNull  private Map<CODE_RUNNER_TYPE,String> solutionCodes;
     @NotNull  private ExerciseTests[] manualTests;
    @NotNull private int ram;
 }

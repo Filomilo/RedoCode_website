@@ -1,6 +1,5 @@
 import IExerciseDescriptionI from './IExerciseDescriptionI'
 import RangeType from './RangeType'
-import VarSize from './VarSize'
 import VarType from './VarType'
 
 export default interface ExerciseParametersType extends IExerciseDescriptionI {
@@ -12,9 +11,7 @@ export default interface ExerciseParametersType extends IExerciseDescriptionI {
   timeForTaskH: number
   executionTimeMs: number
   inputType: VarType
-  inputSize: VarSize
   outputType: VarType
-  outputSize: VarSize
   amountOfAutoTests: number
   autoTestminValue: number
   autoTestMaxValue: number

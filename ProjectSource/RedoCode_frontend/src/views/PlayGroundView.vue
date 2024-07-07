@@ -2,7 +2,7 @@
   Playgournd
   <main class="PlayGroundBase">
     <CodeRunnerPanel
-      :exerciseInfo="{ title: 'no impelnted', desc: 'no implented' }"
+      :exerciseInfo="{ title: 'no impelnted', description: 'no implented' }"
       :languageChoices="['cpp', 'js']"
       :codeContainerUpdate="codeConatienrUpdate"
       starting=""

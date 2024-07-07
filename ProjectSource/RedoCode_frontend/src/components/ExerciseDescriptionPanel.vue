@@ -21,7 +21,7 @@ const props = defineProps({
 const codeRunnerStore = useCodeRunnerStore()
 const markdown = new MarkdownIt()
 
-const desc = computed(() => props.exerciseInfo.desc.replace('\n', '<br>'))
+const desc = computed(() => props.exerciseInfo.description.replace('\n', '<br>'))
 
 const mdSrc = `# tile
         descitpiron of taks, create fibonachi sewaunce`

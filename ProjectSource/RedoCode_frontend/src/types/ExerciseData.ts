@@ -3,7 +3,7 @@ import IExerciseDescriptionI from './IExerciseDescriptionI'
 export default interface ExerciseData extends IExerciseDescriptionI {
   availbleCodeRunners: string[]
   id: number | null
-  desc: string
+  description: string
   outputType: string
   inputType: string
   tests: ExerciseTest[]

@@ -61,68 +61,66 @@ export default class CodeRunnerConnection {
     this._stompApiConnection.sendMessage('/app/codeRunnerRequest', request)
   }
 
-
   public readonly sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
-//   console.log('sendToExerciseIdRun: ' + content)
-//   const message: IPublishParams = {
-//     destination: '/app//CodeRun/ExerciseIdRun',
-//     body: JSON.stringify(content)
-//   }
-//   stompClient.publish(message)
-}
+    //   console.log('sendToExerciseIdRun: ' + content)
+    //   const message: IPublishParams = {
+    //     destination: '/app//CodeRun/ExerciseIdRun',
+    //     body: JSON.stringify(content)
+    //   }
+    //   stompClient.publish(message)
+  }
 
-public readonly sendToRawCodeRun = (content: RawCodeToRunMessage) => {
-//   console.log('sendToRawCodeRun: ' + content)
-//   const message: IPublishParams = {
-//     destination: '/app//CodeRun/RawCodeRun',
-//     body: JSON.stringify(content)
-//   }
-//   stompClient.publish(message)
-}
+  public readonly sendToRawCodeRun = (content: RawCodeToRunMessage) => {
+    //   console.log('sendToRawCodeRun: ' + content)
+    //   const message: IPublishParams = {
+    //     destination: '/app//CodeRun/RawCodeRun',
+    //     body: JSON.stringify(content)
+    //   }
+    //   stompClient.publish(message)
+  }
 
-public readonly sendToExerciseIdValidation = (content: ExerciseIdToRunMessage) => {
-//   console.log('sendToExerciseIdRun: ' + content)
-//   const message: IPublishParams = {
-//     destination: '/app//CodeRun/ExerciseIdValidation',
-//     body: JSON.stringify(content)
-//   }
-//   stompClient.publish(message)
-}
+  public readonly sendToExerciseIdValidation = (content: ExerciseIdToRunMessage) => {
+    //   console.log('sendToExerciseIdRun: ' + content)
+    //   const message: IPublishParams = {
+    //     destination: '/app//CodeRun/ExerciseIdValidation',
+    //     body: JSON.stringify(content)
+    //   }
+    //   stompClient.publish(message)
+  }
 
-public readonly sendToExerciseCreationValidation = (content: ExercsieCreatorValidationMesage) => {
-//   console.log('sendToExerciseCodeTests: ' + content)
-//   const message: IPublishParams = {
-//     destination: '/app//CodeRun/ExerciseCreationValidation',
-//     body: JSON.stringify(content)
-//   }
-//   stompClient.publish(message)
-}
-public readonly sendToExerciseCodeTests = (content: ExerciseTestToRunMesseage) => {
-//   console.log('sendToExerciseExerciseCodeTests: ' + JSON.stringify( content))
-//   const message: IPublishParams = {
-//     destination: '/app//CodeRun/ExerciseCodeTests',
-//     body: JSON.stringify(content)
-//   }
-//   stompClient.publish(message)
-}
+  public readonly sendToExerciseCreationValidation = (content: ExercsieCreatorValidationMesage) => {
+    //   console.log('sendToExerciseCodeTests: ' + content)
+    //   const message: IPublishParams = {
+    //     destination: '/app//CodeRun/ExerciseCreationValidation',
+    //     body: JSON.stringify(content)
+    //   }
+    //   stompClient.publish(message)
+  }
+  public readonly sendToExerciseCodeTests = (content: ExerciseTestToRunMesseage) => {
+    //   console.log('sendToExerciseExerciseCodeTests: ' + JSON.stringify( content))
+    //   const message: IPublishParams = {
+    //     destination: '/app//CodeRun/ExerciseCodeTests',
+    //     body: JSON.stringify(content)
+    //   }
+    //   stompClient.publish(message)
+  }
 
-public readonly subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
-//   console.log('subscribing tor results')
-//   stompClient.subscribe('/user/topic/codeRunnerResults', (mesage: IMessage) => {
-//     console.log('staee code resulr: ' + JSON.stringify(mesage.body))
-//     const results: ProgramResult[] = JSON.parse(mesage.body).map((elem: any) => {
-//       if (elem.variables === null) return elem
-//       return {
-//         ...elem,
-//         variables: elem.variables.value
-//       }
-//     })
-//     func(results)
-//   })
-}
+  public readonly subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
+    //   console.log('subscribing tor results')
+    //   stompClient.subscribe('/user/topic/codeRunnerResults', (mesage: IMessage) => {
+    //     console.log('staee code resulr: ' + JSON.stringify(mesage.body))
+    //     const results: ProgramResult[] = JSON.parse(mesage.body).map((elem: any) => {
+    //       if (elem.variables === null) return elem
+    //       return {
+    //         ...elem,
+    //         variables: elem.variables.value
+    //       }
+    //     })
+    //     func(results)
+    //   })
+  }
 
-
-public readonly runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
+  public readonly runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
     // console.log('runExercsieTestsCode: ' + JSON.stringify(exerciseCreatorController))
     // const message: ExerciseTestToRunMesseage = {
     //   code: exerciseCreatorController.solutions[this.codeRunnerActive.codeRunnerType],
@@ -144,13 +142,14 @@ public readonly runExercsieTestsCode = (exerciseCreatorController: ExerciseCreat
     //   specialCharacterInput: exerciseCreatorController.specialCharacterInput,
     //   breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
     //   spaceInupt: exerciseCreatorController.spaceInupt
-    }
+  }
 
-
-
+  public readonly submitExerciseCreationRequest = (request: ExercsieCreatorValidationMesage) => {
+    console.log('submitExerciseCreationRequest: ' + JSON.stringify(request))
+    this._stompApiConnection.sendMessage('/app/CodeRun/ExerciseCreationValidation', request)
+  }
 
   private readonly _vmStatusSubscription: StompApiSubscription
 }
-
 
 // }

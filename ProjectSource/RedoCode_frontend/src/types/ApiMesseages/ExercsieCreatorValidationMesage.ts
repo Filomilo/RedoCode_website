@@ -1,39 +1,32 @@
+import CodeRunnerType from '../CodeRunnerTypes'
 import ExerciseTest from '../ExcericseTest'
 import RangeType from '../RangeType'
-import VarSize from '../VarSize'
 import VarType from '../VarType'
 import ITestParameters from '@/types/ITestParameters'
 
-interface StringIndexed {
-  [index: string]: string
-}
-interface testsIndexed {
-  [index: string]: ExerciseTest[]
+type StringIndexed = {
+  [index in CodeRunnerType]?: string
 }
 
 export default interface ExercsieCreatorValidationMesage extends ITestParameters {
   title: string
-  desc: string
-  languages: string[] | { label: string; value: string }[]
+  description: string
   ram: number
-  executionTimeMs: number
   inputType: VarType
-  inputSize: VarSize
   outputType: VarType
-  outputSize: VarSize
   amountOfAutoTests: number
   autoTestminValue: number
   autoTestMaxValue: number
   lengthRange: RangeType
-  xArrayRange: RangeType
-  yArrayRange: RangeType
-  upperCaseInput: boolean
-  lowerCaseInput: boolean
-  numberInput: boolean
-  specialCharacterInput: boolean
-  breakCharacterInupt: boolean
-  spaceInupt: boolean
-  solutions: StringIndexed
-  timeForTaskM: number
-  timeForTaskH: number
+  xArrayRange: RangeType | null
+  yArrayRange: RangeType | null
+  upperCaseInput: boolean | null
+  lowerCaseInput: boolean | null
+  numberInput: boolean | null
+  specialCharacterInput: boolean | null
+  breakCharacterInupt: boolean | null
+  spaceInupt: boolean | null
+  solutionCodes: StringIndexed
+  timeForTaskMin: number
+  timeForExecutionMs: number
 }

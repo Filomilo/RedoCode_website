@@ -26,16 +26,13 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
 
   const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(stompApiConnection)
 
-  // const _CodeRunnerResultsSubscriptions: StompApiConnection = 
-  stompApiConnection.subscribe(
-    '/user/topic/codeRunnerResults',
-    (response: Object) => {
-      const results: ProgramResultsMessage = response as ProgramResultsMessage
-      console.log('_CodeRunnerResultsSubscriptions: ' + JSON.stringify(results))
+  // const _CodeRunnerResultsSubscriptions: StompApiConnection =
+  stompApiConnection.subscribe('/user/topic/codeRunnerResults', (response: Object) => {
+    const results: ProgramResultsMessage = response as ProgramResultsMessage
+    console.log('_CodeRunnerResultsSubscriptions: ' + JSON.stringify(results))
 
-      codeRunnerStore.updateTestData(results.results)
-    }
-  )
+    codeRunnerStore.updateTestData(results.results)
+  })
 
   const helloWorldSubscription: StompApiSubscription = stompApiConnection.subscribe(
     '/user/topic/health',

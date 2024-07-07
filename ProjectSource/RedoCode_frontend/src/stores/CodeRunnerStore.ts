@@ -11,8 +11,12 @@ import type CodeToRunMessage from '@/types/CodeToRunMessage'
 import ExerciseCreatorController from '@/controllers/ExerciseCreatorControlller'
 import CoderunnerState from '../types/CodeRunnerState'
 import { IFrame } from '@stomp/stompjs'
-import VarType from '@/types/VarType'
-import VarSize from '@/types/VarSize'
+import VarType, {
+  isTypeArray,
+  isTypeDoubleArray,
+  isTypeSingle,
+  isTypeString
+} from '@/types/VarType'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { isNullOrUndef } from 'chart.js/helpers'
@@ -23,7 +27,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const playGroundBase: ExerciseData = {
     inputType: '',
     title: '',
-    desc: '',
+    description: '',
     id: null,
     outputType: '',
     availbleCodeRunners: languageChoices.map((element) => element),
@@ -93,40 +97,25 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
   }
 
-  const getVarAcording: any = (type: VarType, size: VarSize) => {
-    if (type === 'string') {
-      switch (size) {
-        case 'SINGLE_VALUE':
-          return ''
-        case 'ARRAY':
-          return ['']
-        case 'DOUBLE_ARRAY':
-          return [['']]
-      }
+  const getVarAcording: any = (type: VarType) => {
+    if (isTypeString(type)) {
+      if (isTypeSingle(type)) return ''
+      if (isTypeArray(type)) return ['']
+      if (isTypeDoubleArray(type)) return [['']]
     } else {
-      switch (size) {
-        case 'SINGLE_VALUE':
-          return 0
-        case 'ARRAY':
-          return [0]
-        case 'DOUBLE_ARRAY':
-          return [[0]]
-      }
+      if (isTypeSingle(type)) return 0
+      if (isTypeArray(type)) return [0]
+
+      if (isTypeDoubleArray(type)) return [[0]]
     }
-    return 0
   }
 
   const manualTestBuffer: any = reactive([])
 
-  const addblankTestToBuffer = (
-    inputType: VarType,
-    outputype: VarType,
-    inputSize: VarSize,
-    outputSize: VarSize
-  ) => {
-    const input = getVarAcording(inputType, inputSize)
-    const output = getVarAcording(outputype, outputSize)
-    console.log('ading ' + inputType + ' _ ' + inputSize + ' :: ' + JSON.stringify(input))
+  const addblankTestToBuffer = (inputType: VarType, outputype: VarType) => {
+    const input = getVarAcording(inputType)
+    const output = getVarAcording(outputype)
+    console.log('ading ' + inputType + ' _ ' + ' :: ' + JSON.stringify(input))
     manualTestBuffer.push({
       input: input,
       expectedOutput: output,

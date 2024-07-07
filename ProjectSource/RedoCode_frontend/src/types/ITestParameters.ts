@@ -1,24 +1,21 @@
 import ExcericseTest from './ExcericseTest'
 import RangeType from './RangeType'
-import VarSize from './VarSize'
 import VarType from './VarType'
 
 export default interface ITestParameters {
   manualTests: ExcericseTest[]
   inputType: VarType
-  inputSize: VarSize
   outputType: VarType
-  outputSize: VarSize
   amountOfAutoTests: number
   autoTestminValue: number
   autoTestMaxValue: number
   lengthRange: RangeType
-  xArrayRange: RangeType
-  yArrayRange: RangeType
-  upperCaseInput: boolean
-  lowerCaseInput: boolean
-  numberInput: boolean
-  specialCharacterInput: boolean
-  breakCharacterInupt: boolean
-  spaceInupt: boolean
+  xArrayRange: RangeType | null
+  yArrayRange: RangeType | null
+  upperCaseInput: boolean | null
+  lowerCaseInput: boolean | null
+  numberInput: boolean | null
+  specialCharacterInput: boolean | null
+  breakCharacterInupt: boolean | null
+  spaceInupt: boolean | null
 }

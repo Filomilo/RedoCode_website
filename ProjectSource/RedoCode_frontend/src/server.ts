@@ -154,7 +154,8 @@ export function makeServer({ environment = 'development' } = {}) {
     inputType: 'int',
     id: 1,
     title: 'Fibonacci',
-    desc: 'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
+    description:
+      'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
     outputType: 'int[]',
     availbleCodeRunners: ['js'],
     tests: [

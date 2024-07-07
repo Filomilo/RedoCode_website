@@ -10,7 +10,7 @@
     />
 
     <Textarea
-      v-model="codeRunnerStore.exerciseCreatorController.desc"
+      v-model="codeRunnerStore.exerciseCreatorController.description"
       rows="5"
       cols="30"
       placeholder="Exercise dexcription"

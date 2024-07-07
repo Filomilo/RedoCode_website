@@ -1,6 +1,6 @@
 <template>
-  type:
-  {{ JSON.stringify(props.ManualTests?.length) }}
+  <!-- type: -->
+  <!-- {{ JSON.stringify(props) }} -->
   <div class="CodeResultContainer">
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">

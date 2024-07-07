@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.Time;
 import java.util.HashMap;
+import java.util.Map;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -38,7 +39,7 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     @NotNull
     Long timeForExecution;
     @NotNull
-    HashMap<CODE_RUNNER_TYPE,String> solutionCodes;
+    Map<CODE_RUNNER_TYPE,String> solutionCodes;
 
 
 

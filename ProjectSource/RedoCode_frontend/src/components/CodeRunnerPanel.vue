@@ -1,11 +1,12 @@
 <!-- eslint-disable vue/no-mutating-props -->
 
 <template>
-  CoderunnerState:
+  <!-- CoderunnerState:
   {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState }}
-
-  {{ JSON.stringify(props.ManualTests) }}
-  {{ JSON.stringify(props.AutoTests) }}
+<div style="color: white" >
+  {{ JSON.stringify(props) }}
+</div>
+  {{ JSON.stringify(props.AutoTests) }} -->
   <Dialog
     :visible="codeRunnerStore.exerciseLoading"
     modal

@@ -11,20 +11,10 @@
         class="VerticalLine"
       >
         <div class="TestContainer">
-          <VariablesInput
-            :Type="inputType"
-            :Size="inputSize"
-            :isInput="true"
-            :manualTestInputIndex="index"
-          />
+          <VariablesInput :Type="inputType" :isInput="true" :manualTestInputIndex="index" />
         </div>
         <div class="TestContainer">
-          <VariablesInput
-            :Type="outputype"
-            :Size="outputSize"
-            :isInput="false"
-            :manualTestInputIndex="index"
-          />
+          <VariablesInput :Type="outputype" :isInput="false" :manualTestInputIndex="index" />
         </div>
         <div class="TrashButtonContainer">
           <Button
@@ -51,35 +41,22 @@ import IconTrash from '../assets/icons/IconTrash.vue'
 import VariablesInput from './VariablesInput.vue'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import VarType from '@/types/VarType'
-import VarSize from '@/types/VarSize'
 import { onMounted, PropType } from 'vue'
 import ExerciseTest from '@/types/ExcericseTest'
 const codeRunnerStore = useCodeRunnerStore()
 const props = defineProps({
-  inputType: { type: String as PropType<VarType>, required: true, default: 'int' },
-  outputype: { type: String as PropType<VarType>, required: true, default: 'int' },
-  inputSize: { type: String as PropType<VarSize>, required: true, default: 'DOUBLE_ARRAY' },
-  outputSize: { type: String as PropType<VarSize>, required: true, default: 'SINGLE_VALUE' }
+  inputType: { type: String as PropType<VarType>, required: true, default: 'SINGLE_INT' },
+  outputype: { type: String as PropType<VarType>, required: true, default: 'SINGLE_INT' }
 })
 const onAddButton = () => {
-  codeRunnerStore.addblankTestToBuffer(
-    props.inputType,
-    props.outputype,
-    props.inputSize,
-    props.outputSize
-  )
+  codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype)
 }
 const onRemoveButton = (index: number) => {
   codeRunnerStore.removeTestFromBuffer(index)
 }
 onMounted(() => {
   codeRunnerStore.clearTestsFromBuffer()
-  codeRunnerStore.addblankTestToBuffer(
-    props.inputType,
-    props.outputype,
-    props.inputSize,
-    props.outputSize
-  )
+  codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype)
 })
 </script>
 

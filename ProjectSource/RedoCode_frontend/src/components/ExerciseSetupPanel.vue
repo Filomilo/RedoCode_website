@@ -1,6 +1,18 @@
 <template>
   info:
-  {{ JSON.stringify(codeRunnerStore.exerciseCreatorController) }}
+  <div
+    style="
+      color: white;
+      width: 40rem;
+      max-width: 40rem;
+      word-wrap: break-word;
+      background-color: red;
+      padding: 1rem;
+      overflow: hidden;
+    "
+  >
+    {{ JSON.stringify(codeRunnerStore.exerciseCreatorController) }}
+  </div>
   <!-- {{ JSON.stringify(codeRunnerStore.exerciseCreatorController.languages.map((x)=> x.value)) }} -->
   <Splitter layout="vertical" style="height: 100%" class="exerciseSetupPanel">
     <SplitterPanel>
@@ -37,7 +49,16 @@
             Time for task
             <div style="display: flex; flex-direction: row">
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.timeForTaskH"
+                @update:model-value="
+                  (newNum: number) => {
+                    codeRunnerStore.exerciseCreatorController.timeForTaskMin =
+                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin % 60) +
+                      +newNum * 60
+                  }
+                "
+                :model-value="
+                  Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)
+                "
                 inputId="integeronly"
                 suffix=" H"
                 :min="0"
@@ -45,7 +66,14 @@
                 class="numberInput"
               />
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.timeForTaskM"
+                @update:model-value="
+                  (newNum: number) => {
+                    codeRunnerStore.exerciseCreatorController.timeForTaskMin =
+                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) +
+                      +newNum
+                  }
+                "
+                :model-value="codeRunnerStore.exerciseCreatorController.timeForTaskMin % 60"
                 inputId="integeronly"
                 suffix=" M"
                 :min="0"
@@ -58,7 +86,7 @@
             Maximum execution time
             <div style="display: flex; flex-direction: row">
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.executionTimeMs"
+                v-model="codeRunnerStore.exerciseCreatorController.timeForExecutionMs"
                 inputId="integeronly"
                 suffix=" ms"
                 :min="5"
@@ -74,7 +102,13 @@
           <div class="horizontalSection">
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.inputType"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.inputType = setTypeToInt(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
+                  }
+                "
                 inputId="inputType1"
                 name="int"
                 value="int"
@@ -83,7 +117,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.inputType"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.inputType = setTypeToFloat(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
+                  }
+                "
                 inputId="inputType2"
                 name="float"
                 value="float"
@@ -92,7 +132,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.inputType"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.inputType = setTypeToString(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
+                  }
+                "
                 inputId="inputType3"
                 name="string"
                 value="string"
@@ -103,7 +149,13 @@
           <div class="horizontalSection">
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.inputSize"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.inputType = setTypeToSingle(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
+                  }
+                "
                 inputId="inputSize1"
                 name="SINGLE_VALUE"
                 value="SINGLE_VALUE"
@@ -112,7 +164,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.inputSize"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.inputType = setTypeToArray(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
+                  }
+                "
                 inputId="inputSize2"
                 name="ARRAY"
                 value="ARRAY"
@@ -121,7 +179,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.inputSize"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.inputType = setTypeToDoubleArray(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
+                  }
+                "
                 inputId="inputSize3"
                 name="DOUBLE_ARRAY"
                 value="DOUBLE_ARRAY"
@@ -135,7 +199,13 @@
           <div class="horizontalSection">
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.outputType"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.outputType = setTypeToInt(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
+                  }
+                "
                 inputId="outputype1"
                 name="int"
                 value="int"
@@ -144,7 +214,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.outputType"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.outputType = setTypeToFloat(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
+                  }
+                "
                 inputId="outputype2"
                 name="float"
                 value="float"
@@ -153,7 +229,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.outputType"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.outputType = setTypeToString(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
+                  }
+                "
                 inputId="outputype3"
                 name="string"
                 value="string"
@@ -164,7 +246,13 @@
           <div class="horizontalSection">
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.outputSize"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.outputType = setTypeToSingle(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
+                  }
+                "
                 inputId="outputSize1"
                 name="SINGLE_VALUE"
                 value="SINGLE_VALUE"
@@ -173,7 +261,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.outputSize"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.outputType = setTypeToArray(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
+                  }
+                "
                 inputId="outputSize2"
                 name="ARRAY"
                 value="ARRAY"
@@ -182,7 +276,13 @@
             </div>
             <div class="RadioButtonSection">
               <RadioButton
-                v-model="codeRunnerStore.exerciseCreatorController.outputSize"
+                @update:model-value="
+                  (value: any) => {
+                    codeRunnerStore.exerciseCreatorController.outputType = setTypeToDoubleArray(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
+                  }
+                "
                 inputId="outputSize3"
                 name="DOUBLE_ARRAY"
                 value="DOUBLE_ARRAY"
@@ -199,8 +299,6 @@
         <ManualTestPnael
           :inputType="codeRunnerStore.exerciseCreatorController.inputType"
           :outputype="codeRunnerStore.exerciseCreatorController.outputType"
-          :inputSize="codeRunnerStore.exerciseCreatorController.inputSize"
-          :outputSize="codeRunnerStore.exerciseCreatorController.outputSize"
         />
       </div>
     </SplitterPanel>
@@ -229,8 +327,8 @@
             class="horizontalSection"
             style="flex-direction: column"
             v-if="
-              codeRunnerStore.exerciseCreatorController.inputSize === ('DOUBLE_ARRAY' as VarSize) ||
-              codeRunnerStore.exerciseCreatorController.inputSize === ('array' as VarSize)
+              isTypeArray(codeRunnerStore.exerciseCreatorController.inputType) ||
+              isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)
             "
           >
             <h5>Array x length range</h5>
@@ -265,9 +363,7 @@
           <div
             class="horizontalSection"
             style="flex-direction: column"
-            v-if="
-              codeRunnerStore.exerciseCreatorController.inputSize === ('DOUBLE_ARRAY' as VarSize)
-            "
+            v-if="isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)"
           >
             <h5>Array y length range</h5>
             <div>
@@ -405,7 +501,7 @@
           </div>
 
           <div
-            v-if="codeRunnerStore.exerciseCreatorController.inputType === 'string'"
+            v-if="isTypeString(codeRunnerStore.exerciseCreatorController.inputType)"
             class="SubPanelSection"
           >
             <div class="horizontalSection" style="flex-direction: column">
@@ -515,8 +611,17 @@
 import { onMounted } from 'vue'
 import VueSlider from 'vue-slider-component'
 import ManualTestPnael from './ManualTestPnael.vue'
-import VarType from '@/types/VarType'
-import VarSize from '@/types/VarSize'
+import VarType, {
+  setTypeToArray,
+  isTypeDoubleArray,
+  isTypeString,
+  isTypeArray,
+  setTypeToDoubleArray,
+  setTypeToSingle,
+  setTypeToString,
+  setTypeToInt,
+  setTypeToFloat
+} from '@/types/VarType'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
 const codeRunnerStore = useCodeRunnerStore()
