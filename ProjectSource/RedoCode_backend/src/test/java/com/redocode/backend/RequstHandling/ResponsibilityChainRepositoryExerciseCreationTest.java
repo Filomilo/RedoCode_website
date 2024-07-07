@@ -172,7 +172,7 @@ assertDoesNotThrow(
         int exerciseBefore=exerciseRepository.findAll() .size();
         ExerciseCreationRequest exerciseCreationRequest= this.exerciseCreationRequestCorrect;
         exerciseCreationRequest.setTitle(incorrectTitle);
-     assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
         int exerciseAfter=exerciseRepository.findAll() .size();
         assertEquals(exerciseBefore,exerciseAfter);
     }
