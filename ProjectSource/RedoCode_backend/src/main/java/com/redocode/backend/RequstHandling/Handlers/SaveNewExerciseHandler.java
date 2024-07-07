@@ -34,7 +34,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
                 .amountOfAutoTests(exerciseCreationRequest.getAmountOfAutoTests())
                 .author( exerciseCreationRequest.getUser())
                 .description(exerciseCreationRequest.getDescription())
-                .exerciseTests(Arrays.stream(exerciseCreationRequest.getTestsToRun()).toList())
+                .exerciseTests(exerciseCreationRequest.getTestsToRun())
                 .breakCharacterInput(exerciseCreationRequest.isBreakCharacterInput())
                 .lowerCaseInput(exerciseCreationRequest.isBreakCharacterInput())
                 .numberInput(exerciseCreationRequest.isNumberInput())

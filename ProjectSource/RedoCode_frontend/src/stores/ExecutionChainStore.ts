@@ -10,28 +10,7 @@ import { rejects } from 'assert'
 export const useExecutionChainStore = defineStore('executionChainStore', () => {
   const apiConnectionStore = useApiConnectionStore()
 
-  const executionChain: Ref<ChainNodeStatus[]> = ref([
-    {
-      nodeName: 'name',
-      status: 'PENDING',
-      processingMessage: 'pending descritpion'
-    },
-    {
-      nodeName: 'RUNNING',
-      status: 'RUNNING',
-      processingMessage: 'RUNNING descritpion'
-    },
-    {
-      nodeName: 'SUCCESS',
-      status: 'SUCCESS',
-      processingMessage: 'SUCCESS descritpion'
-    },
-    {
-      nodeName: 'FAILED',
-      status: 'FAILED',
-      processingMessage: 'FAILED descritpion'
-    }
-  ])
+  const executionChain: Ref<ChainNodeStatus[]> = ref([])
 
   const loadChainScheme = (scheme: ExecutionChainScheme) => {
     console.log('ExecutionResponses  loadChainScheme:' + JSON.stringify(scheme))

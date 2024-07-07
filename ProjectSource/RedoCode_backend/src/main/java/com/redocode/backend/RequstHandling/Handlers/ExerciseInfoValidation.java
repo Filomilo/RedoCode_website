@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 @Slf4j
 public class ExerciseInfoValidation extends MessageRequestHandler{
 
-    static String stringTitlePatttrnRegexMatch= "^(?=.{3,20}$)([A-Z]([a-z]*))+(\\s+([A-Z]([a-z]*)))*$";
+    static String stringTitlePatttrnRegexMatch= "^.{5,30}$";
     static Pattern TitlePattern=Pattern.compile(stringTitlePatttrnRegexMatch);
 
 
-    static String stringDescPatttrnRegexMatch= "^(?=.{10,2000}$)([A-Z]([a-z]*))+(\\s+([A-Z]([a-z]*)))*$";
+    static String stringDescPatttrnRegexMatch= "^.{5,3000}$";
     static Pattern DescPattern=Pattern.compile(stringDescPatttrnRegexMatch);
 
 
@@ -52,11 +52,11 @@ public class ExerciseInfoValidation extends MessageRequestHandler{
 
         if( !TitlePattern.matcher(exerciseCretionRequest.getTitle()).matches())
         {
-            throw  new RequestHadndlingException("Exercise title is inocrrect");
+            throw  new RequestHadndlingException("Exercise title: "+exerciseCretionRequest.getTitle()+" is inocrrect");
         }
         if( !DescPattern.matcher(exerciseCretionRequest.getDescription()).matches())
         {
-            throw  new RequestHadndlingException("Exercise title is inocrrect");
+            throw  new RequestHadndlingException("Exercise description is inocrrect");
         }
         if(exerciseCretionRequest.getAmountOfAutoTests()<=0 || exerciseCretionRequest.getAmountOfAutoTests()>10)
         {

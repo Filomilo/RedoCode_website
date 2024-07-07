@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.sql.Time;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,7 +61,7 @@ class MultipleCodeTestHandlerTest {
                 .Title("test")
                 .Description("desription")
                 .user(user)
-                .testsToRun(tests)
+                .testsToRun(Arrays.stream(tests).toList())
                 .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .outputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .timeForTaskMin(60L)

@@ -132,7 +132,7 @@ class CodeRunHandlerTest {
         .timeForTaskMin(timeForTask)
         .timeForExecutionMs(maxExecutionTimeMS)
         .solutionCodes(solutionCodes)
-        .manualTests(tests)
+        .manualTests(Arrays.stream(tests).toList())
 
         .ram(ram)
                         .build();

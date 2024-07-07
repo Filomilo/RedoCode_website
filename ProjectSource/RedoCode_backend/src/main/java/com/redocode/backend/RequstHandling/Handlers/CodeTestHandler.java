@@ -61,6 +61,12 @@ public class CodeTestHandler extends  BaseRequestHandler {
             log.error("varaible NULL: "+ ex.getMessage());
             throw new RequestHadndlingException("returned value is null_");
         }
+        catch (Exception ex)
+        {
+            log.error("varaible NULL: "+ ex.getMessage());
+            throw new RequestHadndlingException("Error while executing tests: "+ ex.getMessage());
+
+        }
 
 
 

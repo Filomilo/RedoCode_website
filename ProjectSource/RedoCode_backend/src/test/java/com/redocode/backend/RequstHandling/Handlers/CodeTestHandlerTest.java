@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,7 +68,7 @@ class CodeTestHandlerTest {
 
 
         CodeTestRequest codeTestRequest=CodeTestRequest.builder()
-                .testsToRun(this.tests)
+                .testsToRun(Arrays.stream(this.tests).toList())
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .Code("#include <iostream>\n" +
                         "#include <vector>\n" +

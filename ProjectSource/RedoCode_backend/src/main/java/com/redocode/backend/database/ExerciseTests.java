@@ -30,7 +30,7 @@ public class ExerciseTests {
 
     @JsonProperty("input")
     String input;
-    @JsonProperty("expected_output")
+    @JsonProperty("expectedOutput")
     String  expectedOutput;
 
 

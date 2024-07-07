@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
+import java.util.List;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -17,7 +18,7 @@ import java.util.Date;
 @Setter
 public class CodeTestRequest extends RawCodeRunRequest {
 
-    ExerciseTests[] testsToRun;
+    List<ExerciseTests> testsToRun;
     Variables.VARIABLES_TYPES inputType;
     Variables.VARIABLES_TYPES outputType;
 

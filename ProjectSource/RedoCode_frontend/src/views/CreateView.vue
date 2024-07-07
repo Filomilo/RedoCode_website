@@ -55,6 +55,8 @@ import { EditorLanguagesMap, languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import { text } from 'stream/consumers'
 import { TabViewClickEvent } from 'primevue/tabview'
+import ExerciseTest from '@/types/ExcericseTest'
+import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
 const ToastStore = useToastStore()
 const codeRunnerStore = useCodeRunnerStore()
 const ApiConnectionStore = useApiConnectionStore()
@@ -77,35 +79,15 @@ const onRunCode = () => {
 
 const onSubmit = () => {
   console.log('On sumbit')
-
-  ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest({
-    title: '',
-    description: '',
-    ram: 0,
-    timeForExecutionMs: 0,
-    inputType: 'SINGLE_INTEGER',
-    outputType: 'SINGLE_INTEGER',
-    amountOfAutoTests: 0,
-    autoTestminValue: 0,
-    autoTestMaxValue: 0,
-    lengthRange: {
-      min: 0,
-      max: 0
-    },
-    xArrayRange: null,
-    yArrayRange: null,
-    upperCaseInput: false,
-    lowerCaseInput: false,
-    numberInput: false,
-    specialCharacterInput: false,
-    breakCharacterInupt: false,
-    spaceInupt: false,
-    solutionCodes: {
-      CPP_RUNNER: 'example_solution'
-    },
-    timeForTaskMin: 0,
-    manualTests: []
+ const request: ExercsieCreatorValidationMesage=JSON.parse(JSON.stringify(codeRunnerStore.exerciseCreatorController)) as ExercsieCreatorValidationMesage;
+ request.manualTests=Object.values(codeRunnerStore.exerciseCreatorController.manualTestsSolutions)[0]as ExerciseTest[]
+ request.manualTests.forEach((obj: ExerciseTest)=>{
+    obj.expectedOutput=obj.expectedOutput.toString();
+    obj.input=(obj.input).toString();
   })
+  const request2: ExercsieCreatorValidationMesage=JSON.parse(JSON.stringify(request)) as ExercsieCreatorValidationMesage;
+
+  ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest(request)
 }
 
 const exerciseLnageus = computed(() => {

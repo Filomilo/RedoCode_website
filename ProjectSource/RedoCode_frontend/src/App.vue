@@ -8,15 +8,6 @@ const executionChainStore = useExecutionChainStore()
 
 <template>
   <html lang="pl" data-bs-theme="dark">
-    {{
-      executionChainStore.showExecutionChain
-    }}
-    <br />
-    chain:
-    <br />
-    {{
-      JSON.stringify(executionChainStore.executionChain)
-    }}
     <ChainOfReposibiltyWindow v-if="executionChainStore.showExecutionChain" />
     <div id="MainPageContainer" :class="executionChainStore.showExecutionChain ? 'lock' : ''">
       <TopBar id="TopBarContainer" />

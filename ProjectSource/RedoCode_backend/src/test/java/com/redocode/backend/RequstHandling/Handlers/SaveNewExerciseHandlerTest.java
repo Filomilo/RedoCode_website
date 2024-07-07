@@ -113,7 +113,7 @@ class SaveNewExerciseHandlerTest {
                 .upperCaseInput(upperCaseInput)
                 .xArrayRange(xArrayRange)
                 .yArrayRange(yArrayRange)
-                .testsToRun(tests)
+                .testsToRun(Arrays.stream(tests).toList())
                 .timeForTaskMin(timeForTask)
                 .timeForExecution(timeForExecution)
                 .build();

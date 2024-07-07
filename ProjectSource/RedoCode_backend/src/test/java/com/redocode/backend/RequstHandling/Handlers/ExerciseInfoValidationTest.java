@@ -59,7 +59,7 @@ class ExerciseInfoValidationTest {
                 .upperCaseInput(upperCaseInputCorrect)
                 .xArrayRange(xArrayRangeCorrect)
                 .yArrayRange(yArrayRangeCorrect)
-                .testsToRun(testsCorrect)
+                .testsToRun(Arrays.stream(testsCorrect).toList())
                 .timeForTaskMin(timeForTaskCorrect)
                 .timeForExecution(maxExecutionTimeMSCorrect)
                 .build();
