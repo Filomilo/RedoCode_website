@@ -14,7 +14,7 @@ export const isTypeString = (type: VarType): boolean => {
   return type === 'SINGLE_STRING' || type === 'ARRAY_STRINGS' || type === 'DOUBLE_ARRAY_OF_STRINGS'
 }
 
-export const isTypeSFloat = (type: VarType): boolean => {
+export const isTypeFloat = (type: VarType): boolean => {
   return type === 'SINGLE_FLOAT' || type === 'ARRAY_OF_FLOATS' || type === 'DOUBLE_ARRAY_OF_FLOATS'
 }
 

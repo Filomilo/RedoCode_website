@@ -110,8 +110,8 @@
                   }
                 "
                 inputId="inputType1"
-                name="int"
-                value="int"
+                :value="true"
+                :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.inputType)"
               />
               <label>int</label>
             </div>
@@ -125,8 +125,8 @@
                   }
                 "
                 inputId="inputType2"
-                name="float"
-                value="float"
+                :value="true"
+                :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType)"
               />
               <label>float</label>
             </div>
@@ -140,8 +140,8 @@
                   }
                 "
                 inputId="inputType3"
-                name="string"
-                value="string"
+                :value="true"
+                :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.inputType)"
               />
               <label>string</label>
             </div>
@@ -157,8 +157,8 @@
                   }
                 "
                 inputId="inputSize1"
-                name="SINGLE_VALUE"
-                value="SINGLE_VALUE"
+                :value="true"
+                :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.inputType)"
               />
               <label>single value</label>
             </div>
@@ -172,8 +172,8 @@
                   }
                 "
                 inputId="inputSize2"
-                name="ARRAY"
-                value="ARRAY"
+                :value="true"
+                :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.inputType)"
               />
               <label>array</label>
             </div>
@@ -187,8 +187,10 @@
                   }
                 "
                 inputId="inputSize3"
-                name="DOUBLE_ARRAY"
-                value="DOUBLE_ARRAY"
+                :value="true"
+                :model-value="
+                  isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)
+                "
               />
               <label>2d array</label>
             </div>
@@ -207,8 +209,8 @@
                   }
                 "
                 inputId="outputype1"
-                name="int"
-                value="int"
+                :value="true"
+                :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.outputType)"
               />
               <label>int</label>
             </div>
@@ -222,8 +224,8 @@
                   }
                 "
                 inputId="outputype2"
-                name="float"
-                value="float"
+                :value="true"
+                :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.outputType)"
               />
               <label>float</label>
             </div>
@@ -237,8 +239,8 @@
                   }
                 "
                 inputId="outputype3"
-                name="string"
-                value="string"
+                :value="true"
+                :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.outputType)"
               />
               <label>string</label>
             </div>
@@ -254,8 +256,8 @@
                   }
                 "
                 inputId="outputSize1"
-                name="SINGLE_VALUE"
-                value="SINGLE_VALUE"
+                :value="true"
+                :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.outputType)"
               />
               <label>single value</label>
             </div>
@@ -269,8 +271,8 @@
                   }
                 "
                 inputId="outputSize2"
-                name="ARRAY"
-                value="ARRAY"
+                :value="true"
+                :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.outputType)"
               />
               <label>array</label>
             </div>
@@ -278,14 +280,17 @@
               <RadioButton
                 @update:model-value="
                   (value: any) => {
+                    console.log('RadioButtonSection: outDoubleeArray')
                     codeRunnerStore.exerciseCreatorController.outputType = setTypeToDoubleArray(
                       codeRunnerStore.exerciseCreatorController.outputType
                     )
                   }
                 "
                 inputId="outputSize3"
-                name="DOUBLE_ARRAY"
-                value="DOUBLE_ARRAY"
+                :value="true"
+                :model-value="
+                  isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.outputType)
+                "
               />
               <label>2d array</label>
             </div>
@@ -616,11 +621,14 @@ import VarType, {
   isTypeDoubleArray,
   isTypeString,
   isTypeArray,
+  isTypeInt,
+  isTypeFloat,
   setTypeToDoubleArray,
   setTypeToSingle,
   setTypeToString,
   setTypeToInt,
-  setTypeToFloat
+  setTypeToFloat,
+  isTypeSingle
 } from '@/types/VarType'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 

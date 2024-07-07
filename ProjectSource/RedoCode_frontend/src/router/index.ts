@@ -7,7 +7,7 @@ import CreateView from '@/views/CreateView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AccountView from '@/views/AccountView.vue'
 import ResultsView from '@/views/ResultsView.vue'
-import ManualTestPnael from '@/components/ManualTestPnael.vue'
+import TestView from '@/views/TestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,7 +63,7 @@ const router = createRouter({
     {
       path: '/test',
       name: 'test',
-      component: ManualTestPnael
+      component: TestView
     }
   ]
 })
