@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
-class ExecutionChainSchemeTest extends WebSocketTestBase {
+class ExecutionChainSchemeTest  {
 @Test
     void ExecutionChainSchemeToJSonTest()
     {

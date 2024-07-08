@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @ContextConfiguration
 @SpringBootTest
-class ResponsibilityChainRepositoryGetChainTest extends WebSocketTestBase {
+class ResponsibilityChainRepositoryGetChainTest  {
 
     @Test
     void createNewExerciseChainTest(){

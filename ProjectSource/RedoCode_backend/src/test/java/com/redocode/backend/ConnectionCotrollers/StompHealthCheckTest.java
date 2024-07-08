@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -23,11 +24,21 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class StompHealthCheckTest extends WebSocketTestBase {
+
     WebSocketStompClient stompClient;
     static final String WEBSOCKET_TOPIC_HEALTH_RESPONSE = "/user/topic/health";
     static final String WEBSOCKET_TOPIC_HEALTH_DESTIN = "/app/Health";
+
+
+    @LocalServerPort
+    int port;
+    @Override
+    protected String getWebSocketUri() {
+        return getWebSocketUri(port);
+    }
+
     @BeforeEach
     public void setup() {
 

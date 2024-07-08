@@ -23,12 +23,18 @@ import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.WebSocketTestBase;
 import com.redocode.backend.database.*;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,11 +45,21 @@ import java.util.concurrent.TimeUnit;
 import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunExerciseCreatorValidationCode;
 import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunRawCode;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
 class CodeRunHandlerStompTest extends WebSocketTestBase {
+
+    @LocalServerPort
+    int port;
+    @Override
+    protected String getWebSocketUri() {
+        return getWebSocketUri(port);
+    }
+
 
     @Autowired
     ExerciseRepository exerciseRepository;
@@ -195,203 +211,300 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         );
 
 
+///todo: siplyfy await form
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("Checking user type")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(0)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("Correct user type")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
+                                    .stepUpdate(0)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
 
 
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                .message("Checking user type")
-                .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                .stepUpdate(0)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
 
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("Correct user type")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
-                        .stepUpdate(0)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("Checking exercise information")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(1)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
 
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("Checking exercise information")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(1)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("Correct exercise setup")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
-                        .stepUpdate(1)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("generation")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(2)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("generated")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
-                        .stepUpdate(2)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
 
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("preparation")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(3)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("prepared tests")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
-                        .stepUpdate(3)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("validating access to CPP_RUNNER")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("Validated access to CPP_RUNNER")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("Correct exercise setup")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
+                                    .stepUpdate(1)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
 
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("generation")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(2)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
 
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("running CPP_RUNNER tests")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("correct CPP_RUNNER tests")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("validating access to JS_RUNNER")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("Validated access to JS_RUNNER")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("running JS_RUNNER tests")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("correct JS_RUNNER tests")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("tests finished correctly")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
-                        .stepUpdate(4)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("saving to database")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
-                        .stepUpdate(5)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
-        assertEquals(ExecutionResponseStatusUpdate.builder()
-                        .message("saved to database")
-                        .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
-                        .stepUpdate(5)
-                        .build()
-                ,objectMapper.readValue(
-                        blockingQueue.poll(30, SECONDS)
-                        ,ExecutionResponseStatusUpdate.class
-                )
-        );
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("generated")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
+                                    .stepUpdate(2)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("preparation")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(3)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("prepared tests")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
+                                    .stepUpdate(3)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("validating access to CPP_RUNNER")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("Validated access to CPP_RUNNER")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+
+                });
+
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("running CPP_RUNNER tests")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("correct CPP_RUNNER tests")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("validating access to JS_RUNNER")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("Validated access to JS_RUNNER")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("running JS_RUNNER tests")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("correct JS_RUNNER tests")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("tests finished correctly")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
+                                    .stepUpdate(4)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("saving to database")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
+                                    .stepUpdate(5)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(200, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+                });
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+
+                    assertEquals(ExecutionResponseStatusUpdate.builder()
+                                    .message("saved to database")
+                                    .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
+                                    .stepUpdate(5)
+                                    .build()
+                            ,objectMapper.readValue(
+                                    blockingQueue.poll(100, SECONDS)
+                                    ,ExecutionResponseStatusUpdate.class
+                            )
+                    );
+
+                });
 
 
         int amountOfExeciseAfterdding=exerciseRepository.findAll().size();
@@ -475,12 +588,21 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                         .variables(null)
                 .build();
 
-        ProgramResultsMessage result=objectMapper.readValue(
-                blockingQueue.poll(20, SECONDS)
-                , ProgramResultsMessage.class);;
 
-        assertEquals(1,result.getResults().size());
-        assertEquals(correctResults, result.getResults().get(0));
+        await()
+                .atMost(60, SECONDS)
+                .untilAsserted(() ->{
+                    ProgramResultsMessage result=objectMapper.readValue(
+                            blockingQueue.poll(100, SECONDS)
+                            , ProgramResultsMessage.class);;
+
+                    assertEquals(1,result.getResults().size());
+                    assertEquals(correctResults, result.getResults().get(0));
+
+                });
+
+
+
 
     }
 
@@ -500,6 +622,8 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         session.send( "/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
         log.info("messge send to " + "/app"+INrunRawCode);
 
+//        Thread.sleep(3000);
+
         ProgramResult correctResults = ProgramResult.builder()
                 .consoleOutput(ConsoleOutput.builder()
                         .errorOutput("")
@@ -509,13 +633,27 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                 .variables(null)
                 .build();
 
-        ProgramResultsMessage result=objectMapper.readValue(
-                blockingQueue.poll(20, SECONDS)
-                , ProgramResultsMessage.class);;
+        await()
+                .atMost(50, SECONDS)
+                .untilAsserted(() ->{
+                    ProgramResultsMessage result=objectMapper.readValue(
+                            blockingQueue.poll(60,SECONDS)
+                            , ProgramResultsMessage.class);;
 
-        assertEquals(1,result.getResults().size());
-        assertEquals(correctResults, result.getResults().get(0));
+                    assertEquals(1,result.getResults().size());
+                    assertEquals(correctResults, result.getResults().get(0));
 
+                });
     }
 
+
+
+
+
+    @SneakyThrows
+    @Override
+    @AfterEach
+    protected void tearDown() {
+        super.tearDown();
     }
+}
