@@ -22,14 +22,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JsSolutionProgramTest {
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void runProgramJsReturnInt(Integer val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
-                .setOutputBase(new SingleInteger())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -47,14 +47,14 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void runProgramJsReturnFloat(Float val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
-                .setOutputBase(new SingleFloat())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
                 .setSolutionCode("float solution(float val){" +
                         "return val;" +
                         "}")
@@ -68,14 +68,14 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void runProgramJsReturnString(String val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleString(val))
-                .setOutputBase(new SingleString())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -89,7 +89,7 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void runProgramJSReturnStringArray(String[] val) {
         log.info("Code runner cpp return");
         ArrayOfStrings resultTemplate=new ArrayOfStrings();
@@ -98,7 +98,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -112,7 +112,7 @@ public class JsSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void runProgramJsReturnIntArray(Integer[] val) {
         log.info("Code runner cpp return");
         ArrayOfIntegers resultTemplate=new ArrayOfIntegers();
@@ -121,7 +121,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -136,7 +136,7 @@ public class JsSolutionProgramTest {
     }
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void runProgramJsReturnIntArray(Float[] val) {
         log.info("Code runner cpp return");
         ArrayOfFloats resultTemplate=new ArrayOfFloats();
@@ -145,7 +145,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -162,7 +162,7 @@ public class JsSolutionProgramTest {
     }
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     void runProgramJsReturnStringDoubleArray(String[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfStrings resultTemplate=new DoubleArrayOfStrings();
@@ -172,7 +172,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
                 .setSolutionCode(
                         "function solution(val){" +
                         "return val;" +
@@ -192,7 +192,7 @@ public class JsSolutionProgramTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void runProgramJsReturnIntDoubleArray(Integer[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfIntegers resultTemplate=new DoubleArrayOfIntegers();
@@ -202,7 +202,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -225,7 +225,7 @@ public class JsSolutionProgramTest {
 //
 //
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void runProgramJsReturnFloatDoubleArray(Float[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfFloats resultTemplate=new DoubleArrayOfFloats();
@@ -235,7 +235,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +

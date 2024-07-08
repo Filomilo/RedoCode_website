@@ -5,13 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Data
 @SuperBuilder
+@ToString
 public abstract class Variables<T> {
 
     @JsonIgnore
@@ -20,16 +24,25 @@ public abstract class Variables<T> {
     private int h=-1;
 
    public enum VARIABLES_TYPES {
-        SINGLE_INTEGER,
-        SINGLE_STRING,
-        SINGLE_FLOAT,
-        ARRAY_OF_INTEGERS,
-        ARRAY_STRINGS,
-        ARRAY_OF_FLOATS,
-        DOUBLE_ARRAY_OF_INTEGERS,
-        DOUBLE_ARRAY_OF_FLOATS,
-        DOUBLE_ARRAY_OF_STRINGS
-    }
+        SINGLE_INTEGER(0),
+        SINGLE_STRING(1),
+        SINGLE_FLOAT(2),
+        ARRAY_OF_INTEGERS(3),
+        ARRAY_STRINGS(4),
+        ARRAY_OF_FLOATS(5),
+        DOUBLE_ARRAY_OF_INTEGERS(5),
+        DOUBLE_ARRAY_OF_FLOATS(6),
+        DOUBLE_ARRAY_OF_STRINGS(7);
+
+       private final int  id;
+       VARIABLES_TYPES(int i) {
+           id=i;
+       }
+      public int getId()
+       {
+           return id;
+       }
+   }
 
 
     @Getter
@@ -69,6 +82,47 @@ public abstract class Variables<T> {
     @Override
     public boolean equals(Object o) {
         Variables<T> variables = (Variables<T>) o;
+//
+        if(getValue() instanceof Object[] && variables.getValue() instanceof Object[]) {
+            Object[] arr= (Object[]) getValue();
+            Object[] arro= (Object[]) variables.getValue();
+            return  Arrays.deepEquals(arr,arro);
+        }
+
         return Objects.equals(this.getValue(), variables.getValue());
+    }
+
+    @Override
+    public String toString() {
+        if(getValue() instanceof Object[][]) {
+            Object[][] arr= (Object[][]) getValue();
+           StringBuilder builder=new StringBuilder("{\n");
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length ; j++) {
+                    builder.append(arr[i][j]);
+                    if(j<arr[i].length-1)
+                    builder.append(", ");
+                }
+                builder.append("\n");
+            }
+            builder.append("}");
+            return builder.toString();
+        }
+
+        if(getValue() instanceof Object[]) {
+            Object[] arr= (Object[]) getValue();
+            StringBuilder builder=new StringBuilder("{\n");
+            for (int i = 0; i < arr.length; i++) {
+                    builder.append(arr[i]);
+                    if(i<arr.length-1)
+                        builder.append(", ");
+                }
+                builder.append("\n");
+            builder.append("}");
+            return builder.toString();
+        }
+
+
+        return getValue().toString();
     }
 }

@@ -9,8 +9,15 @@ import type CodeResultsType from '@/types/CodeResultsType'
 import TestResultCard from './TestResultCard.vue'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import { computed } from 'vue'
-const codeRunnerStore = useCodeRunnerStore()
-const tests = computed(() =>
-  codeRunnerStore.exerciseData.tests.concat(codeRunnerStore.exerciseData.automaticTests)
-)
+import ExerciseTest from '@/types/ExcericseTest'
+const props = defineProps({
+  ManualTests: { type: Array as () => ExerciseTest[] | undefined, required: true },
+  AutoTests: { type: Array as () => ExerciseTest[] | undefined, required: true }
+})
+const tests = computed(() => {
+  if (props.ManualTests !== undefined && props.AutoTests !== undefined) {
+    return props.ManualTests.concat(props.AutoTests)
+  }
+  return []
+})
 </script>

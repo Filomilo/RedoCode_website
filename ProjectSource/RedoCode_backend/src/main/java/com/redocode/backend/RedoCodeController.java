@@ -1,18 +1,13 @@
 package com.redocode.backend;
 
-import com.redocode.backend.Auth.UnauthenticatedUser;
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import jakarta.annotation.PreDestroy;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.util.*;
 
@@ -27,31 +22,34 @@ public class RedoCodeController {
     private RedoCodeController()
     {}
 
-     HashMap<User,User> connectedUsers=new HashMap<>();
-
+     HashMap<String,User> connectedUsers=new HashMap<>();
 
     public void addConnectedUser(User user)
     {
-        connectedUsers.put(user,user);
+        log.info("adding connete user: "+ user);
+        connectedUsers.put(user.getSessionID(),user);
+        log.info("connected user list: "+Arrays.toString(connectedUsers.keySet().toArray()));
     }
 
     public void removeConnectedUser(User user)
     {
-       log.info("Removing user : "+ user+ " from connected users");
+       log.info("Removing user : "+ user+ " from connected users : "+ Arrays.toString(connectedUsers.keySet().toArray()));
 
-        this.connectedUsers.remove(user);
+        this.connectedUsers.remove(user.getSessionID());
+        log.info("Removed user : "+ user+ " from connected users : "+ Arrays.toString(connectedUsers.keySet().toArray()));
+
         codeRunnersController.deregisterUser(user);
     }
-    public void removeConnectedUser(String id)
+    public void removeConnectedUser(String uuid)
     {
-        log.info("Removing user of id: "+ id+ " from connected users");
-        this.removeConnectedUser(new UnauthenticatedUser(id));
+        log.info("Removing user of id: "+ uuid+ " from connected users");
+        this.removeConnectedUser(new User(uuid));
     }
 
-    public User getUserById(String id)
+    public User getUserByConnectionUUID(String uuid)
     {
-        User usertmp=new UnauthenticatedUser(id);
-        return (User) this.connectedUsers.get(usertmp);
+
+        return this.connectedUsers.get(uuid);
     }
 
 
@@ -59,7 +57,7 @@ public class RedoCodeController {
     @PreDestroy
 public void reset() {
         log.info("Destrying Redocode controller");
-        connectedUsers.keySet().stream()
+        connectedUsers.values().stream()
                 .forEach(user ->    codeRunnersController.deregisterUser(user));
 
         connectedUsers.clear();

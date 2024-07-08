@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.redocode.backend.Tools.StringFormatter;
 import lombok.extern.jackson.Jacksonized;
 
+
 public class SingleString  extends Variables<String> {
     public SingleString(String value) {
         super(value);

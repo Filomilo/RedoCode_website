@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.Objects;
 
 @Entity
 @Table(name ="exercise_tests")
@@ -14,6 +17,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Getter
+@Slf4j
 public class ExerciseTests {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +30,13 @@ public class ExerciseTests {
 
     @JsonProperty("input")
     String input;
-    @JsonProperty("expected_output")
+    @JsonProperty("expectedOutput")
     String  expectedOutput;
 
 
     private Variables parseVaraibles(String toParse, Variables.VARIABLES_TYPES type) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Variables input=null;
-
         switch (type) {
             case SINGLE_INTEGER -> {input=mapper.readValue(toParse, SingleInteger.class);
             }
@@ -41,7 +44,7 @@ public class ExerciseTests {
             }
             case SINGLE_FLOAT -> {input=mapper.readValue(toParse, SingleFloat.class);
             }
-            case ARRAY_OF_INTEGERS -> {input=mapper.readValue(toParse, ArrayOfStrings.class);
+            case ARRAY_OF_INTEGERS -> {input=mapper.readValue(toParse, ArrayOfIntegers.class);
             }
             case ARRAY_STRINGS -> {input=mapper.readValue(toParse, ArrayOfStrings.class);
             }
@@ -59,6 +62,7 @@ public class ExerciseTests {
 
 
    public Variables getParsedInput(Variables.VARIABLES_TYPES inputType) throws JsonProcessingException {
+
         ObjectMapper mapper = new ObjectMapper();
        return parseVaraibles(this.getInput(),inputType);
     }
@@ -67,5 +71,16 @@ public class ExerciseTests {
         return parseVaraibles(this.getExpectedOutput(),outputType);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExerciseTests that = (ExerciseTests) o;
+        return Objects.equals(id, that.id) && Objects.equals(input, that.input) && Objects.equals(expectedOutput, that.expectedOutput);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, input, expectedOutput);
+    }
 }

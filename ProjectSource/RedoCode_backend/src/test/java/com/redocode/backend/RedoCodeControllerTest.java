@@ -1,26 +1,20 @@
 package com.redocode.backend;
 
-import com.redocode.backend.Auth.UnauthenticatedUser;
-import com.redocode.backend.Auth.User;
+import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ContextConfiguration
+@Slf4j
 class RedoCodeControllerTest {
 
     @Autowired
@@ -40,8 +34,8 @@ class RedoCodeControllerTest {
 
     @Test
     void addConnectedUser() {
-        UnauthenticatedUser user1 = new UnauthenticatedUser("1");
-        UnauthenticatedUser user2 = new UnauthenticatedUser("2");
+        User user1 = new User("1");
+        User user2 = new User("2");
 
         int amountOfUsersBeforeAdding = redoCodeController.connectedUsers.size();
         redoCodeController.addConnectedUser(user1);
@@ -56,21 +50,24 @@ class RedoCodeControllerTest {
         assertEquals(1, aomuntAfterFristAdditon);
         assertEquals(2, amountAfterSecondAddition);
         assertEquals(2, amountAfterAdingTheSame);
-        assertTrue(redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user1))));
-        assertTrue(redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user2))));
+        assertTrue(redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user1))));
+        assertTrue(redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user2))));
     }
 
     @Test
     void removeConnectedUser() {
-        UnauthenticatedUser user1 = new UnauthenticatedUser("1");
-        UnauthenticatedUser user2 = new UnauthenticatedUser("2");
+        User user1 = new User("1");
+        User user2 = new User("2");
         redoCodeController.addConnectedUser(user1);
         redoCodeController.addConnectedUser(user2);
         int amountOfUsersBeforeRemoving = redoCodeController.connectedUsers.size();
         redoCodeController.removeConnectedUser(user1);
         int amountOfUsersAfterRemoving = redoCodeController.connectedUsers.size();
-        Boolean doesContainUser1 = redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user1)));
-        Boolean doesContainUser2 = redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user2)));
+        log.info("checking doesContainUser1: "+ Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
+        Boolean doesContainUser1 = redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user1)));
+        log.info("checking doesContainUser2: "+ Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
+
+        Boolean doesContainUser2 = redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user2)));
         redoCodeController.removeConnectedUser("2");
         Boolean doesContainUser2AfterRemoval = redoCodeController.connectedUsers.keySet().stream().anyMatch(user -> (user.equals(user2)));
         int amountOfUsersAfterRemovingSecond = redoCodeController.connectedUsers.size();
@@ -86,12 +83,12 @@ class RedoCodeControllerTest {
 
     @Test
     void getUserById() {
-        UnauthenticatedUser user1 = new UnauthenticatedUser("1");
-        UnauthenticatedUser user2 = new UnauthenticatedUser("2");
+        User user1 = new User("1");
+        User user2 = new User("2");
         redoCodeController.addConnectedUser(user1);
         redoCodeController.addConnectedUser(user2);
-        User user1Recived = redoCodeController.getUserById("1");
-        User user2Recived = redoCodeController.getUserById("2");
+        User user1Recived = redoCodeController.getUserByConnectionUUID("1");
+        User user2Recived = redoCodeController.getUserByConnectionUUID("2");
         assertEquals(user1, user1Recived);
         assertEquals(user2, user2Recived);
     }

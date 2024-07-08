@@ -58,7 +58,7 @@ public class DataBaseSolutionsRun {
                                     ProgramFactory.createSolutionProgram()
                                             .setSolutionCodeRunner(codeRunner.getType())
                                             .setSolutionCode(sol.getCode())
-                                            .setOutputBase(new SingleInteger()) // todo: mapping type from data base to Varaible type
+                                            .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER) // todo: mapping type from data base to Varaible type
                                             .setInputVaraiable(test.getParsedInput(Variables.VARIABLES_TYPES.SINGLE_INTEGER)) // todo: Dynamic mapping for type
                                             .build();
                             ProgramResult result = codeRunner.runProgram(program);

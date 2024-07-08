@@ -1,11 +1,12 @@
 package com.redocode.backend.VmAcces;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.redocode.backend.Auth.User;
-import com.redocode.backend.ConnectionCotrollers.CodeRunnerSender;
+import com.redocode.backend.database.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
-import com.redocode.backend.Messages.CodeToRunMessage;
+import com.redocode.backend.ConnectionCotrollers.MessageSender;
+import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
 import com.redocode.backend.Messages.CoderunnerStateMessage;
+import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.CodeRunners.*;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
@@ -21,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.PriorityBlockingQueue;
 
 @Slf4j
-@Component
+@Service
 @Scope("singleton")
 public class CodeRunnersController {
 
@@ -35,12 +36,12 @@ public class CodeRunnersController {
     CodeRunnersController() {
     }
     @Autowired
-    private CodeRunnerSender codeRunnerSender;
+    private MessageSender messeageSender;
     @Autowired
     ExerciseRepository exerciseRepository;
-    static final int maxAmountOfVm=5;
+    static final int maxAmountOfVm=5; //todo move to global config
 
-    private Map<User, CodeRunner> usersCodeRunenrs=new Hashtable<>(maxAmountOfVm);
+    private HashMap<User, CodeRunner> usersCodeRunenrs=new HashMap<>(maxAmountOfVm);
     private Set<CodeRunnerRequest> requestMessageSet=new HashSet<>();
     PriorityBlockingQueue<CodeRunnerRequest> requestQueue=new  PriorityBlockingQueue<>();
 
@@ -94,7 +95,7 @@ public class CodeRunnersController {
 
         Optional<CodeRunnerRequest> requestMessage=requestMessageSet
                 .stream()
-                .filter((req)-> req.getUserRequesting().equals(user))
+                .filter((req)-> req.getUser().equals(user))
 
                 .findFirst();
 
@@ -113,7 +114,7 @@ public class CodeRunnersController {
         requestMessageSet.add(codeRunnerRequest);
         requestQueue.add(codeRunnerRequest);
         log.info("added to queue: "+ codeRunnerRequest);
-        updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
+        updateCodeRunnerState(codeRunnerRequest.getUser());
     }
 
 
@@ -122,18 +123,18 @@ public class CodeRunnersController {
     {
         log.info("creating new vm per request: "+ codeRunnerRequest);
        CodeRunner codeRunner= CodeRunnerBuilder.build(codeRunnerRequest);
-       this.usersCodeRunenrs.put(codeRunnerRequest.getUserRequesting(),codeRunner);
+       this.usersCodeRunenrs.put(codeRunnerRequest.getUser(),codeRunner);
        codeRunner.start();
         log.info("created new vm per request: "+ codeRunnerRequest);
-       updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
+       updateCodeRunnerState(codeRunnerRequest.getUser());
     }
 
 
     public void requestVm(CodeRunnerRequest codeRunnerRequest)
     {
-        if(usersCodeRunenrs.containsKey(codeRunnerRequest.getUserRequesting()))
+        if(usersCodeRunenrs.containsKey(codeRunnerRequest.getUser()))
         {
-            deregisterUser(codeRunnerRequest.getUserRequesting());
+            deregisterUser(codeRunnerRequest.getUser());
         }
 
         if(usersCodeRunenrs.size()<maxAmountOfVm)
@@ -144,7 +145,7 @@ public class CodeRunnersController {
         {
             addToQueue(codeRunnerRequest);
         }
-        updateCodeRunnerState(codeRunnerRequest.getUserRequesting());
+        updateCodeRunnerState(codeRunnerRequest.getUser());
 
     }
 
@@ -156,13 +157,17 @@ public class CodeRunnersController {
                 "------"+
                 Arrays.toString(this.usersCodeRunenrs.keySet().toArray())
         );
+
+        log.info("user hash: "+ user.hashCode());
+        log.info("hashmap hashes: "+Arrays.toString(this.usersCodeRunenrs.keySet().stream().map(a-> a.hashCode()).toArray()));
+
         return this.usersCodeRunenrs.get(user);
     }
 
     public void updateCodeRunnerState(User user)
     {
     VmStatus status=this.getUserVmStatus(user);
-    if(codeRunnerSender!=null)
+    if(messeageSender!=null)
     {
         CodeRunner userCodeRunner=getUserCodeRunner(user);
         CodeRunnerState state;
@@ -179,7 +184,7 @@ public class CodeRunnersController {
                 .codeRunnerType(userCodeRunner==null?CODE_RUNNER_TYPE.UNIDENTIFIED :userCodeRunner.getType())
                 .build();
         log.info("user: "+ user+" requested status: "+ coderunnerStateMessage);
-        codeRunnerSender.sendToUser(user.getId(),  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);
+        messeageSender.sendMessage(user,  CodeRunnersConnectionController.codeRunnerStateEndPoint,coderunnerStateMessage);
     }
     }
 
@@ -189,41 +194,42 @@ public class CodeRunnersController {
 //    testing purpioses only
 
     public void reset() {
+        removeAllCodeRunners();
         requestMessageSet.clear();
         requestQueue.clear();
         usersCodeRunenrs.clear();
     }
 
-    public List<ProgramResult> runCode(User user, CodeToRunMessage codeToRunMessage) {
+    public List<ProgramResult> runCode(User user, ExerciseIdToRunMessage exerciseIdToRunMessage) {
         CodeRunner codeRunner= this.getUserCodeRunner(user);
         if(codeRunner==null)
             throw  new RuntimeException("user doesnt have code runner");
 
-        log.info("running program form meesage: "+ codeToRunMessage);
-        List<ProgramResult> results=runProgramFromMessage(codeRunner,codeToRunMessage);
+        log.info("running program form meesage: "+ exerciseIdToRunMessage);
+        List<ProgramResult> results=runProgramFromMessage(codeRunner, exerciseIdToRunMessage);
         this.sendResults(user,results);
         return results;
     }
     // running raw program based on message send by user
 
-    public List<ProgramResult> runProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    public List<ProgramResult> runProgramFromMessage(CodeRunner codeRunner, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         List<ProgramResult> results=new ArrayList<>();
-        if(codeToRunMessage.getExercise_id()==null)
+        if(exerciseIdToRunMessage.getExercise_id()==null)
         {
-            results=this.runRawProgramFromMessage(codeRunner,codeToRunMessage);
+            results=this.runRawProgramFromMessage(codeRunner, exerciseIdToRunMessage);
         }
         else {
-            results=this.runExerciseSoultionFromMessage(codeRunner,codeToRunMessage);
+            results=this.runExerciseSoultionFromMessage(codeRunner, exerciseIdToRunMessage);
         }
 
         return results;
     }
 
-    private List<ProgramResult> runRawProgramFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    private List<ProgramResult> runRawProgramFromMessage(CodeRunner codeRunner, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         Program pr;
-        pr=new RawProgram(codeToRunMessage.getCode());
+        pr=new RawProgram(exerciseIdToRunMessage.getCode());
         List<Variable> variablesInput=new ArrayList<>();
         List<ProgramResult> programResults=new ArrayList<>();
         programResults.add(codeRunner.runProgram(pr));
@@ -231,11 +237,11 @@ public class CodeRunnersController {
     }
     // running exercise program based on message send by user
 
-    private List<ProgramResult> runExerciseSoultionFromMessage(CodeRunner codeRunner, CodeToRunMessage codeToRunMessage)
+    private List<ProgramResult> runExerciseSoultionFromMessage(CodeRunner codeRunner, ExerciseIdToRunMessage exerciseIdToRunMessage)
     {
         List<ProgramResult> results=new ArrayList<>();
-        log.info("Ruunnign code to run on exercise of id: "+codeToRunMessage.getExercise_id() );
-        Excersize exercise= exerciseRepository.findById(Long.parseLong(codeToRunMessage.getExercise_id())).orElse(null);
+        log.info("Ruunnign code to run on exercise of id: "+ exerciseIdToRunMessage.getExercise_id() );
+        Excersize exercise= exerciseRepository.findById(Long.parseLong(exerciseIdToRunMessage.getExercise_id())).orElse(null);
     List<ExerciseTests>     tests=exercise.getExerciseTests();
         log.info("Exercise Tests: "+ Arrays.toString(tests.toArray()));
 
@@ -248,9 +254,9 @@ public class CodeRunnersController {
             Program program= ProgramFactory
                     .createSolutionProgram()
                     .setSolutionCodeRunner(codeRunner.getType())
-                    .setOutputBase(VariablesFactory.getVeraibleFromType(exercise.getOutputType()))
+                    .setOutputBase((exercise.getOutputType()))
                     .setInputVaraiable(input)
-                    .setSolutionCode(codeToRunMessage.getCode())
+                    .setSolutionCode(exerciseIdToRunMessage.getCode())
                     .build();
             log.info("Ruunign test: "+ program);
             ProgramResult result=codeRunner.runProgram(program);
@@ -275,7 +281,15 @@ public class CodeRunnersController {
     public void sendResults(User user, List<ProgramResult> results)
     {
         log.info("sending resutls: "+ Arrays.toString(results.toArray())+" to user "+ user);
-        this.codeRunnerSender.sendMessageToUser(CodeRunnersConnectionController.codeRunnerResultEndPoint,results,user);
+        this.messeageSender.sendMessage(user,CodeRunnersConnectionController.codeRunnerResultEndPoint,results);
+    }
+
+
+    public void removeAllCodeRunners()
+    {
+        usersCodeRunenrs.forEach((User user, CodeRunner cosdeRuner)->{
+            cosdeRuner.destroy();
+        });
     }
 
     // TODO: 14/02/2024 Wokr on proper synchornizaion aroudn collenction 

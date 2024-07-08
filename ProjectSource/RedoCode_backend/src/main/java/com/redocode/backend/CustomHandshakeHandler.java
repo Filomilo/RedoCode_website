@@ -1,10 +1,9 @@
 package com.redocode.backend;
 
-import com.redocode.backend.Auth.UnauthenticatedUser;
+import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
@@ -23,7 +22,7 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler {
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
        String uuid=UUID.randomUUID().toString();
       log.info("new user connected: "+ uuid);
-        UnauthenticatedUser user= new UnauthenticatedUser(uuid);
+        User user= new User(uuid,null, User.USER_TYPE.UNAUTHENTICATED);
 //        redoCodeController.addConnectedUser(user);
         return new StompPrincipal(uuid);
     }

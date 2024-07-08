@@ -5,10 +5,10 @@ import lombok.ToString;
 import java.security.Principal;
 
 @ToString
-class StompPrincipal implements Principal {
+public class StompPrincipal implements Principal {
     String name;
 
-    StompPrincipal(String name) {
+    public StompPrincipal(String name) {
         this.name = name;
     }
 

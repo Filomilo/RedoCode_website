@@ -1,24 +1,25 @@
-INSERT INTO users (user_name) VALUES
-                                  ('sunny'),
-                                  ('shadow'),
-                                  ('sparky'),
-                                  ('whisper'),
-                                  ('blaze'),
-                                  ('frosty'),
-                                  ('echo'),
-                                  ('nova'),
-                                  ('shimmer'),
-                                  ('phoenix'),
-                                  ('neptune'),
-                                  ('zenith'),
-                                  ('avalanche'),
-                                  ('sapphire'),
-                                  ('mystic'),
-                                  ('raptor'),
-                                  ('thunder'),
-                                  ('enigma'),
-                                  ('infinity'),
-                                  ('quasar');
+INSERT INTO users (user_name,user_type) VALUES
+                                  ('sunny',0),
+                                  ('shadow',1),
+                                  ('sparky',2),
+                                  ('whisper',0),
+                                  ('blaze',1),
+                                  ('frosty',2),
+                                  ('echo',0),
+                                  ('nova',1),
+                                  ('shimmer',2),
+                                  ('phoenix',0),
+                                  ('neptune',1),
+                                  ('zenith',2),
+                                  ('avalanche',0),
+                                  ('sapphire',1),
+                                  ('mystic',2),
+                                  ('raptor',0),
+                                  ('thunder',1),
+                                  ('enigma',2),
+                                  ('infinity',0),
+                                  ('quasar',1),
+                                  ('laptop',2);
 
 
 INSERT INTO public.programming_languages (name)
@@ -31,7 +32,7 @@ INSERT INTO public.excersizes (
     input_type,
     output_type,
     ram_Mb,
-    time_for_task,
+    time_for_task_min,
     amount_of_auto_tests,
     array_x_length_range_min,
     array_x_length_range_max,
@@ -39,7 +40,7 @@ INSERT INTO public.excersizes (
     array_y_length_range_max,
     value_range_min,
     value_range_max,
-    string_format_mask
+    max_execution_time_ms
 )
 VALUES (1, --author_id
         'fibonachi sequance', --excersize_name
@@ -47,15 +48,15 @@ VALUES (1, --author_id
         0, --input_type
         0, -- output_type
         512, --ram_Mb
-        '01:30:00', --time_for_task
+        30, --time_for_task
         10, --amount_of_auto_tests
         0, --array_x_length_range_min
         0, --array_x_length_range_max
         0, --array_y_length_range_min
         0, --array_y_length_range_max
         10, --value_range_min
-        40, --value_range_max
-        0 --string_format_mask
+        40, --value_range_max,
+        1000 -- max executin time ms
        );
 
 INSERT INTO public.exercise_tests (excersize, id, expected_output, input)

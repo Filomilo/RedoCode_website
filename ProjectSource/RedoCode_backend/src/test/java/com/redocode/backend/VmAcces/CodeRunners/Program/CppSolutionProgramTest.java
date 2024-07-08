@@ -30,14 +30,14 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void runProgramCppReturnInt(Integer val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
-                .setOutputBase(new SingleInteger())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("int solution(int val){" +
                         "return val;" +
                         "}")
@@ -55,14 +55,14 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void runProgramCppReturnFloat(Float val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
-                .setOutputBase(new SingleFloat())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
                 .setSolutionCode("float solution(float val){" +
                         "return val;" +
                         "}")
@@ -76,14 +76,14 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#singleStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void runProgramCppReturnString(String val) {
         log.info("Code runner cpp return");
         Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleString(val))
-                .setOutputBase(new SingleString())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .setSolutionCode("#include <string>\n" +
                         "std::string solution(std::string val){" +
                         "return val;" +
@@ -98,7 +98,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void runProgramCppReturnStringArray(String[] val) {
         log.info("Code runner cpp return");
         ArrayOfStrings resultTemplate=new ArrayOfStrings();
@@ -107,7 +107,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .setSolutionCode("#include <string>\n" +
                                 "#include <vector>\n"+
                         "std::vector<std::string> solution(std::vector<std::string> val){" +
@@ -124,7 +124,7 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void runProgramCppReturnIntArray(Integer[] val) {
         log.info("Code runner cpp return");
         ArrayOfIntegers resultTemplate=new ArrayOfIntegers();
@@ -133,7 +133,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<int> solution(std::vector<int> val){" +
                                 "return val;" +
@@ -148,7 +148,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#arrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void runProgramCppReturnIntArray(Float[] val) {
         log.info("Code runner cpp return");
         ArrayOfFloats resultTemplate=new ArrayOfFloats();
@@ -157,7 +157,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "#include <vector>\n std::vector<float> solution(std::vector<float> val){" +
                                 "return val;" +
@@ -174,7 +174,7 @@ class CppSolutionProgramTest {
     }
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayStringProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     void runProgramCppReturnStringDoubleArray(String[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfStrings resultTemplate=new DoubleArrayOfStrings();
@@ -184,7 +184,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
                 .setSolutionCode("#include <string>\n" +
                         "#include <vector>\n"+
                         "std::vector<std::vector<std::string>> solution(std::vector<std::vector<std::string>> val){" +
@@ -205,7 +205,7 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayIntProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void runProgramCppReturnIntDoubleArray(Integer[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfIntegers resultTemplate=new DoubleArrayOfIntegers();
@@ -215,7 +215,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<int>> solution(std::vector<std::vector<int>> val){" +
                                 "return val;" +
@@ -238,7 +238,7 @@ class CppSolutionProgramTest {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.ValuesProvider#doubleArrayFloatProvider")
+    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void runProgramCppReturnFloatDoubleArray(Float[][] val) {
         log.info("Code runner cpp return");
         DoubleArrayOfFloats resultTemplate=new DoubleArrayOfFloats();
@@ -248,7 +248,7 @@ class CppSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
-                .setOutputBase(resultTemplate)
+                .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<float>> solution(std::vector<std::vector<float>> val){" +
                                 "return val;" +

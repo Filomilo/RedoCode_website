@@ -10,15 +10,15 @@
     "test:dev:unit": "vitest",
     "test:dev:e2e": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress run --e2e -C config/cypress-dev.config.ts'",
     "test:dev:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e -C config/cypress-dev.config.ts  '",
-    "test:prod:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e -C config/cypress-prod.config.ts  '",
-    "test:prod:e2e:dev": "start-server-and-test 'vite preview --port 4173' http://localhost:4173 'cypress open --e2e -C config/cypress-prod.config.ts  '",
+    "test:prod:e2e": "start-server-and-test preview http://localhost:80 'cypress run --e2e -C config/cypress-prod.config.ts  '",
+    "test:prod:e2e:dev": "start-server-and-test 'vite preview --port 80' http://localhost:80 'cypress open --e2e -C config/cypress-prod.config.ts  '",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist",
-    "serve": "serve -s dist"
+    "serve": "serve -s dist -l 80"
   },
   "dependencies": {
     "@guolao/vue-monaco-editor": "^1.5.1",

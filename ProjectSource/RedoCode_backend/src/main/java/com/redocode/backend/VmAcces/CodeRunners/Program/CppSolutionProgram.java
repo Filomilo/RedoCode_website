@@ -108,7 +108,7 @@ public class CppSolutionProgram extends SolutionProgram {
                        "#include <iostream>\n" +
                        "#include <sstream>\n" +
                        "#include <vector>\n" +
-                       "void "+this.getOutputGeneratorFunctionName()+"("+getVarName(this.getOutput().getType())+" a)\n" +
+                       "void "+this.getOutputGeneratorFunctionName()+"("+getVarName(this.getOutputType())+" a)\n" +
                        "{\n"+
         "std::ofstream myfile;\n" +
                 "myfile.open (\""+this.getOutputFileName()+"\");\n";
@@ -119,7 +119,7 @@ public class CppSolutionProgram extends SolutionProgram {
     }
 
     private String getOutputgeneartionBody() {
-        String returnfunc=switch (this.getOutput().getType()){
+        String returnfunc=switch (this.getOutputType()){
             case ARRAY_STRINGS,ARRAY_OF_FLOATS,ARRAY_OF_INTEGERS -> {
            yield   "size_t l=a.size();\n" +
                    "for (size_t i = 0; i < l; i++)\n" +

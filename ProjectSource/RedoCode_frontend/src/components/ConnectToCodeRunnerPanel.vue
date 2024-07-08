@@ -9,7 +9,7 @@
       </div>
       <Dropdown
         v-model="chosenLangague"
-        :options="langaugesOptions"
+        :options="languageChoices"
         placeholder="Select programming langauge"
         class="dropDown"
         style="height: 3rem"
@@ -21,18 +21,19 @@
 
 <script setup lang="ts">
 import LanguageDropdown from './LanguageDropdown.vue'
-import { languageChoices } from '../config/Data'
 import { computed, ref } from 'vue'
 import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+
+const props = defineProps({
+  languageChoices: { type: Array as () => string[], required: true }
+})
+
 const chosenLangague = ref('')
 const codeRunnerStore = useCodeRunnerStore()
-const langaugesOptions = computed(() =>
-  codeRunnerStore.exerciseData.title === ''
-    ? languageChoices
-    : codeRunnerStore.exerciseData.availbleCodeRunners
-)
+const ApiConnectionStore = useApiConnectionStore()
 const connectToCodeRunner = async (codeRunner: string) => {
-  codeRunnerStore.requestCodeRunner(chosenLangague.value)
+  ApiConnectionStore.codeRunnerConnection.requestCodeRunner(chosenLangague.value)
   // codeRunnerStore.increment()
   console.log('Json log: ' + JSON.stringify(codeRunnerStore))
 }
