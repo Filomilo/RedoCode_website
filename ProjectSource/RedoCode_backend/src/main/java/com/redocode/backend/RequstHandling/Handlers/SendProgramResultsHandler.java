@@ -27,7 +27,7 @@ public class SendProgramResultsHandler extends BaseRequestHandler{
                 .results(porgramReusltsSendRequest.getProgramResults())
                 .build();
 
-        messageSender.sendMessage(porgramReusltsSendRequest.getUser(),"/topic/codeRunnerResults",programResultsMessage);
+        messageSender.sendMessage(porgramReusltsSendRequest.getUser(),"/public/topic/codeRunnerResults",programResultsMessage);
 
         return request;
     }

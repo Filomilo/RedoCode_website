@@ -20,10 +20,36 @@ class AuthenticatedUserValidationHandlerTest  {
     @SneakyThrows
     @Test
     void handleUser() {
-        User userAdmin = new User("uuid","nick", User.USER_TYPE.ADMIN);
-        User userPremium = new User("uuid","nick", User.USER_TYPE.PREMIUM);
-        User userAuthenicated = new User("uuid","nick", User.USER_TYPE.AUTHENTICATED);
-        User userUnathetniacted = new User("uuid","nick", User.USER_TYPE.UNAUTHENTICATED);
+        User userAdmin = User.builder()
+                .sessionID("uuid")
+                .email("adminADMIN@admin.com")
+                .nickname("nick")
+                .type(User.USER_TYPE.ADMIN)
+                .password("password")
+                .build();
+
+
+        User userPremium =User.builder()
+                .sessionID("uuid")
+                .email("adminPREMIUM@admin.com")
+                .nickname("nick")
+                .type(User.USER_TYPE.PREMIUM)
+                .password("password")
+                .build();
+        User userAuthenicated = User.builder()
+                .sessionID("uuid")
+                .email("adminAUTHENTICATED@admin.com")
+                .nickname("nick")
+                .password("password")
+                .type(User.USER_TYPE.AUTHENTICATED)
+                .build();
+        User userUnathetniacted =User.builder()
+                .sessionID("uuid")
+                .email("adminUNAUTHENTICATED@admin.com")
+                .nickname("nick")
+                .password("password")
+                .type(User.USER_TYPE.UNAUTHENTICATED)
+                .build();
         usersRepository.save(userAdmin);
         usersRepository.save(userPremium);
         usersRepository.save(userAuthenicated);

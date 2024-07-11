@@ -18,7 +18,7 @@ public class ResponsibilityChainRepository {
     public static BiFunction<User, ExecutionResponseBase, Void> sendExecutionMessage=(User user, ExecutionResponseBase responseBase)->
     {
         log.info("sending chian repsonse: "+responseBase+" to "+user);
-        messageSender.sendMessage(user,"/topic/ExecutionResponses",responseBase);
+        messageSender.sendMessage(user,"/public/topic/ExecutionResponses",responseBase);
         return null;
     };
 

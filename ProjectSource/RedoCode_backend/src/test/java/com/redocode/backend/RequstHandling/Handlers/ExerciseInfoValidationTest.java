@@ -9,6 +9,8 @@ import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,11 +37,32 @@ class ExerciseInfoValidationTest {
     UsersRepository usersRepository;
     User userCorrect;
 
+
+
+    @BeforeAll
+    static void  setupUserInDb()
+    {
+
+    }
+
     @BeforeEach
     void setupCorrectData()
     {
-        userCorrect=new User("uuid","nick", User.USER_TYPE.PREMIUM);
-        usersRepository.save(userCorrect);
+        userCorrect=usersRepository.findByEmail("correct@example.com");
+        if(userCorrect==null) {
+            userCorrect =
+                    User.builder()
+                            .sessionID("uuid")
+                            .email("correct@example.com")
+                            .password("password")
+                            .nickname("nick")
+                            .type(User.USER_TYPE.PREMIUM)
+                            .build();
+            usersRepository.save(userCorrect);
+        }
+
+
+
 
         exerciseCreationRequestCorrect  = ExerciseCreationRequest.builder()
                 .user(userCorrect)

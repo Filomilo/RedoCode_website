@@ -39,9 +39,17 @@ class SaveNewExerciseHandlerTest {
     @BeforeEach
     void setupUser()
     {
-        user=new User("uuid","nick", User.USER_TYPE.PREMIUM);
-        usersRepository.save(user);
+        user=usersRepository.findByEmail("email@emial.com");
+        if(user==null) {
+            user = User.builder()
+                    .type(User.USER_TYPE.PREMIUM)
+                    .nickname("nick")
+                    .password("passsword")
+                    .email("email@emial.com")
+                    .build();
 
+            usersRepository.save(user);
+        }
     }
 
 

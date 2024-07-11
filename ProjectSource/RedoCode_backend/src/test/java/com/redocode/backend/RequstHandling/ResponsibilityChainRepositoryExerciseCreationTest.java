@@ -39,8 +39,19 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
     @BeforeEach
     void setupCorrectData()
     {
-        userCorrect=new User("uuid","nick", User.USER_TYPE.PREMIUM);
-        usersRepository.save(userCorrect);
+        userCorrect=usersRepository.findByEmail("email@email.com");
+        if(userCorrect==null) {
+            userCorrect = User.builder()
+                    .email("email@email.com")
+                    .type(User.USER_TYPE.PREMIUM)
+                    .password("aaaa")
+                    .sessionID("uuid")
+                    .nickname("nick")
+                    .build();
+
+
+            usersRepository.save(userCorrect);
+        }
 
         exerciseCreationRequestCorrect  = ExerciseCreationRequest.builder()
                 .user(userCorrect)

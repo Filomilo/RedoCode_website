@@ -1,13 +1,20 @@
 package com.redocode.backend.database;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,7 +22,9 @@ import java.util.Objects;
 @Data
 @Slf4j
 @NoArgsConstructor
-public class User implements Comparable {
+@AllArgsConstructor
+@Builder
+public class User implements Comparable, UserDetails {
 
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +37,82 @@ public class User implements Comparable {
     private String sessionID;
 
 
+    @Column(
+            name = "email",
+            unique = true
+    )
+    @NotNull
+    @Email
+    @NotEmpty
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+    private String email;
+
+    @Column(
+            name = "nick_name"
+    )
+    @NotNull
+    @NotEmpty
+    private String nickname;
+
+    @Column(
+            name = "user_type"
+    )
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    private USER_TYPE type;
+
+    @Column(
+            name = "password"
+    )
+    @NotNull
+    @NotEmpty
+    private String password;
+
+
+
+
     public User(String session, String nick, USER_TYPE userType) {
         this.sessionID = session;
-        this.userName=nick;
+        this.nickname =nick;
         this.type=userType;
     }
 
     public User(String uuid) {
         this(uuid,null,USER_TYPE.UNAUTHENTICATED);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.type.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        //todo
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        //todo
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        //todo
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        //todo
+        return true;
     }
 
     @Getter
@@ -52,20 +129,9 @@ public class User implements Comparable {
     }
 
 
-    @Column(
-            name = "user_name"
-    )
-    @NotNull
-    private String userName;
 
-    @Column(
-            name = "user_type"
-    )
 //    @Min(0)
 //    @Max(2)
-    @NotNull
-    private USER_TYPE type;
-
 
 
 
