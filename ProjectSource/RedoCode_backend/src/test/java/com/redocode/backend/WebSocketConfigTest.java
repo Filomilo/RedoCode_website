@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Type;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Slf4j
-//@Disabled("tests wiht websokcet  dont wokt along side")
+@Disabled("tests wiht websokcet  dont wokt along side")
 @RunWith(SpringRunner.class)
 class WebSocketConfigTest {
     WebSocketStompClient stompClient;
