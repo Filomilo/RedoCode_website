@@ -6,8 +6,8 @@ describe('template spec', () => {
     cy.visit('/')
     cy.get("a.TopBarItemContainer:nth-child(2)").click()
     cy.url().should('eq', Cypress.config().baseUrl+'/PlayGround');
-    cy.get('#pv_id_5').click()   
-    cy.get('#pv_id_5_1').click()
+    cy.get('#pv_id_4').click()   
+    cy.get('#pv_id_4_1').click()
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
     cy.get('.p-button-label').click()

@@ -3,7 +3,7 @@
 describe('spec', () => {
   it('passes', () => {
     cy.origin('http://localhost:8080', () => {
-      cy.visit('hello')
+      cy.visit('public/healthcheck/hello')
       cy.contains('hello')
   })
     // cy.get('#Excersices_button > b-nav-text:nth-child(1)').click()

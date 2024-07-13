@@ -17,16 +17,20 @@
           class="TextInputConainer AuthPanelElement"
           ca
           placeholder="nick/email"
+          id="login-email"
         />
         <Password
           v-model="inputPass"
           class="TextInputConainer AuthPanelElement passwordCont"
           placeholder="password"
           :feedback="false"
+          id="login-password"
         />
         <div class="AuthPanelElement boldText">Don't have an account?</div>
-        <router-link to="/Register" class="AuthPanelElement linkText"> sign up </router-link>
-        <Button class="BasicButton" label="Sign in" @click="onSginInButton" />
+        <router-link id="switch-register" to="/Register" class="AuthPanelElement linkText">
+          sign up
+        </router-link>
+        <Button id="login" class="BasicButton" label="Sign in" @click="onSginInButton" />
       </div>
     </div>
     <div class="CommunicatsListContainer">

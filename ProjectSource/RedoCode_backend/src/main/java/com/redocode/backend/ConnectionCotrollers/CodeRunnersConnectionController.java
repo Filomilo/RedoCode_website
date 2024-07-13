@@ -17,8 +17,8 @@ import java.security.Principal;
 public class CodeRunnersConnectionController {
 
     private final SimpMessagingTemplate template;
-    public static final String  codeRunnerStateEndPoint="/topic/codeRunnerState";
-    public static final String  codeRunnerResultEndPoint="/topic/codeRunnerResults";
+    public static final String  codeRunnerStateEndPoint="public/topic/codeRunnerState";
+    public static final String  codeRunnerResultEndPoint="public/topic/codeRunnerResults";
 
     @Autowired
     private CodeRunnersController codeRunnersController;

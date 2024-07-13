@@ -9,8 +9,8 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
   const isLogged = ref(false)
   const nick = ref('')
-  const token=ref("")
-  const isAwaitingAuthentication:Ref<boolean>=ref(false);
+  const token = ref('')
+  const isAwaitingAuthentication: Ref<boolean> = ref(false)
 
   const acoountInfo = computed(() => {
     return { nick: nick }
@@ -21,94 +21,78 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   const login = async (email: string, pass: string) => {
-    const request:AuthenticationRequest={
+    const request: AuthenticationRequest = {
       password: pass,
       email: email
     }
-    axios.post('/public/auth/login',request)
-    .then((response)=>{
-      console.log("Response: "+ JSON.stringify(response))
-if(response.status==200)
-  {
-    toastStore.showSuccessMessage("Succesfully logged in");
-    token.value=response.data.token;
-    isLogged.value=true;
-    router.push({ path: '/home', replace: true })
-  }
-  else{
-    console.log("test")
-    toastStore.showErrorMessage("Couldn't Login, please check email nad password")
+    axios
+      .post('/public/auth/login', request)
+      .then((response) => {
+        console.log('Response: ' + JSON.stringify(response))
+        if (response.status == 200) {
+          toastStore.showSuccessMessage('Succesfully logged in')
+          token.value = response.data.token
+          isLogged.value = true
+          router.push({ path: '/Home', replace: true })
+        } else {
+          console.log('test')
+          toastStore.showErrorMessage("Couldn't Login, please check email nad password")
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+        if (error.response) {
+          console.error('Error response:', error.response)
+          console.error('Status:', error.response.status)
+          console.error('Data:', error.response.data)
+          console.error('Headers:', error.response.headers)
 
-  }
-
-    })
-    .catch((error)=>{
-      console.error(error)
-      if (error.response) {
-        console.error('Error response:', error.response);
-        console.error('Status:', error.response.status);
-        console.error('Data:', error.response.data);
-        console.error('Headers:', error.response.headers);
-
-        if(error.response.status!=200)
-          {
+          if (error.response.status != 200) {
             toastStore.showErrorMessage("Couldn't Login, please check email nad password")
           }
-        
-      }
-    })
-    .finally(()=>{
-    //  console.log("axios finshed")
-    })
-  
+        }
+      })
+      .finally(() => {
+        //  console.log("axios finshed")
+      })
   }
 
   const logout = () => {
     isLogged.value = false
     nick.value = ''
-    token.value='';
+    token.value = ''
   }
 
-
-  const register =async (email:string, nickname:string, pass: string)=>{
-    const request:RegisterRequest={
+  const register = async (email: string, nickname: string, pass: string) => {
+    const request: RegisterRequest = {
       nickname: nickname,
       password: pass,
       email: email
     }
-    axios.post('/public/auth/register',request)
-    .then((response)=>{
-      console.log("Response: "+ JSON.stringify(response))
-if(response.status==200)
-  {
-    toastStore.showSuccessMessage("Succesfully registered user");
-    token.value=response.data.token;
-    isLogged.value=true;
-    router.push({ path: '/home', replace: true })
-  }
-  else{
-    toastStore.showErrorMessage("Couldn't register user")
-
-  }
-
-    })
-    .catch((error)=>{
-      if (error.response) {
-        if(error.response.status!=200)
-          {
+    axios
+      .post('/public/auth/register', request)
+      .then((response) => {
+        console.log('Response: ' + JSON.stringify(response))
+        if (response.status == 200) {
+          toastStore.showSuccessMessage('Succesfully registered user')
+          token.value = response.data.token
+          isLogged.value = true
+          router.push({ path: '/Home', replace: true })
+        } else {
+          toastStore.showErrorMessage("Couldn't register user")
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status != 200) {
             toastStore.showErrorMessage("Couldn't register user")
           }
-        
-      }
-    })
-    .finally(()=>{
-    //  console.log("axios finshed")
-    })
-  
-
-
+        }
+      })
+      .finally(() => {
+        //  console.log("axios finshed")
+      })
   }
-  
 
-  return { isLogged, login, logout, acoountInfo,register }
+  return { isLogged, login, logout, acoountInfo, register }
 })

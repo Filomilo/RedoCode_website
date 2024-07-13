@@ -1,4 +1,3 @@
-
-export default interface AuthenticationResponse{
-    token: string
+export default interface AuthenticationResponse {
+  token: string
 }

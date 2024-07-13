@@ -12,7 +12,7 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const toastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
   const stompApiConnection: StompApiConnection = new StompApiConnection(
-    'ws://localhost:8080/web-socket',
+    'ws://localhost:8080/public/web-socket',
     (message: string) => {
       toastStore.showProccessingMessage(message)
     },
@@ -27,7 +27,7 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(stompApiConnection)
 
   // const _CodeRunnerResultsSubscriptions: StompApiConnection =
-  stompApiConnection.subscribe('/user/topic/codeRunnerResults', (response: Object) => {
+  stompApiConnection.subscribe('/user/public/topic/codeRunnerResults', (response: Object) => {
     const results: ProgramResultsMessage = response as ProgramResultsMessage
     console.log('_CodeRunnerResultsSubscriptions: ' + JSON.stringify(results))
 
@@ -35,7 +35,7 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   })
 
   const helloWorldSubscription: StompApiSubscription = stompApiConnection.subscribe(
-    '/user/topic/health',
+    '/user/public/topic/health',
     (response: Object) => {
       toastStore.showProccessingMessage('Hello world reposnes: ' + JSON.stringify(response))
     }
@@ -44,7 +44,7 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   // connectionDestinnation
 
   const sendHealthCheck = () => {
-    stompApiConnection.sendMessage('/app/Health', 'messaaage')
+    stompApiConnection.sendMessage('/public/app/Health', 'messaaage')
   }
 
   // const codeRunnerConnectionControler= ref(new CodeRunnerConnectionControler());

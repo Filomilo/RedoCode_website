@@ -19,13 +19,7 @@ public class ExercisesController {
     ExerciseRepository exerciseRepository;
 
     Logger logger= LoggerFactory.getLogger(ExercisesController.class);
-    @GetMapping("/exercises")
-    public List<?> getExercises(ExerciseListRequestMessage mes)
-    {
-    logger.info("experiences list request: "+ mes);
-    logger.info("sending exercse list: "+ exerciseRepository.getSimpleExcersizeList());
-        return  exerciseRepository.getSimpleExcersizeList();
-    }
+
 
 
 

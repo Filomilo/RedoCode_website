@@ -1,5 +1,4 @@
-
-export default interface AuthenticationResponse{
-    email: string,
-    password: string
+export default interface AuthenticationResponse {
+  email: string
+  password: string
 }

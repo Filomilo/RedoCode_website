@@ -60,10 +60,12 @@ export default class StompApiConnection {
   }
 
   public deactivate() {
-    this._subscriptions.forEach((sub: StompApiSubscription) => {
-      sub.deactivateSubscription()
-    })
-    this._stompClient.deactivate()
+    if (this._stompClient.connected) {
+      this._subscriptions.forEach((sub: StompApiSubscription) => {
+        sub.deactivateSubscription()
+      })
+      this._stompClient.deactivate()
+    }
   }
 
   public getIsActive() {

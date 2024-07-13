@@ -109,7 +109,7 @@ const loadFromServer = () => {
     sortDirection: serverOptions.value.sortType === 'desc'
   }
   console.log('Getting exercises')
-  axios.get('exercises', { params: request }).then((response) => {
+  axios.get('/public/exercises/list', { params: request }).then((response) => {
     if (response === undefined) {
       console.error("couldn't retrieve excercise list from server")
       throw "couldn't retrieve excercise list from server"

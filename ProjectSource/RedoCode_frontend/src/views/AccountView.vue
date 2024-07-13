@@ -12,7 +12,7 @@
       <div class="NickContainer">{{ activeUserStore.acoountInfo.nick.value }}</div>
       <div class="DescriptionContainer">Account description</div>
       <div class="LogoutButtonContainer">
-        <Button @click="onLogOutButton"> Logout </Button>
+        <Button @click="onLogOutButton" id="logout"> Logout </Button>
       </div>
     </div>
     <div class="BottomPanel">

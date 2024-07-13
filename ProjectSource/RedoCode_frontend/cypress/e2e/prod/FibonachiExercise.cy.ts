@@ -10,8 +10,8 @@ describe('spec', () => {
     cy.url().should('eq', Cypress.config().baseUrl+'/Exercises');
     cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase.locked div.datatable-container div.vue3-easy-data-table.dataTableStyle div.vue3-easy-data-table__main.fixed-header.hoverable table tbody.vue3-easy-data-table__body.row-alternation tr td.direction-left button.p-button.p-component').click()
     cy.url().should('eq', Cypress.config().baseUrl+'/Exercises/1');
-    cy.get('#pv_id_5').click()   
-    cy.get('#pv_id_5_0').click()
+    cy.get('#pv_id_4').click()   
+    cy.get('#pv_id_4_0').click()
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
     cy.get('.p-button-label').click()
