@@ -79,8 +79,8 @@ import { useActiveUserStore } from '../stores/ActiveUserStore'
 import { useToast } from 'primevue/usetoast'
 const toast = useToast()
 const activeUserStore = useActiveUserStore()
-const inputLogin = ref('')
-const inputPass = ref('')
+const inputLogin = ref('sunny@mail.com')
+const inputPass = ref('Password+123')
 
 const onSginInButton = () => {
   activeUserStore.login(inputLogin.value, inputPass.value)

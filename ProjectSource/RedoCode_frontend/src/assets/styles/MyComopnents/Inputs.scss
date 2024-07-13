@@ -11,6 +11,10 @@
   border-radius: 0.4rem;
   border: 0rem;
 }
+.TextInputConainer *{
+  background-color: $InputBackGround;
+
+}
 
 .TextInputConainer .p-password-input {
   background-color: $InputBackGround;
@@ -24,9 +28,6 @@
   border: 0rem;
 }
 
-.p-password-panel {
-  background-color: $InputBackGround;
-}
 
 .p-password-info {
   color: white;

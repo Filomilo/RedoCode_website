@@ -51,7 +51,7 @@ import Timeline from 'primevue/timeline'
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
-  makeServer()
+  // makeServer()
 }
 
 app
