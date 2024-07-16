@@ -20,12 +20,12 @@ import org.springframework.test.context.ContextConfiguration;
 import java.sql.Time;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
-@ContextConfiguration()
 class ResponsibilityChainRepositoryExerciseCreationTest {
     @Autowired
     UsersRepository usersRepository;
@@ -42,10 +42,10 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
         userCorrect=usersRepository.findByEmail("email@email.com");
         if(userCorrect==null) {
             userCorrect = User.builder()
-                    .email("email@email.com")
+                    .email("email"+ UUID.randomUUID()+"@email.com")
                     .type(User.USER_TYPE.PREMIUM)
                     .password("aaaa")
-                    .sessionID("uuid")
+                    .sessionID("uuid"+ UUID.randomUUID())
                     .nickname("nick")
                     .build();
 

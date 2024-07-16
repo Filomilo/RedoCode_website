@@ -20,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -39,11 +41,11 @@ User authorizedUser;
     public void registerUser()
     {
         codeRunnersController.reset();
-        user=new User("555");
+        user=new User("555"+ UUID.randomUUID());
         redoCodeController.addConnectedUser(user);
 
         authorizedUser=usersRepository.getReferenceById(1L);
-        authorizedUser.setSessionID("222222222");
+        authorizedUser.setSessionID("222222222"+ UUID.randomUUID());
         redoCodeController.addConnectedUser(authorizedUser);
 
     }

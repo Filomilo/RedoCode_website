@@ -19,10 +19,10 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@ContextConfiguration
 @Slf4j
 class CodeTestHandlerTest {
 
@@ -64,7 +64,7 @@ class CodeTestHandlerTest {
         CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler= new CodeRunnerAccesValidationHandler();
         CodeTestHandler codeTestHandler=new CodeTestHandler();
 
-        User user=new User("1234");
+        User user=new User("1234"+ UUID.randomUUID());
 
 
         CodeTestRequest codeTestRequest=CodeTestRequest.builder()
