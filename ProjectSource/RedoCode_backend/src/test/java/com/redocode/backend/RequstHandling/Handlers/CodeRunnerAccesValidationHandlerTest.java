@@ -38,7 +38,7 @@ User authorizedUser;
     @BeforeEach
     public void registerUser()
     {
-//        codeRunnersController.reset();
+        codeRunnersController.reset();
         user=new User("555");
         redoCodeController.addConnectedUser(user);
 
