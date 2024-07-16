@@ -23,9 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ContextConfiguration
 @Slf4j
-@DirtiesContext(classMode= DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class CodeRunnerAccessValidationHandlerTest {
 
         @Autowired
@@ -40,12 +38,14 @@ User authorizedUser;
     @BeforeEach
     public void registerUser()
     {
+//        codeRunnersController.reset();
         user=new User("555");
         redoCodeController.addConnectedUser(user);
 
         authorizedUser=usersRepository.getReferenceById(1L);
         authorizedUser.setSessionID("222222222");
         redoCodeController.addConnectedUser(authorizedUser);
+
     }
     @BeforeEach
     public void cerateHandler()
