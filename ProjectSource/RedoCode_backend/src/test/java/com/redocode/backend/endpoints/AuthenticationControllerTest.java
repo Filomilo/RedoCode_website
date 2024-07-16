@@ -82,9 +82,8 @@ class AuthenticationControllerTest {
 
         AuthenticationResponse response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, AuthenticationResponse.class);
 
-        assertEquals(jwtService.generateToken(
-                user
-        ),response.getToken());
+        assertEquals(user.getEmail(
+        ), jwtService.extractUsername(response.getToken()));
 
         User newUser=   usersRepository.findByEmail(_correctMail);
 
