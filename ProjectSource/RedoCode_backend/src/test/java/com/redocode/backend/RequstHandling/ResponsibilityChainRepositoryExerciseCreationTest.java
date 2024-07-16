@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
+@ContextConfiguration(classes = CodeRunnersController.class)
 class ResponsibilityChainRepositoryExerciseCreationTest {
     @Autowired
     UsersRepository usersRepository;
