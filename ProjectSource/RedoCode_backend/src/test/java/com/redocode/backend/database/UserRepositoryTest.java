@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,7 +25,7 @@ public class UserRepositoryTest {
         String userNameTest="test";
         User user = User.builder()
                 .type(User.USER_TYPE.AUTHENTICATED)
-                .email("email@email.com")
+                .email("email"+ UUID.randomUUID() +"@email.com")
                 .password("password")
                 .nickname(userNameTest)
                 .build();

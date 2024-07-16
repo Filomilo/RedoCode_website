@@ -55,9 +55,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
-@RunWith(SpringRunner.class)
-@ContextConfiguration
-@DirtiesContext
+//@RunWith(SpringRunner.class)
+//@DirtiesContext
 class CodeRunHandlerStompTest extends WebSocketTestBase {
 
 
