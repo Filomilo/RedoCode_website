@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest
-@ContextConfiguration
 @Slf4j
 public class UserRepositoryTest {
 
