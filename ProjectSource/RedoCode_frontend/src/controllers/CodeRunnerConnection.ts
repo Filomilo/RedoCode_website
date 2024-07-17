@@ -35,7 +35,7 @@ export default class CodeRunnerConnection {
     this._stompApiConnection = stompApiConnection
 
     this._vmStatusSubscription = this._stompApiConnection.subscribe(
-      '/user/topic/codeRunnerState',
+      '/user/public/topic/codeRunnerState',
       (message: Object) => {
         console.log('codeRunnerState recived  ' + JSON.stringify(message))
         const state: CoderunnerState = message as CoderunnerState
@@ -48,7 +48,7 @@ export default class CodeRunnerConnection {
     const message: RawCodeToRunMessage = {
       code: code
     }
-    this._stompApiConnection.sendMessage('/app/CodeRun/RawCodeRun', message)
+    this._stompApiConnection.sendMessage('/public/app/CodeRun/RawCodeRun', message)
     console.log('runRawCode: ' + JSON.stringify(message))
   }
 
@@ -58,7 +58,7 @@ export default class CodeRunnerConnection {
       CodeRunnerType: CodeRunnerMap[codeRunnerName]
     }
     console.log('requestCodeRunner: ' + JSON.stringify(request))
-    this._stompApiConnection.sendMessage('/app/codeRunnerRequest', request)
+    this._stompApiConnection.sendMessage('/public/app/codeRunnerRequest', request)
   }
 
   public readonly sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
@@ -146,7 +146,7 @@ export default class CodeRunnerConnection {
 
   public readonly submitExerciseCreationRequest = (request: ExercsieCreatorValidationMesage) => {
     console.log('submitExerciseCreationRequest: ' + JSON.stringify(request))
-    this._stompApiConnection.sendMessage('/app/CodeRun/ExerciseCreationValidation', request)
+    this._stompApiConnection.sendMessage('/public/app/CodeRun/ExerciseCreationValidation', request)
   }
 
   private readonly _vmStatusSubscription: StompApiSubscription

@@ -7,8 +7,6 @@ import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.database.*;
 
-import java.util.Arrays;
-
 public class SaveNewExerciseHandler extends MessageRequestHandler{
 
     static final ExerciseRepository  exerciseRepository= SpringContextUtil.getApplicationContext().getBean(ExerciseRepository.class);
@@ -68,8 +66,10 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
         // it is tepory soultuion to test chain
 
         User user=exerciseCreationRequest.getUser();
-        if(user.getUserName()==null) {
-            user.setUserName("tmp");
+        if(user.getNickname()==null) {
+            user.setNickname("tmp");
+            user.setEmail("email@emial.com");
+            user.setPassword("passs");
             usersRepository.save(user);
 
         }

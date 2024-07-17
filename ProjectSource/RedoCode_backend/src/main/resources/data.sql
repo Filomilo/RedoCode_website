@@ -1,25 +1,26 @@
-INSERT INTO users (user_name,user_type) VALUES
-                                  ('sunny',0),
-                                  ('shadow',1),
-                                  ('sparky',2),
-                                  ('whisper',0),
-                                  ('blaze',1),
-                                  ('frosty',2),
-                                  ('echo',0),
-                                  ('nova',1),
-                                  ('shimmer',2),
-                                  ('phoenix',0),
-                                  ('neptune',1),
-                                  ('zenith',2),
-                                  ('avalanche',0),
-                                  ('sapphire',1),
-                                  ('mystic',2),
-                                  ('raptor',0),
-                                  ('thunder',1),
-                                  ('enigma',2),
-                                  ('infinity',0),
-                                  ('quasar',1),
-                                  ('laptop',2);
+INSERT INTO users (nick_name, user_type, password, email) VALUES
+                                                              ('sunny', 0, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'sunny@mail.com'),
+                                                              ('shadow', 1, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'shadow@mail.com'),
+                                                              ('sparky', 2, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'sparky@mail.com'),
+                                                              ('whisper', 0, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'whisper@mail.com'),
+                                                              ('blaze', 1, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'blaze@mail.com'),
+                                                              ('frosty', 2, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'frosty@mail.com'),
+                                                              ('echo', 0, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'echo@mail.com'),
+                                                              ('nova', 1, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'nova@mail.com'),
+                                                              ('shimmer', 2, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'shimmer@mail.com'),
+                                                              ('phoenix', 0, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'phoenix@mail.com'),
+                                                              ('neptune', 1, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'neptune@mail.com'),
+                                                              ('zenith', 2, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'zenith@mail.com'),
+                                                              ('avalanche', 0, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'avalanche@mail.com'),
+                                                              ('sapphire', 1, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'sapphire@mail.com'),
+                                                              ('mystic', 2, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'mystic@mail.com'),
+                                                              ('raptor', 0, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'raptor@mail.com'),
+                                                              ('thunder', 1, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'thunder@mail.com'),
+                                                              ('enigma', 2, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'enigma@mail.com'),
+                                                              ('infinity', 0, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'infinity@mail.com'),
+                                                              ('quasar', 1, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'quasar@mail.com'),
+                                                              ('laptop', 2, '$2a$10$Y83STWCLUoIgeGDitOGMS.wuei4hViRP0YVCLYstf2vdpPRpjRaYi', 'laptop@mail.com');
+
 
 
 INSERT INTO public.programming_languages (name)

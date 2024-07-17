@@ -32,7 +32,7 @@ public abstract class WebSocketTestBase {
 
     protected String getWebSocketUri(int port)
     {
-        return  "ws://localhost:"+ port+"/web-socket";
+        return  "ws://localhost:"+ port+"/public/web-socket";
     }
     protected abstract String getWebSocketUri();
     protected static final ObjectMapper  mapper = new ObjectMapper();

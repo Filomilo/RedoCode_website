@@ -149,7 +149,8 @@ class CppSolutionProgramTest {
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
-    void runProgramCppReturnIntArray(Float[] val) {
+    void
+    runProgramCppReturnIntArray(Float[] val) {
         log.info("Code runner cpp return");
         ArrayOfFloats resultTemplate=new ArrayOfFloats();
         resultTemplate.setW(val.length);

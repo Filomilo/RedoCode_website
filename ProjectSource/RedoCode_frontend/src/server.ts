@@ -214,9 +214,9 @@ export function makeServer({ environment = 'development' } = {}) {
     routes() {
       // this.namespace = "http://localhost:9090"
 
-      this.get('http://localhost:8080/exercises', exerciseListHandler)
+      this.get('http://localhost:8080/public/exercises/list', exerciseListHandler)
 
-      this.get('http://localhost:8080/exerciseData/', exerciseDataHandler)
+      this.get('http://localhost:8080/public/exercises/data', exerciseDataHandler)
     }
   })
 

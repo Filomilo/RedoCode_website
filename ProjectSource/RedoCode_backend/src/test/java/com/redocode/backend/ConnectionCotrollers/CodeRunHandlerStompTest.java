@@ -30,11 +30,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.Timeout;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +55,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
+//@RunWith(SpringRunner.class)
+//@DirtiesContext
 class CodeRunHandlerStompTest extends WebSocketTestBase {
+
 
     @LocalServerPort
     int port;
@@ -68,7 +75,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     @Autowired
     RedoCodeController redoCodeController;
 
-    static final String WEBSOCKET_TOPIC_DESTIN = "/app"+INrunExerciseCreatorValidationCode;
+    static final String WEBSOCKET_TOPIC_DESTIN = "/public/app"+INrunExerciseCreatorValidationCode;
     final static ObjectMapper objectMapper = new ObjectMapper();
     @BeforeEach
     void setUp() {
@@ -79,7 +86,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
     @Test
     void runExerciseCreatorValidationCode() throws InterruptedException, JsonProcessingException {
-        subscribe("/user/topic/ExecutionResponses");
+        subscribe("/user/public/topic/ExecutionResponses");
         Long userId=1L;
         Variables.VARIABLES_TYPES inputType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
         Variables.VARIABLES_TYPES ouptutType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
@@ -190,7 +197,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
 
         session.send(WEBSOCKET_TOPIC_DESTIN, mapper.writeValueAsBytes (creatorValidationMessage) );
-        log.info("messge send to "+ WEBSOCKET_TOPIC_DESTIN);
+        log.info("messge send to "+ WEBSOCKET_TOPIC_DESTIN+" OF content: "+mapper.writeValueAsString(creatorValidationMessage));
 
 
         Thread.sleep(2000);
@@ -562,7 +569,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
     @Test
     void rawCppHelloWorld() throws InterruptedException, JsonProcessingException {
-        subscribe("/user/topic/codeRunnerResults");
+        subscribe("/user/public/topic/codeRunnerResults");
         CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
                 .CodeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .build();
@@ -574,9 +581,9 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                         "}")
                 .build();
 
-        session.send( "/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
         TimeUnit.SECONDS.sleep(2);
-        session.send( "/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
+        session.send( "/public/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
         log.info("messge send to " + "/app"+INrunRawCode);
 
         ProgramResult correctResults = ProgramResult.builder()
@@ -608,7 +615,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
     @Test
     void rawJsHelloWorld() throws InterruptedException, JsonProcessingException {
-        subscribe("/user/topic/codeRunnerResults");
+        subscribe("/user/public/topic/codeRunnerResults");
         CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
                 .CodeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .build();
@@ -617,10 +624,12 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                 .code("console.log(\"Hello world\")")
                 .build();
 
-        session.send( "/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        log.info("messge send to /public/app/codeRunnerRequest with content: "+ mapper.writeValueAsString(codeRunnerRequestMessage));
+
         TimeUnit.SECONDS.sleep(2);
-        session.send( "/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
-        log.info("messge send to " + "/app"+INrunRawCode);
+        session.send( "/public/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
+        log.info("messge send to " + "/public/app"+INrunRawCode+" with content: "+ mapper.writeValueAsString(rawCodeToRunMessage));
 
 //        Thread.sleep(3000);
 

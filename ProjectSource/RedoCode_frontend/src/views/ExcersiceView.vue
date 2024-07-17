@@ -34,7 +34,7 @@ const fetchExerciseData = (id: number) => {
   const params = {
     id: route.params.id
   }
-  axios.get('http://localhost:8080/exerciseData/', { params: params }).then((response) => {
+  axios.get('http://localhost:8080/public/exercises/data', { params: params }).then((response) => {
     const data: ExerciseData = response.data
     data.tests = data.tests.map((elem: any) => {
       return {

@@ -53,7 +53,7 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
       })
   }
   apiConnectionStore.stompApiConnection.subscribe(
-    '/user/topic/ExecutionResponses',
+    '/user/public/topic/ExecutionResponses',
     (message: Object) => {
       const responseBase: ExecutionResponseBase = message as ExecutionResponseBase
 

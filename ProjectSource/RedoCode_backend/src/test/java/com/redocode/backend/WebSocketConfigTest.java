@@ -5,11 +5,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
@@ -26,10 +28,11 @@ import java.lang.reflect.Type;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Slf4j
 @Disabled("tests wiht websokcet  dont wokt along side")
+@RunWith(SpringRunner.class)
 class WebSocketConfigTest {
     WebSocketStompClient stompClient;
-    static final String WEBSOCKET_TOPIC = "/topic";
-    static final String WEBSOCKET_URI = "ws://localhost:8080/web-socket";
+    static final String WEBSOCKET_TOPIC = "/public/topic";
+    static final String WEBSOCKET_URI = "ws://localhost:8080/public/web-socket";
     BlockingQueue<String> blockingQueue;
     @BeforeEach
     public void setup() {

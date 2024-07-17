@@ -9,5 +9,5 @@ public class ConnectionTargets {
 
     public final static String OUTNodeStatusUpdate="/NodeStatusUpdate";
 
-    public final static  String StompHealthCheck="/Health";
+    public final static  String INStompHealthCheck="/public/Health";
 }
