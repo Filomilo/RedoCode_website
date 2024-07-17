@@ -48,7 +48,7 @@ export default class CodeRunnerConnection {
     const message: RawCodeToRunMessage = {
       code: code
     }
-    this._stompApiConnection.sendMessage('/app/public/CodeRun/RawCodeRun', message)
+    this._stompApiConnection.sendMessage('/public/app/CodeRun/RawCodeRun', message)
     console.log('runRawCode: ' + JSON.stringify(message))
   }
 

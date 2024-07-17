@@ -1,5 +1,6 @@
 import { ActivationState, Client, IFrame } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
+import { stompClient } from './StompApiConnectionold'
 
 export default class StompApiConnection {
   userName: String | null = null
@@ -84,10 +85,16 @@ export default class StompApiConnection {
   }
 
   public sendMessage(destination: string, message: Object) {
-    this._stompClient.publish({
+    console.log("desitn: "+destination)
+    
+    const obj={
       destination: destination,
       body: JSON.stringify(message)
-    })
+    };
+
+    this._stompClient.publish(obj)
+    console.log("published "+ JSON.stringify(obj));
+    console.log("THrough: "+JSON.stringify(stompClient))
   }
 }
 
