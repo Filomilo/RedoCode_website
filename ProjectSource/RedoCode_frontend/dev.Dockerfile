@@ -1,5 +1,5 @@
 # build stage
-FROM cypress/included:12.12.0 as build-stage
+FROM cypress/included:13.13.1 as build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN yarn 
