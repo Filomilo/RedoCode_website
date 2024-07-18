@@ -52,15 +52,13 @@
         :size="25"
       >
         <Splitter layout="vertical" style="width: 100%">
-          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%" >
+          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
             <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
 
-      <SplitterPanel 
-      
-      :size="50">
+      <SplitterPanel :size="50">
         <CodeEditor
           class="CodeEditorContainer"
           :starting="props.starting"

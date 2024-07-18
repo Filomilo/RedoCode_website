@@ -85,16 +85,16 @@ export default class StompApiConnection {
   }
 
   public sendMessage(destination: string, message: Object) {
-    console.log("desitn: "+destination)
-    
-    const obj={
+    console.log('desitn: ' + destination)
+
+    const obj = {
       destination: destination,
       body: JSON.stringify(message)
-    };
+    }
 
     this._stompClient.publish(obj)
-    console.log("published "+ JSON.stringify(obj));
-    console.log("THrough: "+JSON.stringify(stompClient))
+    console.log('published ' + JSON.stringify(obj))
+    console.log('THrough: ' + JSON.stringify(stompClient))
   }
 }
 

@@ -1,19 +1,16 @@
 <template>
-
   <div style="width: 100%; height: 100%; max-height: 100%; max-width: 100%; overflow: hidden">
-    <InputText 
-    v-model="jsonInput" 
-    style="width: 100%" 
-    :id="'test-input-'+props.manualTestInputIndex+'-'+(props.isInput?'input':'output')"
-    
+    <InputText
+      v-model="jsonInput"
+      style="width: 100%"
+      :id="'test-input-' + props.manualTestInputIndex + '-' + (props.isInput ? 'input' : 'output')"
     />
 
     <br />
     value: <br />
     {{ JSON.stringify(storedValue) }}
     <br />
-    <div style="color: red">
-    </div>
+    <div style="color: red"></div>
   </div>
 </template>
 
@@ -35,12 +32,10 @@ import { json } from 'agent-base'
 const jsonInput: Ref<string> = ref('')
 const value = computed(() => {
   try {
-    console.log("jsonInput.value: "+ jsonInput.value)
+    console.log('jsonInput.value: ' + jsonInput.value)
 
-    if(props.Type=="SINGLE_STRING"){
-      
-      return jsonInput.value;
-      
+    if (props.Type == 'SINGLE_STRING') {
+      return jsonInput.value
     }
     return JSON.parse(jsonInput.value)
   } catch {
@@ -61,8 +56,8 @@ const storedValue = computed(() => {
 })
 
 const validateType = (variable: any, type: VarType) => {
-  console.log("isTypeString(type) "+isTypeString(type))
-  console.log("!isNumber(variable) "+!isNumber(variable))
+  console.log('isTypeString(type) ' + isTypeString(type))
+  console.log('!isNumber(variable) ' + !isNumber(variable))
   // if (isTypeString(type) && (!isNumber(variable) )) {
   //   throw new Error('All varaibles should be ' + type)
   // }
@@ -75,7 +70,7 @@ const validateType = (variable: any, type: VarType) => {
 }
 
 const validateData = (jsonString: string, type: VarType): boolean => {
-  const value =props.Type=="SINGLE_STRING"?jsonString:JSON.parse(jsonString)
+  const value = props.Type == 'SINGLE_STRING' ? jsonString : JSON.parse(jsonString)
 
   console.log('valie: ' + value)
   if (value === null) {
@@ -143,8 +138,8 @@ const validationofData = computed(() => {
 })
 watch(value, (newVal, oldVal) => {
   try {
-    console.log("validationofData.value: "+validationofData.value)
-    if (validationofData.value === '' ) {
+    console.log('validationofData.value: ' + validationofData.value)
+    if (validationofData.value === '') {
       if (props.isInput) {
         CodeRunnerStore.manualTestBuffer[props.manualTestInputIndex].input = newVal
       } else {

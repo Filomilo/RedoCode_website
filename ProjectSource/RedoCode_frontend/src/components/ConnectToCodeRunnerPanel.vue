@@ -15,12 +15,7 @@
         style="height: 3rem"
         id="coderunner-dropdown"
       />
-      <Button
-       class="BasicButton" 
-       label="Connect"
-        @click="onConnectButton"
-        id="connect-button"
-        />
+      <Button class="BasicButton" label="Connect" @click="onConnectButton" id="connect-button" />
     </div>
   </div>
 </template>

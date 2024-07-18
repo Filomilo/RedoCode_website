@@ -14,18 +14,15 @@
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
-      <Button 
-      @click="props.onRunCode"
-       v-if="!codeRunnerStore.isAwaitingCompilation"
-       id="coderunner-run-button"
-       >
+      <Button
+        @click="props.onRunCode"
+        v-if="!codeRunnerStore.isAwaitingCompilation"
+        id="coderunner-run-button"
+      >
         <IconPlay style="z-index: 9" />
       </Button>
       <div v-else>
-        <LoadingIndicator
-         style="max-height: 2rem; max-width: 2rem"
-         id="coderunner-wait-button"
-         />
+        <LoadingIndicator style="max-height: 2rem; max-width: 2rem" id="coderunner-wait-button" />
       </div>
     </div>
   </div>

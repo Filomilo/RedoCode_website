@@ -10,50 +10,44 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
   const isLogged = ref(false)
   const nick = ref('')
-  const _token:Ref<String> = ref('')
+  const _token: Ref<String> = ref('')
   const isAwaitingAuthentication: Ref<boolean> = ref(false)
-  const $cookies = inject<VueCookies>('$cookies'); 
+  const $cookies = inject<VueCookies>('$cookies')
   const acoountInfo = computed(() => {
     return { nick: nick }
   })
 
-  const validateToken=():boolean=>{
-      if(_token.value==="")
-        return false;
-    return true;
-      }
+  const validateToken = (): boolean => {
+    if (_token.value === '') return false
+    return true
+  }
   const setIsLogged = (state: boolean) => {
     isLogged.value = state
   }
 
-  const saveCookie=()=>{
-    console.log("Save cookie")
-    $cookies?.set("token",_token)
+  const saveCookie = () => {
+    console.log('Save cookie')
+    $cookies?.set('token', _token)
   }
-  const deleteCookie=()=>{
-    if($cookies?.isKey("token")){
-    $cookies?.remove("token")
+  const deleteCookie = () => {
+    if ($cookies?.isKey('token')) {
+      $cookies?.remove('token')
     }
   }
 
-  const attemptToLoginThroughCookie=()=>
-  {
+  const attemptToLoginThroughCookie = () => {
     console.log(JSON.stringify($cookies))
-    if($cookies?.isKey("token"))
-    {
-      const token=$cookies.get("token");
-      _token.value=token;
-      if(validateToken())
-      {
-          setIsLogged(true);
-      }
-      else{
-        _token.value="";
+    if ($cookies?.isKey('token')) {
+      const token = $cookies.get('token')
+      _token.value = token
+      if (validateToken()) {
+        setIsLogged(true)
+      } else {
+        _token.value = ''
       }
     }
   }
-  attemptToLoginThroughCookie();
-
+  attemptToLoginThroughCookie()
 
   const login = async (email: string, pass: string, stayLoggedIn: boolean) => {
     const request: AuthenticationRequest = {
@@ -69,9 +63,8 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
           _token.value = response.data.token
           isLogged.value = true
           router.push({ path: '/Home', replace: true })
-          if(stayLoggedIn)
-          {
-            saveCookie( );
+          if (stayLoggedIn) {
+            saveCookie()
           }
         } else {
           console.log('test')
@@ -100,7 +93,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     isLogged.value = false
     nick.value = ''
     _token.value = ''
-    deleteCookie();
+    deleteCookie()
   }
 
   const register = async (email: string, nickname: string, pass: string) => {
@@ -134,6 +127,5 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       })
   }
 
-
-  return { isLogged, login, logout, acoountInfo, register,validateToken }
+  return { isLogged, login, logout, acoountInfo, register, validateToken }
 })

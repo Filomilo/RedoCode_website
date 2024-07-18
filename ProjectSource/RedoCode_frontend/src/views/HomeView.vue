@@ -26,15 +26,10 @@
           :feedback="false"
           id="login-password"
         />
-        <div 
-        class="StayLoggedIn"
-        >
-        <Checkbox 
-        v-model="stayLoggedIn"
-        :binary="true"
-        />
-        Stay logged in
-      </div>
+        <div class="StayLoggedIn">
+          <Checkbox v-model="stayLoggedIn" :binary="true" />
+          Stay logged in
+        </div>
         <div class="AuthPanelElement boldText">Don't have an account?</div>
         <router-link id="switch-register" to="/Register" class="AuthPanelElement linkText">
           sign up
@@ -94,23 +89,19 @@ const toast = useToast()
 const activeUserStore = useActiveUserStore()
 const inputLogin = ref('sunny@mail.com')
 const inputPass = ref('Password+123')
-const stayLoggedIn=ref(false);
+const stayLoggedIn = ref(false)
 
 const onSginInButton = () => {
-  activeUserStore.login(inputLogin.value, inputPass.value,stayLoggedIn.value)
+  activeUserStore.login(inputLogin.value, inputPass.value, stayLoggedIn.value)
 }
 </script>
 
 <style>
-
-.StayLoggedIn{
+.StayLoggedIn {
   background-color: transparent;
   justify-content: center;
   align-items: center;
   align-content: center;
   margin: 1rem;
-
 }
-
-
 </style>

@@ -124,7 +124,7 @@
                 :value="true"
                 :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.inputType)"
                 id="radio-input-int"
-                />
+              />
               <label>int</label>
             </div>
             <div class="RadioButtonSection">
@@ -140,7 +140,7 @@
                 :value="true"
                 :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType)"
                 id="radio-input-float"
-                />
+              />
               <label>float</label>
             </div>
             <div class="RadioButtonSection">
@@ -156,7 +156,7 @@
                 :value="true"
                 :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.inputType)"
                 id="radio-input-string"
-                />
+              />
               <label>string</label>
             </div>
           </div>
@@ -174,7 +174,7 @@
                 :value="true"
                 :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.inputType)"
                 id="radio-input-single"
-                />
+              />
               <label>single value</label>
             </div>
             <div class="RadioButtonSection">
@@ -190,7 +190,7 @@
                 :value="true"
                 :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.inputType)"
                 id="radio-input-array"
-                />
+              />
               <label>array</label>
             </div>
             <div class="RadioButtonSection">
@@ -208,7 +208,7 @@
                   isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)
                 "
                 id="radio-input-2d-array"
-                />
+              />
               <label>2d array</label>
             </div>
           </div>
@@ -229,7 +229,7 @@
                 :value="true"
                 :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.outputType)"
                 id="radio-output-int"
-                />
+              />
               <label>int</label>
             </div>
             <div class="RadioButtonSection">
@@ -245,7 +245,7 @@
                 :value="true"
                 :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.outputType)"
                 id="radio-output-float"
-                />
+              />
               <label>float</label>
             </div>
             <div class="RadioButtonSection">
@@ -261,7 +261,7 @@
                 :value="true"
                 :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.outputType)"
                 id="radio-output-string"
-                />
+              />
               <label>string</label>
             </div>
           </div>
@@ -279,7 +279,7 @@
                 :value="true"
                 :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.outputType)"
                 id="radio-output-single"
-                />
+              />
               <label>single value</label>
             </div>
             <div class="RadioButtonSection">
@@ -295,7 +295,7 @@
                 :value="true"
                 :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.outputType)"
                 id="radio-output-array"
-                />
+              />
               <label>array</label>
             </div>
             <div class="RadioButtonSection">
@@ -314,7 +314,7 @@
                   isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.outputType)
                 "
                 id="radio-output-2d-array"
-                />
+              />
               <label>2d array</label>
             </div>
           </div>
@@ -613,7 +613,6 @@
                     invalid
                     binary
                     id="special-char-checkbox"
-
                   />
                   <label> +, (, ), %, # ... </label>
                 </div>
@@ -632,7 +631,6 @@
                     invalid
                     binary
                     id="space-char-checkbox"
-
                   />
                   <label> [_] </label>
                 </div>

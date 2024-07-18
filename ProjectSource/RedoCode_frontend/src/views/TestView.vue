@@ -1,8 +1,5 @@
 <template>
-  <main>
-    test
-
-  </main>
+  <main>test</main>
 </template>
 
 <script setup lang="ts">

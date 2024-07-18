@@ -10,7 +10,6 @@ import ResultsView from '@/views/ResultsView.vue'
 import TestView from '@/views/TestView.vue'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,23 +36,20 @@ const router = createRouter({
     {
       path: '/PlayGround',
       name: 'PlayGround',
-      component: PlayGroundView,
-
+      component: PlayGroundView
     },
     {
       path: '/create',
       name: 'Create',
       component: CreateView,
-      beforeEnter: (to,from,next)=>{
-        const activeUserStore=useActiveUserStore();
+      beforeEnter: (to, from, next) => {
+        const activeUserStore = useActiveUserStore()
         // console.log("authethication")
-        if(activeUserStore.validateToken())
-        {
-          next();
-        }
-        else{
+        if (activeUserStore.validateToken()) {
+          next()
+        } else {
           // console.log("Unauhenticated")
-          next({name: "Home"})
+          next({ name: 'Home' })
         }
       }
     },
@@ -66,16 +62,14 @@ const router = createRouter({
       path: '/Account',
       name: 'Account',
       component: AccountView,
-      beforeEnter: (to,from,next)=>{
-        const activeUserStore=useActiveUserStore();
-        console.log("authethication")
-        if(activeUserStore.validateToken())
-        {
-          next();
-        }
-        else{
-          console.log("Unauhenticated")
-          next({name: "Home"})
+      beforeEnter: (to, from, next) => {
+        const activeUserStore = useActiveUserStore()
+        console.log('authethication')
+        if (activeUserStore.validateToken()) {
+          next()
+        } else {
+          console.log('Unauhenticated')
+          next({ name: 'Home' })
         }
       }
     },
