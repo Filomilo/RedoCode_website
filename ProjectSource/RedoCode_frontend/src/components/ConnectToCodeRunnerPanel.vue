@@ -13,8 +13,14 @@
         placeholder="Select programming langauge"
         class="dropDown"
         style="height: 3rem"
+        id="coderunner-dropdown"
       />
-      <Button class="BasicButton" label="Connect" @click="onConnectButton" />
+      <Button
+       class="BasicButton" 
+       label="Connect"
+        @click="onConnectButton"
+        id="connect-button"
+        />
     </div>
   </div>
 </template>

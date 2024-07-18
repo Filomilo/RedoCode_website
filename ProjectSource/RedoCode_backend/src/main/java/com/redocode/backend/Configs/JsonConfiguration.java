@@ -9,4 +9,5 @@ public class JsonConfiguration {
     public com.fasterxml.jackson.databind.Module hibernateModule() {
         return new Hibernate5JakartaModule();
     }
+
 }

@@ -10,7 +10,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
   const isLogged = ref(false)
   const nick = ref('')
-  const _token = ref('')
+  const _token:Ref<String> = ref('')
   const isAwaitingAuthentication: Ref<boolean> = ref(false)
   const $cookies = inject<VueCookies>('$cookies'); 
   const acoountInfo = computed(() => {
@@ -18,7 +18,8 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   })
 
   const validateToken=():boolean=>{
-
+      if(_token.value==="")
+        return false;
     return true;
       }
   const setIsLogged = (state: boolean) => {

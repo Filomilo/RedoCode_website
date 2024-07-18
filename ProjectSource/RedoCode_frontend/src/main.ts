@@ -55,8 +55,11 @@ import VueCookies from 'vue-cookies'
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
-  // makeServer()
+  makeServer()
 }
+const pinia = createPinia()
+
+app.use(pinia)
 
 app
   .use(router)
@@ -89,9 +92,6 @@ app.component('Timeline', Timeline)
 
 app.use(ConfirmationService)
 app.use(ToastService)
-const pinia = createPinia()
-
-app.use(pinia)
 
 app.use(VueMonacoEditorPlugin, {
   paths: {

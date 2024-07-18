@@ -31,7 +31,11 @@
       </div>
     </div>
     <div class="VerticalLine">
-      <Button class="addButton" @click="onAddButton"> add </Button>
+      <Button 
+      class="addButton"
+       @click="onAddButton"
+       id="add-exercise-button"
+       > add </Button>
     </div>
   </div>
 </template>
