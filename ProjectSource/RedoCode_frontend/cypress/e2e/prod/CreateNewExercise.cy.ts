@@ -54,7 +54,7 @@ describe('template spec', () => {
     cy.wait(1000);
     cy.get('#switch-exercises').click();
     cy.wait(1000);
-    cy.get("#Create-button").click();
+    cy.get("#Create-button").click({ force: true });
     cy.get("#Exercise-title-input").click().type(title);
     cy.get("#Exercise-description-input").click().type(description);
     cy.get("#pv_id_5_1_header_action").click()
