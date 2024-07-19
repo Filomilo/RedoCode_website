@@ -53,6 +53,7 @@ describe('template spec', () => {
     cy.get('#login').click();
     cy.wait(1000);
     cy.get('#switch-exercises').click();
+    cy.wait(1000);
     cy.get("#Create-button").click();
     cy.get("#Exercise-title-input").click().type(title);
     cy.get("#Exercise-description-input").click().type(description);
