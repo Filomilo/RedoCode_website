@@ -51,13 +51,17 @@ describe('template spec', () => {
     cy.get("#login-email").clear().type(email)
     cy.get("#login-password").clear().type(password)
     cy.get('#login').click();
-    cy.wait(1000);
+    cy.wait(5000);
     cy.get('#switch-exercises').click();
-    cy.wait(1000);
+    cy.wait(10000);
     cy.get("#Create-button").click({ force: true });
+    cy.wait(5000);
     cy.get("#Exercise-title-input").click().type(title);
+    cy.wait(5000);
     cy.get("#Exercise-description-input").click().type(description);
+    cy.wait(5000);
     cy.get("#pv_id_5_1_header_action").click()
+    cy.wait(5000);
     cy.get("#language-selection").click();
     cy.get("#language-selection_0").click();
     cy.get("#language-selection_1").click();
