@@ -8,6 +8,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import AccountView from '@/views/AccountView.vue'
 import ResultsView from '@/views/ResultsView.vue'
 import TestView from '@/views/TestView.vue'
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,14 +37,21 @@ const router = createRouter({
       path: '/PlayGround',
       name: 'PlayGround',
       component: PlayGroundView
-      // beforeEnter: (to,from,next)=>{
-      //   codeRunnerStore.setExceriseDataToPlayground();
-      // }
     },
     {
       path: '/create',
       name: 'Create',
-      component: CreateView
+      component: CreateView,
+      beforeEnter: (to, from, next) => {
+        const activeUserStore = useActiveUserStore()
+        // console.log("authethication")
+        if (activeUserStore.validateToken()) {
+          next()
+        } else {
+          // console.log("Unauhenticated")
+          next({ name: 'Home' })
+        }
+      }
     },
     {
       path: '/register',
@@ -53,7 +61,17 @@ const router = createRouter({
     {
       path: '/Account',
       name: 'Account',
-      component: AccountView
+      component: AccountView,
+      beforeEnter: (to, from, next) => {
+        const activeUserStore = useActiveUserStore()
+        console.log('authethication')
+        if (activeUserStore.validateToken()) {
+          next()
+        } else {
+          console.log('Unauhenticated')
+          next({ name: 'Home' })
+        }
+      }
     },
     {
       path: '/Results',

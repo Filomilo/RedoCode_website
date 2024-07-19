@@ -5,13 +5,13 @@
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
-        <div class="EngineStatusStatus">
+        <div class="EngineStatusStatus" id="coderunner-type">
           {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType }}
         </div>
       </div>
 
       <div class="EngineStatusPanel">
-        <div class="EngineStatusTitle">Status:</div>
+        <div class="EngineStatusTitle" id="coderunner-status">Status:</div>
         <div class="EngineStatusStatus">
           {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState.state }}
         </div>
@@ -45,7 +45,14 @@
       v-if="props.ManualTests !== undefined"
       :style="true ? '' : 'pointer-events: none'"
     >
-      <Button class="submitButton" :disabled="isCorrect" @click="props.onSubmit"> Submit </Button>
+      <Button
+        class="submitButton"
+        :disabled="isCorrect"
+        @click="props.onSubmit"
+        id="coderunner-submit-button"
+      >
+        Submit
+      </Button>
     </div>
   </div>
 </template>

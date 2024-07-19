@@ -25,6 +25,7 @@
             optionLabel="label"
             placeholder="programming languages"
             class="languageDropDown"
+            id="language-selection"
           />
         </div>
         <div class="panelSection SubPanelSection">
@@ -43,6 +44,7 @@
               :min="128"
               :max="2048"
               class="numberInputRam"
+              id="ram-number-input"
             />
           </div>
           <div class="panelVerticalSection">
@@ -66,6 +68,7 @@
                 :min="0"
                 :max="12"
                 class="numberInput"
+                id="hour-number-input"
               />
               <InputNumber
                 @update:model-value="
@@ -85,6 +88,7 @@
                 :min="0"
                 :max="59"
                 class="numberInput"
+                id="minute-number-input"
               />
             </div>
           </div>
@@ -98,6 +102,7 @@
                 :min="5"
                 :max="5000"
                 class="numberInput"
+                id="ms-number-input"
               />
             </div>
           </div>
@@ -118,6 +123,7 @@
                 inputId="inputType1"
                 :value="true"
                 :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.inputType)"
+                id="radio-input-int"
               />
               <label>int</label>
             </div>
@@ -133,6 +139,7 @@
                 inputId="inputType2"
                 :value="true"
                 :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType)"
+                id="radio-input-float"
               />
               <label>float</label>
             </div>
@@ -148,6 +155,7 @@
                 inputId="inputType3"
                 :value="true"
                 :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.inputType)"
+                id="radio-input-string"
               />
               <label>string</label>
             </div>
@@ -165,6 +173,7 @@
                 inputId="inputSize1"
                 :value="true"
                 :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.inputType)"
+                id="radio-input-single"
               />
               <label>single value</label>
             </div>
@@ -180,6 +189,7 @@
                 inputId="inputSize2"
                 :value="true"
                 :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.inputType)"
+                id="radio-input-array"
               />
               <label>array</label>
             </div>
@@ -197,6 +207,7 @@
                 :model-value="
                   isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)
                 "
+                id="radio-input-2d-array"
               />
               <label>2d array</label>
             </div>
@@ -217,6 +228,7 @@
                 inputId="outputype1"
                 :value="true"
                 :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.outputType)"
+                id="radio-output-int"
               />
               <label>int</label>
             </div>
@@ -232,6 +244,7 @@
                 inputId="outputype2"
                 :value="true"
                 :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.outputType)"
+                id="radio-output-float"
               />
               <label>float</label>
             </div>
@@ -247,6 +260,7 @@
                 inputId="outputype3"
                 :value="true"
                 :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.outputType)"
+                id="radio-output-string"
               />
               <label>string</label>
             </div>
@@ -264,6 +278,7 @@
                 inputId="outputSize1"
                 :value="true"
                 :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.outputType)"
+                id="radio-output-single"
               />
               <label>single value</label>
             </div>
@@ -279,6 +294,7 @@
                 inputId="outputSize2"
                 :value="true"
                 :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.outputType)"
+                id="radio-output-array"
               />
               <label>array</label>
             </div>
@@ -297,6 +313,7 @@
                 :model-value="
                   isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.outputType)
                 "
+                id="radio-output-2d-array"
               />
               <label>2d array</label>
             </div>
@@ -325,6 +342,7 @@
               :max="10"
               class="smallNumberInput"
               style="width: 0.5rem"
+              id="amount-of-auto-test-input"
             />
             <div class="sliderContaienr">
               <Slider
@@ -530,6 +548,7 @@
                         codeRunnerStore.exerciseCreatorController.lengthRange.max
                       ])
                   "
+                  id="string-range-low-input"
                 />
                 <InputNumber
                   v-model="codeRunnerStore.exerciseCreatorController.lengthRange.max"
@@ -543,6 +562,7 @@
                         event
                       ])
                   "
+                  id="string-range-up-input"
                 />
               </div>
               <div class="sliderContaienr" style="width: 100%; height: 3rem; margin-top: 1rem">
@@ -565,6 +585,7 @@
                     v-model="codeRunnerStore.exerciseCreatorController.upperCaseInput"
                     invalid
                     binary
+                    id="upper-case-checkbox"
                   />
                   <label> A, B, C, D, ... </label>
                 </div>
@@ -573,6 +594,7 @@
                     v-model="codeRunnerStore.exerciseCreatorController.lowerCaseInput"
                     invalid
                     binary
+                    id="lower-case-checkbox"
                   />
                   <label> a, b, c, d, ... </label>
                 </div>
@@ -581,6 +603,7 @@
                     v-model="codeRunnerStore.exerciseCreatorController.numberInput"
                     invalid
                     binary
+                    id="number-checkbox"
                   />
                   <label> 1, 2, 3, 4 ... </label>
                 </div>
@@ -589,6 +612,7 @@
                     v-model="codeRunnerStore.exerciseCreatorController.specialCharacterInput"
                     invalid
                     binary
+                    id="special-char-checkbox"
                   />
                   <label> +, (, ), %, # ... </label>
                 </div>
@@ -597,6 +621,7 @@
                     v-model="codeRunnerStore.exerciseCreatorController.breakCharacterInupt"
                     invalid
                     binary
+                    id="character-breaks-checkbox"
                   />
                   <label> \n \t </label>
                 </div>
@@ -605,6 +630,7 @@
                     v-model="codeRunnerStore.exerciseCreatorController.spaceInupt"
                     invalid
                     binary
+                    id="space-char-checkbox"
                   />
                   <label> [_] </label>
                 </div>

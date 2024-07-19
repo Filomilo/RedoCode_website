@@ -6618,6 +6618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-cookies@npm:^1.8.4":
+  version: 1.8.4
+  resolution: "vue-cookies@npm:1.8.4"
+  checksum: fefbca5aac0eae9847271115e3481cee1ce79ffc4b57cc6b8108303f35bc41148c882df1c3d7931ccbfb1883bf376db284dbaf197460e506966a50057e03cb0c
+  languageName: node
+  linkType: hard
+
 "vue-demi@npm:>=0.14.5":
   version: 0.14.7
   resolution: "vue-demi@npm:0.14.7"
@@ -6987,6 +6994,7 @@ __metadata:
     vite: "npm:^5.2.7"
     vitest: "npm:^1.0.4"
     vue: "npm:^3.3.11"
+    vue-cookies: "npm:^1.8.4"
     vue-router: "npm:^4.2.5"
     vue-slider-component: "npm:^4.1.0-beta.7"
     vue-tsc: "npm:^1.8.25"

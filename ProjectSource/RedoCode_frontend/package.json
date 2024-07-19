@@ -35,6 +35,7 @@
     "serve": "^14.2.3",
     "v-dropdown-menu": "^2.0.4",
     "vue": "^3.3.11",
+    "vue-cookies": "^1.8.4",
     "vue-router": "^4.2.5",
     "vue-slider-component": "^4.1.0-beta.7",
     "vue3-easy-data-table": "^1.5.47"

@@ -1,9 +1,9 @@
 <template>
   <div class="DesciptionPanelContainer">
     <div class="DesciptionTitleContainer">
-      <div class="DesciptionTitle">{{ exerciseInfo.title }}</div>
+      <div class="DesciptionTitle" id="exercise-title">{{ exerciseInfo.title }}</div>
     </div>
-    <div class="DescriptioNContainer" v-html="desc"></div>
+    <div class="DescriptioNContainer" v-html="desc" id="exercise-description"></div>
   </div>
 </template>
 

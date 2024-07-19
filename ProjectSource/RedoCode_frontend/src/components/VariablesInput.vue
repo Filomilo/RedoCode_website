@@ -1,14 +1,16 @@
 <template>
   <div style="width: 100%; height: 100%; max-height: 100%; max-width: 100%; overflow: hidden">
-    <InputText v-model="jsonInput" style="width: 100%" />
+    <InputText
+      v-model="jsonInput"
+      style="width: 100%"
+      :id="'test-input-' + props.manualTestInputIndex + '-' + (props.isInput ? 'input' : 'output')"
+    />
 
     <br />
     value: <br />
     {{ JSON.stringify(storedValue) }}
     <br />
-    <div style="color: red">
-      {{ validationofData }}
-    </div>
+    <div style="color: red"></div>
   </div>
 </template>
 
@@ -30,6 +32,11 @@ import { json } from 'agent-base'
 const jsonInput: Ref<string> = ref('')
 const value = computed(() => {
   try {
+    console.log('jsonInput.value: ' + jsonInput.value)
+
+    if (props.Type == 'SINGLE_STRING') {
+      return jsonInput.value
+    }
     return JSON.parse(jsonInput.value)
   } catch {
     return null
@@ -49,9 +56,11 @@ const storedValue = computed(() => {
 })
 
 const validateType = (variable: any, type: VarType) => {
-  if (isTypeString(type) && (!isNumber(variable) || typeof variable == 'string')) {
-    throw new Error('All varaibles should be ' + type)
-  }
+  console.log('isTypeString(type) ' + isTypeString(type))
+  console.log('!isNumber(variable) ' + !isNumber(variable))
+  // if (isTypeString(type) && (!isNumber(variable) )) {
+  //   throw new Error('All varaibles should be ' + type)
+  // }
 
   if (isTypeInt(type) && Math.floor(variable) !== Number(variable)) {
     throw new Error('All varaibles should be int not float')
@@ -61,7 +70,8 @@ const validateType = (variable: any, type: VarType) => {
 }
 
 const validateData = (jsonString: string, type: VarType): boolean => {
-  const value = JSON.parse(jsonString)
+  const value = props.Type == 'SINGLE_STRING' ? jsonString : JSON.parse(jsonString)
+
   console.log('valie: ' + value)
   if (value === null) {
     throw new Error(
@@ -128,6 +138,7 @@ const validationofData = computed(() => {
 })
 watch(value, (newVal, oldVal) => {
   try {
+    console.log('validationofData.value: ' + validationofData.value)
     if (validationofData.value === '') {
       if (props.isInput) {
         CodeRunnerStore.manualTestBuffer[props.manualTestInputIndex].input = newVal

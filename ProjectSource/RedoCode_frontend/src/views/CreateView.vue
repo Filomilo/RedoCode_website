@@ -4,7 +4,7 @@
 
   <main class="PlayGroundBase">
     <TabView @tab-click="ontablClik">
-      <div class="childHeight">
+      <div class="childHeight" id="information-switch">
         <TabPanel header="Information" class="childHeight">
           <ExerciseInfoSetup class="childHeight" />
         </TabPanel>

@@ -49,16 +49,16 @@
       <SplitterPanel
         v-if="props.ManualTests !== undefined"
         style="max-width: 100%; width: 100%"
-        :size="1"
+        :size="25"
       >
         <Splitter layout="vertical" style="width: 100%">
-          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%" :size="1">
+          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
             <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
 
-      <SplitterPanel :size="30">
+      <SplitterPanel :size="50">
         <CodeEditor
           class="CodeEditorContainer"
           :starting="props.starting"
@@ -66,7 +66,7 @@
           :onRunCode="props.onRunCode"
         />
       </SplitterPanel>
-      <SplitterPanel :size="1">
+      <SplitterPanel :size="25">
         <CodeResultPanel
           :onSubmit="props.onSubmit"
           :ManualTests="props.ManualTests"

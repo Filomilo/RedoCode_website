@@ -48,11 +48,17 @@ import ConfirmationService from 'primevue/confirmationservice'
 import './interceptors/axios'
 import ToastService from 'primevue/toastservice'
 import Timeline from 'primevue/timeline'
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
   makeServer()
 }
+const pinia = createPinia()
+
+app.use(pinia)
 
 app
   .use(router)
@@ -85,14 +91,11 @@ app.component('Timeline', Timeline)
 
 app.use(ConfirmationService)
 app.use(ToastService)
-const pinia = createPinia()
-
-app.use(pinia)
 
 app.use(VueMonacoEditorPlugin, {
   paths: {
     vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
   }
 })
-
+app.use(VueCookies, { expires: '30d' })
 app.mount('#app')

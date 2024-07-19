@@ -7,6 +7,7 @@
       style="height: 3rem"
       maxlength="40"
       minlength="2"
+      id="Exercise-title-input"
     />
 
     <Textarea
@@ -17,6 +18,7 @@
       maxlength="2500"
       class="descritptionConatiner"
       style="height: 100%"
+      id="Exercise-description-input"
     />
   </div>
 </template>

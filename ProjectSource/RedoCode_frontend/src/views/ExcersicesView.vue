@@ -46,7 +46,7 @@
             id="Home_Button"
             :class="ActiveUserStore.isLogged ? '' : 'diabled'"
           >
-            <Button :disabled="!ActiveUserStore.isLogged"> Create </Button>
+            <Button :disabled="!ActiveUserStore.isLogged" id="Create-button"> Create </Button>
           </router-link>
         </template>
       </EasyDataTable>
