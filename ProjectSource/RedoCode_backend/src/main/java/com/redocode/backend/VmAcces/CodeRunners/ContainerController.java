@@ -103,4 +103,8 @@ public class ContainerController {
     public VmStatus getStatus() {
         return vmConnector.getVmStatus(containerId);
     }
+
+    public int getRamMb(){
+        return  vmConnector.getContainerRamInMb(this.containerId);
+    }
 }

@@ -19,7 +19,7 @@ public abstract String createVm(String vmName,int ramMb);
     public abstract List<String> getVmList();
     public abstract ConsoleOutput executeCommandInVm(String id, String... command);
     public abstract ConsoleOutput executeCommandInVmWithInput(String id, String command,String input);
-    public abstract int getContainerRamInMb(String id) throws Exception;;
+    public abstract int getContainerRamInMb(String id) ;
 
 
     abstract public void close();

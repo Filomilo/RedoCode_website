@@ -67,6 +67,7 @@ User authorizedUser;
         RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .ram(512)
                 .user(user)
                 .build();
         assertDoesNotThrow(()->{
@@ -77,6 +78,7 @@ User authorizedUser;
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
         assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER,codeRunner.getType());
+        assertEquals(512,codeRunner.getRamMb());
     }
 
 
@@ -88,6 +90,7 @@ User authorizedUser;
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(user)
+                .ram(128)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
@@ -97,6 +100,7 @@ User authorizedUser;
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
         assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunner.getType());
+        assertEquals(128,codeRunner.getRamMb());
     }
 
     @Test
@@ -109,6 +113,7 @@ User authorizedUser;
         RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .ram(128)
                 .user(user)
                 .build();
         assertDoesNotThrow(()->{
@@ -128,6 +133,57 @@ User authorizedUser;
         assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerFirst.getType());
         assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerSecond.getType());
         assertEquals(codeRunnerFirst,codeRunnerSecond);
+    }
+
+
+    @Test
+    void handleSameTypeDiffrentRam() {
+        assertNotNull(codeRunnerAccesValidationHandler);
+
+        VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
+        RawCodeRunRequest firstRawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
+                .builder()
+                .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .ram(128)
+                .user(user)
+                .build();
+
+        RawCodeRunRequest secondRawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
+                .builder()
+                .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .ram(512)
+                .user(user)
+                .build();
+
+        assertDoesNotThrow(()->{
+            codeRunnerAccesValidationHandler.handle(firstRawCodeRunRequest);
+        });
+        VmStatus statusAfter = codeRunnersController.getUserVmStatus(user);
+        CodeRunner codeRunnerFirst= codeRunnersController.getUserCodeRunner(user);
+        int FirstCodeRunnerRam= codeRunnerFirst.getRamMb();
+        CODE_RUNNER_TYPE firstCodeRunnerType= codeRunnerFirst.getType();
+
+        assertDoesNotThrow(()->{
+            codeRunnerAccesValidationHandler.handle(secondRawCodeRunRequest);
+        });
+        VmStatus statusAfterSecond = codeRunnersController.getUserVmStatus(user);
+        CodeRunner codeRunnerSecond= codeRunnersController.getUserCodeRunner(user);
+        int SecondCodeRunnerRam= codeRunnerSecond.getRamMb();
+        CODE_RUNNER_TYPE secondCodeRunnerType= codeRunnerSecond.getType();
+
+        assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
+        assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
+        assertEquals(VmStatus.RUNNING_MACHINE, statusAfterSecond);
+
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerFirst.getType());
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerSecond.getType());
+
+
+        assertEquals(128,FirstCodeRunnerRam);
+        assertEquals(512,SecondCodeRunnerRam);
+        
+        assertNotEquals (codeRunnerFirst,codeRunnerSecond);
+
     }
 
     @Test
