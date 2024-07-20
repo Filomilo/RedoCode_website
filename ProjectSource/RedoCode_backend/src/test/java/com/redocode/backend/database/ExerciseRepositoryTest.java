@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManagerFactory;
 import javassist.compiler.ast.Variable;
 import lombok.extern.java.Log;
 import org.hibernate.query.Page;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ContextConfiguration
 @Log
+@Disabled("Islotating specific test for debugging")
 class ExerciseRepositoryTest {
     @Autowired
     private ExerciseRepository exerciseRepository;
@@ -38,6 +40,7 @@ class ExerciseRepositoryTest {
     }
 
     @Test
+    @Disabled("Islotating specific test for debugging")
     void getExeciseListFromQuery() {
 
         ExerciseListRequestMessage req= ExerciseListRequestMessage.

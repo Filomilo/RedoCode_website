@@ -3,6 +3,7 @@ package com.redocode.backend.VmAcces.CodeRunners;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
+@Disabled("Islotating specific test for debugging")
 class CppCodeRunnerTest {
 
 

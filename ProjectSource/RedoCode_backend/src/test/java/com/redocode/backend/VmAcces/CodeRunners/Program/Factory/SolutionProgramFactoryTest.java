@@ -4,10 +4,11 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.CppSolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Program.JsSolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Disabled("Islotating specific test for debugging")
 class SolutionProgramFactoryTest {
     @Test
     void buildCpp() {

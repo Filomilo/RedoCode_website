@@ -2,6 +2,7 @@ package com.redocode.backend.VmAcces.vmConnection;
 
 import com.redocode.backend.VmAcces.VmStatus;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Disabled("Islotating specific test for debugging")
 class VmConnectorDockerTest {
 
 

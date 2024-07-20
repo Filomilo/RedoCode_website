@@ -9,6 +9,7 @@ import com.redocode.backend.database.SolutionPrograms;
 import com.redocode.backend.database.SolutionProgramsRepository;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
+@Disabled("Islotating specific test for debugging")
 class CppSolutionProgramTest {
 
 

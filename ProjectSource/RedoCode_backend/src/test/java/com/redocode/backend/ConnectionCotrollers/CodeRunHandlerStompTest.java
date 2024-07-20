@@ -57,6 +57,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
 //@RunWith(SpringRunner.class)
 //@DirtiesContext
+//@Disabled("Islotating specific test for debugging")
 class CodeRunHandlerStompTest extends WebSocketTestBase {
 
 

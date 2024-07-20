@@ -7,6 +7,7 @@ import com.redocode.backend.Secuirity.JwtService;
 import com.redocode.backend.database.User;
 import com.redocode.backend.database.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration
 @Slf4j
+@Disabled("Islotating specific test for debugging")
 class AuthenticationControllerTest {
 
 

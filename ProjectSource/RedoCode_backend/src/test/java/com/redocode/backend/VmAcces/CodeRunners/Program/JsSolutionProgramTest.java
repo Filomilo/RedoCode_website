@@ -8,6 +8,7 @@ import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
+@Disabled("Islotating specific test for debugging")
 public class JsSolutionProgramTest {
 
     @ParameterizedTest

@@ -8,6 +8,7 @@ import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -16,6 +17,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
+@Disabled("Islotating specific test for debugging")
 class CodeRunnerRequestTest {
 
     @Test

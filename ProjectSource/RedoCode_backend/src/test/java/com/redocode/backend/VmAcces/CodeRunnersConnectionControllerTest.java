@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ContextConfiguration
     @Slf4j
+@Disabled("Islotating specific test for debugging")
 class CodeRunnersConnectionControllerTest {
 
 

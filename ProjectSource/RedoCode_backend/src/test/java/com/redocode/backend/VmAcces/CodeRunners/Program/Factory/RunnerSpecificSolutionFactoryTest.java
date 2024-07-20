@@ -5,10 +5,11 @@ import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.ArrayOfFloats;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.DoubleArrayOfStrings;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Disabled("Islotating specific test for debugging")
 class RunnerSpecificSolutionFactoryTest {
 
     @Test

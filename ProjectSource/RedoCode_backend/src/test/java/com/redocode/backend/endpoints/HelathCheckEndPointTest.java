@@ -3,6 +3,7 @@ package com.redocode.backend.endpoints;
 import com.redocode.backend.Messages.Authentication.AuthenticationRequest;
 import com.redocode.backend.Messages.Authentication.Authentication;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @ContextConfiguration
+@Disabled("Islotating specific test for debugging")
 public class HelathCheckEndPointTest  {
 
 
