@@ -108,7 +108,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
           sudo docker run hello-world
-          docker info
+      - name: print docker info
+        run: docker info
       - name: start containers
         run: |
           docker compose -f docker-compose-dev.yml up -d
