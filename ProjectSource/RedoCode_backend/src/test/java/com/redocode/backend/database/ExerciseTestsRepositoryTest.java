@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ContextConfiguration
 @Log
-@Disabled("Islotating specific test for debugging")
+//@Disabled("Islotating specific test for debugging")
 class ExerciseTestsRepositoryTest {
 
     @Autowired
