@@ -4,6 +4,7 @@ import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Handlers.BaseRequestHandler;
 import com.redocode.backend.WebSocketTestBase;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @ContextConfiguration
 @SpringBootTest
+//@Disabled("Islotating specific test for debugging")
 class ResponsibilityChainRepositoryGetChainTest  {
 
     @Test

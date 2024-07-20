@@ -16,8 +16,10 @@ import io.fabric8.kubernetes.client.*;
 import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.ConfigBuilder;
 import io.fabric8.kubernetes.client.dsl.ExecWatch;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+@Slf4j
 public class VmConnectorKubernetes  extends VmConnector{
 
 
@@ -62,9 +64,9 @@ catch (Exception ex)
     }
 
     @Override
-    public String createVm(String image) {
+    public String createVm(String image, int ramMb) {
         String name=UUID.randomUUID().toString();
-
+        //TODO add ram handling
         Deployment deployment = new DeploymentBuilder()
                 .withNewMetadata().withName(name).endMetadata()
                 .withNewSpec()
@@ -82,6 +84,7 @@ catch (Exception ex)
                 .endSpec()
                 .endTemplate()
                 .endSpec()
+
                 .build();
             logger.info("name: "+ name);
         Deployment dep= kubernetesClient.apps().deployments().inNamespace(codeRunnersNamespace).resource(deployment).create();
@@ -256,6 +259,12 @@ catch (Exception ex)
             }
 
         return  null;
+    }
+
+    @Override
+    public int getContainerRamInMb(String id)  {
+       log.error("Not implemented yet");
+        return -1;
     }
 
     void destroyEveryThing()

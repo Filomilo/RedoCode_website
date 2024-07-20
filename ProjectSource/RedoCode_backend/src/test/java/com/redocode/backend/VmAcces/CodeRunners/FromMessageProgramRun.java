@@ -6,6 +6,7 @@ import com.redocode.backend.VmAcces.CodeRunnersController;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ContextConfiguration
 @Log
+//@Disabled("Islotating specific test for debugging")
 public class FromMessageProgramRun {
 
 
@@ -31,7 +33,7 @@ public class FromMessageProgramRun {
     @BeforeAll
     static void initlizeCodeRunners()
     {
-        cppCodeRunner=new CppCodeRunner();
+        cppCodeRunner=new CppCodeRunner(128);
         cppCodeRunner.start();
     }
 

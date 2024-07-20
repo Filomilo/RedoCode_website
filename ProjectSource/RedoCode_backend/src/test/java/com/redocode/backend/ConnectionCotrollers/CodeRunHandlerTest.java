@@ -11,6 +11,7 @@ import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
+//@Disabled("Islotating specific test for debugging")
 class CodeRunHandlerTest {
 @Autowired
     CodeRunHandler codeRunHandler;

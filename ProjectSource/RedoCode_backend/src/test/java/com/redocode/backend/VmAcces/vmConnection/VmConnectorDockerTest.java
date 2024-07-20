@@ -2,13 +2,16 @@ package com.redocode.backend.VmAcces.vmConnection;
 
 import com.redocode.backend.VmAcces.VmStatus;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+//@Disabled("Islotating specific test for debugging")
 class VmConnectorDockerTest {
 
 
@@ -34,7 +37,7 @@ class VmConnectorDockerTest {
     void createDestroyVm() {
         assertDoesNotThrow(()->{
             int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
-            String id= vmConnectorDocker.createVm(testContainer);
+            String id= vmConnectorDocker.createVm(testContainer,128);
 //            Thread.sleep(1000);
             int amtOfConatinersAfterCreation= vmConnectorDocker.getVmList().size();
             vmConnectorDocker.destroyVm(id);
@@ -50,7 +53,7 @@ class VmConnectorDockerTest {
     void startVm(){
         assertDoesNotThrow(()->{
             int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
-            String id= vmConnectorDocker.createVm(testContainer);
+            String id= vmConnectorDocker.createVm(testContainer,128);
             int amtOfConatinersAfterCreation= vmConnectorDocker.getVmList().size();
             vmConnectorDocker.destroyVm(id);
             int amtOfConatinersAfterestrcution= vmConnectorDocker.getVmList().size();
@@ -64,7 +67,7 @@ class VmConnectorDockerTest {
     {
         assertDoesNotThrow(()->{
             int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
-            String id= vmConnectorDocker.createVm(testContainerNeverEnding);
+            String id= vmConnectorDocker.createVm(testContainerNeverEnding,128);
             VmStatus containerStatusBeforeRunnginh= vmConnectorDocker.getVmStatus(id);
             vmConnectorDocker.startVm(id);
             VmStatus containerStatusAfterRunning= vmConnectorDocker.getVmStatus(id);
@@ -93,7 +96,7 @@ class VmConnectorDockerTest {
 
         assertDoesNotThrow(()->{
             int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
-            String id= vmConnectorDocker.createVm(testContainerNeverEnding);
+            String id= vmConnectorDocker.createVm(testContainerNeverEnding,128);
             vmConnectorDocker.startVm(id);
 
             String checkpharase="Hello, execute";
@@ -117,7 +120,7 @@ class VmConnectorDockerTest {
 
         assertDoesNotThrow(()->{
             int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
-            String id= vmConnectorDocker.createVm(testProgramInput);
+            String id= vmConnectorDocker.createVm(testProgramInput,128);
             vmConnectorDocker.startVm(id);
 
             String argumentsInput="Test\nTest2\nTest3\n1\n2\n3\n4\n5\n6\nexit\n";
@@ -134,7 +137,17 @@ assertEquals(argumentsInput.trim(),res,"Testing program output did not match pro
         });
 
     }
-
+    @ParameterizedTest
+    @ValueSource(ints = {6,8,16,32,64,128,256,512,1024,2048,2048*6})
+    void getRamFromConatainer(int ram){
+        assertDoesNotThrow(()->{
+            int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
+            String id= vmConnectorDocker.createVm(testContainer,ram);
+            int containerRam= vmConnectorDocker.getContainerRamInMb(id);
+            vmConnectorDocker.destroyVm(id);
+            assertEquals(ram,containerRam);
+        });
+    }
 
 
 

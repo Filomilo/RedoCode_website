@@ -8,6 +8,7 @@ import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Log
+//@Disabled("Islotating specific test for debugging")
 public class JsSolutionProgramTest {
 
     @ParameterizedTest
@@ -38,7 +39,7 @@ public class JsSolutionProgramTest {
         log.info("Code to run: \n\n\n"+program.getProgramCode()+"\n\n\n" );
 
 
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -59,7 +60,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -80,7 +81,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -103,7 +104,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -127,7 +128,7 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -151,7 +152,7 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -178,7 +179,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -209,7 +210,7 @@ public class JsSolutionProgramTest {
                                 "}")
                 .build();
         log.info("getProgramCode:\n\n\n"+ program.getProgramCode());
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -241,7 +242,7 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();

@@ -6,6 +6,7 @@ import com.redocode.backend.WebSocketTestBase;
 import com.redocode.backend.database.ExcersizeListEntry;
 import com.redocode.backend.database.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration
 @Slf4j
+//@Disabled("Islotating specific test for debugging")
 class ExcecisesEndpointsTest  {
 
 

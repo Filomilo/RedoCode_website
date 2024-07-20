@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public class JsCodeRunner extends CodeRunner{
 
-    public JsCodeRunner() {
-        super("filipredocode/redocode:JsRunner");
+    public JsCodeRunner(int ramMb) {
+        super("filipredocode/redocode:JsRunner",ramMb);
         type=CODE_RUNNER_TYPE.JS_RUNNER;
     }
 

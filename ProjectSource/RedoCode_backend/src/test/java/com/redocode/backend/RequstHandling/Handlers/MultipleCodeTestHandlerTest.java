@@ -21,7 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Disabled("Not wokrking in gihtub pipleine eveneroment")
+//@Disabled("Not wokrking in gihtub pipleine eveneroment")
+//////@Disabled("Islotating specific test for debugging")
 class MultipleCodeTestHandlerTest {
 
     ExerciseTests[] tests;

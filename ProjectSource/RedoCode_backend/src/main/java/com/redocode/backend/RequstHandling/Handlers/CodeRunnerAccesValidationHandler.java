@@ -32,9 +32,10 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"validating access to "+ ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
         log.info("CodeRunnerAccesValidationHandler hadnling: "+ request+" from "+request.getUser());
-
-        if(codeRunnersController.getUserCodeRunner(request.getUser())!= null
-        && codeRunnersController.getUserCodeRunner(request.getUser()).getType()==((CodeRunnerRequest) request).getCodeRunnerType()
+        CodeRunner currentCodeRunner=codeRunnersController.getUserCodeRunner(request.getUser());
+        if(currentCodeRunner!= null
+        && currentCodeRunner.getType()==((CodeRunnerRequest) request).getCodeRunnerType()
+        &&  currentCodeRunner.getRamMb() ==((CodeRunnerRequest) request).getRam()
         ){
             return request;
         }

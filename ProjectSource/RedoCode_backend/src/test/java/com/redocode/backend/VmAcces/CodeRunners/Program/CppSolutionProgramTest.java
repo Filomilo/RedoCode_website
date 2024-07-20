@@ -9,6 +9,7 @@ import com.redocode.backend.database.SolutionPrograms;
 import com.redocode.backend.database.SolutionProgramsRepository;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Log
+//@Disabled("Islotating specific test for debugging")
 class CppSolutionProgramTest {
 
 
@@ -46,7 +47,7 @@ class CppSolutionProgramTest {
         log.info("Code to run: \n\n\n"+program.getProgramCode()+"\n\n\n" );
 
 
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -67,7 +68,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -89,7 +90,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -114,7 +115,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -139,7 +140,7 @@ class CppSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -164,7 +165,7 @@ class CppSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -192,7 +193,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -223,7 +224,7 @@ class CppSolutionProgramTest {
                                 "}")
                 .build();
         log.info("getProgramCode:\n\n\n"+ program.getProgramCode());
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -255,7 +256,7 @@ class CppSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();

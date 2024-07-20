@@ -9,6 +9,7 @@ import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.*;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Log
+//@Disabled("Islotating specific test for debugging")
 public class DataBaseSolutionsRun {
     @Autowired
     SolutionProgramsRepository solutionProgramsRepository;
@@ -44,8 +45,8 @@ public class DataBaseSolutionsRun {
                 ) {
                     log.info("SOlutions: "+ sol.toString());
                     CodeRunner codeRunner=switch (sol.getLanguage().getName()){
-                        case "cpp" -> new CppCodeRunner();
-                        case "js" -> new JsCodeRunner();
+                        case "cpp" -> new CppCodeRunner(128);
+                        case "js" -> new JsCodeRunner(128);
                         default -> throw new Exception("Unkown code unner type");
                     };
                     codeRunner.start();

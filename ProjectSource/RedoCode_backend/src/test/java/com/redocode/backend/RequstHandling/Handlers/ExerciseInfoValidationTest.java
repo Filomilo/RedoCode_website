@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ContextConfiguration
 @Slf4j
+////@Disabled("Islotating specific test for debugging")
 class ExerciseInfoValidationTest {
     @Autowired
     ExerciseRepository exerciseRepository;
@@ -156,7 +158,7 @@ class ExerciseInfoValidationTest {
 
 
 
-
+    ////@Disabled("Islotating specific test for debugging")
     @ParameterizedTest
     @MethodSource ("com.redocode.backend.DataProviders.IncorrectExerciseParamatersProviders#incorrectTitleProvider")
     void testIncorrectTitleExerciseCreation(String incorrectTitle){

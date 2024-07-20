@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public class CppCodeRunner extends CodeRunner{
 
-    public CppCodeRunner() {
-        super("filipredocode/redocode:CppRunner");
+    public CppCodeRunner(int ramMb) {
+        super("filipredocode/redocode:CppRunner",ramMb);
         type=CODE_RUNNER_TYPE.CPP_RUNNER;
     }
 

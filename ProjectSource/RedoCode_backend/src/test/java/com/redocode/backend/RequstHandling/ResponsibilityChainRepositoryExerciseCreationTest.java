@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
-@Disabled("Not wokrking in gihtub pipleine eveneroment")
+//@Disabled("Not wokrking in gihtub pipleine eveneroment")
 class ResponsibilityChainRepositoryExerciseCreationTest {
     @Autowired
     UsersRepository usersRepository;

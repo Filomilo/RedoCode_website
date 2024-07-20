@@ -12,15 +12,15 @@ public class ContainerController {
     static Logger logger= LoggerFactory.getLogger(ContainerController.class);
     private String containerId;
     static final VmConnector vmConnector= VmConnectorFactory.getVmConnector();
-    private void createContainer(String image)
+    private void createContainer(String image, int ram)
     {
         logger.info("attempting creation of container controller for image "+ image);
-        this.containerId=vmConnector.createVm(image);
+        this.containerId=vmConnector.createVm(image,ram);
     }
 
-    public ContainerController(String image)
+    public ContainerController(String image, int ram)
     {
-        createContainer(image);
+        createContainer(image,ram);
     }
 
 
@@ -102,5 +102,9 @@ public class ContainerController {
 
     public VmStatus getStatus() {
         return vmConnector.getVmStatus(containerId);
+    }
+
+    public int getRamMb(){
+        return  vmConnector.getContainerRamInMb(this.containerId);
     }
 }
