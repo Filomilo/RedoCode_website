@@ -112,7 +112,11 @@ jobs:
         run: |
           docker info
           ls /etc/docker
+          echo \ " {
+            "exec-opts": ["native.cgroupdriver=cgroupfs"]
+          } " > /etc/docker/daemon.json
           cat /etc/docker/daemon.json
+          sudo systemctl restart docker
       - name: start containers
         run: |
           docker compose -f docker-compose-dev.yml up -d
