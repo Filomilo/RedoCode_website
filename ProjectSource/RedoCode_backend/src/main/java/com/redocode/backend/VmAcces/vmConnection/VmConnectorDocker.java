@@ -4,7 +4,9 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.*;
 import com.github.dockerjava.api.exception.ConflictException;
 import com.github.dockerjava.api.exception.NotFoundException;
+import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.Container;
+import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
@@ -13,20 +15,20 @@ import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.VmStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import com.github.dockerjava.transport.DockerHttpClient.Request;
 import com.github.dockerjava.transport.DockerHttpClient.Response;
+import org.springframework.context.annotation.Scope;
+
 import java.io.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+@Slf4j
 public class VmConnectorDocker extends VmConnector {
 
-    static Logger logger= LoggerFactory.getLogger(VmConnectorDocker.class);
 
     private final DockerClient dockerClient;
 
@@ -35,7 +37,7 @@ public class VmConnectorDocker extends VmConnector {
         String dockerHost=System.getenv("DOCKER_HOST");
         if(dockerHost==null)
         {
-            logger.error("Error: no docker host specified in system environment variables");
+            log.error("Error: no docker host specified in system environment variables");
             throw new RuntimeException("Error: no docker host specified in system environment variables");
             // TODO: 31/01/2024 replace wioth custom exception 
         }
@@ -47,9 +49,9 @@ public class VmConnectorDocker extends VmConnector {
               .build();
 
 
-    logger.info("dockerConfiguration: "+ dockerConfiguration.toString());
-    logger.info("test docker host: "+ dockerConfiguration.getDockerHost());
-    logger.info("change test");
+      log.info("dockerConfiguration: "+ dockerConfiguration.toString());
+      log.info("test docker host: "+ dockerConfiguration.getDockerHost());
+      log.info("change test");
       DockerHttpClient httpClient=null;
 try {
     httpClient = new ApacheDockerHttpClient.Builder()
@@ -62,11 +64,11 @@ try {
 
 
 
-      logger.info("httpClient: "+ httpClient);
+      log.info("httpClient: "+ httpClient);
 }
 catch(Exception ex)
 {
-    logger.error("Error creating http client");
+    log.error("Error creating http client");
     ex.printStackTrace();
     throw ex;
 }
@@ -78,38 +80,48 @@ catch(Exception ex)
         Response response = httpClient.execute(request);
         if(response.getStatusCode()!=200)
         {
-            logger.error("error establishing connection with docker api: "+response.getBody());
+            log.error("error establishing connection with docker api: "+response.getBody());
             throw new RuntimeException("error establishing connection with docker api: "+response.getBody());
             //todo: replace with custom exeption
         }
         else {
-            logger.info("successfully established connection docker api");
+            log.info("successfully established connection docker api");
         }
         dockerClient = DockerClientImpl.getInstance(dockerConfiguration, httpClient);
-        logger.info("dockerClient: "+ dockerClient);
+        log.info("dockerClient: "+ dockerClient);
     }
 
     @Override
-    public String createVm(String Image) {
+    public String createVm(String Image, int ram) {
+
+        HostConfig hostConfig = HostConfig
+                .newHostConfig()
+                        .withMemory((long) ram *1024*1024);
 
         CreateContainerResponse response;
-        logger.info("attempting to create new vm in docker: "+ Image);
+        log.info("attempting to create new vm in docker: "+ Image);
         try {
-            response=   dockerClient.createContainerCmd(Image).exec();
+            response=   dockerClient
+                    .createContainerCmd(Image)
+                    .withHostConfig(hostConfig)
+                    .exec();
         }
         catch (NotFoundException ex)
         {
-            logger.warn("Docker image: "+ Image+" locally attempting to pull it from repository");
+            log.warn("Docker image: "+ Image+" locally attempting to pull it from repository");
             try {
                 pullImageSync(Image);
-                response=dockerClient.createContainerCmd(Image).exec();
+                response=dockerClient
+                        .createContainerCmd(Image)
+                        .withHostConfig(hostConfig)
+                        .exec();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
                 //todo: add own exception
             }
         }
         String virtualMachineIdentifiaction=response.getId();
-        logger.info("Successfully created docker conaitner with image: "+ Image+" with id: "+virtualMachineIdentifiaction);
+        log.info("Successfully created docker conaitner with image: "+ Image+" with id: "+virtualMachineIdentifiaction);
         return virtualMachineIdentifiaction;
 
     }
@@ -126,9 +138,9 @@ catch(Exception ex)
     public List<String> getRunningVmList() {
             List<Container> conatinerList= dockerClient.listContainersCmd().exec();
             //todo: switch to trace
-            logger.trace("returned this container list: "+ Arrays.toString(conatinerList.toArray()));
+            log.trace("returned this container list: "+ Arrays.toString(conatinerList.toArray()));
             List<String> containersId=contianerListToIdList(conatinerList);
-            logger.trace("converted to this list of id: "+ Arrays.toString(conatinerList.toArray()));
+            log.trace("converted to this list of id: "+ Arrays.toString(conatinerList.toArray()));
 
             return containersId;
     }
@@ -141,20 +153,20 @@ catch(Exception ex)
 
     @Override
     public void stopVm(String id) {
-        logger.info("stopping container "+ id);
+        log.info("stopping container "+ id);
     dockerClient.stopContainerCmd(id).exec();
     }
 
     @Override
     public void destroyVm(String id) {
-        logger.info("destroying vm with id: "+ id);
+        log.info("destroying vm with id: "+ id);
 try {
     dockerClient.removeContainerCmd(id).exec();
 
 }
 catch (ConflictException ex)
 {
-    logger.warn("warning, container "+ id+" id still running but will be exited to destroy it");
+    log.warn("warning, container "+ id+" id still running but will be exited to destroy it");
     stopVm(id);
     dockerClient.removeContainerCmd(id).exec();
 
@@ -182,7 +194,7 @@ catch (ConflictException ex)
     public VmStatus getVmStatus(String id) {
       try {
           String status = getContianerFromID(id).getStatus();
-          logger.info("gettign status: " + status);
+          log.info("gettign status: " + status);
           if (status.contains("Up"))
               return VmStatus.RUNNING_MACHINE;
           if (status.contains("Exited"))
@@ -203,12 +215,12 @@ return        contiaenrList.stream()
 
     @Override
     public List<String> getVmList() {
-        logger.info("executing list conatien cmd");
+        log.info("executing list conatien cmd");
        List<Container> conatinerList= dockerClient.listContainersCmd().withShowAll(true).exec();
         //todo: switch to trace
-       logger.trace("returned this container list: "+ Arrays.toString(conatinerList.toArray()));
+       log.trace("returned this container list: "+ Arrays.toString(conatinerList.toArray()));
        List<String> containersId=contianerListToIdList(conatinerList);
-        logger.trace("converted to this list of id: "+ Arrays.toString(conatinerList.toArray()));
+        log.trace("converted to this list of id: "+ Arrays.toString(conatinerList.toArray()));
 
         return containersId;
     }
@@ -216,7 +228,7 @@ return        contiaenrList.stream()
     @Override
     public void  close() {
         try {
-            logger.info("Stopping docker connetion");
+            log.info("Stopping docker connetion");
             dockerClient.close();
         } catch (IOException e) {
             //todo add won exception
@@ -236,7 +248,7 @@ return        contiaenrList.stream()
 
     @Override
     public ConsoleOutput executeCommandInVm(String id, String... command) {
-        logger.info("Executing command :\n"+ Arrays.toString(Arrays.stream(command).toList().toArray())+"\n in conaitner: "+ id);
+        log.info("Executing command :\n"+ Arrays.toString(Arrays.stream(command).toList().toArray())+"\n in conaitner: "+ id);
 
         String execResponseId = execCreate(id, command);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -252,14 +264,14 @@ return        contiaenrList.stream()
 
         }
 
-        logger.info("returned: "+outputStream.toString().trim());
+        log.info("returned: "+outputStream.toString().trim());
         //return outputStream.toString().trim();
         return new ConsoleOutput(exitCode,outputStream.toString().trim(),errorStream.toString().trim());
 
 
     }
     public ConsoleOutput executeCommandInVmWithInput(String id, String command,String input) {
-        logger.info("Executing command :\n"+ command+" with input: \n"+input+"\n in conaitner: "+ id);
+        log.info("Executing command :\n"+ command+" with input: \n"+input+"\n in conaitner: "+ id);
 
         String execResponseId = execCreate(id, command);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -275,10 +287,17 @@ return        contiaenrList.stream()
             throw new RuntimeException("couldn't execute command in vm with input: "+ e.getMessage());
         }
 
-        logger.info("rturned: "+outputStream.toString().trim());
+        log.info("rturned: "+outputStream.toString().trim());
       //  return outputStream.toString().trim();
         return new ConsoleOutput(exitCode,outputStream.toString().trim(),errorStream.toString().trim());
 
+    }
+
+    @Override
+    public int getContainerRamInMb(String id) {
+ InspectContainerResponse inspectContainerResponse=    dockerClient.inspectContainerCmd(id).exec();
+    Long ramInBytes=inspectContainerResponse.getHostConfig().getMemory();
+        return (int) (ramInBytes/(1024*1024));
     }
 //todo add exception when ocmamnd or program doesnt exist
     //todo add exception when execution timeout

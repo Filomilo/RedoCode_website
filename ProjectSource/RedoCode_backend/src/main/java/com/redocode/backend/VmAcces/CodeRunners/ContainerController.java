@@ -15,7 +15,7 @@ public class ContainerController {
     private void createContainer(String image)
     {
         logger.info("attempting creation of container controller for image "+ image);
-        this.containerId=vmConnector.createVm(image);
+        this.containerId=vmConnector.createVm(image,128);
     }
 
     public ContainerController(String image)

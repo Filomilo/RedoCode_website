@@ -62,9 +62,9 @@ catch (Exception ex)
     }
 
     @Override
-    public String createVm(String image) {
+    public String createVm(String image, int ramMb) {
         String name=UUID.randomUUID().toString();
-
+        //TODO add ram handling
         Deployment deployment = new DeploymentBuilder()
                 .withNewMetadata().withName(name).endMetadata()
                 .withNewSpec()
@@ -82,6 +82,7 @@ catch (Exception ex)
                 .endSpec()
                 .endTemplate()
                 .endSpec()
+
                 .build();
             logger.info("name: "+ name);
         Deployment dep= kubernetesClient.apps().deployments().inNamespace(codeRunnersNamespace).resource(deployment).create();
@@ -256,6 +257,11 @@ catch (Exception ex)
             }
 
         return  null;
+    }
+
+    @Override
+    public int getContainerRamInMb(String id) throws Exception {
+        throw new Exception("not implemtned");
     }
 
     void destroyEveryThing()
