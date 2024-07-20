@@ -31,7 +31,7 @@ public class FromMessageProgramRun {
     @BeforeAll
     static void initlizeCodeRunners()
     {
-        cppCodeRunner=new CppCodeRunner();
+        cppCodeRunner=new CppCodeRunner(128);
         cppCodeRunner.start();
     }
 

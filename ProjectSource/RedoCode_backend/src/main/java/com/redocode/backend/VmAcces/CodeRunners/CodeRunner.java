@@ -11,8 +11,8 @@ import lombok.Synchronized;
 @Getter
 public abstract class CodeRunner extends ContainerController {
 
-    protected CodeRunner(String image) {
-        super(image);
+    protected CodeRunner(String image,int ramMb) {
+        super(image,ramMb);
         type=CODE_RUNNER_TYPE.UNIDENTIFIED;
     }
 

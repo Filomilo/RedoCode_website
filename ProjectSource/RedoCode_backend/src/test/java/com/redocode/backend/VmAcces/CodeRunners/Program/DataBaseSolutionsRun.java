@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Log
 public class DataBaseSolutionsRun {
     @Autowired
     SolutionProgramsRepository solutionProgramsRepository;
@@ -44,8 +43,8 @@ public class DataBaseSolutionsRun {
                 ) {
                     log.info("SOlutions: "+ sol.toString());
                     CodeRunner codeRunner=switch (sol.getLanguage().getName()){
-                        case "cpp" -> new CppCodeRunner();
-                        case "js" -> new JsCodeRunner();
+                        case "cpp" -> new CppCodeRunner(128);
+                        case "js" -> new JsCodeRunner(128);
                         default -> throw new Exception("Unkown code unner type");
                     };
                     codeRunner.start();

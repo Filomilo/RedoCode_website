@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Log
 class CppSolutionProgramTest {
 
 
@@ -46,7 +45,7 @@ class CppSolutionProgramTest {
         log.info("Code to run: \n\n\n"+program.getProgramCode()+"\n\n\n" );
 
 
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -67,7 +66,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -89,7 +88,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -114,7 +113,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -139,7 +138,7 @@ class CppSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -164,7 +163,7 @@ class CppSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -192,7 +191,7 @@ class CppSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -223,7 +222,7 @@ class CppSolutionProgramTest {
                                 "}")
                 .build();
         log.info("getProgramCode:\n\n\n"+ program.getProgramCode());
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -255,7 +254,7 @@ class CppSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();

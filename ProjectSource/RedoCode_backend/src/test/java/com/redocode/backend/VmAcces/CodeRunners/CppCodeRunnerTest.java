@@ -24,7 +24,7 @@ class CppCodeRunnerTest {
                 "    return 0;\n" +
                 "}";
         RawProgram rawProgram=new RawProgram(code);
-        CppCodeRunner cppCodeRunner=new CppCodeRunner();
+        CppCodeRunner cppCodeRunner=new CppCodeRunner(128);
         cppCodeRunner.start();
         ProgramResult programResult=cppCodeRunner.runProgram(rawProgram);
         cppCodeRunner.stop();
@@ -43,7 +43,7 @@ class CppCodeRunnerTest {
                 "    return 0;\n" +
                 "}";
         RawProgram rawProgram=new RawProgram(code);
-        CppCodeRunner cppCodeRunner=new CppCodeRunner();
+        CppCodeRunner cppCodeRunner=new CppCodeRunner(128);
         cppCodeRunner.start();
         ProgramResult programResult=cppCodeRunner.runProgram(rawProgram);
         cppCodeRunner.stop();

@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-@Log
 public class JsSolutionProgramTest {
 
     @ParameterizedTest
@@ -38,7 +37,7 @@ public class JsSolutionProgramTest {
         log.info("Code to run: \n\n\n"+program.getProgramCode()+"\n\n\n" );
 
 
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -59,7 +58,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner();
+        CodeRunner codeRunner= new CppCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -80,7 +79,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -103,7 +102,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -127,7 +126,7 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -151,7 +150,7 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -178,7 +177,7 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -209,7 +208,7 @@ public class JsSolutionProgramTest {
                                 "}")
                 .build();
         log.info("getProgramCode:\n\n\n"+ program.getProgramCode());
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
@@ -241,7 +240,7 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner();
+        CodeRunner codeRunner= new JsCodeRunner(128);
         codeRunner.start();
         ProgramResult result= codeRunner.runProgram(program);
         codeRunner.destroy();
