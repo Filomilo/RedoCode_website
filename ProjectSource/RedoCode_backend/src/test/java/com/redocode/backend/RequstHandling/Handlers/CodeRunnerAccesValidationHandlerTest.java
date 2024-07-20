@@ -100,6 +100,37 @@ User authorizedUser;
     }
 
     @Test
+    void handleAlreadyHavingCodeRunnerRequest() {
+        assertNotNull(codeRunnerAccesValidationHandler);
+
+
+
+        VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
+                .builder()
+                .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .user(user)
+                .build();
+        assertDoesNotThrow(()->{
+            codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
+        });
+        VmStatus statusAfter = codeRunnersController.getUserVmStatus(user);
+        CodeRunner codeRunnerFirst= codeRunnersController.getUserCodeRunner(user);
+
+        assertDoesNotThrow(()->{
+            codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
+        });
+        VmStatus statusAfterSecond = codeRunnersController.getUserVmStatus(user);
+        CodeRunner codeRunnerSecond= codeRunnersController.getUserCodeRunner(user);
+        assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
+        assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
+        assertEquals(VmStatus.RUNNING_MACHINE, statusAfterSecond);
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerFirst.getType());
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerSecond.getType());
+        assertEquals(codeRunnerFirst,codeRunnerSecond);
+    }
+
+    @Test
     void handleSwitchingRequest() {
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);

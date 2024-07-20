@@ -6,6 +6,9 @@ import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest
 import router from '@/router'
 import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
 import { VueCookies } from 'vue-cookies'
+import { useApiConnectionStore } from './ApiConnectionStore'
+
+
 export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
   const isLogged = ref(false)
@@ -42,6 +45,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       _token.value = token
       if (validateToken()) {
         setIsLogged(true)
+        const apiConnectionStore= useApiConnectionStore();
       } else {
         _token.value = ''
       }
@@ -61,6 +65,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
         if (response.status == 200) {
           toastStore.showSuccessMessage('Succesfully logged in')
           _token.value = response.data.token
+          const apiConnectionStore= useApiConnectionStore();
           isLogged.value = true
           router.push({ path: '/Home', replace: true })
           if (stayLoggedIn) {
@@ -127,5 +132,9 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       })
   }
 
-  return { isLogged, login, logout, acoountInfo, register, validateToken }
+  const getToken=():String=>{
+    return _token.value;
+  }
+
+  return { isLogged, login, logout, acoountInfo, register, validateToken,getToken }
 })

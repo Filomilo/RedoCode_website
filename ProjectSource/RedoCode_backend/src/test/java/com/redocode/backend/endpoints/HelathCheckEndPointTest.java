@@ -1,9 +1,7 @@
 package com.redocode.backend.endpoints;
 
 import com.redocode.backend.Messages.Authentication.AuthenticationRequest;
-import com.redocode.backend.Messages.Authentication.AuthenticationResponse;
-import com.redocode.backend.WebSocketTestBase;
-import com.redocode.backend.database.User;
+import com.redocode.backend.Messages.Authentication.Authentication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +65,7 @@ public class HelathCheckEndPointTest  {
                 .email(_exisitingtMail)
                 .password(_exisitingPass)
                 .build();
-        AuthenticationResponse response= this.restTemplate.postForObject(getFullEndpoint(_loginEndPont), authenticationRequest, AuthenticationResponse.class);
+        Authentication response= this.restTemplate.postForObject(getFullEndpoint(_loginEndPont), authenticationRequest, Authentication.class);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + response.getToken());
         HttpEntity<String> entity = new HttpEntity<>(headers);

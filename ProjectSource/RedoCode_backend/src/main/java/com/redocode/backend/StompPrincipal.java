@@ -1,21 +1,17 @@
 package com.redocode.backend;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.security.Principal;
-
+@AllArgsConstructor
 @ToString
+@Getter
 public class StompPrincipal implements Principal {
     String name;
 
-    public StompPrincipal(String name) {
-        this.name = name;
-    }
 
-    @Override
-    public String getName() {
-        return name;
-    }
 
 
 }
