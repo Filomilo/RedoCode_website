@@ -46,8 +46,6 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       if (validateToken()) {
         setIsLogged(true)
         const apiConnectionStore= useApiConnectionStore();
-
-        apiConnectionStore.stompApiConnection.setConnectionAuthentication(_token.value)
       } else {
         _token.value = ''
       }
@@ -68,8 +66,6 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
           toastStore.showSuccessMessage('Succesfully logged in')
           _token.value = response.data.token
           const apiConnectionStore= useApiConnectionStore();
-
-          apiConnectionStore.stompApiConnection.setConnectionAuthentication(_token.value)
           isLogged.value = true
           router.push({ path: '/Home', replace: true })
           if (stayLoggedIn) {
