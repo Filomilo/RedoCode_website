@@ -116,6 +116,8 @@ jobs:
       - name: start containers
         run: |
           docker compose -f docker-compose-dev.yml up -d
+      - name: conatainers info
+        run: docker ps
       - name: run test
         run: |
           docker exec -t projectsource-api-1 mvn clean install
