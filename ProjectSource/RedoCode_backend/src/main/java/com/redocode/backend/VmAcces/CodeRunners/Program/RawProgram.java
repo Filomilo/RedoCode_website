@@ -18,8 +18,14 @@ public class RawProgram extends Program {
     }
 
 
+
     @Override
     public String getProgramCode() {
         return code;
+    }
+
+    @Override
+    public long getExecutionTimeLimitMs() {
+        return 500;
     }
 }

@@ -6,13 +6,15 @@ import javassist.compiler.ast.Variable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Var;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@SuperBuilder
 @Slf4j
+@NoArgsConstructor
 public class CppSolutionProgram extends SolutionProgram {
 
     @Override

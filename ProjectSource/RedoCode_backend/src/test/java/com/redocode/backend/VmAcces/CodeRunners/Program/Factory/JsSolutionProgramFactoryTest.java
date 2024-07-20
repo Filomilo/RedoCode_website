@@ -37,6 +37,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -55,6 +58,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -82,6 +88,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -119,6 +128,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleFloat(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -138,6 +150,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -165,6 +180,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -199,6 +217,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleString(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -218,6 +239,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -243,6 +267,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -273,6 +300,10 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
+                .setInputVaraiable(new SingleInteger(1))
                 .build()
                 ;
         String ouputGenerationCode=
@@ -310,6 +341,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
+                .setTimeout(500)
+                .setInputVaraiable(new SingleInteger(1))
+                .setSolutionCode("")
                 .build()
                 ;
        String ouputGenerationCode=
@@ -348,6 +382,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
+                .setTimeout(500)
+                .setInputVaraiable(new SingleInteger(1))
+                .setSolutionCode("")
                 .build()
                 ;
         String ouputGenerationCode=
@@ -380,10 +417,15 @@ public class JsSolutionProgramFactoryTest {
     }
 //
     @Test
+    @Disabled("Depracted functionality, there canot be arguemnt less solution program")
     void getActivationFunctionNOArumgument() {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setInputVaraiable(new SingleInteger(1))
+                .setSolutionCode("")
+                .setTimeout(100L)
                 .build()
                 ;
 
@@ -398,6 +440,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(1))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String code=program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));";
@@ -411,6 +456,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(new Integer[]{1, 8, 5, 4}))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -427,6 +475,9 @@ public class JsSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(new Integer[][]{{1, 8, 5, 4},{1, 8, 5, 4}}))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -444,6 +495,7 @@ public class JsSolutionProgramFactoryTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)// TODO: add class mapping data base string to Code runner enum
                 .setInputVaraiable(new SingleInteger(1))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setTimeout(500)
                 .setSolutionCode(list.get(1).getCode())
                 .build();
         String correctCode="function solution(val) {\n" +

@@ -187,7 +187,7 @@ catch (Exception ex)
     }
 
     @Override
-    public ConsoleOutput executeCommandInVm(String id, String... command) {
+    public ConsoleOutput executeCommandInVm(String id, long timeout,String... command) {
         logger.info("Executign command in "+ id+" : \n"+Arrays.toString(Arrays.stream(command).toArray()));
 
 

@@ -101,7 +101,7 @@ class VmConnectorDockerTest {
 
             String checkpharase="Hello, execute";
 
-            String res= vmConnectorDocker.executeCommandInVm(id,"echo",checkpharase).getOutput();
+            String res= vmConnectorDocker.executeCommandInVm(id,100,"echo",checkpharase).getOutput();
 
 
             vmConnectorDocker.destroyVm(id);
@@ -114,6 +114,28 @@ class VmConnectorDockerTest {
         });
 
     }
+    @Test
+    void executeCommandInVmTimeout() {
+
+        assertDoesNotThrow(()->{
+            int amtOfConatinersBefore= vmConnectorDocker.getVmList().size();
+            String id= vmConnectorDocker.createVm(testContainerNeverEnding,128);
+            vmConnectorDocker.startVm(id);
+
+            String checkpharase="Hello, execute";
+            assertThrows(Exception.class, ()->{
+                vmConnectorDocker.executeCommandInVm(id,1,"echo",checkpharase).getOutput();
+            });
+
+
+
+            vmConnectorDocker.destroyVm(id);
+
+
+        });
+
+    }
+
 
     @Test
     void executeProgramInputInVMInVm() {

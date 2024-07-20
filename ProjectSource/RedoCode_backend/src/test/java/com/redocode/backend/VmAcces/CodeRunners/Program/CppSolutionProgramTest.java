@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +31,33 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CppSolutionProgramTest {
 
 
+
+    @Test
+    void runProgramCppTimeout() {
+        log.info("Code runner cpp return");
+        Program program= ProgramFactory
+                .createSolutionProgram()
+                .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setInputVaraiable(new SingleInteger(1))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setTimeout(0)
+                .setSolutionCode("int solution(int val){" +
+                        "return val;" +
+                        "}")
+                .build();
+
+        log.info("Code to run: \n\n\n"+program.getProgramCode()+"\n\n\n" );
+
+
+        CodeRunner codeRunner= new CppCodeRunner(128);
+        codeRunner.start();
+
+        ProgramResult result=  codeRunner.runProgram(program);
+        assertTrue(result.getConsoleOutput().getErrorOutput().contains("timeout"));
+
+        codeRunner.destroy();
+    }
+
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void runProgramCppReturnInt(Integer val) {
@@ -39,6 +67,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setTimeout(500)
                 .setSolutionCode("int solution(int val){" +
                         "return val;" +
                         "}")
@@ -55,6 +84,9 @@ class CppSolutionProgramTest {
         assertEquals(val,result.getVariables().getValue());
     }
 
+
+
+
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void runProgramCppReturnFloat(Float val) {
@@ -64,6 +96,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
+                .setTimeout(1000)
                 .setSolutionCode("float solution(float val){" +
                         "return val;" +
                         "}")
@@ -85,6 +118,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleString(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .setTimeout(500)
                 .setSolutionCode("#include <string>\n" +
                         "std::string solution(std::string val){" +
                         "return val;" +
@@ -109,6 +143,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
+                .setTimeout(500)
                 .setSolutionCode("#include <string>\n" +
                                 "#include <vector>\n"+
                         "std::vector<std::string> solution(std::vector<std::string> val){" +
@@ -135,6 +170,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
+                .setTimeout(500)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<int> solution(std::vector<int> val){" +
                                 "return val;" +
@@ -160,6 +196,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
+                .setTimeout(500)
                 .setSolutionCode(
                         "#include <vector>\n std::vector<float> solution(std::vector<float> val){" +
                                 "return val;" +
@@ -187,6 +224,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
+                .setTimeout(500)
                 .setSolutionCode("#include <string>\n" +
                         "#include <vector>\n"+
                         "std::vector<std::vector<std::string>> solution(std::vector<std::vector<std::string>> val){" +
@@ -218,6 +256,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_INTEGERS)
+                .setTimeout(1000)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<int>> solution(std::vector<std::vector<int>> val){" +
                                 "return val;" +
@@ -251,6 +290,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS)
+                .setTimeout(500)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<float>> solution(std::vector<std::vector<float>> val){" +
                                 "return val;" +

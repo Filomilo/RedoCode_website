@@ -83,6 +83,7 @@ class CodeTestHandlerTest {
                 .user(user)
                 .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .outputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
+                .timeForExecution(500l)
                 .build();
 
 

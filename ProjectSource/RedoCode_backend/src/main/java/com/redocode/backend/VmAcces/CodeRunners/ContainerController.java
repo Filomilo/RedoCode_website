@@ -5,8 +5,11 @@ import com.redocode.backend.Tools.StringFormatter;
 import com.redocode.backend.VmAcces.VmStatus;
 import com.redocode.backend.VmAcces.vmConnection.VmConnector;
 import com.redocode.backend.VmAcces.vmConnection.VmConnectorFactory;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeoutException;
 
 public class ContainerController {
     static Logger logger= LoggerFactory.getLogger(ContainerController.class);
@@ -34,16 +37,14 @@ public class ContainerController {
         vmConnector.startVm(containerId);
     }
 
-    protected ConsoleOutput executeCommand(String... commad)
-    {
-        return vmConnector.executeCommandInVm(containerId,commad);
+    protected ConsoleOutput executeCommand(long timeout,String... commad) throws TimeoutException {
+        return vmConnector.executeCommandInVm(containerId,timeout,commad);
     }
-    protected ConsoleOutput executeBash(String command)
-    {
-        return  vmConnector.executeCommandInVm(containerId,"bash", "-c",command);
+    protected ConsoleOutput executeBash(String command,long timeout) throws TimeoutException {
+        return  vmConnector.executeCommandInVm(containerId,timeout,"bash", "-c",command);
     }
 
-
+    @SneakyThrows
     void createFile(String fileName,String fileContent)
     {
 //        String[] fileContentSection=StringFormatter.prepreForFileSaving(fileContent).split("'");
@@ -54,34 +55,35 @@ public class ContainerController {
             command+=" > ";
             command+="\""+fileName+"\"";
             logger.info("creating file "+ fileName+ "with content\n"+ fileContent);
-            executeBash(command);
+            executeBash(command,1000);
 
 
     }
 
 
-
+    @SneakyThrows
    protected String[] listFiles()
     {
-     ConsoleOutput consoleOutput=  executeCommand("ls");
+
+     ConsoleOutput consoleOutput=  executeCommand(500,"ls");
      return consoleOutput.getOutput().split("\n");
     }
 
-
+    @SneakyThrows
     void removeFile(String fileName)
     {
         logger.info("removing file: "+ fileName);
-        executeCommand("unlink",fileName);
+        executeCommand(500,"unlink",fileName);
     }
 
 
     public void start() {
         vmConnector.startVm(containerId);
     }
-
+    @SneakyThrows
     public String getFileContnt(String fileName) {
         logger.info("getting file conent: "+ fileName);
-        ConsoleOutput consoleOutput=executeCommand("cat",fileName);
+        ConsoleOutput consoleOutput=executeCommand(2000,"cat",fileName);
         return consoleOutput.getOutput();
     }
 

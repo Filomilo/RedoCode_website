@@ -37,8 +37,6 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     @NotNull
     Long timeForTaskMin;
     @NotNull
-    Long timeForExecution;
-    @NotNull
     Map<CODE_RUNNER_TYPE,String> solutionCodes;
 
 

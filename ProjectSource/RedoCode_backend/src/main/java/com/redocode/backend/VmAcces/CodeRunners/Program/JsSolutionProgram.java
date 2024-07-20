@@ -1,9 +1,13 @@
 package com.redocode.backend.VmAcces.CodeRunners.Program;
 
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@SuperBuilder
+@NoArgsConstructor
 public class JsSolutionProgram extends SolutionProgram {
     @Override
     String getImports() {

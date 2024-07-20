@@ -39,6 +39,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
                     .setInputVaraiable(test.getParsedInput(request.getInputType()))
                     .setOutputBase(request.getOutputType())
                     .setSolutionCode(request.getCode())
+                    .setTimeout(request.getTimeForExecution())
                     .build();
             log.info("solution program being tested: "+ solutionProgram.getInput());
             ProgramResult result=codeRunner.runProgram(solutionProgram);

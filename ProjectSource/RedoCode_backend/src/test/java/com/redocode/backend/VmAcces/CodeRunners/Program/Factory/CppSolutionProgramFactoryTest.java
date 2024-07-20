@@ -37,7 +37,10 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(var))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -58,6 +61,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -87,6 +93,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -123,6 +132,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -143,7 +155,10 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setTimeout(500)
                 .setInputVaraiable(new ArrayOfFloats(var))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -173,6 +188,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -206,7 +224,10 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setTimeout(500)
                 .setInputVaraiable(new SingleString(var))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -228,6 +249,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -255,6 +279,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(var))
+                .setTimeout(500)
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
         String inputCodeGenerationExpected=
@@ -287,6 +314,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .setTimeout(500)
+                .setInputVaraiable(new SingleInteger(1))
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -335,6 +365,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
+                .setTimeout(500)
+                .setInputVaraiable(new SingleInteger(1))
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -389,6 +422,9 @@ public class CppSolutionProgramFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
+                .setTimeout(500)
+                .setInputVaraiable(new SingleInteger(1))
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -434,10 +470,16 @@ public class CppSolutionProgramFactoryTest {
     }
 
     @Test
+    @Deprecated
+    @Disabled("Depracted functionality, there canot be arguemnt less solution program")
     void getActivationFunctionNOArumgument() {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setTimeout(500)
+                .setInputVaraiable(new SingleInteger())
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -456,7 +498,10 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(1))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -476,7 +521,10 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setTimeout(500)
                 .setInputVaraiable(new ArrayOfIntegers(new Integer[]{1, 8, 5, 4}))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -496,7 +544,10 @@ public class CppSolutionProgramFactoryTest {
         SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .setTimeout(500)
                 .setInputVaraiable(new DoubleArrayOfIntegers(new Integer[][]{{1, 8, 5, 4},{1, 8, 5, 4}}))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setSolutionCode("")
                 .build()
                 ;
 
@@ -519,6 +570,7 @@ public class CppSolutionProgramFactoryTest {
                 .setInputVaraiable(new SingleInteger(1))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode(list.get(0).getCode())
+                .setTimeout(500)
                 .build();
         String correctCode="int solution(int val)\n" +
                 "{\n" +
