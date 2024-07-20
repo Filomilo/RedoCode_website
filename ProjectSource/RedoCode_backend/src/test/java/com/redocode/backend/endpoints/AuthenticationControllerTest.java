@@ -1,7 +1,7 @@
 package com.redocode.backend.endpoints;
 
 import com.redocode.backend.Messages.Authentication.AuthenticationRequest;
-import com.redocode.backend.Messages.Authentication.AuthenticationResponse;
+import com.redocode.backend.Messages.Authentication.Authentication;
 import com.redocode.backend.Messages.Authentication.RegisterRequest;
 import com.redocode.backend.Secuirity.JwtService;
 import com.redocode.backend.database.User;
@@ -80,7 +80,7 @@ class AuthenticationControllerTest {
                 .type(User.USER_TYPE.AUTHENTICATED)
                 .build();
 
-        AuthenticationResponse response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, AuthenticationResponse.class);
+        Authentication response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, Authentication.class);
 
         assertEquals(user.getEmail(
         ), jwtService.extractUsername(response.getToken()));
@@ -122,7 +122,7 @@ class AuthenticationControllerTest {
                 .type(User.USER_TYPE.AUTHENTICATED)
                 .build();
 
-        AuthenticationResponse response= this.restTemplate.postForObject(getFullEndpoint(_loginEndPont), authenticationRequest, AuthenticationResponse.class);
+        Authentication response= this.restTemplate.postForObject(getFullEndpoint(_loginEndPont), authenticationRequest, Authentication.class);
 
         assertEquals(user.getEmail(), jwtService.extractUsername(response.getToken()));
 
@@ -136,7 +136,7 @@ class AuthenticationControllerTest {
                 .email("aaaa")
                 .password(_exisitingPass)
                 .build();
-        AuthenticationResponse response= this.restTemplate.postForObject (getFullEndpoint(_loginEndPont), authenticationRequest, AuthenticationResponse.class);
+        Authentication response= this.restTemplate.postForObject (getFullEndpoint(_loginEndPont), authenticationRequest, Authentication.class);
         assertNull(response);
 
     }
@@ -152,7 +152,7 @@ class AuthenticationControllerTest {
                 .password(_correctPass)
                 .nickname(_correctNick)
                 .build();
-        AuthenticationResponse response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, AuthenticationResponse.class);
+        Authentication response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, Authentication.class);
         assertNull(response);
     }
 
@@ -166,7 +166,7 @@ class AuthenticationControllerTest {
                 .password(_correctPass)
                 .nickname(nick)
                 .build();
-        AuthenticationResponse response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, AuthenticationResponse.class);
+        Authentication response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, Authentication.class);
         assertNull(response);
     }
 
@@ -181,7 +181,7 @@ class AuthenticationControllerTest {
                 .password(pass)
                 .nickname(_correctNick)
                 .build();
-        AuthenticationResponse response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, AuthenticationResponse.class);
+        Authentication response= this.restTemplate.postForObject(getFullEndpoint(_registerEndPont), registerRequest, Authentication.class);
         assertNull(response);
     }
 

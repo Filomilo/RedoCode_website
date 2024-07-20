@@ -1,11 +1,12 @@
-import { ActivationState, Client, IFrame } from '@stomp/stompjs'
+import { ActivationState, Client, IFrame, StompHeaders } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
 import { stompClient } from './StompApiConnectionold'
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
 export default class StompApiConnection {
   userName: String | null = null
 
-  private _stompClient
+  private _stompClient: Client
   private _onBeforeConnection: (message: string) => void
   private _onConnected: (message: string) => void
   private _onError: (message: string) => void
@@ -23,6 +24,9 @@ export default class StompApiConnection {
 
     this._stompClient = new Client({
       brokerURL: connectionUrl,
+      connectHeaders: {
+        token: 'your-token-here' 
+      },
       beforeConnect: () => {
         console.log(connectionUrl + ' beforeConnect')
         this._onBeforeConnection('connecting with server')
@@ -32,6 +36,14 @@ export default class StompApiConnection {
         this._subscriptions.forEach((sub: StompApiSubscription) => {
           sub.activateSubscription()
         })
+        const activeUserStore = useActiveUserStore();
+        if(activeUserStore.getToken().length>0)
+        {
+          
+          this.sendMessage("/public/app/tokenAuth",{
+            token: activeUserStore.getToken()
+          })
+        }
         this._onConnected('succesfully conntected')
       },
       onStompError: (frame: IFrame) => {
@@ -47,16 +59,24 @@ export default class StompApiConnection {
         this._onError('there was an websocket error wtih server connection')
       }
     })
+
+    this._stompClient.connectHeaders={
+      login: 'AAA'
+    }
+    
   }
 
-  setConnectionAuthentication(nick: string, password: string) {
-    this._stompClient.connectHeaders = {
-      loign: nick,
-      passcode: password
-    }
+
+
+  setConnectionAuthentication(token: string) {
+    console.log("setConnectionAuthentication")
+    this._stompClient.connectHeaders={
+      'token' : token
+    };
   }
 
   public activate() {
+    
     this._stompClient.activate()
   }
 
@@ -65,8 +85,9 @@ export default class StompApiConnection {
       this._subscriptions.forEach((sub: StompApiSubscription) => {
         sub.deactivateSubscription()
       })
-      this._stompClient.deactivate()
+     
     }
+    this._stompClient.deactivate()
   }
 
   public getIsActive() {
