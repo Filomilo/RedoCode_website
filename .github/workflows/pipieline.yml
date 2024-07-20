@@ -112,6 +112,7 @@ jobs:
         run: |
           docker info
           ls /etc/docker
+          cat /etc/docker/daemon.json
       - name: start containers
         run: |
           docker compose -f docker-compose-dev.yml up -d
