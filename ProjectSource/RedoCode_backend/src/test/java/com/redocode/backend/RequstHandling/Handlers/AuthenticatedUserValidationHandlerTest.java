@@ -59,23 +59,22 @@ class AuthenticatedUserValidationHandlerTest  {
 
         AuthenticatedUserValidationHandler authenticatedUserValidationHandler = new AuthenticatedUserValidationHandler();
 
-//        Currenlty tunred off
-//           assertNotNull(authenticatedUserValidationHandler.handle(
-//                   RequestBase.builder().user(userAdmin).build()
-//           ));
-//        assertNotNull(authenticatedUserValidationHandler.handle(
-//                   RequestBase.builder().user(userPremium).build()
-//           ));
-//        assertNotNull(authenticatedUserValidationHandler.handle(
-//                   RequestBase.builder().user(userAuthenicated).build()
-//           ));
-//        assertNull(authenticatedUserValidationHandler.handle(
-//                   RequestBase.builder().user(userUnathetniacted).build()
-//           ));
-//
-//        assertNull(authenticatedUserValidationHandler.handle(
-//                    RequestBase.builder().user(userUnsaved).build()
-//            ));
+           assertNotNull(authenticatedUserValidationHandler.handle(
+                   RequestBase.builder().user(userAdmin).build()
+           ));
+        assertNotNull(authenticatedUserValidationHandler.handle(
+                   RequestBase.builder().user(userPremium).build()
+           ));
+        assertNotNull(authenticatedUserValidationHandler.handle(
+                   RequestBase.builder().user(userAuthenicated).build()
+           ));
+        assertNull(authenticatedUserValidationHandler.handle(
+                   RequestBase.builder().user(userUnathetniacted).build()
+           ));
+
+        assertNull(authenticatedUserValidationHandler.handle(
+                    RequestBase.builder().user(userUnsaved).build()
+            ));
 
 
 
