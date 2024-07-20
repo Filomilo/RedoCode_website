@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
-@Disabled("Not wokrking in gihtub pipleine eveneroment")
+//@Disabled("Not wokrking in gihtub pipleine eveneroment")
 class CodeRunnerAccessValidationHandlerTest {
 
         @Autowired
