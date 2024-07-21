@@ -58,7 +58,7 @@ if (import.meta.env.MODE === 'development') {
 }
 const pinia = createPinia()
 
-app.use(pinia)
+
 
 app
   .use(router)
@@ -98,4 +98,5 @@ app.use(VueMonacoEditorPlugin, {
   }
 })
 app.use(VueCookies, { expires: '30d' })
+app.use(pinia)
 app.mount('#app')
