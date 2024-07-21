@@ -45,6 +45,7 @@ public class ObjectMapper {
                 .user(user)
                 .Code(rawCodeToRunMessage.getCode())
                 .codeRunnerType(codeRunnerType)
+                .timeForExecution(1000L)
                 .build();
 
     }
