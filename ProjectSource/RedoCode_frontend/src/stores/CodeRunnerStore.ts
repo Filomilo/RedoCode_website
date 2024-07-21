@@ -156,6 +156,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         : reuslts[index].consoleOutput.errorOutput
       val.output = isNullOrUndef(reuslts[index].variables) ? null : reuslts[index].variables
       val.isSolved = val.expectedOutput === reuslts[index].variables
+      isAwaitingCompilation.value=false
     })
   }
 

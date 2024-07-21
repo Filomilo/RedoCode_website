@@ -15,14 +15,14 @@
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
       <Button
-        @click="props.onRunCode"
+        @click="codeRunButton"
         v-if="!codeRunnerStore.isAwaitingCompilation"
         id="coderunner-run-button"
       >
         <IconPlay style="z-index: 9" />
       </Button>
-      <div v-else>
-        <LoadingIndicator style="max-height: 2rem; max-width: 2rem" id="coderunner-wait-button" />
+      <div v-else >
+        <LoadingIndicator style="height: 2rem; width: 2rem;" id="coderunner-wait-button" />
       </div>
     </div>
   </div>
@@ -62,6 +62,12 @@ const codeRunnerStore = useCodeRunnerStore()
 const ApiConnectionStore = useApiConnectionStore()
 
 const codeRef = ref(props.starting)
+
+
+const codeRunButton=()=>{
+  props.onRunCode();
+  codeRunnerStore.isAwaitingCompilation=true;
+}
 
 const onCodeChnaage = (text: string) => {
   props.codeUpdateMethod(text)
