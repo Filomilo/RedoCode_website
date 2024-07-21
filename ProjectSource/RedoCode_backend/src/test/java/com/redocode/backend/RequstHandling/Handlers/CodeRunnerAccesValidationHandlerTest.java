@@ -69,6 +69,7 @@ User authorizedUser;
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .ram(512)
                 .user(user)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
@@ -91,6 +92,7 @@ User authorizedUser;
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(user)
                 .ram(128)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
@@ -115,6 +117,7 @@ User authorizedUser;
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .ram(128)
                 .user(user)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
@@ -146,6 +149,7 @@ User authorizedUser;
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .ram(128)
                 .user(user)
+                .timeForExecution(50L)
                 .build();
 
         RawCodeRunRequest secondRawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
@@ -153,6 +157,7 @@ User authorizedUser;
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .ram(512)
                 .user(user)
+                .timeForExecution(100L)
                 .build();
 
         assertDoesNotThrow(()->{
@@ -194,6 +199,7 @@ User authorizedUser;
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(user)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
@@ -206,6 +212,7 @@ User authorizedUser;
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(user)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequestJS);
@@ -233,6 +240,7 @@ User authorizedUser;
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(authorizedUser)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
@@ -251,6 +259,7 @@ User authorizedUser;
         RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .timeForExecution(500L)
                 .user(authorizedUser)
                 .build();
         assertDoesNotThrow(()->{
@@ -271,6 +280,7 @@ User authorizedUser;
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(authorizedUser)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
@@ -283,6 +293,7 @@ User authorizedUser;
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(authorizedUser)
+                .timeForExecution(500L)
                 .build();
         assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequestJS);

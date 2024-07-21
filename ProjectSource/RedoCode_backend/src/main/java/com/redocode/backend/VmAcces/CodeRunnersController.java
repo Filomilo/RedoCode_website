@@ -257,6 +257,7 @@ public class CodeRunnersController {
                     .setOutputBase((exercise.getOutputType()))
                     .setInputVaraiable(input)
                     .setSolutionCode(exerciseIdToRunMessage.getCode())
+                    .setTimeout(exercise.getMaxExecutionTimeMS())
                     .build();
             log.info("Ruunign test: "+ program);
             ProgramResult result=codeRunner.runProgram(program);

@@ -1,6 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
+import lombok.SneakyThrows;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -21,10 +22,11 @@ public class CppCodeRunner extends CodeRunner{
     }
 
     @Override
+    @SneakyThrows
     String compileProgram(String sourceFile) {
         String fileName= UUID.randomUUID().toString();
         String compileCommand="g++ -Wall "+sourceFile+" -o "+fileName;
-        ConsoleOutput consoleOutput= executeBash(compileCommand);
+        ConsoleOutput consoleOutput= executeBash(compileCommand,1000);
         logger.info("Compilation result: "+consoleOutput.toString());
         if(consoleOutput.getErrorOutput().length()>0)
             throw new RuntimeException(consoleOutput.getErrorOutput());

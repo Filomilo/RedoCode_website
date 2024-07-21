@@ -40,7 +40,7 @@ public abstract class CodeRunner extends ContainerController {
             String fileName = createProgramCodeFile(program);
             String programName = compileProgram(fileName);
             String runCommand = getRunCommand(programName);
-            ConsoleOutput consoleOutput = executeBash(runCommand);
+            ConsoleOutput consoleOutput = executeBash(runCommand,program.getExecutionTimeLimitMs());
             Variables programOutput = null;
             if (program.getOutuputType() != null) {
                 String resultFileContent=getFileContnt(((SolutionProgram)program).getOutputFileName());

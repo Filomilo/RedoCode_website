@@ -15,6 +15,7 @@ import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.VmStatus;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import com.github.dockerjava.transport.DockerHttpClient.Request;
 import com.github.dockerjava.transport.DockerHttpClient.Response;
@@ -26,6 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 @Slf4j
 public class VmConnectorDocker extends VmConnector {
 
@@ -247,7 +251,7 @@ return        contiaenrList.stream()
 
 
     @Override
-    public ConsoleOutput executeCommandInVm(String id, String... command) {
+    public ConsoleOutput executeCommandInVm(String id,long timeout, String... command) throws TimeoutException {
         log.info("Executing command :\n"+ Arrays.toString(Arrays.stream(command).toList().toArray())+"\n in conaitner: "+ id);
 
         String execResponseId = execCreate(id, command);
@@ -255,15 +259,19 @@ return        contiaenrList.stream()
         OutputStream errorStream = new ByteArrayOutputStream();
 // TODO: 11/02/2024 check for possiblity of getting exit code
         int exitCode=0;
+        Boolean res;
         try {
-            ExecStartResultCallback ret=  this.dockerClient.execStartCmd(execResponseId).withDetach(false)
-                    .exec(new ExecStartResultCallback(outputStream, errorStream)).awaitCompletion();
+            res=  this.dockerClient.execStartCmd(execResponseId).withDetach(false)
+                    .exec(new ExecStartResultCallback(outputStream, errorStream)).awaitCompletion(timeout, TimeUnit.MILLISECONDS);
 
         } catch (Exception e) {
             throw new RuntimeException("couldnt execute command in vm: "+ e.getMessage());
 
         }
-
+        if(!res)
+        {
+            throw new TimeoutException("Execution timeout, exceeded: "+ timeout+"ms");
+        }
         log.info("returned: "+outputStream.toString().trim());
         //return outputStream.toString().trim();
         return new ConsoleOutput(exitCode,outputStream.toString().trim(),errorStream.toString().trim());

@@ -31,6 +31,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .setTimeout(500)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -56,6 +57,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
+                .setTimeout(500)
                 .setSolutionCode("float solution(float val){" +
                         "return val;" +
                         "}")
@@ -77,6 +79,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleString(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .setTimeout(500)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -100,6 +103,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
+                .setTimeout(500)
                 .setSolutionCode("function solution(val){" +
                         "return val;" +
                         "}")
@@ -123,6 +127,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
+                .setTimeout(500)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -147,6 +152,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
+                .setTimeout(500)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +
@@ -174,6 +180,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
+                .setTimeout(500)
                 .setSolutionCode(
                         "function solution(val){" +
                         "return val;" +
@@ -203,6 +210,7 @@ public class JsSolutionProgramTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
+                .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_INTEGERS)
                 .setSolutionCode(
                         "function solution(val){" +
@@ -237,6 +245,7 @@ public class JsSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS)
+                .setTimeout(500)
                 .setSolutionCode(
                         "function solution(val){" +
                                 "return val;" +

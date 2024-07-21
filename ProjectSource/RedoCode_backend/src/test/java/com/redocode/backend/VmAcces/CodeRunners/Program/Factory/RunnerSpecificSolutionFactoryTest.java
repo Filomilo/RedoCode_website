@@ -4,6 +4,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.ArrayOfFloats;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.DoubleArrayOfStrings;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleInteger;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,9 @@ class RunnerSpecificSolutionFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable((Variables) inuputVar)
+                 .setTimeout(500)
+                 .setSolutionCode("")
+                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                  .build();
 
          assertEquals(inuputVar,solutionProgram.getInput());
@@ -31,6 +35,9 @@ class RunnerSpecificSolutionFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
+                .setTimeout(500)
+                .setSolutionCode("")
+                .setInputVaraiable(new SingleInteger(1))
                 .build();
         assertEquals(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS,solutionProgram.getOutputType());
     }
@@ -44,6 +51,9 @@ class RunnerSpecificSolutionFactoryTest {
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setSolutionCode(code)
+                .setTimeout(500)
+                .setInputVaraiable(new SingleInteger(1))
+                .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .build();
         assertEquals(code,solutionProgram.getSolutionCode());
     }

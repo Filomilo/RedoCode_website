@@ -2,10 +2,10 @@ package com.redocode.backend.VmAcces.CodeRunners.Program;
 
 import com.redocode.backend.Tools.StringFormatter;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@SuperBuilder
 public abstract class SolutionProgram  extends Program{
 
 
@@ -26,6 +27,7 @@ public abstract class SolutionProgram  extends Program{
     private Variables.VARIABLES_TYPES outputType;
     private String SolutionCode;
     private List<String> imports=new ArrayList<>();
+    private long executionTimeLimitMs=-1;
 
     abstract String getImports();
     abstract void validate();
@@ -56,5 +58,12 @@ public abstract class SolutionProgram  extends Program{
     @Override
     public Variables.VARIABLES_TYPES getOutuputType() {
         return outputType;
+    }
+    @Override
+    @SneakyThrows
+    public long getExecutionTimeLimitMs() {
+        if(executionTimeLimitMs<0)
+            throw new Exception("Wrong execution time limit");
+        return executionTimeLimitMs;
     }
 }

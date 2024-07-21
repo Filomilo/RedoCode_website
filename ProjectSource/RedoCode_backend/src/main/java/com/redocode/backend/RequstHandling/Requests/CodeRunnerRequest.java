@@ -24,6 +24,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
     protected int ram;
 
 
+
     public CodeRunnerRequest(User user, CODE_RUNNER_TYPE codeRunnerType) {
         super(user);
 

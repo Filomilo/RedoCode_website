@@ -4,6 +4,7 @@ import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 
 @AllArgsConstructor
 public class RunnerSpecificSolutionFactory {
@@ -30,8 +31,19 @@ public class RunnerSpecificSolutionFactory {
         return this;
     }
 
-
+    public RunnerSpecificSolutionFactory setTimeout(long timeoout)
+    {
+        solutionProgram.setExecutionTimeLimitMs(timeoout);
+        return this;
+    }
+@SneakyThrows
     public SolutionProgram build() {
+        if(solutionProgram.getInput()==null
+        || solutionProgram.getOutputType()==null
+                || solutionProgram.getSolutionCode()==null
+                || solutionProgram.getExecutionTimeLimitMs()<0
+        )
+            throw new Exception("All paramters should be set");
         return solutionProgram;
     }
 }

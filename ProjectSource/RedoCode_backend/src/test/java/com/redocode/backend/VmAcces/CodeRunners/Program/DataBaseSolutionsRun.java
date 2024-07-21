@@ -61,6 +61,7 @@ public class DataBaseSolutionsRun {
                                             .setSolutionCode(sol.getCode())
                                             .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER) // todo: mapping type from data base to Varaible type
                                             .setInputVaraiable(test.getParsedInput(Variables.VARIABLES_TYPES.SINGLE_INTEGER)) // todo: Dynamic mapping for type
+                                            .setTimeout(ex.getMaxExecutionTimeMS())
                                             .build();
                             ProgramResult result = codeRunner.runProgram(program);
                             assertEquals(test.getParsedOutput(Variables.VARIABLES_TYPES.SINGLE_INTEGER), result.getVariables());
