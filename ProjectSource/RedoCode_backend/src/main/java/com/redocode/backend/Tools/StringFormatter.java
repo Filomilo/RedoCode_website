@@ -22,6 +22,10 @@ public class StringFormatter {
                     input = input.substring(0, i) + "\\\"" + input.substring(i + 1);
                     i += 1;
                     break;
+                case '\t':
+                    input = input.substring(0, i) + "\\t" + input.substring(i + 1);
+                    i += 1;
+                    break;
 
             }
         }

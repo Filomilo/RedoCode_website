@@ -22,6 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Slf4j
 public class CodeTestHandler extends  BaseRequestHandler {
 
@@ -44,6 +47,8 @@ public class CodeTestHandler extends  BaseRequestHandler {
             log.info("solution program being tested: "+ solutionProgram.getInput());
             ProgramResult result=codeRunner.runProgram(solutionProgram);
             Variables recived=result.getVariables();
+            if(test.getExpectedOutput()=="")
+                return;
             Variables expcected=test.getParsedOutput(request.getOutputType());
             log.info("program resuult: "+recived);
             log.info("expected program resuult: "+ expcected);
@@ -99,7 +104,12 @@ public class CodeTestHandler extends  BaseRequestHandler {
         CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(request.getUser());
         log.info("Staring handler: CodeTestHandler+"+"for " + codeTestRequest );
         int i=0;
-        for (ExerciseTests exTest: codeTestRequest.getTestsToRun()
+        List<ExerciseTests> tests = new LinkedList<ExerciseTests>();
+        tests.addAll(codeTestRequest.getTestsToRun());
+    if(codeTestRequest.getAutotestsToRun()!=null) {
+        tests.addAll(codeTestRequest.getAutotestsToRun());
+    }
+        for (ExerciseTests exTest:tests
         ) {
             try {
                 checkTest(exTest,codeTestRequest,codeRunner);
