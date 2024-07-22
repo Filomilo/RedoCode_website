@@ -2,12 +2,13 @@ package com.redocode.backend.VmAcces.CodeRunners.Variables;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+import org.apache.catalina.mapper.Mapper;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
 
 import java.util.Arrays;
@@ -15,7 +16,9 @@ import java.util.Objects;
 
 @Data
 @SuperBuilder
-@ToString
+
+@JsonSerialize
+@JsonDeserialize
 public abstract class Variables<T> {
 
     @JsonIgnore
@@ -30,9 +33,9 @@ public abstract class Variables<T> {
         ARRAY_OF_INTEGERS(3),
         ARRAY_STRINGS(4),
         ARRAY_OF_FLOATS(5),
-        DOUBLE_ARRAY_OF_INTEGERS(5),
-        DOUBLE_ARRAY_OF_FLOATS(6),
-        DOUBLE_ARRAY_OF_STRINGS(7);
+        DOUBLE_ARRAY_OF_INTEGERS(6),
+        DOUBLE_ARRAY_OF_STRINGS(7),
+       DOUBLE_ARRAY_OF_FLOATS(8);
 
        private final int  id;
        VARIABLES_TYPES(int i) {
@@ -42,6 +45,32 @@ public abstract class Variables<T> {
        {
            return id;
        }
+
+       public boolean isInteger()
+       {
+           return id%3==0;
+       }
+       public boolean isString()
+       {
+           return id%3==1;
+       }
+       public boolean isFloat()
+       {
+           return id%3==2;
+       }
+       public boolean isSingle()
+        {
+            return id/3==0;
+        }
+       public  boolean isArray()
+       {
+           return id/3==1;
+       }
+       public boolean isDoubleArray()
+       {
+           return id/3==2;
+       }
+
    }
 
 
@@ -91,38 +120,44 @@ public abstract class Variables<T> {
 
         return Objects.equals(this.getValue(), variables.getValue());
     }
-
     @Override
+    @SneakyThrows
     public String toString() {
-        if(getValue() instanceof Object[][]) {
-            Object[][] arr= (Object[][]) getValue();
-           StringBuilder builder=new StringBuilder("{\n");
-            for (int i = 0; i < arr.length; i++) {
-                for (int j = 0; j < arr[i].length ; j++) {
-                    builder.append(arr[i][j]);
-                    if(j<arr[i].length-1)
-                    builder.append(", ");
-                }
-                builder.append("\n");
-            }
-            builder.append("}");
-            return builder.toString();
-        }
-
-        if(getValue() instanceof Object[]) {
-            Object[] arr= (Object[]) getValue();
-            StringBuilder builder=new StringBuilder("{\n");
-            for (int i = 0; i < arr.length; i++) {
-                    builder.append(arr[i]);
-                    if(i<arr.length-1)
-                        builder.append(", ");
-                }
-                builder.append("\n");
-            builder.append("}");
-            return builder.toString();
-        }
-
-
-        return getValue().toString();
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(this);
     }
+
+//    @Override
+//    public String toString() {
+//        if(getValue() instanceof Object[][]) {
+//            Object[][] arr= (Object[][]) getValue();
+//           StringBuilder builder=new StringBuilder("{\n");
+//            for (int i = 0; i < arr.length; i++) {
+//                for (int j = 0; j < arr[i].length ; j++) {
+//                    builder.append(arr[i][j]);
+//                    if(j<arr[i].length-1)
+//                    builder.append(", ");
+//                }
+//                builder.append("\n");
+//            }
+//            builder.append("}");
+//            return builder.toString();
+//        }
+//
+//        if(getValue() instanceof Object[]) {
+//            Object[] arr= (Object[]) getValue();
+//            StringBuilder builder=new StringBuilder("{\n");
+//            for (int i = 0; i < arr.length; i++) {
+//                    builder.append(arr[i]);
+//                    if(i<arr.length-1)
+//                        builder.append(", ");
+//                }
+//                builder.append("\n");
+//            builder.append("}");
+//            return builder.toString();
+//        }
+//
+//
+//        return getValue().toString();
+//    }
 }
