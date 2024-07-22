@@ -33,9 +33,9 @@ class AutoTestGeneratorHandlerTest {
                 .xArrayRange(new Range(3,8))
                 .build();
 
-        int currAmtOFTests = codeTestRequest.getTestsToRun().size();
+        int currAmtOFTests =codeTestRequest.getAutotestsToRun()==null?0: codeTestRequest.getAutotestsToRun().size();
         codeTestRequest= (CodeTestRequest) handler.handle(codeTestRequest);
-        int amtOfTestsAfter = codeTestRequest.getTestsToRun().size();
+        int amtOfTestsAfter = codeTestRequest.getAutotestsToRun().size();
         assertEquals(currAmtOFTests+amtOfAutoTests, amtOfTestsAfter);
     }
 }
