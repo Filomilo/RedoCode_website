@@ -29,8 +29,10 @@ public class ExerciseTests {
     private Excersize excersize;
 
     @JsonProperty("input")
+    @Column(length = 10000)
     String input;
     @JsonProperty("expectedOutput")
+    @Column(length = 10000)
     String  expectedOutput;
 
 

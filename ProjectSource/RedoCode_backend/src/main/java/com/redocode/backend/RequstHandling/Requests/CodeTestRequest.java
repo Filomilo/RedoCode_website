@@ -22,6 +22,7 @@ import java.util.Map;
 public class CodeTestRequest extends RawCodeRunRequest {
 
     List<ExerciseTests> testsToRun;
+    List<ExerciseTests> AutotestsToRun;
     Variables.VARIABLES_TYPES inputType;
     Variables.VARIABLES_TYPES outputType;
 

@@ -10,6 +10,7 @@ import com.redocode.backend.database.ExerciseTests;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
@@ -41,7 +42,9 @@ public class AutoTestGeneratorHandler extends  MessageRequestHandler{
                                                                                         .setNumbers(codeTestRequest.isNumberInput())
                                                                                                 .setSpaceCharacters(codeTestRequest.isSpecialCharacterInput())
                                                                                                         .build();
-        codeTestRequest.getTestsToRun().addAll(Arrays.asList(tests));
+
+
+        codeTestRequest.setAutotestsToRun(Arrays.stream(tests).toList());
 
 
         this.nodeUpdate(request,"generated", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
