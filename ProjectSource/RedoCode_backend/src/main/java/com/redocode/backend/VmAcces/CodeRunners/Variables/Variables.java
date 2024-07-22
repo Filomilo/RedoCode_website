@@ -120,44 +120,44 @@ public abstract class Variables<T> {
 
         return Objects.equals(this.getValue(), variables.getValue());
     }
-    @Override
-    @SneakyThrows
-    public String toString() {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(this);
-    }
-
 //    @Override
+//    @SneakyThrows
 //    public String toString() {
-//        if(getValue() instanceof Object[][]) {
-//            Object[][] arr= (Object[][]) getValue();
-//           StringBuilder builder=new StringBuilder("{\n");
-//            for (int i = 0; i < arr.length; i++) {
-//                for (int j = 0; j < arr[i].length ; j++) {
-//                    builder.append(arr[i][j]);
-//                    if(j<arr[i].length-1)
-//                    builder.append(", ");
-//                }
-//                builder.append("\n");
-//            }
-//            builder.append("}");
-//            return builder.toString();
-//        }
-//
-//        if(getValue() instanceof Object[]) {
-//            Object[] arr= (Object[]) getValue();
-//            StringBuilder builder=new StringBuilder("{\n");
-//            for (int i = 0; i < arr.length; i++) {
-//                    builder.append(arr[i]);
-//                    if(i<arr.length-1)
-//                        builder.append(", ");
-//                }
-//                builder.append("\n");
-//            builder.append("}");
-//            return builder.toString();
-//        }
-//
-//
-//        return getValue().toString();
+//        ObjectMapper mapper = new ObjectMapper();
+//        return mapper.writeValueAsString(this);
 //    }
+
+    @Override
+    public String toString() {
+        if(getValue() instanceof Object[][]) {
+            Object[][] arr= (Object[][]) getValue();
+           StringBuilder builder=new StringBuilder("{\n");
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length ; j++) {
+                    builder.append(arr[i][j]);
+                    if(j<arr[i].length-1)
+                    builder.append(", ");
+                }
+                builder.append("\n");
+            }
+            builder.append("}");
+            return builder.toString();
+        }
+
+        if(getValue() instanceof Object[]) {
+            Object[] arr= (Object[]) getValue();
+            StringBuilder builder=new StringBuilder("{\n");
+            for (int i = 0; i < arr.length; i++) {
+                    builder.append(arr[i]);
+                    if(i<arr.length-1)
+                        builder.append(", ");
+                }
+                builder.append("\n");
+            builder.append("}");
+            return builder.toString();
+        }
+
+
+        return getValue().toString();
+    }
 }

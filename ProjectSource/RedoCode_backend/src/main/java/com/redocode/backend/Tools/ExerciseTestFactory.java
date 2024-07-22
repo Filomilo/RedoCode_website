@@ -4,6 +4,7 @@ import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import com.redocode.backend.database.ExerciseTests;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Random;
 
 public class ExerciseTestFactory {
 
-
+    private final static com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
     private final Random rnd = new Random();
 
   private Variables.VARIABLES_TYPES inputType;
@@ -299,7 +300,7 @@ public class ExerciseTestFactory {
         }
         return null;
    }
-
+    @SneakyThrows
     public ExerciseTests[] build()
     {
         if(inputType.isString())
@@ -313,7 +314,7 @@ public class ExerciseTestFactory {
                     ExerciseTests
                             .builder()
                             .expectedOutput("")
-                            .input(generateFinalVar().toString())
+                            .input(mapper.writeValueAsString(generateFinalVar()))
                             .build()
             );
         }
