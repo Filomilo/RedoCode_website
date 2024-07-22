@@ -11,11 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-@Setter
+
 public class ExerciseTestFactory {
 
 
-    private Random rnd = new Random();
+    private final Random rnd = new Random();
 
   private Variables.VARIABLES_TYPES inputType;
 
@@ -300,7 +300,7 @@ public class ExerciseTestFactory {
         return null;
    }
 
-    ExerciseTests[] build()
+    public ExerciseTests[] build()
     {
         if(inputType.isString())
         {

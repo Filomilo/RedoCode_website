@@ -2,9 +2,15 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
+import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
+import com.redocode.backend.Tools.ExerciseTestFactory;
+import com.redocode.backend.database.ExerciseTests;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 public class AutoTestGeneratorHandler extends  MessageRequestHandler{
@@ -20,9 +26,24 @@ public class AutoTestGeneratorHandler extends  MessageRequestHandler{
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
         this.nodeUpdate(request,"generation", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
-        ExerciseCreationRequest exerciseCreationRequest= (ExerciseCreationRequest) request;
-                log.error("AutoTestGeneratorHandler NOT IMPLEMENTED");
-        //todo: auto test genrator
+        CodeTestRequest codeTestRequest= (CodeTestRequest) request;
+
+        ExerciseTests[] tests= new ExerciseTestFactory()
+                .setAmount(codeTestRequest.getAmountOfAutoTests())
+                        .setInputType(codeTestRequest.getInputType())
+                                .setLengthRange(codeTestRequest.getLengthRange())
+                                        .setXArrayRange(codeTestRequest.getXArrayRange())
+                                                .setYArrayRange(codeTestRequest.getYArrayRange())
+                                                        .setCapitalLetters(codeTestRequest.isUpperCaseInput())
+                                                                .setSpaceCharacters(codeTestRequest.isSpaceInput())
+                                                                        .setUnderscoreLetters(codeTestRequest.isLowerCaseInput())
+                                                                                .setBreakCharacters(codeTestRequest.isBreakCharacterInput())
+                                                                                        .setNumbers(codeTestRequest.isNumberInput())
+                                                                                                .setSpaceCharacters(codeTestRequest.isSpecialCharacterInput())
+                                                                                                        .build();
+        codeTestRequest.getTestsToRun().addAll(Arrays.asList(tests));
+
+
         this.nodeUpdate(request,"generated", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
                 return request;

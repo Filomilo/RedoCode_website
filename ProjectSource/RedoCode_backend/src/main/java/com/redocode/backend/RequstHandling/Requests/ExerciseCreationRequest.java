@@ -24,20 +24,6 @@ public class ExerciseCreationRequest extends CodeTestRequest{
     @NotNull
     String Description;
 
-    int amountOfAutoTests;
-    Range lengthRange;
-    Range xArrayRange;
-    Range yArrayRange;
-    boolean upperCaseInput;
-    boolean lowerCaseInput;
-    boolean numberInput;
-    boolean specialCharacterInput;
-    boolean breakCharacterInput;
-    boolean spaceInput;
-    @NotNull
-    Long timeForTaskMin;
-    @NotNull
-    Map<CODE_RUNNER_TYPE,String> solutionCodes;
 
 
 
