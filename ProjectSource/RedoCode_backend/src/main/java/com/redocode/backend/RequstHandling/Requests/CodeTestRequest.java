@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class CodeTestRequest extends RawCodeRunRequest {
 
     List<ExerciseTests> testsToRun;
-    List<ExerciseTests> AutotestsToRun;
+    List<ExerciseTests> AutotestsToRun=new ArrayList<>();
     Variables.VARIABLES_TYPES inputType;
     Variables.VARIABLES_TYPES outputType;
 

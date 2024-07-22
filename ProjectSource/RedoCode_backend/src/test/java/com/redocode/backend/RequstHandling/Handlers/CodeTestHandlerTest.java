@@ -20,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,6 +85,8 @@ class CodeTestHandlerTest {
                 .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .outputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .timeForExecution(500l)
+                .timeForTaskMin(10L)
+                .solutionCodes(new HashMap<>())
                 .build();
 
 

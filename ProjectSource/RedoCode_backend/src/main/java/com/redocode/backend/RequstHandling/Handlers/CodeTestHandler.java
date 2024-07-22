@@ -106,7 +106,9 @@ public class CodeTestHandler extends  BaseRequestHandler {
         int i=0;
         List<ExerciseTests> tests = new LinkedList<ExerciseTests>();
         tests.addAll(codeTestRequest.getTestsToRun());
+    if(codeTestRequest.getAutotestsToRun()!=null) {
         tests.addAll(codeTestRequest.getAutotestsToRun());
+    }
         for (ExerciseTests exTest:tests
         ) {
             try {
