@@ -7,22 +7,21 @@
 
 .setupPanel {
   // background-color: rgb(255, 187, 0);
-  height: 100%;
+  height: fit-content;
   overflow-y: scroll;
   overflow-x: scroll;
 }
 
 .manualTestPanel {
   // background-color: blue;
-  height: 100%;
+  height: fit-content;
   overflow: scroll;
 }
 
 .autoTestPanel {
   // background-color: green;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  height: fit-content;
+
 }
 
 .languageDropDown {

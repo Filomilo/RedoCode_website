@@ -25,7 +25,7 @@ export default class StompApiConnection {
     this._stompClient = new Client({
       brokerURL: connectionUrl,
       connectHeaders: {
-        token: 'your-token-here' 
+        token: 'your-token-here'
       },
       beforeConnect: () => {
         console.log(connectionUrl + ' beforeConnect')
@@ -36,11 +36,9 @@ export default class StompApiConnection {
         this._subscriptions.forEach((sub: StompApiSubscription) => {
           sub.activateSubscription()
         })
-        const activeUserStore = useActiveUserStore();
-        if(activeUserStore.getToken().length>0)
-        {
-          
-          this.sendMessage("/public/app/tokenAuth",{
+        const activeUserStore = useActiveUserStore()
+        if (activeUserStore.getToken().length > 0) {
+          this.sendMessage('/public/app/tokenAuth', {
             token: activeUserStore.getToken()
           })
         }
@@ -60,23 +58,19 @@ export default class StompApiConnection {
       }
     })
 
-    this._stompClient.connectHeaders={
+    this._stompClient.connectHeaders = {
       login: 'AAA'
     }
-    
   }
 
-
-
   setConnectionAuthentication(token: string) {
-    console.log("setConnectionAuthentication")
-    this._stompClient.connectHeaders={
-      'token' : token
-    };
+    console.log('setConnectionAuthentication')
+    this._stompClient.connectHeaders = {
+      token: token
+    }
   }
 
   public activate() {
-    
     this._stompClient.activate()
   }
 
@@ -85,7 +79,6 @@ export default class StompApiConnection {
       this._subscriptions.forEach((sub: StompApiSubscription) => {
         sub.deactivateSubscription()
       })
-     
     }
     this._stompClient.deactivate()
   }

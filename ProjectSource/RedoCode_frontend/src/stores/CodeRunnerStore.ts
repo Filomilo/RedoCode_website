@@ -110,13 +110,13 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     }
   }
 
-  const manualTestBuffer: any = reactive([])
+  const manualTestBuffer: any = ref([])
 
   const addblankTestToBuffer = (inputType: VarType, outputype: VarType) => {
     const input = getVarAcording(inputType)
     const output = getVarAcording(outputype)
     console.log('ading ' + inputType + ' _ ' + ' :: ' + JSON.stringify(input))
-    manualTestBuffer.push({
+    manualTestBuffer.value.push({
       input: input,
       expectedOutput: output,
       output: null,
@@ -124,7 +124,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       consoleOutput: '',
       isSolved: null
     })
-    console.log('added: ' + manualTestBuffer)
+    console.log('added: ' + JSON.stringify(manualTestBuffer))
   }
   const clearTestsFromBuffer = () => {
     manualTestBuffer.value = []
@@ -156,8 +156,29 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         : reuslts[index].consoleOutput.errorOutput
       val.output = isNullOrUndef(reuslts[index].variables) ? null : reuslts[index].variables
       val.isSolved = val.expectedOutput === reuslts[index].variables
-      isAwaitingCompilation.value=false
+      isAwaitingCompilation.value = false
     })
+  }
+
+  const getExerciseSetupError=():String=>{
+    if(exerciseCreatorController.languages.length==0)
+    {
+      return "at least one programing lnaguage should be available"
+    }
+    if(exerciseCreatorController.timeForTaskMin<15)
+    {
+      return "at least 15 minute should be for task"
+    }
+    if(manualTestBuffer.value.length<3)
+    {
+      return "tthere should be at least 3 manuall tests"
+    }
+    if(manualTestBuffer.value.length>10)
+    {
+      return "amount of manula test cannot exceed 10"
+    }
+
+    return "";
   }
 
   return {
@@ -181,6 +202,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     addblankTestToBuffer,
     removeTestFromBuffer,
     transferTestFromBufferTpCreator,
-    updateTestData
+    updateTestData,
+    getExerciseSetupError
   }
 })

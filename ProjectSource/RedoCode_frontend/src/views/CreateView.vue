@@ -9,11 +9,11 @@
           <ExerciseInfoSetup class="childHeight" />
         </TabPanel>
       </div>
-      <TabPanel header="Setup">
+      <TabPanel header="Setup" :disabled="!infoValidation">
         <ExerciseSetupPanel />
       </TabPanel>
 
-      <TabPanel header="Solution">
+      <TabPanel header="Solution" :disabled="!testValidation">
         <!-- <CodeRunnerPanel /> -->
         <CodeRunnerPanel
           :languageChoices="exerciseLnageus"
@@ -113,6 +113,18 @@ const onOpenCodeRunner = () => {
   console.log('coderunner opened')
   codeRunnerStore.transferTestFromBufferTpCreator()
 }
+
+const infoValidation = computed(() => {
+  return (
+    codeRunnerStore.exerciseCreatorController.title.length > 5 &&
+    codeRunnerStore.exerciseCreatorController.title.length < 100 &&
+    codeRunnerStore.exerciseCreatorController.description.length > 20 &&
+    codeRunnerStore.exerciseCreatorController.description.length < 5000
+  )
+})
+const testValidation = computed(() => {
+  return codeRunnerStore.getExerciseSetupError()==="";
+})
 </script>
 
 <style>

@@ -42,7 +42,7 @@ export default class ExerciseCreatorController
 
   resetParams(this: any): void {
     ;(this.ram = 128),
-      (this.timeForTaskMin = 10),
+      (this.timeForTaskMin = 15),
       (this.timeForExecutionMs = 100),
       (this.inputType = 'SINGLE_INTEGER' as VarType),
       (this.outputType = 'SINGLE_INTEGER' as VarType),
@@ -57,8 +57,8 @@ export default class ExerciseCreatorController
       (this.languages = []),
       (this.xArrayRange = { min: 1, max: 10 }),
       (this.yArrayRange = { min: 1, max: 10 }),
-      (this.title = ''),
-      (this.description = ''),
+      (this.title = 'TESTESTTEST'),
+      (this.description = 'DEscritptionDescription'),
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
     this.solutionCodes = {}

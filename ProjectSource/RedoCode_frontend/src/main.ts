@@ -58,8 +58,6 @@ if (import.meta.env.MODE === 'development') {
 }
 const pinia = createPinia()
 
-
-
 app
   .use(router)
 
