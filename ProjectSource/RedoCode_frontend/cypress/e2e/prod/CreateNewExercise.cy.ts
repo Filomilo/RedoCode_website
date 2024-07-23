@@ -51,7 +51,7 @@ describe('template spec', () => {
     cy.get("#login-email").clear().type(email)
     cy.get("#login-password").clear().type(password)
     cy.get('#login').click();
-     cy.wait(1000);
+     cy.wait(5000);
     cy.get('#switch-exercises').click();
     // cy.wait(10000);
     cy.url().should('eq', Cypress.config().baseUrl+'/Exercises');
