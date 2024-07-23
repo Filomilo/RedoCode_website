@@ -58,7 +58,6 @@ const storedValue = computed(() => {
 })
 
 const validateType = (variable: any, type: VarType) => {
-  
   console.log('isTypeString(type) ' + isTypeString(type))
   console.log('!isNumber(variable) ' + !isNumber(variable))
   // if (isTypeString(type) && (!isNumber(variable) )) {
@@ -73,17 +72,14 @@ const validateType = (variable: any, type: VarType) => {
 }
 
 const validateData = (jsonString: string, type: VarType): boolean => {
-  let value=null;
-try{
+  let value:any = null
+  try {
+    value = props.Type == 'SINGLE_STRING' ? jsonString : JSON.parse(jsonString)
 
-  value = props.Type == 'SINGLE_STRING' ? jsonString : JSON.parse(jsonString)
-
-  console.log('valie: ' + value)
-
-}
-catch(erorr){
-  value=null
-}
+    console.log('valie: ' + value)
+  } catch (erorr) {
+    value = null
+  }
   if (value === null) {
     throw new Error(
       'couldnt parse value to ' +
