@@ -21,8 +21,8 @@
       >
         <IconPlay style="z-index: 9" />
       </Button>
-      <div v-else >
-        <LoadingIndicator style="height: 2rem; width: 2rem;" id="coderunner-wait-button" />
+      <div v-else>
+        <LoadingIndicator style="height: 2rem; width: 2rem" id="coderunner-wait-button" />
       </div>
     </div>
   </div>
@@ -63,10 +63,9 @@ const ApiConnectionStore = useApiConnectionStore()
 
 const codeRef = ref(props.starting)
 
-
-const codeRunButton=()=>{
-  props.onRunCode();
-  codeRunnerStore.isAwaitingCompilation=true;
+const codeRunButton = () => {
+  props.onRunCode()
+  codeRunnerStore.isAwaitingCompilation = true
 }
 
 const onCodeChnaage = (text: string) => {

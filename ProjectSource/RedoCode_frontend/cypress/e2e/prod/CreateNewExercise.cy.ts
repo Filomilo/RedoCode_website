@@ -51,17 +51,19 @@ describe('template spec', () => {
     cy.get("#login-email").clear().type(email)
     cy.get("#login-password").clear().type(password)
     cy.get('#login').click();
-    cy.wait(5000);
+     cy.wait(5000);
     cy.get('#switch-exercises').click();
-    cy.wait(10000);
+    // cy.wait(10000);
+    cy.url().should('eq', Cypress.config().baseUrl+'/Exercises');
     cy.get("#Create-button").click({ force: true });
-    cy.wait(5000);
-    cy.get("#Exercise-title-input").click().type(title);
-    cy.wait(5000);
-    cy.get("#Exercise-description-input").click().type(description);
-    cy.wait(5000);
+    // cy.wait(5000);
+    cy.url().should('eq', Cypress.config().baseUrl+'/Create');
+    cy.get("#Exercise-title-input").click().clear().type(title);
+    // cy.wait(5000);
+    cy.get("#Exercise-description-input").click().clear().type(description);
+    // cy.wait(5000);
     cy.get("#pv_id_5_1_header_action").click()
-    cy.wait(5000);
+    // cy.wait(5000);
     cy.get("#language-selection").click();
     cy.get("#language-selection_0").click();
     cy.get("#language-selection_1").click();
@@ -73,14 +75,15 @@ describe('template spec', () => {
     cy.get("#radio-output-string").click();
 
     for (let index = 0; index < inputsAndOutputs.length; index++) {
-      cy.get("#test-input-"+index+"-input").click().type(inputsAndOutputs[index].input);
-      cy.get("#test-input-"+index+"-output").click().type(inputsAndOutputs[index].output);
-      if(index+1< inputsAndOutputs.length)
       cy.get("#add-exercise-button").click();
+      cy.get("#test-input-"+index+"-input").click().clear().type(inputsAndOutputs[index].input);
+      cy.get("#test-input-"+index+"-output").click().clear().type(inputsAndOutputs[index].output);
+
     }
-    cy.get("#amount-of-auto-test-input").click().type("6")
-    cy.get("#string-range-low-input").click().clear().type("1")
-    cy.get("#string-range-up-input").click().clear().type("20")
+    
+    cy.get("#amount-of-auto-test-input > input").click().type("6")
+    cy.get("#string-range-low-input > input").click().clear().type("1")
+    cy.get("#string-range-up-input > input").click().clear().type("20")
     cy.get("#number-checkbox").click();
     cy.get("#special-char-checkbox").click();
     cy.get("#character-breaks-checkbox").click();

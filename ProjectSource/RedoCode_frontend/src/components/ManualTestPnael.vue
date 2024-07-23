@@ -43,12 +43,18 @@ import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import VarType from '@/types/VarType'
 import { onMounted, PropType } from 'vue'
 import ExerciseTest from '@/types/ExcericseTest'
+import { useToastStore } from '@/stores/ToastStore'
 const codeRunnerStore = useCodeRunnerStore()
+const toastStore = useToastStore()
 const props = defineProps({
   inputType: { type: String as PropType<VarType>, required: true, default: 'SINGLE_INT' },
   outputype: { type: String as PropType<VarType>, required: true, default: 'SINGLE_INT' }
 })
 const onAddButton = () => {
+  if (codeRunnerStore.manualTestBuffer.length >= 10) {
+    toastStore.showErrorMessage('only 10 manual test are allowed')
+    return
+  }
   codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype)
 }
 const onRemoveButton = (index: number) => {
