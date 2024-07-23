@@ -10,7 +10,9 @@
     value: <br />
     {{ JSON.stringify(storedValue) }}
     <br />
-    <div style="color: red"></div>
+    <div style="color: red; font-size: 0.9rem">
+      {{ validationofData }}
+    </div>
   </div>
 </template>
 
@@ -56,6 +58,7 @@ const storedValue = computed(() => {
 })
 
 const validateType = (variable: any, type: VarType) => {
+  
   console.log('isTypeString(type) ' + isTypeString(type))
   console.log('!isNumber(variable) ' + !isNumber(variable))
   // if (isTypeString(type) && (!isNumber(variable) )) {
@@ -70,9 +73,17 @@ const validateType = (variable: any, type: VarType) => {
 }
 
 const validateData = (jsonString: string, type: VarType): boolean => {
-  const value = props.Type == 'SINGLE_STRING' ? jsonString : JSON.parse(jsonString)
+  let value=null;
+try{
+
+  value = props.Type == 'SINGLE_STRING' ? jsonString : JSON.parse(jsonString)
 
   console.log('valie: ' + value)
+
+}
+catch(erorr){
+  value=null
+}
   if (value === null) {
     throw new Error(
       'couldnt parse value to ' +

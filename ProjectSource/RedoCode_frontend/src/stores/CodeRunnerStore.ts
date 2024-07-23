@@ -160,25 +160,21 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     })
   }
 
-  const getExerciseSetupError=():String=>{
-    if(exerciseCreatorController.languages.length==0)
-    {
-      return "at least one programing lnaguage should be available"
+  const getExerciseSetupError = (): String => {
+    if (exerciseCreatorController.languages.length == 0) {
+      return 'at least one programing lnaguage should be available'
     }
-    if(exerciseCreatorController.timeForTaskMin<15)
-    {
-      return "at least 15 minute should be for task"
+    if (exerciseCreatorController.timeForTaskMin < 15) {
+      return 'at least 15 minute should be for task'
     }
-    if(manualTestBuffer.value.length<3)
-    {
-      return "tthere should be at least 3 manuall tests"
+    if (manualTestBuffer.value.length < 3) {
+      return 'tthere should be at least 3 manuall tests'
     }
-    if(manualTestBuffer.value.length>10)
-    {
-      return "amount of manula test cannot exceed 10"
+    if (manualTestBuffer.value.length > 10) {
+      return 'amount of manula test cannot exceed 10'
     }
 
-    return "";
+    return ''
   }
 
   return {

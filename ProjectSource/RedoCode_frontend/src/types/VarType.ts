@@ -40,7 +40,7 @@ export const isTypeDoubleArray = (type: VarType): boolean => {
 }
 
 export const setTypeToSingle = (type: VarType): VarType => {
-  console.log("set type to single")
+  console.log('set type to single')
   switch (type) {
     case 'SINGLE_INTEGER':
     case 'ARRAY_OF_INTEGERS':

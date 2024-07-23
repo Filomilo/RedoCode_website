@@ -123,7 +123,7 @@ const infoValidation = computed(() => {
   )
 })
 const testValidation = computed(() => {
-  return codeRunnerStore.getExerciseSetupError()==="";
+  return codeRunnerStore.getExerciseSetupError() === ''
 })
 </script>
 
