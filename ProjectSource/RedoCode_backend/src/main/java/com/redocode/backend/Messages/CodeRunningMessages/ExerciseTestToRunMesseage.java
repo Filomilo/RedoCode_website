@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.redocode.backend.Messages.UtilContainers.InputSize;
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import com.redocode.backend.database.ExerciseTests;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+
+import java.util.List;
 
 @Value
 @SuperBuilder
@@ -17,7 +21,7 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class ExerciseTestToRunMesseage {
-private String code;
+    private String code;
     private String inputType;
     private String inputSize;
     private String outputType;
@@ -34,4 +38,6 @@ private String code;
     private boolean specialCharacterInput;
     private boolean breakCharacterInupt;
     private boolean spaceInupt;
+    @NotNull
+    List<ExerciseTests> manualTests;
 }

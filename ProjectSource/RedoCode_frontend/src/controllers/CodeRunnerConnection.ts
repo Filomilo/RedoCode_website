@@ -121,32 +121,29 @@ export default class CodeRunnerConnection {
   }
 
   public readonly runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
-    // console.log('runExercsieTestsCode: ' + JSON.stringify(exerciseCreatorController))
-    // const message: ExerciseTestToRunMesseage = {
-    //   code: exerciseCreatorController.solutions[this.codeRunnerActive.codeRunnerType],
-    //   manualTests:
-    //     exerciseCreatorController.manualTestsSolutions[this.codeRunnerActive.codeRunnerType],
-    //   inputType: exerciseCreatorController.inputType,
-    //   inputSize: exerciseCreatorController.inputSize,
-    //   outputType: exerciseCreatorController.outputType,
-    //   outputSize: exerciseCreatorController.outputSize,
-    //   amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-    //   autoTestminValue: exerciseCreatorController.autoTestminValue,
-    //   autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
-    //   lengthRange: exerciseCreatorController.lengthRange,
-    //   xArrayRange: exerciseCreatorController.xArrayRange,
-    //   yArrayRange: exerciseCreatorController.yArrayRange,
-    //   upperCaseInput: exerciseCreatorController.upperCaseInput,
-    //   lowerCaseInput: exerciseCreatorController.lowerCaseInput,
-    //   numberInput: exerciseCreatorController.numberInput,
-    //   specialCharacterInput: exerciseCreatorController.specialCharacterInput,
-    //   breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
-    //   spaceInupt: exerciseCreatorController.spaceInupt
+    console.log('runExercsieTestsCode: ' + JSON.stringify(exerciseCreatorController))
+    const message: ExerciseTestToRunMesseage = {
+      code: exerciseCreatorController.solutionCodes[this.codeRunnerState.value.codeRunnerType],
+      manualTests:
+        exerciseCreatorController.manualTestsSolutions[this.codeRunnerState.value.codeRunnerType],
+      inputType: exerciseCreatorController.inputType,
+      outputType: exerciseCreatorController.outputType,
+      amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
+      autoTestminValue: exerciseCreatorController.autoTestminValue,
+      autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
+      lengthRange: exerciseCreatorController.lengthRange,
+      xArrayRange: exerciseCreatorController.xArrayRange,
+      yArrayRange: exerciseCreatorController.yArrayRange,
+      upperCaseInput: exerciseCreatorController.upperCaseInput,
+      lowerCaseInput: exerciseCreatorController.lowerCaseInput,
+      numberInput: exerciseCreatorController.numberInput,
+      specialCharacterInput: exerciseCreatorController.specialCharacterInput,
+      breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
+      spaceInupt: exerciseCreatorController.spaceInupt
   }
 
-  public readonly submitExerciseCreationRequest = (request: ExercsieCreatorValidationMesage) => {
-    console.log('submitExerciseCreationRequest: ' + JSON.stringify(request))
-    this._stompApiConnection.sendMessage('/public/app/CodeRun/ExerciseCreationValidation', request)
+    console.log('submitExerciseCreationRequest: ' + JSON.stringify(message))
+    this._stompApiConnection.sendMessage('/public/app/CodeRun/ExerciseCodeTests', message)
   }
 
   private readonly _vmStatusSubscription: StompApiSubscription

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseCreatorValidationMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.ExerciseTestToRunMesseage;
 import com.redocode.backend.Messages.CodeRunningMessages.ProgramResultsMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.RawCodeToRunMessage;
 import com.redocode.backend.Messages.CoderunnerStateMessage;
@@ -20,6 +21,7 @@ import com.redocode.backend.VmAcces.CodeRunnerState;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.DoubleArrayOfFloats;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.WebSocketTestBase;
 import com.redocode.backend.database.*;
@@ -46,8 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunExerciseCreatorValidationCode;
-import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunRawCode;
+import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
@@ -657,6 +658,50 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     }
 
 
+    @Test
+    void ruNExerciseTestCodesJsReturnTheSame() throws InterruptedException, JsonProcessingException {
+
+        int amountOfAutoTests=4;
+        List<ExerciseTests> tests=
+                new ArrayList<>();
+        tests.add(ExerciseTests.builder()
+                        .input("[[1,2,3],[4,5,6],[7.8.9]]")
+                        .expectedOutput("[[1,2,3],[4,5,6],[7.8.9]]")
+                .build());
+
+
+
+
+        subscribe("/user/public/topic/codeRunnerResults");
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
+                .CodeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .build();
+
+        ExerciseTestToRunMesseage exerciseTestToRunMesseage=ExerciseTestToRunMesseage.builder()
+                .code("function (let x)\n{\nreturn x;\n}")
+                .amountOfAutoTests(amountOfAutoTests)
+                .lengthRange(new Range(-3,6))
+                .inputType(String.valueOf(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS))
+                .manualTests(tests)
+                                .build();
+
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        log.info("messge send to /public/app/codeRunnerRequest with content: "+ mapper.writeValueAsString(codeRunnerRequestMessage));
+
+        TimeUnit.SECONDS.sleep(2);
+        session.send( "/public/app"+INrunExercsieTestsCode, mapper.writeValueAsBytes(exerciseTestToRunMesseage));
+        log.info("messge send to " + "/public/app"+INrunRawCode+" with content: "+ mapper.writeValueAsString(exerciseTestToRunMesseage));
+
+//        Thread.sleep(3000);
+
+        ProgramResultsMessage results=(ProgramResultsMessage)objectMapper.readValue(
+                blockingQueue.poll(60,SECONDS)
+                , ProgramResultsMessage.class);;
+
+                assertEquals(tests.size()+amountOfAutoTests,results.getResults().size());
+
+
+    }
 
 
 
