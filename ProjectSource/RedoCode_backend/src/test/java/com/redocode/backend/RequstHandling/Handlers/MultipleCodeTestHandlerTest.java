@@ -32,26 +32,26 @@ class MultipleCodeTestHandlerTest {
         tests= new ExerciseTests[]{
                 ExerciseTests.builder()
                         .id(1l)
-                        .expectedOutput("{\"value\": [1,2]}")
-                        .input("{\"value\": [1,2]}")
+                        .expectedOutput("[1,2]")
+                        .input("[1,2]")
                         .excersize(null)
                         .build(),
                 ExerciseTests.builder()
                         .id(2l)
-                        .expectedOutput("{\"value\": [1,2,3]}")
-                        .input("{\"value\": [1,2,3]}")
+                        .expectedOutput("[1,2,3]")
+                        .input("[1,2,3]")
                         .excersize(null)
                         .build(),
                 ExerciseTests.builder()
                         .id(3l)
-                        .expectedOutput("{\"value\": [1,2,3,4]}")
-                        .input("{\"value\": [1,2,3,4]}")
+                        .expectedOutput("[1,2,3,4]")
+                        .input("[1,2,3,4]")
                         .excersize(null)
                         .build(),
                 ExerciseTests.builder()
                         .id(4l)
-                        .expectedOutput("{\"value\": [1,2,3,4,5]}")
-                        .input("{\"value\": [1,2,3,4,5]}")
+                        .expectedOutput("[1,2,3,4,5]}")
+                        .input("[1,2,3,4,5]")
                         .excersize(null)
                         .build(),
         };

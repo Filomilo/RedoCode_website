@@ -26,7 +26,7 @@ public class CppCodeRunner extends CodeRunner{
     String compileProgram(String sourceFile) {
         String fileName= UUID.randomUUID().toString();
         String compileCommand="g++ -Wall "+sourceFile+" -o "+fileName;
-        ConsoleOutput consoleOutput= executeBash(compileCommand,1000);
+        ConsoleOutput consoleOutput= executeBash(compileCommand,5000);
         logger.info("Compilation result: "+consoleOutput.toString());
         if(consoleOutput.getErrorOutput().length()>0)
             throw new RuntimeException(consoleOutput.getErrorOutput());

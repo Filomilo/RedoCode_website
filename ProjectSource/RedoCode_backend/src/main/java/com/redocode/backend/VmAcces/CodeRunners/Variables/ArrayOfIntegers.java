@@ -9,7 +9,6 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.util.Arrays;
 import java.util.Objects;
-@Builder
 @JsonSerialize
 @JsonDeserialize
 public class ArrayOfIntegers  extends Variables<Integer[]> {

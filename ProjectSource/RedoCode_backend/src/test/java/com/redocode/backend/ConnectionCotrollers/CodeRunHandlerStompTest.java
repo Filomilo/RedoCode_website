@@ -31,6 +31,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +49,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -59,6 +65,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@RunWith(SpringRunner.class)
 //@DirtiesContext
 ////@Disabled("Islotating specific test for debugging")
+//@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 class CodeRunHandlerStompTest extends WebSocketTestBase {
 
 
@@ -658,19 +665,29 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     }
 
 
-    @Test
-    void ruNExerciseTestCodesJsReturnTheSame() throws InterruptedException, JsonProcessingException {
+    @ParameterizedTest
+    @MethodSource ("com.redocode.backend.DataProviders.ValuesProvider#multipleDoubleArrayFloatProvider")
+    void ruNExerciseTestCodesJsReturnTheSame(List<Float[][]> inputs) throws InterruptedException, JsonProcessingException {
+
+
+
+
 
         int amountOfAutoTests=4;
         List<ExerciseTests> tests=
                 new ArrayList<>();
-        tests.add(ExerciseTests.builder()
-                        .input("[[1,2,3],[4,5,6],[7.8.9]]")
-                        .expectedOutput("[[1,2,3],[4,5,6],[7.8.9]]")
-                .build());
+        for(int i=0;i<inputs.size();i++){
+            tests.add(
+                    ExerciseTests.builder()
+                            .input(objectMapper.writeValueAsString(inputs.get(i)))
+                            .expectedOutput(objectMapper.writeValueAsString(inputs.get(i)))
+                            .build()
+            );
+        }
 
 
 
+        TimeUnit.SECONDS.sleep(2);
 
         subscribe("/user/public/topic/codeRunnerResults");
         CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
@@ -678,28 +695,51 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                 .build();
 
         ExerciseTestToRunMesseage exerciseTestToRunMesseage=ExerciseTestToRunMesseage.builder()
-                .code("function (let x)\n{\nreturn x;\n}")
+                .code("function solution(x)\n{\nreturn x;\n}")
                 .amountOfAutoTests(amountOfAutoTests)
                 .lengthRange(new Range(-3,6))
                 .inputType(String.valueOf(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS))
                 .manualTests(tests)
+                .executionTime(200L)
+                .outputType(String.valueOf(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS))
+                .xArrayRange(new Range(1,7))
+                .yArrayRange(new Range(4,8))
+                .lengthRange(new Range(-444,555))
                                 .build();
 
         session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
         log.info("messge send to /public/app/codeRunnerRequest with content: "+ mapper.writeValueAsString(codeRunnerRequestMessage));
 
+        String reqMes=mapper.writeValueAsString(codeRunnerRequestMessage);
+        log.info("reqMes: \n"+ reqMes);
         TimeUnit.SECONDS.sleep(2);
+
+        String mess=mapper.writeValueAsString(exerciseTestToRunMesseage);
+        log.info("Messeage: \n"+ mess);
+
         session.send( "/public/app"+INrunExercsieTestsCode, mapper.writeValueAsBytes(exerciseTestToRunMesseage));
         log.info("messge send to " + "/public/app"+INrunRawCode+" with content: "+ mapper.writeValueAsString(exerciseTestToRunMesseage));
 
 //        Thread.sleep(3000);
 
-        ProgramResultsMessage results=(ProgramResultsMessage)objectMapper.readValue(
-                blockingQueue.poll(60,SECONDS)
-                , ProgramResultsMessage.class);;
+        String results=
+                blockingQueue.poll(60,SECONDS);
 
-                assertEquals(tests.size()+amountOfAutoTests,results.getResults().size());
+        assertNotNull(results);
+        assertTrue(results!="");
 
+      log.info(
+              "results: \n\n\n"+results+"\n\n\n\n\n"
+      );
+
+        int i = 0;
+        Pattern p = Pattern.compile("consoleOutput");
+        Matcher m = p.matcher( results );
+        while (m.find()) {
+            i++;
+        }
+        log.info("input size: "+ inputs.size());
+        assertEquals(amountOfAutoTests+inputs.size(), i);
 
     }
 
@@ -710,5 +750,6 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     @AfterEach
     protected void tearDown() {
         super.tearDown();
+        redoCodeController.reset();
     }
 }

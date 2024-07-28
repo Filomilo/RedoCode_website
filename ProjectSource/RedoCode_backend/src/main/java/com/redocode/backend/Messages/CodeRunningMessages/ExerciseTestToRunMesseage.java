@@ -1,6 +1,7 @@
 package com.redocode.backend.Messages.CodeRunningMessages;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.redocode.backend.Messages.UtilContainers.InputSize;
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
@@ -12,25 +13,28 @@ import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Value
 @SuperBuilder
 @Jacksonized
-@JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class ExerciseTestToRunMesseage {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ExerciseTestToRunMesseage implements Serializable {
     private String code;
     private String inputType;
     private String inputSize;
     private String outputType;
     private String outputSize;
-    private float amountOfAutoTests;
+    private int amountOfAutoTests;
     private float autoTestminValue;
     private float autoTestMaxValue;
     private Range lengthRange;
+    @JsonProperty("sArrayRange")
     private Range xArrayRange;
+    @JsonProperty("yArrayRange")
     private Range yArrayRange;
     private boolean upperCaseInput;
     private boolean lowerCaseInput;
@@ -38,6 +42,7 @@ public class ExerciseTestToRunMesseage {
     private boolean specialCharacterInput;
     private boolean breakCharacterInupt;
     private boolean spaceInupt;
+    private Long executionTime;
     @NotNull
     List<ExerciseTests> manualTests;
 }

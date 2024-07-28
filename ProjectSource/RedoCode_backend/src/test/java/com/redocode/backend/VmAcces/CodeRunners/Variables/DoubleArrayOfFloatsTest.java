@@ -1,5 +1,9 @@
 package com.redocode.backend.VmAcces.CodeRunners.Variables;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -40,4 +44,56 @@ class DoubleArrayOfFloatsTest {
         var.setValue(arr2);
         assertEquals(arr2,var.getValue());
     }
+
+
+    @Test
+    @SneakyThrows
+    void deserialzationTest()
+    {
+        Float[][] arr = {
+                {1.1f, 2.2f, 3.3f},
+                {4.4f, 5.5f, 6.6f},
+                {7.7f, 8.8f, 9.9f}
+        };
+
+        DoubleArrayOfFloats doubleArrayOfFloats=new DoubleArrayOfFloats(arr);
+        com.fasterxml.jackson.databind.ObjectMapper objectMapper= new com.fasterxml.jackson.databind.ObjectMapper();
+        byte[] bytes= objectMapper.writeValueAsBytes(doubleArrayOfFloats);
+        DoubleArrayOfFloats res= objectMapper.readValue(bytes,DoubleArrayOfFloats.class);
+        assertEquals(doubleArrayOfFloats,res);
+    }
+    @Test
+    @SneakyThrows
+    void StringifyTest()
+    {
+        Float[][] arr = {
+                {1.1f, 2.2f, 3.3f},
+                {4.4f, 5.5f, 6.6f},
+                {7.7f, 8.8f, 9.9f}
+        };
+
+        DoubleArrayOfFloats doubleArrayOfFloats=new DoubleArrayOfFloats(arr);
+        com.fasterxml.jackson.databind.ObjectMapper objectMapper= new com.fasterxml.jackson.databind.ObjectMapper();
+       String string= objectMapper.writeValueAsString(doubleArrayOfFloats);
+        DoubleArrayOfFloats res= objectMapper.readValue(string,DoubleArrayOfFloats.class);
+        assertEquals(doubleArrayOfFloats,res);
+    }
+
+    @Test
+    void desreialzeBadCase()
+    {
+        assertDoesNotThrow(()->{
+            String jsonString = "[[0.9199068,0.01825869],[0.03128314,0.94099855],[0.87412083,0.5238099],[0.109776914,0.92646646],[0.9567671,0.06990063],[0.39623928,0.6877511]]";
+
+            ObjectMapper mapper = new ObjectMapper();
+            DoubleArrayOfFloats result = (DoubleArrayOfFloats) RedoCodeObjectMapper.parseVaraibles(jsonString, Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS);
+            System.out.println(result);
+        });
+
+
+    }
+
+
+
+
 }

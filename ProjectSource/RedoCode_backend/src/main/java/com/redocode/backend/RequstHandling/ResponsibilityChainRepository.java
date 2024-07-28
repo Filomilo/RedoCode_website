@@ -51,6 +51,15 @@ public class ResponsibilityChainRepository {
                     .next(new CodeTestHandler())
                     .build();
 
+    public  static final BaseRequestHandler runExercisesTests=
+            new ResposibilityChainBuilder()
+                    .setSteps()
+                    .next(new CodeRunnerAccesValidationHandler())
+                    .next(new AutoTestGeneratorHandler())
+                    .next(new CodeTestHandler())
+                    .next(new SendProgramResultsHandler())
+                    .build();
+
 
     public  static final BaseRequestHandler runRawCode=
             new ResposibilityChainBuilder()
