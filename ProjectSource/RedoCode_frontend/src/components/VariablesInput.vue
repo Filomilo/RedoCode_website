@@ -72,7 +72,7 @@ const validateType = (variable: any, type: VarType) => {
 }
 
 const validateData = (jsonString: string, type: VarType): boolean => {
-  let value:any = null
+  let value: any = null
   try {
     value = props.Type == 'SINGLE_STRING' ? jsonString : JSON.parse(jsonString)
 

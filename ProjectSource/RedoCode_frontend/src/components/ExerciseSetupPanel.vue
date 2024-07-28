@@ -8,7 +8,7 @@
         <MultiSelect
           v-model="codeRunnerStore.exerciseCreatorController.languages"
           display="chip"
-          :options="langOptions"
+          :options="languageChoices"
           optionLabel="label"
           placeholder="programming languages"
           class="languageDropDown"
@@ -690,14 +690,12 @@ import VarType, {
   setTypeToFloat,
   isTypeSingle
 } from '@/types/VarType'
+
+import {languageChoices} from '@/config/Data'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
 const codeRunnerStore = useCodeRunnerStore()
 
-const langOptions = [
-  { label: 'Cpp', value: 'cpp' }, //TODO: replace with html call
-  { label: 'Js', value: 'js' }
-]
 
 const onXChange = (val: any) => {
   if (val[0] > val[1]) {

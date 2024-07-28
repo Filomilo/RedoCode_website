@@ -3,7 +3,7 @@
   <main class="PlayGroundBase">
     <CodeRunnerPanel
       :exerciseInfo="{ title: 'no impelnted', description: 'no implented' }"
-      :languageChoices="['cpp', 'js']"
+      :languageChoices="languageChoices.map(element=>element.value)"
       :codeContainerUpdate="codeConatienrUpdate"
       starting=""
       :onRunCode="onRunCode"

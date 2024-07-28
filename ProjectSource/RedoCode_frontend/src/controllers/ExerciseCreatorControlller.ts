@@ -6,19 +6,18 @@ import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 import ITestParameters from '@/types/ITestParameters'
 import RangeType from '@/types/RangeType'
 import VarType from '@/types/VarType'
+import type CodeRunnerType from '@/types/CodeRunnerTypes'
 import { reactive } from 'vue'
-interface StringIndexed {
-  [index: string]: string
-}
-interface TestsIndexed {
-  [index: string]: ExerciseTest[]
-}
+
+interface StringIndexed extends Record<CodeRunnerType, string> {}
+interface TestsIndexed extends Record<CodeRunnerType, ExerciseTest[]> {}
+
 export default class ExerciseCreatorController
   implements IExerciseDescriptionI, ExercsieCreatorValidationMesage
 {
   title!: string
   description!: string
-  languages!: string[] | { label: string; value: string }[]
+  languages!: CodeRunnerType[] 
   ram!: number
   timeForTaskMin!: number
   timeForExecutionMs!: number
@@ -39,6 +38,7 @@ export default class ExerciseCreatorController
   solutionCodes!: StringIndexed
   manualTestsSolutions!: TestsIndexed
   autoTests!: TestsIndexed
+  executionTime!: number
 
   resetParams(this: any): void {
     ;(this.ram = 128),
@@ -61,12 +61,12 @@ export default class ExerciseCreatorController
       (this.description = 'DEscritptionDescription'),
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
-    this.solutionCodes = {}
-    this.manualTestsSolutions = {}
+    ;(this.solutionCodes = {}), (this.manualTestsSolutions = {}), (this.executionTime = 100)
   }
 
   constructor() {
     this.resetParams()
   }
+
   manualTests!: ExerciseTest[] //compatiblity reasons do not use
 }

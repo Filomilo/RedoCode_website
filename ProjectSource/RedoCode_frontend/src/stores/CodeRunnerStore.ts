@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref, reactive } from 'vue'
+import { ref, computed, type Ref, reactive, ComputedRef } from 'vue'
 import type CodeRunnerState from '../types/CodeRunnerState'
 import ExerciseData from '@/types/ExerciseData'
 import axios from 'axios'
@@ -20,6 +20,8 @@ import VarType, {
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { isNullOrUndef } from 'chart.js/helpers'
+import CodeRunnerType from '@/types/CodeRunnerTypes'
+import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
@@ -30,7 +32,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     description: '',
     id: null,
     outputType: '',
-    availbleCodeRunners: languageChoices.map((element) => element),
+    availbleCodeRunners: languageChoices.map((element) => element.value),
     tests: [
       {
         input: '',
@@ -60,34 +62,32 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     exerciseLoading.value = state
   }
 
-  const dropDownLangaugeMap: any = {
-    CPP_RUNNER: 'cpp',
-    JS_RUNNER: 'js',
-    UNIDENTIFIED: ''
-  }
+
   const startingMethod = computed(() => {
-    if (exerciseData.value.id != null) {
-      console.log('--------------------------id is not null')
-      if (apiConnectionStore.codeRunnerConnection.codeRunnerState.state === 'ACTIVE') {
-        console.log(
-          '--------------------------codeRunnerType is not UNIDENTIFIED: ' +
-            JSON.stringify(apiConnectionStore.codeRunnerConnection.codeRunnerState)
-        )
-        return exerciseData.value.startingFunction[
-          dropDownLangaugeMap[
-            apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-          ]
-        ]
-      }
-    }
-    console.log('retune non')
+    // if (exerciseData.value.id != null) {
+    //   console.log('--------------------------id is not null')
+    //   if (apiConnectionStore.codeRunnerConnection.codeRunnerState.state === 'ACTIVE') {
+    //     console.log(
+    //       '--------------------------codeRunnerType is not UNIDENTIFIED: ' +
+    //         JSON.stringify(apiConnectionStore.codeRunnerConnection.codeRunnerState)
+    //     )
+    //     return exerciseData.value.startingFunction[
+    //       dropDownLangaugeMap[
+    //         apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    //       ]
+    //     ]
+    //   }
+    // }
+    // console.log('retune non')
     return ''
   })
 
   const areResultCorrect = computed(() => {
     return exerciseData.value.tests.every((x) => x.expectedOutput === x.output)
   })
-  const isAwaitingCompilation: Ref<boolean> = ref(false)
+  const isAwaitingCompilation: ComputedRef<boolean> = computed(()=>{
+    return apiConnectionStore.codeRunnerConnection.codeRunnerState.state===CodeRunnerStatus.RUNNING
+  })
 
   const exerciseCreatorController = reactive(new ExerciseCreatorController())
   const removeTestFromBuffer = (index: number) => {
@@ -134,12 +134,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     console.log('test transfer2: ' + JSON.stringify(manualTestBuffer))
 
     exerciseCreatorController.languages.forEach(
-      (element: { label: string; value: string } | string) => {
-        const labelVal: { label: string; value: string } = element as unknown as {
-          label: string
-          value: string
-        }
-        exerciseCreatorController.manualTestsSolutions[labelVal.value] = manualTestBuffer
+      (element: CodeRunnerType) => {
+        exerciseCreatorController.manualTestsSolutions[element] = manualTestBuffer
       }
     )
     console.log('tests after: ' + JSON.stringify(exerciseCreatorController.manualTestsSolutions))
@@ -156,7 +152,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         : reuslts[index].consoleOutput.errorOutput
       val.output = isNullOrUndef(reuslts[index].variables) ? null : reuslts[index].variables
       val.isSolved = val.expectedOutput === reuslts[index].variables
-      isAwaitingCompilation.value = false
     })
   }
 

@@ -2,13 +2,16 @@
   <main class="PlayGroundBase">
     <CodeRunnerPanel
       :exerciseInfo="{ title: 'no impelnted', description: 'no implented' }"
-      :languageChoices="['cpp', 'js']"
-      :codeContainerUpdate="codeConatienrUpdate"
+      :languageChoices="languageChoices.map(element=>element.value)"
       starting="not impented"
       :onRunCode="onRunCode"
       :onSubmit="onSubmit"
       :ManualTests="[]"
       :AutoTests="[]"
+      :codeContainerUpdate="codeConatienrUpdate"
+      
+
+ 
     />
   </main>
 </template>
@@ -22,6 +25,7 @@ import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import ExerciseData from '@/types/ExerciseData'
 import { useToastStore } from '@/stores/ToastStore'
+import { languageChoices } from '@/config/Data'
 const codeRunnerStore = useCodeRunnerStore()
 const toastStore = useToastStore()
 

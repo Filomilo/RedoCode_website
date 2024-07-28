@@ -16,7 +16,7 @@
       <TabPanel header="Solution" :disabled="!testValidation">
         <!-- <CodeRunnerPanel /> -->
         <CodeRunnerPanel
-          :languageChoices="exerciseLnageus"
+          :languageChoices="exerciseLnageus.map(element=> element.value)"
           :exerciseInfo="codeRunnerStore.exerciseCreatorController"
           :codeContianer="codeRunnerStore.exerciseCreatorController.solutionCodes"
           :starting="
@@ -29,9 +29,7 @@
           :onSubmit="onSubmit"
           :ManualTests="
             codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
-              EditorLanguagesMap[
                 ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-              ]
             ]
           "
           :AutoTests="[]"
@@ -51,12 +49,13 @@ import ExerciseSetupPanel from '@/components/ExerciseSetupPanel.vue'
 import ExerciseDescriptionPanel from '@/components/ExerciseDescriptionPanel.vue'
 import ExerciseInfoSetup from '@/components/ExerciseInfoSetup.vue'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-import { EditorLanguagesMap, languageChoices } from '@/config/Data'
+import { EditorLanguagesMap ,languageChoices} from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import { text } from 'stream/consumers'
 import { TabViewClickEvent } from 'primevue/tabview'
 import ExerciseTest from '@/types/ExcericseTest'
 import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
+
 const ToastStore = useToastStore()
 const codeRunnerStore = useCodeRunnerStore()
 const ApiConnectionStore = useApiConnectionStore()
@@ -97,7 +96,7 @@ const onSubmit = () => {
 }
 
 const exerciseLnageus = computed(() => {
-  return (codeRunnerStore.exerciseCreatorController.languages as any).map((x: any) => x.value)
+  return languageChoices
 })
 
 onMounted(() => {
@@ -154,14 +153,7 @@ const testValidation = computed(() => {
   min-width: 100%;
   flex-grow: 100%;
 }
-.p-tabview * {
-}
 
-.p-tabview-panels * {
-}
-
-.p-tabview-nav * {
-}
 
 .p-tabview-panels {
   background-color: rgb(31, 31, 31);
@@ -169,14 +161,12 @@ const testValidation = computed(() => {
   overflow: hidden;
   max-height: 100%;
 }
-.p-tabview .p-component {
-}
+
 .p-tabview {
   background-color: cadetblue;
   height: 93%;
 }
-.info {
-}
+
 .childHeight * {
   height: 100%;
 }

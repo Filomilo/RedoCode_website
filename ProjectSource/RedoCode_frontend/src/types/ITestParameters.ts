@@ -1,9 +1,9 @@
-import ExcericseTest from './ExcericseTest'
+import ExerciseTest from './ExcericseTest'
 import RangeType from './RangeType'
 import VarType from './VarType'
 
 export default interface ITestParameters {
-  manualTests: ExcericseTest[]
+  manualTests: ExerciseTest[]
   inputType: VarType
   outputType: VarType
   amountOfAutoTests: number
@@ -18,4 +18,5 @@ export default interface ITestParameters {
   specialCharacterInput: boolean | null
   breakCharacterInupt: boolean | null
   spaceInupt: boolean | null
+  executionTime: number
 }

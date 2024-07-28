@@ -11,6 +11,8 @@
       class="dropDown"
       @change="onChangeLnageugeDropDown"
       id="coderunner-langage-dropdown"
+      optionLabel="label"
+      optionValue="value"
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
@@ -52,6 +54,7 @@ import LoadingIndicator from './LoadingIndicator.vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { EditorLanguagesMap, languageChoices } from '@/config/Data'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+import codeRunnerType from '@/types/CodeRunnerTypes'
 const props = defineProps({
   starting: { type: String, required: true },
   codeUpdateMethod: { type: Function, required: true },
@@ -65,7 +68,6 @@ const codeRef = ref(props.starting)
 
 const codeRunButton = () => {
   props.onRunCode()
-  codeRunnerStore.isAwaitingCompilation = true
 }
 
 const onCodeChnaage = (text: string) => {
@@ -108,7 +110,7 @@ const onChangeLnageugeDropDown = (lang: any) => {
     confirmChangeOFCodeRuner(lang.value)
   }
 }
-const confirmChangeOFCodeRuner = (type: string) => {
+const confirmChangeOFCodeRuner = (type: codeRunnerType) => {
   confirm.require({
     message: 'Changing code runner may take a while',
     header: 'Are you sure?',

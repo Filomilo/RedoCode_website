@@ -2,6 +2,7 @@ import { createServer, Model } from 'miragejs'
 import type ExerciseType from './types/ExerciseType'
 import type ExerciseListRequestMessage from './types/ExerciseListRequestMessage'
 import ExerciseData from './types/ExerciseData'
+import CodeRunnerType from './types/CodeRunnerTypes'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -157,7 +158,7 @@ export function makeServer({ environment = 'development' } = {}) {
     description:
       'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
     outputType: 'int[]',
-    availbleCodeRunners: ['js'],
+    availbleCodeRunners: [CodeRunnerType.JS_RUNNER],
     tests: [
       {
         input: 1,

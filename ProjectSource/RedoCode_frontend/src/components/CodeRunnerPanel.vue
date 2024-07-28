@@ -109,9 +109,11 @@ import LoadingIndicator from './LoadingIndicator.vue'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 import ExerciseTest from '@/types/ExcericseTest'
+import codeRunnerType from '@/types/CodeRunnerTypes'
+import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 const props = defineProps({
   exerciseInfo: { type: Object as () => IExerciseDescriptionI, required: true },
-  languageChoices: { type: Array as () => string[], required: true },
+  languageChoices: { type: Array as () => codeRunnerType[], required: true },
   codeContainerUpdate: { type: Function, required: true },
   starting: { type: String, required: true },
   onRunCode: { type: Function, required: true },
@@ -127,7 +129,7 @@ const meaages = ref('')
 const tryingToEstablishConnection: Ref<boolean> = ref(false)
 const establishedConnection: Ref<boolean> = ref(false)
 const VmAcces: Ref<boolean> = ref(false)
-const chosenLangague: Ref<String> = ref(props.languageChoices[0])
+const chosenLangague: Ref<codeRunnerType> = ref(props.languageChoices[0])
 const code: Ref<string> = ref('Write Code')
 const resultData = ref(basicResultTemplate)
 
@@ -140,7 +142,7 @@ const disconnectStomp = () => {
 
 const updateVmStatus = (state: CodeRunnerState) => {
   console.log('status: ' + state)
-  if (state.state == 'STOPPED' || state.state == 'RUNNING_MACHINE') {
+  if (state.state == CodeRunnerStatus.STOPPED || state.state == CodeRunnerStatus.RUNNING_MACHINE) {
     console.log('vmacces')
     VmAcces.value = true
   } else VmAcces.value = false
@@ -164,7 +166,7 @@ onBeforeRouteLeave(async (to, from, next) => {
   next()
 })
 
-const onSelectLanguage = (lang: string) => {
+const onSelectLanguage = (lang: codeRunnerType) => {
   console.log('info selcted:' + lang)
   chosenLangague.value = lang
   // if (establishedConnection.value) requstDefaultVmMachine(lang)
