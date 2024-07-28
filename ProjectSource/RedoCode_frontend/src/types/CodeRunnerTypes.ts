@@ -2,9 +2,9 @@
 
 
 enum CodeRunnerType {
-    CPP_RUNNER,
-    JS_RUNNER,
-    UNIDENTIFIED,
+    CPP_RUNNER="CPP_RUNNER",
+    JS_RUNNER="JS_RUNNER",
+    UNIDENTIFIED="UNIDENTIFIED",
   }
   type LanguageName= "cpp"|"js"|"none";
 

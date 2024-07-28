@@ -16,6 +16,7 @@ import { computed, ComputedRef, Ref, ref } from 'vue'
 import { CodeRunnerMap } from '@/config/Data'
 import ExerciseCreatorController from './ExerciseCreatorControlller'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+import ExerciseTest from '@/types/ExcericseTest'
 export default class CodeRunnerConnection {
   private _stompApiConnection: StompApiConnection
 
@@ -54,7 +55,7 @@ export default class CodeRunnerConnection {
   }
 
   public readonly requestCodeRunner = (codeRunnerName: CodeRunnerType) => {
-    // this.codeRunnerState.value.state = CodeRunnerStatus.AWAITING
+    this.codeRunnerState.value.state = CodeRunnerStatus.AWAITING
     console.log('codeRunnerName: ' + JSON.stringify(codeRunnerName))
     const request: CodeRunnerRequestMessage = {
       CodeRunnerType: codeRunnerName
@@ -124,12 +125,12 @@ export default class CodeRunnerConnection {
 
   public readonly runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
     if( this.codeRunnerState.value !==null){
-    const codeType: CodeRunnerType=this.codeRunnerState.value as unknown as CodeRunnerType;
+    const codeType: CodeRunnerType=this.codeRunnerState.value.codeRunnerType;
     console.log("codeType"+ codeType)
-
+    console.log("exerciseCreatorController: "+ JSON.stringify(exerciseCreatorController))
     const message: ExerciseTestToRunMesseage = {
       code: exerciseCreatorController.solutionCodes[codeType],
-      manualTests: exerciseCreatorController.manualTestsSolutions[codeType],
+      manualTests: exerciseCreatorController.manualTestsSolutions[codeType] as ExerciseTest[],
       inputType: exerciseCreatorController.inputType,
       outputType: exerciseCreatorController.outputType,
       amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
@@ -146,6 +147,7 @@ export default class CodeRunnerConnection {
       spaceInupt: exerciseCreatorController.spaceInupt,
       executionTime: exerciseCreatorController.timeForExecutionMs
     }
+    console.log("exerciseCreatorController.manualTestsSolutions: "+JSON.stringify (exerciseCreatorController.manualTestsSolutions))
     console.log('runExercsieTestsCode: ' + JSON.stringify(message))
 
   this._stompApiConnection.sendMessage('/public/app/CodeRun/ExerciseCodeTests', message)

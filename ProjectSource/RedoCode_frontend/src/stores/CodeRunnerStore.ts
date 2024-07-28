@@ -93,7 +93,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const removeTestFromBuffer = (index: number) => {
     console.log('remove: test: ' + index)
     console.log('tests before: ' + JSON.stringify(exerciseData.value.tests))
-    manualTestBuffer.splice(index, 1)
+    manualTestBuffer.value.splice(index, 1)
     console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
   }
 
@@ -110,7 +110,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     }
   }
 
-  const manualTestBuffer: any = ref([])
+  const manualTestBuffer: Ref<ExerciseTest[]> = ref([])
 
   const addblankTestToBuffer = (inputType: VarType, outputype: VarType) => {
     const input = getVarAcording(inputType)
@@ -135,7 +135,10 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
     exerciseCreatorController.languages.forEach(
       (element: CodeRunnerType) => {
-        exerciseCreatorController.manualTestsSolutions[element] = manualTestBuffer
+        console.log("for type: "+ JSON.stringify( element))
+        console.log("manualTestBuffer: "+ JSON.stringify( manualTestBuffer.value))
+        exerciseCreatorController.manualTestsSolutions[element] = manualTestBuffer.value;
+        console.log("exerciseCreatorController: "+JSON.stringify(exerciseCreatorController))
       }
     )
     console.log('tests after: ' + JSON.stringify(exerciseCreatorController.manualTestsSolutions))

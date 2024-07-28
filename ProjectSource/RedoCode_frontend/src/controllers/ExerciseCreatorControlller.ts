@@ -61,7 +61,9 @@ export default class ExerciseCreatorController
       (this.description = 'DEscritptionDescription'),
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
-    ;(this.solutionCodes = {}), (this.manualTestsSolutions = {}), (this.executionTime = 100)
+    ;(this.solutionCodes = {}),
+     (this.manualTestsSolutions = {} as TestsIndexed), 
+     (this.executionTime = 100)
   }
 
   constructor() {

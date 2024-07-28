@@ -10,6 +10,7 @@
           display="chip"
           :options="languageChoices"
           optionLabel="label"
+          optionValue="value"
           placeholder="programming languages"
           class="languageDropDown"
           id="language-selection"

@@ -25,9 +25,7 @@ import java.util.List;
 public class ExerciseTestToRunMesseage implements Serializable {
     private String code;
     private String inputType;
-    private String inputSize;
     private String outputType;
-    private String outputSize;
     private int amountOfAutoTests;
     private float autoTestminValue;
     private float autoTestMaxValue;

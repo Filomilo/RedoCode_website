@@ -17,6 +17,9 @@
         </div>
       </div>
     </div>
+    tets
+
+    {{ JSON.stringify( codeRunnerStore.exerciseCreatorController.manualTests )}}
     <div
       class="ConsoleResultConsoleCOntainer"
       v-if="!isDataResult"
@@ -33,7 +36,7 @@
         v-html="formattedConsole"
       ></div>
     </div>
-
+x
     <DataResultPanel
       v-if="props.ManualTests !== undefined"
       :ManualTests="props.ManualTests"
