@@ -19,6 +19,7 @@
       <TabPanel header="Solution" :disabled="!testValidation">
         <!-- <CodeRunnerPanel /> -->
         <CodeRunnerPanel
+          key="CreateCodeRunner"
           :languageChoices="exerciseLnageus.map(element => element.value)"
           :exerciseInfo="codeRunnerStore.exerciseCreatorController"
           :codeContianer="

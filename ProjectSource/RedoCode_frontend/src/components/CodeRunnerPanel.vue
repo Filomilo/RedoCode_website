@@ -163,6 +163,7 @@ import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
 
   onMounted(() => {
     console.log('props: ' + JSON.stringify(props))
+    codeRunnerStore.updateCodeRunner();
     // if (props.connectAtStart) {
     connectStomp()
     ApiConnectionStore.setOnCodeResult(props.onResults);

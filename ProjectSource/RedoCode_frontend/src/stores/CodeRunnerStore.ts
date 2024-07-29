@@ -22,10 +22,11 @@ import { useApiConnectionStore } from './ApiConnectionStore'
 import { isNullOrUndef } from 'chart.js/helpers'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+import { useActiveUserStore } from './ActiveUserStore'
 
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
-
+  const activeUserStore=useActiveUserStore();
   const playGroundBase: ExerciseData = {
     inputType: '',
     title: '',
@@ -204,6 +205,22 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
     return ''
   }
+  
+  const updateCodeRunner=()=>{
+    console.log("updateCodeRunner: "+activeUserStore.getToken())
+
+    axios.post('/public/coderunner/state',  {token: activeUserStore.getToken()} )
+    .then(response => {
+        console.log('updateCodeRunner Response:', response.data);
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType=CodeRunnerType.UNIDENTIFIED;
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.state=CodeRunnerStatus.NONE;
+    })
+    .catch(error => {
+        console.error('updateCodeRunner Error:', error);
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType=CodeRunnerType.UNIDENTIFIED;
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.state=CodeRunnerStatus.NONE;
+    });
+  }
 
   return {
     // codeRunnerActive,
@@ -228,6 +245,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     transferTestFromBufferTpCreator,
     updateTestData,
     getExerciseSetupError,
-    updateCreationTestData
+    updateCreationTestData,
+    updateCodeRunner
   }
 })
