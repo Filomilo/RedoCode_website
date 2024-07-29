@@ -4,7 +4,7 @@
 
   <main class="PlayGroundBase">
     {{
-      JSON.stringify(ApiConnectionStore.codeRunnerConnection.codeRunnerState)
+      JSON.stringify(activeUserStore._token)
     }}
     <TabView @tab-click="ontablClik">
       <div class="childHeight" id="information-switch">
@@ -20,7 +20,7 @@
         <!-- <CodeRunnerPanel /> -->
         <CodeRunnerPanel
           key="CreateCodeRunner"
-          :languageChoices="exerciseLnageus.map(element => element.value)"
+          :languageChoices="codeRunnerStore.exerciseCreatorController.languages"
           :exerciseInfo="codeRunnerStore.exerciseCreatorController"
           :codeContianer="
             codeRunnerStore.exerciseCreatorController.solutionCodes
@@ -65,11 +65,12 @@
   import ExerciseTest from '@/types/ExcericseTest'
   import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
 import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
   const ToastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
-
+  const activeUserStore=useActiveUserStore();
   const codeUpdate = (code: string) => {
     console.log('codee update: ' + code)
     // codeRunnerStore.exerciseCreatorController.solutions
@@ -111,7 +112,7 @@ import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   }
 
   const exerciseLnageus = computed(() => {
-    return languageChoices
+    return languageChoices.filter(x=>codeRunnerStore.exerciseCreatorController.languages.includes(x.value))
   })
 
   onMounted(() => {

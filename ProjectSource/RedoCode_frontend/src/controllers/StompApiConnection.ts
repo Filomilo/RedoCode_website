@@ -2,6 +2,7 @@ import { ActivationState, Client, IFrame, StompHeaders } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
 import { stompClient } from './StompApiConnectionold'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
 export default class StompApiConnection {
   userName: String | null = null
@@ -37,11 +38,14 @@ export default class StompApiConnection {
           sub.activateSubscription()
         })
         const activeUserStore = useActiveUserStore()
+        console.log("on connected: "+JSON.stringify( activeUserStore.getToken()._rawValue) )
         if (activeUserStore.getToken().length > 0) {
           this.sendMessage('/public/app/tokenAuth', {
             token: activeUserStore.getToken(),
           })
         }
+        const codeRunnerStore=useCodeRunnerStore();
+        codeRunnerStore.updateCodeRunner();
         this._onConnected('succesfully conntected')
       },
       onStompError: (frame: IFrame) => {

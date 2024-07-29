@@ -82,9 +82,9 @@ const MONACO_EDITOR_OPTIONS = {
 const chosenLangague = ref("Cpp");
 // const langaugesOptions = ['cpp', 'Js']
 const langaugesOptions = computed(() =>
-  codeRunnerStore.exerciseData.title === ""
+codeRunnerStore.exerciseCreatorController.title === ""
     ? languageChoices
-    : codeRunnerStore.exerciseData.availbleCodeRunners
+    :  languageChoices.filter(x=>codeRunnerStore.exerciseCreatorController.languages.includes(x.value))
 );
 
 watch(

@@ -56,9 +56,9 @@ public class CodeTestHandler extends  BaseRequestHandler {
             Variables expcected=test.getParsedOutput(request.getOutputType());
             log.info("program resuult: "+recived);
             log.info("expected program resuult: "+ expcected);
-            if(!recived.equals(expcected))
+            if(recived==null || !recived.equals(expcected))
             {
-                throw new RequestHadndlingException("expected: "+ test.getParsedOutput(request.getOutputType()).getValue()+" but recived: " + result.getVariables().getValue());
+                throw new RequestHadndlingException("expected: "+ test.getParsedOutput(request.getOutputType()).getValue()+" but recived: " +result.getVariables()!=null?result.getVariables().getValue().toString():"null");
             }
             return result;
         }

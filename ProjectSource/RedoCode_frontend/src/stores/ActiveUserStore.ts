@@ -29,7 +29,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const saveCookie = () => {
     console.log('Save cookie')
-    $cookies?.set('token', _token)
+    $cookies?.set('token', _token.value)
   }
   const deleteCookie = () => {
     if ($cookies?.isKey('token')) {
@@ -41,6 +41,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     console.log(JSON.stringify($cookies))
     if ($cookies?.isKey('token')) {
       const token = $cookies.get('token')
+      console.log("set token: "+ JSON.stringify( token))
       _token.value = token
       if (validateToken()) {
         setIsLogged(true)

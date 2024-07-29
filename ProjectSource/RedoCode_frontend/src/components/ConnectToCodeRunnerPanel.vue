@@ -10,7 +10,7 @@
       </div>
       <Dropdown
         v-model="chosenLangague"
-        :options="languageChoices"
+        :options="languageChoices.filter(x=>props.languageChoices.includes(x.value)) "
         placeholder="Select programming langauge"
         class="dropDown"
         style="height: 3rem"
