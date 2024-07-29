@@ -15,7 +15,7 @@ import VarType, {
   isTypeArray,
   isTypeDoubleArray,
   isTypeSingle,
-  isTypeString
+  isTypeString,
 } from '@/types/VarType'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import { useApiConnectionStore } from './ApiConnectionStore'
@@ -32,7 +32,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     description: '',
     id: null,
     outputType: '',
-    availbleCodeRunners: languageChoices.map((element) => element.value),
+    availbleCodeRunners: languageChoices.map(element => element.value),
     tests: [
       {
         input: '',
@@ -40,11 +40,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         errorOutput: '',
         consoleOutput: '',
         expectedOutput: '',
-        isSolved: null
-      }
+        isSolved: null,
+      },
     ],
     automaticTests: [],
-    startingFunction: ''
+    startingFunction: '',
   }
 
   const exerciseData: Ref<ExerciseData> = ref(playGroundBase)
@@ -61,7 +61,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const setExerciseLoading = (state: boolean) => {
     exerciseLoading.value = state
   }
-
 
   const startingMethod = computed(() => {
     // if (exerciseData.value.id != null) {
@@ -83,10 +82,13 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   })
 
   const areResultCorrect = computed(() => {
-    return exerciseData.value.tests.every((x) => x.expectedOutput === x.output)
+    return exerciseData.value.tests.every(x => x.expectedOutput === x.output)
   })
-  const isAwaitingCompilation: ComputedRef<boolean> = computed(()=>{
-    return apiConnectionStore.codeRunnerConnection.codeRunnerState.state===CodeRunnerStatus.RUNNING
+  const isAwaitingCompilation: ComputedRef<boolean> = computed(() => {
+    return (
+      apiConnectionStore.codeRunnerConnection.codeRunnerState.state ===
+      CodeRunnerStatus.RUNNING
+    )
   })
 
   const exerciseCreatorController = reactive(new ExerciseCreatorController())
@@ -122,7 +124,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       output: null,
       errorOutput: '',
       consoleOutput: '',
-      isSolved: null
+      isSolved: null,
     })
     console.log('added: ' + JSON.stringify(manualTestBuffer))
   }
@@ -133,15 +135,20 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const transferTestFromBufferTpCreator = () => {
     console.log('test transfer2: ' + JSON.stringify(manualTestBuffer))
 
-    exerciseCreatorController.languages.forEach(
-      (element: CodeRunnerType) => {
-        console.log("for type: "+ JSON.stringify( element))
-        console.log("manualTestBuffer: "+ JSON.stringify( manualTestBuffer.value))
-        exerciseCreatorController.manualTestsSolutions[element] = manualTestBuffer.value;
-        console.log("exerciseCreatorController: "+JSON.stringify(exerciseCreatorController))
-      }
+    exerciseCreatorController.languages.forEach((element: CodeRunnerType) => {
+      console.log('for type: ' + JSON.stringify(element))
+      console.log('manualTestBuffer: ' + JSON.stringify(manualTestBuffer.value))
+      exerciseCreatorController.manualTestsSolutions[element] =
+        manualTestBuffer.value
+      console.log(
+        'exerciseCreatorController: ' +
+          JSON.stringify(exerciseCreatorController)
+      )
+    })
+    console.log(
+      'tests after: ' +
+        JSON.stringify(exerciseCreatorController.manualTestsSolutions)
     )
-    console.log('tests after: ' + JSON.stringify(exerciseCreatorController.manualTestsSolutions))
   }
 
   const updateTestData = (reuslts: ProgramResult[]) => {
@@ -153,7 +160,9 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
         ? ''
         : reuslts[index].consoleOutput.errorOutput
-      val.output = isNullOrUndef(reuslts[index].variables) ? null : reuslts[index].variables
+      val.output = isNullOrUndef(reuslts[index].variables)
+        ? null
+        : reuslts[index].variables
       val.isSolved = val.expectedOutput === reuslts[index].variables
     })
   }
@@ -197,6 +206,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     removeTestFromBuffer,
     transferTestFromBufferTpCreator,
     updateTestData,
-    getExerciseSetupError
+    getExerciseSetupError,
   }
 })

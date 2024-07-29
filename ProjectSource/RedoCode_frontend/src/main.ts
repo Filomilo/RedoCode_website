@@ -92,8 +92,8 @@ app.use(ToastService)
 
 app.use(VueMonacoEditorPlugin, {
   paths: {
-    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
-  }
+    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs',
+  },
 })
 app.use(VueCookies, { expires: '30d' })
 app.use(pinia)

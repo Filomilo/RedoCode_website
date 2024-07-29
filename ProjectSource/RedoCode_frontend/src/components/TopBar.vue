@@ -7,12 +7,20 @@
           <label class="TopBarItemTitle">Home</label>
         </router-link>
 
-        <router-link to="/PlayGround" class="TopBarItemContainer" id="switch-playground">
+        <router-link
+          to="/PlayGround"
+          class="TopBarItemContainer"
+          id="switch-playground"
+        >
           <IconPlayground class="TopBarItemIcon" />
           <label class="TopBarItemTitle">PlayGorund</label>
         </router-link>
 
-        <router-link to="/Exercises" class="TopBarItemContainer" id="switch-exercises">
+        <router-link
+          to="/Exercises"
+          class="TopBarItemContainer"
+          id="switch-exercises"
+        >
           <IconExcerisce class="TopBarItemIcon" />
           <label class="TopBarItemTitle">Exercises</label>
         </router-link>
@@ -32,12 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import '../assets/icons/IconHome.vue'
-import IconPlayground from '@/assets/icons/IconPlayground.vue'
-import IconHome from '@/assets/icons/IconHome.vue'
-import IconExcerisce from '@/assets/icons/IconExcerisce.vue'
-import IconAccount from '@/assets/icons/IconAccount.vue'
-import { useActiveUserStore } from '../stores/ActiveUserStore'
+  import '../assets/icons/IconHome.vue'
+  import IconPlayground from '@/assets/icons/IconPlayground.vue'
+  import IconHome from '@/assets/icons/IconHome.vue'
+  import IconExcerisce from '@/assets/icons/IconExcerisce.vue'
+  import IconAccount from '@/assets/icons/IconAccount.vue'
+  import { useActiveUserStore } from '../stores/ActiveUserStore'
 
-const activeUserStore = useActiveUserStore()
+  const activeUserStore = useActiveUserStore()
 </script>

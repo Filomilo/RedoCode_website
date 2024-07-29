@@ -1,4 +1,10 @@
-import { ActivationState, Client, IMessage, StompSubscription, type IFrame } from '@stomp/stompjs'
+import {
+  ActivationState,
+  Client,
+  IMessage,
+  StompSubscription,
+  type IFrame,
+} from '@stomp/stompjs'
 
 export default class StompApiSubscription {
   private stompClient: Client
@@ -20,7 +26,9 @@ export default class StompApiSubscription {
     this.stompSubscription = this.stompClient.subscribe(
       this.subscriptionLocation,
       (message: IMessage) => {
-        console.log('received message from subscription: ' + this.subscriptionLocation)
+        console.log(
+          'received message from subscription: ' + this.subscriptionLocation
+        )
         const messageObject: Object = JSON.parse(message.body)
         this.onSubscriptionMethod(messageObject)
       }

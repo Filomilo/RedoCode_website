@@ -1,41 +1,52 @@
 <template>
   <div class="DesciptionPanelContainer">
     <div class="DesciptionTitleContainer">
-      <div class="DesciptionTitle" id="exercise-title">{{ exerciseInfo.title }}</div>
+      <div class="DesciptionTitle" id="exercise-title">
+        {{ exerciseInfo.title }}
+      </div>
     </div>
-    <div class="DescriptioNContainer" v-html="desc" id="exercise-description"></div>
+    <div
+      class="DescriptioNContainer"
+      v-html="desc"
+      id="exercise-description"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import MarkdownIt from 'markdown-it'
-import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
-import { computed } from 'vue'
-import ExerciseData from '@/types/ExerciseData'
-import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
+  import MarkdownIt from 'markdown-it'
+  import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+  import { computed } from 'vue'
+  import ExerciseData from '@/types/ExerciseData'
+  import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 
-const props = defineProps({
-  exerciseInfo: { type: Object as () => IExerciseDescriptionI, required: true }
-})
+  const props = defineProps({
+    exerciseInfo: {
+      type: Object as () => IExerciseDescriptionI,
+      required: true,
+    },
+  })
 
-const codeRunnerStore = useCodeRunnerStore()
-const markdown = new MarkdownIt()
+  const codeRunnerStore = useCodeRunnerStore()
+  const markdown = new MarkdownIt()
 
-const desc = computed(() => props.exerciseInfo.description.replace('\n', '<br>'))
+  const desc = computed(() =>
+    props.exerciseInfo.description.replace('\n', '<br>')
+  )
 
-const mdSrc = `# tile
+  const mdSrc = `# tile
         descitpiron of taks, create fibonachi sewaunce`
 </script>
 
 <style>
-.titleEdit {
-  height: 100%;
-  width: 100%;
-  background-color: transparent;
-}
-.descriptorEdit {
-  height: 100%;
-  width: 100%;
-  background-color: transparent;
-}
+  .titleEdit {
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+  }
+  .descriptorEdit {
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+  }
 </style>

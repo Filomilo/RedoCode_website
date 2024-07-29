@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import IconPlay from '@/assets/icons/IconPlay.vue'
-import type CodeExerciseTab from '../types/CodeExerciseTab'
-defineProps<{
-  excerciseData: CodeExerciseTab
-}>()
+  import IconPlay from '@/assets/icons/IconPlay.vue'
+  import type CodeExerciseTab from '../types/CodeExerciseTab'
+  defineProps<{
+    excerciseData: CodeExerciseTab
+  }>()
 </script>

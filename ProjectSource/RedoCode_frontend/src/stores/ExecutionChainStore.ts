@@ -39,11 +39,13 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
     console.log('ExecutionResponses  udpate:' + JSON.stringify(update))
     await waitForScheme(update.stepUpdate, 100)
       .then(() => {
-        executionChain.value[update.stepUpdate].processingMessage = update.message
+        executionChain.value[update.stepUpdate].processingMessage =
+          update.message
         executionChain.value[update.stepUpdate].status = update.lvlStatus
         if (
           update.lvlStatus === 'FAILED' ||
-          (update.stepUpdate === executionChain.value.length - 1 && update.lvlStatus === 'SUCCESS')
+          (update.stepUpdate === executionChain.value.length - 1 &&
+            update.lvlStatus === 'SUCCESS')
         ) {
           showCloseButton.value = true
         }
@@ -55,9 +57,12 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
   apiConnectionStore.stompApiConnection.subscribe(
     '/user/public/topic/ExecutionResponses',
     (message: Object) => {
-      const responseBase: ExecutionResponseBase = message as ExecutionResponseBase
+      const responseBase: ExecutionResponseBase =
+        message as ExecutionResponseBase
 
-      console.log('ExecutionResponses revcived: ' + JSON.stringify(responseBase))
+      console.log(
+        'ExecutionResponses revcived: ' + JSON.stringify(responseBase)
+      )
       if (responseBase.messageType === 'CHAIN_SCHEME')
         loadChainScheme(responseBase as ExecutionChainScheme)
       else updateStatus(responseBase as ExecutionResponseStatusUpdate)
@@ -77,6 +82,6 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
     executionChain,
     showExecutionChain,
     showCloseButton,
-    close
+    close,
   }
 })

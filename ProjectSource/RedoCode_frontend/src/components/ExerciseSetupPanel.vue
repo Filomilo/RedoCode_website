@@ -44,12 +44,17 @@
                   codeRunnerStore.exerciseCreatorController.timeForTaskMin =
                     newNum * 60 +
                     (codeRunnerStore.exerciseCreatorController.timeForTaskMin -
-                      Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) *
+                      Math.floor(
+                        codeRunnerStore.exerciseCreatorController
+                          .timeForTaskMin / 60
+                      ) *
                         60)
                 }
               "
               :model-value="
-                Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60)
+                Math.floor(
+                  codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60
+                )
               "
               inputId="integeronly"
               suffix=" H"
@@ -62,13 +67,20 @@
               @update:model-value="
                 (newNum: number) => {
                   codeRunnerStore.exerciseCreatorController.timeForTaskMin =
-                    Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) * 60 +
+                    Math.floor(
+                      codeRunnerStore.exerciseCreatorController.timeForTaskMin /
+                        60
+                    ) *
+                      60 +
                     +newNum
                 }
               "
               :model-value="
                 codeRunnerStore.exerciseCreatorController.timeForTaskMin -
-                Math.floor(codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60) * 60
+                Math.floor(
+                  codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60
+                ) *
+                  60
               "
               inputId="integeronly"
               suffix=" M"
@@ -83,7 +95,9 @@
           Maximum execution time
           <div style="display: flex; flex-direction: row">
             <InputNumber
-              v-model="codeRunnerStore.exerciseCreatorController.timeForExecutionMs"
+              v-model="
+                codeRunnerStore.exerciseCreatorController.timeForExecutionMs
+              "
               inputId="integeronly"
               suffix=" ms"
               :min="5"
@@ -103,14 +117,17 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.inputType = setTypeToInt(
-                    codeRunnerStore.exerciseCreatorController.inputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToInt(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputType1"
               :value="true"
-              :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.inputType)"
+              :model-value="
+                isTypeInt(codeRunnerStore.exerciseCreatorController.inputType)
+              "
               id="radio-input-int"
             />
             <label>int</label>
@@ -120,14 +137,17 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.inputType = setTypeToFloat(
-                    codeRunnerStore.exerciseCreatorController.inputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToFloat(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputType2"
               :value="true"
-              :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType)"
+              :model-value="
+                isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType)
+              "
               id="radio-input-float"
             />
             <label>float</label>
@@ -137,14 +157,19 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.inputType = setTypeToString(
-                    codeRunnerStore.exerciseCreatorController.inputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToString(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputType3"
               :value="true"
-              :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.inputType)"
+              :model-value="
+                isTypeString(
+                  codeRunnerStore.exerciseCreatorController.inputType
+                )
+              "
               id="radio-input-string"
             />
             <label>string</label>
@@ -156,14 +181,19 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.inputType = setTypeToSingle(
-                    codeRunnerStore.exerciseCreatorController.inputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToSingle(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputSize1"
               :value="true"
-              :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.inputType)"
+              :model-value="
+                isTypeSingle(
+                  codeRunnerStore.exerciseCreatorController.inputType
+                )
+              "
               id="radio-input-single"
             />
             <label>single value</label>
@@ -173,14 +203,17 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.inputType = setTypeToArray(
-                    codeRunnerStore.exerciseCreatorController.inputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToArray(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputSize2"
               :value="true"
-              :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.inputType)"
+              :model-value="
+                isTypeArray(codeRunnerStore.exerciseCreatorController.inputType)
+              "
               id="radio-input-array"
             />
             <label>array</label>
@@ -190,14 +223,19 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.inputType = setTypeToDoubleArray(
-                    codeRunnerStore.exerciseCreatorController.inputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToDoubleArray(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputSize3"
               :value="true"
-              :model-value="isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)"
+              :model-value="
+                isTypeDoubleArray(
+                  codeRunnerStore.exerciseCreatorController.inputType
+                )
+              "
               id="radio-input-2d-array"
             />
             <label>2d array</label>
@@ -211,14 +249,17 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.outputType = setTypeToInt(
-                    codeRunnerStore.exerciseCreatorController.outputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToInt(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputype1"
               :value="true"
-              :model-value="isTypeInt(codeRunnerStore.exerciseCreatorController.outputType)"
+              :model-value="
+                isTypeInt(codeRunnerStore.exerciseCreatorController.outputType)
+              "
               id="radio-output-int"
             />
             <label>int</label>
@@ -228,14 +269,19 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.outputType = setTypeToFloat(
-                    codeRunnerStore.exerciseCreatorController.outputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToFloat(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputype2"
               :value="true"
-              :model-value="isTypeFloat(codeRunnerStore.exerciseCreatorController.outputType)"
+              :model-value="
+                isTypeFloat(
+                  codeRunnerStore.exerciseCreatorController.outputType
+                )
+              "
               id="radio-output-float"
             />
             <label>float</label>
@@ -245,14 +291,19 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.outputType = setTypeToString(
-                    codeRunnerStore.exerciseCreatorController.outputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToString(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputype3"
               :value="true"
-              :model-value="isTypeString(codeRunnerStore.exerciseCreatorController.outputType)"
+              :model-value="
+                isTypeString(
+                  codeRunnerStore.exerciseCreatorController.outputType
+                )
+              "
               id="radio-output-string"
             />
             <label>string</label>
@@ -264,14 +315,19 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.outputType = setTypeToSingle(
-                    codeRunnerStore.exerciseCreatorController.outputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToSingle(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputSize1"
               :value="true"
-              :model-value="isTypeSingle(codeRunnerStore.exerciseCreatorController.outputType)"
+              :model-value="
+                isTypeSingle(
+                  codeRunnerStore.exerciseCreatorController.outputType
+                )
+              "
               id="radio-output-single"
             />
             <label>single value</label>
@@ -281,14 +337,19 @@
               @update:model-value="
                 (value: any) => {
                   resetManualtTetstBuffer()
-                  codeRunnerStore.exerciseCreatorController.outputType = setTypeToArray(
-                    codeRunnerStore.exerciseCreatorController.outputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToArray(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputSize2"
               :value="true"
-              :model-value="isTypeArray(codeRunnerStore.exerciseCreatorController.outputType)"
+              :model-value="
+                isTypeArray(
+                  codeRunnerStore.exerciseCreatorController.outputType
+                )
+              "
               id="radio-output-array"
             />
             <label>array</label>
@@ -299,14 +360,19 @@
                 (value: any) => {
                   resetManualtTetstBuffer()
                   console.log('RadioButtonSection: outDoubleeArray')
-                  codeRunnerStore.exerciseCreatorController.outputType = setTypeToDoubleArray(
-                    codeRunnerStore.exerciseCreatorController.outputType
-                  )
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToDoubleArray(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputSize3"
               :value="true"
-              :model-value="isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.outputType)"
+              :model-value="
+                isTypeDoubleArray(
+                  codeRunnerStore.exerciseCreatorController.outputType
+                )
+              "
               id="radio-output-2d-array"
             />
             <label>2d array</label>
@@ -329,7 +395,9 @@
         <div class="horizontalSection" style="flex-direction: column">
           <h5>Amount of automatic tests</h5>
           <InputNumber
-            v-model="codeRunnerStore.exerciseCreatorController.amountOfAutoTests"
+            v-model="
+              codeRunnerStore.exerciseCreatorController.amountOfAutoTests
+            "
             :min="1"
             :max="10"
             class="smallNumberInput"
@@ -338,7 +406,9 @@
           />
           <div class="sliderContaienr">
             <Slider
-              v-model="codeRunnerStore.exerciseCreatorController.amountOfAutoTests"
+              v-model="
+                codeRunnerStore.exerciseCreatorController.amountOfAutoTests
+              "
               :min="1"
               :max="10"
             />
@@ -349,19 +419,25 @@
           style="flex-direction: column"
           v-if="
             isTypeArray(codeRunnerStore.exerciseCreatorController.inputType) ||
-            isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)
+            isTypeDoubleArray(
+              codeRunnerStore.exerciseCreatorController.inputType
+            )
           "
         >
           <h5>Array x length range</h5>
           <div>
             <InputNumber
-              v-model="codeRunnerStore.exerciseCreatorController.xArrayRange.min"
+              v-model="
+                codeRunnerStore.exerciseCreatorController.xArrayRange.min
+              "
               :min="1"
               :max="10"
               class="smallNumberInput"
             />
             <InputNumber
-              v-model="codeRunnerStore.exerciseCreatorController.xArrayRange.max"
+              v-model="
+                codeRunnerStore.exerciseCreatorController.xArrayRange.max
+              "
               :min="1"
               :max="10"
               class="smallNumberInput"
@@ -371,31 +447,39 @@
             <Slider
               :model-value="[
                 codeRunnerStore.exerciseCreatorController.xArrayRange.min,
-                codeRunnerStore.exerciseCreatorController.xArrayRange.max
+                codeRunnerStore.exerciseCreatorController.xArrayRange.max,
               ]"
               range
               :min="1"
               :max="10"
               :unstyled="false"
-              @update:modelValue="(event) => onXChange(event)"
+              @update:modelValue="event => onXChange(event)"
             />
           </div>
         </div>
         <div
           class="horizontalSection"
           style="flex-direction: column"
-          v-if="isTypeDoubleArray(codeRunnerStore.exerciseCreatorController.inputType)"
+          v-if="
+            isTypeDoubleArray(
+              codeRunnerStore.exerciseCreatorController.inputType
+            )
+          "
         >
           <h5>Array y length range</h5>
           <div>
             <InputNumber
-              v-model="codeRunnerStore.exerciseCreatorController.yArrayRange.min"
+              v-model="
+                codeRunnerStore.exerciseCreatorController.yArrayRange.min
+              "
               :min="1"
               :max="10"
               class="smallNumberInput"
             />
             <InputNumber
-              v-model="codeRunnerStore.exerciseCreatorController.yArrayRange.max"
+              v-model="
+                codeRunnerStore.exerciseCreatorController.yArrayRange.max
+              "
               :min="1"
               :max="10"
               class="smallNumberInput"
@@ -405,57 +489,67 @@
             <Slider
               :model-value="[
                 codeRunnerStore.exerciseCreatorController.yArrayRange.min,
-                codeRunnerStore.exerciseCreatorController.yArrayRange.max
+                codeRunnerStore.exerciseCreatorController.yArrayRange.max,
               ]"
               range
               :min="1"
               :max="10"
               :unstyled="false"
-              @update:modelValue="(event) => onYChange(event)"
+              @update:modelValue="event => onYChange(event)"
             />
           </div>
         </div>
       </div>
       <div class="panelSection SubPanelSection">
         <div
-          v-if="codeRunnerStore.exerciseCreatorController.inputType === ('int' as VarType)"
+          v-if="
+            codeRunnerStore.exerciseCreatorController.inputType ===
+            ('int' as VarType)
+          "
           class="SubPanelSection"
         >
           <div class="horizontalSection" style="flex-direction: column">
             <h5>int range</h5>
             <div>
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.lengthRange.min"
+                v-model="
+                  codeRunnerStore.exerciseCreatorController.lengthRange.min
+                "
                 :min="-Math.pow(10, 10)"
                 :max="Math.pow(10, 10)"
                 :maxFractionDigits="0"
                 @update:modelValue="
-                  (event) =>
+                  event =>
                     onLengthChange([
                       event,
-                      codeRunnerStore.exerciseCreatorController.lengthRange.max
+                      codeRunnerStore.exerciseCreatorController.lengthRange.max,
                     ])
                 "
               />
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.lengthRange.max"
+                v-model="
+                  codeRunnerStore.exerciseCreatorController.lengthRange.max
+                "
                 :min="-Math.pow(10, 10)"
                 :max="Math.pow(10, 10)"
                 :maxFractionDigits="0"
                 @update:modelValue="
-                  (event) =>
+                  event =>
                     onLengthChange([
                       codeRunnerStore.exerciseCreatorController.lengthRange.min,
-                      event
+                      event,
                     ])
                 "
               />
             </div>
-            <div class="sliderContaienr" style="width: 100%; height: 3rem; margin-top: 1rem">
+            <div
+              class="sliderContaienr"
+              style="width: 100%; height: 3rem; margin-top: 1rem"
+            >
               <Slider
                 :model-value="[
                   codeRunnerStore.exerciseCreatorController.lengthRange.min,
-                  codeRunnerStore.exerciseCreatorController.lengthRange.max
+                  codeRunnerStore.exerciseCreatorController.lengthRange.max,
                 ]"
                 range
                 :min="-Math.pow(10, 10)"
@@ -463,8 +557,10 @@
                 :unstyled="false"
                 @change="
                   (value: any) => {
-                    codeRunnerStore.exerciseCreatorController.lengthRange.min = value[0]
-                    codeRunnerStore.exerciseCreatorController.lengthRange.max = value[1]
+                    codeRunnerStore.exerciseCreatorController.lengthRange.min =
+                      value[0]
+                    codeRunnerStore.exerciseCreatorController.lengthRange.max =
+                      value[1]
                   }
                 "
               />
@@ -473,42 +569,52 @@
         </div>
 
         <div
-          v-if="codeRunnerStore.exerciseCreatorController.inputType === ('float' as VarType)"
+          v-if="
+            codeRunnerStore.exerciseCreatorController.inputType ===
+            ('float' as VarType)
+          "
           class="SubPanelSection"
         >
           <div class="horizontalSection" style="flex-direction: column">
             <h5>float range</h5>
             <div>
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.lengthRange.min"
+                v-model="
+                  codeRunnerStore.exerciseCreatorController.lengthRange.min
+                "
                 :min="-Math.pow(10, 10)"
                 :max="Math.pow(10, 10)"
                 @update:modelValue="
-                  (event) =>
+                  event =>
                     onLengthChange([
                       event,
-                      codeRunnerStore.exerciseCreatorController.lengthRange.max
+                      codeRunnerStore.exerciseCreatorController.lengthRange.max,
                     ])
                 "
               />
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.lengthRange.max"
+                v-model="
+                  codeRunnerStore.exerciseCreatorController.lengthRange.max
+                "
                 :min="-Math.pow(10, 10)"
                 :max="Math.pow(10, 10)"
                 @update:modelValue="
-                  (event) =>
+                  event =>
                     onLengthChange([
                       codeRunnerStore.exerciseCreatorController.lengthRange.min,
-                      event
+                      event,
                     ])
                 "
               />
             </div>
-            <div class="sliderContaienr" style="width: 100%; height: 3rem; margin-top: 1rem">
+            <div
+              class="sliderContaienr"
+              style="width: 100%; height: 3rem; margin-top: 1rem"
+            >
               <Slider
                 :model-value="[
                   codeRunnerStore.exerciseCreatorController.lengthRange.min,
-                  codeRunnerStore.exerciseCreatorController.lengthRange.max
+                  codeRunnerStore.exerciseCreatorController.lengthRange.max,
                 ]"
                 range
                 :min="-Math.pow(10, 10)"
@@ -525,9 +631,13 @@
           <div class="horizontalSection" style="flex-direction: column">
             <h5>
               {{
-                isTypeString(codeRunnerStore.exerciseCreatorController.inputType)
+                isTypeString(
+                  codeRunnerStore.exerciseCreatorController.inputType
+                )
                   ? 'string'
-                  : isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType)
+                  : isTypeFloat(
+                        codeRunnerStore.exerciseCreatorController.inputType
+                      )
                     ? 'float'
                     : 'int'
               }}
@@ -536,83 +646,122 @@
             </h5>
             <div style="display: flex; justify-content: center">
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.lengthRange.min"
+                v-model="
+                  codeRunnerStore.exerciseCreatorController.lengthRange.min
+                "
                 :min="
-                  isTypeString(codeRunnerStore.exerciseCreatorController.inputType)
+                  isTypeString(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
                     ? 0
                     : Number.MIN_SAFE_INTEGER
                 "
                 :max="
-                  isTypeString(codeRunnerStore.exerciseCreatorController.inputType)
+                  isTypeString(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
                     ? 30
                     : Number.MAX_SAFE_INTEGER
                 "
                 :maxFractionDigits="
-                  isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType) ? 10 : 0
+                  isTypeFloat(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
+                    ? 10
+                    : 0
                 "
                 @update:modelValue="
-                  (event) =>
+                  event =>
                     onLengthChange([
                       event,
-                      codeRunnerStore.exerciseCreatorController.lengthRange.max
+                      codeRunnerStore.exerciseCreatorController.lengthRange.max,
                     ])
                 "
                 id="string-range-low-input"
               />
               <InputNumber
-                v-model="codeRunnerStore.exerciseCreatorController.lengthRange.max"
+                v-model="
+                  codeRunnerStore.exerciseCreatorController.lengthRange.max
+                "
                 :min="
-                  isTypeString(codeRunnerStore.exerciseCreatorController.inputType)
+                  isTypeString(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
                     ? 0
                     : Number.MIN_SAFE_INTEGER
                 "
                 :max="
-                  isTypeString(codeRunnerStore.exerciseCreatorController.inputType)
+                  isTypeString(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
                     ? 30
                     : Number.MAX_SAFE_INTEGER
                 "
                 :maxFractionDigits="
-                  isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType) ? 10 : 0
+                  isTypeFloat(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
+                    ? 10
+                    : 0
                 "
                 @update:modelValue="
-                  (event) =>
+                  event =>
                     onLengthChange([
                       codeRunnerStore.exerciseCreatorController.lengthRange.min,
-                      event
+                      event,
                     ])
                 "
                 id="string-range-up-input"
               />
             </div>
-            <div class="sliderContaienr" style="width: 100%; height: 3rem; margin-top: 1rem">
+            <div
+              class="sliderContaienr"
+              style="width: 100%; height: 3rem; margin-top: 1rem"
+            >
               <Slider
                 :model-value="[
                   codeRunnerStore.exerciseCreatorController.lengthRange.min,
-                  codeRunnerStore.exerciseCreatorController.lengthRange.max
+                  codeRunnerStore.exerciseCreatorController.lengthRange.max,
                 ]"
                 range
                 :min="
-                  isTypeString(codeRunnerStore.exerciseCreatorController.inputType)
+                  isTypeString(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
                     ? 0
                     : Number.MIN_SAFE_INTEGER
                 "
                 :max="
-                  isTypeString(codeRunnerStore.exerciseCreatorController.inputType)
+                  isTypeString(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
                     ? 30
                     : Number.MAX_SAFE_INTEGER
                 "
-                :step="isTypeFloat(codeRunnerStore.exerciseCreatorController.inputType) ? 0.01 : 1"
+                :step="
+                  isTypeFloat(
+                    codeRunnerStore.exerciseCreatorController.inputType
+                  )
+                    ? 0.01
+                    : 1
+                "
                 :unstyled="false"
-                @update:modelValue="(change) => onLengthChange(change)"
+                @update:modelValue="change => onLengthChange(change)"
               />
             </div>
             <div
               class="SubPanelSection"
-              v-if="isTypeString(codeRunnerStore.exerciseCreatorController.inputType)"
+              v-if="
+                isTypeString(
+                  codeRunnerStore.exerciseCreatorController.inputType
+                )
+              "
             >
               <div class="checkBoxContainer">
                 <Checkbox
-                  v-model="codeRunnerStore.exerciseCreatorController.upperCaseInput"
+                  v-model="
+                    codeRunnerStore.exerciseCreatorController.upperCaseInput
+                  "
                   invalid
                   binary
                   id="upper-case-checkbox"
@@ -621,7 +770,9 @@
               </div>
               <div class="checkBoxContainer">
                 <Checkbox
-                  v-model="codeRunnerStore.exerciseCreatorController.lowerCaseInput"
+                  v-model="
+                    codeRunnerStore.exerciseCreatorController.lowerCaseInput
+                  "
                   invalid
                   binary
                   id="lower-case-checkbox"
@@ -630,7 +781,9 @@
               </div>
               <div class="checkBoxContainer">
                 <Checkbox
-                  v-model="codeRunnerStore.exerciseCreatorController.numberInput"
+                  v-model="
+                    codeRunnerStore.exerciseCreatorController.numberInput
+                  "
                   invalid
                   binary
                   id="number-checkbox"
@@ -639,7 +792,10 @@
               </div>
               <div class="checkBoxContainer">
                 <Checkbox
-                  v-model="codeRunnerStore.exerciseCreatorController.specialCharacterInput"
+                  v-model="
+                    codeRunnerStore.exerciseCreatorController
+                      .specialCharacterInput
+                  "
                   invalid
                   binary
                   id="special-char-checkbox"
@@ -648,7 +804,10 @@
               </div>
               <div class="checkBoxContainer">
                 <Checkbox
-                  v-model="codeRunnerStore.exerciseCreatorController.breakCharacterInupt"
+                  v-model="
+                    codeRunnerStore.exerciseCreatorController
+                      .breakCharacterInupt
+                  "
                   invalid
                   binary
                   id="character-breaks-checkbox"
@@ -674,79 +833,78 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
-import VueSlider from 'vue-slider-component'
-import ManualTestPnael from './ManualTestPnael.vue'
-import VarType, {
-  setTypeToArray,
-  isTypeDoubleArray,
-  isTypeString,
-  isTypeArray,
-  isTypeInt,
-  isTypeFloat,
-  setTypeToDoubleArray,
-  setTypeToSingle,
-  setTypeToString,
-  setTypeToInt,
-  setTypeToFloat,
-  isTypeSingle
-} from '@/types/VarType'
+  import { onMounted, watch } from 'vue'
+  import VueSlider from 'vue-slider-component'
+  import ManualTestPnael from './ManualTestPnael.vue'
+  import VarType, {
+    setTypeToArray,
+    isTypeDoubleArray,
+    isTypeString,
+    isTypeArray,
+    isTypeInt,
+    isTypeFloat,
+    setTypeToDoubleArray,
+    setTypeToSingle,
+    setTypeToString,
+    setTypeToInt,
+    setTypeToFloat,
+    isTypeSingle,
+  } from '@/types/VarType'
 
-import {languageChoices} from '@/config/Data'
-import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+  import { languageChoices } from '@/config/Data'
+  import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
-const codeRunnerStore = useCodeRunnerStore()
+  const codeRunnerStore = useCodeRunnerStore()
 
-
-const onXChange = (val: any) => {
-  if (val[0] > val[1]) {
-    val[0] = val[1]
+  const onXChange = (val: any) => {
+    if (val[0] > val[1]) {
+      val[0] = val[1]
+    }
+    codeRunnerStore.exerciseCreatorController.xArrayRange.min = val[0]
+    codeRunnerStore.exerciseCreatorController.xArrayRange.max = val[1]
   }
-  codeRunnerStore.exerciseCreatorController.xArrayRange.min = val[0]
-  codeRunnerStore.exerciseCreatorController.xArrayRange.max = val[1]
-}
 
-const onYChange = (val: any) => {
-  if (val[0] > val[1]) {
-    val[0] = val[1]
+  const onYChange = (val: any) => {
+    if (val[0] > val[1]) {
+      val[0] = val[1]
+    }
+    codeRunnerStore.exerciseCreatorController.yArrayRange.min = val[0]
+    codeRunnerStore.exerciseCreatorController.yArrayRange.max = val[1]
   }
-  codeRunnerStore.exerciseCreatorController.yArrayRange.min = val[0]
-  codeRunnerStore.exerciseCreatorController.yArrayRange.max = val[1]
-}
 
-const onLengthChange = (val: any) => {
-  if (val[0] > val[1]) {
-    val[0] = val[1]
+  const onLengthChange = (val: any) => {
+    if (val[0] > val[1]) {
+      val[0] = val[1]
+    }
+    codeRunnerStore.exerciseCreatorController.lengthRange.min = val[0]
+    codeRunnerStore.exerciseCreatorController.lengthRange.max = val[1]
   }
-  codeRunnerStore.exerciseCreatorController.lengthRange.min = val[0]
-  codeRunnerStore.exerciseCreatorController.lengthRange.max = val[1]
-}
 
-onMounted(() => {
-  codeRunnerStore.exerciseCreatorController.resetParams()
-})
+  onMounted(() => {
+    codeRunnerStore.exerciseCreatorController.resetParams()
+  })
 
-const resetManualtTetstBuffer = () => {
-  console.log('input output type cahnged')
-  codeRunnerStore.clearTestsFromBuffer()
-}
+  const resetManualtTetstBuffer = () => {
+    console.log('input output type cahnged')
+    codeRunnerStore.clearTestsFromBuffer()
+  }
 </script>
 
 <style>
-.mainContainer {
-  overflow: scroll;
-  height: 100%;
-  max-height: 100vh;
-  background-color: rgb(22, 22, 22);
-  color: white;
-}
+  .mainContainer {
+    overflow: scroll;
+    height: 100%;
+    max-height: 100vh;
+    background-color: rgb(22, 22, 22);
+    color: white;
+  }
 
-.errorContainer {
-  color: red;
-  justify-self: center;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  text-align: center;
-}
+  .errorContainer {
+    color: red;
+    justify-self: center;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+  }
 </style>

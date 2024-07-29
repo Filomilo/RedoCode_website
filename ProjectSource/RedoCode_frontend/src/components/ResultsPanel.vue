@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import type CodeResult from '@/types/CodeResultsType'
+  import type CodeResult from '@/types/CodeResultsType'
 
-defineProps({
-  resultData: Object as () => CodeResult[]
-})
+  defineProps({
+    resultData: Object as () => CodeResult[],
+  })
 </script>

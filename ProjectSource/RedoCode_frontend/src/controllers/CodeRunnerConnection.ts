@@ -1,4 +1,8 @@
-import type { IMessage, IPublishParams, messageCallbackType } from '@stomp/stompjs'
+import type {
+  IMessage,
+  IPublishParams,
+  messageCallbackType,
+} from '@stomp/stompjs'
 import type CodeRunnerRequestMessage from '@/types/CodeRunnerRequestMessage'
 import type CodeRunnerStateCallBack from '@/types/CodeRunnerStateCallBack'
 import type CoderunnerState from '@/types/CodeRunnerState'
@@ -22,13 +26,14 @@ export default class CodeRunnerConnection {
 
   public readonly codeRunnerState: Ref<CoderunnerState> = ref({
     codeRunnerType: CodeRunnerType.UNIDENTIFIED,
-    state: CodeRunnerStatus.NONE
+    state: CodeRunnerStatus.NONE,
   })
-  
 
-  public readonly doesHaveACtiveToCodeRunner: ComputedRef<Boolean> = computed(() => {
-    return this.codeRunnerState.value.state === 'ACTIVE'
-  })
+  public readonly doesHaveACtiveToCodeRunner: ComputedRef<Boolean> = computed(
+    () => {
+      return this.codeRunnerState.value.state === 'ACTIVE'
+    }
+  )
   public readonly isAwaitngCodeRunner = computed(
     () => this.codeRunnerState.value.state == 'AWAITING'
   )
@@ -48,9 +53,12 @@ export default class CodeRunnerConnection {
 
   public readonly runRawCode = (code: string) => {
     const message: RawCodeToRunMessage = {
-      code: code
+      code: code,
     }
-    this._stompApiConnection.sendMessage('/public/app/CodeRun/RawCodeRun', message)
+    this._stompApiConnection.sendMessage(
+      '/public/app/CodeRun/RawCodeRun',
+      message
+    )
     console.log('runRawCode: ' + JSON.stringify(message))
   }
 
@@ -58,10 +66,13 @@ export default class CodeRunnerConnection {
     this.codeRunnerState.value.state = CodeRunnerStatus.AWAITING
     console.log('codeRunnerName: ' + JSON.stringify(codeRunnerName))
     const request: CodeRunnerRequestMessage = {
-      CodeRunnerType: codeRunnerName
+      CodeRunnerType: codeRunnerName,
     }
     console.log('requestCodeRunner: ' + JSON.stringify(request))
-    this._stompApiConnection.sendMessage('/public/app/codeRunnerRequest', request)
+    this._stompApiConnection.sendMessage(
+      '/public/app/codeRunnerRequest',
+      request
+    )
   }
 
   public readonly sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
@@ -82,7 +93,9 @@ export default class CodeRunnerConnection {
     //   stompClient.publish(message)
   }
 
-  public readonly sendToExerciseIdValidation = (content: ExerciseIdToRunMessage) => {
+  public readonly sendToExerciseIdValidation = (
+    content: ExerciseIdToRunMessage
+  ) => {
     //   console.log('sendToExerciseIdRun: ' + content)
     //   const message: IPublishParams = {
     //     destination: '/app//CodeRun/ExerciseIdValidation',
@@ -91,7 +104,9 @@ export default class CodeRunnerConnection {
     //   stompClient.publish(message)
   }
 
-  public readonly sendToExerciseCreationValidation = (content: ExercsieCreatorValidationMesage) => {
+  public readonly sendToExerciseCreationValidation = (
+    content: ExercsieCreatorValidationMesage
+  ) => {
     //   console.log('sendToExerciseCodeTests: ' + content)
     //   const message: IPublishParams = {
     //     destination: '/app//CodeRun/ExerciseCreationValidation',
@@ -99,7 +114,9 @@ export default class CodeRunnerConnection {
     //   }
     //   stompClient.publish(message)
   }
-  public readonly sendToExerciseCodeTests = (content: ExerciseTestToRunMesseage) => {
+  public readonly sendToExerciseCodeTests = (
+    content: ExerciseTestToRunMesseage
+  ) => {
     //   console.log('sendToExerciseExerciseCodeTests: ' + JSON.stringify( content))
     //   const message: IPublishParams = {
     //     destination: '/app//CodeRun/ExerciseCodeTests',
@@ -108,7 +125,9 @@ export default class CodeRunnerConnection {
     //   stompClient.publish(message)
   }
 
-  public readonly subscribeToCodeResults = (func: CodeRunnerResultsCallBack) => {
+  public readonly subscribeToCodeResults = (
+    func: CodeRunnerResultsCallBack
+  ) => {
     //   console.log('subscribing tor results')
     //   stompClient.subscribe('/user/topic/codeRunnerResults', (mesage: IMessage) => {
     //     console.log('staee code resulr: ' + JSON.stringify(mesage.body))
@@ -123,40 +142,58 @@ export default class CodeRunnerConnection {
     //   })
   }
 
-  public readonly runExercsieTestsCode = (exerciseCreatorController: ExerciseCreatorController) => {
-    if( this.codeRunnerState.value !==null){
-    const codeType: CodeRunnerType=this.codeRunnerState.value.codeRunnerType;
-    console.log("codeType"+ codeType)
-    console.log("exerciseCreatorController: "+ JSON.stringify(exerciseCreatorController))
-    const message: ExerciseTestToRunMesseage = {
-      code: exerciseCreatorController.solutionCodes[codeType],
-      manualTests: exerciseCreatorController.manualTestsSolutions[codeType] as ExerciseTest[],
-      inputType: exerciseCreatorController.inputType,
-      outputType: exerciseCreatorController.outputType,
-      amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-      autoTestminValue: exerciseCreatorController.autoTestminValue,
-      autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
-      lengthRange: exerciseCreatorController.lengthRange,
-      xArrayRange: exerciseCreatorController.xArrayRange,
-      yArrayRange: exerciseCreatorController.yArrayRange,
-      upperCaseInput: exerciseCreatorController.upperCaseInput,
-      lowerCaseInput: exerciseCreatorController.lowerCaseInput,
-      numberInput: exerciseCreatorController.numberInput,
-      specialCharacterInput: exerciseCreatorController.specialCharacterInput,
-      breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
-      spaceInupt: exerciseCreatorController.spaceInupt,
-      executionTime: exerciseCreatorController.timeForExecutionMs
-    }
-    console.log("exerciseCreatorController.manualTestsSolutions: "+JSON.stringify (exerciseCreatorController.manualTestsSolutions))
-    console.log('runExercsieTestsCode: ' + JSON.stringify(message))
+  public readonly runExercsieTestsCode = (
+    exerciseCreatorController: ExerciseCreatorController
+  ) => {
+    if (this.codeRunnerState.value !== null) {
+      const codeType: CodeRunnerType = this.codeRunnerState.value.codeRunnerType
+      console.log('codeType' + codeType)
+      console.log(
+        'exerciseCreatorController: ' +
+          JSON.stringify(exerciseCreatorController)
+      )
+      const message: ExerciseTestToRunMesseage = {
+        code: exerciseCreatorController.solutionCodes[codeType],
+        manualTests: exerciseCreatorController.manualTestsSolutions[
+          codeType
+        ] as ExerciseTest[],
+        inputType: exerciseCreatorController.inputType,
+        outputType: exerciseCreatorController.outputType,
+        amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
+        autoTestminValue: exerciseCreatorController.autoTestminValue,
+        autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
+        lengthRange: exerciseCreatorController.lengthRange,
+        xArrayRange: exerciseCreatorController.xArrayRange,
+        yArrayRange: exerciseCreatorController.yArrayRange,
+        upperCaseInput: exerciseCreatorController.upperCaseInput,
+        lowerCaseInput: exerciseCreatorController.lowerCaseInput,
+        numberInput: exerciseCreatorController.numberInput,
+        specialCharacterInput: exerciseCreatorController.specialCharacterInput,
+        breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
+        spaceInupt: exerciseCreatorController.spaceInupt,
+        executionTime: exerciseCreatorController.timeForExecutionMs,
+      }
+      console.log(
+        'exerciseCreatorController.manualTestsSolutions: ' +
+          JSON.stringify(exerciseCreatorController.manualTestsSolutions)
+      )
+      console.log('runExercsieTestsCode: ' + JSON.stringify(message))
 
-  this._stompApiConnection.sendMessage('/public/app/CodeRun/ExerciseCodeTests', message)
+      this._stompApiConnection.sendMessage(
+        '/public/app/CodeRun/ExerciseCodeTests',
+        message
+      )
     }
-}
+  }
 
-  public readonly submitExerciseCreationRequest = (request: ExercsieCreatorValidationMesage) => {
+  public readonly submitExerciseCreationRequest = (
+    request: ExercsieCreatorValidationMesage
+  ) => {
     console.log('submitExerciseCreationRequest: ' + JSON.stringify(request))
-    this._stompApiConnection.sendMessage('/public/app/CodeRun/ExerciseCreationValidation', request)
+    this._stompApiConnection.sendMessage(
+      '/public/app/CodeRun/ExerciseCreationValidation',
+      request
+    )
   }
 
   private readonly _vmStatusSubscription: StompApiSubscription

@@ -7,7 +7,8 @@ import ITestParameters from '@/types/ITestParameters'
 interface StringIndexed extends Record<CodeRunnerType, string> {}
 interface TestsIndexed extends Record<CodeRunnerType, ExerciseTest[]> {}
 
-export default interface ExercsieCreatorValidationMesage extends ITestParameters {
+export default interface ExercsieCreatorValidationMesage
+  extends ITestParameters {
   title: string
   description: string
   ram: number

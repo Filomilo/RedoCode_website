@@ -17,7 +17,7 @@ export default class ExerciseCreatorController
 {
   title!: string
   description!: string
-  languages!: CodeRunnerType[] 
+  languages!: CodeRunnerType[]
   ram!: number
   timeForTaskMin!: number
   timeForExecutionMs!: number
@@ -62,8 +62,8 @@ export default class ExerciseCreatorController
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
     ;(this.solutionCodes = {}),
-     (this.manualTestsSolutions = {} as TestsIndexed), 
-     (this.executionTime = 100)
+      (this.manualTestsSolutions = {} as TestsIndexed),
+      (this.executionTime = 100)
   }
 
   constructor() {
