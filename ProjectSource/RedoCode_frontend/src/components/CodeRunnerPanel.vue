@@ -76,7 +76,7 @@
     </Splitter>
   </div>
   <div v-else style="height: 100%">
-    {{ JSON.stringify( props.languageChoices) }}
+    {{ JSON.stringify(props.languageChoices) }}
     <ConnectToCodeRunnerPanel :languageChoices="props.languageChoices" />
   </div>
 </template>
@@ -112,7 +112,7 @@
   import ExerciseTest from '@/types/ExcericseTest'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import CodeRunnerStatus from '@/types/CodeRunnerStatus'
-import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
+  import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   const props = defineProps({
     exerciseInfo: {
       type: Object as () => IExerciseDescriptionI,
@@ -123,7 +123,10 @@ import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
     starting: { type: String, required: true },
     onRunCode: { type: Function, required: true },
     onSubmit: { type: Function, required: true },
-    onResults:{type: Function as PropType<(result: ProgramResultsMessage) => void>,required: true},
+    onResults: {
+      type: Function as PropType<(result: ProgramResultsMessage) => void>,
+      required: true,
+    },
     ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
   })
@@ -164,16 +167,16 @@ import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
 
   onMounted(() => {
     console.log('props: ' + JSON.stringify(props))
-    codeRunnerStore.updateCodeRunner();
+    codeRunnerStore.updateCodeRunner()
     // if (props.connectAtStart) {
     connectStomp()
-    ApiConnectionStore.setOnCodeResult(props.onResults);
+    ApiConnectionStore.setOnCodeResult(props.onResults)
     //connectToCodeRunner()
     // }
   })
 
   onBeforeRouteLeave(async (to, from, next) => {
-    ApiConnectionStore.clearOnCodeResult();
+    ApiConnectionStore.clearOnCodeResult()
     disconnectStomp()
     next()
   })

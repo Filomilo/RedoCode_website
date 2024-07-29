@@ -24,18 +24,16 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     }
   )
 
-let onCodeResult=(result: ProgramResultsMessage ): void=>{
+  let onCodeResult = (result: ProgramResultsMessage): void => {}
 
-};
-
-const setOnCodeResult=(func: (result: ProgramResultsMessage) => void): void  =>{
-  onCodeResult=func;
-}
-const clearOnCodeResult=()=>{
-  onCodeResult=(result: ProgramResultsMessage)=>{
-
+  const setOnCodeResult = (
+    func: (result: ProgramResultsMessage) => void
+  ): void => {
+    onCodeResult = func
   }
-}
+  const clearOnCodeResult = () => {
+    onCodeResult = (result: ProgramResultsMessage) => {}
+  }
 
   const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(
     stompApiConnection
@@ -48,7 +46,7 @@ const clearOnCodeResult=()=>{
       const results: ProgramResultsMessage = response as ProgramResultsMessage
       console.log('_CodeRunnerResultsSubscriptions: ' + JSON.stringify(results))
       onCodeResult(results)
-      // 
+      //
     }
   )
 
@@ -79,7 +77,7 @@ const clearOnCodeResult=()=>{
     stompApiConnection,
     codeRunnerConnection,
     setOnCodeResult,
-    clearOnCodeResult
+    clearOnCodeResult,
     // codeRunnerConnectionControler,
 
     // doesHaveACtiveToCodeRunner,

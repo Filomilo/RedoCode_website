@@ -38,14 +38,17 @@ export default class StompApiConnection {
           sub.activateSubscription()
         })
         const activeUserStore = useActiveUserStore()
-        console.log("on connected: "+JSON.stringify( activeUserStore.getToken()._rawValue) )
+        console.log(
+          'on connected: ' +
+            JSON.stringify(activeUserStore.getToken()._rawValue)
+        )
         if (activeUserStore.getToken().length > 0) {
           this.sendMessage('/public/app/tokenAuth', {
             token: activeUserStore.getToken(),
           })
         }
-        const codeRunnerStore=useCodeRunnerStore();
-        codeRunnerStore.updateCodeRunner();
+        const codeRunnerStore = useCodeRunnerStore()
+        codeRunnerStore.updateCodeRunner()
         this._onConnected('succesfully conntected')
       },
       onStompError: (frame: IFrame) => {

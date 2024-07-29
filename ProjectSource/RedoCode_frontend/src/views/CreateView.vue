@@ -3,9 +3,7 @@
   <br /> -->
 
   <main class="PlayGroundBase">
-    {{
-      JSON.stringify(activeUserStore._token)
-    }}
+    {{ JSON.stringify(activeUserStore._token) }}
     <TabView @tab-click="ontablClik">
       <div class="childHeight" id="information-switch">
         <TabPanel header="Information" class="childHeight">
@@ -64,13 +62,13 @@
   import { TabViewClickEvent } from 'primevue/tabview'
   import ExerciseTest from '@/types/ExcericseTest'
   import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
-import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-import { useActiveUserStore } from '@/stores/ActiveUserStore'
+  import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
+  import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
   const ToastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
-  const activeUserStore=useActiveUserStore();
+  const activeUserStore = useActiveUserStore()
   const codeUpdate = (code: string) => {
     console.log('codee update: ' + code)
     // codeRunnerStore.exerciseCreatorController.solutions
@@ -112,7 +110,9 @@ import { useActiveUserStore } from '@/stores/ActiveUserStore'
   }
 
   const exerciseLnageus = computed(() => {
-    return languageChoices.filter(x=>codeRunnerStore.exerciseCreatorController.languages.includes(x.value))
+    return languageChoices.filter(x =>
+      codeRunnerStore.exerciseCreatorController.languages.includes(x.value)
+    )
   })
 
   onMounted(() => {
@@ -141,8 +141,8 @@ import { useActiveUserStore } from '@/stores/ActiveUserStore'
     return codeRunnerStore.getExerciseSetupError() === ''
   })
 
-  const onCodeResult=(results: ProgramResultsMessage)=>{
-    console.log("playgronud view results: "+JSON.stringify(results) )
+  const onCodeResult = (results: ProgramResultsMessage) => {
+    console.log('playgronud view results: ' + JSON.stringify(results))
     codeRunnerStore.updateCreationTestData(results.results)
   }
 </script>

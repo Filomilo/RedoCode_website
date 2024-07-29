@@ -41,7 +41,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     console.log(JSON.stringify($cookies))
     if ($cookies?.isKey('token')) {
       const token = $cookies.get('token')
-      console.log("set token: "+ JSON.stringify( token))
+      console.log('set token: ' + JSON.stringify(token))
       _token.value = token
       if (validateToken()) {
         setIsLogged(true)

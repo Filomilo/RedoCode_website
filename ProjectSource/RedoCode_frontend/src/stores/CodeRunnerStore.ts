@@ -26,7 +26,7 @@ import { useActiveUserStore } from './ActiveUserStore'
 
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
-  const activeUserStore=useActiveUserStore();
+  const activeUserStore = useActiveUserStore()
   const playGroundBase: ExerciseData = {
     inputType: '',
     title: '',
@@ -168,26 +168,25 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     })
   }
 
- const  updateCreationTestData= (reuslts: ProgramResult[]) => {
-  console.log('----updateTestData')
-  exerciseCreatorController.manualTestsSolutions[
-    apiConnectionStore.codeRunnerConnection.codeRunnerState
-      .codeRunnerType
-  ].forEach((val: ExerciseTest, index: number) => {
-    console.log("--Test: "+JSON.stringify(reuslts[index]) )
+  const updateCreationTestData = (reuslts: ProgramResult[]) => {
+    console.log('----updateTestData')
+    exerciseCreatorController.manualTestsSolutions[
+      apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    ].forEach((val: ExerciseTest, index: number) => {
+      console.log('--Test: ' + JSON.stringify(reuslts[index]))
 
-    val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
-      ? ''
-      : reuslts[index].consoleOutput.output
-    val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
-      ? ''
-      : reuslts[index].consoleOutput.errorOutput
-    val.output = isNullOrUndef(reuslts[index].variables.value)
-      ? null
-      : reuslts[index].variables.value
-    val.isSolved = val.expectedOutput === reuslts[index].variables.value
-  })
-}
+      val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
+        ? ''
+        : reuslts[index].consoleOutput.output
+      val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
+        ? ''
+        : reuslts[index].consoleOutput.errorOutput
+      val.output = isNullOrUndef(reuslts[index].variables.value)
+        ? null
+        : reuslts[index].variables.value
+      val.isSolved = val.expectedOutput === reuslts[index].variables.value
+    })
+  }
 
   const getExerciseSetupError = (): String => {
     if (exerciseCreatorController.languages.length == 0) {
@@ -205,21 +204,26 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
     return ''
   }
-  
-  const updateCodeRunner=()=>{
-    console.log("updateCodeRunner: "+activeUserStore.getToken())
 
-    axios.post('/public/coderunner/state',  {token: activeUserStore.getToken()} )
-    .then(response => {
-        console.log('updateCodeRunner Response:', response.data);
-        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType=CodeRunnerType.UNIDENTIFIED;
-        apiConnectionStore.codeRunnerConnection.codeRunnerState.state=CodeRunnerStatus.NONE;
-    })
-    .catch(error => {
-        console.error('updateCodeRunner Error:', error);
-        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType=CodeRunnerType.UNIDENTIFIED;
-        apiConnectionStore.codeRunnerConnection.codeRunnerState.state=CodeRunnerStatus.NONE;
-    });
+  const updateCodeRunner = () => {
+    console.log('updateCodeRunner: ' + activeUserStore.getToken())
+
+    axios
+      .post('/public/coderunner/state', { token: activeUserStore.getToken() })
+      .then(response => {
+        console.log('updateCodeRunner Response:', response.data)
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType =
+          CodeRunnerType.UNIDENTIFIED
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.state =
+          CodeRunnerStatus.NONE
+      })
+      .catch(error => {
+        console.error('updateCodeRunner Error:', error)
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType =
+          CodeRunnerType.UNIDENTIFIED
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.state =
+          CodeRunnerStatus.NONE
+      })
   }
 
   return {
@@ -246,6 +250,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     updateTestData,
     getExerciseSetupError,
     updateCreationTestData,
-    updateCodeRunner
+    updateCodeRunner,
   }
 })
