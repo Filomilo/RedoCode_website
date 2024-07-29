@@ -9,6 +9,7 @@
       :ManualTests="[]"
       :AutoTests="[]"
       :codeContainerUpdate="codeConatienrUpdate"
+      :onResults="onCodeResult"
     />
   </main>
 </template>
@@ -23,6 +24,7 @@
   import ExerciseData from '@/types/ExerciseData'
   import { useToastStore } from '@/stores/ToastStore'
   import { languageChoices } from '@/config/Data'
+import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
 
@@ -71,5 +73,10 @@
 
   const onSubmit = () => {
     toastStore.featureNotImplemented('onSubmit')
+  }
+
+  const onCodeResult=(results: ProgramResultsMessage)=>{
+    console.log("Exercise view results: "+JSON.stringify(results) )
+    codeRunnerStore.updateTestData(results.results)
   }
 </script>

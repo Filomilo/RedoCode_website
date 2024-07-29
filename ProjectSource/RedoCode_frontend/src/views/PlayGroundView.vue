@@ -8,6 +8,7 @@
       starting=""
       :onRunCode="onRunCode"
       :onSubmit="onSubmit"
+      :onResults="onCodeResult"
     />
   </main>
 </template>
@@ -22,6 +23,7 @@
   import { languageChoices } from '@/config/Data'
   import { useToastStore } from '@/stores/ToastStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   const ApiConnectionStore = useApiConnectionStore()
   const setupPlayground = () => {
     // console.log("-----------------")
@@ -49,6 +51,10 @@
 
   const onSubmit = () => {
     toastStore.featureNotImplemented('feature not related')
+  }
+  const onCodeResult=(results: ProgramResultsMessage)=>{
+    console.log("playgronud view results: "+JSON.stringify(results) )
+    codeRunnerStore.updateTestData(results.results)
   }
 </script>
 

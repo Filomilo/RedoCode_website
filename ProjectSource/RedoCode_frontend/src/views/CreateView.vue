@@ -40,6 +40,7 @@
             ]
           "
           :AutoTests="[]"
+          :onResults="onCodeResult"
         />
       </TabPanel>
     </TabView>
@@ -62,6 +63,7 @@
   import { TabViewClickEvent } from 'primevue/tabview'
   import ExerciseTest from '@/types/ExcericseTest'
   import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
+import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
 
   const ToastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
@@ -136,6 +138,11 @@
   const testValidation = computed(() => {
     return codeRunnerStore.getExerciseSetupError() === ''
   })
+
+  const onCodeResult=(results: ProgramResultsMessage)=>{
+    console.log("playgronud view results: "+JSON.stringify(results) )
+    codeRunnerStore.updateCreationTestData(results.results)
+  }
 </script>
 
 <style>

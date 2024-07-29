@@ -84,7 +84,7 @@
   import CodeEditor from '@/components/CodeEditorPanel.vue'
   import BasicButton from '@/components/BasicButton.vue'
   import type { Button } from 'bootstrap'
-  import { ref, onMounted, type Ref } from 'vue'
+  import { ref, onMounted, type Ref, PropType } from 'vue'
   import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
   import axios from 'axios'
   import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
@@ -111,6 +111,7 @@
   import ExerciseTest from '@/types/ExcericseTest'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   const props = defineProps({
     exerciseInfo: {
       type: Object as () => IExerciseDescriptionI,
@@ -121,6 +122,7 @@
     starting: { type: String, required: true },
     onRunCode: { type: Function, required: true },
     onSubmit: { type: Function, required: true },
+    onResults:{type: Function as PropType<(result: ProgramResultsMessage) => void>,required: true},
     ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
   })
@@ -163,11 +165,13 @@
     console.log('props: ' + JSON.stringify(props))
     // if (props.connectAtStart) {
     connectStomp()
+    ApiConnectionStore.setOnCodeResult(props.onResults);
     //connectToCodeRunner()
     // }
   })
 
   onBeforeRouteLeave(async (to, from, next) => {
+    ApiConnectionStore.clearOnCodeResult();
     disconnectStomp()
     next()
   })
