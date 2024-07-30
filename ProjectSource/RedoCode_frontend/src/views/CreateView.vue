@@ -3,7 +3,6 @@
   <br /> -->
 
   <main class="PlayGroundBase">
-    {{ JSON.stringify(activeUserStore._token) }}
     <TabView @tab-click="ontablClik">
       <div class="childHeight" id="information-switch">
         <TabPanel header="Information" class="childHeight">
