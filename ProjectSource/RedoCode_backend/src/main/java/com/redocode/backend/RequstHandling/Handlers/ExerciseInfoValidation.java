@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 @Slf4j
 public class ExerciseInfoValidation extends MessageRequestHandler{
 
-    static String stringTitlePatttrnRegexMatch= "^[\\S ]{5,30}$";
+    static String stringTitlePatttrnRegexMatch= "^(?=.{5,30}$)(?!\\s)[^\\s]*(?:\\s[^\\s]*)*$\n";
     static Pattern TitlePattern=Pattern.compile(stringTitlePatttrnRegexMatch);
 
 
-    static String stringDescPatttrnRegexMatch= "^[\\S ]{10,3000}$";
+    static String stringDescPatttrnRegexMatch= "^(?=.{10,3000}$)(?!\\s)[^\\s]*(?:\\s[^\\s]*)*$\n";
     static Pattern DescPattern=Pattern.compile(stringDescPatttrnRegexMatch);
 
 

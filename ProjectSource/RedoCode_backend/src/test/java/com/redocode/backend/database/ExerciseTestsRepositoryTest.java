@@ -2,6 +2,7 @@ package com.redocode.backend.database;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.ArrayOfIntegers;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleInteger;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
@@ -28,6 +29,7 @@ class ExerciseTestsRepositoryTest {
     @Test
     void saveExerciseTest() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
+
         SingleInteger inputVal= new SingleInteger(3);
         ArrayOfIntegers expectedOutput=new ArrayOfIntegers (new Integer[]{0,1,1});
         String inputString=  objectMapper.writeValueAsString(inputVal);
@@ -45,8 +47,8 @@ class ExerciseTestsRepositoryTest {
         List<ExerciseTests> exerciseTestsList= exerciseTestsRepository.findAll();
         ExerciseTests lastAdded= exerciseTestsList.get(exerciseTestsList.size()-1);
 
-        SingleInteger inputFromTest=objectMapper.readValue(lastAdded.getInput(),SingleInteger.class);
-        ArrayOfIntegers ouptutFromTest=objectMapper.readValue(lastAdded.getExpectedOutput(),ArrayOfIntegers.class);
+        SingleInteger inputFromTest= (SingleInteger) RedoCodeObjectMapper.parseVaraibles(lastAdded.getInput(), Variables.VARIABLES_TYPES.SINGLE_INTEGER);
+        ArrayOfIntegers ouptutFromTest= (ArrayOfIntegers) RedoCodeObjectMapper.parseVaraibles(lastAdded.getExpectedOutput(), Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS);
 
         assertEquals(test,lastAdded);
         assertEquals(inputVal,inputFromTest);
