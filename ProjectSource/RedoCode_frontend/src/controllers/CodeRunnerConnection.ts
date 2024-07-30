@@ -152,11 +152,24 @@ export default class CodeRunnerConnection {
         'exerciseCreatorController: ' +
           JSON.stringify(exerciseCreatorController)
       )
+
+      
+      const tests: ExerciseTest[]=exerciseCreatorController.manualTestsSolutions[
+        codeType
+      ].map((x)=>{
+        const test:ExerciseTest={
+          input: JSON.stringify(x.input),
+          output: JSON.stringify(x.output),
+          expectedOutput: JSON.stringify(x.expectedOutput),
+          errorOutput: x.errorOutput,
+          consoleOutput: x.consoleOutput,
+          isSolved: null
+        }
+        return test;
+      });
       const message: ExerciseTestToRunMesseage = {
         code: exerciseCreatorController.solutionCodes[codeType],
-        manualTests: exerciseCreatorController.manualTestsSolutions[
-          codeType
-        ] as ExerciseTest[],
+        manualTests: tests,
         inputType: exerciseCreatorController.inputType,
         outputType: exerciseCreatorController.outputType,
         amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
@@ -192,7 +205,7 @@ export default class CodeRunnerConnection {
     console.log('submitExerciseCreationRequest: ' + JSON.stringify(request))
     this._stompApiConnection.sendMessage(
       '/public/app/CodeRun/ExerciseCreationValidation',
-      request
+      JSON.stringify(request)
     )
   }
 
