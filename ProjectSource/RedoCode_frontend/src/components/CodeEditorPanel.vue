@@ -83,6 +83,7 @@
   const confirm = useConfirm()
   const MONACO_EDITOR_OPTIONS = {
     automaticLayout: true,
+    autoClosingBrackets:false
   }
   const chosenLangague = ref('Cpp')
   // const langaugesOptions = ['cpp', 'Js']

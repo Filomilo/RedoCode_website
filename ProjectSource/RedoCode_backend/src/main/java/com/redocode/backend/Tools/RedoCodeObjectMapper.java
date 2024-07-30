@@ -89,7 +89,7 @@ public class RedoCodeObjectMapper {
         switch (type) {
             case SINGLE_INTEGER -> {input=new SingleInteger(mapper.readValue(toParse, Integer.class));
             }
-            case SINGLE_STRING -> {input=new SingleString(mapper.readValue(toParse, String.class));
+            case SINGLE_STRING -> {input=new SingleString(toParse);
             }
             case SINGLE_FLOAT -> {input=new SingleFloat(mapper.readValue(toParse, Float.class));
             }

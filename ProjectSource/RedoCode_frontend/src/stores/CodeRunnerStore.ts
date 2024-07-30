@@ -163,8 +163,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         : reuslts[index].consoleOutput.errorOutput
       val.output = isNullOrUndef(reuslts[index].variables)
         ? null
-        : reuslts[index].variables.value
-      val.isSolved = val.expectedOutput === reuslts[index].variables.value
+        : reuslts[index].variables
+      val.isSolved = val.expectedOutput === reuslts[index].variables
     })
   }
 
@@ -181,10 +181,10 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
         ? ''
         : reuslts[index].consoleOutput.errorOutput
-      val.output = isNullOrUndef(reuslts[index].variables.value)
+      val.output = isNullOrUndef(reuslts[index].variables)
         ? null
-        : reuslts[index].variables.value
-      val.isSolved = val.expectedOutput === reuslts[index].variables.value
+        : reuslts[index].variables
+      val.isSolved = val.expectedOutput === reuslts[index].variables
     })
   }
 

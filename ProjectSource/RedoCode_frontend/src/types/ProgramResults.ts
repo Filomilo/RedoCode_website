@@ -3,9 +3,8 @@ interface ConsoleOutput {
   output: string
   errorOutput: string
 }
-interface Vars {
-  value: number[] | number | string | string[] | null
-}
+type Vars=number[] | number | string | string[] | null
+
 
 export default interface ProgramResult {
   consoleOutput: ConsoleOutput
