@@ -11,6 +11,7 @@ import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import com.redocode.backend.database.User;
+import lombok.SneakyThrows;
 
 import java.util.HashMap;
 
@@ -112,5 +113,9 @@ public class RedoCodeObjectMapper {
 
     public static String VarAsString(Variables variables) throws JsonProcessingException {
         return mapper.writeValueAsString(variables.getValue());
+    }
+@SneakyThrows
+    public static Variables parseVaraibles(byte[] bytes, Variables.VARIABLES_TYPES variablesTypes) {
+        return  parseVaraibles(new String(bytes),variablesTypes);
     }
 }

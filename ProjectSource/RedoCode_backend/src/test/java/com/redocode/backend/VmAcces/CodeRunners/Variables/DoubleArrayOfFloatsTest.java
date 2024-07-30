@@ -59,7 +59,7 @@ class DoubleArrayOfFloatsTest {
         DoubleArrayOfFloats doubleArrayOfFloats=new DoubleArrayOfFloats(arr);
         com.fasterxml.jackson.databind.ObjectMapper objectMapper= new com.fasterxml.jackson.databind.ObjectMapper();
         byte[] bytes= objectMapper.writeValueAsBytes(doubleArrayOfFloats);
-        DoubleArrayOfFloats res= objectMapper.readValue(bytes,DoubleArrayOfFloats.class);
+        DoubleArrayOfFloats res= (DoubleArrayOfFloats) RedoCodeObjectMapper.parseVaraibles (bytes, Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS);
         assertEquals(doubleArrayOfFloats,res);
     }
     @Test
@@ -75,7 +75,7 @@ class DoubleArrayOfFloatsTest {
         DoubleArrayOfFloats doubleArrayOfFloats=new DoubleArrayOfFloats(arr);
         com.fasterxml.jackson.databind.ObjectMapper objectMapper= new com.fasterxml.jackson.databind.ObjectMapper();
        String string= objectMapper.writeValueAsString(doubleArrayOfFloats);
-        DoubleArrayOfFloats res= objectMapper.readValue(string,DoubleArrayOfFloats.class);
+        DoubleArrayOfFloats res= (DoubleArrayOfFloats) RedoCodeObjectMapper.parseVaraibles(string, Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS);
         assertEquals(doubleArrayOfFloats,res);
     }
 
