@@ -22,6 +22,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.DoubleArrayOfFloats;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleInteger;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.WebSocketTestBase;
 import com.redocode.backend.database.*;
@@ -743,6 +744,112 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
     }
 
+
+    @Test
+    void ruNExerciseTestCodesJsReturnOneINcorrect() throws InterruptedException, JsonProcessingException {
+
+
+
+
+
+        int amountOfAutoTests=4;
+        List<ExerciseTests> tests=
+                new ArrayList<>();
+
+            tests.add(
+                    ExerciseTests.builder()
+                            .input(objectMapper.writeValueAsString(new SingleInteger(1)))
+                            .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(1)))
+                            .build()
+            );
+        tests.add(
+                ExerciseTests.builder()
+                        .input(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .build()
+        );
+        tests.add(
+                ExerciseTests.builder()
+                        .input(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .build()
+        );
+        tests.add(
+                ExerciseTests.builder()
+                        .input(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .build()
+        );
+        tests.add(
+                ExerciseTests.builder()
+                        .input(objectMapper.writeValueAsString(new SingleInteger(2)))
+                        .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(2)))
+                        .build()
+        );
+        tests.add(
+                ExerciseTests.builder()
+                        .input(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(1)))
+                        .build()
+        );
+
+
+
+        TimeUnit.SECONDS.sleep(2);
+
+        subscribe("/user/public/topic/codeRunnerResults");
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
+                .CodeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .build();
+
+        ExerciseTestToRunMesseage exerciseTestToRunMesseage=ExerciseTestToRunMesseage.builder()
+                .code("function solution(x)\n{\nreturn 1;\n}")
+                .amountOfAutoTests(amountOfAutoTests)
+                .lengthRange(new Range(-3,6))
+                .inputType(String.valueOf(Variables.VARIABLES_TYPES.SINGLE_INTEGER))
+                .manualTests(tests)
+                .executionTime(200L)
+                .outputType(String.valueOf(Variables.VARIABLES_TYPES.SINGLE_INTEGER))
+                .xArrayRange(new Range(1,7))
+                .yArrayRange(new Range(4,8))
+                .lengthRange(new Range(-444,555))
+                .build();
+
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        log.info("messge send to /public/app/codeRunnerRequest with content: "+ mapper.writeValueAsString(codeRunnerRequestMessage));
+
+        String reqMes=mapper.writeValueAsString(codeRunnerRequestMessage);
+        log.info("reqMes: \n"+ reqMes);
+        TimeUnit.SECONDS.sleep(2);
+
+        String mess=mapper.writeValueAsString(exerciseTestToRunMesseage);
+        log.info("Messeage: \n"+ mess);
+
+        session.send( "/public/app"+INrunExercsieTestsCode, mapper.writeValueAsBytes(exerciseTestToRunMesseage));
+        log.info("messge send to " + "/public/app"+INrunRawCode+" with content: "+ mapper.writeValueAsString(exerciseTestToRunMesseage));
+
+//        Thread.sleep(3000);
+
+        String results=
+                blockingQueue.poll(60,SECONDS);
+
+        assertNotNull(results);
+        assertTrue(results!="");
+
+        log.info(
+                "results: \n\n\n"+results+"\n\n\n\n\n"
+        );
+
+        int i = 0;
+        Pattern p = Pattern.compile("consoleOutput");
+        Matcher m = p.matcher( results );
+        while (m.find()) {
+            i++;
+        }
+        log.info("input size: "+ tests.size());
+        assertEquals(tests.size()-1, i);
+
+    }
 
 
     @SneakyThrows

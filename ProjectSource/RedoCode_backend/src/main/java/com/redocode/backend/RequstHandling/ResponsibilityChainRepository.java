@@ -57,6 +57,7 @@ public class ResponsibilityChainRepository {
                     .next(new CodeRunnerAccesValidationHandler())
                     .next(new AutoTestGeneratorHandler())
                     .next(new CodeTestHandler())
+                    .setContinueOnError(true)
                     .next(new SendProgramResultsHandler())
                     .build();
 

@@ -70,7 +70,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
         catch (NullPointerException ex)
         {
             log.error("varaible NULL: "+ ex.getMessage());
-            throw new RequestHadndlingException("returned value is null_ "+ ex.getMessage());
+            throw new RequestHadndlingException("returned value is null ");
         }
         catch (Exception ex)
         {
@@ -130,7 +130,10 @@ public class CodeTestHandler extends  BaseRequestHandler {
                                 )
                                 .build()
                 );
+                if(!is_continueOnError())
                 throw new RequestHadndlingException("Test "+ i+ " failed: "+ex.getMessage());
+                else
+                    break;
             }
             i++;
         }

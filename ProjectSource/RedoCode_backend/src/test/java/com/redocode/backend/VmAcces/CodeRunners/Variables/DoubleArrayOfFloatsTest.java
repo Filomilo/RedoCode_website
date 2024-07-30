@@ -93,6 +93,18 @@ class DoubleArrayOfFloatsTest {
 
     }
 
+    @Test
+    @SneakyThrows
+    void StringifyRegularTest()
+    {
+        Float[][] arr ={{1.1f,1.2f},{1.3f,1.4f}};
+
+        DoubleArrayOfFloats doubleArrayOfFloats=new DoubleArrayOfFloats(arr);
+        com.fasterxml.jackson.databind.ObjectMapper objectMapper= new com.fasterxml.jackson.databind.ObjectMapper();
+        String stringFromDoubleArray= objectMapper.writeValueAsString(doubleArrayOfFloats);
+        String stringFromRegularArray= objectMapper.writeValueAsString(arr);
+        assertEquals(stringFromRegularArray,stringFromDoubleArray);
+    }
 
 
 
