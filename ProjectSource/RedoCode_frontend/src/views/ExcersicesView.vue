@@ -23,6 +23,7 @@
         </template>
         <template #item-actions="item">
           <Button
+          :id="'try_exercise-button-'+item.id"
             v-on:click="onExcersiceButton(item.id)"
             style="
               background-color: transparent;
