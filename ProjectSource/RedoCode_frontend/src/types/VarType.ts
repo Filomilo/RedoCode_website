@@ -11,24 +11,42 @@ type VarType =
 export default VarType
 
 export const isTypeString = (type: VarType): boolean => {
-  return type === 'SINGLE_STRING' || type === 'ARRAY_STRINGS' || type === 'DOUBLE_ARRAY_OF_STRINGS'
+  return (
+    type === 'SINGLE_STRING' ||
+    type === 'ARRAY_STRINGS' ||
+    type === 'DOUBLE_ARRAY_OF_STRINGS'
+  )
 }
 
 export const isTypeFloat = (type: VarType): boolean => {
-  return type === 'SINGLE_FLOAT' || type === 'ARRAY_OF_FLOATS' || type === 'DOUBLE_ARRAY_OF_FLOATS'
+  return (
+    type === 'SINGLE_FLOAT' ||
+    type === 'ARRAY_OF_FLOATS' ||
+    type === 'DOUBLE_ARRAY_OF_FLOATS'
+  )
 }
 
 export const isTypeInt = (type: VarType): boolean => {
   return (
-    type === 'SINGLE_INTEGER' || type === 'ARRAY_OF_INTEGERS' || type === 'DOUBLE_ARRAY_OF_INTEGERS'
+    type === 'SINGLE_INTEGER' ||
+    type === 'ARRAY_OF_INTEGERS' ||
+    type === 'DOUBLE_ARRAY_OF_INTEGERS'
   )
 }
 
 export const isTypeSingle = (type: VarType): boolean => {
-  return type === 'SINGLE_INTEGER' || type === 'SINGLE_STRING' || type === 'SINGLE_FLOAT'
+  return (
+    type === 'SINGLE_INTEGER' ||
+    type === 'SINGLE_STRING' ||
+    type === 'SINGLE_FLOAT'
+  )
 }
 export const isTypeArray = (type: VarType): boolean => {
-  return type === 'ARRAY_OF_INTEGERS' || type === 'ARRAY_STRINGS' || type === 'ARRAY_OF_FLOATS'
+  return (
+    type === 'ARRAY_OF_INTEGERS' ||
+    type === 'ARRAY_STRINGS' ||
+    type === 'ARRAY_OF_FLOATS'
+  )
 }
 
 export const isTypeDoubleArray = (type: VarType): boolean => {

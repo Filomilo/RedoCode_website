@@ -53,38 +53,46 @@
       "
     >
       {{
-        data.isSolved !== null ? (data.expectedOutput == data.output ? 'Correct' : 'Failed') : ''
+        data.isSolved !== null
+          ? data.expectedOutput == data.output
+            ? 'Correct'
+            : 'Failed'
+          : ''
       }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type ExerciseTest from '@/types/ExcericseTest'
-import { formatToHtml } from '@/config/Tools'
-import { computed } from 'vue'
-const props = defineProps<{
-  data: ExerciseTest
-  index: number
-}>()
+  import type ExerciseTest from '@/types/ExcericseTest'
+  import { formatToHtml } from '@/config/Tools'
+  import { computed } from 'vue'
+  const props = defineProps<{
+    data: ExerciseTest
+    index: number
+  }>()
 
-const formattedConsole = computed<string>(() => formatToHtml(props.data.consoleOutput))
-const formattedEror = computed<string>(() => formatToHtml(props.data.errorOutput))
+  const formattedConsole = computed<string>(() =>
+    formatToHtml(props.data.consoleOutput)
+  )
+  const formattedEror = computed<string>(() =>
+    formatToHtml(props.data.errorOutput)
+  )
 </script>
 
 <style>
-.correct {
-  border-color: lime;
-  color: lime;
-}
+  .correct {
+    border-color: lime;
+    color: lime;
+  }
 
-.wrong {
-  border-color: red;
-  color: red;
-}
+  .wrong {
+    border-color: red;
+    color: red;
+  }
 
-.unknown {
-  border-color: transparent;
-  height: 10rem;
-}
+  .unknown {
+    border-color: transparent;
+    height: 10rem;
+  }
 </style>

@@ -55,7 +55,7 @@ public class ContainerController {
             command+=" > ";
             command+="\""+fileName+"\"";
             logger.info("creating file "+ fileName+ "with content\n"+ fileContent);
-            executeBash(command,1000);
+            executeBash(command,5000);
 
 
     }
@@ -65,7 +65,7 @@ public class ContainerController {
    protected String[] listFiles()
     {
 
-     ConsoleOutput consoleOutput=  executeCommand(500,"ls");
+     ConsoleOutput consoleOutput=  executeCommand(5000,"ls");
      return consoleOutput.getOutput().split("\n");
     }
 
@@ -73,7 +73,7 @@ public class ContainerController {
     void removeFile(String fileName)
     {
         logger.info("removing file: "+ fileName);
-        executeCommand(500,"unlink",fileName);
+        executeCommand(5000,"unlink",fileName);
     }
 
 
@@ -83,7 +83,7 @@ public class ContainerController {
     @SneakyThrows
     public String getFileContnt(String fileName) {
         logger.info("getting file conent: "+ fileName);
-        ConsoleOutput consoleOutput=executeCommand(2000,"cat",fileName);
+        ConsoleOutput consoleOutput=executeCommand(5000,"cat",fileName);
         return consoleOutput.getOutput();
     }
 

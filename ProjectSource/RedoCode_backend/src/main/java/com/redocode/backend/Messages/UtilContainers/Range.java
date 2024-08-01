@@ -2,9 +2,7 @@ package com.redocode.backend.Messages.UtilContainers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.dialect.PostgreSQLCastingInetJdbcType;
@@ -19,10 +17,9 @@ import java.sql.SQLException;
 @Value
 @SuperBuilder
 @Jacksonized
-@JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class Range { //todo: change to postgres database  type mappign
+public class Range implements Serializable{ //todo: change to postgres database  type mappign
     @NotNull
     Float min;
     @NotNull

@@ -2,6 +2,7 @@ import { ActivationState, Client, IFrame, StompHeaders } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
 import { stompClient } from './StompApiConnectionold'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
 export default class StompApiConnection {
   userName: String | null = null
@@ -25,7 +26,7 @@ export default class StompApiConnection {
     this._stompClient = new Client({
       brokerURL: connectionUrl,
       connectHeaders: {
-        token: 'your-token-here'
+        token: 'your-token-here',
       },
       beforeConnect: () => {
         console.log(connectionUrl + ' beforeConnect')
@@ -37,11 +38,14 @@ export default class StompApiConnection {
           sub.activateSubscription()
         })
         const activeUserStore = useActiveUserStore()
+        console.log("on connected: "+JSON.stringify( activeUserStore.getToken()) )
         if (activeUserStore.getToken().length > 0) {
           this.sendMessage('/public/app/tokenAuth', {
-            token: activeUserStore.getToken()
+            token: activeUserStore.getToken(),
           })
         }
+        const codeRunnerStore=useCodeRunnerStore();
+        codeRunnerStore.updateCodeRunner();
         this._onConnected('succesfully conntected')
       },
       onStompError: (frame: IFrame) => {
@@ -55,18 +59,18 @@ export default class StompApiConnection {
       onWebSocketError: (frame: IFrame) => {
         console.log(connectionUrl + ' onWebSocketError')
         this._onError('there was an websocket error wtih server connection')
-      }
+      },
     })
 
     this._stompClient.connectHeaders = {
-      login: 'AAA'
+      login: 'AAA',
     }
   }
 
   setConnectionAuthentication(token: string) {
     console.log('setConnectionAuthentication')
     this._stompClient.connectHeaders = {
-      token: token
+      token: token,
     }
   }
 
@@ -87,7 +91,10 @@ export default class StompApiConnection {
     this._stompClient.active
   }
 
-  public subscribe(location: string, callback: (mesage: Object) => void): StompApiSubscription {
+  public subscribe(
+    location: string,
+    callback: (mesage: Object) => void
+  ): StompApiSubscription {
     console.log('new subsciption on ' + location)
     const newSubsricption: StompApiSubscription = new StompApiSubscription(
       this._stompClient,
@@ -103,7 +110,7 @@ export default class StompApiConnection {
 
     const obj = {
       destination: destination,
-      body: JSON.stringify(message)
+      body: JSON.stringify(message),
     }
 
     this._stompClient.publish(obj)

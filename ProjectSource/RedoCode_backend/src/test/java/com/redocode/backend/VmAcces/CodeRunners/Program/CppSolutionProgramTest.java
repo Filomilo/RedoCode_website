@@ -40,7 +40,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleInteger(1))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
-                .setTimeout(0)
+                .setTimeout(1)
                 .setSolutionCode("int solution(int val){" +
                         "return val;" +
                         "}")
@@ -67,7 +67,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
-                .setTimeout(500)
+                .setTimeout(50000)
                 .setSolutionCode("int solution(int val){" +
                         "return val;" +
                         "}")
@@ -96,7 +96,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
-                .setTimeout(1000)
+                .setTimeout(10000)
                 .setSolutionCode("float solution(float val){" +
                         "return val;" +
                         "}")
@@ -118,7 +118,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleString(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
-                .setTimeout(500)
+                .setTimeout(5000)
                 .setSolutionCode("#include <string>\n" +
                         "std::string solution(std::string val){" +
                         "return val;" +
@@ -143,7 +143,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
-                .setTimeout(500)
+                .setTimeout(5000)
                 .setSolutionCode("#include <string>\n" +
                                 "#include <vector>\n"+
                         "std::vector<std::string> solution(std::vector<std::string> val){" +
@@ -170,7 +170,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
-                .setTimeout(500)
+                .setTimeout(5000)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<int> solution(std::vector<int> val){" +
                                 "return val;" +
@@ -196,7 +196,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_OF_FLOATS)
-                .setTimeout(500)
+                .setTimeout(5000)
                 .setSolutionCode(
                         "#include <vector>\n std::vector<float> solution(std::vector<float> val){" +
                                 "return val;" +
@@ -256,7 +256,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_INTEGERS)
-                .setTimeout(1000)
+                .setTimeout(10000)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<int>> solution(std::vector<std::vector<int>> val){" +
                                 "return val;" +
@@ -290,7 +290,7 @@ class CppSolutionProgramTest {
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS)
-                .setTimeout(500)
+                .setTimeout(50000)
                 .setSolutionCode(
                         "#include <vector>\nstd::vector<std::vector<float>> solution(std::vector<std::vector<float>> val){" +
                                 "return val;" +

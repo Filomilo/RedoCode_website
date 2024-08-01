@@ -235,6 +235,7 @@ class ExerciseTestFactoryTest {
             log.info("- "+singleString.getValue()+" -");
             for (int j = 0; j <singleString.getValue().length() ; j++) {
                 Character character= (Character) singleString.getValue().charAt(j);
+                log.info("Checking character: "+ character+": "+ (int)character);
                 assertTrue(
                         (int)character=='\n' || (int)character=='\t'
                 );

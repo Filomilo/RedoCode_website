@@ -16,27 +16,27 @@ const router = createRouter({
     {
       path: '/',
       name: '',
-      component: HomeView
+      component: HomeView,
     },
     {
       path: '/Home',
       name: 'Home',
-      component: HomeView
+      component: HomeView,
     },
     {
       path: '/Exercises',
       name: 'Excersices',
-      component: ExcersicesView
+      component: ExcersicesView,
     },
     {
       path: '/Exercises/:id',
       name: 'Exercise',
-      component: ExcersiceView
+      component: ExcersiceView,
     },
     {
       path: '/PlayGround',
       name: 'PlayGround',
-      component: PlayGroundView
+      component: PlayGroundView,
     },
     {
       path: '/create',
@@ -51,12 +51,12 @@ const router = createRouter({
           // console.log("Unauhenticated")
           next({ name: 'Home' })
         }
-      }
+      },
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
     },
     {
       path: '/Account',
@@ -71,19 +71,19 @@ const router = createRouter({
           console.log('Unauhenticated')
           next({ name: 'Home' })
         }
-      }
+      },
     },
     {
       path: '/Results',
       name: 'Results',
-      component: ResultsView
+      component: ResultsView,
     },
     {
       path: '/test',
       name: 'test',
-      component: TestView
-    }
-  ]
+      component: TestView,
+    },
+  ],
 })
 
 export default router

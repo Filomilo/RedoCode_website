@@ -10,11 +10,16 @@ export const useToastStore = defineStore('toastStore', () => {
       severity: 'error',
       summary: 'error',
       detail: 'Wrong e-mail or passowrd',
-      life: 2000
+      life: 2000,
     })
   }
   const shotCorrectLogin = () => {
-    toast.add({ severity: 'success', summary: 'signed in', detail: 'signed in', life: 2000 })
+    toast.add({
+      severity: 'success',
+      summary: 'signed in',
+      detail: 'signed in',
+      life: 2000,
+    })
   }
 
   const featureNotImplemented = (deatil: string = '') => {
@@ -22,7 +27,7 @@ export const useToastStore = defineStore('toastStore', () => {
       severity: 'warn',
       summary: 'unsuported',
       detail: 'feature not implemented: ' + deatil,
-      life: 7000
+      life: 7000,
     })
   }
 
@@ -31,7 +36,7 @@ export const useToastStore = defineStore('toastStore', () => {
       severity: 'success',
       summary: 'Success',
       detail: message,
-      life: 2000
+      life: 2000,
     })
   }
   const showErrorMessage = (message: string) => {
@@ -39,7 +44,7 @@ export const useToastStore = defineStore('toastStore', () => {
       severity: 'error',
       summary: 'Error',
       detail: message,
-      life: 2000
+      life: 2000,
     })
   }
   const showProccessingMessage = (message: string) => {
@@ -47,7 +52,7 @@ export const useToastStore = defineStore('toastStore', () => {
       severity: 'info',
       summary: 'Processing',
       detail: message,
-      life: 2000
+      life: 2000,
     })
   }
 
@@ -57,6 +62,6 @@ export const useToastStore = defineStore('toastStore', () => {
     featureNotImplemented,
     showSuccessMessage,
     showErrorMessage,
-    showProccessingMessage
+    showProccessingMessage,
   }
 })

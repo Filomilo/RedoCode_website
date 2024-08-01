@@ -24,6 +24,9 @@ import java.util.function.Function;
 public abstract class BaseRequestHandler implements IRequestHandler{
 
     @Setter
+    private boolean _continueOnError = false;
+
+    @Setter
     private int _nodeLevel;
 
     BaseRequestHandler nextRequestHandler;

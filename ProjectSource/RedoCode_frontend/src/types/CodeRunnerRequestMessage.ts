@@ -1,3 +1,5 @@
+import CodeRunnerType from './CodeRunnerTypes'
+
 export default interface CodeRunnerRequestMessage {
-  CodeRunnerType: String
+  CodeRunnerType: CodeRunnerType
 }

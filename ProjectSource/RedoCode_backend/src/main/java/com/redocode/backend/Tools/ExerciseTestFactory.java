@@ -314,7 +314,7 @@ public class ExerciseTestFactory {
                     ExerciseTests
                             .builder()
                             .expectedOutput("")
-                            .input(mapper.writeValueAsString(generateFinalVar()))
+                            .input(RedoCodeObjectMapper.VarAsString(generateFinalVar()))
                             .build()
             );
         }

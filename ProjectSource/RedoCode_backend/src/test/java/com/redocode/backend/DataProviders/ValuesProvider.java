@@ -130,11 +130,36 @@ public class ValuesProvider {
     }
     public static Stream<Arguments> doubleArrayFloatProvider() {
         List<Float[][]> argeumnets= (List<Float[][]>) new ArrayList<Float[][]>();
-        int width=rand.nextInt(1,20);
-        int height=rand.nextInt(1,20);
+        int width=rand.nextInt(1,10);
+        int height=rand.nextInt(1,10);
         argeumnets.add(generateRadnomFloatDoubleArray(height,width));
         argeumnets.add(generateRadnomFloatDoubleArray(height,width));
         Stream<Arguments> args=argeumnets.stream().map((arg)->{return  Arguments.of((Object) arg);});
+        return args;
+    }
+
+    public static Stream<Arguments> multipleDoubleArrayFloatProvider() {
+        List<List<Float[][]>> arguments = new ArrayList<List<Float[][]>>();
+
+        int amountExample=rand.nextInt(4,15);
+        for(int i=0;i<amountExample;i++)
+        {
+            List<Float[][]> tests= new ArrayList<Float[][]>();
+            int amountInSingleTest=rand.nextInt(1,10);
+            for(int j=0;j<amountInSingleTest;j++)
+            {
+                int width=rand.nextInt(1,20);
+                int height=rand.nextInt(1,20);
+                tests.add(generateRadnomFloatDoubleArray(height,width));
+            }
+
+
+            arguments.add(tests);
+
+        }
+
+
+        Stream<Arguments> args=arguments.stream().map((arg)->{return  Arguments.of((Object) arg);});
         return args;
     }
 

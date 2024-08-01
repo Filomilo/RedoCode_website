@@ -6,6 +6,7 @@ import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.VmAcces.VmStatus;
@@ -33,6 +34,11 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
         this.nodeUpdate(request,"validating access to "+ ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
         log.info("CodeRunnerAccesValidationHandler hadnling: "+ request+" from "+request.getUser());
         CodeRunner currentCodeRunner=codeRunnersController.getUserCodeRunner(request.getUser());
+
+        if(((CodeRunnerRequest) request).getCodeRunnerType()== CODE_RUNNER_TYPE.UNIDENTIFIED && currentCodeRunner!=null){
+            return request;
+        }
+
         if(currentCodeRunner!= null
         && currentCodeRunner.getType()==((CodeRunnerRequest) request).getCodeRunnerType()
         &&  currentCodeRunner.getRamMb() ==((CodeRunnerRequest) request).getRam()

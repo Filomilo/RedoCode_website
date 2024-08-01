@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
+import com.redocode.backend.RequstHandling.Requests.PorgramReusltsSendRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
+import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
@@ -22,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,7 +35,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
    protected static final CodeRunnersController codeRunnersController= (CodeRunnersController) SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
 
-    protected  void checkTest(ExerciseTests test,CodeTestRequest request,CodeRunner codeRunner ) throws RequestHadndlingException {
+    protected  ProgramResult checkTest(ExerciseTests test,CodeTestRequest request,CodeRunner codeRunner ) throws RequestHadndlingException {
         log.info("Testing: " + test);
 
         try {
@@ -41,21 +45,22 @@ public class CodeTestHandler extends  BaseRequestHandler {
                     .setSolutionCodeRunner(request.getCodeRunnerType())
                     .setInputVaraiable(test.getParsedInput(request.getInputType()))
                     .setOutputBase(request.getOutputType())
-                    .setSolutionCode(request.getCode())
+                    .setSolutionCode(request.getSolutionCodes().get(request.getCodeRunnerType()== CODE_RUNNER_TYPE.UNIDENTIFIED?CODE_RUNNER_TYPE.UNIDENTIFIED: codeRunner.getType()))
                     .setTimeout(request.getTimeForExecution())
                     .build();
             log.info("solution program being tested: "+ solutionProgram.getInput());
             ProgramResult result=codeRunner.runProgram(solutionProgram);
             Variables recived=result.getVariables();
             if(test.getExpectedOutput()=="")
-                return;
+                return result;
             Variables expcected=test.getParsedOutput(request.getOutputType());
             log.info("program resuult: "+recived);
             log.info("expected program resuult: "+ expcected);
-            if(!recived.equals(expcected))
+            if(recived==null || !recived.equals(expcected))
             {
-                throw new RequestHadndlingException("expected: "+ test.getParsedOutput(request.getOutputType()).getValue()+" but recived: " + result.getVariables().getValue());
+                throw new RequestHadndlingException("expected: "+ test.getParsedOutput(request.getOutputType()).getValue()+" but recived: " +result.getVariables()!=null?result.getVariables().getValue().toString():"null");
             }
+            return result;
         }
         catch (JsonProcessingException ex)
         {
@@ -65,7 +70,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
         catch (NullPointerException ex)
         {
             log.error("varaible NULL: "+ ex.getMessage());
-            throw new RequestHadndlingException("returned value is null_");
+            throw new RequestHadndlingException("returned value is null ");
         }
         catch (Exception ex)
         {
@@ -85,7 +90,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
 
     @Override
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
-
+        List<ProgramResult> programResults=new ArrayList<>();
         if(!(request instanceof CodeTestRequest))
         {
 
@@ -112,18 +117,33 @@ public class CodeTestHandler extends  BaseRequestHandler {
         for (ExerciseTests exTest:tests
         ) {
             try {
-                checkTest(exTest,codeTestRequest,codeRunner);
+                programResults.add(  checkTest(exTest,codeTestRequest,codeRunner));
             }
             catch (RequestHadndlingException ex)
             {
+                programResults.add(
+                        ProgramResult.builder()
+                                .consoleOutput(
+                                        ConsoleOutput.builder()
+                                                .errorOutput(ex.getMessage())
+                                                .build()
+                                )
+                                .build()
+                );
+                if(!is_continueOnError())
                 throw new RequestHadndlingException("Test "+ i+ " failed: "+ex.getMessage());
+                else
+                    break;
             }
             i++;
         }
       log.info("CodeTestHandler handles: "+ codeTestRequest);
         this.nodeUpdate(request,"correct "+codeTestRequest.getCodeRunnerType()+" tests", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
-
-      return request;
+        PorgramReusltsSendRequest porgramReusltsSendRequest=PorgramReusltsSendRequest.builder()
+                .programResults(programResults)
+                .user(request.getUser())
+                .build();
+      return porgramReusltsSendRequest;
     }
 
     @Override

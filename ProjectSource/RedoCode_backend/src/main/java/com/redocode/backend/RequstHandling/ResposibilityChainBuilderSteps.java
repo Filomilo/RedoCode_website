@@ -31,6 +31,13 @@ this.messagehandler=messagehandler;
       return this;
     }
 
+    public ResposibilityChainBuilderSteps setContinueOnError(boolean continueOnError)
+    {
+        baseRequestHandlerCurrent.set_continueOnError(continueOnError);
+        return this;
+    }
+
+
     public BaseRequestHandler build()
     {
         return startRequest;

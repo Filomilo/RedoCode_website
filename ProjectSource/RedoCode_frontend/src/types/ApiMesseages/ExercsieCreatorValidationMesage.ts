@@ -4,11 +4,11 @@ import RangeType from '../RangeType'
 import VarType from '../VarType'
 import ITestParameters from '@/types/ITestParameters'
 
-type StringIndexed = {
-  [index in CodeRunnerType]?: string
-}
+interface StringIndexed extends Record<CodeRunnerType, string> {}
+interface TestsIndexed extends Record<CodeRunnerType, ExerciseTest[]> {}
 
-export default interface ExercsieCreatorValidationMesage extends ITestParameters {
+export default interface ExercsieCreatorValidationMesage
+  extends ITestParameters {
   title: string
   description: string
   ram: number

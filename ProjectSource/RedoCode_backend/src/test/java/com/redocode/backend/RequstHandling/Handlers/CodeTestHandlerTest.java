@@ -38,26 +38,26 @@ class CodeTestHandlerTest {
         tests= new ExerciseTests[]{
                 ExerciseTests.builder()
                         .id(1l)
-                        .expectedOutput("{\"value\": [1,2]}")
-                        .input("{\"value\": [1,2]}")
+                        .expectedOutput("[1,2]")
+                        .input("[1,2]")
                         .excersize(null)
                         .build(),
                 ExerciseTests.builder()
                         .id(2l)
-                        .expectedOutput("{\"value\": [1,2,3]}")
-                        .input("{\"value\": [1,2,3]}")
+                        .expectedOutput("[1,2,3]")
+                        .input("[1,2,3]")
                         .excersize(null)
                         .build(),
                 ExerciseTests.builder()
                         .id(3l)
-                        .expectedOutput("{\"value\": [1,2,3,4]}")
-                        .input("{\"value\": [1,2,3,4]}")
+                        .expectedOutput("[1,2,3,4]")
+                        .input("[1,2,3,4]")
                         .excersize(null)
                         .build(),
                 ExerciseTests.builder()
                         .id(4l)
-                        .expectedOutput("{\"value\": [1,2,3,4,5]}")
-                        .input("{\"value\": [1,2,3,4,5]}")
+                        .expectedOutput("[1,2,3,4,5]")
+                        .input("[1,2,3,4,5]")
                         .excersize(null)
                         .build(),
         };
@@ -71,22 +71,24 @@ class CodeTestHandlerTest {
         User user=new User("1234"+ UUID.randomUUID());
 
 
+        HashMap<CODE_RUNNER_TYPE,String> solutions=new HashMap<>();
+        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
+                "#include <vector>\n" +
+                "\n" +
+                "std::vector<int> solution(std::vector<int> in)\n" +
+                "{\n" +
+                "    return in;\n" +
+                "}");
+
         CodeTestRequest codeTestRequest=CodeTestRequest.builder()
                 .testsToRun(Arrays.stream(this.tests).toList())
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
-                .Code("#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "\n" +
-                        "std::vector<int> solution(std::vector<int> in)\n" +
-                        "{\n" +
-                        "    return in;\n" +
-                        "}")
                 .user(user)
                 .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .outputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
                 .timeForExecution(500l)
                 .timeForTaskMin(10L)
-                .solutionCodes(new HashMap<>())
+                .solutionCodes(solutions)
                 .build();
 
 

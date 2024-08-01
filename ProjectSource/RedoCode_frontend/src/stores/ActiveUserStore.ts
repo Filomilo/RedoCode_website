@@ -29,7 +29,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const saveCookie = () => {
     console.log('Save cookie')
-    $cookies?.set('token', _token)
+    $cookies?.set('token', _token.value)
   }
   const deleteCookie = () => {
     if ($cookies?.isKey('token')) {
@@ -41,6 +41,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     console.log(JSON.stringify($cookies))
     if ($cookies?.isKey('token')) {
       const token = $cookies.get('token')
+      console.log('set token: ' + JSON.stringify(token))
       _token.value = token
       if (validateToken()) {
         setIsLogged(true)
@@ -55,11 +56,11 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const login = async (email: string, pass: string, stayLoggedIn: boolean) => {
     const request: AuthenticationRequest = {
       password: pass,
-      email: email
+      email: email,
     }
     axios
       .post('/public/auth/login', request)
-      .then((response) => {
+      .then(response => {
         console.log('Response: ' + JSON.stringify(response))
         if (response.status == 200) {
           toastStore.showSuccessMessage('Succesfully logged in')
@@ -72,10 +73,12 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
           }
         } else {
           console.log('test')
-          toastStore.showErrorMessage("Couldn't Login, please check email nad password")
+          toastStore.showErrorMessage(
+            "Couldn't Login, please check email nad password"
+          )
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error)
         if (error.response) {
           console.error('Error response:', error.response)
@@ -84,7 +87,9 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
           console.error('Headers:', error.response.headers)
 
           if (error.response.status != 200) {
-            toastStore.showErrorMessage("Couldn't Login, please check email nad password")
+            toastStore.showErrorMessage(
+              "Couldn't Login, please check email nad password"
+            )
           }
         }
       })
@@ -104,11 +109,11 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     const request: RegisterRequest = {
       nickname: nickname,
       password: pass,
-      email: email
+      email: email,
     }
     axios
       .post('/public/auth/register', request)
-      .then((response) => {
+      .then(response => {
         console.log('Response: ' + JSON.stringify(response))
         if (response.status == 200) {
           toastStore.showSuccessMessage('Succesfully registered user')
@@ -119,7 +124,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
           toastStore.showErrorMessage("Couldn't register user")
         }
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response) {
           if (error.response.status != 200) {
             toastStore.showErrorMessage("Couldn't register user")
@@ -135,5 +140,13 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     return _token.value
   }
 
-  return { isLogged, login, logout, acoountInfo, register, validateToken, getToken }
+  return {
+    isLogged,
+    login,
+    logout,
+    acoountInfo,
+    register,
+    validateToken,
+    getToken,
+  }
 })

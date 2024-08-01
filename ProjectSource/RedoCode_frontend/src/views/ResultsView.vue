@@ -14,7 +14,9 @@
         class="rateButton level1"
         :disabled="alreadyRated"
         :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 1 ? 'filledBar' : 'unfilledBar'
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 1
+            ? 'filledBar'
+            : 'unfilledBar'
         "
         @mouseover="ratingLevelShow = 1"
         @mouseleave="ratingLevelShow = selectedRating"
@@ -24,7 +26,9 @@
         class="rateButton level2"
         :disabled="alreadyRated"
         :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 2 ? 'filledBar' : 'unfilledBar'
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 2
+            ? 'filledBar'
+            : 'unfilledBar'
         "
         @mouseover="ratingLevelShow = 2"
         @mouseleave="ratingLevelShow = selectedRating"
@@ -34,7 +38,9 @@
         class="rateButton level3"
         :disabled="alreadyRated"
         :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 3 ? 'filledBar' : 'unfilledBar'
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 3
+            ? 'filledBar'
+            : 'unfilledBar'
         "
         @mouseover="ratingLevelShow = 3"
         @mouseleave="ratingLevelShow = selectedRating"
@@ -44,7 +50,9 @@
         class="rateButton level4"
         :disabled="alreadyRated"
         :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 4 ? 'filledBar' : 'unfilledBar'
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 4
+            ? 'filledBar'
+            : 'unfilledBar'
         "
         @mouseover="ratingLevelShow = 4"
         @mouseleave="ratingLevelShow = selectedRating"
@@ -54,7 +62,9 @@
         class="rateButton level5"
         :disabled="alreadyRated"
         :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 5 ? 'filledBar' : 'unfilledBar'
+          (alreadyRated ? selectedRating : ratingLevelShow) >= 5
+            ? 'filledBar'
+            : 'unfilledBar'
         "
         @mouseover="ratingLevelShow = 5"
         @mouseleave="ratingLevelShow = selectedRating"
@@ -77,7 +87,11 @@
       {{ commentInput.length + '/3000' }}
     </div>
     <div class="VerticalLine" style="margin-top: 0.5rem; display: flex">
-      <Button class="commentButton" :disabled="!ActiveUserStore.isLogged" @click="onCommentButton">
+      <Button
+        class="commentButton"
+        :disabled="!ActiveUserStore.isLogged"
+        @click="onCommentButton"
+      >
         comment
       </Button>
     </div>
@@ -100,124 +114,124 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Ref, ref } from 'vue'
-import { useActiveUserStore } from '@/stores/ActiveUserStore'
+  import { computed, Ref, ref } from 'vue'
+  import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
-const ActiveUserStore = useActiveUserStore()
-const commentInput: Ref<string> = ref('')
-const comments = ref([
-  {
-    nick: 'nick',
-    content: 'Great exercise',
-    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
-  },
-  {
-    nick: 'nick',
-    content: 'Great exercise',
-    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
-  },
-  {
-    nick: 'nick',
-    content: 'Great exercise',
-    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
-  },
-  {
-    nick: 'nick',
-    content: 'Great exercise',
-    profilePic: 'https://i.imgur.com/Z6fpYPD.png'
-  }
-])
-
-const ratingLevelShow: Ref<number> = ref(0)
-
-const selectedRating: Ref<number> = ref(0)
-const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
-const validatedComment = computed(() => {
-  return commentInput.value.length > 0 && commentInput.value.length < 3000
-})
-
-const onCommentButton = () => {
-  if (validatedComment.value) {
-    comments.value.unshift({
-      nick: ActiveUserStore.acoountInfo.nick.value,
+  const ActiveUserStore = useActiveUserStore()
+  const commentInput: Ref<string> = ref('')
+  const comments = ref([
+    {
+      nick: 'nick',
+      content: 'Great exercise',
       profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-      content: commentInput.value
-    })
-    commentInput.value = ''
+    },
+    {
+      nick: 'nick',
+      content: 'Great exercise',
+      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
+    },
+    {
+      nick: 'nick',
+      content: 'Great exercise',
+      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
+    },
+    {
+      nick: 'nick',
+      content: 'Great exercise',
+      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
+    },
+  ])
+
+  const ratingLevelShow: Ref<number> = ref(0)
+
+  const selectedRating: Ref<number> = ref(0)
+  const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
+  const validatedComment = computed(() => {
+    return commentInput.value.length > 0 && commentInput.value.length < 3000
+  })
+
+  const onCommentButton = () => {
+    if (validatedComment.value) {
+      comments.value.unshift({
+        nick: ActiveUserStore.acoountInfo.nick.value,
+        profilePic: 'https://i.imgur.com/Z6fpYPD.png',
+        content: commentInput.value,
+      })
+      commentInput.value = ''
+    }
   }
-}
-const onSaveRate = () => {
-  alreadyRated.value = true
-}
+  const onSaveRate = () => {
+    alreadyRated.value = true
+  }
 </script>
 
 <style>
-.VerticalLine {
-  width: 100%;
-}
+  .VerticalLine {
+    width: 100%;
+  }
 
-.rateButton {
-  border-color: transparent;
-  margin: 0.1rem;
-  border-radius: 0.2rem;
-  align-self: flex-end;
-}
+  .rateButton {
+    border-color: transparent;
+    margin: 0.1rem;
+    border-radius: 0.2rem;
+    align-self: flex-end;
+  }
 
-.level1 {
-  height: 0.1rem;
-}
-.level2 {
-  height: 2rem;
-}
-.level3 {
-  height: 3rem;
-}
-.level4 {
-  height: 4rem;
-}
-.level5 {
-  height: 5rem;
-}
-.algainBottom {
-  display: flex;
-  flex-direction: row;
-}
-.saveButton {
-  border-radius: 0.2rem;
-  border-color: transparent;
-}
-.commentButton {
-  border-radius: 0.2rem;
-  border-color: transparent;
-  align-self: flex-end;
-}
+  .level1 {
+    height: 0.1rem;
+  }
+  .level2 {
+    height: 2rem;
+  }
+  .level3 {
+    height: 3rem;
+  }
+  .level4 {
+    height: 4rem;
+  }
+  .level5 {
+    height: 5rem;
+  }
+  .algainBottom {
+    display: flex;
+    flex-direction: row;
+  }
+  .saveButton {
+    border-radius: 0.2rem;
+    border-color: transparent;
+  }
+  .commentButton {
+    border-radius: 0.2rem;
+    border-color: transparent;
+    align-self: flex-end;
+  }
 
-.CommentArea {
-  width: 95%;
-  background-color: rgb(49, 49, 49);
-  height: 10rem;
-  width: 95%;
-  color: white;
-}
+  .CommentArea {
+    width: 95%;
+    background-color: rgb(49, 49, 49);
+    height: 10rem;
+    width: 95%;
+    color: white;
+  }
 
-.ProfilePicContainer {
-  width: 5rem;
-  max-width: 5rem;
-  margin-left: 2rem;
-}
-.profilePic {
-  width: 100%;
-  border-radius: 50rem;
-  max-width: 100%;
-  height: 5rem;
-}
+  .ProfilePicContainer {
+    width: 5rem;
+    max-width: 5rem;
+    margin-left: 2rem;
+  }
+  .profilePic {
+    width: 100%;
+    border-radius: 50rem;
+    max-width: 100%;
+    height: 5rem;
+  }
 
-.CommentContainer {
-  background-color: rgb(22, 22, 22);
-  border-radius: 2rem;
-  width: 95%;
-  height: 20rem;
-  margin: 2rem;
-  color: white;
-}
+  .CommentContainer {
+    background-color: rgb(22, 22, 22);
+    border-radius: 2rem;
+    width: 95%;
+    height: 20rem;
+    margin: 2rem;
+    color: white;
+  }
 </style>

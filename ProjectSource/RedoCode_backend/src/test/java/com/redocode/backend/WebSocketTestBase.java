@@ -3,10 +3,7 @@ package com.redocode.backend;
 import ch.qos.logback.core.net.ObjectWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.simp.stomp.StompFrameHandler;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.messaging.simp.stomp.*;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
@@ -14,10 +11,7 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 import static java.util.Arrays.asList;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -38,23 +32,26 @@ public abstract class WebSocketTestBase {
     protected static final ObjectMapper  mapper = new ObjectMapper();
 
    protected void setup() throws ExecutionException, InterruptedException, TimeoutException {
-
+       TimeUnit.SECONDS.sleep(2);
         blockingQueue = new LinkedBlockingDeque<>();
         stompClient =   new WebSocketStompClient(new SockJsClient(
                 List.of(new WebSocketTransport(new StandardWebSocketClient()))));
-
         log.info("connecting to web socket: "+getWebSocketUri());
         session = stompClient
                 .connect(getWebSocketUri() , new StompSessionHandlerAdapter() {})
-                .get(1, SECONDS);
+                .get(5, SECONDS)
+        ;
+
        log.info("connected: "+      session.isConnected());
        log.info("session: "+ session.getSessionId());
 
    }
     protected void tearDown() throws ExecutionException, InterruptedException, TimeoutException {
+       log.info("tearing down");
         session.disconnect();
         stompClient.stop();
-
+        stompClient=null;
+        TimeUnit.SECONDS.sleep(3);
     }
 
 
@@ -82,6 +79,18 @@ public abstract class WebSocketTestBase {
             log.info("connected: "+ stompClient.isRunning());
             log.info("received frame from web socket: "+new String((byte[]) o));
             blockingQueue.offer(new String((byte[]) o));
+        }
+
+        @Override
+        public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
+            super.afterConnected(session, connectedHeaders);
+            log.info("\n\n\n\nconnected: "+ session.isConnected()+"\n\n\n\n\n");
+        }
+
+        @Override
+        public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
+            super.handleException(session, command, headers, payload, exception);
+            log.error("STompClinet error: "+ exception.getMessage());
         }
     }
 

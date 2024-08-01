@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref, reactive } from 'vue'
+import { ref, computed, type Ref, reactive, ComputedRef } from 'vue'
 import type CodeRunnerState from '../types/CodeRunnerState'
 import ExerciseData from '@/types/ExerciseData'
 import axios from 'axios'
@@ -15,22 +15,25 @@ import VarType, {
   isTypeArray,
   isTypeDoubleArray,
   isTypeSingle,
-  isTypeString
+  isTypeString,
 } from '@/types/VarType'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { isNullOrUndef } from 'chart.js/helpers'
+import CodeRunnerType from '@/types/CodeRunnerTypes'
+import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+import { useActiveUserStore } from './ActiveUserStore'
 
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
-
+  const activeUserStore = useActiveUserStore()
   const playGroundBase: ExerciseData = {
     inputType: '',
     title: '',
     description: '',
     id: null,
     outputType: '',
-    availbleCodeRunners: languageChoices.map((element) => element),
+    availbleCodeRunners: languageChoices.map(element => element.value),
     tests: [
       {
         input: '',
@@ -38,11 +41,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         errorOutput: '',
         consoleOutput: '',
         expectedOutput: '',
-        isSolved: null
-      }
+        isSolved: null,
+      },
     ],
     automaticTests: [],
-    startingFunction: ''
+    startingFunction: '',
   }
 
   const exerciseData: Ref<ExerciseData> = ref(playGroundBase)
@@ -60,40 +63,40 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     exerciseLoading.value = state
   }
 
-  const dropDownLangaugeMap: any = {
-    CPP_RUNNER: 'cpp',
-    JS_RUNNER: 'js',
-    UNIDENTIFIED: ''
-  }
   const startingMethod = computed(() => {
-    if (exerciseData.value.id != null) {
-      console.log('--------------------------id is not null')
-      if (apiConnectionStore.codeRunnerConnection.codeRunnerState.state === 'ACTIVE') {
-        console.log(
-          '--------------------------codeRunnerType is not UNIDENTIFIED: ' +
-            JSON.stringify(apiConnectionStore.codeRunnerConnection.codeRunnerState)
-        )
-        return exerciseData.value.startingFunction[
-          dropDownLangaugeMap[
-            apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-          ]
-        ]
-      }
-    }
-    console.log('retune non')
+    // if (exerciseData.value.id != null) {
+    //   console.log('--------------------------id is not null')
+    //   if (apiConnectionStore.codeRunnerConnection.codeRunnerState.state === 'ACTIVE') {
+    //     console.log(
+    //       '--------------------------codeRunnerType is not UNIDENTIFIED: ' +
+    //         JSON.stringify(apiConnectionStore.codeRunnerConnection.codeRunnerState)
+    //     )
+    //     return exerciseData.value.startingFunction[
+    //       dropDownLangaugeMap[
+    //         apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    //       ]
+    //     ]
+    //   }
+    // }
+    // console.log('retune non')
     return ''
   })
 
   const areResultCorrect = computed(() => {
-    return exerciseData.value.tests.every((x) => x.expectedOutput === x.output)
+    return exerciseData.value.tests.every(x => x.expectedOutput === x.output)
   })
-  const isAwaitingCompilation: Ref<boolean> = ref(false)
+  const isAwaitingCompilation: ComputedRef<boolean> = computed(() => {
+    return (
+      apiConnectionStore.codeRunnerConnection.codeRunnerState.state ===
+      CodeRunnerStatus.RUNNING
+    )
+  })
 
   const exerciseCreatorController = reactive(new ExerciseCreatorController())
   const removeTestFromBuffer = (index: number) => {
     console.log('remove: test: ' + index)
     console.log('tests before: ' + JSON.stringify(exerciseData.value.tests))
-    manualTestBuffer.splice(index, 1)
+    manualTestBuffer.value.splice(index, 1)
     console.log('tests after: ' + JSON.stringify(exerciseData.value.tests))
   }
 
@@ -110,7 +113,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     }
   }
 
-  const manualTestBuffer: any = ref([])
+  const manualTestBuffer: Ref<ExerciseTest[]> = ref([])
 
   const addblankTestToBuffer = (inputType: VarType, outputype: VarType) => {
     const input = getVarAcording(inputType)
@@ -122,7 +125,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       output: null,
       errorOutput: '',
       consoleOutput: '',
-      isSolved: null
+      isSolved: null,
     })
     console.log('added: ' + JSON.stringify(manualTestBuffer))
   }
@@ -133,16 +136,20 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const transferTestFromBufferTpCreator = () => {
     console.log('test transfer2: ' + JSON.stringify(manualTestBuffer))
 
-    exerciseCreatorController.languages.forEach(
-      (element: { label: string; value: string } | string) => {
-        const labelVal: { label: string; value: string } = element as unknown as {
-          label: string
-          value: string
-        }
-        exerciseCreatorController.manualTestsSolutions[labelVal.value] = manualTestBuffer
-      }
+    exerciseCreatorController.languages.forEach((element: CodeRunnerType) => {
+      console.log('for type: ' + JSON.stringify(element))
+      console.log('manualTestBuffer: ' + JSON.stringify(manualTestBuffer.value))
+      exerciseCreatorController.manualTestsSolutions[element] =
+        manualTestBuffer.value
+      console.log(
+        'exerciseCreatorController: ' +
+          JSON.stringify(exerciseCreatorController)
+      )
+    })
+    console.log(
+      'tests after: ' +
+        JSON.stringify(exerciseCreatorController.manualTestsSolutions)
     )
-    console.log('tests after: ' + JSON.stringify(exerciseCreatorController.manualTestsSolutions))
   }
 
   const updateTestData = (reuslts: ProgramResult[]) => {
@@ -154,9 +161,30 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
         ? ''
         : reuslts[index].consoleOutput.errorOutput
-      val.output = isNullOrUndef(reuslts[index].variables) ? null : reuslts[index].variables
+      val.output = isNullOrUndef(reuslts[index].variables)
+        ? null
+        : reuslts[index].variables
       val.isSolved = val.expectedOutput === reuslts[index].variables
-      isAwaitingCompilation.value = false
+    })
+  }
+
+  const updateCreationTestData = (reuslts: ProgramResult[]) => {
+    console.log('----updateTestData')
+    exerciseCreatorController.manualTestsSolutions[
+      apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    ].forEach((val: ExerciseTest, index: number) => {
+      console.log('--Test: ' + JSON.stringify(reuslts[index]))
+
+      val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
+        ? ''
+        : reuslts[index].consoleOutput.output
+      val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
+        ? ''
+        : reuslts[index].consoleOutput.errorOutput
+      val.output = isNullOrUndef(reuslts[index].variables)
+        ? null
+        : reuslts[index].variables
+      val.isSolved = val.expectedOutput === reuslts[index].variables
     })
   }
 
@@ -175,6 +203,27 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     }
 
     return ''
+  }
+
+  const updateCodeRunner = () => {
+    console.log('updateCodeRunner: ' + activeUserStore.getToken())
+
+    axios
+      .post('/public/coderunner/state', { token: activeUserStore.getToken() })
+      .then(response => {
+        console.log('updateCodeRunner Response:', response.data)
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType =
+          CodeRunnerType.UNIDENTIFIED
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.state =
+          CodeRunnerStatus.NONE
+      })
+      .catch(error => {
+        console.error('updateCodeRunner Error:', error)
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType =
+          CodeRunnerType.UNIDENTIFIED
+        apiConnectionStore.codeRunnerConnection.codeRunnerState.state =
+          CodeRunnerStatus.NONE
+      })
   }
 
   return {
@@ -199,6 +248,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     removeTestFromBuffer,
     transferTestFromBufferTpCreator,
     updateTestData,
-    getExerciseSetupError
+    getExerciseSetupError,
+    updateCreationTestData,
+    updateCodeRunner,
   }
 })

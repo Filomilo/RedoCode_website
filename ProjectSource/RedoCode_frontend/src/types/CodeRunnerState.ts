@@ -1,10 +1,6 @@
+import CodeRunnerType from './CodeRunnerTypes'
+import CodeRunnerStatus from './CodeRunnerStatus'
 export default interface CoderunnerState {
-  codeRunnerType: string
-  state: string
+  codeRunnerType: CodeRunnerType
+  state: CodeRunnerStatus
 }
-
-// states:
-// inactive
-//   awaitng
-//   active
-//   closing

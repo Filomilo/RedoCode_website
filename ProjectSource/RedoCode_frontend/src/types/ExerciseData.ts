@@ -1,7 +1,8 @@
+import CodeRunnerType from './CodeRunnerTypes'
 import type ExerciseTest from './ExcericseTest'
 import IExerciseDescriptionI from './IExerciseDescriptionI'
 export default interface ExerciseData extends IExerciseDescriptionI {
-  availbleCodeRunners: string[]
+  availbleCodeRunners: CodeRunnerType[]
   id: number | null
   description: string
   outputType: string
