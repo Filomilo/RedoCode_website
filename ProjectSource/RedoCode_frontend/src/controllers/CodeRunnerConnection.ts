@@ -205,7 +205,7 @@ export default class CodeRunnerConnection {
     console.log('submitExerciseCreationRequest: ' + JSON.stringify(request))
     this._stompApiConnection.sendMessage(
       '/public/app/CodeRun/ExerciseCreationValidation',
-      JSON.stringify(request)
+      request
     )
   }
 

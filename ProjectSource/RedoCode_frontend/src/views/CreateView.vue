@@ -96,8 +96,8 @@
       codeRunnerStore.exerciseCreatorController.manualTestsSolutions
     )[0] as ExerciseTest[]
     request.manualTests.forEach((obj: ExerciseTest) => {
-      obj.expectedOutput = obj.expectedOutput.toString()
-      obj.input = obj.input.toString()
+      obj.expectedOutput = JSON.stringify (obj.expectedOutput.toString())
+      obj.input =  JSON.stringify (obj.input.toString())
     })
     const request2: ExercsieCreatorValidationMesage = JSON.parse(
       JSON.stringify(request)
