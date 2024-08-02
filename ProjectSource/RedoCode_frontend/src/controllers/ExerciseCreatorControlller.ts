@@ -9,7 +9,9 @@ import VarType from '@/types/VarType'
 import type CodeRunnerType from '@/types/CodeRunnerTypes'
 import { reactive } from 'vue'
 
-interface StringIndexed extends Record<CodeRunnerType, string> {}
+type StringIndexed = {
+  [key in CodeRunnerType]?: string;
+};
 interface TestsIndexed extends Record<CodeRunnerType, ExerciseTest[]> {}
 
 export default class ExerciseCreatorController

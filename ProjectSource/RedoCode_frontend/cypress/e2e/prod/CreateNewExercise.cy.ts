@@ -9,6 +9,14 @@ describe('template spec', () => {
     const title="Cesar cipher";
     const description="move every letter in alphabet by 7 so a -> d and z - g, lower case and upper case letters should be handled"
   
+
+
+let backspaces="";
+for (let index = 0; index < 100; index++) {
+  backspaces+="{backspace}";
+  
+}
+
     const cppSolution="#include <iostream>\n" +
     "#include <string>\n" +
     "\n" +
@@ -26,6 +34,36 @@ describe('template spec', () => {
     "    }\n" +
     "    return result;\n" +
     "}";
+
+const jsSolution = 
+    "function solution(input) {\n" +
+    "    let result = \"\";\n" +
+    "    const shift = 7;\n" +
+    "\n" +
+    "    for (let i = 0; i < input.length; i++) {\n" +
+    "        let c = input[i];\n" +
+    "        if (/[a-zA-Z]/.test(c)) {\n" +
+    "            let base = c >= 'a' && c <= 'z' ? 'a'.charCodeAt(0) : 'A'.charCodeAt(0);\n" +
+    "            result += String.fromCharCode((c.charCodeAt(0) - base + shift) % 26 + base);\n" +
+    "        } else {\n" +
+    "            result += c;\n" +
+    "        }\n" +
+    "    }\n" +
+    "\n" +
+    "    return result;\n" +
+    "}\n" +
+    "\n" +
+    "// Example usage:\n" +
+    "const input = \"Hello, World!\";\n" +
+    "const output = solution(input);\n" +
+    "console.log(output); // Outputs: \"Olssv, Dvysk!\"";
+
+
+    const midpoint = Math.ceil(jsSolution.length / 2);
+    
+    const JSfirstHalf = jsSolution.slice(0, midpoint);
+    const JSsecondHalf = jsSolution.slice(midpoint);
+
 
     const inputsAndOutputs=[
       {
@@ -92,13 +130,13 @@ describe('template spec', () => {
     cy.get("#coderunner-dropdown_0").click();
     cy.get("#connect-button").click();
     cy.get('#coderunner-editor-panel > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs-dark')
-    .type(cppSolution)
+    .type(backspaces).type(cppSolution)
     cy.get("#coderunner-run-button").click();
     cy.wait(5000);
     for (let index = 0; index < inputsAndOutputs.length; index++) {
       cy.get("#TestResultCard"+index).contains("span","Result").click();
-      cy.get("#tab-result-expected-container-"+index).contains("\""+inputsAndOutputs[index].output+"\"");
-      cy.get("#tab-result-achived-container-"+index).contains("\""+inputsAndOutputs[index].output+"\"");
+      cy.get("#tab-result-expected-container-"+index).contains("expected: \""+inputsAndOutputs[index].output+"\"");
+      cy.get("#tab-result-achived-container-"+index).contains("achived: \""+inputsAndOutputs[index].output+"\"");
     }
     cy.get("#coderunner-submit-button").click();
     cy.get("html > div.floatWindowContainer > div > div > div:nth-child(6) > div.p-timeline-event-content > h2").contains("saved to database")
