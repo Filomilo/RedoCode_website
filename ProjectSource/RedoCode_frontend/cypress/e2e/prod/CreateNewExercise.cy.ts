@@ -135,8 +135,8 @@ const jsSolution =
     cy.wait(5000);
     for (let index = 0; index < inputsAndOutputs.length; index++) {
       cy.get("#TestResultCard"+index).contains("span","Result").click();
-      cy.get("#tab-result-expected-container-"+index).contains("expected: \""+inputsAndOutputs[index].output+"\"");
-      cy.get("#tab-result-achived-container-"+index).contains("achived: \""+inputsAndOutputs[index].output+"\"");
+      cy.get("#tab-result-expected-container-"+index). contains("expeteced: \""+inputsAndOutputs[index].output+"\"");
+      cy.get("#tab-result-achived-container-"+index). contains( "achived: \""+inputsAndOutputs[index].output+"\"");
     }
     cy.get("#coderunner-submit-button").click();
     cy.get("html > div.floatWindowContainer > div > div > div:nth-child(6) > div.p-timeline-event-content > h2").contains("saved to database")
