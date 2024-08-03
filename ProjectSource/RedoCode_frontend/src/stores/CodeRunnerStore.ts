@@ -140,7 +140,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
       console.log('for type: ' + JSON.stringify(element))
       console.log('manualTestBuffer: ' + JSON.stringify(manualTestBuffer.value))
       exerciseCreatorController.manualTestsSolutions[element] =
-        manualTestBuffer.value
+      JSON.parse(JSON.stringify (manualTestBuffer.value));
       console.log(
         'exerciseCreatorController: ' +
           JSON.stringify(exerciseCreatorController)
@@ -169,11 +169,16 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   }
 
   const updateCreationTestData = (reuslts: ProgramResult[]) => {
-    console.log('----updateTestData')
-    exerciseCreatorController.manualTestsSolutions[
+    console.log('----updateTestData: '+JSON.stringify(exerciseCreatorController.manualTestsSolutions[
       apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    ].forEach((val: ExerciseTest, index: number) => {
-      console.log('--Test: ' + JSON.stringify(reuslts[index]))
+    ]))
+    
+    const test: ExerciseTest[]=exerciseCreatorController.manualTestsSolutions[
+      apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    ];
+    console.log("tests: "+ (test.length)+ " : "+JSON.stringify(test))
+    test.forEach((val: ExerciseTest, index: number) => {
+      console.log('--Test: val' + JSON.stringify(val)+" index: "+ JSON.stringify( index))
 
       val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
         ? ''
@@ -186,6 +191,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         : reuslts[index].variables
       val.isSolved = val.expectedOutput === reuslts[index].variables
     })
+
+
+    exerciseCreatorController.manualTestsSolutions[
+      apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    ]=test;
   }
 
   const getExerciseSetupError = (): String => {

@@ -46,7 +46,7 @@ export default class StompApiConnection {
         }
         const codeRunnerStore=useCodeRunnerStore();
         codeRunnerStore.updateCodeRunner();
-        this._onConnected('succesfully conntected')
+        this._onConnected('succesfully connected')
       },
       onStompError: (frame: IFrame) => {
         console.log(connectionUrl + ' onStompError')

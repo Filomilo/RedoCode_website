@@ -27,7 +27,7 @@ export const useToastStore = defineStore('toastStore', () => {
       severity: 'warn',
       summary: 'unsuported',
       detail: 'feature not implemented: ' + deatil,
-      life: 7000,
+      life: 1000,
     })
   }
 
