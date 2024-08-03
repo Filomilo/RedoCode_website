@@ -156,7 +156,9 @@ export default class CodeRunnerConnection {
       
       const tests: ExerciseTest[]=exerciseCreatorController.manualTestsSolutions[
         codeType
-      ].map((x)=>{
+      ]??[];
+      const formattedTests: ExerciseTest[]=tests
+      .map((x)=>{
         const test:ExerciseTest={
           input: JSON.stringify(x.input),
           output: JSON.stringify(x.output),
@@ -168,7 +170,7 @@ export default class CodeRunnerConnection {
         return test;
       });
       const message: ExerciseTestToRunMesseage = {
-        code: exerciseCreatorController.solutionCodes[codeType],
+        code: exerciseCreatorController.solutionCodes[codeType]??"",
         manualTests: tests,
         inputType: exerciseCreatorController.inputType,
         outputType: exerciseCreatorController.outputType,
