@@ -7,12 +7,12 @@ import ITestParameters from '@/types/ITestParameters'
 import RangeType from '@/types/RangeType'
 import VarType from '@/types/VarType'
 import type CodeRunnerType from '@/types/CodeRunnerTypes'
-import { reactive } from 'vue'
+import { computed, ComputedRef, reactive } from 'vue'
 
 type StringIndexed = {
   [key in CodeRunnerType]?: string;
 };
-interface TestsIndexed extends Record<CodeRunnerType, ExerciseTest[]> {}
+type TestsIndexed={ [key in CodeRunnerType]?: ExerciseTest[]}
 
 export default class ExerciseCreatorController
   implements IExerciseDescriptionI, ExercsieCreatorValidationMesage
@@ -41,6 +41,7 @@ export default class ExerciseCreatorController
   manualTestsSolutions!: TestsIndexed
   autoTests!: TestsIndexed
   executionTime!: number
+  isSolved!: boolean
 
   resetParams(this: any): void {
     ;(this.ram = 128),
@@ -70,6 +71,23 @@ export default class ExerciseCreatorController
 
   constructor() {
     this.resetParams()
+  }
+
+  public updateSubmitAcces(){
+    if(Object.values(this.manualTestsSolutions).length==0)
+      this.isSolved= false
+    console.log("---isSolved values: "+ JSON.stringify(this.manualTestsSolutions))
+    console.log("---isSolved values: "+ JSON.stringify(Object.values(this.manualTestsSolutions)))
+    Object.values(this.manualTestsSolutions).forEach((tests: ExerciseTest[])=>{
+      tests.forEach((test: ExerciseTest)=>{
+        console.log("test: "+ JSON.stringify(test))
+        if(test.isSolved==null || !test.isSolved){
+          this.isSolved= false;
+        }
+      })
+
+    })
+    this.isSolved=  true;
   }
 
   manualTests!: ExerciseTest[] //compatiblity reasons do not use

@@ -86,8 +86,10 @@ const jsSolution =
 
 
     cy.visit('/');
-    cy.get("#login-email").clear().type(email)
-    cy.get("#login-password").clear().type(password)
+    cy.get("#login-email").clear()
+    cy.get("#login-email").type(email)
+    cy.get("#login-password").clear()
+    cy.get("#login-password").type(password)
     cy.get('#login').click();
     cy.get('.p-toast-detail').contains('Succesfully logged in').should('be.visible');
     cy.get('.p-toast-detail').should('not.exist');;
@@ -97,11 +99,16 @@ const jsSolution =
     cy.url().should('eq', Cypress.config().baseUrl+'/Create');
     cy.get('.p-toast-detail').contains('succesfully connected').should('be.visible');
     cy.get('.p-toast-detail').should('not.exist');
-    cy.get("#Exercise-title-input").click().clear();
-    cy.get("#Exercise-description-input").click().clear();
+    cy.get("#Exercise-title-input").click()
+    cy.get("#Exercise-title-input").clear();
+    cy.get("#Exercise-description-input").click()
+    cy.get("#Exercise-description-input").clear();
     cy.get("#pv_id_5_1_header_action").should('have.attr', 'aria-disabled', 'true');
-    cy.get("#Exercise-title-input").click().type(title);
-    cy.get("#Exercise-description-input").click().clear().type(description);
+    cy.get("#Exercise-title-input").click()
+    cy.get("#Exercise-title-input").type(title);
+    cy.get("#Exercise-description-input").click()
+    cy.get("#Exercise-description-input").clear()
+    cy.get("#Exercise-description-input").type(description);
     cy.get("#pv_id_5_1_header_action").should('have.attr', 'aria-disabled', 'false').click();
     
     
@@ -109,20 +116,33 @@ const jsSolution =
     cy.get("#language-selection").click();
     cy.get("#language-selection_0").click();
     cy.get("#language-selection_1").click();
-    cy.get("#ms-number-input").click().type("222");
-    cy.get("#hour-number-input").click().type("1");
-    cy.get("#minute-number-input").click().type("22");
-    cy.get("#ram-number-input").click().type("512");
+    cy.get("#ms-number-input").click()
+    cy.get("#ms-number-input").type("222");
+    cy.get("#hour-number-input").click()
+    cy.get("#hour-number-input").type("1");
+    cy.get("#minute-number-input").click()
+    cy.get("#minute-number-input").type("22");
+    cy.get("#ram-number-input").click()
+    cy.get("#ram-number-input").type("512");
     cy.get("#radio-input-string").click();
     cy.get("#radio-output-string").click();
     for (let index = 0; index < inputsAndOutputs.length; index++) {
       cy.get("#add-exercise-button").click();
-      cy.get("#test-input-"+index+"-input").click().clear().type(inputsAndOutputs[index].input);
-      cy.get("#test-input-"+index+"-output").click().clear().type(inputsAndOutputs[index].output);
+      cy.get("#test-input-"+index+"-input").click()
+      cy.get("#test-input-"+index+"-input").clear()
+      cy.get("#test-input-"+index+"-input").type(inputsAndOutputs[index].input);
+      cy.get("#test-input-"+index+"-output").click()
+      cy.get("#test-input-"+index+"-output").clear()
+      cy.get("#test-input-"+index+"-output").type(inputsAndOutputs[index].output);
     }
-    cy.get("#amount-of-auto-test-input > input").click().type("6")
-    cy.get("#string-range-low-input > input").click().clear().type("1")
-    cy.get("#string-range-up-input > input").click().clear().type("20")
+    cy.get("#amount-of-auto-test-input > input").click();
+    cy.get("#amount-of-auto-test-input > input").type("6")
+    cy.get("#string-range-low-input > input").click()
+    cy.get("#string-range-low-input > input").clear()
+    cy.get("#string-range-low-input > input").type("1")
+    cy.get("#string-range-up-input > input").click()
+    cy.get("#string-range-up-input > input").clear()
+    cy.get("#string-range-up-input > input").type("20")
     cy.get("#number-checkbox").click();
     cy.get("#special-char-checkbox").click();
     cy.get("#character-breaks-checkbox").click();
@@ -148,8 +168,10 @@ const jsSolution =
 
 
     // cpp run
-    cy.get(codeEditorSequance).click().type(backspaces);
-    cy.get(codeEditorSequance).click().type(cppSolution);
+    cy.get(codeEditorSequance).click()
+    cy.get(codeEditorSequance).type(backspaces);
+    cy.get(codeEditorSequance).click();
+    cy.get(codeEditorSequance).type(cppSolution);
     cy.get("#coderunner-run-button").click();
 
     // cy.wait(5000);
@@ -167,7 +189,8 @@ const jsSolution =
     .should('exist')
     .invoke('text')
     .should('include', 'function solution(input) {');
-    cy.get(codeEditorSequance).click().type(JSsecondHalf);
+    cy.get(codeEditorSequance).click();
+    cy.get(codeEditorSequance).type(JSsecondHalf);
     cy.get("#coderunner-run-button").click();
     // cy.get("#coderunner-submit-button").click();
     // cy.get("html > div.floatWindowContainer > div > div > div:nth-child(6) > div.p-timeline-event-content > h2").contains("saved to database")

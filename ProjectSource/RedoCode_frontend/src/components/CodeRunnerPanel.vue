@@ -71,6 +71,7 @@
           :onSubmit="props.onSubmit"
           :ManualTests="props.ManualTests"
           :AutoTests="props.AutoTests"
+          :SubmitAccess="props.SubmitAccess"
         />
       </SplitterPanel>
     </Splitter>
@@ -112,6 +113,7 @@
   import ExerciseTest from '@/types/ExcericseTest'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+  import { ComputedRef } from 'vue'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   const props = defineProps({
     exerciseInfo: {
@@ -129,6 +131,7 @@
     },
     ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
+    SubmitAccess: {type: Boolean, required: true}
   })
 
   const codeRunnerStore = useCodeRunnerStore()

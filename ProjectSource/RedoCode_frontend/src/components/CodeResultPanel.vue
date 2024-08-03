@@ -53,7 +53,7 @@
     >
       <Button
         class="submitButton"
-        :disabled="isCorrect"
+        :disabled="!SubmitAccess"
         @click="props.onSubmit"
         id="coderunner-submit-button"
       >
@@ -77,6 +77,7 @@
     onSubmit: { type: Function, required: true },
     ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
+    SubmitAccess: {type: Boolean, required: true}
   })
 
   const formattedConsole = computed<string>(() =>

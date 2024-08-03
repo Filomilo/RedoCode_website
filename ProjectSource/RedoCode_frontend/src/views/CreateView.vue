@@ -39,6 +39,7 @@
           "
           :AutoTests="[]"
           :onResults="onCodeResult"
+          :SubmitAccess="codeRunnerStore.exerciseCreatorController.isSolved"
         />
       </TabPanel>
     </TabView>
@@ -143,7 +144,10 @@
   const onCodeResult = (results: ProgramResultsMessage) => {
     console.log('playgronud view results: ' + JSON.stringify(results))
     codeRunnerStore.updateCreationTestData(results.results)
+    codeRunnerStore.exerciseCreatorController.updateSubmitAcces();
   }
+
+  
 </script>
 
 <style>
