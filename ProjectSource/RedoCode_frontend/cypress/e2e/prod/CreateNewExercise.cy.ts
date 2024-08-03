@@ -202,5 +202,9 @@ const jsSolution =
 
     cy.get("#coderunner-submit-button").click();
     cy.get("html > div.floatWindowContainer > div > div > div:nth-child(6) > div.p-timeline-event-content > h2").contains("saved to database")
+    cy.get("button").contains("Close").click();
+    cy.get('#switch-exercises').click();
+    cy.url().should('eq', Cypress.config().baseUrl+'/Exercises');
+    cy.get("tbody").find('td').contains(title)
   })
 })
