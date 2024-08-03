@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   test:
+  {{ props.starting }}
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
@@ -62,6 +63,7 @@
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   const props = defineProps({
+    starting: { type: String, required: true },
     codeUpdateMethod: { type: Function, required: true },
     onRunCode: { type: Function, required: true },
   })
@@ -69,7 +71,7 @@
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
 
-  const codeRef = ref("")
+  const codeRef = ref(props.starting)
 
   const codeRunButton = () => {
     props.onRunCode()
@@ -93,15 +95,15 @@
         )
   )
 
-  // watch(
-  //   () => props.starting,
-  //   (first, second) => {
-  //     console.log(
-  //       'props chahned-----------------------: ' + second + ' -> ' + first
-  //     )
-  //     codeRef.value = first
-  //   }
-  // )
+  watch(
+    () => props.starting,
+    (first, second) => {
+      console.log(
+        'props chahned-----------------------: ' + second + ' -> ' + first
+      )
+      codeRef.value = first
+    }
+  )
 
   const lnagaugeDropdownVaule = computed(
     () =>

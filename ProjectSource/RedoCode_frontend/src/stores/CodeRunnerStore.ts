@@ -175,7 +175,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     
     const test: ExerciseTest[]=exerciseCreatorController.manualTestsSolutions[
       apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    ]?? [];
+    ];
     console.log("tests: "+ (test.length)+ " : "+JSON.stringify(test))
     test.forEach((val: ExerciseTest, index: number) => {
       console.log('--Test: val' + JSON.stringify(val)+" index: "+ JSON.stringify( index))

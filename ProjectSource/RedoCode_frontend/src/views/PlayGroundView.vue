@@ -9,7 +9,6 @@
       :onRunCode="onRunCode"
       :onSubmit="onSubmit"
       :onResults="onCodeResult"
-      :SubmitAccess="true"
     />
   </main>
 </template>

@@ -61,6 +61,7 @@
       <SplitterPanel :size="50">
         <CodeEditor
           class="CodeEditorContainer"
+          :starting="props.starting"
           :codeUpdateMethod="props.codeContainerUpdate"
           :onRunCode="props.onRunCode"
         />
@@ -121,6 +122,7 @@
     },
     languageChoices: { type: Array as () => codeRunnerType[], required: true },
     codeContainerUpdate: { type: Function, required: true },
+    starting: { type: String, required: true },
     onRunCode: { type: Function, required: true },
     onSubmit: { type: Function, required: true },
     onResults: {

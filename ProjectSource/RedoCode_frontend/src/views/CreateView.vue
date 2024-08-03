@@ -22,7 +22,12 @@
           :codeContianer="
             codeRunnerStore.exerciseCreatorController.solutionCodes
           "
-          starting=""
+          :starting="
+            codeRunnerStore.exerciseCreatorController.solutionCodes[
+              ApiConnectionStore.codeRunnerConnection.codeRunnerState
+                .codeRunnerType
+            ]
+          "
           :codeContainerUpdate="codeUpdate"
           :onRunCode="onRunCode"
           :onSubmit="onSubmit"
