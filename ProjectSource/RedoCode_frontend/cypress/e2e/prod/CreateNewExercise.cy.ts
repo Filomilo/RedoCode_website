@@ -184,15 +184,17 @@ const jsSolution =
     cy.get("#coderunner-langage-dropdown").click();
     cy.get(".p-dropdown-item").contains("js").click();
     cy.get('.p-button').contains('span', 'Change').click();
-    cy.shadow() // Only if dealing with shadow DOM; adjust accordingly
-    .find('span.command-message-text')
-    .should('exist')
-    .invoke('text')
-    .should('include', 'function solution(input) {');
-    cy.get(codeEditorSequance).click();
+    // cy.get(codeEditorSequance).click();
     cy.get(codeEditorSequance).type(JSsecondHalf);
     cy.get("#coderunner-run-button").click();
-    // cy.get("#coderunner-submit-button").click();
-    // cy.get("html > div.floatWindowContainer > div > div > div:nth-child(6) > div.p-timeline-event-content > h2").contains("saved to database")
+
+    for (let index = 0; index < inputsAndOutputs.length; index++) {
+      cy.get("#TestResultCard"+index).contains("span","Result").click();
+      cy.get("#tab-result-expected-container-"+index). contains("expeteced: \""+inputsAndOutputs[index].output+"\"");
+      cy.get("#tab-result-achived-container-"+index). contains( "achived: \""+inputsAndOutputs[index].output+"\"");
+    }
+
+    cy.get("#coderunner-submit-button").click();
+    cy.get("html > div.floatWindowContainer > div > div > div:nth-child(6) > div.p-timeline-event-content > h2").contains("saved to database")
   })
 })

@@ -73,21 +73,29 @@ export default class ExerciseCreatorController
     this.resetParams()
   }
 
-  public updateSubmitAcces(){
-    if(Object.values(this.manualTestsSolutions).length==0)
-      this.isSolved= false
-    console.log("---isSolved values: "+ JSON.stringify(this.manualTestsSolutions))
-    console.log("---isSolved values: "+ JSON.stringify(Object.values(this.manualTestsSolutions)))
-    Object.values(this.manualTestsSolutions).forEach((tests: ExerciseTest[])=>{
-      tests.forEach((test: ExerciseTest)=>{
-        console.log("test: "+ JSON.stringify(test))
-        if(test.isSolved==null || !test.isSolved){
-          this.isSolved= false;
-        }
-      })
+  public  updateSubmitAcces(){
+    this.isSolved= this.calculalteSubmitAcces();
+  }
 
-    })
-    this.isSolved=  true;
+
+  public calculalteSubmitAcces(){
+    if(Object.values(this.manualTestsSolutions).length==0)
+      return false;
+    console.log("---isSolved values: "+ JSON.stringify(this.manualTestsSolutions))
+    console.log("---isSolved values amont: : "+Object.values(this.manualTestsSolutions).length+" : "+ JSON.stringify(Object.values(this.manualTestsSolutions)))
+    
+    for (const tests of Object.values(this.manualTestsSolutions)) {
+      for (const test of tests) {
+        console.log("test: " + JSON.stringify(test));
+        if (test.isSolved !== true) {
+          console.log("false");
+          return false; // Exit the outer function early
+        }
+      }
+    }
+
+    console.log("TRUe")
+    return true;
   }
 
   manualTests!: ExerciseTest[] //compatiblity reasons do not use

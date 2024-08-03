@@ -45,20 +45,20 @@
     "
     class="heightLimit"
   >
-    <Splitter style="height: 100%; width: 100%">
+    <Splitter >
       <SplitterPanel
         v-if="props.ManualTests !== undefined"
-        style="max-width: 100%; width: 100%"
-        :size="25"
+        style=""
+        :size="15"
       >
-        <Splitter layout="vertical" style="width: 100%">
-          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
+        <Splitter layout="vertical" >
+          <SplitterPanel style="">
             <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
 
-      <SplitterPanel :size="50">
+      <SplitterPanel :size="70" :min-size="40">
         <CodeEditor
           class="CodeEditorContainer"
           :starting="props.starting"
@@ -66,7 +66,7 @@
           :onRunCode="props.onRunCode"
         />
       </SplitterPanel>
-      <SplitterPanel :size="25">
+      <SplitterPanel :size="15">
         <CodeResultPanel
           :onSubmit="props.onSubmit"
           :ManualTests="props.ManualTests"

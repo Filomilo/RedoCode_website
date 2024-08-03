@@ -26,7 +26,7 @@
             codeRunnerStore.exerciseCreatorController.solutionCodes[
               ApiConnectionStore.codeRunnerConnection.codeRunnerState
                 .codeRunnerType
-            ]
+            ] ??''
           "
           :codeContainerUpdate="codeUpdate"
           :onRunCode="onRunCode"

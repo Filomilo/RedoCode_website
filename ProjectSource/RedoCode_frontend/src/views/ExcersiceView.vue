@@ -10,6 +10,7 @@
       :AutoTests="[]"
       :codeContainerUpdate="codeConatienrUpdate"
       :onResults="onCodeResult"
+      :SubmitAccess="true"
     />
   </main>
 </template>
