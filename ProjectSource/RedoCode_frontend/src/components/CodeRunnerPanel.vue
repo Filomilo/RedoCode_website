@@ -12,9 +12,10 @@
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
+
   >
     <template #container>
-      <div class="CodeRunnerLoadingPanel">
+      <div class="CodeRunnerLoadingPanel"     id="data-loading-dialog">
         <LoadingIndicator />
         <div>Loading data</div>
       </div>
@@ -28,7 +29,7 @@
     :style="{ width: '25rem' }"
   >
     <template #container>
-      <div class="CodeRunnerLoadingPanel">
+      <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
         <LoadingIndicator />
         <div>
           Awiating acces to code runner, plase be patient. Consider Creating and
@@ -45,20 +46,20 @@
     "
     class="heightLimit"
   >
-    <Splitter >
+    <Splitter style="max-height: 100%; ">
       <SplitterPanel
         v-if="props.ManualTests !== undefined"
-        style=""
+       style="width: 5rem"
         :size="15"
       >
-        <Splitter layout="vertical" >
+        <Splitter layout="vertical"  style="">
           <SplitterPanel style="">
             <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
 
-      <SplitterPanel :size="70" :min-size="40">
+      <SplitterPanel :size="70" :min-size="40" style="max-width: 100%;">
         <CodeEditor
           class="CodeEditorContainer"
           :starting="props.starting"
@@ -66,7 +67,7 @@
           :onRunCode="props.onRunCode"
         />
       </SplitterPanel>
-      <SplitterPanel :size="15">
+      <SplitterPanel :size="15" style="max-width: 100%; width: 5rem" >
         <CodeResultPanel
           :onSubmit="props.onSubmit"
           :ManualTests="props.ManualTests"

@@ -9,13 +9,13 @@ describe('template spec', () => {
     const title="Cesar cipher";
     const description="move every letter in alphabet by 7 so a -> d and z - g, lower case and upper case letters should be handled"
   
-const codeEditorSequance='#coderunner-editor-panel > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs-dark';
+const codeEditorSequance='#coderunner-editor-panel textarea';
 
-let backspaces="";
-for (let index = 0; index < 100; index++) {
-  backspaces+="{backspace}";
+const backspaces="{selectAll}{backspace}";
+// for (let index = 0; index < 100; index++) {
+//   backspaces+="{delete}";
   
-}
+// }
 
     const cppSolution="#include <iostream>\n" +
     "#include <string>\n" +
@@ -103,13 +103,13 @@ const jsSolution =
     cy.get("#Exercise-title-input").clear();
     cy.get("#Exercise-description-input").click()
     cy.get("#Exercise-description-input").clear();
-    cy.get("#pv_id_5_1_header_action").should('have.attr', 'aria-disabled', 'true');
+    cy.get("#ContentConatiner span").contains("Setup").closest(".p-tabview-nav-link").should('have.attr', 'aria-disabled', 'true');
     cy.get("#Exercise-title-input").click()
     cy.get("#Exercise-title-input").type(title);
     cy.get("#Exercise-description-input").click()
     cy.get("#Exercise-description-input").clear()
     cy.get("#Exercise-description-input").type(description);
-    cy.get("#pv_id_5_1_header_action").should('have.attr', 'aria-disabled', 'false').click();
+    cy.get("#ContentConatiner span").contains("Setup").closest(".p-tabview-nav-link").should('have.attr', 'aria-disabled', 'false').click();
     
     
     //exercise test panel setup
@@ -146,7 +146,7 @@ const jsSolution =
     cy.get("#number-checkbox").click();
     cy.get("#special-char-checkbox").click();
     cy.get("#character-breaks-checkbox").click();
-    cy.get("#pv_id_5_2_header_action").should('have.attr', 'aria-disabled', 'false').click();
+    cy.get("#ContentConatiner span").contains("Solution").closest(".p-tabview-nav-link").should('have.attr', 'aria-disabled', 'false').click();
     cy.get("#coderunner-dropdown").click();
     cy.get(".p-dropdown-item").contains("js").click();
     cy.get("#connect-button").click();
@@ -154,6 +154,8 @@ const jsSolution =
 
     // js first half 
     cy.get(codeEditorSequance).type(backspaces, { force: true });
+    cy.get(codeEditorSequance).focus();
+    cy.get(codeEditorSequance).type("{selectAll}", { force: true });
     cy.get(codeEditorSequance).type(JSfirstHalf, { force: true });
     cy.get("#coderunner-run-button").click();
     cy.get("#TestResultCard"+'0'+" > div.testValidationSection.wrong").should('have.text', 'Failed');
@@ -168,9 +170,11 @@ const jsSolution =
 
 
     // cpp run
-    cy.get(codeEditorSequance).click()
-    cy.get(codeEditorSequance).type(backspaces, { force: true });
-    cy.get(codeEditorSequance).click();
+    cy.get("#coderunner-loading-dialog").should('not.exist');
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    // cy.wait(20000);
+    cy.get(codeEditorSequance).focus();
+    cy.get(codeEditorSequance).type("{selectAll}", { force: true });
     cy.get(codeEditorSequance).type(cppSolution, { force: true });
     cy.get("#coderunner-run-button").click();
 
@@ -184,8 +188,10 @@ const jsSolution =
     cy.get("#coderunner-langage-dropdown").click();
     cy.get(".p-dropdown-item").contains("js").click();
     cy.get('.p-button').contains('span', 'Change').click();
+    cy.get("#coderunner-loading-dialog").should('not.exist');
     // cy.get(codeEditorSequance).click();
-    cy.get(codeEditorSequance).type(JSsecondHalf), { force: true };
+    cy.get(codeEditorSequance).focus();
+    cy.get(codeEditorSequance).type("{moveToEnd}"+JSsecondHalf,{force: true});
     cy.get("#coderunner-run-button").click();
 
     for (let index = 0; index < inputsAndOutputs.length; index++) {
