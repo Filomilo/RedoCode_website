@@ -153,8 +153,8 @@ const jsSolution =
 
 
     // js first half 
-    cy.get(codeEditorSequance).type(backspaces);
-    cy.get(codeEditorSequance).type(JSfirstHalf);
+    cy.get(codeEditorSequance).type(backspaces, { force: true });
+    cy.get(codeEditorSequance).type(JSfirstHalf, { force: true });
     cy.get("#coderunner-run-button").click();
     cy.get("#TestResultCard"+'0'+" > div.testValidationSection.wrong").should('have.text', 'Failed');
     for (let index = 1; index < inputsAndOutputs.length; index++) {
@@ -169,9 +169,9 @@ const jsSolution =
 
     // cpp run
     cy.get(codeEditorSequance).click()
-    cy.get(codeEditorSequance).type(backspaces);
+    cy.get(codeEditorSequance).type(backspaces, { force: true });
     cy.get(codeEditorSequance).click();
-    cy.get(codeEditorSequance).type(cppSolution);
+    cy.get(codeEditorSequance).type(cppSolution, { force: true });
     cy.get("#coderunner-run-button").click();
 
     // cy.wait(5000);
@@ -185,7 +185,7 @@ const jsSolution =
     cy.get(".p-dropdown-item").contains("js").click();
     cy.get('.p-button').contains('span', 'Change').click();
     // cy.get(codeEditorSequance).click();
-    cy.get(codeEditorSequance).type(JSsecondHalf);
+    cy.get(codeEditorSequance).type(JSsecondHalf), { force: true };
     cy.get("#coderunner-run-button").click();
 
     for (let index = 0; index < inputsAndOutputs.length; index++) {
