@@ -174,8 +174,8 @@ const jsSolution =
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     // cy.wait(20000);
     cy.get(codeEditorSequance).focus();
-    cy.get(codeEditorSequance).type("{selectAll}", { force: true });
-    cy.get(codeEditorSequance).type(cppSolution, { force: true });
+    cy.get(codeEditorSequance).type("{selectAll}", { force: true,delay: 2000 });
+    cy.get(codeEditorSequance).type(cppSolution, { force: true,delay: 2000 });
     cy.get("#coderunner-run-button").click();
 
     // cy.wait(5000);
