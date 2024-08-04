@@ -12,9 +12,10 @@
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
+
   >
     <template #container>
-      <div class="CodeRunnerLoadingPanel">
+      <div class="CodeRunnerLoadingPanel"     id="data-loading-dialog">
         <LoadingIndicator />
         <div>Loading data</div>
       </div>
@@ -28,7 +29,7 @@
     :style="{ width: '25rem' }"
   >
     <template #container>
-      <div class="CodeRunnerLoadingPanel">
+      <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
         <LoadingIndicator />
         <div>
           Awiating acces to code runner, plase be patient. Consider Creating and
@@ -45,20 +46,20 @@
     "
     class="heightLimit"
   >
-    <Splitter style="height: 100%; width: 100%">
+    <Splitter style="max-height: 100%; ">
       <SplitterPanel
         v-if="props.ManualTests !== undefined"
-        style="max-width: 100%; width: 100%"
-        :size="25"
+       style="width: 5rem"
+        :size="15"
       >
-        <Splitter layout="vertical" style="width: 100%">
-          <SplitterPanel style="width: 100%; max-width: 100%; width: 100%">
+        <Splitter layout="vertical"  style="">
+          <SplitterPanel style="">
             <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
 
-      <SplitterPanel :size="50">
+      <SplitterPanel :size="70" :min-size="40" style="max-width: 100%;">
         <CodeEditor
           class="CodeEditorContainer"
           :starting="props.starting"
@@ -66,11 +67,12 @@
           :onRunCode="props.onRunCode"
         />
       </SplitterPanel>
-      <SplitterPanel :size="25">
+      <SplitterPanel :size="15" style="max-width: 100%; width: 5rem" >
         <CodeResultPanel
           :onSubmit="props.onSubmit"
           :ManualTests="props.ManualTests"
           :AutoTests="props.AutoTests"
+          :SubmitAccess="props.SubmitAccess"
         />
       </SplitterPanel>
     </Splitter>
@@ -112,6 +114,7 @@
   import ExerciseTest from '@/types/ExcericseTest'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+  import { ComputedRef } from 'vue'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   const props = defineProps({
     exerciseInfo: {
@@ -129,6 +132,7 @@
     },
     ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
+    SubmitAccess: {type: Boolean, required: true}
   })
 
   const codeRunnerStore = useCodeRunnerStore()

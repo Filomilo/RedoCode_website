@@ -1,7 +1,5 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  test:
-  {{ props.starting }}
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown

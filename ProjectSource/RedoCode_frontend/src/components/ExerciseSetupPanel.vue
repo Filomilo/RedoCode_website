@@ -853,6 +853,8 @@
 
   import { languageChoices } from '@/config/Data'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+import CodeRunnerType from '@/types/CodeRunnerTypes'
 
   const codeRunnerStore = useCodeRunnerStore()
 
@@ -888,6 +890,19 @@
     console.log('input output type cahnged')
     codeRunnerStore.clearTestsFromBuffer()
   }
+
+  const getStartFuntionForLnagauge=(type: CodeRunnerType)=>{
+    return "unimplmented";
+  }
+
+  watch(() => codeRunnerStore.exerciseCreatorController.languages, (newVal: CodeRunnerType[], oldVa: CodeRunnerType[]) => {
+    codeRunnerStore.exerciseCreatorController.solutionCodes= {};
+    for (let index = 0; index < newVal.length; index++) {
+        
+      codeRunnerStore.exerciseCreatorController.solutionCodes[newVal[index]]=getStartFuntionForLnagauge(newVal[index]);
+      }
+    
+    });
 </script>
 
 <style>
