@@ -171,18 +171,20 @@ jobs:
           docker run  --network="host" -v $PWD:/e2e -w /e2e cypress/included:12.3.0
       - name: file testing
         working-directory: ./ProjectSource/RedoCode_frontend
+        if: always()
         run: |
           tree $PWD
           ls
+          ls -r
           pwd
       - name: upload arifacts
         uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots
-          path: $PWD
+          path: ./ProjectSource/RedoCode_frontend
       - uses: actions/upload-artifact@v2
         if: always()
         with:
           name: cypress-videos
-          path: $PWD
+          path: ./
