@@ -187,4 +187,4 @@ jobs:
         if: always()
         with:
           name: cypress-videos
-          path: /ProjectSource/RedoCode_frontend/cypress/videos
+          path: ./ProjectSource/RedoCode_frontend/cypress/videos
