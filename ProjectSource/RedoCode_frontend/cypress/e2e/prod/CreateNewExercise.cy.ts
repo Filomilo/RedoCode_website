@@ -153,10 +153,17 @@ const jsSolution =
 
 
     // js first half 
+    cy.get("#coderunner-loading-dialog").should('not.exist');
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+     cy.wait(20);
     cy.get(codeEditorSequance).type(backspaces, { force: true });
     cy.get(codeEditorSequance).focus();
     cy.get(codeEditorSequance).type("{selectAll}", { force: true });
-    cy.get(codeEditorSequance).type(JSfirstHalf, { force: true });
+    for(let i=0;i<JSfirstHalf.length;i++)
+      {
+        cy.get(codeEditorSequance).focus();
+        cy.get(codeEditorSequance).type(JSfirstHalf[i], { force: true });
+      }
     cy.get("#coderunner-run-button").click();
     cy.get("#TestResultCard"+'0'+" > div.testValidationSection.wrong").should('have.text', 'Failed');
     for (let index = 1; index < inputsAndOutputs.length; index++) {
@@ -172,7 +179,7 @@ const jsSolution =
     // cpp run
     cy.get("#coderunner-loading-dialog").should('not.exist');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-     cy.wait(20000);
+     cy.wait(20);
     cy.get(codeEditorSequance).focus();
 
     cy.get(codeEditorSequance).focus();
@@ -195,9 +202,17 @@ const jsSolution =
     cy.get(".p-dropdown-item").contains("js").click();
     cy.get('.p-button').contains('span', 'Change').click();
     cy.get("#coderunner-loading-dialog").should('not.exist');
-    // cy.get(codeEditorSequance).click();
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(20);
     cy.get(codeEditorSequance).focus();
-    cy.get(codeEditorSequance).type("{moveToEnd}"+JSsecondHalf,{force: true});
+    cy.get(codeEditorSequance).type("{moveToEnd}",{force: true});
+
+    for(let i=0;i<JSsecondHalf.length;i++)
+      {
+        cy.get(codeEditorSequance).focus();
+        cy.get(codeEditorSequance).type(JSsecondHalf[i], { force: true });
+      }
+
     cy.get("#coderunner-run-button").click();
 
     for (let index = 0; index < inputsAndOutputs.length; index++) {
