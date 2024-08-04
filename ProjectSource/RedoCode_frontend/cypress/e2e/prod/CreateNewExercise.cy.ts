@@ -172,10 +172,16 @@ const jsSolution =
     // cpp run
     cy.get("#coderunner-loading-dialog").should('not.exist');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    // cy.wait(20000);
+     cy.wait(20000);
     cy.get(codeEditorSequance).focus();
-    cy.get(codeEditorSequance).type("{selectAll}", { force: true,delay: 2000 });
-    cy.get(codeEditorSequance).type(cppSolution, { force: true,delay: 2000 });
+
+    cy.get(codeEditorSequance).focus();
+    cy.get(codeEditorSequance).type("{selectAll}", { force: true});
+    for(let i=0;i<cppSolution.length;i++)
+      {
+        cy.get(codeEditorSequance).focus();
+        cy.get(codeEditorSequance).type(cppSolution[i], { force: true });
+      }
     cy.get("#coderunner-run-button").click();
 
     // cy.wait(5000);
