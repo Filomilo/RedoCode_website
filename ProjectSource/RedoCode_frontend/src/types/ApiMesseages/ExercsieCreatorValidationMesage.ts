@@ -5,8 +5,8 @@ import VarType from '../VarType'
 import ITestParameters from '@/types/ITestParameters'
 
 type StringIndexed = {
-  [key in CodeRunnerType]?: string;
-};
+  [key in CodeRunnerType]?: string
+}
 interface TestsIndexed extends Record<CodeRunnerType, ExerciseTest[]> {}
 
 export default interface ExercsieCreatorValidationMesage

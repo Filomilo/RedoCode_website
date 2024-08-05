@@ -153,25 +153,22 @@ export default class CodeRunnerConnection {
           JSON.stringify(exerciseCreatorController)
       )
 
-      
-      const tests: ExerciseTest[]=exerciseCreatorController.manualTestsSolutions[
-        codeType
-      ]??[]
-      
-      const formattedTests: ExerciseTest[]=tests
-      .map((x)=>{
-        const test:ExerciseTest={
+      const tests: ExerciseTest[] =
+        exerciseCreatorController.manualTestsSolutions[codeType] ?? []
+
+      const formattedTests: ExerciseTest[] = tests.map(x => {
+        const test: ExerciseTest = {
           input: JSON.stringify(x.input),
           output: JSON.stringify(x.output),
           expectedOutput: JSON.stringify(x.expectedOutput),
           errorOutput: x.errorOutput,
           consoleOutput: x.consoleOutput,
-          isSolved: null
+          isSolved: null,
         }
-        return test;
-      });
+        return test
+      })
       const message: ExerciseTestToRunMesseage = {
-        code: exerciseCreatorController.solutionCodes[codeType]??"",
+        code: exerciseCreatorController.solutionCodes[codeType] ?? '',
         manualTests: formattedTests,
         inputType: exerciseCreatorController.inputType,
         outputType: exerciseCreatorController.outputType,

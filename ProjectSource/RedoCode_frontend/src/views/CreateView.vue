@@ -26,7 +26,7 @@
             codeRunnerStore.exerciseCreatorController.solutionCodes[
               ApiConnectionStore.codeRunnerConnection.codeRunnerState
                 .codeRunnerType
-            ] ??''
+            ] ?? ''
           "
           :codeContainerUpdate="codeUpdate"
           :onRunCode="onRunCode"
@@ -97,8 +97,8 @@
       codeRunnerStore.exerciseCreatorController.manualTestsSolutions
     )[0] as ExerciseTest[]
     request.manualTests.forEach((obj: ExerciseTest) => {
-      obj.expectedOutput = JSON.stringify (obj.expectedOutput.toString())
-      obj.input =  JSON.stringify (obj.input.toString())
+      obj.expectedOutput = JSON.stringify(obj.expectedOutput.toString())
+      obj.input = JSON.stringify(obj.input.toString())
     })
     const request2: ExercsieCreatorValidationMesage = JSON.parse(
       JSON.stringify(request)
@@ -144,10 +144,8 @@
   const onCodeResult = (results: ProgramResultsMessage) => {
     console.log('playgronud view results: ' + JSON.stringify(results))
     codeRunnerStore.updateCreationTestData(results.results)
-    codeRunnerStore.exerciseCreatorController.updateSubmitAcces();
+    codeRunnerStore.exerciseCreatorController.updateSubmitAcces()
   }
-
-  
 </script>
 
 <style>

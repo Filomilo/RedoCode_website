@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <div style="display: none;" id="code-preview" >
+  <div style="display: none" id="code-preview">
     {{ codeRef }}
   </div>
   <div class="CodeEditorContainer">
@@ -84,7 +84,7 @@
   const confirm = useConfirm()
   const MONACO_EDITOR_OPTIONS = {
     automaticLayout: true,
-    autoClosingBrackets:false
+    autoClosingBrackets: false,
   }
   const chosenLangague = ref('Cpp')
   // const langaugesOptions = ['cpp', 'Js']

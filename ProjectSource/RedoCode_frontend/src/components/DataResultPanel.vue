@@ -5,7 +5,7 @@
       :key="index"
       :data="item"
       :index="index"
-      :id="'TestResultCard'+index"
+      :id="'TestResultCard' + index"
     />
   </div>
 </template>

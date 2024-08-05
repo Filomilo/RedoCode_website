@@ -853,9 +853,9 @@
 
   import { languageChoices } from '@/config/Data'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-import CodeRunnerStatus from '@/types/CodeRunnerStatus'
-import CodeRunnerType from '@/types/CodeRunnerTypes'
-import generateStartingFunction from '@/tools/StartingFunctionGenerator'
+  import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+  import CodeRunnerType from '@/types/CodeRunnerTypes'
+  import generateStartingFunction from '@/tools/StartingFunctionGenerator'
   const codeRunnerStore = useCodeRunnerStore()
 
   const onXChange = (val: any) => {
@@ -891,29 +891,34 @@ import generateStartingFunction from '@/tools/StartingFunctionGenerator'
     codeRunnerStore.clearTestsFromBuffer()
   }
 
- 
-
-
-  
-
   watch(
     () => [
-    codeRunnerStore.exerciseCreatorController.languages,
-    codeRunnerStore.exerciseCreatorController.inputType,
-    codeRunnerStore.exerciseCreatorController.outputType
-  ],  ([newLanguages, newInputType, newOutputType], [oldLanguages, oldInputType, oldOutputType]) => {
-    codeRunnerStore.exerciseCreatorController.solutionCodes= {};
-    const newVal: CodeRunnerType[]=newLanguages as CodeRunnerType[] ;
-    for (let index = 0; index < newVal.length; index++) {
-        
-      codeRunnerStore.exerciseCreatorController.solutionCodes[newVal[index]]=generateStartingFunction(
-        newVal[index]
-        ,codeRunnerStore.exerciseCreatorController.inputType
-        ,codeRunnerStore.exerciseCreatorController.outputType
-        );
+      codeRunnerStore.exerciseCreatorController.languages,
+      codeRunnerStore.exerciseCreatorController.inputType,
+      codeRunnerStore.exerciseCreatorController.outputType,
+    ],
+    (
+      [newLanguages, newInputType, newOutputType],
+      [oldLanguages, oldInputType, oldOutputType]
+    ) => {
+      codeRunnerStore.exerciseCreatorController.solutionCodes = {}
+      const newVal: CodeRunnerType[] = newLanguages as CodeRunnerType[]
+      for (let index = 0; index < newVal.length; index++) {
+        codeRunnerStore.exerciseCreatorController.solutionCodes[newVal[index]] =
+          generateStartingFunction(
+            newVal[index],
+            codeRunnerStore.exerciseCreatorController.inputType,
+            codeRunnerStore.exerciseCreatorController.outputType
+          )
       }
-    console.log("codeRunnerStore.exerciseCreatorController.solutionCodes: "+JSON.stringify( codeRunnerStore.exerciseCreatorController.solutionCodes))
-    });
+      console.log(
+        'codeRunnerStore.exerciseCreatorController.solutionCodes: ' +
+          JSON.stringify(
+            codeRunnerStore.exerciseCreatorController.solutionCodes
+          )
+      )
+    }
+  )
 </script>
 
 <style>
