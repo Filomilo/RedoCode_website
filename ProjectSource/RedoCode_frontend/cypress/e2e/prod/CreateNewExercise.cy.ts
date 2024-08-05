@@ -203,7 +203,7 @@ const jsSolution =
     cy.get('.p-button').contains('span', 'Change').click();
     cy.get("#coderunner-loading-dialog").should('not.exist');
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(20);
+      cy.wait(100);
     cy.get(codeEditorSequance).focus();
     cy.get(codeEditorSequance).type("{moveToEnd}",{force: true});
 
