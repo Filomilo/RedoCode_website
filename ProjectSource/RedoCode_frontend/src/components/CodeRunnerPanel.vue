@@ -12,10 +12,9 @@
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
-
   >
     <template #container>
-      <div class="CodeRunnerLoadingPanel"     id="data-loading-dialog">
+      <div class="CodeRunnerLoadingPanel" id="data-loading-dialog">
         <LoadingIndicator />
         <div>Loading data</div>
       </div>
@@ -46,20 +45,20 @@
     "
     class="heightLimit"
   >
-    <Splitter style="max-height: 100%; ">
+    <Splitter style="max-height: 100%">
       <SplitterPanel
         v-if="props.ManualTests !== undefined"
-       style="width: 5rem"
+        style="width: 5rem"
         :size="15"
       >
-        <Splitter layout="vertical"  style="">
+        <Splitter layout="vertical" style="">
           <SplitterPanel style="">
             <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
           </SplitterPanel>
         </Splitter>
       </SplitterPanel>
 
-      <SplitterPanel :size="70" :min-size="40" style="max-width: 100%;">
+      <SplitterPanel :size="70" :min-size="40" style="max-width: 100%">
         <CodeEditor
           class="CodeEditorContainer"
           :starting="props.starting"
@@ -67,7 +66,7 @@
           :onRunCode="props.onRunCode"
         />
       </SplitterPanel>
-      <SplitterPanel :size="15" style="max-width: 100%; width: 5rem" >
+      <SplitterPanel :size="15" style="max-width: 100%; width: 5rem">
         <CodeResultPanel
           :onSubmit="props.onSubmit"
           :ManualTests="props.ManualTests"
@@ -132,7 +131,7 @@
     },
     ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
-    SubmitAccess: {type: Boolean, required: true}
+    SubmitAccess: { type: Boolean, required: true },
   })
 
   const codeRunnerStore = useCodeRunnerStore()

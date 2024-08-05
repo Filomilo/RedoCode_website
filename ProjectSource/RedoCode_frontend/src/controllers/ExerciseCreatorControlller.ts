@@ -10,9 +10,9 @@ import type CodeRunnerType from '@/types/CodeRunnerTypes'
 import { computed, ComputedRef, reactive } from 'vue'
 
 type StringIndexed = {
-  [key in CodeRunnerType]?: string;
-};
-type TestsIndexed={ [key in CodeRunnerType]?: ExerciseTest[]}
+  [key in CodeRunnerType]?: string
+}
+type TestsIndexed = { [key in CodeRunnerType]?: ExerciseTest[] }
 
 export default class ExerciseCreatorController
   implements IExerciseDescriptionI, ExercsieCreatorValidationMesage
@@ -73,29 +73,34 @@ export default class ExerciseCreatorController
     this.resetParams()
   }
 
-  public  updateSubmitAcces(){
-    this.isSolved= this.calculalteSubmitAcces();
+  public updateSubmitAcces() {
+    this.isSolved = this.calculalteSubmitAcces()
   }
 
+  public calculalteSubmitAcces() {
+    if (Object.values(this.manualTestsSolutions).length == 0) return false
+    console.log(
+      '---isSolved values: ' + JSON.stringify(this.manualTestsSolutions)
+    )
+    console.log(
+      '---isSolved values amont: : ' +
+        Object.values(this.manualTestsSolutions).length +
+        ' : ' +
+        JSON.stringify(Object.values(this.manualTestsSolutions))
+    )
 
-  public calculalteSubmitAcces(){
-    if(Object.values(this.manualTestsSolutions).length==0)
-      return false;
-    console.log("---isSolved values: "+ JSON.stringify(this.manualTestsSolutions))
-    console.log("---isSolved values amont: : "+Object.values(this.manualTestsSolutions).length+" : "+ JSON.stringify(Object.values(this.manualTestsSolutions)))
-    
     for (const tests of Object.values(this.manualTestsSolutions)) {
       for (const test of tests) {
-        console.log("test: " + JSON.stringify(test));
+        console.log('test: ' + JSON.stringify(test))
         if (test.isSolved !== true) {
-          console.log("false");
-          return false; // Exit the outer function early
+          console.log('false')
+          return false // Exit the outer function early
         }
       }
     }
 
-    console.log("TRUe")
-    return true;
+    console.log('TRUe')
+    return true
   }
 
   manualTests!: ExerciseTest[] //compatiblity reasons do not use

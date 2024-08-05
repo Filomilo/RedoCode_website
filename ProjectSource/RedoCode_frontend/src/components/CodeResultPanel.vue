@@ -77,7 +77,7 @@
     onSubmit: { type: Function, required: true },
     ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
-    SubmitAccess: {type: Boolean, required: true}
+    SubmitAccess: { type: Boolean, required: true },
   })
 
   const formattedConsole = computed<string>(() =>

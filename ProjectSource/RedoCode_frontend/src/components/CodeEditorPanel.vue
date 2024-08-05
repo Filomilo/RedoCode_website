@@ -31,6 +31,9 @@
       </div>
     </div>
   </div>
+  <div style="display: none" id="code-preview">
+    {{ codeRef }}
+  </div>
   <div class="CodeEditorContainer">
     <vue-monaco-editor
       style="width: 100%; height: 100%"
@@ -81,7 +84,7 @@
   const confirm = useConfirm()
   const MONACO_EDITOR_OPTIONS = {
     automaticLayout: true,
-    autoClosingBrackets:false
+    autoClosingBrackets: false,
   }
   const chosenLangague = ref('Cpp')
   // const langaugesOptions = ['cpp', 'Js']
