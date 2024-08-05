@@ -156,6 +156,8 @@ const jsSolution =
     cy.get("#coderunner-loading-dialog").should('not.exist');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
      cy.wait(20);
+     cy.get("#code-preview").invoke('text')
+     .should('contain', "function solution(x){");
     cy.get(codeEditorSequance).type(backspaces, { force: true });
     cy.get(codeEditorSequance).focus();
     cy.get(codeEditorSequance).type("{selectAll}", { force: true });
@@ -180,6 +182,8 @@ const jsSolution =
     cy.get("#coderunner-loading-dialog").should('not.exist');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
      cy.wait(20);
+     cy.get("#code-preview").invoke('text')
+     .should('contain', "std::string solution(std::string x)");
     cy.get(codeEditorSequance).focus();
 
     cy.get(codeEditorSequance).focus();

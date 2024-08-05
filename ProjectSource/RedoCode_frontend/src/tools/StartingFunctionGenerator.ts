@@ -4,7 +4,7 @@ import VarType,{isTypeArray, isTypeDoubleArray, isTypeFloat, isTypeInt, isTypeSt
 
 
 const generateJsFunction=(): string=>{
-    return "function solution(x){\n \\\\your solution \n}"
+    return "function solution(x){\n //your solution \n}"
 }
 
 const getVarCpVarType=(type: VarType):string=>{
@@ -68,7 +68,7 @@ return imports;
 const generateCppFunction=(inputVaraible: VarType, outputVariable: VarType): string=>{
     let func="";
     func+=getCppImport(inputVaraible,outputVariable)
-    +getVarCpVarType(outputVariable)+" solution("+getVarCpVarType(inputVaraible)+" x){\n \\\\your solution \n}";
+    +getVarCpVarType(outputVariable)+" solution("+getVarCpVarType(inputVaraible)+" x){\n //your solution \n}";
 
     return func;
 
@@ -82,7 +82,7 @@ export default function generateStartingFunction(codeRunnerType: CodeRunnerType,
     switch (codeRunnerType){
         case CodeRunnerType.CPP_RUNNER: return  generateCppFunction(inputVariable,outputVariable);
         case CodeRunnerType.JS_RUNNER: return generateJsFunction();
-        default: return "\\\\your code here";
+        default: return "//your code here";
     }
 
 }

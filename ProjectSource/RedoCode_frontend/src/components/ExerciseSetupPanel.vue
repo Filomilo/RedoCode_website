@@ -855,7 +855,7 @@
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
-
+import generateStartingFunction from '@/tools/StartingFunctionGenerator'
   const codeRunnerStore = useCodeRunnerStore()
 
   const onXChange = (val: any) => {
@@ -891,17 +891,28 @@ import CodeRunnerType from '@/types/CodeRunnerTypes'
     codeRunnerStore.clearTestsFromBuffer()
   }
 
-  const getStartFuntionForLnagauge=(type: CodeRunnerType)=>{
-    return "unimplmented";
-  }
+ 
 
-  watch(() => codeRunnerStore.exerciseCreatorController.languages, (newVal: CodeRunnerType[], oldVa: CodeRunnerType[]) => {
+
+  
+
+  watch(
+    () => [
+    codeRunnerStore.exerciseCreatorController.languages,
+    codeRunnerStore.exerciseCreatorController.inputType,
+    codeRunnerStore.exerciseCreatorController.outputType
+  ],  ([newLanguages, newInputType, newOutputType], [oldLanguages, oldInputType, oldOutputType]) => {
     codeRunnerStore.exerciseCreatorController.solutionCodes= {};
+    const newVal: CodeRunnerType[]=newLanguages as CodeRunnerType[] ;
     for (let index = 0; index < newVal.length; index++) {
         
-      codeRunnerStore.exerciseCreatorController.solutionCodes[newVal[index]]=getStartFuntionForLnagauge(newVal[index]);
+      codeRunnerStore.exerciseCreatorController.solutionCodes[newVal[index]]=generateStartingFunction(
+        newVal[index]
+        ,codeRunnerStore.exerciseCreatorController.inputType
+        ,codeRunnerStore.exerciseCreatorController.outputType
+        );
       }
-    
+    console.log("codeRunnerStore.exerciseCreatorController.solutionCodes: "+JSON.stringify( codeRunnerStore.exerciseCreatorController.solutionCodes))
     });
 </script>
 

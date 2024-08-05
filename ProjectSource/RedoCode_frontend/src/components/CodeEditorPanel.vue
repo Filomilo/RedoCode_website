@@ -31,6 +31,9 @@
       </div>
     </div>
   </div>
+  <div style="display: none;" id="code-preview" >
+    {{ codeRef }}
+  </div>
   <div class="CodeEditorContainer">
     <vue-monaco-editor
       style="width: 100%; height: 100%"
