@@ -10,7 +10,7 @@ class VariablesParserTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            
+
                     "VSYKCpBg55hx9gSRgh\ti4gN\tF\tOUHtY7uvzEGJ\tk6BdhnPnBCeitojF9\tsJYE6MfwPsYwj\tD\tS\\ne\t\tL\\tDdtHRA\t3IW2\\tijt\tWOS0qPreAShd8w\n" +
                     "sqd0YwxOrEK6\tE\\t Ji0QSrX3yKPXEv\t\teQ8MFLj0v\t78d5Le\tIdt 0h\tSOQwUlRnDFSDXd4SA\tvuP43ZyCQVjdlvPIH\tEhp\t\\t5IumQHpFo2Tj\t7Tjv\t\n" +
                     "0VHBe7sLx\tq\tY7SOBPBkQi\tOm0mV7FwmX\\teuAEJGQ3\t99CwvPhV dC\tx8r9v\\nA4XRU4L\t2G\t1vK03XSmNDSQoos\t\tQOyzge\\tFhRznG6S\t\tUI8ROH3VALTtxo\n" +

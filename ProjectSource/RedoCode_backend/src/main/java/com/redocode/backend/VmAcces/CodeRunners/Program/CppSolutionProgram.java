@@ -148,7 +148,7 @@ public class CppSolutionProgram extends SolutionProgram {
                    "};\n" +
                    "myfile << str;\n" +
                    "}\n" +
-                   "if(j+1<s.size())"+
+                   "if(i+1<l)\n"+
                    "myfile <<\"\\t\";\n" +
                    "}\n";
 
