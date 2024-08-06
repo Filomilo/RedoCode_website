@@ -47,7 +47,7 @@ public class JsSolutionProgram extends SolutionProgram {
                         "        }\n" +
                         "        else{\n" +
                         "            a=a.map(element => {\n" +
-                        "                element.forEach(x=>{x.toString().replace(/\\\\/g, \"\\\\\\\\\").replace(/\\n/g, \"\\\\n\").replace(/\\t/g, \"\\\\t\")})\n" +
+                        "                   element= element.map(x=>{return x.toString().replace(/\\\\/g, \"\\\\\\\\\").replace(/\\n/g, \"\\\\n\").replace(/\\t/g, \"\\\\t\")})\n" +
                         "                return element= element.join(\"\\t\")\n" +
                         "            });\n" +
                         "            str=a.join(\"\\n\")\n" +
