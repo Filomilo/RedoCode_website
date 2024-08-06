@@ -51,6 +51,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
                     .build();
             log.info("solution program being tested: "+ solutionProgram.getInput());
             ProgramResult result=codeRunner.runProgram(solutionProgram);
+            log.info("program: \n\n"+solutionProgram.getProgramCode()+"\n\nresulted in: \n\n\n"+result);
             if(result.getConsoleOutput().getErrorOutput().length()>0)
             {
                 throw new CodeErroeException(result.getConsoleOutput().getErrorOutput());

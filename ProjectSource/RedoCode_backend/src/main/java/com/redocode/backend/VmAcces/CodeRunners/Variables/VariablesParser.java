@@ -27,7 +27,7 @@ public class VariablesParser {
                 yield new ArrayOfIntegers(res);
             }
             case ARRAY_STRINGS -> {
-                    String[] splits =toParse.split("\t");
+                    String[] splits =toParse.split("\t",-1);
                     String[] res =new String[splits.length];
                     for (int i = 0; i < splits.length; i++) {
                         res[i]=StringFormatter.recoverWhiteCharacter(splits[i]);
@@ -74,10 +74,10 @@ public class VariablesParser {
                 yield new DoubleArrayOfFloats(res);
             }
             case DOUBLE_ARRAY_OF_STRINGS -> {
-                String[] firstPass=toParse.split("\n");
+                String[] firstPass=toParse.split("\n",-1);
                 String[][] secPass= new String[firstPass.length][];
                 for (int i = 0; i < firstPass.length ; i++) {
-                    secPass[i]=firstPass[i].split("\t");
+                    secPass[i]=firstPass[i].split("\t",-1);
                 }
                 String res[][]=new String[firstPass.length][secPass[0].length];
                 for (int i = 0; i <firstPass.length ; i++) {
