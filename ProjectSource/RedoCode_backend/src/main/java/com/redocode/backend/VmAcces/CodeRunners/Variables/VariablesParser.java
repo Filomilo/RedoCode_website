@@ -77,6 +77,9 @@ public class VariablesParser {
                 String[] firstPass=toParse.split("\n",-1);
                 String[][] secPass= new String[firstPass.length][];
                 for (int i = 0; i < firstPass.length ; i++) {
+                    if (firstPass[i].endsWith("\t")) {
+                        firstPass[i] = firstPass[i].substring(0, firstPass[i].length() - 1);
+                    }
                     secPass[i]=firstPass[i].split("\t",-1);
                 }
                 String res[][]=new String[firstPass.length][secPass[0].length];
