@@ -1,7 +1,6 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.redocode.backend.Excpetions.CodeErroeException;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
@@ -36,7 +35,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
    protected static final CodeRunnersController codeRunnersController= (CodeRunnersController) SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
 
-    protected  ProgramResult checkTest(ExerciseTests test,CodeTestRequest request,CodeRunner codeRunner ) throws RequestHadndlingException,CodeErroeException {
+    protected  ProgramResult checkTest(ExerciseTests test,CodeTestRequest request,CodeRunner codeRunner ) throws RequestHadndlingException {
         log.info("Testing: " + test);
 
         try {
@@ -51,11 +50,6 @@ public class CodeTestHandler extends  BaseRequestHandler {
                     .build();
             log.info("solution program being tested: "+ solutionProgram.getInput());
             ProgramResult result=codeRunner.runProgram(solutionProgram);
-            log.info("program: \n\n"+solutionProgram.getProgramCode()+"\n\nresulted in: \n\n\n"+result);
-            if(result.getConsoleOutput().getErrorOutput().length()>0)
-            {
-                throw new CodeErroeException(result.getConsoleOutput().getErrorOutput());
-            }
             Variables recived=result.getVariables();
             if(test.getExpectedOutput()=="")
                 return result;
@@ -78,6 +72,13 @@ public class CodeTestHandler extends  BaseRequestHandler {
             log.error("varaible NULL: "+ ex.getMessage());
             throw new RequestHadndlingException("returned value is null ");
         }
+        catch (Exception ex)
+        {
+            log.error("varaible NULL: "+ ex.getMessage());
+            throw new RequestHadndlingException("Error while executing tests: "+ ex.getMessage());
+
+        }
+
 
 
     }
@@ -118,7 +119,7 @@ public class CodeTestHandler extends  BaseRequestHandler {
             try {
                 programResults.add(  checkTest(exTest,codeTestRequest,codeRunner));
             }
-            catch (Exception ex)
+            catch (RequestHadndlingException ex)
             {
                 programResults.add(
                         ProgramResult.builder()

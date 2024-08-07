@@ -406,7 +406,6 @@ public class CppSolutionProgramFactoryTest {
                         "};\n" +
                         "myfile << str;\n" +
                         "}\n" +
-                        "if(i+1<l)\n"+
                         "myfile <<\"\\t\";\n" +
                         "}\n" +
                         "myfile.close();\n" +
