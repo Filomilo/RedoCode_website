@@ -7,7 +7,7 @@ public class StringFormatter {
 
     public static String removeWhiteCharacterss(String input)
     {
-//    log.info("String before format: "+ input);
+    log.info("String before format: "+ input);
         for (int i = 0; i < input.length(); i++) {
             switch (input.charAt(i)) {
                 case '\\':
@@ -29,13 +29,13 @@ public class StringFormatter {
 
             }
         }
-//        log.info("String before format: "+ input);
+        log.info("String before format: "+ input);
             return input;
         }
 
     public static String recoverWhiteCharacter(String input)
     {
-//        log.info("String before reformat: "+ input);
+        log.info("String before reformat: "+ input);
         for (int i = 0; i < input.length()-1; i++) {
             String tmp = input.substring(i, i + 2);
 
@@ -57,7 +57,7 @@ public class StringFormatter {
 
             }
         }
-//        log.info("String after  reformat: "+ input);
+        log.info("String after  reformat: "+ input);
             return input;
     }
 
