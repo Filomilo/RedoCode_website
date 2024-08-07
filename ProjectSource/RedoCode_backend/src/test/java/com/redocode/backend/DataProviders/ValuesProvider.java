@@ -1,5 +1,13 @@
 package com.redocode.backend.DataProviders;
 
+import com.redocode.backend.Messages.UtilContainers.Range;
+import com.redocode.backend.RequstHandling.Handlers.AutoTestGeneratorHandler;
+import com.redocode.backend.Tools.ExerciseTestFactory;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.DoubleArrayOfStrings;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleString;
+import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import com.redocode.backend.database.ExerciseTests;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -162,7 +170,7 @@ public class ValuesProvider {
         Stream<Arguments> args=arguments.stream().map((arg)->{return  Arguments.of((Object) arg);});
         return args;
     }
-
+    @SneakyThrows
     public static Stream<String> singleStringProvider() {
         List<String> argeumnets= (List<String>) new ArrayList<String>();
                 argeumnets.add("AAAA");
@@ -242,6 +250,26 @@ public class ValuesProvider {
                         "outputGenerator_b89f0990be99412b84016b6ee03bf951(solution(inputGenerator_c1d93977e0744521bd01971e37806965()));\n" +
                         "return 0;\n" +
                         "}");
+
+
+        ExerciseTests[] tests= new ExerciseTestFactory()
+                .setAmount(30)
+                .setInputType(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .setLengthRange(new Range(0,20))
+                .setXArrayRange(new Range(1,20))
+                .setYArrayRange(new Range(1,20))
+                .setCapitalLetters(true)
+                .setSpaceCharacters(true)
+                .setUnderscoreLetters(true)
+                .setBreakCharacters(true)
+                .setNumbers(true)
+                .setSpaceCharacters(true)
+                .build();
+        for (int i = 0; i < tests.length; i++) {
+
+            argeumnets.add(((SingleString)tests[i].getParsedInput(Variables.VARIABLES_TYPES.SINGLE_STRING)).getValue());
+        }
+
         return argeumnets.stream();
     }
 
@@ -255,14 +283,36 @@ public class ValuesProvider {
         Stream<Arguments> args=argeumnets.stream().map((arg)->{return  Arguments.of((Object) arg);});
         return args;
     }
-
+@SneakyThrows
     public static Stream<Arguments> doubleArrayStringProvider() {
         List<String[][]> argeumnets= (List<String[][]>) new ArrayList<String[][]>();
         int width=rand.nextInt(1,20);
         int height=rand.nextInt(1,20);
-        argeumnets.add(new String[][]{{"AAAAAAAAAAAA","BBBBBBBBBBBBBB"},{"CCCCCCCCCCC","DDDDDDDDDDDDDD"}});
-        //        argeumnets.add(generateRadnomStringDoubleArray(height,width));
-        //        argeumnets.add(generateRadnomStringDoubleArray(height,width));
+//        argeumnets.add(new String[][]{{"AAAAAAAAAAAA","BBBBBBBBBBBBBB"},{"CCCCCCCCCCC","DDDDDDDDDDDDDD"}});
+        argeumnets.add(new String[][]{{"AAAAAAAAAAAA","\n"},{"CCCCCCCCCCC","DDDDDDDDDDDDDD"}});
+//         argeumnets.add(new String[][]{{"AAAAAAAAAAAA","\t"},{"CCCCCCCCCCC","DDDDDDDDDDDDDD"}});
+//    argeumnets.add(new String[][]{{"","BBBBBBBBBBBBBB"},{"CCCCCCCCCCC","DDDDDDDDDDDDDD"}});
+//        ExerciseTests[] tests= new ExerciseTestFactory()
+//                .setAmount(30)
+//                .setInputType(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
+//                .setLengthRange(new Range(0,20))
+//                .setXArrayRange(new Range(1,20))
+//                .setYArrayRange(new Range(1,20))
+//                .setCapitalLetters(true)
+//                .setSpaceCharacters(true)
+//                .setUnderscoreLetters(true)
+//                .setBreakCharacters(true)
+//                .setNumbers(true)
+//                .setSpaceCharacters(true)
+//                .build();
+//        for (int i = 0; i < tests.length; i++) {
+//
+//            argeumnets.add(((DoubleArrayOfStrings)tests[i].getParsedInput(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)).getValue());
+//        }
+
+
+//                argeumnets.add(generateRadnomStringDoubleArray(height,width));
+//                argeumnets.add(generateRadnomStringDoubleArray(height,width));
         Stream<Arguments> args=argeumnets.stream().map((arg)->{return  Arguments.of((Object) arg);});
         return args;
     }

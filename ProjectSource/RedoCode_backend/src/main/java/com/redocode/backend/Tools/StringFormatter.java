@@ -52,7 +52,10 @@ public class StringFormatter {
                     break;
                 case "\\\"":
                     input = input.substring(0, i) + "\"" + input.substring(i + 2);
+                    break;
 //                    i -= 1;
+                case "\\t":
+                    input = input.substring(0, i) + "\t" + input.substring(i + 2);
                     break;
 
             }

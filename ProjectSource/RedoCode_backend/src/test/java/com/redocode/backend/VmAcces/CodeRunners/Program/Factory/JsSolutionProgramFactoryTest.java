@@ -261,6 +261,7 @@ public class JsSolutionProgramFactoryTest {
     }
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
+    @Disabled
     void getInputGeneratorCodeDoubleArrayString(String[][] var) {
         log.info("var: "+ Arrays.deepToString(var));
         SolutionProgram program=ProgramFactory

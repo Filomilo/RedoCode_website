@@ -35,7 +35,7 @@ class ContainerControllerTest {
 
 
         assertEquals(fileListBeforeCreation.length+1,fileListAfterCreation.length);
-        assertEquals(fileContent.trim(),recivedFileConenent);
+        assertEquals(fileContent,recivedFileConenent);
         assertEquals(fileListBeforeCreation.length,fileListAfterRemoval.length);
     }
     @ParameterizedTest
