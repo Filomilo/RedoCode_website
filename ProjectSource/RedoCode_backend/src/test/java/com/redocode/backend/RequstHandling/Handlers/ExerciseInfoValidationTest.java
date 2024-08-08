@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ContextConfiguration
 @Slf4j
-@Disabled("Isotating specific test for debugging")
+//@Disabled("Isotating specific test for debugging")
 class ExerciseInfoValidationTest {
     @Autowired
     ExerciseRepository exerciseRepository;
@@ -158,7 +158,7 @@ class ExerciseInfoValidationTest {
 
 
 
-    @Disabled("Isotating specific test for debugging")
+    //@Disabled("Isotating specific test for debugging")
     @ParameterizedTest
     @MethodSource ("com.redocode.backend.DataProviders.IncorrectExerciseParamatersProviders#incorrectTitleProvider")
     void testIncorrectTitleExerciseCreation(String incorrectTitle){

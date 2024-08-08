@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-@Disabled("Islotating specific test for debugging")
+//@Disabled("Islotating specific test for debugging")
 class ExerciseTestFactoryTest {
 
     @ParameterizedTest

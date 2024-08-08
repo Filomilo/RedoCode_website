@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ContextConfiguration
 @Log
-@Disabled("Islotating specific test for debugging")
+//@Disabled("Islotating specific test for debugging")
 class ExerciseRepositoryTest {
     @Autowired
     private ExerciseRepository exerciseRepository;
@@ -40,7 +40,7 @@ class ExerciseRepositoryTest {
     }
 
     @Test
-    @Disabled("Islotating specific test for debugging")
+    //@Disabled("Islotating specific test for debugging")
     void getExeciseListFromQuery() {
 
         ExerciseListRequestMessage req= ExerciseListRequestMessage.

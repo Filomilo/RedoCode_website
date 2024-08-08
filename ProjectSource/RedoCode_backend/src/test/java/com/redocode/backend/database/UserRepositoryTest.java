@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Slf4j
-@Disabled("Islotating specific test for debugging")
+//@Disabled("Islotating specific test for debugging")
 public class UserRepositoryTest {
 
     @Autowired

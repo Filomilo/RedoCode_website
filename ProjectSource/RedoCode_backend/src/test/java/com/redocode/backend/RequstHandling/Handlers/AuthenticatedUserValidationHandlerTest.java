@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled("Isotating specific test for debugging")
+//@Disabled("Isotating specific test for debugging")
 @SpringBootTest
 class AuthenticatedUserValidationHandlerTest  {
 

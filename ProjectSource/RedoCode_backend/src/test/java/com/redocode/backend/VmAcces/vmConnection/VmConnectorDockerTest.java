@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled("Islotating specific test for debugging")
+//@Disabled("Islotating specific test for debugging")
 class VmConnectorDockerTest {
 
 

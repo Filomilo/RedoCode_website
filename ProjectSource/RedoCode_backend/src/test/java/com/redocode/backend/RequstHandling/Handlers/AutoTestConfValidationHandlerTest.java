@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ContextConfiguration
 @Slf4j
-@Disabled("Isotating specific test for debugging")
+//@Disabled("Isotating specific test for debugging")
 class AutoTestConfValidationHandlerTest {
 
     AutoTestConfValidationHandler autoTestConfValidationHandler;

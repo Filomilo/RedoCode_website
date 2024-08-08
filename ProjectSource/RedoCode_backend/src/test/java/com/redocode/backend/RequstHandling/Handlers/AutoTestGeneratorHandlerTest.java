@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled("Islotating specific test for debugging")
+//@Disabled("Islotating specific test for debugging")
 class AutoTestGeneratorHandlerTest {
     @SneakyThrows
     @ParameterizedTest
