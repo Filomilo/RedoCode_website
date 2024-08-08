@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 ////@Disabled("not working under guthub pipilene")
-@Disabled("Isotating specific test for debugging")
+//@Disabled("Isotating specific test for debugging")
 class CodeTestHandlerTest {
 
     @Autowired CodeRunnersController codeRunnersController;
