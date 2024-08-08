@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ContextConfiguration
 //@Disabled("Not wokrking in gihtub pipleine eveneroment")
-//////@Disabled("Islotating specific test for debugging")
+//@Disabled("Isotating specific test for debugging")
 class MultipleCodeTestHandlerTest {
 
     ExerciseTests[] tests;

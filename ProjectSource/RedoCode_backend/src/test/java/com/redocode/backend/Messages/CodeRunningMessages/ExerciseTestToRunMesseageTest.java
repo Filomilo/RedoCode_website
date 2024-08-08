@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.WebSocketTestBase;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+//@Disabled("Islotating specific test for debugging")
 class ExerciseTestToRunMesseageTest  {
 
     public static ObjectMapper mapper = new ObjectMapper();

@@ -272,9 +272,24 @@ return        contiaenrList.stream()
         {
             throw new TimeoutException("Execution timeout, exceeded: "+ timeout+"ms");
         }
-        log.info("returned: "+outputStream.toString().trim());
+        log.info("returned: "+outputStream.toString());
         //return outputStream.toString().trim();
-        return new ConsoleOutput(exitCode,outputStream.toString().trim(),errorStream.toString().trim());
+        //removing last characte becosue new line
+
+        String output="";
+        String error="";
+        if(!outputStream.toString().isEmpty())
+        {
+            if(outputStream.toString().endsWith("\n"))
+            {
+                output=outputStream.toString().substring(0,outputStream.toString().length()-1);
+            }
+            else
+                output=outputStream.toString();
+        }
+         error=errorStream.toString();
+
+        return new ConsoleOutput(exitCode,output,error);
 
 
     }
@@ -295,9 +310,9 @@ return        contiaenrList.stream()
             throw new RuntimeException("couldn't execute command in vm with input: "+ e.getMessage());
         }
 
-        log.info("rturned: "+outputStream.toString().trim());
+        log.info("rturned: "+outputStream.toString());
       //  return outputStream.toString().trim();
-        return new ConsoleOutput(exitCode,outputStream.toString().trim(),errorStream.toString().trim());
+        return new ConsoleOutput(exitCode,outputStream.toString(),errorStream.toString());
 
     }
 

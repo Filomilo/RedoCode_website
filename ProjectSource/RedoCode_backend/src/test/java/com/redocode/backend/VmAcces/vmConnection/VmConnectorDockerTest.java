@@ -153,7 +153,7 @@ class VmConnectorDockerTest {
             int amtOfConatinersAfterestrcution= vmConnectorDocker.getVmList().size();
 
 
-assertEquals(argumentsInput.trim(),res,"Testing program output did not match provided arguments");
+assertEquals(argumentsInput,res,"Testing program output did not match provided arguments");
             assertEquals(amtOfConatinersBefore,amtOfConatinersAfterestrcution,"New Vm failed to bew removed after creation");
 
         });

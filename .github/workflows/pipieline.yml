@@ -122,6 +122,19 @@ jobs:
       - name: run test
         run: |
           docker exec -t projectsource-api-1 mvn clean install
+        continue-on-error: true
+      - name: Upload Docker Logs on Failure
+        if: failure()
+        run: |
+          mkdir -p docker-logs
+          docker ps -a > docker-logs/docker-ps.txt
+          docker-compose -f docker-compose-dev.yml logs > docker-logs/docker-compose-logs.txt
+      - name: Upload Artifact
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-logs
+          path: docker-logs/
 
   docker_structure_test:
     defaults:

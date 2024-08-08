@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
-////@Disabled("Islotating specific test for debugging")
+//@Disabled("Isotating specific test for debugging")
 
 class ContainerControllerTest {
 
@@ -35,7 +35,7 @@ class ContainerControllerTest {
 
 
         assertEquals(fileListBeforeCreation.length+1,fileListAfterCreation.length);
-        assertEquals(fileContent.trim(),recivedFileConenent);
+        assertEquals(fileContent,recivedFileConenent);
         assertEquals(fileListBeforeCreation.length,fileListAfterRemoval.length);
     }
     @ParameterizedTest

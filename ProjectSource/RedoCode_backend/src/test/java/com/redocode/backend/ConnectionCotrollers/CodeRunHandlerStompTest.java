@@ -65,7 +65,6 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFOR
 @Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
 //@RunWith(SpringRunner.class)
 //@DirtiesContext
-////@Disabled("Islotating specific test for debugging")
 //@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 class CodeRunHandlerStompTest extends WebSocketTestBase {
 

@@ -148,6 +148,7 @@ public class CppSolutionProgram extends SolutionProgram {
                    "};\n" +
                    "myfile << str;\n" +
                    "}\n" +
+                   "if(i+1<l)\n"+
                    "myfile <<\"\\t\";\n" +
                    "}\n";
 
@@ -206,8 +207,10 @@ public class CppSolutionProgram extends SolutionProgram {
                         "};\n" +
                         "myfile << str;\n" +
                         "}\n" +
+                        "if(j+1<w)\n"+
                         "myfile <<\"\\t\";\n" +
                         "}\n" +
+                        "if(i+1<h)"+
                         "myfile <<\"\\n\";\n" +
                         "}\n" ;
             }

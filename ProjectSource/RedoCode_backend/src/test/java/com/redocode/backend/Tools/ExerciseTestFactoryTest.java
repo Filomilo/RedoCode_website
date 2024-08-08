@@ -5,6 +5,7 @@ import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import com.redocode.backend.database.ExerciseTests;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -12,6 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
+//@Disabled("Islotating specific test for debugging")
 class ExerciseTestFactoryTest {
 
     @ParameterizedTest

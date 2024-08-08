@@ -155,7 +155,7 @@ const jsSolution =
     // js first half 
     cy.get("#coderunner-loading-dialog").should('not.exist');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-     cy.wait(20);
+     cy.wait(200);
      cy.get("#code-preview").invoke('text')
      .should('contain', "function solution(x){");
     cy.get(codeEditorSequance).type(backspaces, { force: true });
@@ -181,13 +181,19 @@ const jsSolution =
     // cpp run
     cy.get("#coderunner-loading-dialog").should('not.exist');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-     cy.wait(20);
+     cy.wait(200);
      cy.get("#code-preview").invoke('text')
      .should('contain', "std::string solution(std::string x)");
     cy.get(codeEditorSequance).focus();
 
     cy.get(codeEditorSequance).focus();
+    cy.get(codeEditorSequance).type("{selectAll}{backspace}", { force: true});
     cy.get(codeEditorSequance).type("{selectAll}", { force: true});
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(200);
+    cy.get(codeEditorSequance).type("{backspace}", { force: true});
+    cy.get("#code-preview").invoke('text')
+    .should('equal', "");
     for(let i=0;i<cppSolution.length;i++)
       {
         cy.get(codeEditorSequance).focus();
@@ -207,7 +213,7 @@ const jsSolution =
     cy.get('.p-button').contains('span', 'Change').click();
     cy.get("#coderunner-loading-dialog").should('not.exist');
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(100);
+      cy.wait(200);
     cy.get(codeEditorSequance).focus();
     cy.get(codeEditorSequance).type("{moveToEnd}",{force: true});
 
