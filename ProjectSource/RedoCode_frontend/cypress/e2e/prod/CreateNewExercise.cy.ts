@@ -187,7 +187,13 @@ const jsSolution =
     cy.get(codeEditorSequance).focus();
 
     cy.get(codeEditorSequance).focus();
+    cy.get(codeEditorSequance).type("{selectAll}{backspace}", { force: true});
     cy.get(codeEditorSequance).type("{selectAll}", { force: true});
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(200);
+    cy.get(codeEditorSequance).type("{backspace}", { force: true});
+    cy.get("#code-preview").invoke('text')
+    .should('equal', "");
     for(let i=0;i<cppSolution.length;i++)
       {
         cy.get(codeEditorSequance).focus();
