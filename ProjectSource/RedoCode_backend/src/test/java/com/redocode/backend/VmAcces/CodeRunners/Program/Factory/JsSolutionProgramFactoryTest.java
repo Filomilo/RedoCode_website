@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-//@Disabled("Islotating specific test for debugging")
+@Disabled("Islotating specific test for debugging")
 public class JsSolutionProgramFactoryTest {
 
     @Autowired

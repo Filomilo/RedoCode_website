@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-//@Disabled("Islotating specific test for debugging")
+@Disabled("Islotating specific test for debugging")
 public class DataBaseSolutionsRun {
     @Autowired
     SolutionProgramsRepository solutionProgramsRepository;

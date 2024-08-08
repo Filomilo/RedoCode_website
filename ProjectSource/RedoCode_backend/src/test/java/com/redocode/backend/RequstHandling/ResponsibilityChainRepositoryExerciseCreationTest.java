@@ -28,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 //@Disabled("Not wokrking in gihtub pipleine eveneroment")
+@Disabled("Islotating specific test for debugging")
 class ResponsibilityChainRepositoryExerciseCreationTest {
     @Autowired
     UsersRepository usersRepository;

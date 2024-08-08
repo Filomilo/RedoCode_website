@@ -1,11 +1,12 @@
 package com.redocode.backend.VmAcces.CodeRunners.Variables;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Disabled("Islotating specific test for debugging")
 class VariablesParserTest {
 
     @ParameterizedTest

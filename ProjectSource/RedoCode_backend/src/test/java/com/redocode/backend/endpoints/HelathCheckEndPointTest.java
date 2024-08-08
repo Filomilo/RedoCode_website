@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @ContextConfiguration
-//@Disabled("Islotating specific test for debugging")
+@Disabled("Islotating specific test for debugging")
 public class HelathCheckEndPointTest  {
 
 

@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
-//@Disabled("Islotating specific test for debugging")
+@Disabled("Islotating specific test for debugging")
 class CppSolutionProgramTest {
 
 

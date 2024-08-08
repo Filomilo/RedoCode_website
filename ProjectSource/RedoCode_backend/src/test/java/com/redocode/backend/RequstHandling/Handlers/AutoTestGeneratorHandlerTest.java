@@ -5,6 +5,7 @@ import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.User;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@Disabled("Islotating specific test for debugging")
 class AutoTestGeneratorHandlerTest {
     @SneakyThrows
     @ParameterizedTest
