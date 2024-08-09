@@ -11,6 +11,7 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
+  
   test: {
     environment: 'jsdom',
     include: ['src/__tests__/integral/**/*.spec.ts'], 
