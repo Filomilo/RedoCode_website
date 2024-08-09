@@ -184,7 +184,7 @@ jobs:
           tree $PWD
           ls
           ls -r
-          docker run --network="host" -v $PWD:/e2e -w /e2e cypress/included:12.3.0
+          docker run --network="host" -v $PWD:/e2e -w /e2e cypress/included:12.3.0 --config-file cypress-prod.config.ts
       - name: file testing
         working-directory: ./ProjectSource/RedoCode_frontend
         if: always()
