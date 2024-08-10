@@ -11,7 +11,7 @@
       <Dropdown
         v-model="chosenLangague"
         :options="
-          languageChoices.filter(x => props.languageChoices.includes(x))
+        laguageDropDown 
         "
         placeholder="Select programming langauge"
         class="dropDown"
@@ -25,6 +25,7 @@
         label="Connect"
         @click="onConnectButton"
         id="connect-button"
+        :disabled="!allowConnection"
       />
     </div>
   </div>
@@ -37,19 +38,22 @@
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import { languageDropDownType } from '@/types/CodeRunnerTypes'
   import codeRunnerType from '@/types/CodeRunnerTypes'
-  // import { languageChoices } from '@/config/Data'
+  import { languageChoices } from '@/config/Data'
   const props = defineProps({
-    languageChoices: { type: Array as () => codeRunnerType[], required: true },
+    languageChoicesSelection: { type: Array as () => codeRunnerType[], required: true },
   })
 
   const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
+
+    const allowConnection=computed(()=>{
+      return chosenLangague.value!= codeRunnerType.UNIDENTIFIED
+    })
+
   const codeRunnerStore = useCodeRunnerStore()
   // const ApiConnectionStore = useApiConnectionStore()
-  // const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
-  //   return languageChoices.filter(element =>
-  //     languageChoices.some(choice => choice.value === element.value)
-  //   )
-  // })
+  const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
+    return languageChoices.filter(element => props.languageChoicesSelection.includes(element.value))
+  })
 
   const connectToCodeRunner = async (codeRunner: codeRunnerType) => {
     codeRunnerStore.codeRunnerConnection.requestCodeRunner(

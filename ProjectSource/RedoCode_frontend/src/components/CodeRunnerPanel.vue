@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 
 <template>
+  
   <!-- CoderunnerState:
   {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState }}
 <div style="color: white" >
@@ -73,7 +74,7 @@
   </div>
   <div v-else style="height: 100%">
     {{ JSON.stringify(props.languageChoices) }}
-    <ConnectToCodeRunnerPanel :languageChoices="props.languageChoices" />
+    <ConnectToCodeRunnerPanel :languageChoicesSelection="props.languageChoices" />
   </div>
 </template>
 
