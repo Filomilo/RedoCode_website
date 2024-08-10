@@ -20,6 +20,9 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   })
 
   const validateToken = (): boolean => {
+    if (import.meta.env.MODE === 'development') {
+      return true;
+    }
     if (_token.value === '') return false
     return true
   }
@@ -139,6 +142,11 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const getToken = (): String => {
     return _token.value
   }
+
+  if (import.meta.env.MODE === 'development') {
+    isLogged.value=true;
+  }
+
 
   return {
     isLogged,

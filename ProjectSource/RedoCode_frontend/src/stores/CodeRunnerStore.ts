@@ -115,20 +115,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const manualTestBuffer: Ref<ExerciseTest[]> = ref([])
 
-  const addblankTestToBuffer = (inputType: VarType, outputype: VarType) => {
-    const input = getVarAcording(inputType)
-    const output = getVarAcording(outputype)
-    console.log('ading ' + inputType + ' _ ' + ' :: ' + JSON.stringify(input))
-    manualTestBuffer.value.push({
-      input: input,
-      expectedOutput: output,
-      output: null,
-      errorOutput: '',
-      consoleOutput: '',
-      isSolved: null,
-    })
-    console.log('added: ' + JSON.stringify(manualTestBuffer))
-  }
+  
   const clearTestsFromBuffer = () => {
     manualTestBuffer.value = []
   }
@@ -169,43 +156,43 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     })
   }
 
-  const updateCreationTestData = (reuslts: ProgramResult[]) => {
-    console.log(
-      '----updateTestData: ' +
-        JSON.stringify(
-          exerciseCreatorController.manualTestsSolutions[
-            apiConnectionStore.codeRunnerConnection.codeRunnerState
-              .codeRunnerType
-          ]
-        )
-    )
+  // const updateCreationTestData = (reuslts: ProgramResult[]) => {
+  //   console.log(
+  //     '----updateTestData: ' +
+  //       JSON.stringify(
+  //         exerciseCreatorController.manualTestsSolutions[
+  //           apiConnectionStore.codeRunnerConnection.codeRunnerState
+  //             .codeRunnerType
+  //         ]
+  //       )
+  //   )
 
-    const test: ExerciseTest[] =
-      exerciseCreatorController.manualTestsSolutions[
-        apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-      ] ?? []
-    console.log('tests: ' + test.length + ' : ' + JSON.stringify(test))
-    test.forEach((val: ExerciseTest, index: number) => {
-      console.log(
-        '--Test: val' + JSON.stringify(val) + ' index: ' + JSON.stringify(index)
-      )
+  //   const test: ExerciseTest[] =
+  //     exerciseCreatorController.manualTestsSolutions[
+  //       apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+  //     ] ?? []
+  //   console.log('tests: ' + test.length + ' : ' + JSON.stringify(test))
+  //   test.forEach((val: ExerciseTest, index: number) => {
+  //     console.log(
+  //       '--Test: val' + JSON.stringify(val) + ' index: ' + JSON.stringify(index)
+  //     )
 
-      val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
-        ? ''
-        : reuslts[index].consoleOutput.output
-      val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
-        ? ''
-        : reuslts[index].consoleOutput.errorOutput
-      val.output = isNullOrUndef(reuslts[index].variables)
-        ? null
-        : reuslts[index].variables
-      val.isSolved = val.expectedOutput === reuslts[index].variables
-    })
+  //     val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
+  //       ? ''
+  //       : reuslts[index].consoleOutput.output
+  //     val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
+  //       ? ''
+  //       : reuslts[index].consoleOutput.errorOutput
+  //     val.output = isNullOrUndef(reuslts[index].variables)
+  //       ? null
+  //       : reuslts[index].variables
+  //     val.isSolved = val.expectedOutput === reuslts[index].variables
+  //   })
 
-    exerciseCreatorController.manualTestsSolutions[
-      apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    ] = test
-  }
+  //   exerciseCreatorController.manualTestsSolutions[
+  //     apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+  //   ] = test
+  // }
 
   const getExerciseSetupError = (): String => {
     if (exerciseCreatorController.languages.length == 0) {
@@ -261,14 +248,14 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     // areResultCorsrect,
     // removeTest,
     exerciseCreatorController,
-    manualTestBuffer,
-    clearTestsFromBuffer,
-    addblankTestToBuffer,
-    removeTestFromBuffer,
-    transferTestFromBufferTpCreator,
+    // manualTestBuffer,
+    // clearTestsFromBuffer,
+    // addblankTestToBuffer,
+    // removeTestFromBuffer,
+    // transferTestFromBufferTpCreator,
     updateTestData,
     getExerciseSetupError,
-    updateCreationTestData,
+    // updateCreationTestData,
     updateCodeRunner,
   }
 })

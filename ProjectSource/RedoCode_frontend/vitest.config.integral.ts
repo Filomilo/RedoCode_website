@@ -11,12 +11,19 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
-  
   test: {
     environment: 'jsdom',
     include: ['src/__tests__/integral/**/*.spec.ts'], 
     exclude: ['e2e/*'],
-    root: fileURLToPath(new URL('./src', import.meta.url))
+    root: fileURLToPath(new URL('./', import.meta.url)),
+    coverage: {
+      provider: 'v8', 
+      reporter: ['text', 'json', 'html'],
+      reportsDirectory: './coverage',
+    },
   },
 });
+
+
+
 
