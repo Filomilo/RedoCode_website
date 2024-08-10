@@ -23,6 +23,7 @@ import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import ExerciseTest from '@/types/ExcericseTest'
 import StompApiSender from './Stomp/StompApiSender'
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+import StompApiSubsciptionContorller from './Stomp/StompApiSubsriptionsController'
 export default class CodeRunnerConnection {
   private _stompApiSender: StompApiSender
 
@@ -40,11 +41,9 @@ export default class CodeRunnerConnection {
     () => this.codeRunnerState.value.state == 'AWAITING'
   )
 
-  constructor(stompApiConnection: StompApiSender) {
+  constructor(stompApiConnection: StompApiSender, stompApiSubscriptions: StompApiSubsciptionContorller) {
     this._stompApiSender = stompApiConnection
-
-    const apiConnectionStore= useApiConnectionStore();
-    apiConnectionStore.stompApiSubsciptionContorller.addVmStatusSubscription
+    stompApiSubscriptions.addVmStatusSubscription
     (
       (state: CoderunnerState)=>{
         this.codeRunnerState.value=state;

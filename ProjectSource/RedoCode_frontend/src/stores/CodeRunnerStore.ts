@@ -25,13 +25,17 @@ import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import { useActiveUserStore } from './ActiveUserStore'
 import CodeRunnerConnection from '@/controllers/CodeRunnerConnection'
 import StompApiSender from '@/controllers/Stomp/StompApiSender'
+import StompApiSubsciptionContorller from '@/controllers/Stomp/StompApiSubsriptionsController'
 
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
 
+  console.log("apiConnectionStore: "+JSON.stringify(apiConnectionStore))
+
   const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(
-    apiConnectionStore.stompApiSender as StompApiSender
+    apiConnectionStore.stompApiSender as StompApiSender,
+    apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller
   )
 
 

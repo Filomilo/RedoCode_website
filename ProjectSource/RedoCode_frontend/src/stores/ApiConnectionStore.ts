@@ -5,14 +5,11 @@ import StompApiConnection from '@/controllers/Stomp/StompApiConnection'
 import StompApiSubscription from '@/controllers/Stomp/StompApiSubscription'
 import CodeRunnerConnection from '@/controllers/CodeRunnerConnection'
 import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-import { useCodeRunnerStore } from './CodeRunnerStore'
-import ProgramResult from '@/types/ProgramResults'
 import StompApiSender from '@/controllers/Stomp/StompApiSender'
 import StompApiSubsriptionsController from '@/controllers/Stomp/StompApiSubsriptionsController'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const toastStore = useToastStore()
-  const codeRunnerStore = useCodeRunnerStore()
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
     (message: string) => {
