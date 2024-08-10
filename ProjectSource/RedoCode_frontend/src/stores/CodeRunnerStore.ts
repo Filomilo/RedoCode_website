@@ -8,7 +8,7 @@ import { languageChoices } from '../config/Data'
 import ExerciseTest from '@/types/ExcericseTest'
 import type ProgramResult from '@/types/ProgramResults'
 import type CodeToRunMessage from '@/types/CodeToRunMessage'
-import ExerciseCreatorController from '@/controllers/ExerciseCreatorControlller'
+import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
 import CoderunnerState from '../types/CodeRunnerState'
 import { IFrame } from '@stomp/stompjs'
 import VarType, {
@@ -23,10 +23,11 @@ import { isNullOrUndef } from 'chart.js/helpers'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import { useActiveUserStore } from './ActiveUserStore'
-import CodeRunnerConnection from '@/controllers/CodeRunnerConnection'
+import CodeRunnerConnection from '@/controllers/CodeRunner/CodeRunnerConnection'
 import StompApiSender from '@/controllers/Stomp/StompApiSender'
 import StompApiSubsciptionContorller from '@/controllers/Stomp/StompApiSubsriptionsController'
-
+import codeRunnerSender from '@/controllers/CodeRunner/CodeRunnerSender'
+import CodeRunnerSender from '@/controllers/CodeRunner/CodeRunnerSender'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
@@ -37,7 +38,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     apiConnectionStore.stompApiSender as StompApiSender,
     apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller
   )
-
+  const codeRunnerSender: CodeRunnerSender=new CodeRunnerSender(apiConnectionStore.stompApiSender as StompApiSender );
 
 
   const playGroundBase: ExerciseData = {
@@ -134,7 +135,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   return {
     codeRunnerConnection,
-    exerciseCreatorController
+    exerciseCreatorController,
+    codeRunnerSender
     // codeRunnerActive,
     // doesHaveACtiveToCodeRunner,
     // requestCodeRunner,

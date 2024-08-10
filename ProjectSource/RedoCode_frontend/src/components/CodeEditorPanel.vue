@@ -16,7 +16,7 @@
     <div class="CodeEditorPlayButton">
       <Button
         @click="codeRunButton"
-        v-if="false"
+        v-if="true"
         id="coderunner-run-button"
       >
         <IconPlay style="z-index: 9" />
@@ -133,7 +133,7 @@ const confirmChangeOFCodeRuner = (type: codeRunnerType) => {
     acceptLabel: "Change",
     accept: () => {
       console.log(" confirm change: " + type);
-      codeRunnerStore.codeRunnerConnection.requestCodeRunner(type);
+      codeRunnerStore.codeRunnerSender.requestCodeRunner(type);
     },
     reject: () => {
       console.log(" reject change: " + type);

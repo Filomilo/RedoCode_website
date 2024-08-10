@@ -56,7 +56,7 @@
   })
 
   const connectToCodeRunner = async (codeRunner: codeRunnerType) => {
-    codeRunnerStore.codeRunnerConnection.requestCodeRunner(
+    codeRunnerStore.codeRunnerSender.requestCodeRunner(
       chosenLangague.value
     )
     // codeRunnerStore.increment()

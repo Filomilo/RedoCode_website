@@ -5,10 +5,13 @@ import CodeRunnerType from '@/types/CodeRunnerTypes'
 import { computed, ComputedRef, Ref, ref } from 'vue'
 
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
-import StompApiSender from './Stomp/StompApiSender'
-import StompApiSubsciptionContorller from './Stomp/StompApiSubsriptionsController'
+import StompApiSender from '../Stomp/StompApiSender'
+import StompApiSubsciptionContorller from '../Stomp/StompApiSubsriptionsController'
+import EnpointAcces from '../EndpointsAcces'
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 export default class CodeRunnerConnection {
   private _stompApiSender: StompApiSender
+  private activeUserStore=useActiveUserStore();
 
   public readonly codeRunnerState: Ref<CoderunnerState> = ref({
     codeRunnerType: CodeRunnerType.UNIDENTIFIED,
@@ -27,8 +30,7 @@ export default class CodeRunnerConnection {
   public onCodeRunnerStateChanged(codeRunnerState: CoderunnerState)
   {
     console.log(JSON.stringify(codeRunnerState));
-    this.codeRunnerState.value.state=codeRunnerState.state;
-    this.codeRunnerState.value.codeRunnerType=codeRunnerState.codeRunnerType;
+    this.codeRunnerState.value=codeRunnerState;
   }
 
   constructor(stompApiSender: StompApiSender, stompApiSubscriptions: StompApiSubsciptionContorller) {
@@ -41,43 +43,17 @@ export default class CodeRunnerConnection {
   }
 
 
-  public readonly requestCodeRunner = (codeRunnerName: CodeRunnerType) => {
-    this.codeRunnerState.value.state = CodeRunnerStatus.AWAITING
-    console.log('codeRunnerName: ' + JSON.stringify(codeRunnerName))
-    const request: CodeRunnerRequestMessage = {
-      CodeRunnerType: codeRunnerName,
-    }
-    console.log('requestCodeRunner: ' + JSON.stringify(request))
-    this._stompApiSender.codeRunnerRequest(request);
-  }
-
-
-
 
 public updateCodeRunner = () => {
-  console.error("Uniplmented")
+  EnpointAcces.getCodeRunnerState(this.activeUserStore.getToken()as string).then((data: CoderunnerState)=>{
+    this.codeRunnerState.value=data;
+  })
+
 }
 }
 
   // console.log('updateCodeRunner: ' + activeUserStore.getToken())
 
-  // axios
-  //   .post('/public/coderunner/state', { token: activeUserStore.getToken() })
-  //   .then(response => {
-  //     console.log('updateCodeRunner Response:', response.data)
-  //     apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType =
-  //       CodeRunnerType.UNIDENTIFIED
-  //     apiConnectionStore.codeRunnerConnection.codeRunnerState.state =
-  //       CodeRunnerStatus.NONE
-  //   })
-  //   .catch(error => {
-  //     console.error('updateCodeRunner Error:', error)
-  //     apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType =
-  //       CodeRunnerType.UNIDENTIFIED
-  //     apiConnectionStore.codeRunnerConnection.codeRunnerState.state =
-  //       CodeRunnerStatus.NONE
-  //   })
-// }
 
   // public readonly sendToExerciseIdRun = (content: ExerciseIdToRunMessage) => {
   //   //   console.log('sendToExerciseIdRun: ' + content)
