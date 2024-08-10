@@ -54,20 +54,7 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
         showCloseButton.value = true
       })
   }
-  apiConnectionStore.stompApiConnection.subscribe(
-    '/user/public/topic/ExecutionResponses',
-    (message: Object) => {
-      const responseBase: ExecutionResponseBase =
-        message as ExecutionResponseBase
 
-      console.log(
-        'ExecutionResponses revcived: ' + JSON.stringify(responseBase)
-      )
-      if (responseBase.messageType === 'CHAIN_SCHEME')
-        loadChainScheme(responseBase as ExecutionChainScheme)
-      else updateStatus(responseBase as ExecutionResponseStatusUpdate)
-    }
-  )
 
   const showExecutionChain: Ref<Boolean> = ref(false)
   const showCloseButton: Ref<Boolean> = ref(false)

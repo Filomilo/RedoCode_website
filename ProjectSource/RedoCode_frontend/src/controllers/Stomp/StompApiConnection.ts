@@ -1,6 +1,5 @@
 import { ActivationState, Client, IFrame, StompHeaders } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
-import { stompClient } from './StompApiConnectionold'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
@@ -47,7 +46,7 @@ export default class StompApiConnection {
           })
         }
         const codeRunnerStore = useCodeRunnerStore()
-        codeRunnerStore.updateCodeRunner()
+        codeRunnerStore.codeRunnerConnection.updateCodeRunner()
         this._onConnected('succesfully connected')
       },
       onStompError: (frame: IFrame) => {
@@ -117,7 +116,7 @@ export default class StompApiConnection {
 
     this._stompClient.publish(obj)
     console.log('published ' + JSON.stringify(obj))
-    console.log('THrough: ' + JSON.stringify(stompClient))
+    console.log('THrough: ' + JSON.stringify(this._stompClient))
   }
 }
 

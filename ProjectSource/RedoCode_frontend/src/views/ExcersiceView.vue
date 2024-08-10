@@ -33,26 +33,27 @@
   const route = useRoute()
 
   const fetchExerciseData = (id: number) => {
-    codeRunnerStore.exerciseLoading = true
+    toastStore.showErrorMessage("not impelented fetchExerciseData")
+    // codeRunnerStore.exerciseLoading = true
 
-    const params = {
-      id: route.params.id,
-    }
-    axios
-      .get('http://localhost:8080/public/exercises/data', { params: params })
-      .then(response => {
-        const data: ExerciseData = response.data
-        data.tests = data.tests.map((elem: any) => {
-          return {
-            ...elem,
-            input: elem.input.value,
-            expectedOutput: elem.expectedOutput.value,
-          }
-        })
-        codeRunnerStore.setExerciseData(data)
-        console.log('data: ' + JSON.stringify(data))
-        codeRunnerStore.exerciseLoading = false
-      })
+    // const params = {
+    //   id: route.params.id,
+    // }
+    // axios
+    //   .get('http://localhost:8080/public/exercises/data', { params: params })
+    //   .then(response => {
+    //     const data: ExerciseData = response.data
+    //     data.tests = data.tests.map((elem: any) => {
+    //       return {
+    //         ...elem,
+    //         input: elem.input.value,
+    //         expectedOutput: elem.expectedOutput.value,
+    //       }
+    //     })
+    //     codeRunnerStore.setExerciseData(data)
+    //     console.log('data: ' + JSON.stringify(data))
+    //     codeRunnerStore.exerciseLoading = false
+    //   })
   }
 
   onMounted(() => {
@@ -77,7 +78,8 @@
   }
 
   const onCodeResult = (results: ProgramResultsMessage) => {
+    toastStore.featureNotImplemented('onCodeResult')
     console.log('Exercise view results: ' + JSON.stringify(results))
-    codeRunnerStore.updateTestData(results.results)
+    // codeRunnerStore.updateTestData(results.results)
   }
 </script>

@@ -24,7 +24,7 @@
           "
           :starting="
             codeRunnerStore.exerciseCreatorController.solutionCodes[
-              ApiConnectionStore.codeRunnerConnection.codeRunnerState
+              codeRunnerStore.codeRunnerConnection.codeRunnerState
                 .codeRunnerType
             ] ?? ''
           "
@@ -33,12 +33,17 @@
           :onSubmit="onSubmit"
           :ManualTests="
             codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
-              ApiConnectionStore.codeRunnerConnection.codeRunnerState
+              codeRunnerStore.codeRunnerConnection.codeRunnerState
                 .codeRunnerType
-            ]
+            ]?.tests
           "
-          :AutoTests="[]"
-          :onResults="onCodeResult"
+          :AutoTests="
+          codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
+            codeRunnerStore.codeRunnerConnection.codeRunnerState
+              .codeRunnerType
+          ]?.autoTests
+        "
+          :onResults="(results: ProgramResultsMessage)=>{codeRunnerStore.exerciseCreatorController.updateTests(results,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)}"
           :SubmitAccess="codeRunnerStore.exerciseCreatorController.isSolved"
         />
       </TabPanel>
@@ -71,10 +76,10 @@
   const activeUserStore = useActiveUserStore()
   const codeUpdate = (code: string) => {
     console.log('codee update: ' + code)
-    // codeRunnerStore.exerciseCreatorController.solutions
-    codeRunnerStore.exerciseCreatorController.solutionCodes[
-      ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    ] = code
+    codeRunnerStore.exerciseCreatorController.updateSolutionCode(
+      code
+, codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    );
     console.log(
       'update: ' +
         JSON.stringify(codeRunnerStore.exerciseCreatorController.solutionCodes)
@@ -83,30 +88,32 @@
 
   const onRunCode = () => {
     console.log('On run code')
-    ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
-      codeRunnerStore.exerciseCreatorController
-    )
+    // ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
+    //   codeRunnerStore.exerciseCreatorController
+    // )
+    console.error("unimplemented");
   }
 
   const onSubmit = () => {
     console.log('On sumbit')
-    const request: ExercsieCreatorValidationMesage = JSON.parse(
-      JSON.stringify(codeRunnerStore.exerciseCreatorController)
-    ) as ExercsieCreatorValidationMesage
-    request.manualTests = Object.values(
-      codeRunnerStore.exerciseCreatorController.manualTestsSolutions
-    )[0] as ExerciseTest[]
-    request.manualTests.forEach((obj: ExerciseTest) => {
-      obj.expectedOutput = JSON.stringify(obj.expectedOutput.toString())
-      obj.input = JSON.stringify(obj.input.toString())
-    })
-    const request2: ExercsieCreatorValidationMesage = JSON.parse(
-      JSON.stringify(request)
-    ) as ExercsieCreatorValidationMesage
+    console.error("Unimplented")
+    // const request: ExercsieCreatorValidationMesage = JSON.parse(
+    //   JSON.stringify(codeRunnerStore.exerciseCreatorController)
+    // ) as ExercsieCreatorValidationMesage
+    // request.manualTests = Object.values(
+    //   codeRunnerStore.exerciseCreatorController.manualTestsSolutions
+    // )[0] as ExerciseTest[]
+    // request.manualTests.forEach((obj: ExerciseTest) => {
+    //   obj.expectedOutput = JSON.stringify(obj.expectedOutput.toString())
+    //   obj.input = JSON.stringify(obj.input.toString())
+    // })
+    // const request2: ExercsieCreatorValidationMesage = JSON.parse(
+    //   JSON.stringify(request)
+    // ) as ExercsieCreatorValidationMesage
 
-    ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest(
-      request
-    )
+    // ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest(
+    //   request
+    // )
   }
 
   const exerciseLnageus = computed(() => {
@@ -126,7 +133,6 @@
 
   const onOpenCodeRunner = () => {
     console.log('coderunner opened')
-    codeRunnerStore.transferTestFromBufferTpCreator()
   }
 
   const infoValidation = computed(() => {
@@ -138,14 +144,10 @@
     )
   })
   const testValidation = computed(() => {
-    return codeRunnerStore.getExerciseSetupError() === ''
+    return codeRunnerStore.exerciseCreatorController.ExerciseSetupError;
   })
 
-  const onCodeResult = (results: ProgramResultsMessage) => {
-    console.log('playgronud view results: ' + JSON.stringify(results))
-    codeRunnerStore.updateCreationTestData(results.results)
-    codeRunnerStore.exerciseCreatorController.updateSubmitAcces()
-  }
+ 
 </script>
 
 <style>

@@ -3,9 +3,7 @@
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
-      :modelValue="
-        ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-      "
+      :modelValue="codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType"
       :options="langaugesOptions"
       placeholder="Select programming langauge"
       class="dropDown"
@@ -18,16 +16,13 @@
     <div class="CodeEditorPlayButton">
       <Button
         @click="codeRunButton"
-        v-if="!codeRunnerStore.isAwaitingCompilation"
+        v-if="false"
         id="coderunner-run-button"
       >
         <IconPlay style="z-index: 9" />
       </Button>
       <div v-else>
-        <LoadingIndicator
-          style="height: 2rem; width: 2rem"
-          id="coderunner-wait-button"
-        />
+        <LoadingIndicator style="height: 2rem; width: 2rem" id="coderunner-wait-button" />
       </div>
     </div>
   </div>
@@ -43,7 +38,7 @@
       @mount="handleMount"
       :language="
         EditorLanguagesMap[
-          ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+          codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
         ]
       "
       @keyup.ctrl.enter.prevent="onShortCutRun"
@@ -54,125 +49,113 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, shallowRef, computed, watch, onMounted, Ref } from 'vue'
-  import IconPlay from '@/assets/icons/IconPlay.vue'
-  import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
-  import { useConfirm } from 'primevue/useconfirm'
-  import LoadingIndicator from './LoadingIndicator.vue'
-  import { onBeforeRouteLeave } from 'vue-router'
-  import { EditorLanguagesMap, languageChoices } from '@/config/Data'
-  import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
-  import codeRunnerType from '@/types/CodeRunnerTypes'
-  const props = defineProps({
-    starting: { type: String, required: true },
-    codeUpdateMethod: { type: Function, required: true },
-    onRunCode: { type: Function, required: true },
-  })
+import { ref, shallowRef, computed, watch, onMounted, Ref } from "vue";
+import IconPlay from "@/assets/icons/IconPlay.vue";
+import { useCodeRunnerStore } from "../stores/CodeRunnerStore";
+import { useConfirm } from "primevue/useconfirm";
+import LoadingIndicator from "./LoadingIndicator.vue";
+import { onBeforeRouteLeave } from "vue-router";
+import { EditorLanguagesMap, languageChoices } from "@/config/Data";
+import { useApiConnectionStore } from "@/stores/ApiConnectionStore";
+import codeRunnerType from "@/types/CodeRunnerTypes";
+const props = defineProps({
+  starting: { type: String, required: true },
+  codeUpdateMethod: { type: Function, required: true },
+  onRunCode: { type: Function, required: true },
+});
 
-  const codeRunnerStore = useCodeRunnerStore()
-  const ApiConnectionStore = useApiConnectionStore()
+const codeRunnerStore = useCodeRunnerStore();
+const ApiConnectionStore = useApiConnectionStore();
 
-  const codeRef = ref(props.starting)
+const codeRef = ref(props.starting);
 
-  const codeRunButton = () => {
-    props.onRunCode()
-  }
+const codeRunButton = () => {
+  props.onRunCode();
+};
 
-  const onCodeChnaage = (text: string) => {
-    props.codeUpdateMethod(text)
-  }
-  const confirm = useConfirm()
-  const MONACO_EDITOR_OPTIONS = {
-    automaticLayout: true,
-    autoClosingBrackets: false,
-  }
-  const chosenLangague = ref('Cpp')
-  // const langaugesOptions = ['cpp', 'Js']
-  const langaugesOptions = computed(() =>
-    codeRunnerStore.exerciseCreatorController.title === ''
-      ? languageChoices
-      : languageChoices.filter(x =>
-          codeRunnerStore.exerciseCreatorController.languages.includes(x.value)
-        )
-  )
-
-  watch(
-    () => props.starting,
-    (first, second) => {
-      console.log(
-        'props chahned-----------------------: ' + second + ' -> ' + first
+const onCodeChnaage = (text: string) => {
+  props.codeUpdateMethod(text);
+};
+const confirm = useConfirm();
+const MONACO_EDITOR_OPTIONS = {
+  automaticLayout: true,
+  autoClosingBrackets: false,
+};
+const chosenLangague = ref("Cpp");
+// const langaugesOptions = ['cpp', 'Js']
+const langaugesOptions = computed(() =>
+  codeRunnerStore.exerciseCreatorController.title === ""
+    ? languageChoices
+    : languageChoices.filter((x) =>
+        codeRunnerStore.exerciseCreatorController.languages.includes(x.value)
       )
-      codeRef.value = first
-    }
-  )
+);
 
-  const lnagaugeDropdownVaule = computed(
-    () =>
-      EditorLanguagesMap[
-        ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-      ]
-  )
+watch(
+  () => props.starting,
+  (first, second) => {
+    console.log("props chahned-----------------------: " + second + " -> " + first);
+    codeRef.value = first;
+  }
+);
 
-  const editorLang = computed(() => {
-    return EditorLanguagesMap[
-      ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+const lnagaugeDropdownVaule = computed(
+  () =>
+    EditorLanguagesMap[
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
     ]
-  })
+);
 
-  const editorRef = shallowRef()
-  const handleMount = (editor: any) => (editorRef.value = editor)
+const editorLang = computed(() => {
+  return EditorLanguagesMap[
+    codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+  ];
+});
 
-  const onChangeLnageugeDropDown = (lang: any) => {
-    if (
-      lang.value! !==
-      ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    ) {
-      console.log('test change: ' + lang.value)
-      confirmChangeOFCodeRuner(lang.value)
-    }
+const editorRef = shallowRef();
+const handleMount = (editor: any) => (editorRef.value = editor);
+
+const onChangeLnageugeDropDown = (lang: any) => {
+  if (
+    lang.value! !== codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+  ) {
+    console.log("test change: " + lang.value);
+    confirmChangeOFCodeRuner(lang.value);
   }
-  const confirmChangeOFCodeRuner = (type: codeRunnerType) => {
-    confirm.require({
-      message: 'Changing code runner may take a while',
-      header: 'Are you sure?',
-      rejectClass: 'CancelButton',
-      acceptClass: 'AcceptButton',
-      rejectLabel: 'Cancel',
-      acceptLabel: 'Change',
-      accept: () => {
-        console.log(' confirm change: ' + type)
-        ApiConnectionStore.codeRunnerConnection.requestCodeRunner(type)
-      },
-      reject: () => {
-        console.log(' reject change: ' + type)
-      },
-    })
-  }
+};
+const confirmChangeOFCodeRuner = (type: codeRunnerType) => {
+  confirm.require({
+    message: "Changing code runner may take a while",
+    header: "Are you sure?",
+    rejectClass: "CancelButton",
+    acceptClass: "AcceptButton",
+    rejectLabel: "Cancel",
+    acceptLabel: "Change",
+    accept: () => {
+      console.log(" confirm change: " + type);
+      codeRunnerStore.codeRunnerConnection.requestCodeRunner(type);
+    },
+    reject: () => {
+      console.log(" reject change: " + type);
+    },
+  });
+};
 
-  function formatCode() {
-    editorRef.value?.getAction('editor.action.formatDocument').run()
-  }
+function formatCode() {
+  editorRef.value?.getAction("editor.action.formatDocument").run();
+}
 
-  watch(
-    () => codeRunnerStore.exerciseLoading,
-    () => {
-      // console.log('updatedexercise data########################')
-      // if (!codeRunnerStore.exerciseLoading)
-      //   codeRef.value = codeRunnerStore.exerciseData.startingFunction
-    }
-  )
+// const onRunCode = () => {
+//   console.log('running code: \n' + JSON.stringify(codeRef.value))
+//   codeRunnerStore.runCode(codeRef.value)
+// }
 
-  // const onRunCode = () => {
-  //   console.log('running code: \n' + JSON.stringify(codeRef.value))
-  //   codeRunnerStore.runCode(codeRef.value)
-  // }
+onBeforeRouteLeave((to, from) => {
+  codeRef.value = "";
+});
 
-  onBeforeRouteLeave((to, from) => {
-    codeRef.value = ''
-  })
-
-  const onShortCutRun = () => {
-    console.log('onShortCutRun')
-    props.onRunCode()
-  }
+const onShortCutRun = () => {
+  console.log("onShortCutRun");
+  props.onRunCode();
+};
 </script>

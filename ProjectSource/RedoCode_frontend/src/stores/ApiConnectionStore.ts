@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref, computed, Ref } from 'vue'
 import { useToastStore } from './ToastStore'
-import StompApiConnection from '@/controllers/StompApiConnection'
-import StompApiSubscription from '@/controllers/StompApiSubscription'
+import StompApiConnection from '@/controllers/Stomp/StompApiConnection'
+import StompApiSubscription from '@/controllers/Stomp/StompApiSubscription'
 import CodeRunnerConnection from '@/controllers/CodeRunnerConnection'
 import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
 import { useCodeRunnerStore } from './CodeRunnerStore'
 import ProgramResult from '@/types/ProgramResults'
+import StompApiSender from '@/controllers/Stomp/StompApiSender'
+import StompApiSubsriptionsController from '@/controllers/Stomp/StompApiSubsriptionsController'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const toastStore = useToastStore()
@@ -24,47 +26,36 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     }
   )
 
-  let onCodeResult = (result: ProgramResultsMessage): void => {}
 
-  const setOnCodeResult = (
-    func: (result: ProgramResultsMessage) => void
-  ): void => {
-    onCodeResult = func
-  }
-  const clearOnCodeResult = () => {
-    onCodeResult = (result: ProgramResultsMessage) => {}
-  }
+  const stompApiSender: StompApiSender= new StompApiSender(
+    stompApiConnection
+  );
 
-  const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(
+
+  const stompApiSubsciptionContorller: StompApiSubsriptionsController= new StompApiSubsriptionsController(
     stompApiConnection
   )
 
-  // const _CodeRunnerResultsSubscriptions: StompApiConnection =
-  stompApiConnection.subscribe(
-    '/user/public/topic/codeRunnerResults',
-    (response: Object) => {
-      const results: ProgramResultsMessage = response as ProgramResultsMessage
-      console.log('_CodeRunnerResultsSubscriptions: ' + JSON.stringify(results))
-      onCodeResult(results)
-      //
-    }
-  )
 
-  const helloWorldSubscription: StompApiSubscription =
-    stompApiConnection.subscribe(
-      '/user/public/topic/health',
-      (response: Object) => {
-        toastStore.showProccessingMessage(
-          'Hello world reposnes: ' + JSON.stringify(response)
-        )
-      }
-    )
+  // let onCodeResult = (result: ProgramResultsMessage): void => {}
+
+  // const setOnCodeResult = (
+  //   func: (result: ProgramResultsMessage) => void
+  // ): void => {
+  //   onCodeResult = func
+  // }
+  // const clearOnCodeResult = () => {
+  //   onCodeResult = (result: ProgramResultsMessage) => {}
+  // }
+
+
+
 
   // connectionDestinnation
 
-  const sendHealthCheck = () => {
-    stompApiConnection.sendMessage('/public/app/Health', 'messaaage')
-  }
+  // const sendHealthCheck = () => {
+  //   stompApiConnection.sendMessage('/public/app/Health', 'messaaage')
+  // }
 
   // const codeRunnerConnectionControler= ref(new CodeRunnerConnectionControler());
   // const doesHaveACtiveToCodeRunner = computed(() => {
@@ -74,10 +65,12 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   //   const isAwaitngCodeRunner = computed(() => codeRunnerConnectionControler.value.codeRunnerActive.state == 'AWAITING')
 
   return {
+    stompApiSender,
+    stompApiSubsciptionContorller,
     stompApiConnection,
-    codeRunnerConnection,
-    setOnCodeResult,
-    clearOnCodeResult,
+    // codeRunnerConnection,
+    // setOnCodeResult,
+    // clearOnCodeResult,
     // codeRunnerConnectionControler,
 
     // doesHaveACtiveToCodeRunner,

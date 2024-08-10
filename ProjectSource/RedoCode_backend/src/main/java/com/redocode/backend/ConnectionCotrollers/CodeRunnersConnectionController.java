@@ -31,7 +31,7 @@ public class CodeRunnersConnectionController {
         this.template = template;
     }
     @MessageMapping("/codeRunnerRequest")
-    public void test(Principal principal, CodeRunnerRequestMessage requestMessageSource) throws Exception{
+    public void codeRunnerRequest(Principal principal, CodeRunnerRequestMessage requestMessageSource) throws Exception{
         String userId=principal.getName();
         log.info("code runner reuqest from: "+ userId+" : "+requestMessageSource);
         CodeRunnerRequest req= new CodeRunnerRequest(redoCodeController.getUserByConnectionUUID(userId), requestMessageSource);

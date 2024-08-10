@@ -7,7 +7,7 @@
         <div class="EngineStatusTitle">Machine:</div>
         <div class="EngineStatusStatus" id="coderunner-type">
           {{
-            ApiConnectionStore.codeRunnerConnection.codeRunnerState
+            codeRunnerStore.codeRunnerConnection.codeRunnerState
               .codeRunnerType
           }}
         </div>
@@ -16,13 +16,11 @@
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle" id="coderunner-status">Status:</div>
         <div class="EngineStatusStatus">
-          {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState.state }}
+          {{ codeRunnerStore.codeRunnerConnection.codeRunnerState.state }}
         </div>
       </div>
     </div>
-    tets
 
-    {{ JSON.stringify(codeRunnerStore.exerciseCreatorController.manualTests) }}
     <div
       class="ConsoleResultConsoleCOntainer"
       v-if="!isDataResult"
@@ -81,15 +79,17 @@
   })
 
   const formattedConsole = computed<string>(() =>
-    '>> ' + codeRunnerStore.exerciseData.tests[0].consoleOutput == null
-      ? ''
-      : codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(
-          /\n/g,
-          '<br> >> '
-        )
+   'unimplemented'
+    // '>> ' + codeRunnerStore.exerciseData.tests[0].consoleOutput == null
+    //   ? ''
+    //   : codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(
+    //       /\n/g,
+    //       '<br> >> '
+        // )
   )
   const formattedEror = computed<string>(() =>
-    codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
+  'unimplented'
+    // codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
   )
   const isCorrect = computed<boolean>(() => {
     return false

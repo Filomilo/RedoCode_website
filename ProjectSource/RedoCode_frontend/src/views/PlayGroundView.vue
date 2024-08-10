@@ -27,10 +27,11 @@
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   const ApiConnectionStore = useApiConnectionStore()
   const setupPlayground = () => {
+    toastStore.featureNotImplemented('setupPlayground')
     // console.log("-----------------")
-    codeRunnerStore.setExerciseLoading(true)
-    codeRunnerStore.setExceriseDataToPlayground()
-    codeRunnerStore.setExerciseLoading(false)
+    // codeRunnerStore.setExerciseLoading(true)
+    // codeRunnerStore.setExceriseDataToPlayground()
+    // codeRunnerStore.setExerciseLoading(false)
   }
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
@@ -46,8 +47,9 @@
   }
 
   const onRunCode = () => {
-    // toastStore.featureNotImplemented('onRunCode')
-    ApiConnectionStore.codeRunnerConnection.runRawCode(activeCode.value)
+    toastStore.featureNotImplemented('onRunCode')
+    // ApiConnectionStore.codeRunnerConnection.runRawCode(activeCode.value)
+
   }
 
   const onSubmit = () => {
@@ -55,7 +57,9 @@
   }
   const onCodeResult = (results: ProgramResultsMessage) => {
     console.log('playgronud view results: ' + JSON.stringify(results))
-    codeRunnerStore.updateTestData(results.results)
+    console.error("unimplmented")
+    toastStore.featureNotImplemented('onRunCode')
+    // codeRunnerStore.updateTestData(results.results)
   }
 </script>
 

@@ -22,6 +22,8 @@ import VarType, {
   setTypeToFloat,
   isTypeSingle,
 } from '@/types/VarType'
+import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
+import ProgramResult from '@/types/ProgramResults'
 
 type StringIndexed = {
   [key in CodeRunnerType]?: string
@@ -148,6 +150,17 @@ export default class ExerciseCreatorController
   //#endregion
 
 
+//#region code mangament
+
+public updateSolutionCode(code: string, type:CodeRunnerType) {
+  this.solutionCodes[type]=code;
+}
+
+
+
+//#endregion
+
+
   //#region Test managment
 
 
@@ -218,6 +231,42 @@ export default class ExerciseCreatorController
         }
       );
   }
+
+
+  // private updateCreationTestData(reuslts: ProgramResult[])  {
+  //   console.log(
+  //     '----updateTestData: ' +
+  //       JSON.stringify(
+  //         this.manualTestsSolutions[
+  //           apiConnectionStore.codeRunnerConnection.codeRunnerState
+  //             .codeRunnerType
+  //         ]
+  //       )
+  //   )
+
+  public updateTests (results: ProgramResultsMessage,langauge:CodeRunnerType) {
+    console.log('create test rtesult update: ' + JSON.stringify(results))
+    // this.updateCreationTestData(results.results)
+    this.updateSubmitAcces()
+  }
+
+  get ExerciseSetupError() {
+    if (this.languages.length == 0) {
+      return 'at least one programing lnaguage should be available'
+    }
+    if (this.timeForTaskMin < 15) {
+      return 'at least 15 minute should be for task'
+    }
+    if (this.getSingleRowOfManualTests.length < 3) {
+      return 'tthere should be at least 3 manuall tests'
+    }
+    if (this.getSingleRowOfManualTests.length > 10) {
+      return 'amount of manula test cannot exceed 10'
+    }
+
+    return ''
+  }
+
 
   //#endregion
 

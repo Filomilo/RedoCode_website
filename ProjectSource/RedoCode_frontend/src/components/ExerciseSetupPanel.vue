@@ -1,7 +1,7 @@
 <template>
   <div class="mainContainer">
     <div class="errorContainer">
-      {{ codeRunnerStore.getExerciseSetupError() }}
+      {{ codeRunnerStore.exerciseCreatorController.ExerciseSetupError }}
     </div>
     <div class="setupPanel">
       <div class="panelSection">

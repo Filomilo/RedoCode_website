@@ -11,7 +11,7 @@
       <Dropdown
         v-model="chosenLangague"
         :options="
-          languageChoices.filter(x => props.languageChoices.includes(x.value))
+          languageChoices.filter(x => props.languageChoices.includes(x))
         "
         placeholder="Select programming langauge"
         class="dropDown"
@@ -37,22 +37,22 @@
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import { languageDropDownType } from '@/types/CodeRunnerTypes'
   import codeRunnerType from '@/types/CodeRunnerTypes'
-  import { languageChoices } from '@/config/Data'
+  // import { languageChoices } from '@/config/Data'
   const props = defineProps({
     languageChoices: { type: Array as () => codeRunnerType[], required: true },
   })
 
   const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
   const codeRunnerStore = useCodeRunnerStore()
-  const ApiConnectionStore = useApiConnectionStore()
-  const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
-    return languageChoices.filter(element =>
-      languageChoices.some(choice => choice.value === element.value)
-    )
-  })
+  // const ApiConnectionStore = useApiConnectionStore()
+  // const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
+  //   return languageChoices.filter(element =>
+  //     languageChoices.some(choice => choice.value === element.value)
+  //   )
+  // })
 
   const connectToCodeRunner = async (codeRunner: codeRunnerType) => {
-    ApiConnectionStore.codeRunnerConnection.requestCodeRunner(
+    codeRunnerStore.codeRunnerConnection.requestCodeRunner(
       chosenLangague.value
     )
     // codeRunnerStore.increment()
