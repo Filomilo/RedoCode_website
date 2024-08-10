@@ -60,7 +60,7 @@
       chosenLangague.value
     )
     // codeRunnerStore.increment()
-    console.log('Json log: ' + JSON.stringify(codeRunnerStore))
+    // console.log('Json log: ' + JSON.stringify(codeRunnerStore))
   }
   const onConnectButton = () => {
     console.log('connect ' + JSON.stringify(chosenLangague.value))

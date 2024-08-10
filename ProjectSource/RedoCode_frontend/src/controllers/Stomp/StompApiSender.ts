@@ -2,7 +2,7 @@
 import RawCodeToRunMessage from "@/types/ApiMesseages/RawCodeToRunMessage";
 import StompApiConnection from "./StompApiConnection";
 import CodeRunnerRequestMessage from "@/types/CodeRunnerRequestMessage";
-import AuthenticationResponse from "@/types/ApiMesseages/Authentication/AuthenticationRequest";
+import AuthenticationResponse from "@/types/ApiMesseages/Authentication/AuthenticationResponse";
 import ExerciseIdToRunMessage from "@/types/ApiMesseages/ExerciseIdToRunMessage";
 import ExerciseTestToRunMesseage from "@/types/ApiMesseages/ExerciseTestToRunMesseage";
 import ExercsieCreatorValidationMesage from "@/types/ApiMesseages/ExercsieCreatorValidationMesage";
@@ -78,6 +78,7 @@ public readonly authenticationStomp = (mesage: AuthenticationResponse) => {
     //#region CodeRunner Connection controller
 
       public readonly codeRunnerRequest = (mesage: CodeRunnerRequestMessage) => {
+        console.log("codeRunnerRequest: "+JSON.stringify(mesage))
         this._stompApiConnection.sendMessage(
           '/public/app/codeRunnerRequest',
           mesage

@@ -148,6 +148,21 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
 
+  const apiConnectionStore =useApiConnectionStore()
+  apiConnectionStore.stompApiConnection.addOnConnectEvent(()=>{
+    console.log(
+      'on connected: ' + JSON.stringify(getToken())
+    )
+    if (getToken().length > 0) {
+      apiConnectionStore.stompApiSender.authenticationStomp({
+        token: getToken() as string,
+      })
+    }
+  
+  })
+
+
+
   return {
     isLogged,
     login,

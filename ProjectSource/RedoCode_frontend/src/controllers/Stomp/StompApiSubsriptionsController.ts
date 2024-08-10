@@ -4,6 +4,7 @@ import ProgramResultsMessage from "@/types/ApiMesseages/ProgramResultsMessage";
 import ExecutionResponseBase from "@/types/ApiMesseages/ExecutionResponses/ExecutionResponseBase";
 import ExecutionChainScheme from "@/types/ApiMesseages/ExecutionResponses/ExecutionChainScheme";
 import ExecutionResponseStatusUpdate from "@/types/ApiMesseages/ExecutionResponses/ExecutionResponseStatusUpdate";
+import StompApiSubscription from "./StompApiSubscription";
 
 class StompApiSubsciptionContorller{
 
@@ -13,28 +14,38 @@ class StompApiSubsciptionContorller{
     constructor(stompApiConneciton: StompApiConnection)
     {
         this._stompApiConnection=stompApiConneciton;
+        this.initSubscriptions();
+    }
 
+
+    private initSubscriptions()
+    {
+        console.log("this._vmStatusSubscription intlize")
         this._vmStatusSubscription = this._stompApiConnection.subscribe(
-            '/user/public/topic/codeRunnerState',this._VmStatusCallBack
+            '/user/public/topic/codeRunnerState',this._VmStatusCallBack.bind(this)
           );
+          console.log("this._CodeResultsSubscription intlize")
 
     this._CodeResultsSubscription=this._stompApiConnection.subscribe(
       '/user/public/topic/codeRunnerResults',
-      this._CodeResultsCallBack
+      this._CodeResultsCallBack.bind(this)
         );
 
         this._ExecutionChainSubscription=this._stompApiConnection.subscribe(
             '/user/public/topic/ExecutionResponses',
-            this._ExecutionChainCallBack
+            this._ExecutionChainCallBack.bind(this)
               );
 
     }
 
 
+
+
+
     //#region Subscription objects 
-    private _vmStatusSubscription;
-    private _CodeResultsSubscription;
-    private _ExecutionChainSubscription;
+    private _vmStatusSubscription!:StompApiSubscription;
+    private _CodeResultsSubscription!:StompApiSubscription;
+    private _ExecutionChainSubscription!: StompApiSubscription;
     //#endregion
 
     //#region Subscription CallBacks
@@ -42,8 +53,15 @@ class StompApiSubsciptionContorller{
     private _VmStatusCallBack(message: object)
     {
         const state: CoderunnerState=message as CoderunnerState;
+       
+        const eventHandlers: any[]=this._VmStatusSubscriptions as (any[]);
         console.log('codeRunnerState recived  ' + JSON.stringify(state))
-        this._VmStatusSubscriptions.forEach((element: ((state: CoderunnerState)=> void)) => {
+        console.log('typeof this.eventHandlers  ' + (typeof eventHandlers))
+        console.log('typeof this.eventHandlers  ' + eventHandlers)
+        console.log('length  ' + (JSON.stringify(eventHandlers.length)))
+
+        eventHandlers.forEach((element: { (arg: CoderunnerState): void; }) => {
+            console.log("|Test")
             element(state);
         });
     }
@@ -74,12 +92,19 @@ class StompApiSubsciptionContorller{
 
 
     //#region vmStatus
-    private _VmStatusSubscriptions: ((state: CoderunnerState)=> void)[]=[]
+    private _VmStatusSubscriptions: { (arg: CoderunnerState): void; }[]=[]
 
-    public addVmStatusSubscription(method: ((state: CoderunnerState)=> void)):void{
+    public addVmStatusSubscription(method: { (arg: CoderunnerState): void; }):void{
+        console.log('_VmStatusSubscriptions  ' + this._VmStatusSubscriptions)
+        console.log('method  ' + method)
+        console.log('method  ' + (typeof method))
+
        this._VmStatusSubscriptions.push(method)
+       console.log('_VmStatusSubscriptions  ' + this._VmStatusSubscriptions)
+
     }
-    public removeVmStatusSubscription(method: ((state: CoderunnerState)=> void)):void{
+    public removeVmStatusSubscription(method:{ (arg: CoderunnerState): void; }):void{
+        console.log("Test")
         const indexToRemove = this._VmStatusSubscriptions.findIndex(item => item === method);
         if (indexToRemove !== -1) {
             this._VmStatusSubscriptions.splice(indexToRemove, 1);
@@ -87,17 +112,18 @@ class StompApiSubsciptionContorller{
      }
 
      public clearVmStatusSubscriptions(){
+        console.log("test")
         this._VmStatusSubscriptions=[];
      }
      //#endregion
 
     //#region codeResults
-    private _CodeResultsSubscriptions: ((result: ProgramResultsMessage)=> void)[]=[]
+    private _CodeResultsSubscriptions: { (arg: ProgramResultsMessage): void; } []=[]
 
-    public addCodeResultsSubscription(method: ((result: ProgramResultsMessage)=> void)):void{
+    public addCodeResultsSubscription(method: { (arg: ProgramResultsMessage): void; }):void{
        this._CodeResultsSubscriptions.push(method)
     }
-    public removeCodeResultsSubscription(method: ((result: ProgramResultsMessage)=> void)):void{
+    public removeCodeResultsSubscription(method: { (arg: ProgramResultsMessage): void; }):void{
         const indexToRemove = this._CodeResultsSubscriptions.findIndex(item => item === method);
         if (indexToRemove !== -1) {
             this._CodeResultsSubscriptions.splice(indexToRemove, 1);

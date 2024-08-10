@@ -1,28 +1,11 @@
-import type {
-  IMessage,
-  IPublishParams,
-  messageCallbackType,
-} from '@stomp/stompjs'
 import type CodeRunnerRequestMessage from '@/types/CodeRunnerRequestMessage'
-import type CodeRunnerStateCallBack from '@/types/CodeRunnerStateCallBack'
 import type CoderunnerState from '@/types/CodeRunnerState'
-import type CodeToRunMessage from '@/types/CodeToRunMessage'
-import type CodeRunnerResultsCallBack from '@/types/CodeRunnerResultsCallBack'
-import type ProgramResult from '@/types/ProgramResults'
-import ExerciseIdToRunMessage from '@/types/ApiMesseages/ExerciseIdToRunMessage'
-import RawCodeToRunMessage from '@/types/ApiMesseages/RawCodeToRunMessage'
-import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
-import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
-import StompApiConnection from './Stomp/StompApiConnection'
-import StompApiSubscription from './Stomp/StompApiSubscription'
+
 import { computed, ComputedRef, Ref, ref } from 'vue'
-import { CodeRunnerMap } from '@/config/Data'
-import ExerciseCreatorController from './ExerciseCreatorControlller'
+
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
-import ExerciseTest from '@/types/ExcericseTest'
 import StompApiSender from './Stomp/StompApiSender'
-import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
 import StompApiSubsciptionContorller from './Stomp/StompApiSubsriptionsController'
 export default class CodeRunnerConnection {
   private _stompApiSender: StompApiSender
@@ -41,13 +24,18 @@ export default class CodeRunnerConnection {
     () => this.codeRunnerState.value.state == 'AWAITING'
   )
 
-  constructor(stompApiConnection: StompApiSender, stompApiSubscriptions: StompApiSubsciptionContorller) {
-    this._stompApiSender = stompApiConnection
+  public onCodeRunnerStateChanged(codeRunnerState: CoderunnerState)
+  {
+    console.log(JSON.stringify(codeRunnerState));
+    this.codeRunnerState.value.state=codeRunnerState.state;
+    this.codeRunnerState.value.codeRunnerType=codeRunnerState.codeRunnerType;
+  }
+
+  constructor(stompApiSender: StompApiSender, stompApiSubscriptions: StompApiSubsciptionContorller) {
+    this._stompApiSender = stompApiSender
     stompApiSubscriptions.addVmStatusSubscription
     (
-      (state: CoderunnerState)=>{
-        this.codeRunnerState.value=state;
-      }
+      this.onCodeRunnerStateChanged.bind(this)
     )
   
   }
@@ -70,6 +58,7 @@ public updateCodeRunner = () => {
   console.error("Uniplmented")
 }
 }
+
   // console.log('updateCodeRunner: ' + activeUserStore.getToken())
 
   // axios
