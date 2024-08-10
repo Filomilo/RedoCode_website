@@ -7,5 +7,6 @@ export default class SingleTestController implements ExerciseTest{
     errorOutput: string="";
     consoleOutput: string="";
     isSolved: boolean | null = false;
+    id: string ="";//compatilbty with guii
 
 }
