@@ -144,7 +144,7 @@
     )
   })
   const testValidation = computed(() => {
-    return codeRunnerStore.exerciseCreatorController.ExerciseSetupError;
+    return codeRunnerStore.exerciseCreatorController.ExerciseSetupError==="";
   })
 
  

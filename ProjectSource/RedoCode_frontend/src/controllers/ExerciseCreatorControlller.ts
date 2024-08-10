@@ -187,7 +187,7 @@ public updateSolutionCode(code: string, type:CodeRunnerType) {
   if (this.manualTestsSolutions[this.getSingleCodeRunnerKey()]!.tests.length >= 10) {
       throw 'only 10 manual test are allowed';
     }
-
+    console.log("output type: "+ this.outputType)
     Object.keys(this.manualTestsSolutions).forEach((x:string)=>{
       const type:CodeRunnerType=x as CodeRunnerType;
       this.manualTestsSolutions[type]?.addblankTest(
@@ -226,7 +226,8 @@ public updateSolutionCode(code: string, type:CodeRunnerType) {
           this.manualTestsSolutions[x]!.tests[index].input=value;
           }
           else{
-            this.manualTestsSolutions[x]!.tests[index].output=value;
+            console.log("set output: "+ value)
+            this.manualTestsSolutions[x]!.tests[index].expectedOutput=value;
           }
         }
       );
@@ -267,6 +268,21 @@ public updateSolutionCode(code: string, type:CodeRunnerType) {
     return ''
   }
 
+
+  public removeTest(index:number) {
+    this._languages.forEach((type: CodeRunnerType)=>{
+      this.manualTestsSolutions[type]!.tests.splice(index,1);
+    })
+  }
+
+    public getTestString(isInput: boolean, index: number): string{
+      return isInput
+      ?JSON.stringify( this.getSingleRowOfManualTests[index].input)
+      :JSON.stringify( this.getSingleRowOfManualTests[index].expectedOutput)
+     
+    }
+
+    
 
   //#endregion
 

@@ -1,4 +1,5 @@
 <template>
+  {{ JSON.stringify(props.isInput) }}
   <div
     style="
       width: 100%;
@@ -46,8 +47,21 @@
   import { json } from 'agent-base'
   import VariablesParser from '@/tools/VariablesParser'
 //#endregion 
+const CodeRunnerStore = useCodeRunnerStore()
 
-  const jsonInput: Ref<string> = ref('')
+
+const props = defineProps({
+    Type: {
+      type: String as PropType<VarType>,
+      required: true,
+      default: 'SINGLE_INTEGER',
+    },
+    manualTestInputIndex: { type: Number, required: true },
+    isInput: { type: Boolean, required: true },
+  })
+
+
+  const jsonInput: Ref<string> = ref(CodeRunnerStore.exerciseCreatorController.getTestString(props.isInput,props.manualTestInputIndex))
   const value = computed(() => {
     try {
       console.log('jsonInput.value: ' + jsonInput.value)
@@ -85,24 +99,13 @@
       console.log('validationofData.value: ' + validationError.value)
       if (validationError.value === '') {
         CodeRunnerStore.exerciseCreatorController.setTestValue(props.isInput,props.manualTestInputIndex,newVal)
-
-
       }
     } catch (error) {
       console.error(error)
     }
   })
-  const CodeRunnerStore = useCodeRunnerStore()
 
-  const props = defineProps({
-    Type: {
-      type: String as PropType<VarType>,
-      required: true,
-      default: 'SINGLE_INTEGER',
-    },
-    manualTestInputIndex: { type: Number, required: true },
-    isInput: { type: Boolean, required: true },
-  })
+
 </script>
 
 <style>

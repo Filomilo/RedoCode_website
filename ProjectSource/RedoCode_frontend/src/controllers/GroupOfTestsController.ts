@@ -1,6 +1,7 @@
 //#region imports
 import ExerciseTest from "@/types/ExcericseTest";
 import VarType, { isTypeArray, isTypeDoubleArray, isTypeSingle,isTypeString } from "@/types/VarType";
+import { randomUUID } from "crypto";
 //#endregion
 
 export default class GroupOfTestsController{
@@ -22,9 +23,11 @@ export default class GroupOfTestsController{
       }
 
     public addblankTest(inputType: VarType, outputype: VarType):void {
+      console.log('outpout type ' + outputype + ' _ ' + ' :: ' + JSON.stringify(outputype))
+
         const input = this.getVarAcording(inputType)
         const output = this.getVarAcording(outputype)
-        console.log('ading ' + inputType + ' _ ' + ' :: ' + JSON.stringify(input))
+        console.log('ading ' + outputype + ' _ ' + ' :: ' + JSON.stringify(output))
         this.tests.push({
           input: input,
           expectedOutput: output,
@@ -32,6 +35,7 @@ export default class GroupOfTestsController{
           errorOutput: '',
           consoleOutput: '',
           isSolved: null,
+          id: crypto.randomUUID()
         })
         console.log('added: ' + JSON.stringify(this.tests))
       }

@@ -55,6 +55,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
         consoleOutput: '',
         expectedOutput: '',
         isSolved: null,
+        id: ''
       },
     ],
     automaticTests: [],

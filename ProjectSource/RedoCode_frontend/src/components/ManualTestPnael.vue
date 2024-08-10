@@ -9,7 +9,7 @@
     <div>
       <div
         v-for="(item, index) in  codeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests"
-        v-bind:key="index"
+        v-bind:key="item.id"
         class="VerticalLine"
       >
         <div class="TestContainer">
@@ -70,11 +70,11 @@
 
   }
   const onRemoveButton = (index: number) => {
+    codeRunnerStore.exerciseCreatorController.removeTest(index);
     // codeRunnerStore.removeTestFromBuffer(index)
   }
   onMounted(() => {
-    // codeRunnerStore.clearTestsFromBuffer()
-    // codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype)
+    codeRunnerStore.exerciseCreatorController.clearTests();
   })
 </script>
 
