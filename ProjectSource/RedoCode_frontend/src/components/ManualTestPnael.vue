@@ -9,7 +9,7 @@
     <div>
       <div
         v-for="(item, index) in  codeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests"
-        v-bind:key="item.id"
+        v-bind:key="item.uuid"
         class="VerticalLine"
       >
         <div class="TestContainer">

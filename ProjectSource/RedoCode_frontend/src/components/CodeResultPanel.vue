@@ -1,6 +1,6 @@
 <template>
   <!-- type: -->
-  {{ JSON.stringify(props.ManualTests) }}
+
   <div class="CodeResultContainer">
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
@@ -29,7 +29,7 @@
       <div
         class="ConsoleResultConsoleCOntainerText"
         style="color: red; height: fit-content; max-height: fit-content"
-        v-html="formattedEror"
+        v-html="formattedError"
       ></div>
       <div
         class="ConsoleResultConsoleCOntainerText"
@@ -79,20 +79,26 @@
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
     SubmitAccess: { type: Boolean, required: true },
   })
-
+  console.log("CodeReults props: "+JSON.stringify(props))
 
   const manualTestArray: ComputedRef<ExerciseTest[]| undefined>=computed(()=>{
     return Array.isArray(props.ManualTests)?props.ManualTests as ExerciseTest[]:undefined;
   })
+  const formattedConsole = computed<string>(() => {
+  if (props.ManualTests && Array.isArray(props.ManualTests)) {
+    return '';
+  }
+  const manualTests = props.ManualTests as ConsoleOutput | undefined;
+  return manualTests ? StringParser.parseStringToHtml(manualTests.output) : '';
+});
 
-  const formattedConsole= computed<string>(() =>
-    Array.isArray(props.ManualTests)?'':StringParser.parseStringToHtml(
-      (props.ManualTests as ConsoleOutput).output
-    ));
-  const formattedEror = computed<string>(() =>
-    Array.isArray(props.ManualTests)?'':StringParser.parseStringToHtml(
-      (props.ManualTests as ConsoleOutput).errorOutput
-    ));
+const formattedError = computed<string>(() => {
+  if (props.ManualTests && Array.isArray(props.ManualTests)) {
+    return '';
+  }
+  const manualTests = props.ManualTests as ConsoleOutput | undefined;
+  return manualTests ? StringParser.parseStringToHtml(manualTests.errorOutput) : '';
+});
 
   const isCorrect = computed<boolean>(() => {
     return false

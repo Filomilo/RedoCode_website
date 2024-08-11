@@ -7,6 +7,7 @@ import router from '@/router'
 import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
 import { VueCookies } from 'vue-cookies'
 import { useApiConnectionStore } from './ApiConnectionStore'
+import { useCodeRunnerStore } from './CodeRunnerStore'
 
 export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
@@ -149,6 +150,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
 
   const apiConnectionStore =useApiConnectionStore()
+  const codeRunnerStore =useCodeRunnerStore()
   apiConnectionStore.stompApiConnection.addOnConnectEvent(()=>{
     console.log(
       'on connected: ' + JSON.stringify(getToken())
@@ -157,6 +159,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       apiConnectionStore.stompApiSender.authenticationStomp({
         token: getToken() as string,
       })
+      codeRunnerStore.codeRunnerConnection.updateCodeRunner();
     }
   
   })

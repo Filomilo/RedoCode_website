@@ -16,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+// #region imports
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { useRoute } from 'vue-router'
@@ -26,6 +27,8 @@
   import { useToastStore } from '@/stores/ToastStore'
   import { languageChoices } from '@/config/Data'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
+  import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
+  //#endregion
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
 
@@ -66,20 +69,24 @@
   })
 
   const codeConatienrUpdate = (code: string) => {
-    toastStore.featureNotImplemented(code)
+    toastStore.featureNotImplemented(code);
+    codeRunnerStore.exerciseCreatorController.updateSolutionCode(code,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
   }
 
   const onRunCode = () => {
-    toastStore.featureNotImplemented('onRunCode')
+    toastStore.featureNotImplemented('onRunCode');
+    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
   }
 
   const onSubmit = () => {
-    toastStore.featureNotImplemented('onSubmit')
+    
+    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController)
+
   }
 
   const onCodeResult = (results: ProgramResultsMessage) => {
     toastStore.featureNotImplemented('onCodeResult')
     console.log('Exercise view results: ' + JSON.stringify(results))
-    // codeRunnerStore.updateTestData(results.results)
+    codeRunnerStore.exerciseCreatorController.updateTests(results.results,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
   }
 </script>

@@ -43,7 +43,7 @@
               .codeRunnerType
           ]?.autoTests
         "
-          :onResults="(results: ProgramResultsMessage)=>{codeRunnerStore.exerciseCreatorController.updateTests(results,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)}"
+          :onResults="(results: ProgramResultsMessage)=>{codeRunnerStore.exerciseCreatorController.updateTests(results.results,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)}"
           :SubmitAccess="codeRunnerStore.exerciseCreatorController.isSolved"
         />
       </TabPanel>
@@ -69,6 +69,7 @@
   import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
+  import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
 
   const ToastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
@@ -92,11 +93,20 @@
     //   codeRunnerStore.exerciseCreatorController
     // )
     console.error("unimplemented");
+    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
+
   }
+
+
+
+
+
 
   const onSubmit = () => {
     console.log('On sumbit')
     console.error("Unimplented")
+    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController)
+
     // const request: ExercsieCreatorValidationMesage = JSON.parse(
     //   JSON.stringify(codeRunnerStore.exerciseCreatorController)
     // ) as ExercsieCreatorValidationMesage

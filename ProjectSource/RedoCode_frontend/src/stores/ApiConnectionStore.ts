@@ -13,10 +13,10 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
     () => {
-      toastStore.showProccessingMessage("attepting connecting to server")
+      toastStore.showProccessingMessage("attempting connecting to server")
     },
     () => {
-      toastStore.showSuccessMessage("connected to server")
+      toastStore.showSuccessMessage("successfully connected")
     },
     (message: string) => {
       toastStore.showErrorMessage(message)

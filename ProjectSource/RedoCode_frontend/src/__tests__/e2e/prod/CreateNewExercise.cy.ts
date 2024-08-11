@@ -97,7 +97,7 @@ const jsSolution =
     cy.url().should('eq', Cypress.config().baseUrl+'/Exercises');
     cy.get("#Create-button").click();
     cy.url().should('eq', Cypress.config().baseUrl+'/Create');
-    cy.get('.p-toast-detail').contains('succesfully connected').should('be.visible');
+    cy.get('.p-toast-detail').contains('successfully connected').should('be.visible');
     cy.get('.p-toast-detail').should('not.exist');
     cy.get("#Exercise-title-input").click()
     cy.get("#Exercise-title-input").clear();

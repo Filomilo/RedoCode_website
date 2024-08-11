@@ -245,8 +245,20 @@ public updateSolutionCode(code: string, type:CodeRunnerType) {
   //       )
   //   )
 
-  public updateTests (results: ProgramResultsMessage,langauge:CodeRunnerType) {
+  public updateTests (results: ProgramResult[],langauge:CodeRunnerType) {
     console.log('create test rtesult update: ' + JSON.stringify(results))
+
+    for (let i =0;i<results.length;i++)
+    {
+      this.manualTestsSolutions[langauge]!.tests[i].consoleOutput=results[i].consoleOutput.output;
+      this.manualTestsSolutions[langauge]!.tests[i].errorOutput=results[i].consoleOutput.errorOutput;
+      this.manualTestsSolutions[langauge]!.tests[i].output=results[i].variables;
+      this.manualTestsSolutions[langauge]!.tests[i].isSolved=
+      this.manualTestsSolutions[langauge]!.tests[i].expectedOutput
+      === this.manualTestsSolutions[langauge]!.tests[i].output
+    }
+
+
     // this.updateCreationTestData(results.results)
     this.updateSubmitAcces()
   }

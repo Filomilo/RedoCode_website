@@ -62,7 +62,7 @@ const playGroundRunnerCotroller: PlayGroundRunnerCotroller= new PlayGroundRunner
         consoleOutput: '',
         expectedOutput: '',
         isSolved: null,
-        id: ''
+        uuid: ''
       },
     ],
     automaticTests: [],
