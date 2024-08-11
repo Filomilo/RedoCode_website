@@ -55,6 +55,7 @@ public abstract class CodeRunner extends ContainerController {
             return ProgramResult.builder()
                     .consoleOutput(
                             ConsoleOutput.builder()
+                                    .output("")
                                     .errorOutput(ex.getMessage())
                                     .build()
                     )

@@ -2,14 +2,12 @@
   Playgournd
   <main class="PlayGroundBase">
     <CodeRunnerPanel
-      :exerciseInfo="{ title: 'no impelnted', description: 'no implented' }"
       :languageChoices="languageChoices.map(element => element.value)"
       :codeContainerUpdate="codeConatienrUpdate"
       starting=""
       :onRunCode="onRunCode"
-      :onSubmit="onSubmit"
       :onResults="onCodeResult"
-      :SubmitAccess="true"
+      :ManualTests="codeRunnerStore.playGroundRunnerCotroller.consoleOutput"
     />
   </main>
 </template>
@@ -49,7 +47,7 @@
   const onRunCode = () => {
     toastStore.featureNotImplemented('onRunCode')
     // ApiConnectionStore.codeRunnerConnection.runRawCode(activeCode.value)
-
+      codeRunnerStore.codeRunnerSender.runRawCode(activeCode.value);
   }
 
   const onSubmit = () => {
@@ -57,9 +55,9 @@
   }
   const onCodeResult = (results: ProgramResultsMessage) => {
     console.log('playgronud view results: ' + JSON.stringify(results))
-    console.error("unimplmented")
-    toastStore.featureNotImplemented('onRunCode')
-    // codeRunnerStore.updateTestData(results.results)
+    // console.error("unimplmented")
+    // toastStore.featureNotImplemented('onRunCode')
+    codeRunnerStore.playGroundRunnerCotroller.updateResult(results.results[0])
   }
 </script>
 

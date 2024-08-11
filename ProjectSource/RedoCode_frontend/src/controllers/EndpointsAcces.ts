@@ -7,7 +7,9 @@ namespace EnpointAcces{
     export async function getCodeRunnerState(token:string): Promise< CoderunnerState> {
         try {
             const response = await axios.post('/public/coderunner/state', { token: token });
-            console.log('updateCodeRunner Response:', response.data);
+            console.log('updateCodeRunner Response:',  response);
+            if(response===undefined|| response.data==="" ||  response.headers['Content-Length']==0)
+                throw "no status codeRunenr"
             return response.data
 
         } catch (error) {

@@ -28,6 +28,7 @@ import StompApiSender from '@/controllers/Stomp/StompApiSender'
 import StompApiSubsciptionContorller from '@/controllers/Stomp/StompApiSubsriptionsController'
 import codeRunnerSender from '@/controllers/CodeRunner/CodeRunnerSender'
 import CodeRunnerSender from '@/controllers/CodeRunner/CodeRunnerSender'
+import PlayGroundRunnerCotroller from '@/controllers/CodeRunner/PlayGroundRunnerCotroller'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
@@ -38,7 +39,12 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     apiConnectionStore.stompApiSender as StompApiSender,
     apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller
   )
-  const codeRunnerSender: CodeRunnerSender=new CodeRunnerSender(apiConnectionStore.stompApiSender as StompApiSender );
+  const codeRunnerSender: CodeRunnerSender=new CodeRunnerSender(apiConnectionStore.stompApiSender as StompApiSender,codeRunnerConnection );
+
+const playGroundRunnerCotroller: PlayGroundRunnerCotroller= new PlayGroundRunnerCotroller();
+
+  
+
 
 
   const playGroundBase: ExerciseData = {
@@ -136,7 +142,8 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   return {
     codeRunnerConnection,
     exerciseCreatorController,
-    codeRunnerSender
+    codeRunnerSender,
+    playGroundRunnerCotroller
     // codeRunnerActive,
     // doesHaveACtiveToCodeRunner,
     // requestCodeRunner,

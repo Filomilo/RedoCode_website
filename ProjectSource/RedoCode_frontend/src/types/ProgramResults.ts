@@ -1,4 +1,4 @@
-interface ConsoleOutput {
+export interface ConsoleOutput {
   exitCode: number
   output: string
   errorOutput: string

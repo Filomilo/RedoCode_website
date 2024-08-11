@@ -39,6 +39,7 @@
   import { languageDropDownType } from '@/types/CodeRunnerTypes'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import { languageChoices } from '@/config/Data'
+  import LangaugeSelection from '@/tools/LangaugeSelection'
   const props = defineProps({
     languageChoicesSelection: { type: Array as () => codeRunnerType[], required: true },
   })
@@ -52,7 +53,7 @@
   const codeRunnerStore = useCodeRunnerStore()
   // const ApiConnectionStore = useApiConnectionStore()
   const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
-    return languageChoices.filter(element => props.languageChoicesSelection.includes(element.value))
+    return LangaugeSelection.getDropDownFromLanguages(props.languageChoicesSelection)
   })
 
   const connectToCodeRunner = async (codeRunner: codeRunnerType) => {

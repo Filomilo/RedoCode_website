@@ -13,10 +13,13 @@ export default class CodeRunnerConnection {
   private _stompApiSender: StompApiSender
   private activeUserStore=useActiveUserStore();
 
-  public readonly codeRunnerState: Ref<CoderunnerState> = ref({
+  public codeRunnerState: Ref<CoderunnerState> = ref({
     codeRunnerType: CodeRunnerType.UNIDENTIFIED,
     state: CodeRunnerStatus.NONE,
   })
+
+  
+
 
   public readonly doesHaveACtiveToCodeRunner: ComputedRef<Boolean> = computed(
     () => {
@@ -39,16 +42,29 @@ export default class CodeRunnerConnection {
     (
       this.onCodeRunnerStateChanged.bind(this)
     )
-  
+    console.log(JSON.stringify(this.codeRunnerState.value))
   }
 
 
 
 public updateCodeRunner = () => {
   EnpointAcces.getCodeRunnerState(this.activeUserStore.getToken()as string).then((data: CoderunnerState)=>{
+    console.log("update: "+data )
     this.codeRunnerState.value=data;
   })
 
+}
+
+public setAwaiting()
+{
+  console.log("set awaitng")
+  console.log(JSON.stringify(this.codeRunnerState))
+   this.codeRunnerState.value.state =CodeRunnerStatus.AWAITING;
+   console.log(JSON.stringify(this.codeRunnerState.value))
+}
+public setNoneStatus()
+{
+   this.codeRunnerState.value.state =CodeRunnerStatus.NONE;
 }
 }
 

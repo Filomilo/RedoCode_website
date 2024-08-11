@@ -1,6 +1,6 @@
 <template>
   <!-- type: -->
-  <!-- {{ JSON.stringify(props) }} -->
+  {{ JSON.stringify(props.ManualTests) }}
   <div class="CodeResultContainer">
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
@@ -37,16 +37,16 @@
         v-html="formattedConsole"
       ></div>
     </div>
-    x
+    
     <DataResultPanel
-      v-if="props.ManualTests !== undefined"
-      :ManualTests="props.ManualTests"
-      :AutoTests="props.AutoTests"
-    />
+    v-if="manualTestArray"
+    :ManualTests="manualTestArray"
+    :AutoTests="props.AutoTests"
+  />
 
     <div
       class="ExerciseControlPanle"
-      v-if="props.ManualTests !== undefined"
+      v-if="props.onSubmit!==undefined"
       :style="true ? '' : 'pointer-events: none'"
     >
       <Button
@@ -62,35 +62,38 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue'
+  import { computed, ComputedRef } from 'vue'
   import DataResultPanel from './DataResultPanel.vue'
   import type CodeResultType from '@/types/CodeResultsType'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import ExerciseTest from '@/types/ExcericseTest'
+  import ProgramResult, { ConsoleOutput } from "@/types/ProgramResults"
+  import StringParser from '@/tools/StringParser'
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
   const props = defineProps({
     isDataResult: { type: Boolean, required: false },
-    onSubmit: { type: Function, required: true },
-    ManualTests: { type: Array as () => ExerciseTest[], required: false },
+    onSubmit: { type: Function, required: false },
+    ManualTests: { type: Array as () => ExerciseTest[] |ConsoleOutput , required: true },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
     SubmitAccess: { type: Boolean, required: true },
   })
 
-  const formattedConsole = computed<string>(() =>
-   'unimplemented'
-    // '>> ' + codeRunnerStore.exerciseData.tests[0].consoleOutput == null
-    //   ? ''
-    //   : codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(
-    //       /\n/g,
-    //       '<br> >> '
-        // )
-  )
+
+  const manualTestArray: ComputedRef<ExerciseTest[]| undefined>=computed(()=>{
+    return Array.isArray(props.ManualTests)?props.ManualTests as ExerciseTest[]:undefined;
+  })
+
+  const formattedConsole= computed<string>(() =>
+    Array.isArray(props.ManualTests)?'':StringParser.parseStringToHtml(
+      (props.ManualTests as ConsoleOutput).output
+    ));
   const formattedEror = computed<string>(() =>
-  'unimplented'
-    // codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
-  )
+    Array.isArray(props.ManualTests)?'':StringParser.parseStringToHtml(
+      (props.ManualTests as ConsoleOutput).errorOutput
+    ));
+
   const isCorrect = computed<boolean>(() => {
     return false
   })

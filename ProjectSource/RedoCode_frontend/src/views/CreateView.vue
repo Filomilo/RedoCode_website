@@ -35,7 +35,7 @@
             codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
               codeRunnerStore.codeRunnerConnection.codeRunnerState
                 .codeRunnerType
-            ]?.tests
+            ]?.tests as ExerciseTest[]
           "
           :AutoTests="
           codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
