@@ -203,7 +203,7 @@ onBeforeRouteLeave(async (to, from) => {
   disconnectStomp()
 })
 
-const awaiting:ComputedRef<Boolean> = computed(()=>{
+const awaiting:ComputedRef<boolean> = computed(()=>{
   if(import.meta.env.MODE === 'development')
     return false;
   return codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner;
