@@ -1,13 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ExcersicesView from '@/views/ExcersicesView.vue'
-import ExcersiceView from '@/views/ExcersiceView.vue'
-import PlayGroundView from '@/views/PlayGroundView.vue'
-import CreateView from '@/views/CreateView.vue'
-import RegisterView from '@/views/RegisterView.vue'
-import AccountView from '@/views/AccountView.vue'
-import ResultsView from '@/views/ResultsView.vue'
-import TestView from '@/views/TestView.vue'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
 const router = createRouter({
@@ -16,32 +7,32 @@ const router = createRouter({
     {
       path: '/',
       name: '',
-      component: HomeView,
+      component: () => import('@/views/HomeView.vue'),
     },
     {
       path: '/Home',
       name: 'Home',
-      component: HomeView,
+      component:  () => import('@/views/HomeView.vue'),
     },
     {
       path: '/Exercises',
       name: 'Excersices',
-      component: ExcersicesView,
+      component: () => import('@/views/ExcersicesView.vue'),
     },
     {
       path: '/Exercises/:id',
       name: 'Exercise',
-      component: ExcersiceView,
+      component: () => import('@/views/ExcersiceView.vue'),
     },
     {
       path: '/PlayGround',
       name: 'PlayGround',
-      component: PlayGroundView,
+      component: () => import('@/views/PlayGroundView.vue'),
     },
     {
       path: '/create',
       name: 'Create',
-      component: CreateView,
+      component: () => import('@/views/CreateView.vue'),
       beforeEnter: (to, from, next) => {
         const activeUserStore = useActiveUserStore()
         // console.log("authethication")
@@ -56,12 +47,12 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: RegisterView,
+      component: () => import('@/views/RegisterView.vue'),
     },
     {
       path: '/Account',
       name: 'Account',
-      component: AccountView,
+      component: () => import('@/views/AccountView.vue'),
       beforeEnter: (to, from, next) => {
         const activeUserStore = useActiveUserStore()
         console.log('authethication')
@@ -76,12 +67,12 @@ const router = createRouter({
     {
       path: '/Results',
       name: 'Results',
-      component: ResultsView,
+      component: () => import('@/views/ResultsView.vue'),
     },
     {
       path: '/test',
       name: 'test',
-      component: TestView,
+      component: () => import('@/views/TestView.vue'),
     },
   ],
 })
