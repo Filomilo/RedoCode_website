@@ -247,15 +247,34 @@ public updateSolutionCode(code: string, type:CodeRunnerType) {
 
   public updateTests (results: ProgramResult[],langauge:CodeRunnerType) {
     console.log('create test rtesult update: ' + JSON.stringify(results))
-
+    this.manualTestsSolutions[langauge]!.autoTests=[];
     for (let i =0;i<results.length;i++)
     {
-      this.manualTestsSolutions[langauge]!.tests[i].consoleOutput=results[i].consoleOutput.output;
-      this.manualTestsSolutions[langauge]!.tests[i].errorOutput=results[i].consoleOutput.errorOutput;
-      this.manualTestsSolutions[langauge]!.tests[i].output=results[i].variables;
-      this.manualTestsSolutions[langauge]!.tests[i].isSolved=
-      this.manualTestsSolutions[langauge]!.tests[i].expectedOutput
-      === this.manualTestsSolutions[langauge]!.tests[i].output
+      if(i< this.manualTestsSolutions[langauge]!.tests.length)
+        {
+          this.manualTestsSolutions[langauge]!.tests[i].consoleOutput=results[i].consoleOutput.output;
+          this.manualTestsSolutions[langauge]!.tests[i].errorOutput=results[i].consoleOutput.errorOutput;
+          this.manualTestsSolutions[langauge]!.tests[i].output=results[i].variables;
+          this.manualTestsSolutions[langauge]!.tests[i].isSolved=
+          this.manualTestsSolutions[langauge]!.tests[i].expectedOutput
+          === this.manualTestsSolutions[langauge]!.tests[i].output
+        }
+        else
+        {
+          console.log("i: "+i+"::::"+JSON.stringify(this.manualTestsSolutions[langauge]!.autoTests))
+          this.manualTestsSolutions[langauge]!.autoTests.push(
+            {
+              input: results[i].variablesInput!,
+              output: results[i].variables,
+              expectedOutput: null,
+              errorOutput: results[i].consoleOutput.errorOutput,
+              consoleOutput: results[i].consoleOutput.output,
+              isSolved: results[i].consoleOutput.errorOutput==="",
+              uuid: ''
+            }
+          )
+        }
+
     }
 
 
