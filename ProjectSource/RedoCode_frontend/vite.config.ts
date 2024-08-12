@@ -15,6 +15,30 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    // minify: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+          if (id.includes('src/components')) {
+            return 'components';
+          }
+          if (id.includes('src/controllers')) {
+            return 'controllers';
+          }
+          if (id.includes('src/stores')) {
+            return 'stores';
+          }
+          if (id.includes('src/types')) {
+            return 'types';
+          }
+        }
+      }
+    }
   }
   
 })
