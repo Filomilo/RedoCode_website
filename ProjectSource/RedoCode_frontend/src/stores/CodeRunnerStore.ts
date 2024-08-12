@@ -32,9 +32,6 @@ import PlayGroundRunnerCotroller from '@/controllers/CodeRunner/PlayGroundRunner
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
-
-  console.log("apiConnectionStore: "+JSON.stringify(apiConnectionStore))
-
   const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(
     apiConnectionStore.stompApiSender as StompApiSender,
     apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller
