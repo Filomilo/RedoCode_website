@@ -76,7 +76,8 @@ class StompApiSubsciptionContorller{
     private _ExecutionChainCallBack(message: object)
     {
         const responseBase: ExecutionResponseBase = message as ExecutionResponseBase;    
-        
+        console.log('_ExecutionChainCallBack recived  ' + JSON.stringify(responseBase))
+
         if (responseBase.messageType === 'CHAIN_SCHEME')
             this._ExecutionChainSchemeSubscriptions.forEach((element:((_update: ExecutionChainScheme)=> void) ) => {
                 element(responseBase as ExecutionChainScheme)}
