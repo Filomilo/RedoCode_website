@@ -7,6 +7,7 @@ import RawCodeToRunMessage from "@/types/ApiMesseages/RawCodeToRunMessage";
 import ExerciseCreatorController from "./ExerciseCreatorControlller";
 import ExerciseTestToRunMesseage from "@/types/ApiMesseages/ExerciseTestToRunMesseage";
 import ExercsieCreatorValidationMesage from "@/types/ApiMesseages/ExercsieCreatorValidationMesage";
+import MessageCreator from "@/tools/MessageCreator";
 
 class CodeRunnerSender{
   
@@ -40,30 +41,8 @@ class CodeRunnerSender{
 
 
   runSingleExerciseCreationTest= (exerciseCreatorController: ExerciseCreatorController, type: CodeRunnerType) => {
-
-    console.log('runSignleExerciseCreationTest: ' + JSON.stringify(exerciseCreatorController))
-
-    const exerciseTestToRunMesseage: ExerciseTestToRunMesseage={
-      code: exerciseCreatorController.solutionCodes[type]!,
-      manualTests: exerciseCreatorController.getSingleRowOfManualTests,
-      inputType: exerciseCreatorController.inputType,
-      outputType: exerciseCreatorController.outputType,
-      amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-      autoTestminValue: exerciseCreatorController.autoTestminValue,
-      autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
-      lengthRange: exerciseCreatorController.lengthRange,
-      xArrayRange: exerciseCreatorController.xArrayRange,
-      yArrayRange: exerciseCreatorController.yArrayRange,
-      upperCaseInput: exerciseCreatorController.upperCaseInput,
-      lowerCaseInput: exerciseCreatorController.lowerCaseInput,
-      numberInput: exerciseCreatorController.numberInput,
-      specialCharacterInput: exerciseCreatorController.specialCharacterInput,
-      breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
-      spaceInupt: exerciseCreatorController.spaceInupt,
-      executionTime: exerciseCreatorController.executionTime
-    }
-
-
+    const exerciseTestToRunMesseage: ExerciseTestToRunMesseage=MessageCreator.createExerciseTestToRunMesseage(exerciseCreatorController,type);
+    console.log('runSignleExerciseCreationTest: ' + JSON.stringify(exerciseTestToRunMesseage))
     this._stompApiSender.runExerciseTestsCode(exerciseTestToRunMesseage)
   }
 

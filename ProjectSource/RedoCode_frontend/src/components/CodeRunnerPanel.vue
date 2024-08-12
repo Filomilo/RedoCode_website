@@ -11,7 +11,7 @@
   </Dialog>
 
   <Dialog
-    :visible="codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner"
+    :visible="awaiting"
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
@@ -79,7 +79,7 @@
 import CodeEditor from '@/components/CodeEditorPanel.vue'
 import BasicButton from '@/components/BasicButton.vue'
 import type { Button } from 'bootstrap'
-import { ref, onMounted, type Ref, PropType } from 'vue'
+import { ref, onMounted, type Ref, PropType, computed } from 'vue'
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 import axios from 'axios'
 import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
@@ -202,6 +202,14 @@ onBeforeRouteLeave(async (to, from) => {
   // codeRunnerStore.disconnetWithCodeRunner();
   disconnectStomp()
 })
+
+const awaiting:ComputedRef<Boolean> = computed(()=>{
+  if(import.meta.env.MODE === 'development')
+    return false;
+  return codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner;
+})
+
+
 </script>
 
 <style>

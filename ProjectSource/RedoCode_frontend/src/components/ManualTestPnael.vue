@@ -116,7 +116,6 @@
   }
 
   .addButton {
-    background-color: rgb(0, 255, 98);
     border-radius: 0.5rem;
     border-color: transparent;
     margin-top: 5rem;

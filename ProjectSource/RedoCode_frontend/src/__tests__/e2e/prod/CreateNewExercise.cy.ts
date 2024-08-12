@@ -161,11 +161,12 @@ const jsSolution =
     cy.get(codeEditorSequance).type(backspaces, { force: true });
     cy.get(codeEditorSequance).focus();
     cy.get(codeEditorSequance).type("{selectAll}", { force: true });
-    for(let i=0;i<JSfirstHalf.length;i++)
-      {
-        cy.get(codeEditorSequance).focus();
-        cy.get(codeEditorSequance).type(JSfirstHalf[i], { force: true });
-      }
+    // for(let i=0;i<JSfirstHalf.length;i++)
+    //   {
+    //     cy.get(codeEditorSequance).focus();
+    //     cy.get(codeEditorSequance).type(JSfirstHalf[i], { force: true });
+    //   }
+    cy.get(codeEditorSequance).type(JSfirstHalf, { force: true });
     cy.get("#coderunner-run-button").click();
     cy.get("#TestResultCard"+'0'+" > div.testValidationSection.wrong").should('have.text', 'Failed');
     for (let index = 1; index < inputsAndOutputs.length; index++) {
@@ -194,11 +195,12 @@ const jsSolution =
     cy.get(codeEditorSequance).type("{backspace}", { force: true});
     cy.get("#code-preview").invoke('text')
     .should('equal', "");
-    for(let i=0;i<cppSolution.length;i++)
-      {
-        cy.get(codeEditorSequance).focus();
-        cy.get(codeEditorSequance).type(cppSolution[i], { force: true });
-      }
+    // for(let i=0;i<cppSolution.length;i++)
+    //   {
+    //     cy.get(codeEditorSequance).focus();
+    //     cy.get(codeEditorSequance).type(cppSolution[i], { force: true });
+    //   }
+    cy.get(codeEditorSequance).type(cppSolution, { force: true });
     cy.get("#coderunner-run-button").click();
 
     // cy.wait(5000);
@@ -217,12 +219,12 @@ const jsSolution =
     cy.get(codeEditorSequance).focus();
     cy.get(codeEditorSequance).type("{moveToEnd}",{force: true});
 
-    for(let i=0;i<JSsecondHalf.length;i++)
-      {
-        cy.get(codeEditorSequance).focus();
-        cy.get(codeEditorSequance).type(JSsecondHalf[i], { force: true });
-      }
-
+    // for(let i=0;i<JSsecondHalf.length;i++)
+    //   {
+    //     cy.get(codeEditorSequance).focus();
+    //     cy.get(codeEditorSequance).type(JSsecondHalf[i], { force: true });
+    //   }
+    cy.get(codeEditorSequance).type(JSsecondHalf, { force: true });
     cy.get("#coderunner-run-button").click();
 
     for (let index = 0; index < inputsAndOutputs.length; index++) {
