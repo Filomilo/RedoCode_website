@@ -33,7 +33,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
 
-  // console.log("apiConnectionStore: "+JSON.stringify(apiConnectionStore))
+  console.log("apiConnectionStore: "+JSON.stringify(apiConnectionStore))
 
   const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(
     apiConnectionStore.stompApiSender as StompApiSender,
