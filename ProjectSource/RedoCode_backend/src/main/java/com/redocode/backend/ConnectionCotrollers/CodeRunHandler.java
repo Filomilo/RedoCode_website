@@ -55,7 +55,6 @@ MessageSender messageSender;
         );
         log.info("runRawCode chain start");
         ResponsibilityChainRepository.runRawCode.startChain(rawCodeRunRequest);
-
     }
     @MessageMapping({ConnectionTargets.INrunExercsieIdValidationCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExercsieIdValidationCode(Principal principal, ExerciseIdToRunMessage exerciseIdValidationMessage)
@@ -63,6 +62,7 @@ MessageSender messageSender;
         String userId=principal.getName();
         log.info("user: "+ userId +" runs runExercsieIdValidationCode: "+ exerciseIdValidationMessage);
     }
+
     @MessageMapping({ConnectionTargets.INrunExercsieTestsCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest)
     {

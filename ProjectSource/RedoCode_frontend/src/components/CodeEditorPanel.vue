@@ -1,12 +1,14 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
+  choces:
+  {{ JSON.stringify(props.languageChoices) }}
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
       :modelValue="
-        ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
       "
-      :options="langaugesOptions"
+      :options="laguageDropDown"
       placeholder="Select programming langauge"
       class="dropDown"
       @change="onChangeLnageugeDropDown"
@@ -16,11 +18,7 @@
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
-      <Button
-        @click="codeRunButton"
-        v-if="!codeRunnerStore.isAwaitingCompilation"
-        id="coderunner-run-button"
-      >
+      <Button @click="codeRunButton" v-if="true" id="coderunner-run-button">
         <IconPlay style="z-index: 9" />
       </Button>
       <div v-else>
@@ -43,7 +41,7 @@
       @mount="handleMount"
       :language="
         EditorLanguagesMap[
-          ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+          codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
         ]
       "
       @keyup.ctrl.enter.prevent="onShortCutRun"
@@ -54,24 +52,38 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, shallowRef, computed, watch, onMounted, Ref } from 'vue'
+  import {
+    ref,
+    shallowRef,
+    computed,
+    watch,
+    onMounted,
+    Ref,
+    ComputedRef,
+  } from 'vue'
   import IconPlay from '@/assets/icons/IconPlay.vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { useConfirm } from 'primevue/useconfirm'
   import LoadingIndicator from './LoadingIndicator.vue'
   import { onBeforeRouteLeave } from 'vue-router'
-  import { EditorLanguagesMap, languageChoices } from '@/config/Data'
+  import { EditorLanguagesMap } from '@/config/Data'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
-  import codeRunnerType from '@/types/CodeRunnerTypes'
+  import codeRunnerType, { languageDropDownType } from '@/types/CodeRunnerTypes'
+  import LangaugeSelection from '@/tools/LangaugeSelection'
+
   const props = defineProps({
     starting: { type: String, required: true },
     codeUpdateMethod: { type: Function, required: true },
     onRunCode: { type: Function, required: true },
+    languageChoices: { type: Array as () => codeRunnerType[], required: true },
   })
 
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
-
+  // const ApiConnectionStore = useApiConnectionStore()
+  const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
+    return LangaugeSelection.getDropDownFromLanguages(props.languageChoices)
+  })
   const codeRef = ref(props.starting)
 
   const codeRunButton = () => {
@@ -86,15 +98,6 @@
     automaticLayout: true,
     autoClosingBrackets: false,
   }
-  const chosenLangague = ref('Cpp')
-  // const langaugesOptions = ['cpp', 'Js']
-  const langaugesOptions = computed(() =>
-    codeRunnerStore.exerciseCreatorController.title === ''
-      ? languageChoices
-      : languageChoices.filter(x =>
-          codeRunnerStore.exerciseCreatorController.languages.includes(x.value)
-        )
-  )
 
   watch(
     () => props.starting,
@@ -109,13 +112,13 @@
   const lnagaugeDropdownVaule = computed(
     () =>
       EditorLanguagesMap[
-        ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
       ]
   )
 
   const editorLang = computed(() => {
     return EditorLanguagesMap[
-      ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
     ]
   })
 
@@ -125,7 +128,7 @@
   const onChangeLnageugeDropDown = (lang: any) => {
     if (
       lang.value! !==
-      ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
     ) {
       console.log('test change: ' + lang.value)
       confirmChangeOFCodeRuner(lang.value)
@@ -141,7 +144,7 @@
       acceptLabel: 'Change',
       accept: () => {
         console.log(' confirm change: ' + type)
-        ApiConnectionStore.codeRunnerConnection.requestCodeRunner(type)
+        codeRunnerStore.codeRunnerSender.requestCodeRunner(type)
       },
       reject: () => {
         console.log(' reject change: ' + type)
@@ -152,15 +155,6 @@
   function formatCode() {
     editorRef.value?.getAction('editor.action.formatDocument').run()
   }
-
-  watch(
-    () => codeRunnerStore.exerciseLoading,
-    () => {
-      // console.log('updatedexercise data########################')
-      // if (!codeRunnerStore.exerciseLoading)
-      //   codeRef.value = codeRunnerStore.exerciseData.startingFunction
-    }
-  )
 
   // const onRunCode = () => {
   //   console.log('running code: \n' + JSON.stringify(codeRef.value))

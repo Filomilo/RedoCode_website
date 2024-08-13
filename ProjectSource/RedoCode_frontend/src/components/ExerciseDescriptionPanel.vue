@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-  import MarkdownIt from 'markdown-it'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { computed } from 'vue'
   import ExerciseData from '@/types/ExerciseData'
@@ -28,7 +27,6 @@
   })
 
   const codeRunnerStore = useCodeRunnerStore()
-  const markdown = new MarkdownIt()
 
   const desc = computed(() =>
     props.exerciseInfo.description.replace('\n', '<br>')

@@ -47,14 +47,23 @@ public abstract class CodeRunner extends ContainerController {
                 logger.info("Program outoput file: \n"+resultFileContent);
                 programOutput= VariablesParser.parseVaraiables(program.getOutuputType(),resultFileContent);
             }
+
+            Variables inputVar=null;
+
+            if(program instanceof SolutionProgram)
+            {
+                inputVar=  ((SolutionProgram)program).getInput();
+            }
+
             cleanup();
-            return new ProgramResult(consoleOutput, programOutput);
+            return new ProgramResult(consoleOutput, programOutput,inputVar);
         }
         catch (Exception ex)
         {
             return ProgramResult.builder()
                     .consoleOutput(
                             ConsoleOutput.builder()
+                                    .output("")
                                     .errorOutput(ex.getMessage())
                                     .build()
                     )

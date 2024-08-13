@@ -10,9 +10,7 @@
       </div>
       <Dropdown
         v-model="chosenLangague"
-        :options="
-          languageChoices.filter(x => props.languageChoices.includes(x.value))
-        "
+        :options="laguageDropDown"
         placeholder="Select programming langauge"
         class="dropDown"
         style="height: 3rem"
@@ -25,6 +23,7 @@
         label="Connect"
         @click="onConnectButton"
         id="connect-button"
+        :disabled="!allowConnection"
       />
     </div>
   </div>
@@ -38,25 +37,32 @@
   import { languageDropDownType } from '@/types/CodeRunnerTypes'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import { languageChoices } from '@/config/Data'
+  import LangaugeSelection from '@/tools/LangaugeSelection'
   const props = defineProps({
-    languageChoices: { type: Array as () => codeRunnerType[], required: true },
+    languageChoicesSelection: {
+      type: Array as () => codeRunnerType[],
+      required: true,
+    },
   })
 
   const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
+
+  const allowConnection = computed(() => {
+    return chosenLangague.value != codeRunnerType.UNIDENTIFIED
+  })
+
   const codeRunnerStore = useCodeRunnerStore()
-  const ApiConnectionStore = useApiConnectionStore()
+  // const ApiConnectionStore = useApiConnectionStore()
   const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
-    return languageChoices.filter(element =>
-      languageChoices.some(choice => choice.value === element.value)
+    return LangaugeSelection.getDropDownFromLanguages(
+      props.languageChoicesSelection
     )
   })
 
   const connectToCodeRunner = async (codeRunner: codeRunnerType) => {
-    ApiConnectionStore.codeRunnerConnection.requestCodeRunner(
-      chosenLangague.value
-    )
+    codeRunnerStore.codeRunnerSender.requestCodeRunner(chosenLangague.value)
     // codeRunnerStore.increment()
-    console.log('Json log: ' + JSON.stringify(codeRunnerStore))
+    // console.log('Json log: ' + JSON.stringify(codeRunnerStore))
   }
   const onConnectButton = () => {
     console.log('connect ' + JSON.stringify(chosenLangague.value))

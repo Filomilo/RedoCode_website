@@ -46,19 +46,13 @@
       class="testValidationSection"
       :class="
         data.isSolved !== null
-          ? data.expectedOutput == data.output
+          ? data.isSolved
             ? 'correct'
             : 'wrong'
           : 'unknown'
       "
     >
-      {{
-        data.isSolved !== null
-          ? data.expectedOutput == data.output
-            ? 'Correct'
-            : 'Failed'
-          : ''
-      }}
+      {{ data.isSolved !== null ? (data.isSolved ? 'Correct' : 'Failed') : '' }}
     </div>
   </div>
 </template>

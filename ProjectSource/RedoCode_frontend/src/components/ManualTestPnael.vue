@@ -1,4 +1,10 @@
 <template>
+  test
+  {{
+    JSON.stringify(
+      codeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests
+    )
+  }}
   <div>
     <div class="VerticalLine">
       <label class="VerticalLineElement">Input</label>
@@ -6,20 +12,21 @@
     </div>
     <div>
       <div
-        v-for="(item, index) in codeRunnerStore.manualTestBuffer"
-        v-bind:key="index"
+        v-for="(item, index) in codeRunnerStore.exerciseCreatorController
+          .getSingleRowOfManualTests"
+        v-bind:key="item.uuid"
         class="VerticalLine"
       >
         <div class="TestContainer">
           <VariablesInput
-            :Type="inputType"
+            :Type="codeRunnerStore.exerciseCreatorController.inputType"
             :isInput="true"
             :manualTestInputIndex="index"
           />
         </div>
         <div class="TestContainer">
           <VariablesInput
-            :Type="outputype"
+            :Type="codeRunnerStore.exerciseCreatorController.outputType"
             :isInput="false"
             :manualTestInputIndex="index"
           />
@@ -56,31 +63,20 @@
   import { useToastStore } from '@/stores/ToastStore'
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
-  const props = defineProps({
-    inputType: {
-      type: String as PropType<VarType>,
-      required: true,
-      default: 'SINGLE_INT',
-    },
-    outputype: {
-      type: String as PropType<VarType>,
-      required: true,
-      default: 'SINGLE_INT',
-    },
-  })
+
   const onAddButton = () => {
-    if (codeRunnerStore.manualTestBuffer.length >= 10) {
-      toastStore.showErrorMessage('only 10 manual test are allowed')
-      return
+    try {
+      codeRunnerStore.exerciseCreatorController.addEmptyTest()
+    } catch (error: any) {
+      toastStore.showErrorMessage(error)
     }
-    codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype)
   }
   const onRemoveButton = (index: number) => {
-    codeRunnerStore.removeTestFromBuffer(index)
+    codeRunnerStore.exerciseCreatorController.removeTest(index)
+    // codeRunnerStore.removeTestFromBuffer(index)
   }
   onMounted(() => {
-    codeRunnerStore.clearTestsFromBuffer()
-    codeRunnerStore.addblankTestToBuffer(props.inputType, props.outputype)
+    codeRunnerStore.exerciseCreatorController.clearTests()
   })
 </script>
 
@@ -122,7 +118,6 @@
   }
 
   .addButton {
-    background-color: rgb(0, 255, 98);
     border-radius: 0.5rem;
     border-color: transparent;
     margin-top: 5rem;
