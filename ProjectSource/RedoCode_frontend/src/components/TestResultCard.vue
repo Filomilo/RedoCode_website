@@ -52,13 +52,7 @@
           : 'unknown'
       "
     >
-      {{
-        data.isSolved !== null
-          ? data.isSolved
-            ? 'Correct'
-            : 'Failed'
-          : ''
-      }}
+      {{ data.isSolved !== null ? (data.isSolved ? 'Correct' : 'Failed') : '' }}
     </div>
   </div>
 </template>

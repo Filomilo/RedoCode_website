@@ -1,6 +1,10 @@
 <template>
   test
-  {{ JSON.stringify(codeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests) }}
+  {{
+    JSON.stringify(
+      codeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests
+    )
+  }}
   <div>
     <div class="VerticalLine">
       <label class="VerticalLineElement">Input</label>
@@ -8,7 +12,8 @@
     </div>
     <div>
       <div
-        v-for="(item, index) in  codeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests"
+        v-for="(item, index) in codeRunnerStore.exerciseCreatorController
+          .getSingleRowOfManualTests"
         v-bind:key="item.uuid"
         class="VerticalLine"
       >
@@ -61,20 +66,17 @@
 
   const onAddButton = () => {
     try {
-      codeRunnerStore.exerciseCreatorController.addEmptyTest();
-    } catch (error:any) {
+      codeRunnerStore.exerciseCreatorController.addEmptyTest()
+    } catch (error: any) {
       toastStore.showErrorMessage(error)
     }
-   
-
-
   }
   const onRemoveButton = (index: number) => {
-    codeRunnerStore.exerciseCreatorController.removeTest(index);
+    codeRunnerStore.exerciseCreatorController.removeTest(index)
     // codeRunnerStore.removeTestFromBuffer(index)
   }
   onMounted(() => {
-    codeRunnerStore.exerciseCreatorController.clearTests();
+    codeRunnerStore.exerciseCreatorController.clearTests()
   })
 </script>
 

@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-// #region imports
+  // #region imports
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { useRoute } from 'vue-router'
@@ -36,7 +36,7 @@
   const route = useRoute()
 
   const fetchExerciseData = (id: number) => {
-    toastStore.showErrorMessage("not impelented fetchExerciseData")
+    toastStore.showErrorMessage('not impelented fetchExerciseData')
     // codeRunnerStore.exerciseLoading = true
 
     // const params = {
@@ -69,24 +69,33 @@
   })
 
   const codeConatienrUpdate = (code: string) => {
-    toastStore.featureNotImplemented(code);
-    codeRunnerStore.exerciseCreatorController.updateSolutionCode(code,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
+    toastStore.featureNotImplemented(code)
+    codeRunnerStore.exerciseCreatorController.updateSolutionCode(
+      code,
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    )
   }
 
   const onRunCode = () => {
-    toastStore.featureNotImplemented('onRunCode');
-    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
+    toastStore.featureNotImplemented('onRunCode')
+    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(
+      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    )
   }
 
   const onSubmit = () => {
-    
-    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController)
-
+    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
+      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
+    )
   }
 
   const onCodeResult = (results: ProgramResultsMessage) => {
     toastStore.featureNotImplemented('onCodeResult')
     console.log('Exercise view results: ' + JSON.stringify(results))
-    codeRunnerStore.exerciseCreatorController.updateTests(results.results,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
+    codeRunnerStore.exerciseCreatorController.updateTests(
+      results.results,
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    )
   }
 </script>

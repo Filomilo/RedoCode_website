@@ -22,7 +22,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const validateToken = (): boolean => {
     if (import.meta.env.MODE === 'development') {
-      return true;
+      return true
     }
     if (_token.value === '') return false
     return true
@@ -145,26 +145,20 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   if (import.meta.env.MODE === 'development') {
-    isLogged.value=true;
+    isLogged.value = true
   }
 
-
-  const apiConnectionStore =useApiConnectionStore()
-  const codeRunnerStore =useCodeRunnerStore()
-  apiConnectionStore.stompApiConnection.addOnConnectEvent(()=>{
-    console.log(
-      'on connected: ' + JSON.stringify(getToken())
-    )
+  const apiConnectionStore = useApiConnectionStore()
+  const codeRunnerStore = useCodeRunnerStore()
+  apiConnectionStore.stompApiConnection.addOnConnectEvent(() => {
+    console.log('on connected: ' + JSON.stringify(getToken()))
     if (getToken().length > 0) {
       apiConnectionStore.stompApiSender.authenticationStomp({
         token: getToken() as string,
       })
-      codeRunnerStore.codeRunnerConnection.updateCodeRunner();
+      codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     }
-  
   })
-
-
 
   return {
     isLogged,

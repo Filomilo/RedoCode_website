@@ -6,7 +6,7 @@ import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 import ITestParameters from '@/types/ITestParameters'
 import RangeType from '@/types/RangeType'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
-import TestsController from "@/controllers/CodeRunner/GroupOfTestsController"
+import TestsController from '@/controllers/CodeRunner/GroupOfTestsController'
 import { computed, ComputedRef, reactive, toHandlerKey } from 'vue'
 import VarType, {
   setTypeToArray,
@@ -30,25 +30,22 @@ export type StringIndexed = {
 }
 export type TestsIndexed = { [key in CodeRunnerType]?: TestsController }
 
-export default class ExerciseCreatorController 
-{
+export default class ExerciseCreatorController {
   //#region data
 
   private _languages!: CodeRunnerType[]
 
-  get languages(): CodeRunnerType[]{
-    return this._languages;
+  get languages(): CodeRunnerType[] {
+    return this._languages
   }
 
   set languages(newLanguages: CodeRunnerType[]) {
-    this._languages = newLanguages;
-    this.updateTestsFields();
-  } 
+    this._languages = newLanguages
+    this.updateTestsFields()
+  }
 
   title!: string
   description!: string
-
-
 
   ram!: number
   timeForTaskMin!: number
@@ -74,7 +71,7 @@ export default class ExerciseCreatorController
 
   //#endregion
 
-//#region 
+  //#region
 
   resetParams(this: any): void {
     ;(this.ram = 128),
@@ -97,7 +94,7 @@ export default class ExerciseCreatorController
       (this.description = 'DEscritptionDescription'),
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
-    ; (this.solutionCodes = {}),
+    ;(this.solutionCodes = {}),
       (this.manualTestsSolutions = {} as TestsIndexed),
       (this.executionTime = 100)
   }
@@ -110,7 +107,7 @@ export default class ExerciseCreatorController
     this.isSolved = this.validateAllTests()
   }
 
-  private validateAllTests():boolean {
+  private validateAllTests(): boolean {
     // if (Object.values(this.manualTestsSolutions).length == 0) return false
     // console.log(
     //   '---isSolved values: ' + JSON.stringify(this.manualTestsSolutions)
@@ -133,106 +130,92 @@ export default class ExerciseCreatorController
     // }
 
     console.log('TRUe')
-    return true;
+    return true
   }
 
-  //#region 
+  //#region
 
-  private getAmountOfLanguages(): number{
-    return this.languages.length;
+  private getAmountOfLanguages(): number {
+    return this.languages.length
   }
 
-  private getSingleCodeRunnerKey():CodeRunnerType{
-    return this.languages[0];
+  private getSingleCodeRunnerKey(): CodeRunnerType {
+    return this.languages[0]
   }
-
 
   //#endregion
 
+  //#region code mangament
 
-//#region code mangament
+  public updateSolutionCode(code: string, type: CodeRunnerType) {
+    this.solutionCodes[type] = code
+  }
 
-public updateSolutionCode(code: string, type:CodeRunnerType) {
-  this.solutionCodes[type]=code;
-}
-
-
-
-//#endregion
-
+  //#endregion
 
   //#region Test managment
 
-
-  private updateTestsFields()
-  {
-
-    this.manualTestsSolutions={};
-    this.languages.forEach((x:CodeRunnerType)=>{
-      this.manualTestsSolutions[x]=new TestsController();
+  private updateTestsFields() {
+    this.manualTestsSolutions = {}
+    this.languages.forEach((x: CodeRunnerType) => {
+      this.manualTestsSolutions[x] = new TestsController()
     })
-    console.log("Update test fields: "+ JSON.stringify(this.manualTestsSolutions))
+    console.log(
+      'Update test fields: ' + JSON.stringify(this.manualTestsSolutions)
+    )
   }
 
-  public clearTests(): void
-  {
+  public clearTests(): void {}
 
-  }
+  public addEmptyTest() {
+    if (this.getAmountOfLanguages() == 0)
+      throw 'First you need select languages'
 
-  public addEmptyTest()
-  {
-    if(this.getAmountOfLanguages()==0)
-      throw "First you need select languages"
-    
-  if (this.manualTestsSolutions[this.getSingleCodeRunnerKey()]!.tests.length >= 10) {
-      throw 'only 10 manual test are allowed';
+    if (
+      this.manualTestsSolutions[this.getSingleCodeRunnerKey()]!.tests.length >=
+      10
+    ) {
+      throw 'only 10 manual test are allowed'
     }
-    console.log("output type: "+ this.outputType)
-    Object.keys(this.manualTestsSolutions).forEach((x:string)=>{
-      const type:CodeRunnerType=x as CodeRunnerType;
+    console.log('output type: ' + this.outputType)
+    Object.keys(this.manualTestsSolutions).forEach((x: string) => {
+      const type: CodeRunnerType = x as CodeRunnerType
       this.manualTestsSolutions[type]?.addblankTest(
-        this.inputType
-        ,this.outputType
-      );
+        this.inputType,
+        this.outputType
+      )
     })
-    
   }
 
-  get getSingleRowOfManualTests(): ExerciseTest[]{
-    if(this.getAmountOfLanguages()==0)
-      return [];
-      
-      return this.manualTestsSolutions[this.getSingleCodeRunnerKey()]!.tests;
+  get getSingleRowOfManualTests(): ExerciseTest[] {
+    if (this.getAmountOfLanguages() == 0) return []
+
+    return this.manualTestsSolutions[this.getSingleCodeRunnerKey()]!.tests
   }
 
   set getSingleRowOfManualTests(tests: ExerciseTest[]) {
-    if (this.getAmountOfLanguages() === 0 || !this.manualTestsSolutions[this.getSingleCodeRunnerKey()]) {
-      throw "Cannot set varailbes input"
+    if (
+      this.getAmountOfLanguages() === 0 ||
+      !this.manualTestsSolutions[this.getSingleCodeRunnerKey()]
+    ) {
+      throw 'Cannot set varailbes input'
     }
 
-    this._languages.forEach((x:CodeRunnerType)=>{
-      this.manualTestsSolutions[x]!.tests=tests
+    this._languages.forEach((x: CodeRunnerType) => {
+      this.manualTestsSolutions[x]!.tests = tests
     })
   }
 
-
-
-  public setTestValue(isInput:boolean, index:number, value: any)
-  {
-
-        this.languages.forEach((x: CodeRunnerType)=>{
-
-          if (isInput) {
-          this.manualTestsSolutions[x]!.tests[index].input=value;
-          }
-          else{
-            console.log("set output: "+ value)
-            this.manualTestsSolutions[x]!.tests[index].expectedOutput=value;
-          }
-        }
-      );
+  public setTestValue(isInput: boolean, index: number, value: any) {
+    this.languages.forEach((x: CodeRunnerType) => {
+      if (isInput) {
+        this.manualTestsSolutions[x]!.tests[index].input = value
+      } else {
+        console.log('set output: ' + value)
+        this.manualTestsSolutions[x]!.tests[index].expectedOutput = value
+      }
+    })
   }
-
 
   // private updateCreationTestData(reuslts: ProgramResult[])  {
   //   console.log(
@@ -245,38 +228,38 @@ public updateSolutionCode(code: string, type:CodeRunnerType) {
   //       )
   //   )
 
-  public updateTests (results: ProgramResult[],langauge:CodeRunnerType) {
+  public updateTests(results: ProgramResult[], langauge: CodeRunnerType) {
     console.log('create test rtesult update: ' + JSON.stringify(results))
-    this.manualTestsSolutions[langauge]!.autoTests=[];
-    for (let i =0;i<results.length;i++)
-    {
-      if(i< this.manualTestsSolutions[langauge]!.tests.length)
-        {
-          this.manualTestsSolutions[langauge]!.tests[i].consoleOutput=results[i].consoleOutput.output;
-          this.manualTestsSolutions[langauge]!.tests[i].errorOutput=results[i].consoleOutput.errorOutput;
-          this.manualTestsSolutions[langauge]!.tests[i].output=results[i].variables;
-          this.manualTestsSolutions[langauge]!.tests[i].isSolved=
-          this.manualTestsSolutions[langauge]!.tests[i].expectedOutput
-          === this.manualTestsSolutions[langauge]!.tests[i].output
-        }
-        else
-        {
-          console.log("i: "+i+"::::"+JSON.stringify(this.manualTestsSolutions[langauge]!.autoTests))
-          this.manualTestsSolutions[langauge]!.autoTests.push(
-            {
-              input: results[i].variablesInput!,
-              output: results[i].variables,
-              expectedOutput: null,
-              errorOutput: results[i].consoleOutput.errorOutput,
-              consoleOutput: results[i].consoleOutput.output,
-              isSolved: results[i].consoleOutput.errorOutput==="",
-              uuid: ''
-            }
-          )
-        }
-
+    this.manualTestsSolutions[langauge]!.autoTests = []
+    for (let i = 0; i < results.length; i++) {
+      if (i < this.manualTestsSolutions[langauge]!.tests.length) {
+        this.manualTestsSolutions[langauge]!.tests[i].consoleOutput =
+          results[i].consoleOutput.output
+        this.manualTestsSolutions[langauge]!.tests[i].errorOutput =
+          results[i].consoleOutput.errorOutput
+        this.manualTestsSolutions[langauge]!.tests[i].output =
+          results[i].variables
+        this.manualTestsSolutions[langauge]!.tests[i].isSolved =
+          this.manualTestsSolutions[langauge]!.tests[i].expectedOutput ===
+          this.manualTestsSolutions[langauge]!.tests[i].output
+      } else {
+        console.log(
+          'i: ' +
+            i +
+            '::::' +
+            JSON.stringify(this.manualTestsSolutions[langauge]!.autoTests)
+        )
+        this.manualTestsSolutions[langauge]!.autoTests.push({
+          input: results[i].variablesInput!,
+          output: results[i].variables,
+          expectedOutput: null,
+          errorOutput: results[i].consoleOutput.errorOutput,
+          consoleOutput: results[i].consoleOutput.output,
+          isSolved: results[i].consoleOutput.errorOutput === '',
+          uuid: '',
+        })
+      }
     }
-
 
     // this.updateCreationTestData(results.results)
     this.updateSubmitAcces()
@@ -299,151 +282,106 @@ public updateSolutionCode(code: string, type:CodeRunnerType) {
     return ''
   }
 
-
-  public removeTest(index:number) {
-    this._languages.forEach((type: CodeRunnerType)=>{
-      this.manualTestsSolutions[type]!.tests.splice(index,1);
+  public removeTest(index: number) {
+    this._languages.forEach((type: CodeRunnerType) => {
+      this.manualTestsSolutions[type]!.tests.splice(index, 1)
     })
   }
 
-    public getTestString(isInput: boolean, index: number): string{
-      return isInput
-      ?JSON.stringify( this.getSingleRowOfManualTests[index].input)
-      :JSON.stringify( this.getSingleRowOfManualTests[index].expectedOutput)
-     
-    }
-
-    
+  public getTestString(isInput: boolean, index: number): string {
+    return isInput
+      ? JSON.stringify(this.getSingleRowOfManualTests[index].input)
+      : JSON.stringify(this.getSingleRowOfManualTests[index].expectedOutput)
+  }
 
   //#endregion
 
-//#region Time management
-public updateAmountOfMInutes(newNum: number):void
-{
-  this.timeForTaskMin =
-  newNum * 60 +
-  (this.timeForTaskMin -
-    Math.floor(
-      this.timeForTaskMin / 60
-    ) *
-      60)
-}
+  //#region Time management
+  public updateAmountOfMInutes(newNum: number): void {
+    this.timeForTaskMin =
+      newNum * 60 +
+      (this.timeForTaskMin - Math.floor(this.timeForTaskMin / 60) * 60)
+  }
 
+  public getMinutesBound(): number {
+    return Math.floor(this.timeForTaskMin / 60)
+  }
 
+  public updateAmountOfHours(newNum: number): void {
+    this.timeForTaskMin = Math.floor(this.timeForTaskMin / 60) * 60 + +newNum
+  }
 
-public getMinutesBound():number{
- return Math.floor(
-    this.timeForTaskMin / 60
-  )
-}
+  public getHoursBound(): number {
+    return this.timeForTaskMin - Math.floor(this.timeForTaskMin / 60) * 60
+  }
 
+  //#endregion
 
-public updateAmountOfHours(newNum: number):void
-{
-  this.timeForTaskMin =
-  Math.floor(
-    this.timeForTaskMin /
-      60
-  ) *
-    60 +
-  +newNum
-}
+  //#region input output type management
 
-public getHoursBound():number{
-  return this.timeForTaskMin -
-  Math.floor(
-    this.timeForTaskMin / 60
-  ) *
-    60
-}
+  //#region input
 
-//#endregion
+  public setInputTypeInt(): void {
+    this.clearTests()
+    this.inputType = setTypeToInt(this.inputType)
+  }
 
+  public setInputTypeFloat(): void {
+    this.clearTests()
+    this.inputType = setTypeToFloat(this.inputType)
+  }
+  public setInputTypeString(): void {
+    this.clearTests()
+    this.inputType = setTypeToString(this.inputType)
+  }
+  public setInputTypeSingle(): void {
+    this.clearTests()
+    this.inputType = setTypeToSingle(this.inputType)
+  }
 
+  public setInputTypeArray(): void {
+    this.clearTests()
+    this.inputType = setTypeToArray(this.inputType)
+  }
 
-//#region input output type management 
+  public setInputTypeDoubleArray(): void {
+    this.clearTests()
+    this.inputType = setTypeToDoubleArray(this.inputType)
+  }
 
-//#region input
+  //#endregion
 
-public setInputTypeInt(): void
-{
-  this.clearTests();
-  this.inputType=setTypeToInt( this.inputType);
-}
+  //#region ouptut
 
-public setInputTypeFloat(): void
-{
-  this.clearTests();
-  this.inputType=setTypeToFloat( this.inputType);
-}
-public setInputTypeString(): void
-{
-  this.clearTests();
-  this.inputType=setTypeToString( this.inputType);
-}
-public setInputTypeSingle(): void
-{
-  this.clearTests();
-  this.inputType=setTypeToSingle( this.inputType);
-}
+  public setOutputTypeInt(): void {
+    this.clearTests()
+    this.outputType = setTypeToInt(this.outputType)
+  }
 
-public setInputTypeArray(): void
-{
-  this.clearTests();
-  this.inputType=setTypeToArray( this.inputType);
-}
+  public setOutputTypeFloat(): void {
+    this.clearTests()
+    this.outputType = setTypeToFloat(this.outputType)
+  }
+  public setOutputTypeString(): void {
+    this.clearTests()
+    this.outputType = setTypeToString(this.outputType)
+  }
+  public setOutputTypeSingle(): void {
+    this.clearTests()
+    this.outputType = setTypeToSingle(this.outputType)
+  }
 
-public setInputTypeDoubleArray(): void
-{
-  this.clearTests();
-  this.inputType=setTypeToDoubleArray( this.inputType);
-}
+  public setOutputTypeArray(): void {
+    this.clearTests()
+    this.outputType = setTypeToArray(this.outputType)
+  }
 
+  public setOutputTypeDoubleArray(): void {
+    this.clearTests()
+    this.outputType = setTypeToDoubleArray(this.outputType)
+  }
 
-//#endregion
+  //#endregion
 
-//#region ouptut
-
-public setOutputTypeInt(): void
-{
-  this.clearTests();
-  this.outputType=setTypeToInt( this.outputType);
-}
-
-public setOutputTypeFloat(): void
-{
-  this.clearTests();
-  this.outputType=setTypeToFloat( this.outputType);
-}
-public setOutputTypeString(): void
-{
-  this.clearTests();
-  this.outputType=setTypeToString( this.outputType);
-}
-public setOutputTypeSingle(): void
-{
-  this.clearTests();
-  this.outputType=setTypeToSingle( this.outputType);
-}
-
-public setOutputTypeArray(): void
-{
-  this.clearTests();
-  this.outputType=setTypeToArray( this.outputType);
-}
-
-public setOutputTypeDoubleArray(): void
-{
-  this.clearTests();
-  this.outputType=setTypeToDoubleArray( this.outputType);
-}
-
-
-//#endregion
-
-//#endregion
-
-
- 
-
+  //#endregion
 }

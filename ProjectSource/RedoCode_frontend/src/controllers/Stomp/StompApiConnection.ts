@@ -8,31 +8,28 @@ export default class StompApiConnection {
   private _onBeforeConnection: () => void
   private _onError: (message: string) => void
   private _subscriptions: StompApiSubscription[] = []
-  private _onConnected(){
-    console.log("on connected evetn")
-    this._onConnectedEvents.forEach((element:()=>void) => {
-      element();
-    });
+  private _onConnected() {
+    console.log('on connected evetn')
+    this._onConnectedEvents.forEach((element: () => void) => {
+      element()
+    })
   }
-  private _onDisconnected(){
-    console.log("on disconnected evetn")
-    this._onConnectedEvents.forEach((element:()=>void) => {
-      element();
-    });
+  private _onDisconnected() {
+    console.log('on disconnected evetn')
+    this._onConnectedEvents.forEach((element: () => void) => {
+      element()
+    })
   }
-
-
-
 
   constructor(
     connectionUrl: string,
     onBeforeConnection: () => void,
     onConnected: () => void,
-    onError: (mes:string) => void
+    onError: (mes: string) => void
   ) {
     this._onBeforeConnection = onBeforeConnection
     this._onError = onError
-    this.addOnConnectEvent(onConnected);
+    this.addOnConnectEvent(onConnected)
 
     this._stompClient = new Client({
       brokerURL: connectionUrl,
@@ -63,9 +60,9 @@ export default class StompApiConnection {
         console.log(connectionUrl + ' onWebSocketError')
         this._onError('there was an websocket error wtih server connection')
       },
-      onDisconnect: (frame: IFrame)=>{
-        this._onDisconnected();
-      }
+      onDisconnect: (frame: IFrame) => {
+        this._onDisconnected()
+      },
     })
 
     this._stompClient.connectHeaders = {
@@ -121,47 +118,44 @@ export default class StompApiConnection {
 
     this._stompClient.publish(obj)
     console.log('published ' + JSON.stringify(obj))
-
   }
 
+  //#region events handling
 
+  private _onConnectedEvents: (() => void)[] = []
+  private _onDisconnectEvents: (() => void)[] = []
 
+  public addOnConnectEvent(method: () => void): void {
+    this._onConnectedEvents.push(method)
+  }
+  public removeOnConnectEvent(method: () => void): void {
+    const indexToRemove = this._onConnectedEvents.findIndex(
+      item => item === method
+    )
+    if (indexToRemove !== -1) {
+      this._onConnectedEvents.splice(indexToRemove, 1)
+    }
+  }
+  public clearOnConnectEvents() {
+    this._onConnectedEvents = []
+  }
 
-//#region events handling
+  public addOnDisconnectEvent(method: () => void): void {
+    this._onDisconnectEvents.push(method)
+  }
+  public removeOnDisconnectEvent(method: () => void): void {
+    const indexToRemove = this._onConnectedEvents.findIndex(
+      item => item === method
+    )
+    if (indexToRemove !== -1) {
+      this._onDisconnectEvents.splice(indexToRemove, 1)
+    }
+  }
+  public clearOnDisconnectEvents() {
+    this._onDisconnectEvents = []
+  }
 
-private _onConnectedEvents: (()=>void)[]=[]
-private _onDisconnectEvents: (()=>void)[]=[]
-
-public addOnConnectEvent(method: (()=> void)):void{
-  this._onConnectedEvents.push(method)
-}
-public removeOnConnectEvent(method: (()=> void)):void{
-   const indexToRemove = this._onConnectedEvents.findIndex(item => item === method);
-   if (indexToRemove !== -1) {
-       this._onConnectedEvents.splice(indexToRemove, 1);
-   }
-}
-public clearOnConnectEvents(){
-   this._onConnectedEvents=[];
-}
-
-public addOnDisconnectEvent(method: (()=> void)):void{
-  this._onDisconnectEvents.push(method)
-}
-public removeOnDisconnectEvent(method: (()=> void)):void{
-   const indexToRemove = this._onConnectedEvents.findIndex(item => item === method);
-   if (indexToRemove !== -1) {
-       this._onDisconnectEvents.splice(indexToRemove, 1);
-   }
-}
-public clearOnDisconnectEvents(){
-   this._onDisconnectEvents=[];
-}
-
-
-
-//#endregion
-
+  //#endregion
 }
 
 // stompClient.onWebSocketError = (error) => {

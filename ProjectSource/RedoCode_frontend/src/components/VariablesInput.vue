@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-//#region imports
+  //#region imports
   import { computed, PropType, Ref, ref, watch } from 'vue'
   import InputSetupInput from './InputSetupInput.vue'
   import VarType, {
@@ -46,11 +46,10 @@
   import { isArray, isNumber } from 'chart.js/helpers'
   import { json } from 'agent-base'
   import VariablesParser from '@/tools/VariablesParser'
-//#endregion 
-const CodeRunnerStore = useCodeRunnerStore()
+  //#endregion
+  const CodeRunnerStore = useCodeRunnerStore()
 
-
-const props = defineProps({
+  const props = defineProps({
     Type: {
       type: String as PropType<VarType>,
       required: true,
@@ -60,8 +59,12 @@ const props = defineProps({
     isInput: { type: Boolean, required: true },
   })
 
-
-  const jsonInput: Ref<string> = ref(CodeRunnerStore.exerciseCreatorController.getTestString(props.isInput,props.manualTestInputIndex))
+  const jsonInput: Ref<string> = ref(
+    CodeRunnerStore.exerciseCreatorController.getTestString(
+      props.isInput,
+      props.manualTestInputIndex
+    )
+  )
   const value = computed(() => {
     try {
       console.log('jsonInput.value: ' + jsonInput.value)
@@ -75,16 +78,15 @@ const props = defineProps({
     }
   })
 
-
-
   const storedValue = computed(() => {
     return props.isInput
-      ? CodeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests[props.manualTestInputIndex].input
-      : CodeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests[props.manualTestInputIndex]
-          .expectedOutput
+      ? CodeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests[
+          props.manualTestInputIndex
+        ].input
+      : CodeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests[
+          props.manualTestInputIndex
+        ].expectedOutput
   })
-
-
 
   const validationError = computed(() => {
     try {
@@ -98,14 +100,16 @@ const props = defineProps({
     try {
       console.log('validationofData.value: ' + validationError.value)
       if (validationError.value === '') {
-        CodeRunnerStore.exerciseCreatorController.setTestValue(props.isInput,props.manualTestInputIndex,newVal)
+        CodeRunnerStore.exerciseCreatorController.setTestValue(
+          props.isInput,
+          props.manualTestInputIndex,
+          newVal
+        )
       }
     } catch (error) {
       console.error(error)
     }
   })
-
-
 </script>
 
 <style>

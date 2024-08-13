@@ -38,12 +38,20 @@
             ]?.tests as ExerciseTest[]
           "
           :AutoTests="
-          codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
-            codeRunnerStore.codeRunnerConnection.codeRunnerState
-              .codeRunnerType
-          ]?.autoTests
-        "
-          :onResults="(results: ProgramResultsMessage)=>{codeRunnerStore.exerciseCreatorController.updateTests(results.results,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)}"
+            codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
+              codeRunnerStore.codeRunnerConnection.codeRunnerState
+                .codeRunnerType
+            ]?.autoTests
+          "
+          :onResults="
+            (results: ProgramResultsMessage) => {
+              codeRunnerStore.exerciseCreatorController.updateTests(
+                results.results,
+                codeRunnerStore.codeRunnerConnection.codeRunnerState
+                  .codeRunnerType
+              )
+            }
+          "
           :SubmitAccess="codeRunnerStore.exerciseCreatorController.isSolved"
         />
       </TabPanel>
@@ -78,9 +86,9 @@
   const codeUpdate = (code: string) => {
     console.log('codee update: ' + code)
     codeRunnerStore.exerciseCreatorController.updateSolutionCode(
-      code
-, codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    );
+      code,
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    )
     console.log(
       'update: ' +
         JSON.stringify(codeRunnerStore.exerciseCreatorController.solutionCodes)
@@ -92,20 +100,19 @@
     // ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
     //   codeRunnerStore.exerciseCreatorController
     // )
-    console.error("unimplemented");
-    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType)
-
+    console.error('unimplemented')
+    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(
+      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    )
   }
-
-
-
-
-
 
   const onSubmit = () => {
     console.log('On sumbit')
-    console.error("Unimplented")
-    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController)
+    console.error('Unimplented')
+    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
+      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
+    )
   }
 
   const exerciseLnageus = computed(() => {
@@ -136,10 +143,8 @@
     )
   })
   const testValidation = computed(() => {
-    return codeRunnerStore.exerciseCreatorController.ExerciseSetupError==="";
+    return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
   })
-
- 
 </script>
 
 <style>

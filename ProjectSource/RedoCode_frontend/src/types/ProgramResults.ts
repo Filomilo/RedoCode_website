@@ -8,5 +8,5 @@ type Vars = number[] | number | string | string[] | null
 export default interface ProgramResult {
   consoleOutput: ConsoleOutput
   variables: Vars
-  variablesInput: Vars|null ;
+  variablesInput: Vars | null
 }

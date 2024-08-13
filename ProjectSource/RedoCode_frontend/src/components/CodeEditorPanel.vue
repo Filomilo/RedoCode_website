@@ -1,11 +1,13 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  choces: 
+  choces:
   {{ JSON.stringify(props.languageChoices) }}
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
-      :modelValue="codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType"
+      :modelValue="
+        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+      "
       :options="laguageDropDown"
       placeholder="Select programming langauge"
       class="dropDown"
@@ -16,15 +18,14 @@
     />
     <div class="CodeEditorDropDownContainer"></div>
     <div class="CodeEditorPlayButton">
-      <Button
-        @click="codeRunButton"
-        v-if="true"
-        id="coderunner-run-button"
-      >
+      <Button @click="codeRunButton" v-if="true" id="coderunner-run-button">
         <IconPlay style="z-index: 9" />
       </Button>
       <div v-else>
-        <LoadingIndicator style="height: 2rem; width: 2rem" id="coderunner-wait-button" />
+        <LoadingIndicator
+          style="height: 2rem; width: 2rem"
+          id="coderunner-wait-button"
+        />
       </div>
     </div>
   </div>
@@ -51,110 +52,121 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, shallowRef, computed, watch, onMounted, Ref, ComputedRef } from "vue";
-import IconPlay from "@/assets/icons/IconPlay.vue";
-import { useCodeRunnerStore } from "../stores/CodeRunnerStore";
-import { useConfirm } from "primevue/useconfirm";
-import LoadingIndicator from "./LoadingIndicator.vue";
-import { onBeforeRouteLeave } from "vue-router";
-import { EditorLanguagesMap } from "@/config/Data";
-import { useApiConnectionStore } from "@/stores/ApiConnectionStore";
-import codeRunnerType, { languageDropDownType } from "@/types/CodeRunnerTypes";
-import LangaugeSelection from '@/tools/LangaugeSelection'
+  import {
+    ref,
+    shallowRef,
+    computed,
+    watch,
+    onMounted,
+    Ref,
+    ComputedRef,
+  } from 'vue'
+  import IconPlay from '@/assets/icons/IconPlay.vue'
+  import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+  import { useConfirm } from 'primevue/useconfirm'
+  import LoadingIndicator from './LoadingIndicator.vue'
+  import { onBeforeRouteLeave } from 'vue-router'
+  import { EditorLanguagesMap } from '@/config/Data'
+  import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+  import codeRunnerType, { languageDropDownType } from '@/types/CodeRunnerTypes'
+  import LangaugeSelection from '@/tools/LangaugeSelection'
 
-const props = defineProps({
-  starting: { type: String, required: true },
-  codeUpdateMethod: { type: Function, required: true },
-  onRunCode: { type: Function, required: true },
-  languageChoices: { type: Array as () => codeRunnerType[], required: true },
-});
+  const props = defineProps({
+    starting: { type: String, required: true },
+    codeUpdateMethod: { type: Function, required: true },
+    onRunCode: { type: Function, required: true },
+    languageChoices: { type: Array as () => codeRunnerType[], required: true },
+  })
 
-const codeRunnerStore = useCodeRunnerStore();
-const ApiConnectionStore = useApiConnectionStore();
+  const codeRunnerStore = useCodeRunnerStore()
+  const ApiConnectionStore = useApiConnectionStore()
   // const ApiConnectionStore = useApiConnectionStore()
   const laguageDropDown: ComputedRef<languageDropDownType[]> = computed(() => {
     return LangaugeSelection.getDropDownFromLanguages(props.languageChoices)
   })
-const codeRef = ref(props.starting);
+  const codeRef = ref(props.starting)
 
-const codeRunButton = () => {
-  props.onRunCode();
-};
-
-const onCodeChnaage = (text: string) => {
-  props.codeUpdateMethod(text);
-};
-const confirm = useConfirm();
-const MONACO_EDITOR_OPTIONS = {
-  automaticLayout: true,
-  autoClosingBrackets: false,
-};
-
-watch(
-  () => props.starting,
-  (first, second) => {
-    console.log("props chahned-----------------------: " + second + " -> " + first);
-    codeRef.value = first;
+  const codeRunButton = () => {
+    props.onRunCode()
   }
-);
 
-const lnagaugeDropdownVaule = computed(
-  () =>
-    EditorLanguagesMap[
+  const onCodeChnaage = (text: string) => {
+    props.codeUpdateMethod(text)
+  }
+  const confirm = useConfirm()
+  const MONACO_EDITOR_OPTIONS = {
+    automaticLayout: true,
+    autoClosingBrackets: false,
+  }
+
+  watch(
+    () => props.starting,
+    (first, second) => {
+      console.log(
+        'props chahned-----------------------: ' + second + ' -> ' + first
+      )
+      codeRef.value = first
+    }
+  )
+
+  const lnagaugeDropdownVaule = computed(
+    () =>
+      EditorLanguagesMap[
+        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+      ]
+  )
+
+  const editorLang = computed(() => {
+    return EditorLanguagesMap[
       codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
     ]
-);
+  })
 
-const editorLang = computed(() => {
-  return EditorLanguagesMap[
-    codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-  ];
-});
+  const editorRef = shallowRef()
+  const handleMount = (editor: any) => (editorRef.value = editor)
 
-const editorRef = shallowRef();
-const handleMount = (editor: any) => (editorRef.value = editor);
-
-const onChangeLnageugeDropDown = (lang: any) => {
-  if (
-    lang.value! !== codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-  ) {
-    console.log("test change: " + lang.value);
-    confirmChangeOFCodeRuner(lang.value);
+  const onChangeLnageugeDropDown = (lang: any) => {
+    if (
+      lang.value! !==
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    ) {
+      console.log('test change: ' + lang.value)
+      confirmChangeOFCodeRuner(lang.value)
+    }
   }
-};
-const confirmChangeOFCodeRuner = (type: codeRunnerType) => {
-  confirm.require({
-    message: "Changing code runner may take a while",
-    header: "Are you sure?",
-    rejectClass: "CancelButton",
-    acceptClass: "AcceptButton",
-    rejectLabel: "Cancel",
-    acceptLabel: "Change",
-    accept: () => {
-      console.log(" confirm change: " + type);
-      codeRunnerStore.codeRunnerSender.requestCodeRunner(type);
-    },
-    reject: () => {
-      console.log(" reject change: " + type);
-    },
-  });
-};
+  const confirmChangeOFCodeRuner = (type: codeRunnerType) => {
+    confirm.require({
+      message: 'Changing code runner may take a while',
+      header: 'Are you sure?',
+      rejectClass: 'CancelButton',
+      acceptClass: 'AcceptButton',
+      rejectLabel: 'Cancel',
+      acceptLabel: 'Change',
+      accept: () => {
+        console.log(' confirm change: ' + type)
+        codeRunnerStore.codeRunnerSender.requestCodeRunner(type)
+      },
+      reject: () => {
+        console.log(' reject change: ' + type)
+      },
+    })
+  }
 
-function formatCode() {
-  editorRef.value?.getAction("editor.action.formatDocument").run();
-}
+  function formatCode() {
+    editorRef.value?.getAction('editor.action.formatDocument').run()
+  }
 
-// const onRunCode = () => {
-//   console.log('running code: \n' + JSON.stringify(codeRef.value))
-//   codeRunnerStore.runCode(codeRef.value)
-// }
+  // const onRunCode = () => {
+  //   console.log('running code: \n' + JSON.stringify(codeRef.value))
+  //   codeRunnerStore.runCode(codeRef.value)
+  // }
 
-onBeforeRouteLeave((to, from) => {
-  codeRef.value = "";
-});
+  onBeforeRouteLeave((to, from) => {
+    codeRef.value = ''
+  })
 
-const onShortCutRun = () => {
-  console.log("onShortCutRun");
-  props.onRunCode();
-};
+  const onShortCutRun = () => {
+    console.log('onShortCutRun')
+    props.onRunCode()
+  }
 </script>

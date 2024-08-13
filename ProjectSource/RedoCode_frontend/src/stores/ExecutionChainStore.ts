@@ -12,7 +12,6 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
 
   const executionChain: Ref<ChainNodeStatus[]> = ref([])
 
-
   const loadChainScheme = (scheme: ExecutionChainScheme) => {
     console.log('ExecutionResponses  loadChainScheme:' + JSON.stringify(scheme))
     executionChain.value = scheme.levels
@@ -21,7 +20,7 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
 
   apiConnectionStore.stompApiSubsciptionContorller.addExecutionChainSchemeSubscription(
     loadChainScheme.bind(this)
-  );
+  )
 
   const waitForScheme = (expectedLvl: number, timeout: number) => {
     return new Promise<void>((resolve, reject) => {
@@ -61,7 +60,7 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
   }
   apiConnectionStore.stompApiSubsciptionContorller.addEExecutionResponseStatusUpdateSubscription(
     updateStatus.bind(this)
-  );
+  )
 
   const showExecutionChain: Ref<Boolean> = ref(false)
   const showCloseButton: Ref<Boolean> = ref(false)

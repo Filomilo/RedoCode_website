@@ -47,7 +47,7 @@
   const onRunCode = () => {
     toastStore.featureNotImplemented('onRunCode')
     // ApiConnectionStore.codeRunnerConnection.runRawCode(activeCode.value)
-      codeRunnerStore.codeRunnerSender.runRawCode(activeCode.value);
+    codeRunnerStore.codeRunnerSender.runRawCode(activeCode.value)
   }
 
   const onSubmit = () => {

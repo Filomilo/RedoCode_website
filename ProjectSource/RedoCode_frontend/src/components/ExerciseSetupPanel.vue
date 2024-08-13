@@ -41,11 +41,13 @@
             <InputNumber
               @update:model-value="
                 (newNum: number) => {
-                  codeRunnerStore.exerciseCreatorController.updateAmountOfMInutes(newNum);
+                  codeRunnerStore.exerciseCreatorController.updateAmountOfMInutes(
+                    newNum
+                  )
                 }
               "
               :model-value="
-              codeRunnerStore.exerciseCreatorController.getMinutesBound()
+                codeRunnerStore.exerciseCreatorController.getMinutesBound()
               "
               inputId="integeronly"
               suffix=" H"
@@ -57,11 +59,13 @@
             <InputNumber
               @update:model-value="
                 (newNum: number) => {
-                  codeRunnerStore.exerciseCreatorController.updateAmountOfHours(newNum);
+                  codeRunnerStore.exerciseCreatorController.updateAmountOfHours(
+                    newNum
+                  )
                 }
               "
               :model-value="
-              codeRunnerStore.exerciseCreatorController.getHoursBound()
+                codeRunnerStore.exerciseCreatorController.getHoursBound()
               "
               inputId="integeronly"
               suffix=" M"
@@ -206,7 +210,7 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeInt();
+                  codeRunnerStore.exerciseCreatorController.setOutputTypeInt()
                 }
               "
               inputId="outputype1"
@@ -222,7 +226,7 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeFloat();
+                  codeRunnerStore.exerciseCreatorController.setOutputTypeFloat()
                 }
               "
               inputId="outputype2"
@@ -240,7 +244,7 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeString();
+                  codeRunnerStore.exerciseCreatorController.setOutputTypeString()
                 }
               "
               inputId="outputype3"
@@ -260,7 +264,7 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeSingle();
+                  codeRunnerStore.exerciseCreatorController.setOutputTypeSingle()
                 }
               "
               inputId="outputSize1"
@@ -278,7 +282,7 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeArray();
+                  codeRunnerStore.exerciseCreatorController.setOutputTypeArray()
                 }
               "
               inputId="outputSize2"
@@ -296,7 +300,7 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeDoubleArray();
+                  codeRunnerStore.exerciseCreatorController.setOutputTypeDoubleArray()
                 }
               "
               inputId="outputSize3"
@@ -766,11 +770,10 @@
 </template>
 
 <script setup lang="ts">
-//#region imports
+  //#region imports
   import { onMounted, watch } from 'vue'
   import VueSlider from 'vue-slider-component'
   import ManualTestPnael from './ManualTestPnael.vue'
-
 
   import { languageChoices } from '@/config/Data'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
@@ -778,20 +781,20 @@
   import CodeRunnerType from '@/types/CodeRunnerTypes'
   import generateStartingFunction from '@/tools/StartingFunctionGenerator'
   import VarType, {
-  setTypeToArray,
-  isTypeDoubleArray,
-  isTypeString,
-  isTypeArray,
-  isTypeInt,
-  isTypeFloat,
-  setTypeToDoubleArray,
-  setTypeToSingle,
-  setTypeToString,
-  setTypeToInt,
-  setTypeToFloat,
-  isTypeSingle,
-} from '@/types/VarType'
-//#endregion
+    setTypeToArray,
+    isTypeDoubleArray,
+    isTypeString,
+    isTypeArray,
+    isTypeInt,
+    isTypeFloat,
+    setTypeToDoubleArray,
+    setTypeToSingle,
+    setTypeToString,
+    setTypeToInt,
+    setTypeToFloat,
+    isTypeSingle,
+  } from '@/types/VarType'
+  //#endregion
   const codeRunnerStore = useCodeRunnerStore()
 
   const onXChange = (val: any) => {
@@ -821,8 +824,6 @@
   onMounted(() => {
     codeRunnerStore.exerciseCreatorController.resetParams()
   })
-
-
 
   watch(
     () => [

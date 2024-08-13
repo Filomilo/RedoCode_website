@@ -13,26 +13,20 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
     () => {
-      toastStore.showProccessingMessage("attempting connecting to server")
+      toastStore.showProccessingMessage('attempting connecting to server')
     },
     () => {
-      toastStore.showSuccessMessage("successfully connected")
+      toastStore.showSuccessMessage('successfully connected')
     },
     (message: string) => {
       toastStore.showErrorMessage(message)
     }
   )
 
+  const stompApiSender: StompApiSender = new StompApiSender(stompApiConnection)
 
-  const stompApiSender: StompApiSender= new StompApiSender(
-    stompApiConnection
-  );
-
-
-  const stompApiSubsciptionContorller: StompApiSubsriptionsController= new StompApiSubsriptionsController(
-    stompApiConnection
-  )
-
+  const stompApiSubsciptionContorller: StompApiSubsriptionsController =
+    new StompApiSubsriptionsController(stompApiConnection)
 
   // let onCodeResult = (result: ProgramResultsMessage): void => {}
 
@@ -44,9 +38,6 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   // const clearOnCodeResult = () => {
   //   onCodeResult = (result: ProgramResultsMessage) => {}
   // }
-
-
-
 
   // connectionDestinnation
 

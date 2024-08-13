@@ -36,13 +36,13 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     apiConnectionStore.stompApiSender as StompApiSender,
     apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller
   )
-  const codeRunnerSender: CodeRunnerSender=new CodeRunnerSender(apiConnectionStore.stompApiSender as StompApiSender,codeRunnerConnection );
+  const codeRunnerSender: CodeRunnerSender = new CodeRunnerSender(
+    apiConnectionStore.stompApiSender as StompApiSender,
+    codeRunnerConnection
+  )
 
-const playGroundRunnerCotroller: PlayGroundRunnerCotroller= new PlayGroundRunnerCotroller();
-
-  
-
-
+  const playGroundRunnerCotroller: PlayGroundRunnerCotroller =
+    new PlayGroundRunnerCotroller()
 
   const playGroundBase: ExerciseData = {
     inputType: '',
@@ -59,7 +59,7 @@ const playGroundRunnerCotroller: PlayGroundRunnerCotroller= new PlayGroundRunner
         consoleOutput: '',
         expectedOutput: '',
         isSolved: null,
-        uuid: ''
+        uuid: '',
       },
     ],
     automaticTests: [],
@@ -81,13 +81,9 @@ const playGroundRunnerCotroller: PlayGroundRunnerCotroller= new PlayGroundRunner
     exerciseLoading.value = state
   }
 
-
-
   const exerciseCreatorController = reactive(new ExerciseCreatorController())
 
-
   const manualTestBuffer: Ref<ExerciseTest[]> = ref([])
-
 
   const updateTestData = (reuslts: ProgramResult[]) => {
     console.log('----updateTestData')
@@ -104,7 +100,6 @@ const playGroundRunnerCotroller: PlayGroundRunnerCotroller= new PlayGroundRunner
       val.isSolved = val.expectedOutput === reuslts[index].variables
     })
   }
-
 
   //   const test: ExerciseTest[] =
   //     exerciseCreatorController.manualTestsSolutions[
@@ -133,14 +128,11 @@ const playGroundRunnerCotroller: PlayGroundRunnerCotroller= new PlayGroundRunner
   //   ] = test
   // }
 
-
-
-
   return {
     codeRunnerConnection,
     exerciseCreatorController,
     codeRunnerSender,
-    playGroundRunnerCotroller
+    playGroundRunnerCotroller,
     // codeRunnerActive,
     // doesHaveACtiveToCodeRunner,
     // requestCodeRunner,
