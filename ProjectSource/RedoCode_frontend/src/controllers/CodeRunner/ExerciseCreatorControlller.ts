@@ -25,10 +25,10 @@ import VarType, {
 import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
 import ProgramResult from '@/types/ProgramResults'
 
-type StringIndexed = {
+export type StringIndexed = {
   [key in CodeRunnerType]?: string
 }
-type TestsIndexed = { [key in CodeRunnerType]?: TestsController }
+export type TestsIndexed = { [key in CodeRunnerType]?: TestsController }
 
 export default class ExerciseCreatorController 
 {

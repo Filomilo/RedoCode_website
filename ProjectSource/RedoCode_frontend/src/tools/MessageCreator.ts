@@ -1,5 +1,6 @@
 import ExerciseCreatorController from "@/controllers/CodeRunner/ExerciseCreatorControlller";
 import ExerciseTestToRunMesseage from "@/types/ApiMesseages/ExerciseTestToRunMesseage";
+import ExercsieCreatorValidationMesage, { TestsIndexed } from "@/types/ApiMesseages/ExercsieCreatorValidationMesage";
 import CodeRunnerType from "@/types/CodeRunnerTypes";
 import ExerciseTest from "@/types/ExcericseTest";
 import VarType from "@/types/VarType";
@@ -53,6 +54,45 @@ namespace MessageCreator{
             executionTime: exerciseCreatorControllercopy.executionTime
           }
     }
+
+
+    export function createExercsieCreatorValidationMesage(exerciseCreatorController: ExerciseCreatorController):ExercsieCreatorValidationMesage{
+
+        let parsedTests:ExerciseTest[]=testStringParser(
+                exerciseCreatorController.getSingleRowOfManualTests
+                ,exerciseCreatorController.inputType
+                ,exerciseCreatorController.outputType
+            );
+            console.log("parsedTests: \n"+JSON.stringify(parsedTests))
+        
+    
+    const exercsieCreatorValidationMesage: ExercsieCreatorValidationMesage={
+        title: exerciseCreatorController.title,
+        description: exerciseCreatorController.description,
+        ram: exerciseCreatorController.ram,
+        inputType: exerciseCreatorController.inputType,
+        outputType: exerciseCreatorController.outputType,
+        amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
+        autoTestminValue: exerciseCreatorController.autoTestminValue,
+        autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
+        lengthRange: exerciseCreatorController.lengthRange,
+        xArrayRange: exerciseCreatorController.xArrayRange,
+        yArrayRange: exerciseCreatorController.yArrayRange,
+        solutionCodes: exerciseCreatorController.solutionCodes,
+        timeForTaskMin: exerciseCreatorController.timeForTaskMin,
+        timeForExecutionMs: exerciseCreatorController.timeForExecutionMs,
+        manualTests: parsedTests,
+        upperCaseInput: exerciseCreatorController.upperCaseInput,
+        lowerCaseInput: exerciseCreatorController.lowerCaseInput,
+        numberInput: exerciseCreatorController.numberInput,
+        specialCharacterInput: exerciseCreatorController.specialCharacterInput,
+        breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
+        spaceInupt: exerciseCreatorController.spaceInupt,
+        executionTime: exerciseCreatorController.executionTime
+      }
+      return exercsieCreatorValidationMesage;
+    }
+
 }
 
 export default MessageCreator;

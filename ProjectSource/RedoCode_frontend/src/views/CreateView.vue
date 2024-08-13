@@ -106,24 +106,6 @@
     console.log('On sumbit')
     console.error("Unimplented")
     codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(codeRunnerStore.exerciseCreatorController as ExerciseCreatorController)
-
-    // const request: ExercsieCreatorValidationMesage = JSON.parse(
-    //   JSON.stringify(codeRunnerStore.exerciseCreatorController)
-    // ) as ExercsieCreatorValidationMesage
-    // request.manualTests = Object.values(
-    //   codeRunnerStore.exerciseCreatorController.manualTestsSolutions
-    // )[0] as ExerciseTest[]
-    // request.manualTests.forEach((obj: ExerciseTest) => {
-    //   obj.expectedOutput = JSON.stringify(obj.expectedOutput.toString())
-    //   obj.input = JSON.stringify(obj.input.toString())
-    // })
-    // const request2: ExercsieCreatorValidationMesage = JSON.parse(
-    //   JSON.stringify(request)
-    // ) as ExercsieCreatorValidationMesage
-
-    // ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest(
-    //   request
-    // )
   }
 
   const exerciseLnageus = computed(() => {

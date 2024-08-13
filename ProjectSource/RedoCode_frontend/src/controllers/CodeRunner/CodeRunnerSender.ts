@@ -50,30 +50,7 @@ class CodeRunnerSender{
 
     console.log('runSignleExerciseCreationTest: ' + JSON.stringify(exerciseCreatorController))
 
-    const exercsieCreatorValidationMesage: ExercsieCreatorValidationMesage={
-      title: exerciseCreatorController.title,
-      description: exerciseCreatorController.description,
-      ram: exerciseCreatorController.ram,
-      inputType: exerciseCreatorController.inputType,
-      outputType: exerciseCreatorController.outputType,
-      amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-      autoTestminValue: exerciseCreatorController.autoTestminValue,
-      autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
-      lengthRange: exerciseCreatorController.lengthRange,
-      xArrayRange: exerciseCreatorController.xArrayRange,
-      yArrayRange: exerciseCreatorController.yArrayRange,
-      solutionCodes: exerciseCreatorController.solutionCodes,
-      timeForTaskMin: exerciseCreatorController.timeForTaskMin,
-      timeForExecutionMs: exerciseCreatorController.timeForExecutionMs,
-      manualTests: exerciseCreatorController.getSingleRowOfManualTests,
-      upperCaseInput: exerciseCreatorController.upperCaseInput,
-      lowerCaseInput: exerciseCreatorController.lowerCaseInput,
-      numberInput: exerciseCreatorController.numberInput,
-      specialCharacterInput: exerciseCreatorController.specialCharacterInput,
-      breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
-      spaceInupt: exerciseCreatorController.spaceInupt,
-      executionTime: exerciseCreatorController.executionTime
-    }
+    const exercsieCreatorValidationMesage: ExercsieCreatorValidationMesage= MessageCreator.createExercsieCreatorValidationMesage(exerciseCreatorController)
 
 
     this._stompApiSender.runExerciseCreatorValidationCode(exercsieCreatorValidationMesage)
