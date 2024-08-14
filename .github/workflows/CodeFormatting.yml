@@ -13,5 +13,6 @@ jobs:
       - uses: joutvhu/intellij-format@v1
         with:
           path: './ProjectSource/RedoCode_backend'
+          mask: '**/*.java
 
             
