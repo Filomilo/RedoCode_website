@@ -1,0 +1,21 @@
+name: code-formatting
+
+on:
+  push
+
+jobs:
+  format-java-code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Prettier Java Format
+      uses: tsar-boomba/prettier-java-format-action@main
+      with:
+        prettier-args: '--tab-width 4  --write'
+        files: '**/*.java'
+        commit: 'true'
+        github-username: 'github-actions'
+        commit-message: 'Format Java Code'
