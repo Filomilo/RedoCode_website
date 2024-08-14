@@ -11,11 +11,13 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Prettier Java Format
-      uses: tsar-boomba/prettier-java-format-action@main
+    - name: prettier-java-format-action
+      uses: tsar-boomba/prettier-java-action@v1.1.0
       with:
         prettier-args: '--tab-width 4  --write'
         files: '**/*.java'
         commit: 'true'
         github-username: 'github-actions'
         commit-message: 'Format Java Code'
+
+            
