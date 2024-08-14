@@ -18,7 +18,7 @@ jobs:
           target-folder: javadoc # url will be https://<username>.github.io/<repo>/javadoc, This can be left as nothing to generate javadocs in the root folder.
           project: maven # or gradle
           # subdirectories: moduleA moduleB #for subdirectories support, needs to be run with custom command
-          custom-command: javadoc -private -splitindex -d docs\JavaDocumentation\ -sourcepath ProjectSource\RedoCode_backend\ ProjectSource\RedoCode_backend\*.java
+          custom-command: javadoc -d javadoc -sourcepath ProjectSource/RedoCode_backend -subpackages .
 
 
           working-directory: ./ProjectSource/RedoCode_backend/
