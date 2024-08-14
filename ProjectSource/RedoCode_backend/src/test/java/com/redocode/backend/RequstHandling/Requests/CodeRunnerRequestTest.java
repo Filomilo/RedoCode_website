@@ -22,74 +22,74 @@ class CodeRunnerRequestTest {
 
     @Test
     void compareTo() throws InterruptedException {
-        CodeRunnerRequest thridInORder=CodeRunnerRequest
+        CodeRunnerRequest thridInORder = CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new User("2"))
 //                .requestTime(new Date())
                 .build();
         Thread.sleep(100);
-        CodeRunnerRequest secondInOrder=CodeRunnerRequest
+        CodeRunnerRequest secondInOrder = CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
-                .user(new User("2","nick",User.USER_TYPE.AUTHENTICATED))
+                .user(new User("2", "nick", User.USER_TYPE.AUTHENTICATED))
                 //.requestTime(new Date())
                 .build();
 
-            Thread.sleep(100);
+        Thread.sleep(100);
 
-        CodeRunnerRequest firstInOrder=CodeRunnerRequest
+        CodeRunnerRequest firstInOrder = CodeRunnerRequest
                 .builder()
-                        .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
-                                .user(new User("2","123", User.USER_TYPE.PREMIUM))
+                .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
+                .user(new User("2", "123", User.USER_TYPE.PREMIUM))
                 //.requestTime(new Date())
-                                        .build();
+                .build();
 
-        assertTrue(firstInOrder.compareTo(secondInOrder)<0);
-        assertTrue(firstInOrder.compareTo(thridInORder)<0);
+        assertTrue(firstInOrder.compareTo(secondInOrder) < 0);
+        assertTrue(firstInOrder.compareTo(thridInORder) < 0);
 
-        assertTrue(secondInOrder.compareTo(firstInOrder)>0);
-        log.info("order: "+ secondInOrder.compareTo(thridInORder));
-        assertTrue(secondInOrder.compareTo(thridInORder)<0);
+        assertTrue(secondInOrder.compareTo(firstInOrder) > 0);
+        log.info("order: " + secondInOrder.compareTo(thridInORder));
+        assertTrue(secondInOrder.compareTo(thridInORder) < 0);
 
-        assertTrue(thridInORder.compareTo(firstInOrder)>0);
-        assertTrue(thridInORder.compareTo(secondInOrder)>0);
+        assertTrue(thridInORder.compareTo(firstInOrder) > 0);
+        assertTrue(thridInORder.compareTo(secondInOrder) > 0);
 
     }
 
     @Test
     void priorityQueueTEtst() throws InterruptedException {
-        CodeRunnerRequest fourthInORder=CodeRunnerRequest
+        CodeRunnerRequest fourthInORder = CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(new User("2"))
 //                .requestTime(new Date())
                 .build();
         Thread.sleep(100);
-        CodeRunnerRequest thridInORder=CodeRunnerRequest
+        CodeRunnerRequest thridInORder = CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
-                .user(new User("2","nick", User.USER_TYPE.AUTHENTICATED))
+                .user(new User("2", "nick", User.USER_TYPE.AUTHENTICATED))
 //                .requestTime(new Date())
                 .build();
 
         Thread.sleep(100);
 
-        CodeRunnerRequest firstInOrder=CodeRunnerRequest
+        CodeRunnerRequest firstInOrder = CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
-                .user(new User("2","nick", User.USER_TYPE.PREMIUM))
+                .user(new User("2", "nick", User.USER_TYPE.PREMIUM))
 //                .requestTime(new Date())
                 .build();
 
         Thread.sleep(100);
-        CodeRunnerRequest secondInOrder=CodeRunnerRequest
+        CodeRunnerRequest secondInOrder = CodeRunnerRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
-                .user(new User("22","nick", User.USER_TYPE.PREMIUM))
+                .user(new User("22", "nick", User.USER_TYPE.PREMIUM))
 //                .requestTime(new Date())
                 .build();
-        PriorityBlockingQueue<CodeRunnerRequest> requestQueue=new  PriorityBlockingQueue<>();
+        PriorityBlockingQueue<CodeRunnerRequest> requestQueue = new PriorityBlockingQueue<>();
         printQueuinOrder(requestQueue);
         requestQueue.add(fourthInORder);
         printQueuinOrder(requestQueue);
@@ -102,64 +102,62 @@ class CodeRunnerRequestTest {
         printQueuinOrder(requestQueue);
 
 
-        assertEquals(firstInOrder,requestQueue.poll());
-        assertEquals(secondInOrder,requestQueue.poll());
-        assertEquals(thridInORder,requestQueue.poll());
-        assertEquals(fourthInORder,requestQueue.poll());
-
-
+        assertEquals(firstInOrder, requestQueue.poll());
+        assertEquals(secondInOrder, requestQueue.poll());
+        assertEquals(thridInORder, requestQueue.poll());
+        assertEquals(fourthInORder, requestQueue.poll());
 
 
     }
-    void printQueuinOrder( PriorityBlockingQueue<CodeRunnerRequest> requestQueue)
-    {
-        PriorityBlockingQueue<CodeRunnerRequest> queue=new PriorityBlockingQueue<>();
+
+    void printQueuinOrder(PriorityBlockingQueue<CodeRunnerRequest> requestQueue) {
+        PriorityBlockingQueue<CodeRunnerRequest> queue = new PriorityBlockingQueue<>();
         queue.addAll(requestQueue);
         log.info("queue: \n");
 
-        int i=0;
+        int i = 0;
 
-        while(queue.size()>0) {
-            log.info(i++ + ": "+ queue.poll());
+        while (queue.size() > 0) {
+            log.info(i++ + ": " + queue.poll());
         }
     }
 
 
-    List<User> unathenicatedUsers=new ArrayList<User>();
-    List<User> athenicatedUsers=new ArrayList<User>();
-    List<User> premiumUsers=new ArrayList<User>();
-    List<User> adminsUsers=new ArrayList<User>();
+    List<User> unathenicatedUsers = new ArrayList<User>();
+    List<User> athenicatedUsers = new ArrayList<User>();
+    List<User> premiumUsers = new ArrayList<User>();
+    List<User> adminsUsers = new ArrayList<User>();
 
-    List<User> allUsers=new ArrayList<User>();
-    Random random= new Random();
+    List<User> allUsers = new ArrayList<User>();
+    Random random = new Random();
 
     @BeforeEach
     void setUp() {
         log.info("code runner controllwe test");
-        int amountOfUnauth=random.nextInt(10,20);
-        int authenticated=random.nextInt(10,20);
-        int amountPremieum=random.nextInt(10,20);
-        int amountAdmin=random.nextInt(10,20);
+        int amountOfUnauth = random.nextInt(10, 20);
+        int authenticated = random.nextInt(10, 20);
+        int amountPremieum = random.nextInt(10, 20);
+        int amountAdmin = random.nextInt(10, 20);
         for (int i = 0; i < amountOfUnauth; i++) {
-            User user=new User(UUID.randomUUID().toString());
+            User user = new User(UUID.randomUUID().toString());
             unathenicatedUsers.add(user);
             allUsers.add(user);
         }
 
         for (int i = 0; i < authenticated; i++) {
-            User user=new User(UUID.randomUUID().toString(),"nikc", User.USER_TYPE.AUTHENTICATED);
+            User user = new User(UUID.randomUUID().toString(), "nikc", User.USER_TYPE.AUTHENTICATED);
             athenicatedUsers.add(user);
             allUsers.add(user);
         }
 
-        for (int i = 0; i < amountPremieum ; i++) {
-            User user=new User(UUID.randomUUID().toString(),"nick", User.USER_TYPE.PREMIUM);
+        for (int i = 0; i < amountPremieum; i++) {
+            User user = new User(UUID.randomUUID().toString(), "nick", User.USER_TYPE.PREMIUM);
             premiumUsers.add(user);
             allUsers.add(user);
         }
 
-        for (int i = 0; i < amountAdmin ; i++) {
-            User user=new User(UUID.randomUUID().toString(),"nick", User.USER_TYPE.ADMIN);
+        for (int i = 0; i < amountAdmin; i++) {
+            User user = new User(UUID.randomUUID().toString(), "nick", User.USER_TYPE.ADMIN);
             adminsUsers.add(user);
             allUsers.add(user);
         }
@@ -169,12 +167,12 @@ class CodeRunnerRequestTest {
 
     @Test
     void queTest() throws InterruptedException {
-        List<User> bufferFillUser= new ArrayList<>();
-        PriorityBlockingQueue<CodeRunnerRequest> requestQueue=new  PriorityBlockingQueue<>();
+        List<User> bufferFillUser = new ArrayList<>();
+        PriorityBlockingQueue<CodeRunnerRequest> requestQueue = new PriorityBlockingQueue<>();
 
-        for (User user: unathenicatedUsers
+        for (User user : unathenicatedUsers
         ) {
-            CodeRunnerRequest req=   CodeRunnerRequest.builder()
+            CodeRunnerRequest req = CodeRunnerRequest.builder()
                     .user(user)
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
 //                    .requestTime(new Date())
@@ -183,10 +181,10 @@ class CodeRunnerRequestTest {
             Thread.sleep(100);
         }
 
-        for (User user: adminsUsers
+        for (User user : adminsUsers
         ) {
 
-            CodeRunnerRequest req=   CodeRunnerRequest.builder()
+            CodeRunnerRequest req = CodeRunnerRequest.builder()
                     .user(user)
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
 //                    .requestTime(new Date())
@@ -196,9 +194,9 @@ class CodeRunnerRequestTest {
             Thread.sleep(1000);
         }
 
-        for (User user: athenicatedUsers
+        for (User user : athenicatedUsers
         ) {
-            CodeRunnerRequest req=   CodeRunnerRequest.builder()
+            CodeRunnerRequest req = CodeRunnerRequest.builder()
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                     .user(user)
 //                    .requestTime(new Date())
@@ -207,9 +205,9 @@ class CodeRunnerRequestTest {
             printQueuinOrder(requestQueue);
             Thread.sleep(100);
         }
-        for (User user: premiumUsers
+        for (User user : premiumUsers
         ) {
-            CodeRunnerRequest req=   CodeRunnerRequest.builder()
+            CodeRunnerRequest req = CodeRunnerRequest.builder()
                     .user(user)
                     .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
 //                    .requestTime(new Date())
@@ -220,47 +218,44 @@ class CodeRunnerRequestTest {
         }
 
 
-
-        int queueSizeAfterAding=requestQueue.size();
-
+        int queueSizeAfterAding = requestQueue.size();
 
 
-        for (User user: adminsUsers
+        for (User user : adminsUsers
         ) {
-            User retrivedUser=requestQueue.poll().getUser();
-            assertEquals(user,retrivedUser,"expected first added admin");
+            User retrivedUser = requestQueue.poll().getUser();
+            assertEquals(user, retrivedUser, "expected first added admin");
         }
 
-        for (User user: premiumUsers
+        for (User user : premiumUsers
         ) {
-            CodeRunnerRequest rq=requestQueue.poll();
+            CodeRunnerRequest rq = requestQueue.poll();
             assert rq != null;
-            User retrivedUser=rq.getUser();
-            assertEquals(user,retrivedUser,"expected first added premium: ");
+            User retrivedUser = rq.getUser();
+            assertEquals(user, retrivedUser, "expected first added premium: ");
         }
 
-        for (User user: athenicatedUsers
+        for (User user : athenicatedUsers
         ) {
-            User retrivedUser=requestQueue.poll().getUser();
-            assertEquals(user,retrivedUser,"expected first added authenticated user");
+            User retrivedUser = requestQueue.poll().getUser();
+            assertEquals(user, retrivedUser, "expected first added authenticated user");
         }
-        for (User user: unathenicatedUsers
+        for (User user : unathenicatedUsers
         ) {
-            User retrivedUser=requestQueue.poll().getUser();
-            assertEquals(user,retrivedUser,"expected first added una unauthenticated user");
+            User retrivedUser = requestQueue.poll().getUser();
+            assertEquals(user, retrivedUser, "expected first added una unauthenticated user");
         }
 
         assertEquals(
                 unathenicatedUsers.size()
                         + athenicatedUsers.size()
                         + premiumUsers.size()
-                        +adminsUsers.size(),
+                        + adminsUsers.size(),
                 queueSizeAfterAding
         );
 
 
-
-}
+    }
 
     @AfterEach
     void tearDown() {

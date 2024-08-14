@@ -15,11 +15,12 @@ import com.redocode.backend.database.RangeNumberType;
 import java.sql.SQLType;
 import java.sql.Time;
 import java.util.*;
+
 import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name ="excersizes")
+@Table(name = "excersizes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -120,27 +121,27 @@ public class Excersize {
     @Column(
             name = "break_character_input"
     )
-    Boolean breakCharacterInput=false;
+    Boolean breakCharacterInput = false;
     @Column(
             name = "lower_case_input"
     )
-        Boolean lowerCaseInput=false;
+    Boolean lowerCaseInput = false;
     @Column(
             name = "number_input"
     )
-    Boolean numberInput=false;
+    Boolean numberInput = false;
     @Column(
             name = "space_input"
     )
-    Boolean spaceInput=false;
+    Boolean spaceInput = false;
     @Column(
             name = "special_character_input"
     )
-    Boolean specialCharacterInput=false;
+    Boolean specialCharacterInput = false;
     @Column(
             name = "upper_case_input"
     )
-    Boolean upperCaseInput=false;
+    Boolean upperCaseInput = false;
 
     @Column(
             name = "max_execution_time_ms"
@@ -149,24 +150,24 @@ public class Excersize {
     Long maxExecutionTimeMS;
 
     public Set<ProgrammingLanguage> getLanguages() {
-        HashSet<ProgrammingLanguage> languages= new HashSet<>();
-        log.info(" progmriang solutions: "+ Arrays.toString(this.solutions.toArray()));
-        for (SolutionPrograms solutionPrograms: this.getSolutions()
-             ) {
+        HashSet<ProgrammingLanguage> languages = new HashSet<>();
+        log.info(" progmriang solutions: " + Arrays.toString(this.solutions.toArray()));
+        for (SolutionPrograms solutionPrograms : this.getSolutions()
+        ) {
             languages.add(solutionPrograms.getLanguage());
         }
         return languages;
     }
 
     public Range getLengthRange() {
-        return new Range(valueLengthRangeMin,valueLengthRangeMax);
+        return new Range(valueLengthRangeMin, valueLengthRangeMax);
     }
 
     public Range getXArrayRange() {
-        return new Range(arrayXLengthRangeMin,arrayXLengthRangeMax);
+        return new Range(arrayXLengthRangeMin, arrayXLengthRangeMax);
     }
 
     public Range getYArrayRange() {
-        return new Range(arrayXLengthRangeMin,arrayYLengthRangeMax);
+        return new Range(arrayXLengthRangeMin, arrayYLengthRangeMax);
     }
 }

@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class RawCodeRunHandler extends  BaseRequestHandler{
+public class RawCodeRunHandler extends BaseRequestHandler {
 
 
-    protected static final CodeRunnersController codeRunnersController= (CodeRunnersController) SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
+    protected static final CodeRunnersController codeRunnersController = (CodeRunnersController) SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
 
     @Override
@@ -32,15 +32,15 @@ public class RawCodeRunHandler extends  BaseRequestHandler{
         log.info("RawCodeRunHadnler");
         RawCodeRunRequest requestRawCodeRunRequest = (RawCodeRunRequest) request;
 
-        CodeRunner codeRunner=codeRunnersController.getUserCodeRunner(request.getUser());
-        ProgramResult results=
-        codeRunner.runProgram(
-                RawProgram.builder()
-                        .code(requestRawCodeRunRequest.getCode())
-                        .build()
-        );
+        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
+        ProgramResult results =
+                codeRunner.runProgram(
+                        RawProgram.builder()
+                                .code(requestRawCodeRunRequest.getCode())
+                                .build()
+                );
 
-        request= PorgramReusltsSendRequest.builder()
+        request = PorgramReusltsSendRequest.builder()
                 .programResults(List.of(new ProgramResult[]{results}))
                 .user(requestRawCodeRunRequest.getUser())
                 .build();

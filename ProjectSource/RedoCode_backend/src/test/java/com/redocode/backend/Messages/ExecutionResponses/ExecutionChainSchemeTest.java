@@ -10,21 +10,20 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @Slf4j
 //@Disabled("Islotating specific test for debugging")
-class ExecutionChainSchemeTest  {
-@Test
-
-    void ExecutionChainSchemeToJSonTest()
-    {
+class ExecutionChainSchemeTest {
+    @Test
+    void ExecutionChainSchemeToJSonTest() {
         ExecutionChainScheme executionChainScheme = ExecutionChainScheme.builder()
                 .messageType(ExecutionResponseBase.EXECUTION_RESPONSE_TYPE.CHAIN_SCHEME)
                 .levels(new ArrayList<>())
 
                 .build();
         ObjectMapper objectMapper = new ObjectMapper();
-        assertDoesNotThrow(()->{
-            String json=objectMapper.writeValueAsString(executionChainScheme);
+        assertDoesNotThrow(() -> {
+            String json = objectMapper.writeValueAsString(executionChainScheme);
             log.info("Execution chain scheme to json: {}", json);
         });
     }

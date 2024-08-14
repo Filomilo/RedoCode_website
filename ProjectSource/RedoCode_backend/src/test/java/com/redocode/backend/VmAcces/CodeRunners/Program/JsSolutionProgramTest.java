@@ -26,7 +26,7 @@ public class JsSolutionProgramTest {
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void runProgramJsReturnInt(Integer val) {
         log.info("Code runner cpp return");
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(val))
@@ -37,22 +37,22 @@ public class JsSolutionProgramTest {
                         "}")
                 .build();
 
-        log.info("Code to run: \n\n\n"+program.getProgramCode()+"\n\n\n" );
+        log.info("Code to run: \n\n\n" + program.getProgramCode() + "\n\n\n");
 
 
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
-        assertEquals(val,result.getVariables().getValue());
+        log.info("\n\ncode result: \n" + result);
+        assertEquals(val, result.getVariables().getValue());
     }
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void runProgramJsReturnFloat(Float val) {
         log.info("Code runner cpp return");
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(val))
@@ -62,19 +62,19 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new CppCodeRunner(128);
+        CodeRunner codeRunner = new CppCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
-        assertEquals(val,result.getVariables().getValue());
+        log.info("\n\ncode result: \n" + result);
+        assertEquals(val, result.getVariables().getValue());
     }
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void runProgramJsReturnString(String val) {
         log.info("Code runner cpp return");
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleString(val))
@@ -84,21 +84,21 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
-        assertEquals(val,result.getVariables().getValue());
+        log.info("\n\ncode result: \n" + result);
+        assertEquals(val, result.getVariables().getValue());
     }
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void runProgramJSReturnStringArray(String[] val) {
         log.info("Code runner cpp return");
-        ArrayOfStrings resultTemplate=new ArrayOfStrings();
+        ArrayOfStrings resultTemplate = new ArrayOfStrings();
         resultTemplate.setW(val.length);
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(val))
@@ -108,11 +108,11 @@ public class JsSolutionProgramTest {
                         "return val;" +
                         "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
+        log.info("\n\ncode result: \n" + result);
         assertArrayEquals((Object[]) val, (Object[]) result.getVariables().getValue());
     }
 
@@ -120,9 +120,9 @@ public class JsSolutionProgramTest {
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void runProgramJsReturnIntArray(Integer[] val) {
         log.info("Code runner cpp return");
-        ArrayOfIntegers resultTemplate=new ArrayOfIntegers();
+        ArrayOfIntegers resultTemplate = new ArrayOfIntegers();
         resultTemplate.setW(val.length);
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(val))
@@ -133,21 +133,22 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
+        log.info("\n\ncode result: \n" + result);
         assertArrayEquals((Object[]) val, (Object[]) result.getVariables().getValue());
     }
-//
+
+    //
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void runProgramJsReturnIntArray(Float[] val) {
         log.info("Code runner cpp return");
-        ArrayOfFloats resultTemplate=new ArrayOfFloats();
+        ArrayOfFloats resultTemplate = new ArrayOfFloats();
         resultTemplate.setW(val.length);
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(val))
@@ -158,24 +159,25 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
+        log.info("\n\ncode result: \n" + result);
         for (int i = 0; i < val.length; i++) {
-            assertTrue(Math.abs(val[i]-((Float[])result.getVariables().getValue())[i])<0.001);
+            assertTrue(Math.abs(val[i] - ((Float[]) result.getVariables().getValue())[i]) < 0.001);
         }
     }
-//
+
+    //
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     void runProgramJsReturnStringDoubleArray(String[][] val) {
         log.info("Code runner cpp return");
-        DoubleArrayOfStrings resultTemplate=new DoubleArrayOfStrings();
+        DoubleArrayOfStrings resultTemplate = new DoubleArrayOfStrings();
         resultTemplate.setW(val[0].length);
         resultTemplate.setH(val.length);
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(val))
@@ -183,30 +185,31 @@ public class JsSolutionProgramTest {
                 .setTimeout(500)
                 .setSolutionCode(
                         "function solution(val){" +
-                        "return val;" +
-                        "}")
+                                "return val;" +
+                                "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
+        log.info("\n\ncode result: \n" + result);
         for (int h = 0; h < val.length; h++) {
             for (int w = 0; w < val[0].length; w++) {
-                assertEquals(val[h][w],((String[][])result.getVariables().getValue())[h][w]);
+                assertEquals(val[h][w], ((String[][]) result.getVariables().getValue())[h][w]);
             }
         }
     }
-//
+
+    //
 //
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void runProgramJsReturnIntDoubleArray(Integer[][] val) {
         log.info("Code runner cpp return");
-        DoubleArrayOfIntegers resultTemplate=new DoubleArrayOfIntegers();
+        DoubleArrayOfIntegers resultTemplate = new DoubleArrayOfIntegers();
         resultTemplate.setW(val[0].length);
         resultTemplate.setH(val.length);
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(val))
@@ -217,30 +220,31 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        log.info("getProgramCode:\n\n\n"+ program.getProgramCode());
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        log.info("getProgramCode:\n\n\n" + program.getProgramCode());
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
+        log.info("\n\ncode result: \n" + result);
         for (int h = 0; h < val.length; h++) {
             for (int w = 0; w < val[0].length; w++) {
 
-                assertEquals(val[h][w],((Integer[][])result.getVariables().getValue())[h][w]);
+                assertEquals(val[h][w], ((Integer[][]) result.getVariables().getValue())[h][w]);
             }
         }
     }
-//
+
+    //
 //
 //
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void runProgramJsReturnFloatDoubleArray(Float[][] val) {
         log.info("Code runner cpp return");
-        DoubleArrayOfFloats resultTemplate=new DoubleArrayOfFloats();
+        DoubleArrayOfFloats resultTemplate = new DoubleArrayOfFloats();
         resultTemplate.setW(val[0].length);
         resultTemplate.setH(val.length);
-        Program program= ProgramFactory
+        Program program = ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(val))
@@ -251,14 +255,14 @@ public class JsSolutionProgramTest {
                                 "return val;" +
                                 "}")
                 .build();
-        CodeRunner codeRunner= new JsCodeRunner(128);
+        CodeRunner codeRunner = new JsCodeRunner(128);
         codeRunner.start();
-        ProgramResult result= codeRunner.runProgram(program);
+        ProgramResult result = codeRunner.runProgram(program);
         codeRunner.destroy();
-        log.info("\n\ncode result: \n"+ result);
+        log.info("\n\ncode result: \n" + result);
         for (int h = 0; h < val.length; h++) {
             for (int w = 0; w < val[0].length; w++) {
-                assertTrue(Math.abs(val[h][w]-((Float[][])result.getVariables().getValue())[h][w])<0.001);
+                assertTrue(Math.abs(val[h][w] - ((Float[][]) result.getVariables().getValue())[h][w]) < 0.001);
             }
         }
     }

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name ="users")
+@Table(name = "users")
 @Data
 @Slf4j
 @NoArgsConstructor
@@ -69,16 +69,14 @@ public class User implements Comparable, UserDetails {
     private String password;
 
 
-
-
     public User(String session, String nick, USER_TYPE userType) {
         this.sessionID = session;
-        this.nickname =nick;
-        this.type=userType;
+        this.nickname = nick;
+        this.type = userType;
     }
 
     public User(String uuid) {
-        this(uuid,null,USER_TYPE.UNAUTHENTICATED);
+        this(uuid, null, USER_TYPE.UNAUTHENTICATED);
     }
 
     @Override
@@ -129,48 +127,44 @@ public class User implements Comparable, UserDetails {
     }
 
 
-
 //    @Min(0)
 //    @Max(2)
 
 
-
-        @Override
+    @Override
     public boolean equals(Object o) {
-            log.info("copmaring "+this.toString()+"with "+ o.toString());
-        if(!(o instanceof User)) {
-            log.info("wrong instance: "+ o.getClass());
+        log.info("copmaring " + this.toString() + "with " + o.toString());
+        if (!(o instanceof User)) {
+            log.info("wrong instance: " + o.getClass());
             return false;
         }
-        User user=(User) o;
-        if(this.type==USER_TYPE.UNAUTHENTICATED) {
+        User user = (User) o;
+        if (this.type == USER_TYPE.UNAUTHENTICATED) {
             return Objects.equals(this.sessionID, user.sessionID);
         }
-        return this.id==user.id;
+        return this.id == user.id;
     }
-
 
 
     @Override
     public int hashCode() {
-            return Objects.hashCode(this.sessionID);
+        return Objects.hashCode(this.sessionID);
 //        return this.type==USER_TYPE.UNAUTHENTICATED?Objects.hashCode(this.sessionID):Objects.hashCode(this.id);
     }
 
     @Override
     public int compareTo(@org.jetbrains.annotations.NotNull Object o) {
 
-        if(!(o instanceof User))
-        {
-            throw  new ClassCastException("This class can only be compared with other classes derived from User class, not with "+ o.getClass());
+        if (!(o instanceof User)) {
+            throw new ClassCastException("This class can only be compared with other classes derived from User class, not with " + o.getClass());
         }
-        User user= (User) o;
-        int res=this.getUserType().compareTo(user.getUserType());
+        User user = (User) o;
+        int res = this.getUserType().compareTo(user.getUserType());
         return res;
     }
 
     public USER_TYPE getUserType() {
-            return type;
+        return type;
     }
 
 

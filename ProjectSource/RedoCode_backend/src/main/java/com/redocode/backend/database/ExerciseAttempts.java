@@ -35,5 +35,4 @@ public class ExerciseAttempts {
     private Boolean succes;
 
 
-
 }

@@ -30,20 +30,17 @@ public class CodeRunnerEndpoints {
     UsersRepository usersRepository;
 
     @PostMapping("/state")
-    public CodeRunner getCodeRUnnerState(String token)
-    {
-        log.info("token: "+ token+" tires getting code runner state");
-        if(token==null || token.isEmpty())
-        {
+    public CodeRunner getCodeRUnnerState(String token) {
+        log.info("token: " + token + " tires getting code runner state");
+        if (token == null || token.isEmpty()) {
             return null;
         }
-        String email= jwtService.extractUsername(token);
-        User user=usersRepository.findByEmail(email);
-        if(user==null)
-        {
-            user=new User(token);
+        String email = jwtService.extractUsername(token);
+        User user = usersRepository.findByEmail(email);
+        if (user == null) {
+            user = new User(token);
         }
-        CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(user);
+        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
         return codeRunner;
     }
 

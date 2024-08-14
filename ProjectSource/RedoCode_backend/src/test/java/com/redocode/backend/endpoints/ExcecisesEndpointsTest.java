@@ -20,12 +20,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration
 @Slf4j
 //@Disabled("Islotating specific test for debugging")
-class ExcecisesEndpointsTest  {
+class ExcecisesEndpointsTest {
 
 
     @LocalServerPort
@@ -46,10 +47,10 @@ class ExcecisesEndpointsTest  {
 
     @Test
     void getExceciseData() {
-            assertNotNull(restTemplate);
-        List<ExcersizeListEntry> excerciseDataMessage= restTemplate.getForObject ("http://localhost:" + port + "/public/exercises/list" , List.class);
+        assertNotNull(restTemplate);
+        List<ExcersizeListEntry> excerciseDataMessage = restTemplate.getForObject("http://localhost:" + port + "/public/exercises/list", List.class);
 
-            assertNotNull(excerciseDataMessage);
+        assertNotNull(excerciseDataMessage);
 
 
     }

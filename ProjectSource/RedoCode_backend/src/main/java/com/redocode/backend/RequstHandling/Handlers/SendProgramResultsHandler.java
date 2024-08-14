@@ -10,8 +10,8 @@ import com.redocode.backend.VmAcces.CodeRunnersController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class SendProgramResultsHandler extends BaseRequestHandler{
-    protected static final MessageSender messageSender= (MessageSender) SpringContextUtil.getApplicationContext().getBean(MessageSender.class);
+public class SendProgramResultsHandler extends BaseRequestHandler {
+    protected static final MessageSender messageSender = (MessageSender) SpringContextUtil.getApplicationContext().getBean(MessageSender.class);
 
     @Override
     String getChainNodeName() {
@@ -20,14 +20,14 @@ public class SendProgramResultsHandler extends BaseRequestHandler{
 
     @Override
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
-        PorgramReusltsSendRequest porgramReusltsSendRequest= (PorgramReusltsSendRequest)(request);
-        log.info("SendProgramResultsHandler: "+porgramReusltsSendRequest.toString());
+        PorgramReusltsSendRequest porgramReusltsSendRequest = (PorgramReusltsSendRequest) (request);
+        log.info("SendProgramResultsHandler: " + porgramReusltsSendRequest.toString());
 
-        ProgramResultsMessage programResultsMessage= ProgramResultsMessage.builder()
+        ProgramResultsMessage programResultsMessage = ProgramResultsMessage.builder()
                 .results(porgramReusltsSendRequest.getProgramResults())
                 .build();
 
-        messageSender.sendMessage(porgramReusltsSendRequest.getUser(),"/public/topic/codeRunnerResults",programResultsMessage);
+        messageSender.sendMessage(porgramReusltsSendRequest.getUser(), "/public/topic/codeRunnerResults", programResultsMessage);
 
         return request;
     }

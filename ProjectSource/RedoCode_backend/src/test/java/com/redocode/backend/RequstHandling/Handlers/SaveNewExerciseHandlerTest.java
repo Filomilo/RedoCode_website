@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @ContextConfiguration
 @Slf4j
@@ -31,18 +32,17 @@ class SaveNewExerciseHandlerTest {
     UsersRepository usersRepository;
     SaveNewExerciseHandler saveNewExerciseHandler;
     User user;
+
     @BeforeEach
-    void prepareHadnler()
-    {
-        saveNewExerciseHandler=new SaveNewExerciseHandler();
+    void prepareHadnler() {
+        saveNewExerciseHandler = new SaveNewExerciseHandler();
     }
 
 
     @BeforeEach
-    void setupUser()
-    {
-        user=usersRepository.findByEmail("email@emial.com");
-        if(user==null) {
+    void setupUser() {
+        user = usersRepository.findByEmail("email@emial.com");
+        if (user == null) {
             user = User.builder()
                     .type(User.USER_TYPE.PREMIUM)
                     .nickname("nick")
@@ -55,32 +55,27 @@ class SaveNewExerciseHandlerTest {
     }
 
 
-
-
-
     @Test
-    void testCoreectExerciseCreation()
-    {
-        Variables.VARIABLES_TYPES inputType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-        Variables.VARIABLES_TYPES ouptutType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-        int ram=1024;
-        String title="Exercise";
-        String decritpion="Descritpion";
-        int amountOfAutoTests=8;
-        boolean breakCharacterInput=true;
-        Range lengthRange=new Range(0F,100F);
-        boolean lowerCaseInput=true;
-        boolean numberInput=true;
-        boolean spaceInput=true;
-        boolean specialCharacterInput=true;
-        boolean upperCaseInput=true;
-        Range xArrayRange= new Range(1F,20F);
-        Range yArrayRange=new Range(1F,20F);
-        long timeForTask=60;
-        Long timeForExecution=1000L;
-        HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
-        {{
-            put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
+    void testCoreectExerciseCreation() {
+        Variables.VARIABLES_TYPES inputType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+        Variables.VARIABLES_TYPES ouptutType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+        int ram = 1024;
+        String title = "Exercise";
+        String decritpion = "Descritpion";
+        int amountOfAutoTests = 8;
+        boolean breakCharacterInput = true;
+        Range lengthRange = new Range(0F, 100F);
+        boolean lowerCaseInput = true;
+        boolean numberInput = true;
+        boolean spaceInput = true;
+        boolean specialCharacterInput = true;
+        boolean upperCaseInput = true;
+        Range xArrayRange = new Range(1F, 20F);
+        Range yArrayRange = new Range(1F, 20F);
+        long timeForTask = 60;
+        Long timeForExecution = 1000L;
+        HashMap<CODE_RUNNER_TYPE, String> solutionCodes = new HashMap<>() {{
+            put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +
                     "#include <vector>\n" +
                     "#include <string>\n" +
                     "\n" +
@@ -88,9 +83,9 @@ class SaveNewExerciseHandlerTest {
                     "{\n" +
                     "    return in;\n" +
                     "}");
-            put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return array;}");
+            put(CODE_RUNNER_TYPE.JS_RUNNER, "function solution(array){return array;}");
         }};
-        ExerciseTests[] tests= new ExerciseTests[]{
+        ExerciseTests[] tests = new ExerciseTests[]{
                 ExerciseTests.builder()
                         .expectedOutput("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
                         .input("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
@@ -105,7 +100,7 @@ class SaveNewExerciseHandlerTest {
         };
 
 
-        ExerciseCreationRequest exerciseCreationRequest= ExerciseCreationRequest.builder()
+        ExerciseCreationRequest exerciseCreationRequest = ExerciseCreationRequest.builder()
                 .user(user)
                 .outputType(ouptutType)
                 .inputType(inputType)
@@ -129,27 +124,26 @@ class SaveNewExerciseHandlerTest {
                 .build();
 
         assertDoesNotThrow(
-                ()->{
+                () -> {
                     assertTrue(saveNewExerciseHandler.next(exerciseCreationRequest));
                 }
         );
 
 
-        Excersize lastAdded=exerciseRepository.findAll().get(exerciseRepository.findAll().size()-1);
-        assertEquals(title,lastAdded.getExcersizeName());
-        assertEquals(inputType,lastAdded.getInputType());
-        assertEquals(ouptutType,lastAdded.getOutputType());
-        assertEquals(ram,lastAdded.getRam_mb());
-        assertEquals(decritpion,lastAdded.getDescription());
-        assertEquals(user.getId(),lastAdded.getAuthor().getId());
-        assertEquals(timeForExecution,lastAdded.getMaxExecutionTimeMS());
+        Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
+        assertEquals(title, lastAdded.getExcersizeName());
+        assertEquals(inputType, lastAdded.getInputType());
+        assertEquals(ouptutType, lastAdded.getOutputType());
+        assertEquals(ram, lastAdded.getRam_mb());
+        assertEquals(decritpion, lastAdded.getDescription());
+        assertEquals(user.getId(), lastAdded.getAuthor().getId());
+        assertEquals(timeForExecution, lastAdded.getMaxExecutionTimeMS());
 
         ;
-        assertEquals(tests.length,lastAdded.getExerciseTests().size());
-        for (int i = 0; i <  tests.length; i++) {
-            assertEquals(tests[i],lastAdded.getExerciseTests().get(i));
+        assertEquals(tests.length, lastAdded.getExerciseTests().size());
+        for (int i = 0; i < tests.length; i++) {
+            assertEquals(tests[i], lastAdded.getExerciseTests().get(i));
         }
-
 
 
 //        try {
