@@ -9,7 +9,7 @@ jobs:
       contents: write  # if you have a protection rule on your repository, you'll need to give write permission to the workflow.
     
     steps:
-      - name: Deploy JavaDoc 🚀
+      - name: generate JavaDox
         uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -18,5 +18,5 @@ jobs:
           target-folder: javadoc # url will be https://<username>.github.io/<repo>/javadoc, This can be left as nothing to generate javadocs in the root folder.
           project: maven # or gradle
           # subdirectories: moduleA moduleB #for subdirectories support, needs to be run with custom command
-          custom-command: javadoc.exe -private -splitindex -d docs\JavaDocumentation\ -sourcepath ProjectSource\RedoCode_backend
+          custom-command: javadoc -private -splitindex -d docs\JavaDocumentation\ -sourcepath ProjectSource\RedoCode_backend
           working-directory: ./ProjectSource/RedoCode_backend/
