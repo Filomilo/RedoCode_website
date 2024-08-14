@@ -101,7 +101,7 @@ class VmConnectorDockerTest {
 
             String checkpharase="Hello, execute";
 
-            String res= vmConnectorDocker.executeCommandInVm(id,100,"echo",checkpharase).getOutput();
+            String res= vmConnectorDocker.executeCommandInVm(id,1000,"echo",checkpharase).getOutput();
 
 
             vmConnectorDocker.destroyVm(id);
