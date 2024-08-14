@@ -17,6 +17,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
+
 public class ProgramResultsMessage {
     List<ProgramResult> results;
 }
