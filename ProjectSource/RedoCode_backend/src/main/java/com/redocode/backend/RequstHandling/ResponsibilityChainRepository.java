@@ -13,18 +13,17 @@ import java.util.function.BiFunction;
 @Slf4j
 public class ResponsibilityChainRepository {
 
-    private static final MessageSender messageSender= SpringContextUtil.getApplicationContext().getBean(MessageSender.class);
+    private static final MessageSender messageSender = SpringContextUtil.getApplicationContext().getBean(MessageSender.class);
 
-    public static BiFunction<User, ExecutionResponseBase, Void> sendExecutionMessage=(User user, ExecutionResponseBase responseBase)->
+    public static BiFunction<User, ExecutionResponseBase, Void> sendExecutionMessage = (User user, ExecutionResponseBase responseBase) ->
     {
-        log.info("sending chian repsonse: "+responseBase+" to "+user);
-        messageSender.sendMessage(user,"/public/topic/ExecutionResponses",responseBase);
+        log.info("sending chian repsonse: " + responseBase + " to " + user);
+        messageSender.sendMessage(user, "/public/topic/ExecutionResponses", responseBase);
         return null;
     };
 
 
-
-    public static final BaseRequestHandler testSingleCode=
+    public static final BaseRequestHandler testSingleCode =
             new ResposibilityChainBuilder()
                     .setMessagehandler(sendExecutionMessage)
                     .setSteps()
@@ -32,18 +31,18 @@ public class ResponsibilityChainRepository {
                     .next(new CodeTestHandler())
                     .build();
 
-    public  static final BaseRequestHandler createNewExercise=
-        new ResposibilityChainBuilder()
-                .setMessagehandler(sendExecutionMessage)
-                .setSteps()
-                .next(new AuthenticatedUserValidationHandler())
-                .next(new ExerciseInfoValidation())
-                .next(new AutoTestGeneratorHandler())
-                .next(new MergeTestHandler())
-                .next( new MultipleCodeTestHandler())
-                .next(new SaveNewExerciseHandler())
-                .build();
-    public  static final BaseRequestHandler runCodeWithSelfTest=
+    public static final BaseRequestHandler createNewExercise =
+            new ResposibilityChainBuilder()
+                    .setMessagehandler(sendExecutionMessage)
+                    .setSteps()
+                    .next(new AuthenticatedUserValidationHandler())
+                    .next(new ExerciseInfoValidation())
+                    .next(new AutoTestGeneratorHandler())
+                    .next(new MergeTestHandler())
+                    .next(new MultipleCodeTestHandler())
+                    .next(new SaveNewExerciseHandler())
+                    .build();
+    public static final BaseRequestHandler runCodeWithSelfTest =
             new ResposibilityChainBuilder()
                     .setMessagehandler(sendExecutionMessage)
                     .setSteps()
@@ -51,7 +50,7 @@ public class ResponsibilityChainRepository {
                     .next(new CodeTestHandler())
                     .build();
 
-    public  static final BaseRequestHandler runExercisesTests=
+    public static final BaseRequestHandler runExercisesTests =
             new ResposibilityChainBuilder()
                     .setSteps()
                     .next(new CodeRunnerAccesValidationHandler())
@@ -62,7 +61,7 @@ public class ResponsibilityChainRepository {
                     .build();
 
 
-    public  static final BaseRequestHandler runRawCode=
+    public static final BaseRequestHandler runRawCode =
             new ResposibilityChainBuilder()
                     .setSteps()
                     .next(new CodeRunnerAccesValidationHandler())

@@ -7,10 +7,10 @@ import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.database.*;
 
-public class SaveNewExerciseHandler extends MessageRequestHandler{
+public class SaveNewExerciseHandler extends MessageRequestHandler {
 
-    static final ExerciseRepository  exerciseRepository= SpringContextUtil.getApplicationContext().getBean(ExerciseRepository.class);
-    static final UsersRepository usersRepository= SpringContextUtil.getApplicationContext().getBean(UsersRepository.class);
+    static final ExerciseRepository exerciseRepository = SpringContextUtil.getApplicationContext().getBean(ExerciseRepository.class);
+    static final UsersRepository usersRepository = SpringContextUtil.getApplicationContext().getBean(UsersRepository.class);
 
 
     @Override
@@ -20,17 +20,17 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
 
     @Override
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
-        this.nodeUpdate(request,"saving to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+        this.nodeUpdate(request, "saving to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
-        ExerciseCreationRequest exerciseCreationRequest= (ExerciseCreationRequest) request;
+        ExerciseCreationRequest exerciseCreationRequest = (ExerciseCreationRequest) request;
 
-        Excersize excersize= Excersize.builder()
+        Excersize excersize = Excersize.builder()
                 .excersizeName(exerciseCreationRequest.getTitle())
                 .ram_mb(exerciseCreationRequest.getRam())
                 .outputType(exerciseCreationRequest.getOutputType())
                 .inputType(exerciseCreationRequest.getInputType())
                 .amountOfAutoTests(exerciseCreationRequest.getAmountOfAutoTests())
-                .author( exerciseCreationRequest.getUser())
+                .author(exerciseCreationRequest.getUser())
                 .description(exerciseCreationRequest.getDescription())
                 .exerciseTests(exerciseCreationRequest.getTestsToRun())
                 .breakCharacterInput(exerciseCreationRequest.isBreakCharacterInput())
@@ -44,18 +44,16 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
                 .timeForTaskMin(exerciseCreationRequest.getTimeForTaskMin())
                 .maxExecutionTimeMS(exerciseCreationRequest.getTimeForExecution())
                 .build();
-        if(exerciseCreationRequest.getXArrayRange()!=null)
-        {
+        if (exerciseCreationRequest.getXArrayRange() != null) {
             excersize.setArrayXLengthRangeMax(exerciseCreationRequest.getXArrayRange().getMax().intValue());
             excersize.setArrayXLengthRangeMin(exerciseCreationRequest.getXArrayRange().getMin().intValue());
         }
-        if(exerciseCreationRequest.getYArrayRange()!=null)
-        {
+        if (exerciseCreationRequest.getYArrayRange() != null) {
             excersize.setArrayYLengthRangeMax(exerciseCreationRequest.getYArrayRange().getMax().intValue());
             excersize.setArrayYLengthRangeMin(exerciseCreationRequest.getYArrayRange().getMin().intValue());
         }
 
-        for (ExerciseTests test: exerciseCreationRequest.getTestsToRun()
+        for (ExerciseTests test : exerciseCreationRequest.getTestsToRun()
         ) {
             test.setExcersize(excersize);
         }
@@ -65,8 +63,8 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
         // should be checkd in user autheinteacted handler
         // it is tepory soultuion to test chain
 
-        User user=exerciseCreationRequest.getUser();
-        if(user.getNickname()==null) {
+        User user = exerciseCreationRequest.getUser();
+        if (user.getNickname() == null) {
             user.setNickname("tmp");
             user.setEmail("email@emial.com");
             user.setPassword("passs");
@@ -74,7 +72,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler{
 
         }
         exerciseRepository.save(excersize);
-        this.nodeUpdate(request,"saved to database", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+        this.nodeUpdate(request, "saved to database", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
         return request;
     }

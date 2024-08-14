@@ -30,29 +30,29 @@ class ExerciseTestsRepositoryTest {
     void saveExerciseTest() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        SingleInteger inputVal= new SingleInteger(3);
-        ArrayOfIntegers expectedOutput=new ArrayOfIntegers (new Integer[]{0,1,1});
-        String inputString=  objectMapper.writeValueAsString(inputVal);
-        String outputString=  objectMapper.writeValueAsString(expectedOutput);
+        SingleInteger inputVal = new SingleInteger(3);
+        ArrayOfIntegers expectedOutput = new ArrayOfIntegers(new Integer[]{0, 1, 1});
+        String inputString = objectMapper.writeValueAsString(inputVal);
+        String outputString = objectMapper.writeValueAsString(expectedOutput);
         log.info("exerccise Test");
-        ExerciseTests test= ExerciseTests.builder()
+        ExerciseTests test = ExerciseTests.builder()
                 .input(inputString)
                 .expectedOutput(outputString)
-        .build();
+                .build();
         exerciseTestsRepository.save(test);
         log.info("exerccise Test");
-        log.info(inputVal+" as json: "+ inputString);
-        log.info(expectedOutput+" as json: "+ outputString);
+        log.info(inputVal + " as json: " + inputString);
+        log.info(expectedOutput + " as json: " + outputString);
 
-        List<ExerciseTests> exerciseTestsList= exerciseTestsRepository.findAll();
-        ExerciseTests lastAdded= exerciseTestsList.get(exerciseTestsList.size()-1);
+        List<ExerciseTests> exerciseTestsList = exerciseTestsRepository.findAll();
+        ExerciseTests lastAdded = exerciseTestsList.get(exerciseTestsList.size() - 1);
 
-        SingleInteger inputFromTest= (SingleInteger) RedoCodeObjectMapper.parseVaraibles(lastAdded.getInput(), Variables.VARIABLES_TYPES.SINGLE_INTEGER);
-        ArrayOfIntegers ouptutFromTest= (ArrayOfIntegers) RedoCodeObjectMapper.parseVaraibles(lastAdded.getExpectedOutput(), Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS);
+        SingleInteger inputFromTest = (SingleInteger) RedoCodeObjectMapper.parseVaraibles(lastAdded.getInput(), Variables.VARIABLES_TYPES.SINGLE_INTEGER);
+        ArrayOfIntegers ouptutFromTest = (ArrayOfIntegers) RedoCodeObjectMapper.parseVaraibles(lastAdded.getExpectedOutput(), Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS);
 
-        assertEquals(test,lastAdded);
-        assertEquals(inputVal,inputFromTest);
-        assertEquals(expectedOutput,ouptutFromTest);
+        assertEquals(test, lastAdded);
+        assertEquals(inputVal, inputFromTest);
+        assertEquals(expectedOutput, ouptutFromTest);
     }
     // TODO: do this something for more variables types
 

@@ -19,21 +19,18 @@ public class MessageSender {
 
     @Autowired
     private final SimpMessagingTemplate template;
-    public void sendMessage(String id, String dir, Object payload)
-    {
+
+    public void sendMessage(String id, String dir, Object payload) {
         try {
             log.info("sending to user: " + id + " in direction: " + dir + " with data: " + payload);
             template.convertAndSendToUser(id, dir, payload);
-        }
-        catch (Exception ex)
-        {
-            log.warn("failed to send message to "+ id + " exepction: "+ ex.getMessage());
+        } catch (Exception ex) {
+            log.warn("failed to send message to " + id + " exepction: " + ex.getMessage());
         }
     }
 
-    public void sendMessage(User user, String dir, Object payload)
-    {
-        sendMessage(user.getSessionID(),dir,payload);
+    public void sendMessage(User user, String dir, Object payload) {
+        sendMessage(user.getSessionID(), dir, payload);
     }
 
 

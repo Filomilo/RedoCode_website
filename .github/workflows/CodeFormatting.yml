@@ -1,0 +1,30 @@
+name: code-formatting
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  reformat:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: joutvhu/intellij-format@v1
+        with:
+          path: './ProjectSource/RedoCode_backend'
+          mask: '**/*.java'
+
+  prettier:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write "**/*.{js,ts,vue,json,md,css,scss,html}"

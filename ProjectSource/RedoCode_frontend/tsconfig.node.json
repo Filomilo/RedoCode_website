@@ -13,7 +13,6 @@
     "module": "ESNext",
     "verbatimModuleSyntax": false,
     "moduleResolution": "Bundler",
-    "types": ["node"],
-    
+    "types": ["node"]
   }
 }

@@ -25,15 +25,16 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-        private final JwtService jwtService;
+    private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+
     @Override
     protected void doFilterInternal(
-           @NotNull HttpServletRequest request
+            @NotNull HttpServletRequest request
             , @NotNull HttpServletResponse response
-            ,@NotNull  FilterChain filterChain) throws ServletException, IOException {
+            , @NotNull FilterChain filterChain) throws ServletException, IOException {
 
-        log.info("JwtAuthenticationFilter: "+ request.getRequestURI());
+        log.info("JwtAuthenticationFilter: " + request.getRequestURI());
         final String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -42,13 +43,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
         final String token = authHeader.substring(7);
-        final String email= jwtService.extractUsername(token);
+        final String email = jwtService.extractUsername(token);
 
-        if(email !=null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails=this.userDetailsService.loadUserByUsername(email);
-            if(jwtService.validateToken(token,userDetails))
-            {
-                UsernamePasswordAuthenticationToken authenticationToken=
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+            if (jwtService.validateToken(token, userDetails)) {
+                UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                 authenticationToken.setDetails(

@@ -27,7 +27,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setHandshakeHandler(new CustomHandshakeHandler())
                 .addInterceptors()
 
-               //  .withSockJS() //there were problems when connecting iwth vue
+        //  .withSockJS() //there were problems when connecting iwth vue
 
         ;
         registry.addEndpoint("/public/web-socket")
@@ -35,15 +35,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setHandshakeHandler(new CustomHandshakeHandler())
                 .addInterceptors()
 
-          .withSockJS() //there were problems when connecting iwth vue
+                .withSockJS() //there were problems when connecting iwth vue
 
         ;
     }
-
-
-
-
-
 
 
 }

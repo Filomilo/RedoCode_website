@@ -1,6 +1,4 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic",
-    "cSpell.words": [
-        "redocode"
-    ]
+  "java.compile.nullAnalysis.mode": "automatic",
+  "cSpell.words": ["redocode"]
 }

@@ -7,7 +7,4 @@ export default defineConfig({
     defaultCommandTimeout: 100000,
     supportFile: false,
   },
-}
-
-
-)
+})

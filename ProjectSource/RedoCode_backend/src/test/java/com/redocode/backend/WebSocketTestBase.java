@@ -24,50 +24,49 @@ public abstract class WebSocketTestBase {
     protected BlockingQueue<String> blockingQueue;
     protected StompSession session;
 
-    protected String getWebSocketUri(int port)
-    {
-        return  "ws://localhost:"+ port+"/public/web-socket";
+    protected String getWebSocketUri(int port) {
+        return "ws://localhost:" + port + "/public/web-socket";
     }
-    protected abstract String getWebSocketUri();
-    protected static final ObjectMapper  mapper = new ObjectMapper();
 
-   protected void setup() throws ExecutionException, InterruptedException, TimeoutException {
-       TimeUnit.SECONDS.sleep(2);
+    protected abstract String getWebSocketUri();
+
+    protected static final ObjectMapper mapper = new ObjectMapper();
+
+    protected void setup() throws ExecutionException, InterruptedException, TimeoutException {
+        TimeUnit.SECONDS.sleep(2);
         blockingQueue = new LinkedBlockingDeque<>();
-        stompClient =   new WebSocketStompClient(new SockJsClient(
+        stompClient = new WebSocketStompClient(new SockJsClient(
                 List.of(new WebSocketTransport(new StandardWebSocketClient()))));
-        log.info("connecting to web socket: "+getWebSocketUri());
+        log.info("connecting to web socket: " + getWebSocketUri());
         session = stompClient
-                .connect(getWebSocketUri() , new StompSessionHandlerAdapter() {})
+                .connect(getWebSocketUri(), new StompSessionHandlerAdapter() {
+                })
                 .get(5, SECONDS)
         ;
 
-       log.info("connected: "+      session.isConnected());
-       log.info("session: "+ session.getSessionId());
+        log.info("connected: " + session.isConnected());
+        log.info("session: " + session.getSessionId());
 
-   }
+    }
+
     protected void tearDown() throws ExecutionException, InterruptedException, TimeoutException {
-       log.info("tearing down");
+        log.info("tearing down");
         session.disconnect();
         stompClient.stop();
-        stompClient=null;
+        stompClient = null;
         TimeUnit.SECONDS.sleep(3);
     }
 
 
-    protected void subscribe(String source)
-    {
-        log.info("subscribing to "+source);
-        StompSession.Subscription subscription= session.subscribe(source, new DefaultStompFrameHandler());
-        log.info("subscribed to "+source);
-        log.info("status: "+ subscription.getSubscriptionHeaders() );
+    protected void subscribe(String source) {
+        log.info("subscribing to " + source);
+        StompSession.Subscription subscription = session.subscribe(source, new DefaultStompFrameHandler());
+        log.info("subscribed to " + source);
+        log.info("status: " + subscription.getSubscriptionHeaders());
     }
 
 
-
-
-
-    class DefaultStompFrameHandler extends StompSessionHandlerAdapter  {
+    class DefaultStompFrameHandler extends StompSessionHandlerAdapter {
         @Override
         public Type getPayloadType(StompHeaders stompHeaders) {
 
@@ -76,21 +75,21 @@ public abstract class WebSocketTestBase {
 
         @Override
         public void handleFrame(StompHeaders stompHeaders, Object o) {
-            log.info("connected: "+ stompClient.isRunning());
-            log.info("received frame from web socket: "+new String((byte[]) o));
+            log.info("connected: " + stompClient.isRunning());
+            log.info("received frame from web socket: " + new String((byte[]) o));
             blockingQueue.offer(new String((byte[]) o));
         }
 
         @Override
         public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
             super.afterConnected(session, connectedHeaders);
-            log.info("\n\n\n\nconnected: "+ session.isConnected()+"\n\n\n\n\n");
+            log.info("\n\n\n\nconnected: " + session.isConnected() + "\n\n\n\n\n");
         }
 
         @Override
         public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
             super.handleException(session, command, headers, payload, exception);
-            log.error("STompClinet error: "+ exception.getMessage());
+            log.error("STompClinet error: " + exception.getMessage());
         }
     }
 

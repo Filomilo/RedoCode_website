@@ -11,15 +11,11 @@ public class SocketConnectionService {
 
 
     private SimpMessagingTemplate simpMessagingTemplate;
-@Autowired
+
+    @Autowired
     public SocketConnectionService(SimpMessagingTemplate simpMessagingTemplate) {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
-
-
-
-
-
 
 
 }

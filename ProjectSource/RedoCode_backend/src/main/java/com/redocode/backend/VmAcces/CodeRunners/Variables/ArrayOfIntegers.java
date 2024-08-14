@@ -9,15 +9,18 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.util.Arrays;
 import java.util.Objects;
+
 @JsonSerialize
 @JsonDeserialize
-public class ArrayOfIntegers  extends Variables<Integer[]> {
+public class ArrayOfIntegers extends Variables<Integer[]> {
     public ArrayOfIntegers(Integer[] value) {
         super(value);
     }
+
     public ArrayOfIntegers() {
         super();
     }
+
     @Override
     @JsonIgnore
     public VARIABLES_TYPES getType() {
