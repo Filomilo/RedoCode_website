@@ -10,7 +10,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
       - uses: joutvhu/intellij-format@v1
+        with:
+          path: './ProjectSource/RedoCode_backend'
 
             
