@@ -25,7 +25,7 @@ public class ApiAuthenication {
     RedoCodeController redoCodeController;
 
     @MessageMapping({ConnectionTargets.INstompAuthenticaiton}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
-    public void authenticationStomp(Principal principal, Authentication authentication)
+    public void healthCheck(Principal principal, Authentication authentication)
     {
         String userId=principal.getName();
         log.info("user: "+ userId +" runs authentication with otken: "+ authentication.getToken());

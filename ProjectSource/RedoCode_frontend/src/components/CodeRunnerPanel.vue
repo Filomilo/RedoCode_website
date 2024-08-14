@@ -1,8 +1,14 @@
 <!-- eslint-disable vue/no-mutating-props -->
 
 <template>
+  <!-- CoderunnerState:
+  {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState }}
+<div style="color: white" >
+  {{ JSON.stringify(props) }}
+</div>
+  {{ JSON.stringify(props.AutoTests) }} -->
   <Dialog
-    :visible="false"
+    :visible="codeRunnerStore.exerciseLoading"
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
@@ -16,7 +22,7 @@
   </Dialog>
 
   <Dialog
-    :visible="awaiting"
+    :visible="ApiConnectionStore.codeRunnerConnection.isAwaitngCodeRunner"
     modal
     header="Edit Profile"
     :style="{ width: '25rem' }"
@@ -34,14 +40,14 @@
 
   <div
     v-if="
-      codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
-      codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
+      ApiConnectionStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
+      ApiConnectionStore.codeRunnerConnection.isAwaitngCodeRunner
     "
     class="heightLimit"
   >
     <Splitter style="max-height: 100%">
       <SplitterPanel
-        v-if="props.exerciseInfo !== undefined"
+        v-if="props.ManualTests !== undefined"
         style="width: 5rem"
         :size="15"
       >
@@ -58,7 +64,6 @@
           :starting="props.starting"
           :codeUpdateMethod="props.codeContainerUpdate"
           :onRunCode="props.onRunCode"
-          :languageChoices="props.languageChoices"
         />
       </SplitterPanel>
       <SplitterPanel :size="15" style="max-width: 100%; width: 5rem">
@@ -73,18 +78,15 @@
   </div>
   <div v-else style="height: 100%">
     {{ JSON.stringify(props.languageChoices) }}
-    <ConnectToCodeRunnerPanel
-      :languageChoicesSelection="props.languageChoices"
-    />
+    <ConnectToCodeRunnerPanel :languageChoices="props.languageChoices" />
   </div>
 </template>
 
 <script lang="ts" setup>
-  //#region imports
   import CodeEditor from '@/components/CodeEditorPanel.vue'
   import BasicButton from '@/components/BasicButton.vue'
   import type { Button } from 'bootstrap'
-  import { ref, onMounted, type Ref, PropType, computed } from 'vue'
+  import { ref, onMounted, type Ref, PropType } from 'vue'
   import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
   import axios from 'axios'
   import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
@@ -113,31 +115,24 @@
   import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   import { ComputedRef } from 'vue'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-  import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
-  //#endregion
-  //#region props
   const props = defineProps({
     exerciseInfo: {
       type: Object as () => IExerciseDescriptionI,
-      required: false,
+      required: true,
     },
     languageChoices: { type: Array as () => codeRunnerType[], required: true },
     codeContainerUpdate: { type: Function, required: true },
     starting: { type: String, required: true },
     onRunCode: { type: Function, required: true },
-    onSubmit: { type: Function, required: false },
+    onSubmit: { type: Function, required: true },
     onResults: {
       type: Function as PropType<(result: ProgramResultsMessage) => void>,
       required: true,
     },
-    ManualTests: {
-      type: Array as () => ExerciseTest[] | ConsoleOutput,
-      required: true,
-    },
+    ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
-    SubmitAccess: { type: Boolean, required: false },
+    SubmitAccess: { type: Boolean, required: true },
   })
-  //#endregion
 
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
@@ -154,9 +149,6 @@
     ApiConnectionStore.stompApiConnection.activate()
   }
   const disconnectStomp = () => {
-    ApiConnectionStore.stompApiSubsciptionContorller.removeCodeResultsSubscription(
-      props.onResults
-    )
     ApiConnectionStore.stompApiConnection.deactivate()
   }
 
@@ -178,18 +170,16 @@
 
   onMounted(() => {
     console.log('props: ' + JSON.stringify(props))
-    codeRunnerStore.codeRunnerConnection.updateCodeRunner()
+    codeRunnerStore.updateCodeRunner()
     // if (props.connectAtStart) {
     connectStomp()
-
-    ApiConnectionStore.stompApiSubsciptionContorller.addCodeResultsSubscription(
-      props.onResults
-    )
+    ApiConnectionStore.setOnCodeResult(props.onResults)
     //connectToCodeRunner()
     // }
   })
 
   onBeforeRouteLeave(async (to, from, next) => {
+    ApiConnectionStore.clearOnCodeResult()
     disconnectStomp()
     next()
   })
@@ -213,11 +203,6 @@
     // console.log("leave************************************************")
     // codeRunnerStore.disconnetWithCodeRunner();
     disconnectStomp()
-  })
-
-  const awaiting: ComputedRef<boolean> = computed(() => {
-    if (import.meta.env.MODE === 'development') return false
-    return codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
   })
 </script>
 

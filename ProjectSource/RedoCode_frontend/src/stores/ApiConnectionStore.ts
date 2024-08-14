@@ -1,49 +1,70 @@
 import { defineStore } from 'pinia'
 import { ref, computed, Ref } from 'vue'
 import { useToastStore } from './ToastStore'
-import StompApiConnection from '@/controllers/Stomp/StompApiConnection'
-import StompApiSubscription from '@/controllers/Stomp/StompApiSubscription'
-import CodeRunnerConnection from '@/controllers/CodeRunner/CodeRunnerConnection'
+import StompApiConnection from '@/controllers/StompApiConnection'
+import StompApiSubscription from '@/controllers/StompApiSubscription'
+import CodeRunnerConnection from '@/controllers/CodeRunnerConnection'
 import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-import StompApiSender from '@/controllers/Stomp/StompApiSender'
-import StompApiSubsriptionsController from '@/controllers/Stomp/StompApiSubsriptionsController'
+import { useCodeRunnerStore } from './CodeRunnerStore'
+import ProgramResult from '@/types/ProgramResults'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const toastStore = useToastStore()
+  const codeRunnerStore = useCodeRunnerStore()
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
-    () => {
-      toastStore.showProccessingMessage('attempting connecting to server')
+    (message: string) => {
+      toastStore.showProccessingMessage(message)
     },
-    () => {
-      toastStore.showSuccessMessage('successfully connected')
+    (message: string) => {
+      toastStore.showSuccessMessage(message)
     },
     (message: string) => {
       toastStore.showErrorMessage(message)
     }
   )
 
-  const stompApiSender: StompApiSender = new StompApiSender(stompApiConnection)
+  let onCodeResult = (result: ProgramResultsMessage): void => {}
 
-  const stompApiSubsciptionContorller: StompApiSubsriptionsController =
-    new StompApiSubsriptionsController(stompApiConnection)
+  const setOnCodeResult = (
+    func: (result: ProgramResultsMessage) => void
+  ): void => {
+    onCodeResult = func
+  }
+  const clearOnCodeResult = () => {
+    onCodeResult = (result: ProgramResultsMessage) => {}
+  }
 
-  // let onCodeResult = (result: ProgramResultsMessage): void => {}
+  const codeRunnerConnection: CodeRunnerConnection = new CodeRunnerConnection(
+    stompApiConnection
+  )
 
-  // const setOnCodeResult = (
-  //   func: (result: ProgramResultsMessage) => void
-  // ): void => {
-  //   onCodeResult = func
-  // }
-  // const clearOnCodeResult = () => {
-  //   onCodeResult = (result: ProgramResultsMessage) => {}
-  // }
+  // const _CodeRunnerResultsSubscriptions: StompApiConnection =
+  stompApiConnection.subscribe(
+    '/user/public/topic/codeRunnerResults',
+    (response: Object) => {
+      const results: ProgramResultsMessage = response as ProgramResultsMessage
+      console.log('_CodeRunnerResultsSubscriptions: ' + JSON.stringify(results))
+      onCodeResult(results)
+      //
+    }
+  )
+
+  const helloWorldSubscription: StompApiSubscription =
+    stompApiConnection.subscribe(
+      '/user/public/topic/health',
+      (response: Object) => {
+        toastStore.showProccessingMessage(
+          'Hello world reposnes: ' + JSON.stringify(response)
+        )
+      }
+    )
 
   // connectionDestinnation
 
-  // const sendHealthCheck = () => {
-  //   stompApiConnection.sendMessage('/public/app/Health', 'messaaage')
-  // }
+  const sendHealthCheck = () => {
+    stompApiConnection.sendMessage('/public/app/Health', 'messaaage')
+  }
 
   // const codeRunnerConnectionControler= ref(new CodeRunnerConnectionControler());
   // const doesHaveACtiveToCodeRunner = computed(() => {
@@ -53,12 +74,10 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   //   const isAwaitngCodeRunner = computed(() => codeRunnerConnectionControler.value.codeRunnerActive.state == 'AWAITING')
 
   return {
-    stompApiSender,
-    stompApiSubsciptionContorller,
     stompApiConnection,
-    // codeRunnerConnection,
-    // setOnCodeResult,
-    // clearOnCodeResult,
+    codeRunnerConnection,
+    setOnCodeResult,
+    clearOnCodeResult,
     // codeRunnerConnectionControler,
 
     // doesHaveACtiveToCodeRunner,

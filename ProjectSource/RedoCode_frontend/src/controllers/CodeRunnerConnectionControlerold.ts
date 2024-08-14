@@ -80,6 +80,14 @@
 
 //     sendToExerciseCodeTests(message)
 //   }
+//   runRawCode = (code: string) => {
+//     const message: RawCodeToRunMessage = {
+//       code: code
+//     }
+//     console.log('runRawCode: ' + JSON.stringify(message))
+//     sendToRawCodeRun(message)
+//   }
+// }
 
 // const ApiConnectionStore=useApiConnectionStore();
 

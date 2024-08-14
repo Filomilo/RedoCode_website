@@ -16,7 +16,6 @@
 </template>
 
 <script setup lang="ts">
-  // #region imports
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { useRoute } from 'vue-router'
@@ -27,8 +26,6 @@
   import { useToastStore } from '@/stores/ToastStore'
   import { languageChoices } from '@/config/Data'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-  import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
-  //#endregion
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
 
@@ -36,27 +33,26 @@
   const route = useRoute()
 
   const fetchExerciseData = (id: number) => {
-    toastStore.showErrorMessage('not impelented fetchExerciseData')
-    // codeRunnerStore.exerciseLoading = true
+    codeRunnerStore.exerciseLoading = true
 
-    // const params = {
-    //   id: route.params.id,
-    // }
-    // axios
-    //   .get('http://localhost:8080/public/exercises/data', { params: params })
-    //   .then(response => {
-    //     const data: ExerciseData = response.data
-    //     data.tests = data.tests.map((elem: any) => {
-    //       return {
-    //         ...elem,
-    //         input: elem.input.value,
-    //         expectedOutput: elem.expectedOutput.value,
-    //       }
-    //     })
-    //     codeRunnerStore.setExerciseData(data)
-    //     console.log('data: ' + JSON.stringify(data))
-    //     codeRunnerStore.exerciseLoading = false
-    //   })
+    const params = {
+      id: route.params.id,
+    }
+    axios
+      .get('http://localhost:8080/public/exercises/data', { params: params })
+      .then(response => {
+        const data: ExerciseData = response.data
+        data.tests = data.tests.map((elem: any) => {
+          return {
+            ...elem,
+            input: elem.input.value,
+            expectedOutput: elem.expectedOutput.value,
+          }
+        })
+        codeRunnerStore.setExerciseData(data)
+        console.log('data: ' + JSON.stringify(data))
+        codeRunnerStore.exerciseLoading = false
+      })
   }
 
   onMounted(() => {
@@ -70,32 +66,18 @@
 
   const codeConatienrUpdate = (code: string) => {
     toastStore.featureNotImplemented(code)
-    codeRunnerStore.exerciseCreatorController.updateSolutionCode(
-      code,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    )
   }
 
   const onRunCode = () => {
     toastStore.featureNotImplemented('onRunCode')
-    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(
-      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    )
   }
 
   const onSubmit = () => {
-    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
-      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
-    )
+    toastStore.featureNotImplemented('onSubmit')
   }
 
   const onCodeResult = (results: ProgramResultsMessage) => {
-    toastStore.featureNotImplemented('onCodeResult')
     console.log('Exercise view results: ' + JSON.stringify(results))
-    codeRunnerStore.exerciseCreatorController.updateTests(
-      results.results,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    )
+    codeRunnerStore.updateTestData(results.results)
   }
 </script>

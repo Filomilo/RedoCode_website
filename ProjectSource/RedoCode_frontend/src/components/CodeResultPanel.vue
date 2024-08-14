@@ -1,13 +1,14 @@
 <template>
   <!-- type: -->
-
+  <!-- {{ JSON.stringify(props) }} -->
   <div class="CodeResultContainer">
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
         <div class="EngineStatusStatus" id="coderunner-type">
           {{
-            codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+            ApiConnectionStore.codeRunnerConnection.codeRunnerState
+              .codeRunnerType
           }}
         </div>
       </div>
@@ -15,11 +16,13 @@
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle" id="coderunner-status">Status:</div>
         <div class="EngineStatusStatus">
-          {{ codeRunnerStore.codeRunnerConnection.codeRunnerState.state }}
+          {{ ApiConnectionStore.codeRunnerConnection.codeRunnerState.state }}
         </div>
       </div>
     </div>
+    tets
 
+    {{ JSON.stringify(codeRunnerStore.exerciseCreatorController.manualTests) }}
     <div
       class="ConsoleResultConsoleCOntainer"
       v-if="!isDataResult"
@@ -28,7 +31,7 @@
       <div
         class="ConsoleResultConsoleCOntainerText"
         style="color: red; height: fit-content; max-height: fit-content"
-        v-html="formattedError"
+        v-html="formattedEror"
       ></div>
       <div
         class="ConsoleResultConsoleCOntainerText"
@@ -36,16 +39,16 @@
         v-html="formattedConsole"
       ></div>
     </div>
-
+    x
     <DataResultPanel
-      v-if="manualTestArray"
-      :ManualTests="manualTestArray"
+      v-if="props.ManualTests !== undefined"
+      :ManualTests="props.ManualTests"
       :AutoTests="props.AutoTests"
     />
 
     <div
       class="ExerciseControlPanle"
-      v-if="props.onSubmit !== undefined"
+      v-if="props.ManualTests !== undefined"
       :style="true ? '' : 'pointer-events: none'"
     >
       <Button
@@ -61,53 +64,33 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ComputedRef } from 'vue'
+  import { computed } from 'vue'
   import DataResultPanel from './DataResultPanel.vue'
   import type CodeResultType from '@/types/CodeResultsType'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import ExerciseTest from '@/types/ExcericseTest'
-  import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
-  import StringParser from '@/tools/StringParser'
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
   const props = defineProps({
     isDataResult: { type: Boolean, required: false },
-    onSubmit: { type: Function, required: false },
-    ManualTests: {
-      type: Array as () => ExerciseTest[] | ConsoleOutput,
-      required: true,
-    },
+    onSubmit: { type: Function, required: true },
+    ManualTests: { type: Array as () => ExerciseTest[], required: false },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
     SubmitAccess: { type: Boolean, required: true },
   })
-  console.log('CodeReults props: ' + JSON.stringify(props))
 
-  const manualTestArray: ComputedRef<ExerciseTest[] | undefined> = computed(
-    () => {
-      return Array.isArray(props.ManualTests)
-        ? (props.ManualTests as ExerciseTest[])
-        : undefined
-    }
+  const formattedConsole = computed<string>(() =>
+    '>> ' + codeRunnerStore.exerciseData.tests[0].consoleOutput == null
+      ? ''
+      : codeRunnerStore.exerciseData.tests[0].consoleOutput.replace(
+          /\n/g,
+          '<br> >> '
+        )
   )
-  const formattedConsole = computed<string>(() => {
-    if (props.ManualTests && Array.isArray(props.ManualTests)) {
-      return ''
-    }
-    const manualTests = props.ManualTests as ConsoleOutput | undefined
-    return manualTests ? StringParser.parseStringToHtml(manualTests.output) : ''
-  })
-
-  const formattedError = computed<string>(() => {
-    if (props.ManualTests && Array.isArray(props.ManualTests)) {
-      return ''
-    }
-    const manualTests = props.ManualTests as ConsoleOutput | undefined
-    return manualTests
-      ? StringParser.parseStringToHtml(manualTests.errorOutput)
-      : ''
-  })
-
+  const formattedEror = computed<string>(() =>
+    codeRunnerStore.exerciseData.tests[0].errorOutput.replace(/\n/g, '<br>')
+  )
   const isCorrect = computed<boolean>(() => {
     return false
   })

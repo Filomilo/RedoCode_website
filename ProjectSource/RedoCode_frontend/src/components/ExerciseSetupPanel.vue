@@ -1,7 +1,7 @@
 <template>
   <div class="mainContainer">
     <div class="errorContainer">
-      {{ codeRunnerStore.exerciseCreatorController.ExerciseSetupError }}
+      {{ codeRunnerStore.getExerciseSetupError() }}
     </div>
     <div class="setupPanel">
       <div class="panelSection">
@@ -41,13 +41,20 @@
             <InputNumber
               @update:model-value="
                 (newNum: number) => {
-                  codeRunnerStore.exerciseCreatorController.updateAmountOfMInutes(
-                    newNum
-                  )
+                  codeRunnerStore.exerciseCreatorController.timeForTaskMin =
+                    newNum * 60 +
+                    (codeRunnerStore.exerciseCreatorController.timeForTaskMin -
+                      Math.floor(
+                        codeRunnerStore.exerciseCreatorController
+                          .timeForTaskMin / 60
+                      ) *
+                        60)
                 }
               "
               :model-value="
-                codeRunnerStore.exerciseCreatorController.getMinutesBound()
+                Math.floor(
+                  codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60
+                )
               "
               inputId="integeronly"
               suffix=" H"
@@ -59,13 +66,21 @@
             <InputNumber
               @update:model-value="
                 (newNum: number) => {
-                  codeRunnerStore.exerciseCreatorController.updateAmountOfHours(
-                    newNum
-                  )
+                  codeRunnerStore.exerciseCreatorController.timeForTaskMin =
+                    Math.floor(
+                      codeRunnerStore.exerciseCreatorController.timeForTaskMin /
+                        60
+                    ) *
+                      60 +
+                    +newNum
                 }
               "
               :model-value="
-                codeRunnerStore.exerciseCreatorController.getHoursBound()
+                codeRunnerStore.exerciseCreatorController.timeForTaskMin -
+                Math.floor(
+                  codeRunnerStore.exerciseCreatorController.timeForTaskMin / 60
+                ) *
+                  60
               "
               inputId="integeronly"
               suffix=" M"
@@ -101,7 +116,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setInputTypeInt()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToInt(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputType1"
@@ -117,7 +136,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setInputTypeFloat()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToFloat(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputType2"
@@ -133,7 +156,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setInputTypeString()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToString(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputType3"
@@ -153,7 +180,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setInputTypeSingle()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToSingle(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputSize1"
@@ -171,7 +202,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setInputTypeArray()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToArray(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputSize2"
@@ -187,7 +222,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setInputTypeDoubleArray()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.inputType =
+                    setTypeToDoubleArray(
+                      codeRunnerStore.exerciseCreatorController.inputType
+                    )
                 }
               "
               inputId="inputSize3"
@@ -210,7 +249,10 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeInt()
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToInt(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputype1"
@@ -226,7 +268,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeFloat()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToFloat(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputype2"
@@ -244,7 +290,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeString()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToString(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputype3"
@@ -264,7 +314,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeSingle()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToSingle(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputSize1"
@@ -282,7 +336,11 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeArray()
+                  resetManualtTetstBuffer()
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToArray(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputSize2"
@@ -300,7 +358,12 @@
             <RadioButton
               @update:model-value="
                 (value: any) => {
-                  codeRunnerStore.exerciseCreatorController.setOutputTypeDoubleArray()
+                  resetManualtTetstBuffer()
+                  console.log('RadioButtonSection: outDoubleeArray')
+                  codeRunnerStore.exerciseCreatorController.outputType =
+                    setTypeToDoubleArray(
+                      codeRunnerStore.exerciseCreatorController.outputType
+                    )
                 }
               "
               inputId="outputSize3"
@@ -770,16 +833,9 @@
 </template>
 
 <script setup lang="ts">
-  //#region imports
   import { onMounted, watch } from 'vue'
   import VueSlider from 'vue-slider-component'
   import ManualTestPnael from './ManualTestPnael.vue'
-
-  import { languageChoices } from '@/config/Data'
-  import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-  import CodeRunnerStatus from '@/types/CodeRunnerStatus'
-  import CodeRunnerType from '@/types/CodeRunnerTypes'
-  import generateStartingFunction from '@/tools/StartingFunctionGenerator'
   import VarType, {
     setTypeToArray,
     isTypeDoubleArray,
@@ -794,7 +850,12 @@
     setTypeToFloat,
     isTypeSingle,
   } from '@/types/VarType'
-  //#endregion
+
+  import { languageChoices } from '@/config/Data'
+  import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+  import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+  import CodeRunnerType from '@/types/CodeRunnerTypes'
+  import generateStartingFunction from '@/tools/StartingFunctionGenerator'
   const codeRunnerStore = useCodeRunnerStore()
 
   const onXChange = (val: any) => {
@@ -824,6 +885,11 @@
   onMounted(() => {
     codeRunnerStore.exerciseCreatorController.resetParams()
   })
+
+  const resetManualtTetstBuffer = () => {
+    console.log('input output type cahnged')
+    codeRunnerStore.clearTestsFromBuffer()
+  }
 
   watch(
     () => [

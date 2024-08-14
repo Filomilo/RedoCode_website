@@ -20,5 +20,5 @@ import lombok.extern.slf4j.Slf4j;
 public class ProgramResult {
     private ConsoleOutput consoleOutput;
     private Variables variables;
-    private Variables variablesInput;
+
 }

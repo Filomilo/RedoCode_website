@@ -24,7 +24,7 @@
           "
           :starting="
             codeRunnerStore.exerciseCreatorController.solutionCodes[
-              codeRunnerStore.codeRunnerConnection.codeRunnerState
+              ApiConnectionStore.codeRunnerConnection.codeRunnerState
                 .codeRunnerType
             ] ?? ''
           "
@@ -33,25 +33,12 @@
           :onSubmit="onSubmit"
           :ManualTests="
             codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
-              codeRunnerStore.codeRunnerConnection.codeRunnerState
+              ApiConnectionStore.codeRunnerConnection.codeRunnerState
                 .codeRunnerType
-            ]?.tests as ExerciseTest[]
+            ]
           "
-          :AutoTests="
-            codeRunnerStore.exerciseCreatorController.manualTestsSolutions[
-              codeRunnerStore.codeRunnerConnection.codeRunnerState
-                .codeRunnerType
-            ]?.autoTests
-          "
-          :onResults="
-            (results: ProgramResultsMessage) => {
-              codeRunnerStore.exerciseCreatorController.updateTests(
-                results.results,
-                codeRunnerStore.codeRunnerConnection.codeRunnerState
-                  .codeRunnerType
-              )
-            }
-          "
+          :AutoTests="[]"
+          :onResults="onCodeResult"
           :SubmitAccess="codeRunnerStore.exerciseCreatorController.isSolved"
         />
       </TabPanel>
@@ -77,7 +64,6 @@
   import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
-  import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
 
   const ToastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
@@ -85,10 +71,10 @@
   const activeUserStore = useActiveUserStore()
   const codeUpdate = (code: string) => {
     console.log('codee update: ' + code)
-    codeRunnerStore.exerciseCreatorController.updateSolutionCode(
-      code,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    )
+    // codeRunnerStore.exerciseCreatorController.solutions
+    codeRunnerStore.exerciseCreatorController.solutionCodes[
+      ApiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    ] = code
     console.log(
       'update: ' +
         JSON.stringify(codeRunnerStore.exerciseCreatorController.solutionCodes)
@@ -97,21 +83,29 @@
 
   const onRunCode = () => {
     console.log('On run code')
-    // ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
-    //   codeRunnerStore.exerciseCreatorController
-    // )
-    console.error('unimplemented')
-    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(
-      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
+      codeRunnerStore.exerciseCreatorController
     )
   }
 
   const onSubmit = () => {
     console.log('On sumbit')
-    console.error('Unimplented')
-    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
-      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
+    const request: ExercsieCreatorValidationMesage = JSON.parse(
+      JSON.stringify(codeRunnerStore.exerciseCreatorController)
+    ) as ExercsieCreatorValidationMesage
+    request.manualTests = Object.values(
+      codeRunnerStore.exerciseCreatorController.manualTestsSolutions
+    )[0] as ExerciseTest[]
+    request.manualTests.forEach((obj: ExerciseTest) => {
+      obj.expectedOutput = JSON.stringify(obj.expectedOutput.toString())
+      obj.input = JSON.stringify(obj.input.toString())
+    })
+    const request2: ExercsieCreatorValidationMesage = JSON.parse(
+      JSON.stringify(request)
+    ) as ExercsieCreatorValidationMesage
+
+    ApiConnectionStore.codeRunnerConnection.submitExerciseCreationRequest(
+      request
     )
   }
 
@@ -132,6 +126,7 @@
 
   const onOpenCodeRunner = () => {
     console.log('coderunner opened')
+    codeRunnerStore.transferTestFromBufferTpCreator()
   }
 
   const infoValidation = computed(() => {
@@ -143,8 +138,14 @@
     )
   })
   const testValidation = computed(() => {
-    return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
+    return codeRunnerStore.getExerciseSetupError() === ''
   })
+
+  const onCodeResult = (results: ProgramResultsMessage) => {
+    console.log('playgronud view results: ' + JSON.stringify(results))
+    codeRunnerStore.updateCreationTestData(results.results)
+    codeRunnerStore.exerciseCreatorController.updateSubmitAcces()
+  }
 </script>
 
 <style>

@@ -18,10 +18,6 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
     showExecutionChain.value = true
   }
 
-  apiConnectionStore.stompApiSubsciptionContorller.addExecutionChainSchemeSubscription(
-    loadChainScheme.bind(this)
-  )
-
   const waitForScheme = (expectedLvl: number, timeout: number) => {
     return new Promise<void>((resolve, reject) => {
       const interval = 50
@@ -58,8 +54,19 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
         showCloseButton.value = true
       })
   }
-  apiConnectionStore.stompApiSubsciptionContorller.addEExecutionResponseStatusUpdateSubscription(
-    updateStatus.bind(this)
+  apiConnectionStore.stompApiConnection.subscribe(
+    '/user/public/topic/ExecutionResponses',
+    (message: Object) => {
+      const responseBase: ExecutionResponseBase =
+        message as ExecutionResponseBase
+
+      console.log(
+        'ExecutionResponses revcived: ' + JSON.stringify(responseBase)
+      )
+      if (responseBase.messageType === 'CHAIN_SCHEME')
+        loadChainScheme(responseBase as ExecutionChainScheme)
+      else updateStatus(responseBase as ExecutionResponseStatusUpdate)
+    }
   )
 
   const showExecutionChain: Ref<Boolean> = ref(false)

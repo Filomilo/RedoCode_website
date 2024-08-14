@@ -54,8 +54,8 @@ const getCppImport = (
   if (isTypeString(inputVaraible) || isTypeString(outputVariable)) {
     imports += '#include <string>\n'
   }
-  // if (imports.length != 0) {
-  // }
+  if (imports.length != 0) {
+  }
 
   return imports
 }

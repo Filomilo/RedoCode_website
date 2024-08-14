@@ -147,12 +147,12 @@ onBeforeRouteUpdate(()=>{
 </script>
 <style>
   .dataTableStyle {
-    height: 100%;
+    height: 5rem;
     overflow: hidden;
   }
 
   .vue3-easy-data-table {
-    min-height: 4rem;
+    height: 4rem;
     max-height: 100%;
   }
   .vue3-easy-data-table__main {

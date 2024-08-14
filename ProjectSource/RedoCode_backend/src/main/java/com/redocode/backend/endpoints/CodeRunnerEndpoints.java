@@ -30,7 +30,7 @@ public class CodeRunnerEndpoints {
     UsersRepository usersRepository;
 
     @PostMapping("/state")
-    public CodeRunner getCodeRUnnerState(String token)
+    public CodeRunner getExceciseData(String token)
     {
         log.info("token: "+ token+" tires getting code runner state");
         if(token==null || token.isEmpty())
