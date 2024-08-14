@@ -20,24 +20,24 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration
 @SpringBootTest
 //@Disabled("Islotating specific test for debugging")
-class ResponsibilityChainRepositoryGetChainTest  {
+class ResponsibilityChainRepositoryGetChainTest {
 
     @Test
-    void createNewExerciseChainTest(){
-        BaseRequestHandler startNode=ResponsibilityChainRepository.createNewExercise;
-        List<ChainNodeInfo> chain=startNode.getChainList();
+    void createNewExerciseChainTest() {
+        BaseRequestHandler startNode = ResponsibilityChainRepository.createNewExercise;
+        List<ChainNodeInfo> chain = startNode.getChainList();
 
 
-        List<ChainNodeInfo> correctNewWxecisehainList=new ArrayList<>();
+        List<ChainNodeInfo> correctNewWxecisehainList = new ArrayList<>();
         correctNewWxecisehainList.add(ChainNodeInfo.builder()
                 .nodeName("Validating user permissions")
                 .processingMessage("Pending")
                 .status(ChainNodeInfo.CHAIN_NODE_STATUS.PENDING)
                 .build());
         correctNewWxecisehainList.add(ChainNodeInfo.builder()
-                        .nodeName("Validating exercise information")
-                        .processingMessage("Pending")
-                        .status(ChainNodeInfo.CHAIN_NODE_STATUS.PENDING)
+                .nodeName("Validating exercise information")
+                .processingMessage("Pending")
+                .status(ChainNodeInfo.CHAIN_NODE_STATUS.PENDING)
                 .build());
         correctNewWxecisehainList.add(ChainNodeInfo.builder()
                 .nodeName("Generating automatic tests")
@@ -61,10 +61,9 @@ class ResponsibilityChainRepositoryGetChainTest  {
                 .build());
 
 
-
         assertEquals(correctNewWxecisehainList.size(), chain.size());
-        for (int i = 0; i <correctNewWxecisehainList.size() ; i++) {
-            assertEquals(correctNewWxecisehainList.get(i),chain.get(i));
+        for (int i = 0; i < correctNewWxecisehainList.size(); i++) {
+            assertEquals(correctNewWxecisehainList.get(i), chain.get(i));
         }
 
     }

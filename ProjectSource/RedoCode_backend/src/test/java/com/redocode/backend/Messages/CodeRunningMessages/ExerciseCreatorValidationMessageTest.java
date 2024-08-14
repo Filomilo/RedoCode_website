@@ -7,12 +7,13 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 //@Disabled("Islotating specific test for debugging")
-class ExerciseCreatorValidationMessageTest  {
+class ExerciseCreatorValidationMessageTest {
 
     @Test
     void JsonBuilder() throws JsonProcessingException {
-        String json="{\n" +
+        String json = "{\n" +
                 "\"amountOfAutoTests\": 1,\n" +
                 "\"autoTestMaxValue\": 1,\n" +
                 "\"autoTestminValue\": -1,\n" +
@@ -65,10 +66,8 @@ class ExerciseCreatorValidationMessageTest  {
                 "    }\n" +
                 "}";
         ObjectMapper mapper = new ObjectMapper();
-        ExerciseCreatorValidationMessage exerciseCreatorValidationMessage=mapper.readValue(json, ExerciseCreatorValidationMessage.class);
-        assertNotNull(   exerciseCreatorValidationMessage.getManualTests().get(0).getExpectedOutput());
-
-
+        ExerciseCreatorValidationMessage exerciseCreatorValidationMessage = mapper.readValue(json, ExerciseCreatorValidationMessage.class);
+        assertNotNull(exerciseCreatorValidationMessage.getManualTests().get(0).getExpectedOutput());
 
 
     }

@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExecutionChainScheme extends ExecutionResponseBase{
+public class ExecutionChainScheme extends ExecutionResponseBase {
     @JsonProperty
     List<ChainNodeInfo> levels;
 }

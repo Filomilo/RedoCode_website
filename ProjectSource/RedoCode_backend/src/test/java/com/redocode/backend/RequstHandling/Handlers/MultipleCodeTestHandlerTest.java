@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @Slf4j
 @SpringBootTest
 @ContextConfiguration
@@ -26,10 +27,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class MultipleCodeTestHandlerTest {
 
     ExerciseTests[] tests;
+
     @BeforeEach
-    void prepareTests()
-    {
-        tests= new ExerciseTests[]{
+    void prepareTests() {
+        tests = new ExerciseTests[]{
                 ExerciseTests.builder()
                         .id(1l)
                         .expectedOutput("[1,2]")
@@ -59,8 +60,8 @@ class MultipleCodeTestHandlerTest {
 
     @Test
     void handleCorrect() {
-        User user=new User("@2"+ UUID.randomUUID());
-        ExerciseCreationRequest exerciseCreationRequest= ExerciseCreationRequest.builder()
+        User user = new User("@2" + UUID.randomUUID());
+        ExerciseCreationRequest exerciseCreationRequest = ExerciseCreationRequest.builder()
                 .ram(1024)
                 .Title("test")
                 .Description("desription")
@@ -82,12 +83,12 @@ class MultipleCodeTestHandlerTest {
                             put(CODE_RUNNER_TYPE.JS_RUNNER, "function solution(array){return array;}");
                         }}
                 )
-               .build();
+                .build();
 
 
-        MultipleCodeTestHandler multipleCodeTestHandler=new MultipleCodeTestHandler();
-        assertDoesNotThrow(()->{
-             multipleCodeTestHandler.handle(exerciseCreationRequest);
+        MultipleCodeTestHandler multipleCodeTestHandler = new MultipleCodeTestHandler();
+        assertDoesNotThrow(() -> {
+            multipleCodeTestHandler.handle(exerciseCreationRequest);
         });
 
     }

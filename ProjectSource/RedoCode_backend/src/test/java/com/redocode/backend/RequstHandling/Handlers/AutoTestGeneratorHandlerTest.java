@@ -14,15 +14,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 //@Disabled("Islotating specific test for debugging")
 class AutoTestGeneratorHandlerTest {
     @SneakyThrows
     @ParameterizedTest
-    @ValueSource( ints = {1,2,5,7,3,0,23})
+    @ValueSource(ints = {1, 2, 5, 7, 3, 0, 23})
     void handle(int amtOfAutoTests) {
         AutoTestGeneratorHandler handler = new AutoTestGeneratorHandler();
 
-        CodeTestRequest codeTestRequest= CodeTestRequest.builder()
+        CodeTestRequest codeTestRequest = CodeTestRequest.builder()
                 .testsToRun(new ArrayList<>())
                 .amountOfAutoTests(amtOfAutoTests)
                 .user(new User("2"))
@@ -30,13 +31,13 @@ class AutoTestGeneratorHandlerTest {
                 .timeForTaskMin(22L)
                 .solutionCodes(new HashMap<>())
                 .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
-                .lengthRange(new Range(4,22))
-                .xArrayRange(new Range(3,8))
+                .lengthRange(new Range(4, 22))
+                .xArrayRange(new Range(3, 8))
                 .build();
 
-        int currAmtOFTests =codeTestRequest.getAutotestsToRun()==null?0: codeTestRequest.getAutotestsToRun().size();
-        codeTestRequest= (CodeTestRequest) handler.handle(codeTestRequest);
+        int currAmtOFTests = codeTestRequest.getAutotestsToRun() == null ? 0 : codeTestRequest.getAutotestsToRun().size();
+        codeTestRequest = (CodeTestRequest) handler.handle(codeTestRequest);
         int amtOfTestsAfter = codeTestRequest.getAutotestsToRun().size();
-        assertEquals(currAmtOFTests+amtOfAutoTests, amtOfTestsAfter);
+        assertEquals(currAmtOFTests + amtOfAutoTests, amtOfTestsAfter);
     }
 }

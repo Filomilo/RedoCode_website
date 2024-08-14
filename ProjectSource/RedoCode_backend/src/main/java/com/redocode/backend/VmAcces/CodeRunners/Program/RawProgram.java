@@ -10,13 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 public class RawProgram extends Program {
 
-    String code="";
+    String code = "";
 
     public RawProgram(String code) {
         super();
-        this.code=code;
+        this.code = code;
     }
-
 
 
     @Override

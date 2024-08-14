@@ -12,10 +12,9 @@ class ContainerControllerTest {
     static ContainerController containerController;
 
     @BeforeEach
-    void createController()
-    {
-        assertDoesNotThrow(()->{
-            containerController=new ContainerController("nginx:stable",128);
+    void createController() {
+        assertDoesNotThrow(() -> {
+            containerController = new ContainerController("nginx:stable", 128);
         });
         assertNotNull(containerController);
         containerController.start();
@@ -24,37 +23,34 @@ class ContainerControllerTest {
 
     @Test
     void crateListRemoveFile() {
-        String fileName="fileTest.txt";
-        String fileContent="test\n  file\n conent \n\n \t test \n\n";
-        String[] fileListBeforeCreation=containerController.listFiles();
+        String fileName = "fileTest.txt";
+        String fileContent = "test\n  file\n conent \n\n \t test \n\n";
+        String[] fileListBeforeCreation = containerController.listFiles();
         containerController.createFile(fileName, fileContent);
-        String[] fileListAfterCreation=containerController.listFiles();
-        String recivedFileConenent=containerController.getFileContnt(fileName);
+        String[] fileListAfterCreation = containerController.listFiles();
+        String recivedFileConenent = containerController.getFileContnt(fileName);
         containerController.removeFile(fileName);
-        String[] fileListAfterRemoval=containerController.listFiles();
+        String[] fileListAfterRemoval = containerController.listFiles();
 
 
-        assertEquals(fileListBeforeCreation.length+1,fileListAfterCreation.length);
-        assertEquals(fileContent,recivedFileConenent);
-        assertEquals(fileListBeforeCreation.length,fileListAfterRemoval.length);
+        assertEquals(fileListBeforeCreation.length + 1, fileListAfterCreation.length);
+        assertEquals(fileContent, recivedFileConenent);
+        assertEquals(fileListBeforeCreation.length, fileListAfterRemoval.length);
     }
+
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void createFile(String content) {
-        containerController.createFile("test.txt",content);
-        String fileContentCreated=containerController.getFileContnt("test.txt");
-        assertEquals(content,fileContentCreated,"Created file contend do not match");
+        containerController.createFile("test.txt", content);
+        String fileContentCreated = containerController.getFileContnt("test.txt");
+        assertEquals(content, fileContentCreated, "Created file contend do not match");
     }
-
-
 
 
     @AfterEach
-    public void destroy()
-    {
-     containerController.destroy();
+    public void destroy() {
+        containerController.destroy();
     }
-
 
 
 }

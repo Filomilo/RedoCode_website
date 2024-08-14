@@ -13,9 +13,11 @@ public class DoubleArrayOfStrings extends Variables<String[][]> {
     public DoubleArrayOfStrings(String[][] value) {
         super(value);
     }
+
     public DoubleArrayOfStrings() {
         super();
     }
+
     @Override
     @JsonIgnore
     public VARIABLES_TYPES getType() {

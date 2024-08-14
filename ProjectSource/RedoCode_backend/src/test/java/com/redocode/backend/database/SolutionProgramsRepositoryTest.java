@@ -23,8 +23,8 @@ public class SolutionProgramsRepositoryTest {
 
     @Test
     public void testGetFibonachiExercise() {
-        List<SolutionPrograms> list=solutionProgramsRepository.findAll();
-        String code="int solution(int val)\n" +
+        List<SolutionPrograms> list = solutionProgramsRepository.findAll();
+        String code = "int solution(int val)\n" +
                 "{\n" +
                 "    int* arr=new int[val];\n" +
                 "\n" +
@@ -38,11 +38,11 @@ public class SolutionProgramsRepositoryTest {
                 "}\n" +
                 "    return arr[val-1];\n" +
                 "}";
-        SolutionPrograms solutionCpp=list.get(0);
-        log.info("solution cpp: "+solutionCpp.toString());
+        SolutionPrograms solutionCpp = list.get(0);
+        log.info("solution cpp: " + solutionCpp.toString());
 
-        assertEquals("cpp",solutionCpp.getLanguage().getName());
-        assertEquals(code,solutionCpp.getCode());
+        assertEquals("cpp", solutionCpp.getLanguage().getName());
+        assertEquals(code, solutionCpp.getCode());
     }
 
 }

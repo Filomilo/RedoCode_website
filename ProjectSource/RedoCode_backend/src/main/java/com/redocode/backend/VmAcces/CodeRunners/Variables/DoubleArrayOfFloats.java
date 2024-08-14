@@ -11,7 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 @JsonSerialize
 @JsonDeserialize
 @AllArgsConstructor
-public class DoubleArrayOfFloats  extends Variables<Float[][]> {
+public class DoubleArrayOfFloats extends Variables<Float[][]> {
     public DoubleArrayOfFloats(Float[][] value) {
         super(value);
     }

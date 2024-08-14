@@ -15,9 +15,15 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @EqualsAndHashCode
 @Getter
-public class ExecutionResponseStatusUpdate extends ExecutionResponseBase{
+public class ExecutionResponseStatusUpdate extends ExecutionResponseBase {
 
-    @JsonProperty @NotNull int stepUpdate;
-    @JsonProperty @NotNull ChainNodeInfo.CHAIN_NODE_STATUS lvlStatus;
-    @JsonProperty  @NotNull String message;
+    @JsonProperty
+    @NotNull
+    int stepUpdate;
+    @JsonProperty
+    @NotNull
+    ChainNodeInfo.CHAIN_NODE_STATUS lvlStatus;
+    @JsonProperty
+    @NotNull
+    String message;
 }

@@ -14,36 +14,33 @@ public class ResposibilityChainBuilderSteps {
     @NotNull
     BaseRequestHandler startRequest;
     BiFunction<User, ExecutionResponseBase, Void> messagehandler;
-    public ResposibilityChainBuilderSteps(BiFunction<User, ExecutionResponseBase, Void> messagehandler)
-    {
-this.messagehandler=messagehandler;
-    }
-    int steps=0;
-    public ResposibilityChainBuilderSteps next(BaseRequestHandler baseRequestHandler)
-    {
-        baseRequestHandler.set_nodeLevel(steps++);
-        baseRequestHandler.setMessageMethod(messagehandler);
-        if(startRequest==null)
-        startRequest=baseRequestHandler;
-        else
-      this.baseRequestHandlerCurrent.setNextRequestHandler(baseRequestHandler);
-      baseRequestHandlerCurrent=baseRequestHandler;
-      return this;
+
+    public ResposibilityChainBuilderSteps(BiFunction<User, ExecutionResponseBase, Void> messagehandler) {
+        this.messagehandler = messagehandler;
     }
 
-    public ResposibilityChainBuilderSteps setContinueOnError(boolean continueOnError)
-    {
+    int steps = 0;
+
+    public ResposibilityChainBuilderSteps next(BaseRequestHandler baseRequestHandler) {
+        baseRequestHandler.set_nodeLevel(steps++);
+        baseRequestHandler.setMessageMethod(messagehandler);
+        if (startRequest == null)
+            startRequest = baseRequestHandler;
+        else
+            this.baseRequestHandlerCurrent.setNextRequestHandler(baseRequestHandler);
+        baseRequestHandlerCurrent = baseRequestHandler;
+        return this;
+    }
+
+    public ResposibilityChainBuilderSteps setContinueOnError(boolean continueOnError) {
         baseRequestHandlerCurrent.set_continueOnError(continueOnError);
         return this;
     }
 
 
-    public BaseRequestHandler build()
-    {
+    public BaseRequestHandler build() {
         return startRequest;
     }
-
-
 
 
 }

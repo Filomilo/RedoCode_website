@@ -8,8 +8,7 @@ import java.util.Arrays;
 // TODO: 20/02/2024 cleanre moethod would be nice
 @Slf4j
 public class VariablesParser {
-    static public Variables parseVaraiables(Variables.VARIABLES_TYPES type, String toParse)
-    {
+    static public Variables parseVaraiables(Variables.VARIABLES_TYPES type, String toParse) {
         try {
             log.info("toParse: " + toParse);
             log.info("PARsed: " + Arrays.deepToString(Arrays.stream(toParse.split("\t")).map(StringFormatter::removeWhiteCharacterss).toArray()));
@@ -82,7 +81,7 @@ public class VariablesParser {
                     }
                     String res[][] = new String[firstPass.length][secPass[0].length];
                     for (int i = 0; i < firstPass.length; i++) {
-                        log.info("parsing: " + Arrays.toString( secPass[i]));
+                        log.info("parsing: " + Arrays.toString(secPass[i]));
                         for (int j = 0; j < secPass[0].length; j++) {
                             log.info("parsing: " + secPass[i][j]);
                             res[i][j] = StringFormatter.recoverWhiteCharacter(secPass[i][j]);
@@ -94,12 +93,10 @@ public class VariablesParser {
             log.info("varaaa: " + var);
 
             return var;
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            throw new ArrayIndexOutOfBoundsException(e.getMessage()+" while parsing "+toParse);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ArrayIndexOutOfBoundsException(e.getMessage() + " while parsing " + toParse);
         }
     }
-    
-    
-    
+
+
 }

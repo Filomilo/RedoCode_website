@@ -17,11 +17,13 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 @EqualsAndHashCode
 public abstract class ExecutionResponseBase {
-   public enum EXECUTION_RESPONSE_TYPE{
+    public enum EXECUTION_RESPONSE_TYPE {
         CHAIN_SCHEME,
         STATUS_UPDATE
     }
+
     @JsonProperty
-    @NotNull EXECUTION_RESPONSE_TYPE messageType;
+    @NotNull
+    EXECUTION_RESPONSE_TYPE messageType;
 
 }

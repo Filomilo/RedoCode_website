@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 //@Disabled("Isotating specific test for debugging")
 @SpringBootTest
-class AuthenticatedUserValidationHandlerTest  {
+class AuthenticatedUserValidationHandlerTest {
 
     @Autowired
     UsersRepository usersRepository;
@@ -30,7 +31,7 @@ class AuthenticatedUserValidationHandlerTest  {
                 .build();
 
 
-        User userPremium =User.builder()
+        User userPremium = User.builder()
                 .sessionID("uuid")
                 .email("adminPREMIUM@admin.com")
                 .nickname("nick")
@@ -44,7 +45,7 @@ class AuthenticatedUserValidationHandlerTest  {
                 .password("password")
                 .type(User.USER_TYPE.AUTHENTICATED)
                 .build();
-        User userUnathetniacted =User.builder()
+        User userUnathetniacted = User.builder()
                 .sessionID("uuid")
                 .email("adminUNAUTHENTICATED@admin.com")
                 .nickname("nick")
@@ -55,32 +56,27 @@ class AuthenticatedUserValidationHandlerTest  {
         usersRepository.save(userPremium);
         usersRepository.save(userAuthenicated);
         usersRepository.save(userUnathetniacted);
-        User userUnsaved = new User("uuid","nick", User.USER_TYPE.ADMIN);
+        User userUnsaved = new User("uuid", "nick", User.USER_TYPE.ADMIN);
 
 
         AuthenticatedUserValidationHandler authenticatedUserValidationHandler = new AuthenticatedUserValidationHandler();
 
-           assertNotNull(authenticatedUserValidationHandler.handle(
-                   RequestBase.builder().user(userAdmin).build()
-           ));
         assertNotNull(authenticatedUserValidationHandler.handle(
-                   RequestBase.builder().user(userPremium).build()
-           ));
+                RequestBase.builder().user(userAdmin).build()
+        ));
         assertNotNull(authenticatedUserValidationHandler.handle(
-                   RequestBase.builder().user(userAuthenicated).build()
-           ));
+                RequestBase.builder().user(userPremium).build()
+        ));
+        assertNotNull(authenticatedUserValidationHandler.handle(
+                RequestBase.builder().user(userAuthenicated).build()
+        ));
         assertNull(authenticatedUserValidationHandler.handle(
-                   RequestBase.builder().user(userUnathetniacted).build()
-           ));
+                RequestBase.builder().user(userUnathetniacted).build()
+        ));
 
         assertNull(authenticatedUserValidationHandler.handle(
-                    RequestBase.builder().user(userUnsaved).build()
-            ));
-
-
-
-
-
+                RequestBase.builder().user(userUnsaved).build()
+        ));
 
 
     }
