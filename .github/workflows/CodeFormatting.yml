@@ -1,7 +1,9 @@
 name: code-formatting
 
 on:
-  push
+  push:
+    branches:
+      - main
 
 jobs:
   reformat:
