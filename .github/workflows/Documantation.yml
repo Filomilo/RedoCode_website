@@ -29,7 +29,7 @@ jobs:
           javadoc-branch: gh-pages
           java-version: 21
           project: maven 
-          target-folder: backend_docs
+          target-folder: backend
           javadoc-source-folder: ./docs/Backend_docs/
           working-directory: ./ProjectSource/RedoCode_backend
           custom-command: |
