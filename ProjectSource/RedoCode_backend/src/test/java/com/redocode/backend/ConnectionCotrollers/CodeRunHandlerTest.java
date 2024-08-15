@@ -29,17 +29,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration
 //@Disabled("Islotating specific test for debugging")
 class CodeRunHandlerTest {
-    @Autowired
+@Autowired
     CodeRunHandler codeRunHandler;
-    @Autowired
+@Autowired
     ExerciseRepository exerciseRepository;
-    @Autowired
+@Autowired
     RedoCodeController redoCodeController;
-    @Autowired
+@Autowired
     UsersRepository usersRepository;
-    @Autowired
+@Autowired
     CodeRunnersController codeRunnersController;
-
     @Test
     void runExerciseIdCode() {
         //todo: runExerciseIdCode
@@ -62,32 +61,32 @@ class CodeRunHandlerTest {
 
     @Test
     void runExerciseCreatorValidationCodeCorrect() {
-        String userSessionId = "sessionID";
-        Long userId = 1L;
-        ;
-        Variables.VARIABLES_TYPES inputType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-        Variables.VARIABLES_TYPES ouptutType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-        int ram = 1024;
-        String title = "Exercise";
-        String decritpion = "Descritpion";
+        String userSessionId="sessionID";
+        Long userId=1L;
+;        Variables.VARIABLES_TYPES inputType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+        Variables.VARIABLES_TYPES ouptutType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+        int ram=1024;
+        String title="Exercise";
+        String decritpion="Descritpion";
 
-        int amountOfAutoTests = 8;
-        boolean breakCharacterInput = true;
-        Range lengthRange = new Range(0F, 20F);
-        boolean lowerCaseInput = true;
-        boolean numberInput = true;
-        boolean spaceInput = true;
-        boolean specialCharacterInput = true;
-        boolean upperCaseInput = true;
-        Range xArrayRange = new Range(1F, 20F);
-        Range yArrayRange = new Range(1F, 20F);
-        long timeForTask = 60L;
-        int amountOfAutoTask = 8;
+        int amountOfAutoTests=8;
+        boolean breakCharacterInput=true;
+        Range lengthRange=new Range(0F,20F);
+        boolean lowerCaseInput=true;
+        boolean numberInput=true;
+        boolean spaceInput=true;
+        boolean specialCharacterInput=true;
+        boolean upperCaseInput=true;
+        Range xArrayRange= new Range(1F,20F);
+        Range yArrayRange=new Range(1F,20F);
+        long timeForTask= 60L;
+        int amountOfAutoTask=8;
 
-        Long maxExecutionTimeMS = 1000L;
+        Long maxExecutionTimeMS=1000L;
 
-        HashMap<CODE_RUNNER_TYPE, String> solutionCodes = new HashMap<>() {{
-            put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +
+        HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
+        {{
+            put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
                     "#include <vector>\n" +
                     "#include <string>\n" +
                     "\n" +
@@ -95,9 +94,9 @@ class CodeRunHandlerTest {
                     "{\n" +
                     "    return in;\n" +
                     "}");
-            put(CODE_RUNNER_TYPE.JS_RUNNER, "function solution(array){return array;}");
+            put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return array;}");
         }};
-        ExerciseTests[] tests = new ExerciseTests[]{
+        ExerciseTests[] tests= new ExerciseTests[]{
                 ExerciseTests.builder()
                         .expectedOutput("[[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]")
                         .input("[[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]")
@@ -112,70 +111,71 @@ class CodeRunHandlerTest {
         };
 
 
-        int amountOfExeciseBeforeAdding = exerciseRepository.findAll().size();
+        int amountOfExeciseBeforeAdding=exerciseRepository.findAll().size();
 
 
-        ExerciseCreatorValidationMessage creatorValidationMessage =
+
+        ExerciseCreatorValidationMessage creatorValidationMessage=
                 ExerciseCreatorValidationMessage.builder()
-                        .title(title)
-                        .description(decritpion)
-                        .inputType(inputType)
-                        .outputType(ouptutType)
-                        .amountOfAutoTests(amountOfAutoTests)
-                        .lengthRange(lengthRange)
-                        .xArrayRange(xArrayRange)
-                        .yArrayRange(yArrayRange)
-                        .upperCaseInput(upperCaseInput)
-                        .lowerCaseInput(lowerCaseInput)
-                        .numberInput(numberInput)
-                        .specialCharacterInput(specialCharacterInput)
-                        .breakCharacterInupt(breakCharacterInput)
-                        .spaceInupt(spaceInput)
-                        .timeForTaskMin(timeForTask)
-                        .timeForExecutionMs(maxExecutionTimeMS)
-                        .solutionCodes(solutionCodes)
-                        .manualTests(Arrays.stream(tests).toList())
+         .title(title)
+        .description(decritpion)
+        .inputType(inputType)
+        .outputType(ouptutType)
+        .amountOfAutoTests(amountOfAutoTests)
+        .lengthRange(lengthRange)
+        .xArrayRange(xArrayRange)
+        .yArrayRange(yArrayRange)
+        .upperCaseInput(upperCaseInput)
+        .lowerCaseInput(lowerCaseInput)
+        .numberInput(numberInput)
+        .specialCharacterInput(specialCharacterInput)
+        .breakCharacterInupt(breakCharacterInput)
+        .spaceInupt(spaceInput)
+        .timeForTaskMin(timeForTask)
+        .timeForExecutionMs(maxExecutionTimeMS)
+        .solutionCodes(solutionCodes)
+        .manualTests(Arrays.stream(tests).toList())
 
-                        .ram(ram)
+        .ram(ram)
                         .build();
 
 
-        User user = usersRepository.getReferenceById(userId);
+        User user= usersRepository.getReferenceById(userId);
         user.setSessionID(userSessionId);
-        StompPrincipal principal = new StompPrincipal(userSessionId);
+        StompPrincipal principal=new StompPrincipal(userSessionId);
         redoCodeController.addConnectedUser(user);
 
-        codeRunHandler.runExerciseCreatorValidationCode(principal, creatorValidationMessage);
-        int amountOfExeciseAfterdding = exerciseRepository.findAll().size();
+        codeRunHandler.runExerciseCreatorValidationCode(principal,creatorValidationMessage);
+        int amountOfExeciseAfterdding=exerciseRepository.findAll().size();
 
 
-        Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
-        assertEquals(amountOfExeciseBeforeAdding + 1, amountOfExeciseAfterdding, "no new exercsie was added");
-        assertEquals(title, lastAdded.getExcersizeName());
-        assertEquals(inputType, lastAdded.getInputType());
-        assertEquals(ouptutType, lastAdded.getOutputType());
-        assertEquals(ram, lastAdded.getRam_mb());
-        assertEquals(decritpion, lastAdded.getDescription());
-        assertEquals(userId, lastAdded.getAuthor().getId());
-        assertEquals(Arrays.stream(tests).toList(), lastAdded.getExerciseTests().stream().toList());
+        Excersize lastAdded=exerciseRepository.findAll().get(exerciseRepository.findAll().size()-1);
+        assertEquals(amountOfExeciseBeforeAdding+1,amountOfExeciseAfterdding,"no new exercsie was added");
+        assertEquals(title,lastAdded.getExcersizeName());
+        assertEquals(inputType,lastAdded.getInputType());
+        assertEquals(ouptutType,lastAdded.getOutputType());
+        assertEquals(ram,lastAdded.getRam_mb());
+        assertEquals(decritpion,lastAdded.getDescription());
+        assertEquals(userId,lastAdded.getAuthor().getId());
+        assertEquals(Arrays.stream(tests).toList(),lastAdded.getExerciseTests().stream().toList());
 
 
-        assertEquals(breakCharacterInput, lastAdded.getBreakCharacterInput());
-        assertEquals(lowerCaseInput, lastAdded.getLowerCaseInput());
-        assertEquals(breakCharacterInput, lastAdded.getLowerCaseInput());
-        assertEquals(numberInput, lastAdded.getNumberInput());
-        assertEquals(spaceInput, lastAdded.getSpaceInput());
-        assertEquals(specialCharacterInput, lastAdded.getSpecialCharacterInput());
-        assertEquals(upperCaseInput, lastAdded.getUpperCaseInput());
+        assertEquals(breakCharacterInput,lastAdded.getBreakCharacterInput());
+        assertEquals(lowerCaseInput,lastAdded.getLowerCaseInput());
+        assertEquals(breakCharacterInput,lastAdded.getLowerCaseInput());
+        assertEquals(numberInput,lastAdded.getNumberInput());
+        assertEquals(spaceInput,lastAdded.getSpaceInput());
+        assertEquals(specialCharacterInput,lastAdded.getSpecialCharacterInput());
+        assertEquals(upperCaseInput,lastAdded.getUpperCaseInput());
 
-        assertEquals(lengthRange, lastAdded.getLengthRange());
-        assertEquals(xArrayRange, lastAdded.getXArrayRange());
-        assertEquals(yArrayRange, lastAdded.getYArrayRange());
+        assertEquals(lengthRange,lastAdded.getLengthRange());
+        assertEquals(xArrayRange,lastAdded.getXArrayRange());
+        assertEquals(yArrayRange,lastAdded.getYArrayRange());
 
-        assertEquals(amountOfAutoTests, lastAdded.getAmountOfAutoTests());
-        assertEquals(timeForTask, lastAdded.getTimeForTaskMin());
+        assertEquals(amountOfAutoTests,lastAdded.getAmountOfAutoTests());
+        assertEquals(timeForTask,lastAdded.getTimeForTaskMin());
 
-        assertEquals(maxExecutionTimeMS, lastAdded.getMaxExecutionTimeMS());
+        assertEquals(maxExecutionTimeMS,lastAdded.getMaxExecutionTimeMS());
 
     }
 

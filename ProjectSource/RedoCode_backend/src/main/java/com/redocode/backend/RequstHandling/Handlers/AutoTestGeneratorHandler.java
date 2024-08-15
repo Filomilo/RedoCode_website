@@ -14,7 +14,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
-public class AutoTestGeneratorHandler extends MessageRequestHandler {
+public class AutoTestGeneratorHandler extends  MessageRequestHandler{
+
 
 
     @Override
@@ -24,30 +25,30 @@ public class AutoTestGeneratorHandler extends MessageRequestHandler {
 
     @Override
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
-        this.nodeUpdate(request, "generation", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+        this.nodeUpdate(request,"generation", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
-        CodeTestRequest codeTestRequest = (CodeTestRequest) request;
+        CodeTestRequest codeTestRequest= (CodeTestRequest) request;
 
-        ExerciseTests[] tests = new ExerciseTestFactory()
+        ExerciseTests[] tests= new ExerciseTestFactory()
                 .setAmount(codeTestRequest.getAmountOfAutoTests())
-                .setInputType(codeTestRequest.getInputType())
-                .setLengthRange(codeTestRequest.getLengthRange())
-                .setXArrayRange(codeTestRequest.getXArrayRange())
-                .setYArrayRange(codeTestRequest.getYArrayRange())
-                .setCapitalLetters(codeTestRequest.isUpperCaseInput())
-                .setSpaceCharacters(codeTestRequest.isSpaceInput())
-                .setUnderscoreLetters(codeTestRequest.isLowerCaseInput())
-                .setBreakCharacters(codeTestRequest.isBreakCharacterInput())
-                .setNumbers(codeTestRequest.isNumberInput())
-                .setSpaceCharacters(codeTestRequest.isSpecialCharacterInput())
-                .build();
+                        .setInputType(codeTestRequest.getInputType())
+                                .setLengthRange(codeTestRequest.getLengthRange())
+                                        .setXArrayRange(codeTestRequest.getXArrayRange())
+                                                .setYArrayRange(codeTestRequest.getYArrayRange())
+                                                        .setCapitalLetters(codeTestRequest.isUpperCaseInput())
+                                                                .setSpaceCharacters(codeTestRequest.isSpaceInput())
+                                                                        .setUnderscoreLetters(codeTestRequest.isLowerCaseInput())
+                                                                                .setBreakCharacters(codeTestRequest.isBreakCharacterInput())
+                                                                                        .setNumbers(codeTestRequest.isNumberInput())
+                                                                                                .setSpaceCharacters(codeTestRequest.isSpecialCharacterInput())
+                                                                                                        .build();
 
 
         codeTestRequest.setAutotestsToRun(Arrays.stream(tests).toList());
 
 
-        this.nodeUpdate(request, "generated", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+        this.nodeUpdate(request,"generated", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-        return request;
+                return request;
     }
 }

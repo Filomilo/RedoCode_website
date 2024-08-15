@@ -21,10 +21,11 @@ public class HelathCheckEndPoint {
     @Autowired
     UsersRepository usersRepository;
 
-    Logger logger = LoggerFactory.getLogger(HelathCheckEndPoint.class);
+    Logger logger= LoggerFactory.getLogger(HelathCheckEndPoint.class);
 
     @GetMapping("/public/healthcheck/hello")
-    public ResponseEntity<String> hello(@RequestHeader Map<String, String> headers) {
+    public ResponseEntity<String>  hello(@RequestHeader Map<String, String> headers)
+    {
         // health check
         log.info("hello");
         return ResponseEntity.ok("hello");
@@ -32,7 +33,8 @@ public class HelathCheckEndPoint {
 
 
     @GetMapping("/secure/healthcheck/hello")
-    public ResponseEntity<String> helloSecured() {
+    public ResponseEntity<String> helloSecured()
+    {
         // health check
         log.info("helloSecured");
         return ResponseEntity.ok("hello secret");

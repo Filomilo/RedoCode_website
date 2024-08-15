@@ -17,7 +17,7 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class CoderunnerStateMessage {
-    @JsonProperty
-    CODE_RUNNER_TYPE codeRunnerType;
+@JsonProperty
+CODE_RUNNER_TYPE codeRunnerType;
     CodeRunnerState state;
 }

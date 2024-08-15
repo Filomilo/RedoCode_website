@@ -8,15 +8,13 @@ import lombok.extern.jackson.Jacksonized;
 
 @JsonSerialize
 @JsonDeserialize
-public class ArrayOfStrings extends Variables<String[]> {
+public class ArrayOfStrings  extends Variables<String[]> {
     public ArrayOfStrings(String[] value) {
         super(value);
     }
-
     public ArrayOfStrings() {
         super();
     }
-
     @Override
     @JsonIgnore
     public VARIABLES_TYPES getType() {

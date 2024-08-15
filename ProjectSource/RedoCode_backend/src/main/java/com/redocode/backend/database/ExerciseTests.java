@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Objects;
 
 @Entity
-@Table(name = "exercise_tests")
+@Table(name ="exercise_tests")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,17 +34,20 @@ public class ExerciseTests {
     String input;
     @JsonProperty("expectedOutput")
     @Column(length = 10000)
-    String expectedOutput;
+    String  expectedOutput;
 
 
-    public Variables getParsedInput(Variables.VARIABLES_TYPES inputType) throws JsonProcessingException {
+
+
+
+   public Variables getParsedInput(Variables.VARIABLES_TYPES inputType) throws JsonProcessingException {
 
         ObjectMapper mapper = new ObjectMapper();
-        return RedoCodeObjectMapper.parseVaraibles(this.getInput(), inputType);
+       return RedoCodeObjectMapper.parseVaraibles(this.getInput(),inputType);
     }
 
     public Variables getParsedOutput(Variables.VARIABLES_TYPES outputType) throws JsonProcessingException {
-        return RedoCodeObjectMapper.parseVaraibles(this.getExpectedOutput(), outputType);
+        return RedoCodeObjectMapper.parseVaraibles(this.getExpectedOutput(),outputType);
     }
 
     @Override

@@ -23,11 +23,11 @@ import java.util.Objects;
 public abstract class Variables<T> {
 
     @JsonIgnore
-    private int w = -1;
+    private int w=-1;
     @JsonIgnore
-    private int h = -1;
+    private int h=-1;
 
-    public enum VARIABLES_TYPES {
+   public enum VARIABLES_TYPES {
         SINGLE_INTEGER(0),
         SINGLE_STRING(1),
         SINGLE_FLOAT(2),
@@ -36,43 +36,43 @@ public abstract class Variables<T> {
         ARRAY_OF_FLOATS(5),
         DOUBLE_ARRAY_OF_INTEGERS(6),
         DOUBLE_ARRAY_OF_STRINGS(7),
-        DOUBLE_ARRAY_OF_FLOATS(8);
+       DOUBLE_ARRAY_OF_FLOATS(8);
 
-        private final int id;
+       private final int  id;
+       VARIABLES_TYPES(int i) {
+           id=i;
+       }
+      public int getId()
+       {
+           return id;
+       }
 
-        VARIABLES_TYPES(int i) {
-            id = i;
+       public boolean isInteger()
+       {
+           return id%3==0;
+       }
+       public boolean isString()
+       {
+           return id%3==1;
+       }
+       public boolean isFloat()
+       {
+           return id%3==2;
+       }
+       public boolean isSingle()
+        {
+            return id/3==0;
         }
+       public  boolean isArray()
+       {
+           return id/3==1;
+       }
+       public boolean isDoubleArray()
+       {
+           return id/3==2;
+       }
 
-        public int getId() {
-            return id;
-        }
-
-        public boolean isInteger() {
-            return id % 3 == 0;
-        }
-
-        public boolean isString() {
-            return id % 3 == 1;
-        }
-
-        public boolean isFloat() {
-            return id % 3 == 2;
-        }
-
-        public boolean isSingle() {
-            return id / 3 == 0;
-        }
-
-        public boolean isArray() {
-            return id / 3 == 1;
-        }
-
-        public boolean isDoubleArray() {
-            return id / 3 == 2;
-        }
-
-    }
+   }
 
 
     @Getter
@@ -82,12 +82,14 @@ public abstract class Variables<T> {
 
 
     public void setValue(T value) {
-        this.value = value;
-        if (value instanceof Object[]) {
-            this.w = ((Object[]) value).length;
-            if (value instanceof Object[][]) {
-                this.w = ((Object[][]) value)[0].length;
-                this.h = ((Object[][]) value).length;
+        this.value=value;
+        if(value instanceof Object[])
+        {
+            this.w=((Object[])value).length;
+            if(value instanceof Object[][])
+            {
+                this.w=((Object[][])value)[0].length;
+                this.h=((Object[][])value).length;
             }
         }
     }
@@ -95,12 +97,12 @@ public abstract class Variables<T> {
     public Variables(T value) {
         setValue(value);
     }
-
-    public Variables() {
+    public Variables()
+    {
 
     }
-
     public abstract VARIABLES_TYPES getType();
+
 
 
     @Override
@@ -112,10 +114,10 @@ public abstract class Variables<T> {
     public boolean equals(Object o) {
         Variables<T> variables = (Variables<T>) o;
 //
-        if (getValue() instanceof Object[] && variables.getValue() instanceof Object[]) {
-            Object[] arr = (Object[]) getValue();
-            Object[] arro = (Object[]) variables.getValue();
-            return Arrays.deepEquals(arr, arro);
+        if(getValue() instanceof Object[] && variables.getValue() instanceof Object[]) {
+            Object[] arr= (Object[]) getValue();
+            Object[] arro= (Object[]) variables.getValue();
+            return  Arrays.deepEquals(arr,arro);
         }
 
         return Objects.equals(this.getValue(), variables.getValue());
@@ -129,14 +131,14 @@ public abstract class Variables<T> {
 
     @Override
     public String toString() {
-        if (getValue() instanceof Object[][]) {
-            Object[][] arr = (Object[][]) getValue();
-            StringBuilder builder = new StringBuilder("{\n");
+        if(getValue() instanceof Object[][]) {
+            Object[][] arr= (Object[][]) getValue();
+           StringBuilder builder=new StringBuilder("{\n");
             for (int i = 0; i < arr.length; i++) {
-                for (int j = 0; j < arr[i].length; j++) {
+                for (int j = 0; j < arr[i].length ; j++) {
                     builder.append(arr[i][j]);
-                    if (j < arr[i].length - 1)
-                        builder.append(", ");
+                    if(j<arr[i].length-1)
+                    builder.append(", ");
                 }
                 builder.append("\n");
             }
@@ -144,15 +146,15 @@ public abstract class Variables<T> {
             return builder.toString();
         }
 
-        if (getValue() instanceof Object[]) {
-            Object[] arr = (Object[]) getValue();
-            StringBuilder builder = new StringBuilder("{\n");
+        if(getValue() instanceof Object[]) {
+            Object[] arr= (Object[]) getValue();
+            StringBuilder builder=new StringBuilder("{\n");
             for (int i = 0; i < arr.length; i++) {
-                builder.append(arr[i]);
-                if (i < arr.length - 1)
-                    builder.append(", ");
-            }
-            builder.append("\n");
+                    builder.append(arr[i]);
+                    if(i<arr.length-1)
+                        builder.append(", ");
+                }
+                builder.append("\n");
             builder.append("}");
             return builder.toString();
         }

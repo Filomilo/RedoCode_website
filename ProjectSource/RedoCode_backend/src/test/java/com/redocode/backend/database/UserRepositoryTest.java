@@ -24,21 +24,22 @@ public class UserRepositoryTest {
 
     @Test
     public void testFindByUserName() {
-        String userNameTest = "test";
+        String userNameTest="test";
         User user = User.builder()
                 .type(User.USER_TYPE.AUTHENTICATED)
-                .email("email" + UUID.randomUUID() + "@email.com")
+                .email("email"+ UUID.randomUUID() +"@email.com")
                 .password("password")
                 .nickname(userNameTest)
                 .build();
 
 
-        log.info("user: " + user);
-        //  user=usersRepository.findAll().get(0);
-        log.info("user: " + user);
+
+        log.info("user: "+ user);
+      //  user=usersRepository.findAll().get(0);
+        log.info("user: "+ user);
         usersRepository.save(user);
         User foundUser = usersRepository.findByNickname(userNameTest);
-        log.info("all user: " + Arrays.toString(usersRepository.findAll().toArray()));
+        log.info("all user: "+ Arrays.toString(usersRepository.findAll().toArray()));
         assertNotNull(foundUser);
         assertEquals(userNameTest, foundUser.getNickname());
     }

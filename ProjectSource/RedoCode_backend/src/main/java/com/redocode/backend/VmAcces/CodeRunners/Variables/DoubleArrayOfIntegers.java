@@ -8,15 +8,13 @@ import lombok.extern.jackson.Jacksonized;
 
 @JsonSerialize
 @JsonDeserialize
-public class DoubleArrayOfIntegers extends Variables<Integer[][]> {
-    public DoubleArrayOfIntegers(Integer[][] value) {
+public class DoubleArrayOfIntegers extends Variables<Integer [][]> {
+    public DoubleArrayOfIntegers(Integer [][] value) {
         super(value);
     }
-
     public DoubleArrayOfIntegers() {
         super();
     }
-
     @Override
     @JsonIgnore
     public VARIABLES_TYPES getType() {

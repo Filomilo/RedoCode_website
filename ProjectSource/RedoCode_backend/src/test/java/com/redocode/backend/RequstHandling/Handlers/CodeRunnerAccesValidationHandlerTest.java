@@ -26,40 +26,39 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
-@DisabledOnOs(OS.LINUX)
-// tests notwroking under github pipileine
+@DisabledOnOs(OS.LINUX)// tests notwroking under github pipileine
 //@Disabled("Not wokrking in gihtub pipleine eveneroment")
 class CodeRunnerAccessValidationHandlerTest {
 
-    @Autowired
-    RedoCodeController redoCodeController;
-    @Autowired
+        @Autowired
+           RedoCodeController redoCodeController;
+@Autowired
     CodeRunnersController codeRunnersController;
-    @Autowired
+@Autowired
     UsersRepository usersRepository;
     CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler;
-    User user;
-    User authorizedUser;
-
+User user;
+User authorizedUser;
     @BeforeEach
-    public void registerUser() {
+    public void registerUser()
+    {
         codeRunnersController.reset();
-        user = new User("555" + UUID.randomUUID());
+        user=new User("555"+ UUID.randomUUID());
         redoCodeController.addConnectedUser(user);
 
-        authorizedUser = usersRepository.getReferenceById(1L);
-        authorizedUser.setSessionID("222222222" + UUID.randomUUID());
+        authorizedUser=usersRepository.getReferenceById(1L);
+        authorizedUser.setSessionID("222222222"+ UUID.randomUUID());
         redoCodeController.addConnectedUser(authorizedUser);
 
     }
-
     @BeforeEach
-    public void cerateHandler() {
-        codeRunnerAccesValidationHandler = new CodeRunnerAccesValidationHandler();
+    public void cerateHandler()
+    {
+      codeRunnerAccesValidationHandler=new CodeRunnerAccesValidationHandler();
     }
-
     @AfterEach
-    public void deregisterUser() {
+    public void deregisterUser()
+    {
         redoCodeController.removeConnectedUser(user);
         redoCodeController.removeConnectedUser(authorizedUser);
     }
@@ -69,22 +68,22 @@ class CodeRunnerAccessValidationHandlerTest {
 
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
-        RawCodeRunRequest rawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .ram(512)
                 .user(user)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         VmStatus statusAfter = codeRunnersController.getUserVmStatus(user);
-        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
+        CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(user);
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
-        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER, codeRunner.getType());
-        assertEquals(512, codeRunner.getRamMb());
+        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER,codeRunner.getType());
+        assertEquals(512,codeRunner.getRamMb());
     }
 
 
@@ -92,22 +91,22 @@ class CodeRunnerAccessValidationHandlerTest {
     void handleJsRequest() {
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
-        RawCodeRunRequest rawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(user)
                 .ram(128)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         VmStatus statusAfter = codeRunnersController.getUserVmStatus(user);
-        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
+        CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(user);
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, codeRunner.getType());
-        assertEquals(128, codeRunner.getRamMb());
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunner.getType());
+        assertEquals(128,codeRunner.getRamMb());
     }
 
     @Test
@@ -116,33 +115,34 @@ class CodeRunnerAccessValidationHandlerTest {
         assertNotNull(codeRunnerAccesValidationHandler);
 
 
+
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
-        RawCodeRunRequest rawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .ram(128)
                 .user(user)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         Thread.sleep(1000);
         VmStatus statusAfter = codeRunnersController.getUserVmStatus(user);
-        CodeRunner codeRunnerFirst = codeRunnersController.getUserCodeRunner(user);
+        CodeRunner codeRunnerFirst= codeRunnersController.getUserCodeRunner(user);
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         Thread.sleep(1000);
         VmStatus statusAfterSecond = codeRunnersController.getUserVmStatus(user);
-        CodeRunner codeRunnerSecond = codeRunnersController.getUserCodeRunner(user);
+        CodeRunner codeRunnerSecond= codeRunnersController.getUserCodeRunner(user);
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfterSecond);
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, codeRunnerFirst.getType());
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, codeRunnerSecond.getType());
-        assertEquals(codeRunnerFirst, codeRunnerSecond);
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerFirst.getType());
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerSecond.getType());
+        assertEquals(codeRunnerFirst,codeRunnerSecond);
     }
 
     @SneakyThrows
@@ -151,7 +151,7 @@ class CodeRunnerAccessValidationHandlerTest {
         assertNotNull(codeRunnerAccesValidationHandler);
 
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
-        RawCodeRunRequest firstRawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest firstRawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .ram(128)
@@ -159,7 +159,7 @@ class CodeRunnerAccessValidationHandlerTest {
                 .timeForExecution(50L)
                 .build();
 
-        RawCodeRunRequest secondRawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest secondRawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .ram(512)
@@ -167,35 +167,35 @@ class CodeRunnerAccessValidationHandlerTest {
                 .timeForExecution(100L)
                 .build();
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(firstRawCodeRunRequest);
         });
 
         VmStatus statusAfter = codeRunnersController.getUserVmStatus(user);
-        CodeRunner codeRunnerFirst = codeRunnersController.getUserCodeRunner(user);
-        int FirstCodeRunnerRam = codeRunnerFirst.getRamMb();
-        CODE_RUNNER_TYPE firstCodeRunnerType = codeRunnerFirst.getType();
+        CodeRunner codeRunnerFirst= codeRunnersController.getUserCodeRunner(user);
+        int FirstCodeRunnerRam= codeRunnerFirst.getRamMb();
+        CODE_RUNNER_TYPE firstCodeRunnerType= codeRunnerFirst.getType();
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(secondRawCodeRunRequest);
         });
         VmStatus statusAfterSecond = codeRunnersController.getUserVmStatus(user);
-        CodeRunner codeRunnerSecond = codeRunnersController.getUserCodeRunner(user);
-        int SecondCodeRunnerRam = codeRunnerSecond.getRamMb();
-        CODE_RUNNER_TYPE secondCodeRunnerType = codeRunnerSecond.getType();
+        CodeRunner codeRunnerSecond= codeRunnersController.getUserCodeRunner(user);
+        int SecondCodeRunnerRam= codeRunnerSecond.getRamMb();
+        CODE_RUNNER_TYPE secondCodeRunnerType= codeRunnerSecond.getType();
 
 //        assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
 //        assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
 //        assertEquals(VmStatus.RUNNING_MACHINE, statusAfterSecond);
 
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, codeRunnerFirst.getType());
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, codeRunnerSecond.getType());
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerFirst.getType());
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunnerSecond.getType());
 
 
-        assertEquals(128, FirstCodeRunnerRam);
-        assertEquals(512, SecondCodeRunnerRam);
-
-        assertNotEquals(codeRunnerFirst, codeRunnerSecond);
+        assertEquals(128,FirstCodeRunnerRam);
+        assertEquals(512,SecondCodeRunnerRam);
+        
+        assertNotEquals (codeRunnerFirst,codeRunnerSecond);
 
     }
 
@@ -203,38 +203,38 @@ class CodeRunnerAccessValidationHandlerTest {
     void handleSwitchingRequest() {
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(user);
-        RawCodeRunRequest rawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(user)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         VmStatus statusAfterCpp = codeRunnersController.getUserVmStatus(user);
-        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
-        CODE_RUNNER_TYPE typeAfterCpp = codeRunner.getType();
+        CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(user);
+        CODE_RUNNER_TYPE typeAfterCpp=codeRunner.getType();
 
-        RawCodeRunRequest rawCodeRunRequestJS = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequestJS= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(user)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequestJS);
         });
         VmStatus statusAfterJs = codeRunnersController.getUserVmStatus(user);
-        codeRunner = codeRunnersController.getUserCodeRunner(user);
-        CODE_RUNNER_TYPE typeAfterJs = codeRunner.getType();
+        codeRunner= codeRunnersController.getUserCodeRunner(user);
+        CODE_RUNNER_TYPE typeAfterJs=codeRunner.getType();
 
 
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfterCpp);
-        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER, typeAfterCpp);
+        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER,typeAfterCpp);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfterJs);
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, typeAfterJs);
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,typeAfterJs);
     }
 
 
@@ -244,80 +244,79 @@ class CodeRunnerAccessValidationHandlerTest {
 
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(authorizedUser);
-        RawCodeRunRequest rawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(authorizedUser)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         Thread.sleep(1000);
         VmStatus statusAfter = codeRunnersController.getUserVmStatus(authorizedUser);
-        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(authorizedUser);
+        CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(authorizedUser);
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
-        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER, codeRunner.getType());
+        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER,codeRunner.getType());
     }
-
     @SneakyThrows
     @Test
     void handleJsRequestAuthorized() {
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(authorizedUser);
-        RawCodeRunRequest rawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .timeForExecution(500L)
                 .user(authorizedUser)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         VmStatus statusAfter = codeRunnersController.getUserVmStatus(authorizedUser);
-        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(authorizedUser);
+        CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(authorizedUser);
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfter);
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, codeRunner.getType());
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,codeRunner.getType());
     }
 
     @Test
     void handleSwitchingRequestAuthirzed() {
         assertNotNull(codeRunnerAccesValidationHandler);
         VmStatus statusOnBeging = codeRunnersController.getUserVmStatus(authorizedUser);
-        RawCodeRunRequest rawCodeRunRequest = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequest= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(authorizedUser)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequest);
         });
         VmStatus statusAfterCpp = codeRunnersController.getUserVmStatus(authorizedUser);
-        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(authorizedUser);
-        CODE_RUNNER_TYPE typeAfterCpp = codeRunner.getType();
+        CodeRunner codeRunner= codeRunnersController.getUserCodeRunner(authorizedUser);
+        CODE_RUNNER_TYPE typeAfterCpp=codeRunner.getType();
 
-        RawCodeRunRequest rawCodeRunRequestJS = (RawCodeRunRequest) RawCodeRunRequest
+        RawCodeRunRequest rawCodeRunRequestJS= (RawCodeRunRequest) RawCodeRunRequest
                 .builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .user(authorizedUser)
                 .timeForExecution(500L)
                 .build();
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             codeRunnerAccesValidationHandler.handle(rawCodeRunRequestJS);
         });
         VmStatus statusAfterJs = codeRunnersController.getUserVmStatus(authorizedUser);
-        codeRunner = codeRunnersController.getUserCodeRunner(authorizedUser);
-        CODE_RUNNER_TYPE typeAfterJs = codeRunner.getType();
+        codeRunner= codeRunnersController.getUserCodeRunner(authorizedUser);
+        CODE_RUNNER_TYPE typeAfterJs=codeRunner.getType();
 
 
         assertEquals(VmStatus.NOT_REQUESTED, statusOnBeging);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfterCpp);
-        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER, typeAfterCpp);
+        assertEquals(CODE_RUNNER_TYPE.CPP_RUNNER,typeAfterCpp);
         assertEquals(VmStatus.RUNNING_MACHINE, statusAfterJs);
-        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER, typeAfterJs);
+        assertEquals(CODE_RUNNER_TYPE.JS_RUNNER,typeAfterJs);
     }
 
 }

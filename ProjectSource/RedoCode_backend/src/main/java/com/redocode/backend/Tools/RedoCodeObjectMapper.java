@@ -16,9 +16,10 @@ import lombok.SneakyThrows;
 import java.util.HashMap;
 
 public class RedoCodeObjectMapper {
-    public static ObjectMapper mapper = new ObjectMapper();
+    public static  ObjectMapper mapper = new ObjectMapper();
 
     public static ExerciseCreationRequest toExerciseCreationRequest(ExerciseCreatorValidationMessage exerciseCreatorValidationMessage, User user) {
+
 
 
         return ExerciseCreationRequest.builder()
@@ -55,9 +56,10 @@ public class RedoCodeObjectMapper {
 
     }
 
-    public static CodeTestRequest toExerciseTestsRunRequest(ExerciseTestToRunMesseage request, User user, CODE_RUNNER_TYPE codeRunnerType) {
-        HashMap<CODE_RUNNER_TYPE, String> solutions = new HashMap<CODE_RUNNER_TYPE, String>();
-        solutions.put(codeRunnerType, request.getCode());
+    public static CodeTestRequest toExerciseTestsRunRequest(ExerciseTestToRunMesseage request, User user,CODE_RUNNER_TYPE codeRunnerType)
+    {
+        HashMap<CODE_RUNNER_TYPE,String> solutions =new HashMap<CODE_RUNNER_TYPE,String>();
+        solutions.put(codeRunnerType,request.getCode());
         return CodeTestRequest
                 .builder()
                 .user(user)
@@ -82,36 +84,27 @@ public class RedoCodeObjectMapper {
                 .build();
     }
 
-    static public Variables parseVaraibles(String toParse, Variables.VARIABLES_TYPES type) throws JsonProcessingException {
+    static public  Variables parseVaraibles(String toParse, Variables.VARIABLES_TYPES type) throws JsonProcessingException {
         com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-        Variables input = null;
+        Variables input=null;
         switch (type) {
-            case SINGLE_INTEGER -> {
-                input = new SingleInteger(mapper.readValue(toParse, Integer.class));
+            case SINGLE_INTEGER -> {input=new SingleInteger(mapper.readValue(toParse, Integer.class));
             }
-            case SINGLE_STRING -> {
-                input = new SingleString(mapper.readValue(toParse, String.class));
+            case SINGLE_STRING -> {input=new SingleString(mapper.readValue(toParse, String.class));
             }
-            case SINGLE_FLOAT -> {
-                input = new SingleFloat(mapper.readValue(toParse, Float.class));
+            case SINGLE_FLOAT -> {input=new SingleFloat(mapper.readValue(toParse, Float.class));
             }
-            case ARRAY_OF_INTEGERS -> {
-                input = new ArrayOfIntegers(mapper.readValue(toParse, Integer[].class));
+            case ARRAY_OF_INTEGERS -> {input=new ArrayOfIntegers(mapper.readValue(toParse,Integer[].class));
             }
-            case ARRAY_STRINGS -> {
-                input = new ArrayOfStrings(mapper.readValue(toParse, String[].class));
+            case ARRAY_STRINGS -> {input=new ArrayOfStrings(mapper.readValue(toParse,  String[].class));
             }
-            case ARRAY_OF_FLOATS -> {
-                input = new ArrayOfFloats(mapper.readValue(toParse, Float[].class));
+            case ARRAY_OF_FLOATS -> {input= new ArrayOfFloats(mapper.readValue(toParse,  Float[].class));
             }
-            case DOUBLE_ARRAY_OF_INTEGERS -> {
-                input = new DoubleArrayOfIntegers(mapper.readValue(toParse, Integer[][].class));
+            case DOUBLE_ARRAY_OF_INTEGERS -> {input=new DoubleArrayOfIntegers(mapper.readValue(toParse, Integer[][].class));
             }
-            case DOUBLE_ARRAY_OF_FLOATS -> {
-                input = new DoubleArrayOfFloats(mapper.readValue(toParse, Float[][].class));
+            case DOUBLE_ARRAY_OF_FLOATS -> {input=new DoubleArrayOfFloats(mapper.readValue(toParse, Float[][].class)) ;
             }
-            case DOUBLE_ARRAY_OF_STRINGS -> {
-                input = new DoubleArrayOfStrings(mapper.readValue(toParse, String[][].class));
+            case DOUBLE_ARRAY_OF_STRINGS -> {input=new DoubleArrayOfStrings(mapper.readValue(toParse,  String[][].class));
             }
         }
         return input;
@@ -121,9 +114,8 @@ public class RedoCodeObjectMapper {
     public static String VarAsString(Variables variables) throws JsonProcessingException {
         return mapper.writeValueAsString(variables.getValue());
     }
-
-    @SneakyThrows
+@SneakyThrows
     public static Variables parseVaraibles(byte[] bytes, Variables.VARIABLES_TYPES variablesTypes) {
-        return parseVaraibles(new String(bytes), variablesTypes);
+        return  parseVaraibles(new String(bytes),variablesTypes);
     }
 }

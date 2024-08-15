@@ -71,7 +71,6 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
     @LocalServerPort
     int port;
-
     @Override
     protected String getWebSocketUri() {
         return getWebSocketUri(port);
@@ -85,12 +84,11 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     @Autowired
     RedoCodeController redoCodeController;
 
-    static final String WEBSOCKET_TOPIC_DESTIN = "/public/app" + INrunExerciseCreatorValidationCode;
+    static final String WEBSOCKET_TOPIC_DESTIN = "/public/app"+INrunExerciseCreatorValidationCode;
     final static ObjectMapper objectMapper = new ObjectMapper();
-
     @BeforeEach
     void setUp() {
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             super.setup();
         });
     }
@@ -98,27 +96,27 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     @Test
     void runExerciseCreatorValidationCode() throws InterruptedException, JsonProcessingException {
         subscribe("/user/public/topic/ExecutionResponses");
-        Long userId = 1L;
-        Variables.VARIABLES_TYPES inputType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-        Variables.VARIABLES_TYPES ouptutType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-        int ram = 1024;
-        String title = "Exercise";
-        String decritpion = "Descritpion";
-        int amountOfAutoTests = 8;
-        boolean breakCharacterInput = true;
-        Range lengthRange = new Range(0F, 20F);
-        boolean lowerCaseInput = true;
-        boolean numberInput = true;
-        boolean spaceInput = true;
-        boolean specialCharacterInput = true;
-        boolean upperCaseInput = true;
-        Range xArrayRange = new Range(1F, 20F);
-        Range yArrayRange = new Range(1F, 20F);
-        long timeForTask = 60L;
-        Long maxExecutionTimeMS = 1000L;
+        Long userId=1L;
+        Variables.VARIABLES_TYPES inputType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+        Variables.VARIABLES_TYPES ouptutType= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+        int ram=1024;
+        String title="Exercise";
+        String decritpion="Descritpion";
+        int amountOfAutoTests=8;
+        boolean breakCharacterInput=true;
+        Range lengthRange=new Range(0F,20F);
+        boolean lowerCaseInput=true;
+        boolean numberInput=true;
+        boolean spaceInput=true;
+        boolean specialCharacterInput=true;
+        boolean upperCaseInput=true;
+        Range xArrayRange= new Range(1F,20F);
+        Range yArrayRange=new Range(1F,20F);
+        long timeForTask= 60L;
+        Long maxExecutionTimeMS=1000L;
 
         //exercise chain template
-        List<ChainNodeInfo> correctNewWxecisehainList = new ArrayList<>();
+        List<ChainNodeInfo> correctNewWxecisehainList=new ArrayList<>();
         correctNewWxecisehainList.add(ChainNodeInfo.builder()
                 .nodeName("Validating user permissions")
                 .processingMessage("Pending")
@@ -151,8 +149,9 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                 .build());
 
 
-        HashMap<CODE_RUNNER_TYPE, String> solutionCodes = new HashMap<>() {{
-            put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +
+        HashMap<CODE_RUNNER_TYPE,String> solutionCodes=new HashMap<>()
+        {{
+            put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
                     "#include <vector>\n" +
                     "#include <string>\n" +
                     "\n" +
@@ -160,9 +159,9 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                     "{\n" +
                     "    return in;\n" +
                     "}");
-            put(CODE_RUNNER_TYPE.JS_RUNNER, "function solution(array){return array;}");
+            put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return array;}");
         }};
-        ExerciseTests[] tests = new ExerciseTests[]{
+        ExerciseTests[] tests= new ExerciseTests[]{
                 ExerciseTests.builder()
                         .expectedOutput("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
                         .input("{\"value\": [[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]}")
@@ -177,10 +176,11 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         };
 
 
-        int amountOfExeciseBeforeAdding = exerciseRepository.findAll().size();
+        int amountOfExeciseBeforeAdding=exerciseRepository.findAll().size();
 
 
-        ExerciseCreatorValidationMessage creatorValidationMessage =
+
+        ExerciseCreatorValidationMessage creatorValidationMessage=
                 ExerciseCreatorValidationMessage.builder()
                         .title(title)
                         .description(decritpion)
@@ -204,22 +204,25 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
                         .build();
 
 
-        session.send(WEBSOCKET_TOPIC_DESTIN, mapper.writeValueAsBytes(creatorValidationMessage));
-        log.info("messge send to " + WEBSOCKET_TOPIC_DESTIN + " OF content: " + mapper.writeValueAsString(creatorValidationMessage));
+
+        session.send(WEBSOCKET_TOPIC_DESTIN, mapper.writeValueAsBytes (creatorValidationMessage) );
+        log.info("messge send to "+ WEBSOCKET_TOPIC_DESTIN+" OF content: "+mapper.writeValueAsString(creatorValidationMessage));
 
 
         Thread.sleep(2000);
 
 
+
+
         //checing messages
         assertEquals(
-                ExecutionChainScheme.builder()
-                        .levels(correctNewWxecisehainList)
-                        .messageType(ExecutionResponseBase.EXECUTION_RESPONSE_TYPE.CHAIN_SCHEME)
-                        .build(),
-                (ExecutionChainScheme) objectMapper.readValue(
-                        blockingQueue.poll(20, SECONDS)
-                        , ExecutionChainScheme.class
+        ExecutionChainScheme.builder()
+                .levels(correctNewWxecisehainList)
+                .messageType(ExecutionResponseBase.EXECUTION_RESPONSE_TYPE.CHAIN_SCHEME)
+                .build(),
+                (ExecutionChainScheme)objectMapper.readValue(
+                blockingQueue.poll(20, SECONDS)
+                ,ExecutionChainScheme.class
                 )
         );
 
@@ -227,31 +230,31 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 ///todo: siplyfy await form
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("Checking user type")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(0)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("Correct user type")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
                                     .stepUpdate(0)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
@@ -259,123 +262,123 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("Checking exercise information")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(1)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("Correct exercise setup")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
                                     .stepUpdate(1)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("generation")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(2)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("generated")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
                                     .stepUpdate(2)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("preparation")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(3)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("prepared tests")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
                                     .stepUpdate(3)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
 
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("validating access to CPP_RUNNER")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("Validated access to CPP_RUNNER")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
 
@@ -383,145 +386,159 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("running CPP_RUNNER tests")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("correct CPP_RUNNER tests")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("validating access to JS_RUNNER")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
 
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("Validated access to JS_RUNNER")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("running JS_RUNNER tests")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("correct JS_RUNNER tests")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("tests finished correctly")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
                                     .stepUpdate(4)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
 
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("saving to database")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING)
                                     .stepUpdate(5)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(200, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
                 });
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
+                .untilAsserted(() ->{
 
                     assertEquals(ExecutionResponseStatusUpdate.builder()
                                     .message("saved to database")
                                     .lvlStatus(ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS)
                                     .stepUpdate(5)
                                     .build()
-                            , objectMapper.readValue(
+                            ,objectMapper.readValue(
                                     blockingQueue.poll(100, SECONDS)
-                                    , ExecutionResponseStatusUpdate.class
+                                    ,ExecutionResponseStatusUpdate.class
                             )
                     );
 
                 });
 
 
-        int amountOfExeciseAfterdding = exerciseRepository.findAll().size();
-        Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
+        int amountOfExeciseAfterdding=exerciseRepository.findAll().size();
+        Excersize lastAdded=exerciseRepository.findAll().get(exerciseRepository.findAll().size()-1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //        assertEquals(amountOfExeciseBeforeAdding+1,amountOfExeciseAfterdding,"no new exercsie was added");
@@ -552,50 +569,55 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 //        assertEquals(maxExecutionTimeMS,lastAdded.getMaxExecutionTimeMS());
 
 
+
+
+
+
     }
 
 
     @Test
     void rawCppHelloWorld() throws InterruptedException, JsonProcessingException {
         subscribe("/user/public/topic/codeRunnerResults");
-        CodeRunnerRequestMessage codeRunnerRequestMessage = CodeRunnerRequestMessage.builder()
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
                 .CodeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .build();
 
-        RawCodeToRunMessage rawCodeToRunMessage = RawCodeToRunMessage.builder()
+        RawCodeToRunMessage rawCodeToRunMessage=RawCodeToRunMessage.builder()
                 .code("#include <iostream>\n" +
                         "int main(){\n" +
                         "std::cout<<\"Hello world\";\n" +
                         "}")
                 .build();
 
-        session.send("/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
         TimeUnit.SECONDS.sleep(2);
-        session.send("/public/app" + INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
-        log.info("messge send to " + "/app" + INrunRawCode);
+        session.send( "/public/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
+        log.info("messge send to " + "/app"+INrunRawCode);
 
         ProgramResult correctResults = ProgramResult.builder()
-                .consoleOutput(ConsoleOutput.builder()
-                        .errorOutput("")
-                        .exitCode(0)
-                        .output("Hello world")
-                        .build())
-                .variables(null)
+                        .consoleOutput(ConsoleOutput.builder()
+                                .errorOutput("")
+                                .exitCode(0)
+                                .output("Hello world")
+                                .build())
+                        .variables(null)
                 .build();
 
 
         await()
                 .atMost(60, SECONDS)
-                .untilAsserted(() -> {
-                    ProgramResultsMessage result = objectMapper.readValue(
+                .untilAsserted(() ->{
+                    ProgramResultsMessage result=objectMapper.readValue(
                             blockingQueue.poll(100, SECONDS)
-                            , ProgramResultsMessage.class);
-                    ;
+                            , ProgramResultsMessage.class);;
 
-                    assertEquals(1, result.getResults().size());
+                    assertEquals(1,result.getResults().size());
                     assertEquals(correctResults, result.getResults().get(0));
 
                 });
+
+
 
 
     }
@@ -603,20 +625,20 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     @Test
     void rawJsHelloWorld() throws InterruptedException, JsonProcessingException {
         subscribe("/user/public/topic/codeRunnerResults");
-        CodeRunnerRequestMessage codeRunnerRequestMessage = CodeRunnerRequestMessage.builder()
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
                 .CodeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .build();
 
-        RawCodeToRunMessage rawCodeToRunMessage = RawCodeToRunMessage.builder()
+        RawCodeToRunMessage rawCodeToRunMessage=RawCodeToRunMessage.builder()
                 .code("console.log(\"Hello world\")")
                 .build();
 
-        session.send("/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
-        log.info("messge send to /public/app/codeRunnerRequest with content: " + mapper.writeValueAsString(codeRunnerRequestMessage));
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        log.info("messge send to /public/app/codeRunnerRequest with content: "+ mapper.writeValueAsString(codeRunnerRequestMessage));
 
         TimeUnit.SECONDS.sleep(2);
-        session.send("/public/app" + INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
-        log.info("messge send to " + "/public/app" + INrunRawCode + " with content: " + mapper.writeValueAsString(rawCodeToRunMessage));
+        session.send( "/public/app"+INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
+        log.info("messge send to " + "/public/app"+INrunRawCode+" with content: "+ mapper.writeValueAsString(rawCodeToRunMessage));
 
 //        Thread.sleep(3000);
 
@@ -631,13 +653,12 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
         await()
                 .atMost(50, SECONDS)
-                .untilAsserted(() -> {
-                    ProgramResultsMessage result = objectMapper.readValue(
-                            blockingQueue.poll(60, SECONDS)
-                            , ProgramResultsMessage.class);
-                    ;
+                .untilAsserted(() ->{
+                    ProgramResultsMessage result=objectMapper.readValue(
+                            blockingQueue.poll(60,SECONDS)
+                            , ProgramResultsMessage.class);;
 
-                    assertEquals(1, result.getResults().size());
+                    assertEquals(1,result.getResults().size());
                     assertEquals(correctResults, result.getResults().get(0));
 
                 });
@@ -645,14 +666,17 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
 
     @ParameterizedTest
-    @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#multipleDoubleArrayFloatProvider")
+    @MethodSource ("com.redocode.backend.DataProviders.ValuesProvider#multipleDoubleArrayFloatProvider")
     void ruNExerciseTestCodesJsReturnTheSame(List<Float[][]> inputs) throws InterruptedException, JsonProcessingException {
 
 
-        int amountOfAutoTests = 4;
-        List<ExerciseTests> tests =
+
+
+
+        int amountOfAutoTests=4;
+        List<ExerciseTests> tests=
                 new ArrayList<>();
-        for (int i = 0; i < inputs.size(); i++) {
+        for(int i=0;i<inputs.size();i++){
             tests.add(
                     ExerciseTests.builder()
                             .input(objectMapper.writeValueAsString(inputs.get(i)))
@@ -662,59 +686,60 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         }
 
 
+
         TimeUnit.SECONDS.sleep(2);
 
         subscribe("/user/public/topic/codeRunnerResults");
-        CodeRunnerRequestMessage codeRunnerRequestMessage = CodeRunnerRequestMessage.builder()
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
                 .CodeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .build();
 
-        ExerciseTestToRunMesseage exerciseTestToRunMesseage = ExerciseTestToRunMesseage.builder()
+        ExerciseTestToRunMesseage exerciseTestToRunMesseage=ExerciseTestToRunMesseage.builder()
                 .code("function solution(x)\n{\nreturn x;\n}")
                 .amountOfAutoTests(amountOfAutoTests)
-                .lengthRange(new Range(-3, 6))
+                .lengthRange(new Range(-3,6))
                 .inputType(String.valueOf(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS))
                 .manualTests(tests)
                 .executionTime(200L)
                 .outputType(String.valueOf(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS))
-                .xArrayRange(new Range(1, 7))
-                .yArrayRange(new Range(4, 8))
-                .lengthRange(new Range(-444, 555))
-                .build();
+                .xArrayRange(new Range(1,7))
+                .yArrayRange(new Range(4,8))
+                .lengthRange(new Range(-444,555))
+                                .build();
 
-        session.send("/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
-        log.info("messge send to /public/app/codeRunnerRequest with content: " + mapper.writeValueAsString(codeRunnerRequestMessage));
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        log.info("messge send to /public/app/codeRunnerRequest with content: "+ mapper.writeValueAsString(codeRunnerRequestMessage));
 
-        String reqMes = mapper.writeValueAsString(codeRunnerRequestMessage);
-        log.info("reqMes: \n" + reqMes);
+        String reqMes=mapper.writeValueAsString(codeRunnerRequestMessage);
+        log.info("reqMes: \n"+ reqMes);
         TimeUnit.SECONDS.sleep(2);
 
-        String mess = mapper.writeValueAsString(exerciseTestToRunMesseage);
-        log.info("Messeage: \n" + mess);
+        String mess=mapper.writeValueAsString(exerciseTestToRunMesseage);
+        log.info("Messeage: \n"+ mess);
 
-        session.send("/public/app" + INrunExercsieTestsCode, mapper.writeValueAsBytes(exerciseTestToRunMesseage));
-        log.info("messge send to " + "/public/app" + INrunRawCode + " with content: " + mapper.writeValueAsString(exerciseTestToRunMesseage));
+        session.send( "/public/app"+INrunExercsieTestsCode, mapper.writeValueAsBytes(exerciseTestToRunMesseage));
+        log.info("messge send to " + "/public/app"+INrunRawCode+" with content: "+ mapper.writeValueAsString(exerciseTestToRunMesseage));
 
 //        Thread.sleep(3000);
 
-        String results =
-                blockingQueue.poll(60, SECONDS);
+        String results=
+                blockingQueue.poll(60,SECONDS);
 
         assertNotNull(results);
-        assertTrue(results != "");
+        assertTrue(results!="");
 
-        log.info(
-                "results: \n\n\n" + results + "\n\n\n\n\n"
-        );
+      log.info(
+              "results: \n\n\n"+results+"\n\n\n\n\n"
+      );
 
         int i = 0;
         Pattern p = Pattern.compile("consoleOutput");
-        Matcher m = p.matcher(results);
+        Matcher m = p.matcher( results );
         while (m.find()) {
             i++;
         }
-        log.info("input size: " + inputs.size());
-        assertEquals(amountOfAutoTests + inputs.size(), i);
+        log.info("input size: "+ inputs.size());
+        assertEquals(amountOfAutoTests+inputs.size(), i);
 
     }
 
@@ -723,16 +748,19 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     void ruNExerciseTestCodesJsReturnOneINcorrect() throws InterruptedException, JsonProcessingException {
 
 
-        int amountOfAutoTests = 4;
-        List<ExerciseTests> tests =
+
+
+
+        int amountOfAutoTests=4;
+        List<ExerciseTests> tests=
                 new ArrayList<>();
 
-        tests.add(
-                ExerciseTests.builder()
-                        .input(objectMapper.writeValueAsString(new SingleInteger(1)))
-                        .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(1)))
-                        .build()
-        );
+            tests.add(
+                    ExerciseTests.builder()
+                            .input(objectMapper.writeValueAsString(new SingleInteger(1)))
+                            .expectedOutput(objectMapper.writeValueAsString(new SingleInteger(1)))
+                            .build()
+            );
         tests.add(
                 ExerciseTests.builder()
                         .input(objectMapper.writeValueAsString(new SingleInteger(1)))
@@ -765,59 +793,60 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         );
 
 
+
         TimeUnit.SECONDS.sleep(2);
 
         subscribe("/user/public/topic/codeRunnerResults");
-        CodeRunnerRequestMessage codeRunnerRequestMessage = CodeRunnerRequestMessage.builder()
+        CodeRunnerRequestMessage codeRunnerRequestMessage=CodeRunnerRequestMessage.builder()
                 .CodeRunnerType(CODE_RUNNER_TYPE.JS_RUNNER)
                 .build();
 
-        ExerciseTestToRunMesseage exerciseTestToRunMesseage = ExerciseTestToRunMesseage.builder()
+        ExerciseTestToRunMesseage exerciseTestToRunMesseage=ExerciseTestToRunMesseage.builder()
                 .code("function solution(x)\n{\nreturn 1;\n}")
                 .amountOfAutoTests(amountOfAutoTests)
-                .lengthRange(new Range(-3, 6))
+                .lengthRange(new Range(-3,6))
                 .inputType(String.valueOf(Variables.VARIABLES_TYPES.SINGLE_INTEGER))
                 .manualTests(tests)
                 .executionTime(200L)
                 .outputType(String.valueOf(Variables.VARIABLES_TYPES.SINGLE_INTEGER))
-                .xArrayRange(new Range(1, 7))
-                .yArrayRange(new Range(4, 8))
-                .lengthRange(new Range(-444, 555))
+                .xArrayRange(new Range(1,7))
+                .yArrayRange(new Range(4,8))
+                .lengthRange(new Range(-444,555))
                 .build();
 
-        session.send("/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
-        log.info("messge send to /public/app/codeRunnerRequest with content: " + mapper.writeValueAsString(codeRunnerRequestMessage));
+        session.send( "/public/app/codeRunnerRequest", mapper.writeValueAsBytes(codeRunnerRequestMessage));
+        log.info("messge send to /public/app/codeRunnerRequest with content: "+ mapper.writeValueAsString(codeRunnerRequestMessage));
 
-        String reqMes = mapper.writeValueAsString(codeRunnerRequestMessage);
-        log.info("reqMes: \n" + reqMes);
+        String reqMes=mapper.writeValueAsString(codeRunnerRequestMessage);
+        log.info("reqMes: \n"+ reqMes);
         TimeUnit.SECONDS.sleep(2);
 
-        String mess = mapper.writeValueAsString(exerciseTestToRunMesseage);
-        log.info("Messeage: \n" + mess);
+        String mess=mapper.writeValueAsString(exerciseTestToRunMesseage);
+        log.info("Messeage: \n"+ mess);
 
-        session.send("/public/app" + INrunExercsieTestsCode, mapper.writeValueAsBytes(exerciseTestToRunMesseage));
-        log.info("messge send to " + "/public/app" + INrunRawCode + " with content: " + mapper.writeValueAsString(exerciseTestToRunMesseage));
+        session.send( "/public/app"+INrunExercsieTestsCode, mapper.writeValueAsBytes(exerciseTestToRunMesseage));
+        log.info("messge send to " + "/public/app"+INrunRawCode+" with content: "+ mapper.writeValueAsString(exerciseTestToRunMesseage));
 
 //        Thread.sleep(3000);
 
-        String results =
-                blockingQueue.poll(60, SECONDS);
+        String results=
+                blockingQueue.poll(60,SECONDS);
 
         assertNotNull(results);
-        assertTrue(results != "");
+        assertTrue(results!="");
 
         log.info(
-                "results: \n\n\n" + results + "\n\n\n\n\n"
+                "results: \n\n\n"+results+"\n\n\n\n\n"
         );
 
         int i = 0;
         Pattern p = Pattern.compile("consoleOutput");
-        Matcher m = p.matcher(results);
+        Matcher m = p.matcher( results );
         while (m.find()) {
             i++;
         }
-        log.info("input size: " + tests.size());
-        assertEquals(tests.size() - 1, i);
+        log.info("input size: "+ tests.size());
+        assertEquals(tests.size()-1, i);
 
     }
 

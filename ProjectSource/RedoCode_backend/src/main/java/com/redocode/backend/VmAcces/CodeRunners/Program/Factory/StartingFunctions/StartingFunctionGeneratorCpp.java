@@ -7,8 +7,8 @@ import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 public class StartingFunctionGeneratorCpp implements StartingFunctionGenerator {
     @Override
     public String getStartingFunction(Variables.VARIABLES_TYPES inputType, Variables.VARIABLES_TYPES ouptuType) {
-        String activationFunction =
-                CppSolutionProgram.getVarName(ouptuType) + " solution " + "(" + CppSolutionProgram.getVarName(inputType) + " val)\n{\n//your code\n}";
+        String activationFunction=
+         CppSolutionProgram.getVarName(ouptuType)+" solution "+"("+CppSolutionProgram.getVarName(inputType)+ " val)\n{\n//your code\n}";
         return activationFunction;
     }
 }

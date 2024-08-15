@@ -13,6 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class PorgramReusltsSendRequest extends RequestBase {
+public class PorgramReusltsSendRequest extends  RequestBase{
     List<ProgramResult> programResults;
 }

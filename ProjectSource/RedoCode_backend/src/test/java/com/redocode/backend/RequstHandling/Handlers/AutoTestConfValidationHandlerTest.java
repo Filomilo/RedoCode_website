@@ -22,16 +22,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class AutoTestConfValidationHandlerTest {
 
     AutoTestConfValidationHandler autoTestConfValidationHandler;
-    User user = new User("1");
+    User user= new User("1");
 
     @BeforeEach
-    void preapreAutoTextConfCalidation() {
-        autoTestConfValidationHandler = new AutoTestConfValidationHandler();
+    void preapreAutoTextConfCalidation()
+    {
+        autoTestConfValidationHandler=new AutoTestConfValidationHandler();
     }
-
     @Test
     void handlecorrecAmountOFTest() {
-        ExerciseCreationRequest exerciseCretionRequest = ExerciseCreationRequest.builder()
+        ExerciseCreationRequest exerciseCretionRequest= ExerciseCreationRequest.builder()
                 .ram(1024)
                 .amountOfAutoTests(5)
                 .Title("123")
@@ -44,14 +44,14 @@ class AutoTestConfValidationHandlerTest {
                 .solutionCodes(new HashMap<>())
                 .build();
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             assertNotNull(autoTestConfValidationHandler.handle(exerciseCretionRequest));
         });
     }
 
     @Test
     void handleIncorrectRam() {
-        ExerciseCreationRequest exerciseCretionRequest = ExerciseCreationRequest.builder()
+        ExerciseCreationRequest exerciseCretionRequest= ExerciseCreationRequest.builder()
                 .ram(1024000)
                 .amountOfAutoTests(5)
                 .Title("123")
@@ -63,14 +63,11 @@ class AutoTestConfValidationHandlerTest {
                 .amountOfAutoTests(6)
                 .solutionCodes(new HashMap<>())
                 .build();
-        assertThrows(RequestHadndlingException.class, () -> {
-            autoTestConfValidationHandler.handle(exerciseCretionRequest);
-        });
+        assertThrows(RequestHadndlingException.class,()->{autoTestConfValidationHandler.handle(exerciseCretionRequest);});
     }
-
     @Test
     void handleIncorrecAmountOFTest() {
-        ExerciseCreationRequest exerciseCretionRequest = ExerciseCreationRequest.builder()
+        ExerciseCreationRequest exerciseCretionRequest= ExerciseCreationRequest.builder()
                 .ram(1024)
                 .amountOfAutoTests(5)
                 .Title("123")
@@ -82,8 +79,6 @@ class AutoTestConfValidationHandlerTest {
                 .amountOfAutoTests(-6)
                 .solutionCodes(new HashMap<>())
                 .build();
-        assertThrows(RequestHadndlingException.class, () -> {
-            autoTestConfValidationHandler.handle(exerciseCretionRequest);
-        });
+        assertThrows(RequestHadndlingException.class,()->{autoTestConfValidationHandler.handle(exerciseCretionRequest);});
     }
 }

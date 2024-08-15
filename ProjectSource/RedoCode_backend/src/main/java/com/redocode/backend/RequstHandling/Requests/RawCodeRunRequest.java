@@ -22,7 +22,7 @@ public class RawCodeRunRequest extends CodeRunnerRequest {
     Long timeForExecution;
 
     public RawCodeRunRequest(User user, CODE_RUNNER_TYPE codeRunnerType, String code, long timeForExecution) {
-        super(user, codeRunnerType);
+        super(user,codeRunnerType);
         Code = code;
         this.timeForExecution = timeForExecution;
     }

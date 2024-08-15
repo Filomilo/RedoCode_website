@@ -28,21 +28,19 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Slf4j
 ////@Disabled("not working under guthub pipilene")
 //@Disabled("Isotating specific test for debugging")
-@DisabledOnOs(OS.LINUX)
+    @DisabledOnOs(OS.LINUX)
 class CodeTestHandlerTest {
 
-    @Autowired
-    CodeRunnersController codeRunnersController;
+    @Autowired CodeRunnersController codeRunnersController;
     ExerciseTests[] tests;
-
     @BeforeEach
-    void prepareTests() {
-        tests = new ExerciseTests[]{
+    void prepareTests()
+    {
+        tests= new ExerciseTests[]{
                 ExerciseTests.builder()
                         .id(1l)
                         .expectedOutput("[1,2]")
@@ -72,14 +70,14 @@ class CodeTestHandlerTest {
 
     @Test
     void handleCpp() throws RequestHadndlingException {
-        CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler = new CodeRunnerAccesValidationHandler();
-        CodeTestHandler codeTestHandler = new CodeTestHandler();
+        CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler= new CodeRunnerAccesValidationHandler();
+        CodeTestHandler codeTestHandler=new CodeTestHandler();
 
-        User user = new User("1234" + UUID.randomUUID());
+        User user=new User("1234"+ UUID.randomUUID());
 
 
-        HashMap<CODE_RUNNER_TYPE, String> solutions = new HashMap<>();
-        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +
+        HashMap<CODE_RUNNER_TYPE,String> solutions=new HashMap<>();
+        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
                 "#include <vector>\n" +
                 "\n" +
                 "std::vector<int> solution(std::vector<int> in)\n" +
@@ -87,7 +85,7 @@ class CodeTestHandlerTest {
                 "    return in;\n" +
                 "}");
 
-        CodeTestRequest codeTestRequest = CodeTestRequest.builder()
+        CodeTestRequest codeTestRequest=CodeTestRequest.builder()
                 .testsToRun(Arrays.stream(this.tests).toList())
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(user)
@@ -99,13 +97,15 @@ class CodeTestHandlerTest {
                 .build();
 
 
-        assertNotNull(codeRunnerAccesValidationHandler.handle(CodeRunnerRequest.builder()
+        assertNotNull( codeRunnerAccesValidationHandler.handle(CodeRunnerRequest.builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(user)
                 .build()
         ));
         CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
         assertNotNull(codeRunner);
+
+
 
 
         assertNotNull(codeTestHandler.handle(codeTestRequest));
@@ -116,15 +116,15 @@ class CodeTestHandlerTest {
 
     @Test
     @SneakyThrows
-    void handleCompliationError() {
-        CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler = new CodeRunnerAccesValidationHandler();
-        CodeTestHandler codeTestHandler = new CodeTestHandler();
+    void handleCompliationError(){
+        CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler= new CodeRunnerAccesValidationHandler();
+        CodeTestHandler codeTestHandler=new CodeTestHandler();
         codeTestHandler.set_continueOnError(true);
-        User user = new User("1234" + UUID.randomUUID());
+        User user=new User("1234"+ UUID.randomUUID());
 
 
-        HashMap<CODE_RUNNER_TYPE, String> solutions = new HashMap<>();
-        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +
+        HashMap<CODE_RUNNER_TYPE,String> solutions=new HashMap<>();
+        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
                 "#include <vector>\n" +
                 "\n" +
                 "std::vector<int> solution(std::vector<int> in)\n" +
@@ -132,7 +132,7 @@ class CodeTestHandlerTest {
                 "    return i;\n" +
                 "}");
 
-        CodeTestRequest codeTestRequest = CodeTestRequest.builder()
+        CodeTestRequest codeTestRequest=CodeTestRequest.builder()
                 .testsToRun(Arrays.stream(this.tests).toList())
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(user)
@@ -144,22 +144,22 @@ class CodeTestHandlerTest {
                 .build();
 
 
-        codeRunnerAccesValidationHandler.handle(CodeRunnerRequest.builder()
+      codeRunnerAccesValidationHandler.handle(CodeRunnerRequest.builder()
                 .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .user(user)
                 .build()
         );
         CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
         assertNotNull(codeRunner);
-        PorgramReusltsSendRequest porgramReusltsSendRequest = (PorgramReusltsSendRequest) codeTestHandler.handle(codeTestRequest);
-        assertEquals(1, porgramReusltsSendRequest.getProgramResults().size());
+        PorgramReusltsSendRequest porgramReusltsSendRequest= (PorgramReusltsSendRequest) codeTestHandler.handle(codeTestRequest);
+        assertEquals(1,porgramReusltsSendRequest.getProgramResults().size());
         assertTrue(porgramReusltsSendRequest.getProgramResults().get(0).getConsoleOutput().getErrorOutput().contains("error: 'i' was not declared in this scope; did you mean 'in'?"));
-        log.info("porgramReusltsSendRequest: " + porgramReusltsSendRequest);
+        log.info("porgramReusltsSendRequest: "+porgramReusltsSendRequest);
     }
 
 
     @AfterEach
-    void removePoteniatlDockerContaierd() {
+    void removePoteniatlDockerContaierd(){
         codeRunnersController.reset();
     }
 }

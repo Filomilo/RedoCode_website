@@ -14,12 +14,11 @@ public class DisconnectEventListener implements ApplicationListener<SessionDisco
 
     @Autowired
     private RedoCodeController redoCodeController;
-
     @Override
     public void onApplicationEvent(SessionDisconnectEvent event) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
-        String userName = accessor.getUser().getName();
-        log.info("User " + userName + " diconnected");
+        String userName=accessor.getUser().getName();
+        log.info("User "+ userName+ " diconnected");
         redoCodeController.removeConnectedUser(userName);
     }
 }

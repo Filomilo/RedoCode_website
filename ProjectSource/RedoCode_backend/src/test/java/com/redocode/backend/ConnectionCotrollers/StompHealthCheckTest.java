@@ -25,7 +25,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
-
 //@RunWith(SpringRunner.class)
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,7 +38,6 @@ class StompHealthCheckTest extends WebSocketTestBase {
 
     @LocalServerPort
     int port;
-
     @Override
     protected String getWebSocketUri() {
         return getWebSocketUri(port);
@@ -48,7 +46,7 @@ class StompHealthCheckTest extends WebSocketTestBase {
     @BeforeEach
     public void setup() {
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(()->{
             super.setup();
         });
 
@@ -61,6 +59,8 @@ class StompHealthCheckTest extends WebSocketTestBase {
         session.send(WEBSOCKET_TOPIC_HEALTH_DESTIN, message.getBytes());
         assertEquals(message, blockingQueue.poll(1, SECONDS));
     }
+
+
 
 
 }

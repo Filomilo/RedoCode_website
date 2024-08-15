@@ -18,11 +18,14 @@ import java.util.Map;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ExerciseCreationRequest extends CodeTestRequest {
+public class ExerciseCreationRequest extends CodeTestRequest{
     @NotNull
     String Title;
     @NotNull
     String Description;
+
+
+
 
 
 }

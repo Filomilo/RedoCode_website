@@ -18,7 +18,12 @@ public class ExercisesController {
     @Autowired
     ExerciseRepository exerciseRepository;
 
-    Logger logger = LoggerFactory.getLogger(ExercisesController.class);
+    Logger logger= LoggerFactory.getLogger(ExercisesController.class);
+
+
+
+
+
 
 
 }

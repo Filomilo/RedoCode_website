@@ -19,14 +19,14 @@ import java.sql.SQLException;
 @Jacksonized
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class Range implements Serializable { //todo: change to postgres database  type mappign
+public class Range implements Serializable{ //todo: change to postgres database  type mappign
     @NotNull
     Float min;
     @NotNull
     Float max;
 
     public Range(Integer min, Integer max) {
-        this.min = Float.valueOf(min);
-        this.max = Float.valueOf(max);
+       this.min=Float.valueOf (min);
+        this.max=Float.valueOf (max);
     }
 }

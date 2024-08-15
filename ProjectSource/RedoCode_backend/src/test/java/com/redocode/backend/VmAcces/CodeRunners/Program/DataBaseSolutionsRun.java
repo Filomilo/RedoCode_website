@@ -32,24 +32,25 @@ public class DataBaseSolutionsRun {
     ExerciseRepository exerciseRepository;
 
     @Test
-    public void rundatabaseExercises() {
-        assertDoesNotThrow(() -> {
-            List<Excersize> list = exerciseRepository.findAll();
-            for (Excersize ex : list
+    public void rundatabaseExercises()
+    {
+        assertDoesNotThrow(()->{
+            List<Excersize> list=exerciseRepository.findAll();
+            for (Excersize ex:list
             ) {
-                log.info("exeriswe: " + ex);
+                log.info("exeriswe: "+ ex);
 
-                Set<SolutionPrograms> solutions = ex.getSolutions();
-                for (SolutionPrograms sol : solutions
+                Set<SolutionPrograms> solutions=ex.getSolutions();
+                for (SolutionPrograms sol:solutions
                 ) {
-                    log.info("SOlutions: " + sol.toString());
-                    CodeRunner codeRunner = switch (sol.getLanguage().getName()) {
+                    log.info("SOlutions: "+ sol.toString());
+                    CodeRunner codeRunner=switch (sol.getLanguage().getName()){
                         case "cpp" -> new CppCodeRunner(128);
                         case "js" -> new JsCodeRunner(128);
                         default -> throw new Exception("Unkown code unner type");
                     };
                     codeRunner.start();
-                    List<ExerciseTests> tests = ex.getExerciseTests();
+                    List<ExerciseTests> tests=ex.getExerciseTests();
                     try {
                         for (ExerciseTests test : tests
                         ) {
@@ -68,9 +69,11 @@ public class DataBaseSolutionsRun {
 
 
                         }
-                    } finally {
+                    }
+                    finally {
                         codeRunner.destroy();
                     }
+
 
 
                 }

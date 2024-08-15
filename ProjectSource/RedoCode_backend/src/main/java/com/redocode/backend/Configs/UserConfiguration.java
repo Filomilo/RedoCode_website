@@ -23,7 +23,7 @@ public class UserConfiguration {
 
     private final UsersRepository usersRepository;
 
-    //
+//
     @Bean
     UserDetailsService userDetailsService() {
 
@@ -34,12 +34,11 @@ public class UserConfiguration {
             }
         };
     }
-
-    //
+//
 //
     @Bean
     AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService());
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 

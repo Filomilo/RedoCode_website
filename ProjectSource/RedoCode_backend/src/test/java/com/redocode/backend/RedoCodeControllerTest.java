@@ -65,9 +65,9 @@ class RedoCodeControllerTest {
         int amountOfUsersBeforeRemoving = redoCodeController.connectedUsers.size();
         redoCodeController.removeConnectedUser(user1);
         int amountOfUsersAfterRemoving = redoCodeController.connectedUsers.size();
-        log.info("checking doesContainUser1: " + Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
+        log.info("checking doesContainUser1: "+ Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
         Boolean doesContainUser1 = redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user1)));
-        log.info("checking doesContainUser2: " + Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
+        log.info("checking doesContainUser2: "+ Arrays.toString(redoCodeController.connectedUsers.keySet().toArray()));
 
         Boolean doesContainUser2 = redoCodeController.connectedUsers.values().stream().anyMatch(user -> (user.equals(user2)));
         redoCodeController.removeConnectedUser("2");

@@ -40,14 +40,15 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
     User userCorrect;
 
     @BeforeEach
-    void setupCorrectData() {
-        userCorrect = usersRepository.findByEmail("email@email.com");
-        if (userCorrect == null) {
+    void setupCorrectData()
+    {
+        userCorrect=usersRepository.findByEmail("email@email.com");
+        if(userCorrect==null) {
             userCorrect = User.builder()
-                    .email("email" + UUID.randomUUID() + "@email.com")
+                    .email("email"+ UUID.randomUUID()+"@email.com")
                     .type(User.USER_TYPE.PREMIUM)
                     .password("aaaa")
-                    .sessionID("uuid" + UUID.randomUUID())
+                    .sessionID("uuid"+ UUID.randomUUID())
                     .nickname("nick")
                     .build();
 
@@ -55,7 +56,7 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
             usersRepository.save(userCorrect);
         }
 
-        exerciseCreationRequestCorrect = ExerciseCreationRequest.builder()
+        exerciseCreationRequestCorrect  = ExerciseCreationRequest.builder()
                 .user(userCorrect)
                 .outputType(ouptutTypeCorrect)
                 .inputType(inputTypeCorrect)
@@ -81,27 +82,30 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
     }
 
 
-    Variables.VARIABLES_TYPES inputTypeCorrect = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-    Variables.VARIABLES_TYPES ouptutTypeCorrect = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
-    int ramCorrect = 1024;
-    String titleCorrect = "Exercise";
-    String decritpionCorrect = "Descritpion";
 
-    int amountOfAutoTestsCorrect = 8;
-    boolean breakCharacterInputCorrect = true;
-    Range lengthRangeCorrect = new Range(0F, 20F);
-    boolean lowerCaseInputCorrect = true;
-    boolean numberInputCorrect = true;
-    boolean spaceInputCorrect = true;
-    boolean specialCharacterInputCorrect = true;
-    boolean upperCaseInputCorrect = true;
-    Range xArrayRangeCorrect = new Range(1F, 20F);
-    Range yArrayRangeCorrect = new Range(1F, 20F);
-    Long timeForTaskCorrect = 60L;
-    Long maxExecutionTimeMSCorrect = 1000L;
 
-    HashMap<CODE_RUNNER_TYPE, String> solutionCodesCorrect = new HashMap<>() {{
-        put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +
+    Variables.VARIABLES_TYPES inputTypeCorrect= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+    Variables.VARIABLES_TYPES ouptutTypeCorrect= Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
+    int ramCorrect=1024;
+    String titleCorrect="Exercise";
+    String decritpionCorrect="Descritpion";
+
+    int amountOfAutoTestsCorrect=8;
+    boolean breakCharacterInputCorrect=true;
+    Range lengthRangeCorrect=new Range(0F,20F);
+    boolean lowerCaseInputCorrect=true;
+    boolean numberInputCorrect=true;
+    boolean spaceInputCorrect=true;
+    boolean specialCharacterInputCorrect=true;
+    boolean upperCaseInputCorrect=true;
+    Range xArrayRangeCorrect= new Range(1F,20F);
+    Range yArrayRangeCorrect=new Range(1F,20F);
+    Long timeForTaskCorrect= 60L;
+    Long maxExecutionTimeMSCorrect=1000L;
+
+    HashMap<CODE_RUNNER_TYPE,String> solutionCodesCorrect=new HashMap<>()
+    {{
+        put (CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
                 "#include <vector>\n" +
                 "#include <string>\n" +
                 "\n" +
@@ -109,9 +113,9 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
                 "{\n" +
                 "    return in;\n" +
                 "}");
-        put(CODE_RUNNER_TYPE.JS_RUNNER, "function solution(array){return array;}");
+        put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return array;}");
     }};
-    ExerciseTests[] testsCorrect = new ExerciseTests[]{
+    ExerciseTests[] testsCorrect= new ExerciseTests[]{
             ExerciseTests.builder()
                     .expectedOutput("[[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]")
                     .input("[[\"1\",\"2\"],[\"3\",\"4\"],[\"5\",\"6\"]]")
@@ -128,87 +132,96 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
     ExerciseCreationRequest exerciseCreationRequestCorrect;
 
 
+
+
+
     @Test
-    void testCoreectExerciseCreation() {
+    void testCoreectExerciseCreation()
+    {
 
 
-        assertDoesNotThrow(
-                () -> {
-                    assertTrue(ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequestCorrect));
-                }
-        );
+assertDoesNotThrow(
+        ()->{
+            assertTrue(ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequestCorrect));
+        }
+);
 
 
-        Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
-        assertEquals(titleCorrect, lastAdded.getExcersizeName());
-        assertEquals(inputTypeCorrect, lastAdded.getInputType());
-        assertEquals(ouptutTypeCorrect, lastAdded.getOutputType());
-        assertEquals(ramCorrect, lastAdded.getRam_mb());
-        assertEquals(decritpionCorrect, lastAdded.getDescription());
-        assertEquals(userCorrect.getId(), lastAdded.getAuthor().getId());
-        assertEquals(Arrays.stream(testsCorrect).toList(), lastAdded.getExerciseTests().stream().toList());
+        Excersize lastAdded=exerciseRepository.findAll().get(exerciseRepository.findAll().size()-1);
+        assertEquals(titleCorrect,lastAdded.getExcersizeName());
+        assertEquals(inputTypeCorrect,lastAdded.getInputType());
+        assertEquals(ouptutTypeCorrect,lastAdded.getOutputType());
+        assertEquals(ramCorrect,lastAdded.getRam_mb());
+        assertEquals(decritpionCorrect,lastAdded.getDescription());
+        assertEquals(userCorrect.getId(),lastAdded.getAuthor().getId());
+        assertEquals(Arrays.stream(testsCorrect).toList(),lastAdded.getExerciseTests().stream().toList());
 
 
-        assertEquals(breakCharacterInputCorrect, lastAdded.getBreakCharacterInput());
-        assertEquals(lowerCaseInputCorrect, lastAdded.getLowerCaseInput());
-        assertEquals(breakCharacterInputCorrect, lastAdded.getLowerCaseInput());
-        assertEquals(numberInputCorrect, lastAdded.getNumberInput());
-        assertEquals(spaceInputCorrect, lastAdded.getSpaceInput());
-        assertEquals(specialCharacterInputCorrect, lastAdded.getSpecialCharacterInput());
-        assertEquals(upperCaseInputCorrect, lastAdded.getUpperCaseInput());
+        assertEquals(breakCharacterInputCorrect,lastAdded.getBreakCharacterInput());
+        assertEquals(lowerCaseInputCorrect,lastAdded.getLowerCaseInput());
+        assertEquals(breakCharacterInputCorrect,lastAdded.getLowerCaseInput());
+        assertEquals(numberInputCorrect,lastAdded.getNumberInput());
+        assertEquals(spaceInputCorrect,lastAdded.getSpaceInput());
+        assertEquals(specialCharacterInputCorrect,lastAdded.getSpecialCharacterInput());
+        assertEquals(upperCaseInputCorrect,lastAdded.getUpperCaseInput());
 
-        assertEquals(lengthRangeCorrect, lastAdded.getLengthRange());
-        assertEquals(xArrayRangeCorrect, lastAdded.getXArrayRange());
-        assertEquals(yArrayRangeCorrect, lastAdded.getYArrayRange());
+        assertEquals(lengthRangeCorrect,lastAdded.getLengthRange());
+        assertEquals(xArrayRangeCorrect,lastAdded.getXArrayRange());
+        assertEquals(yArrayRangeCorrect,lastAdded.getYArrayRange());
 
-        assertEquals(amountOfAutoTestsCorrect, lastAdded.getAmountOfAutoTests());
-        assertEquals(timeForTaskCorrect, lastAdded.getTimeForTaskMin());
+        assertEquals(amountOfAutoTestsCorrect,lastAdded.getAmountOfAutoTests());
+        assertEquals(timeForTaskCorrect,lastAdded.getTimeForTaskMin());
 
-        assertEquals(maxExecutionTimeMSCorrect, lastAdded.getMaxExecutionTimeMS());
+        assertEquals(maxExecutionTimeMSCorrect,lastAdded.getMaxExecutionTimeMS());
 
     }
 
 
+
+
     @ParameterizedTest
-    @ValueSource(strings = {"", "         ", "1", "22", "333", ""})
-    void testIncorrectTitleExerciseCreation(String incorrectTitle) {
-        int exerciseBefore = exerciseRepository.findAll().size();
-        ExerciseCreationRequest exerciseCreationRequest = this.exerciseCreationRequestCorrect;
+    @ValueSource(strings = {"", "         ","1","22","333",""})
+    void testIncorrectTitleExerciseCreation(String incorrectTitle)
+    {
+        int exerciseBefore=exerciseRepository.findAll() .size();
+        ExerciseCreationRequest exerciseCreationRequest= this.exerciseCreationRequestCorrect;
         exerciseCreationRequest.setTitle(incorrectTitle);
-        assertFalse(ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
-        int exerciseAfter = exerciseRepository.findAll().size();
-        assertEquals(exerciseBefore, exerciseAfter);
+        assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        int exerciseAfter=exerciseRepository.findAll() .size();
+        assertEquals(exerciseBefore,exerciseAfter);
     }
-
     @ParameterizedTest
-    @ValueSource(strings = {"", "         ", "1", "22", "333", ""})
-    void testIncorrectDescriptionExerciseCreation(String incorrectdesc) {
-        int exerciseBefore = exerciseRepository.findAll().size();
-        ExerciseCreationRequest exerciseCreationRequest = this.exerciseCreationRequestCorrect;
+    @ValueSource(strings = {"", "         ","1","22","333",""})
+    void testIncorrectDescriptionExerciseCreation(String incorrectdesc)
+    {
+        int exerciseBefore=exerciseRepository.findAll() .size();
+        ExerciseCreationRequest exerciseCreationRequest= this.exerciseCreationRequestCorrect;
         exerciseCreationRequest.setDescription(incorrectdesc);
-        assertFalse(ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
-        int exerciseAfter = exerciseRepository.findAll().size();
-        assertEquals(exerciseBefore, exerciseAfter);
+        assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        int exerciseAfter=exerciseRepository.findAll() .size();
+        assertEquals(exerciseBefore,exerciseAfter);
     }
 
     @Test
-    void testIncorrectSolutionJsExerciseCreation() {
-        int exerciseBefore = exerciseRepository.findAll().size();
-        ExerciseCreationRequest exerciseCreationRequest = this.exerciseCreationRequestCorrect;
-        HashMap<CODE_RUNNER_TYPE, String> solutions = solutionCodesCorrect;
-        solutions.put(CODE_RUNNER_TYPE.JS_RUNNER, "function solution(array){return 0;}");
+    void testIncorrectSolutionJsExerciseCreation()
+    {
+        int exerciseBefore=exerciseRepository.findAll() .size();
+        ExerciseCreationRequest exerciseCreationRequest= this.exerciseCreationRequestCorrect;
+        HashMap<CODE_RUNNER_TYPE,String> solutions=solutionCodesCorrect;
+        solutions.put(CODE_RUNNER_TYPE.JS_RUNNER,"function solution(array){return 0;}");
         exerciseCreationRequest.setSolutionCodes(solutions);
-        assertFalse(ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
-        int exerciseAfter = exerciseRepository.findAll().size();
-        assertEquals(exerciseBefore, exerciseAfter);
+        assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        int exerciseAfter=exerciseRepository.findAll() .size();
+        assertEquals(exerciseBefore,exerciseAfter);
     }
 
     @Test
-    void testIncorrectSolutionCppExerciseCreation() {
-        int exerciseBefore = exerciseRepository.findAll().size();
-        ExerciseCreationRequest exerciseCreationRequest = this.exerciseCreationRequestCorrect;
-        HashMap<CODE_RUNNER_TYPE, String> solutions = solutionCodesCorrect;
-        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER, "#include <iostream>\n" +
+    void testIncorrectSolutionCppExerciseCreation()
+    {
+        int exerciseBefore=exerciseRepository.findAll() .size();
+        ExerciseCreationRequest exerciseCreationRequest= this.exerciseCreationRequestCorrect;
+        HashMap<CODE_RUNNER_TYPE,String> solutions=solutionCodesCorrect;
+        solutions.put(CODE_RUNNER_TYPE.CPP_RUNNER,"#include <iostream>\n" +
                 "#include <vector>\n" +
                 "#include <string>\n" +
                 "\n" +
@@ -217,14 +230,20 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
                 "    return null;\n" +
                 "}");
         exerciseCreationRequest.setSolutionCodes(solutions);
-        assertFalse(ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
-        int exerciseAfter = exerciseRepository.findAll().size();
-        assertEquals(exerciseBefore, exerciseAfter);
+        assertFalse(  ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequest));
+        int exerciseAfter=exerciseRepository.findAll() .size();
+        assertEquals(exerciseBefore,exerciseAfter);
     }
 
 
+
+
+
+
+
     @AfterEach
-    void clearCodeRunners() {
+    void clearCodeRunners()
+    {
         codeRunnersController.reset();
     }
 }

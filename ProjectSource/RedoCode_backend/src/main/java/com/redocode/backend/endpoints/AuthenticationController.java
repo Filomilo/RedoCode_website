@@ -41,21 +41,23 @@ public class AuthenticationController {
     @PostMapping("/register")
     public Authentication registerUser(@RequestBody RegisterRequest request) {
 
-        if (!pattern.matcher(request.getPassword()).matches()) {
-            throw new RuntimeException("Invalid password"); //todo: add own exception
+        if(!pattern.matcher(request.getPassword()).matches())
+        {
+            throw  new RuntimeException     ("Invalid password"); //todo: add own exception
         }
-        if (usersRepository.findByEmail(request.getEmail()) != null) {
-            throw new RuntimeException("User already exists");
+        if(usersRepository.findByEmail(request.getEmail()) != null)
+        {
+            throw  new RuntimeException  ("User already exists");
         }
 
-        User user = User.builder()
+        User user= User.builder()
                 .email(request.getEmail())
                 .nickname(request.getNickname())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .type(User.USER_TYPE.AUTHENTICATED)
                 .build();
         usersRepository.save(user);
-        String token = jwtService.generateToken(user);
+        String token= jwtService.generateToken(user);
         return Authentication.builder()
                 .token(token)
                 .build();
@@ -67,8 +69,8 @@ public class AuthenticationController {
                 request.getEmail(),
                 request.getPassword())
         );
-        User user = usersRepository.findByEmail(request.getEmail());
-        String token = jwtService.generateToken(user);
+        User user= usersRepository.findByEmail(request.getEmail());
+        String token= jwtService.generateToken(user);
         return Authentication.builder()
                 .token(token)
                 .build();

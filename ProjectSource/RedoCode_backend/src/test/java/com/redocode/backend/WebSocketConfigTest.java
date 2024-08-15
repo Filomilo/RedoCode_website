@@ -24,9 +24,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.lang.reflect.Type;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Slf4j
 @Disabled("tests wiht websokcet  dont wokt along side")
@@ -36,12 +34,11 @@ class WebSocketConfigTest {
     static final String WEBSOCKET_TOPIC = "/public/topic";
     static final String WEBSOCKET_URI = "ws://localhost:8080/public/web-socket";
     BlockingQueue<String> blockingQueue;
-
     @BeforeEach
     public void setup() {
 
         blockingQueue = new LinkedBlockingDeque<>();
-        stompClient = new WebSocketStompClient(new SockJsClient(
+        stompClient =  new WebSocketStompClient(new SockJsClient(
                 asList(new WebSocketTransport(new StandardWebSocketClient()))
         ));
     }
@@ -49,10 +46,9 @@ class WebSocketConfigTest {
     @Test
     public void shouldReceiveAMessageFromTheServer() throws Exception {
         StompSession session = stompClient
-                .connect(WEBSOCKET_URI, new StompSessionHandlerAdapter() {
-                })
+                .connect(WEBSOCKET_URI, new StompSessionHandlerAdapter() {})
                 .get(1, SECONDS);
-        session.subscribe(WEBSOCKET_TOPIC, new DefaultStompFrameHandler());
+         session.subscribe(WEBSOCKET_TOPIC, new DefaultStompFrameHandler());
 
         String message = "MESSAGE TEST";
         session.send(WEBSOCKET_TOPIC, message.getBytes());
@@ -64,13 +60,13 @@ class WebSocketConfigTest {
     class DefaultStompFrameHandler implements StompFrameHandler {
         @Override
         public Type getPayloadType(StompHeaders stompHeaders) {
-            log.info("getPayloadType: " + stompHeaders.toString());
+            log.info("getPayloadType: "+ stompHeaders.toString());
             return byte[].class;
         }
 
         @Override
         public void handleFrame(StompHeaders stompHeaders, Object o) {
-            log.info("handleFrame: " + stompHeaders.toString());
+            log.info("handleFrame: "+ stompHeaders.toString());
             blockingQueue.offer(new String((byte[]) o));
         }
     }

@@ -31,42 +31,45 @@ public class FromMessageProgramRun {
     static CodeRunner cppCodeRunner;
 
     @BeforeAll
-    static void initlizeCodeRunners() {
-        cppCodeRunner = new CppCodeRunner(128);
+    static void initlizeCodeRunners()
+    {
+        cppCodeRunner=new CppCodeRunner(128);
         cppCodeRunner.start();
     }
 
     @AfterAll
-    static void destroyCodeRunners() {
+    static void destroyCodeRunners()
+    {
         cppCodeRunner.destroy();
     }
 
     @Test
-    public void cppHelloWorldRun() {
-        log.info("runnign cpp Hell World Test");
+    public void cppHelloWorldRun()
+    {
+    log.info("runnign cpp Hell World Test");
 
-        String helloWorldCode = "#include <iostream>\n" +
-                "\n" +
-                "int main() {\n" +
-                "    std::cout << \"Hello World!\";\n" +
-                "    return 0;\n" +
-                "}";
+    String  helloWorldCode="#include <iostream>\n" +
+            "\n" +
+            "int main() {\n" +
+            "    std::cout << \"Hello World!\";\n" +
+            "    return 0;\n" +
+            "}";
         ExerciseIdToRunMessage exerciseIdToRunMessage = ExerciseIdToRunMessage
                 .builder()
                 .code(helloWorldCode)
                 .build();
 
-        List<ProgramResult> resultList = codeRunnersController.
+        List<ProgramResult> resultList= codeRunnersController.
                 runProgramFromMessage(cppCodeRunner, exerciseIdToRunMessage);
-        log.info(" program hello world resutls: " + Arrays.toString(resultList.toArray()));
-        assertEquals("Hello World!", resultList.get(0).getConsoleOutput().getOutput());
+        log.info(" program hello world resutls: "+ Arrays.toString(resultList.toArray()));
+        assertEquals("Hello World!",resultList.get(0).getConsoleOutput().getOutput());
     }
-
     @Test
-    public void cppFibianchiTestRun() {
+    public void cppFibianchiTestRun()
+    {
         log.info("runnign cpp Fibonachi nubmer test");
 
-        String anwserCode = "int solution(int n) {\n" +
+        String anwserCode="int solution(int n) {\n" +
                 "    if (n <= 2)\n" +
                 "        return n-1;\n" +
                 "    return solution(n - 1) + solution(n - 2);\n" +
@@ -78,9 +81,9 @@ public class FromMessageProgramRun {
                 .exercise_id("1")
                 .build();
 
-        List<ProgramResult> resultList = codeRunnersController.
+                List<ProgramResult> resultList= codeRunnersController.
                 runProgramFromMessage(cppCodeRunner, exerciseIdToRunMessage);
-        log.info(" program fibonachi resutls: " + Arrays.toString(resultList.toArray()));
+        log.info(" program fibonachi resutls: "+ Arrays.toString(resultList.toArray()));
 //        assertEquals("Hello World!",resultList.get(0).getConsoleOutput().getOutput());
     }
 

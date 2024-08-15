@@ -32,88 +32,90 @@ public class JsSolutionProgramFactoryTest {
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void getInputGeneratorCodeSingleInt(Integer var) {
-        log.info("argemnt value: " + var);
-        SolutionProgram program = ProgramFactory
+        log.info("argemnt value: "+ var);
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                        "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
-                        "return " + var + ";\n" +
+                        "return "+var+";\n" +
                         "}";
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void getInputGeneratorCodeArrayInt(Integer[] var) {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                        "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return [";
 
         for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += var[i];
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+=var[i];
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "];\n" +
+        inputCodeGenerationExpected+="];\n" +
                 "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void getInputGeneratorCodeDoubleArrayInt(Integer[][] var) {
-        log.info("var: " + Arrays.deepToString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("var: "+ Arrays.deepToString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                        "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return [";
-        for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "[";
+        for (int i = 0; i <var.length ; i++) {
+            inputCodeGenerationExpected+="[";
             for (int j = 0; j < var[0].length; j++) {
-                inputCodeGenerationExpected += var[i][j];
-                if (j < var[0].length - 1)
-                    inputCodeGenerationExpected += ", ";
+                inputCodeGenerationExpected+=var[i][j];
+                if(j<var[0].length-1)
+                    inputCodeGenerationExpected+=", ";
             }
-            inputCodeGenerationExpected += "]";
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+="]";
+            if(i<var.length-1)
+            inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "]";
-        inputCodeGenerationExpected += ";\n}";
-        log.info("code: \n" + inputCodeGenerationExpected);
+        inputCodeGenerationExpected+="]";
+        inputCodeGenerationExpected+=";\n}";
+        log.info("code: \n"+inputCodeGenerationExpected);
 
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
-
-    //
+//
 //
 //
 //
@@ -121,180 +123,181 @@ public class JsSolutionProgramFactoryTest {
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void getInputGeneratorCodeSingleFloat(Float var) {
-        log.info("argemnt value: " + var);
-        SolutionProgram program = ProgramFactory
+        log.info("argemnt value: "+ var);
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleFloat(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                        "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
-                        "return " + var + ";\n" +
+                        "return "+var+";\n" +
                         "}";
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
-
-    //
+//
 //
 //
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void getInputGeneratorCodeArrayFloat(Float[] var) {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfFloats(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return [";
 
         for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += var[i];
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+=var[i];
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "];\n" +
+        inputCodeGenerationExpected+="];\n" +
                 "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
-
-    //
+//
 //
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void getInputGeneratorCodeDoubleArrayFloat(Float[][] var) {
-        log.info("var: " + Arrays.deepToString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("var: "+ Arrays.deepToString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
-                        "{\n" +
-                        "return [";
-        for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "[";
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                        "function "+program.getInputGeneratorFunctionName()+"()\n" +
+                                "{\n" +
+                                "return [";
+        for (int i = 0; i <var.length ; i++) {
+            inputCodeGenerationExpected+="[";
             for (int j = 0; j < var[0].length; j++) {
-                inputCodeGenerationExpected += var[i][j];
-                if (j < var[0].length - 1)
-                    inputCodeGenerationExpected += ", ";
+                inputCodeGenerationExpected+=var[i][j];
+                if(j<var[0].length-1)
+                    inputCodeGenerationExpected+=", ";
             }
-            inputCodeGenerationExpected += "]";
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+="]";
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "]";
-        inputCodeGenerationExpected += ";\n}";
+        inputCodeGenerationExpected+="]";
+        inputCodeGenerationExpected+=";\n}";
 
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
-
-    //
+//
 //
 //
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void getInputGeneratorCodeSingleString(String var) {
-        log.info("argemnt value: " + var);
-        SolutionProgram program = ProgramFactory
+        log.info("argemnt value: "+ var);
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleString(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                        "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
-                        "return \"" + StringFormatter.removeWhiteCharacterss(var) + "\";\n" +
+                        "return \""+ StringFormatter.removeWhiteCharacterss(var)+"\";\n" +
                         "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+ inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
-
-    //
+//
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void getInputGeneratorCodeArrayString(String[] var) {
-        log.info("val: " + Arrays.toString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("val: "+Arrays.toString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                        "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return [";
 
         for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "\"" + var[i] + "\"";
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+="\""+var[i]+"\"";
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "];\n" +
+        inputCodeGenerationExpected+="];\n" +
                 "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
-
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     @Disabled
     void getInputGeneratorCodeDoubleArrayString(String[][] var) {
-        log.info("var: " + Arrays.deepToString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("var: "+ Arrays.deepToString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "function " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "function "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return [";
-        for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "[";
+        for (int i = 0; i <var.length ; i++) {
+            inputCodeGenerationExpected+="[";
             for (int j = 0; j < var[0].length; j++) {
-                inputCodeGenerationExpected += "\"" + var[i][j] + "\"";
-                if (j < var[0].length - 1)
-                    inputCodeGenerationExpected += ", ";
+                inputCodeGenerationExpected+="\""+var[i][j]+"\"";
+                if(j<var[0].length-1)
+                    inputCodeGenerationExpected+=", ";
             }
-            inputCodeGenerationExpected += "]";
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+="]";
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "]";
-        inputCodeGenerationExpected += ";\n}";
+        inputCodeGenerationExpected+="]";
+        inputCodeGenerationExpected+=";\n}";
 
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
     @Test
     void getOutputGeneratorCodeSingleString() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
@@ -302,10 +305,11 @@ public class JsSolutionProgramFactoryTest {
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
                 .setInputVaraiable(new SingleInteger(1))
-                .build();
-        String ouputGenerationCode =
-                " const " + program.getOutputGeneratorFunctionName() + "_fs = require('fs');\n" +
-                        "function " + program.getOutputGeneratorFunctionName() + "(a)\n" +
+                .build()
+                ;
+        String ouputGenerationCode=
+                " const "+program.getOutputGeneratorFunctionName()+"_fs = require('fs');\n" +
+                        "function "+program.getOutputGeneratorFunctionName()+"(a)\n" +
                         "{\n" +
                         "let str=\"err\";\n" +
                         "if(!Array.isArray(a)){\n" +
@@ -325,27 +329,27 @@ public class JsSolutionProgramFactoryTest {
                         "            str=a.join(\"\\n\")\n" +
                         "        }\n" +
                         "}" +
-                        program.getOutputGeneratorFunctionName() + "_fs.writeFileSync(\"" + program.getOutputFileName() + "\",str);\n" +
+                        program.getOutputGeneratorFunctionName()+"_fs.writeFileSync(\""+program.getOutputFileName()+"\",str);\n" +
                         "}";
-        assertEquals(ouputGenerationCode, program.getOutputGeneratorCode());
+        assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
 
     }
-
-    //
+//
     @Test
     void getOutputGeneratorCodeArrayString() {
 
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(1))
                 .setSolutionCode("")
-                .build();
-        String ouputGenerationCode =
-                " const " + program.getOutputGeneratorFunctionName() + "_fs = require('fs');\n" +
-                        "function " + program.getOutputGeneratorFunctionName() + "(a)\n" +
+                .build()
+                ;
+       String ouputGenerationCode=
+                " const "+program.getOutputGeneratorFunctionName()+"_fs = require('fs');\n" +
+                        "function "+program.getOutputGeneratorFunctionName()+"(a)\n" +
                         "{\n" +
                         "let str=\"err\";\n" +
                         "if(!Array.isArray(a)){\n" +
@@ -365,28 +369,28 @@ public class JsSolutionProgramFactoryTest {
                         "            str=a.join(\"\\n\")\n" +
                         "        }\n" +
                         "}" +
-                        program.getOutputGeneratorFunctionName() + "_fs.writeFileSync(\"" + program.getOutputFileName() + "\",str);\n" +
+                        program.getOutputGeneratorFunctionName()+"_fs.writeFileSync(\""+program.getOutputFileName()+"\",str);\n" +
                         "}";
 
-        log.info("Code: \n" + ouputGenerationCode);
-        assertEquals(ouputGenerationCode, program.getOutputGeneratorCode());
+        log.info("Code: \n"+ ouputGenerationCode);
+        assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
     }
-
-    //
+//
     @Test
     void getOutputGeneratorCodeMultiArrayString() {
 
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(1))
                 .setSolutionCode("")
-                .build();
-        String ouputGenerationCode =
-                " const " + program.getOutputGeneratorFunctionName() + "_fs = require('fs');\n" +
-                        "function " + program.getOutputGeneratorFunctionName() + "(a)\n" +
+                .build()
+                ;
+        String ouputGenerationCode=
+                " const "+program.getOutputGeneratorFunctionName()+"_fs = require('fs');\n" +
+                        "function "+program.getOutputGeneratorFunctionName()+"(a)\n" +
                         "{\n" +
                         "let str=\"err\";\n" +
                         "if(!Array.isArray(a)){\n" +
@@ -406,88 +410,88 @@ public class JsSolutionProgramFactoryTest {
                         "            str=a.join(\"\\n\")\n" +
                         "        }\n" +
                         "}" +
-                        program.getOutputGeneratorFunctionName() + "_fs.writeFileSync(\"" + program.getOutputFileName() + "\",str);\n" +
+                        program.getOutputGeneratorFunctionName()+"_fs.writeFileSync(\""+program.getOutputFileName()+"\",str);\n" +
                         "}";
 
-        log.info("Code: \n" + ouputGenerationCode);
-        assertEquals(ouputGenerationCode, program.getOutputGeneratorCode());
+        log.info("Code: \n"+ ouputGenerationCode);
+        assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
     }
-
-    //
+//
     @Test
     @Disabled("Depracted functionality, there canot be arguemnt less solution program")
     void getActivationFunctionNOArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setInputVaraiable(new SingleInteger(1))
                 .setSolutionCode("")
                 .setTimeout(100L)
-                .build();
+                .build()
+                ;
 
-        String code = program.getOutputGeneratorFunctionName() + "(solution());";
-        log.info("Code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+        String code= program.getOutputGeneratorFunctionName() +"(solution());";
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
     }
-
-    //
+//
     @Test
     void getActivationFunctionSingleArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new SingleInteger(1))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String code = program.getOutputGeneratorFunctionName() + "(solution(" + program.getInputGeneratorFunctionName() + "()));";
-        log.info("code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+                .build()
+                ;
+        String code=program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));";
+        log.info("code: \n"+ code);
+        assertEquals(code,program.getActivationFunction());
     }
-
-    //
+//
     @Test
     void getActivationFunctionArrayAsArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(new Integer[]{1, 8, 5, 4}))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
-        String code =
-                program.getOutputGeneratorFunctionName() + "(solution(" + program.getInputGeneratorFunctionName() + "()));";
-        log.info("Code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+        String code=
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));";
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
     }
-
-    //
+//
 //
     @Test
     void getActivationFunctionMultiArrayAsArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
-                .setInputVaraiable(new DoubleArrayOfIntegers(new Integer[][]{{1, 8, 5, 4}, {1, 8, 5, 4}}))
+                .setInputVaraiable(new DoubleArrayOfIntegers(new Integer[][]{{1, 8, 5, 4},{1, 8, 5, 4}}))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
-        String code =
-                program.getOutputGeneratorFunctionName() + "(solution(" + program.getInputGeneratorFunctionName() + "()));";
-        log.info("Code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+        String code=
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));";
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
     }
-
     @Test
-    void FibonachiCodeTest() {
-        List<SolutionPrograms> list = solutionProgramsRepository.findAll();
-        SolutionProgram solutionProgram = ProgramFactory
+    void FibonachiCodeTest()
+    {
+        List<SolutionPrograms> list=solutionProgramsRepository.findAll();
+        SolutionProgram solutionProgram=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)// TODO: add class mapping data base string to Code runner enum
                 .setInputVaraiable(new SingleInteger(1))
@@ -495,7 +499,7 @@ public class JsSolutionProgramFactoryTest {
                 .setTimeout(500)
                 .setSolutionCode(list.get(1).getCode())
                 .build();
-        String correctCode = "function solution(val) {\n" +
+        String correctCode="function solution(val) {\n" +
                 "    let arr = new Array(val);\n" +
                 "\n" +
                 "    if (val >= 0)\n" +
@@ -509,13 +513,13 @@ public class JsSolutionProgramFactoryTest {
                 "}\n" +
                 "\n" +
                 "\n" +
-                "function " + solutionProgram.getInputGeneratorFunctionName() + "()\n" +
+                "function "+solutionProgram.getInputGeneratorFunctionName()+"()\n" +
                 "{\n" +
                 "return 1;\n" +
                 "}\n" +
                 "\n" +
-                " const " + solutionProgram.getOutputGeneratorFunctionName() + "_fs = require('fs');\n" +
-                "function " + solutionProgram.getOutputGeneratorFunctionName() + "(a)\n" +
+                " const "+solutionProgram.getOutputGeneratorFunctionName()+"_fs = require('fs');\n" +
+                "function "+solutionProgram.getOutputGeneratorFunctionName()+"(a)\n" +
                 "{\n" +
                 "let str=\"err\";\n" +
                 "if(!Array.isArray(a)){\n" +
@@ -535,10 +539,10 @@ public class JsSolutionProgramFactoryTest {
                 "            str=a.join(\"\\n\")\n" +
                 "        }\n" +
                 "}" +
-                solutionProgram.getOutputGeneratorFunctionName() + "_fs.writeFileSync(\"" + solutionProgram.getOutputFileName() + "\",str);\n" +
+                solutionProgram.getOutputGeneratorFunctionName()+"_fs.writeFileSync(\""+solutionProgram.getOutputFileName()+"\",str);\n" +
                 "}\n" +
                 "\n" +
-                solutionProgram.getOutputGeneratorFunctionName() + "(solution(" + solutionProgram.getInputGeneratorFunctionName() + "()));";
-        assertEquals(correctCode, solutionProgram.getProgramCode());
+                solutionProgram.getOutputGeneratorFunctionName()+"(solution("+solutionProgram.getInputGeneratorFunctionName()+"()));";
+        assertEquals(correctCode,solutionProgram.getProgramCode());
     }
 }

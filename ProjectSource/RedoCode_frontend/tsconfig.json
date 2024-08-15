@@ -17,6 +17,10 @@
     "allowJs": true,
     "checkJs": false,
     "verbatimModuleSyntax": false,
-    "typeRoots": ["./src/types", "./node_modules/@types/"]
-  }
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types/",
+    ]
+    },
+
 }

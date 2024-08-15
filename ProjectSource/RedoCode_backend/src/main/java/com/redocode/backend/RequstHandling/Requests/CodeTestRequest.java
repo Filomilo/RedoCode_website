@@ -23,7 +23,7 @@ import java.util.Map;
 public class CodeTestRequest extends RawCodeRunRequest {
 
     List<ExerciseTests> testsToRun;
-    List<ExerciseTests> AutotestsToRun = new ArrayList<>();
+    List<ExerciseTests> AutotestsToRun=new ArrayList<>();
     Variables.VARIABLES_TYPES inputType;
     Variables.VARIABLES_TYPES outputType;
 
@@ -40,7 +40,8 @@ public class CodeTestRequest extends RawCodeRunRequest {
     @NotNull
     Long timeForTaskMin;
     @NotNull
-    Map<CODE_RUNNER_TYPE, String> solutionCodes;
+    Map<CODE_RUNNER_TYPE,String> solutionCodes;
+
 
 
 }

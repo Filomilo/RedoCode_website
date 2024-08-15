@@ -16,14 +16,13 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private static final String SECRET = "5=!^pwr#wj3$+b1u(5_56a1nbbn%k13q874@98v$2i!chndx6_"; // todo : change to github secret
-
+    private static final  String SECRET = "5=!^pwr#wj3$+b1u(5_56a1nbbn%k13q874@98v$2i!chndx6_"; // todo : change to github secret
     public String extractUsername(String token) {
         return extractClaims(token, Claims::getSubject);
     }
 
     public <T> T extractClaims(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractClaims(token);
+        final Claims claims=extractClaims(token);
         return claimsResolver.apply(claims);
     }
 
@@ -31,12 +30,12 @@ public class JwtService {
         return generateTooken(new HashMap<>(), userDetails);
     }
 
-    public String generateTooken(Map<String, Object> claims, UserDetails userDetails) {
+    public String generateTooken(Map<String,Object> claims, UserDetails userDetails) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + 1000* 60 * 60 *24))
                 .signWith(getSignInKey())
                 .compact();
     }

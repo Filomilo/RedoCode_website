@@ -10,9 +10,9 @@ import java.util.function.Function;
 public class ResposibilityChainBuilder {
 
 
-    BiFunction<User, ExecutionResponseBase, Void> messagehandler = (User user, ExecutionResponseBase responseBase) -> {
-        return null;
-    };
+    BiFunction<User, ExecutionResponseBase, Void> messagehandler=(User user, ExecutionResponseBase responseBase)->{
+       return null;
+   };
 
 
     public ResposibilityChainBuilder setMessagehandler(BiFunction<User, ExecutionResponseBase, Void> messagehandler) {
@@ -20,7 +20,8 @@ public class ResposibilityChainBuilder {
         return this;
     }
 
-    public ResposibilityChainBuilderSteps setSteps() {
+    public ResposibilityChainBuilderSteps setSteps()
+    {
         return new ResposibilityChainBuilderSteps(messagehandler);
     }
 

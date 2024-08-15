@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 
-public class RequestHadndlingException extends Exception {
-    public RequestHadndlingException(String message) {
+public class RequestHadndlingException extends Exception{
+    public RequestHadndlingException(String message)
+    {
         super(message);
     }
 }

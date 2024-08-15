@@ -14,11 +14,10 @@ public class SingleInteger extends Variables<Integer> {
     public SingleInteger(Integer value) {
         super(value);
     }
-
     @Override
     @JsonIgnore
     public VARIABLES_TYPES getType() {
-        return VARIABLES_TYPES.SINGLE_INTEGER;
+       return VARIABLES_TYPES.SINGLE_INTEGER;
     }
 
 }

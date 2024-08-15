@@ -10,15 +10,13 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder
 @JsonSerialize
 @JsonDeserialize
-public class SingleString extends Variables<String> {
+public class SingleString  extends Variables<String> {
     public SingleString(String value) {
         super(value);
     }
-
     public SingleString() {
         super();
     }
-
     @Override
     @JsonIgnore
     public VARIABLES_TYPES getType() {

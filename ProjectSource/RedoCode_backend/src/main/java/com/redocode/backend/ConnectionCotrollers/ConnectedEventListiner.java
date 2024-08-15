@@ -1,6 +1,7 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 
+
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.Secuirity.JwtService;
 import com.redocode.backend.StompPrincipal;
@@ -34,10 +35,10 @@ public class ConnectedEventListiner implements ApplicationListener<SessionConnec
     @Override
     public void onApplicationEvent(SessionConnectedEvent event) {
 
-        Principal connected = (Principal) event.getMessage().getHeaders().get("simpUser");
+        Principal connected= (Principal) event.getMessage().getHeaders().get("simpUser");
 
-        log.info("user with uuid connecitng stomp: " + connected.getName());
-        User finalUser = new User(connected.getName());
+        log.info("user with uuid connecitng stomp: "+connected.getName());
+        User finalUser=new User(connected.getName());
         redoCodeController.addConnectedUser(finalUser);
     }
 }

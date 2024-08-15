@@ -21,11 +21,12 @@ import java.util.function.Function;
 public abstract class MessageRequestHandler extends BaseRequestHandler {
 
 
+
 //todo: to remvoe classs
 
 
     void exceptionHandling(Exception exception) {
-        log.info("Expection on Test: " + exception.getMessage());
+        log.info("Expection on Test: "+ exception.getMessage());
     }
 
 

@@ -10,12 +10,11 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 //@Disabled("Islotating specific test for debugging")
 class SolutionProgramFactoryTest {
     @Test
     void buildCpp() {
-        Program program = ProgramFactory
+        Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(100)
@@ -23,12 +22,11 @@ class SolutionProgramFactoryTest {
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
                 .setSolutionCode("")
                 .build();
-        assertSame(CppSolutionProgram.class, program.getClass());
+        assertSame(CppSolutionProgram.class,program.getClass());
     }
-
     @Test
     void buildJs() {
-        Program program = ProgramFactory
+        Program program= ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
                 .setTimeout(100)
@@ -36,7 +34,7 @@ class SolutionProgramFactoryTest {
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_FLOAT)
                 .setSolutionCode("")
                 .build();
-        assertSame(JsSolutionProgram.class, program.getClass());
+        assertSame(JsSolutionProgram.class,program.getClass());
     }
 
 }

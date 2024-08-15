@@ -6,12 +6,15 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '',
-  plugins: [vue(), vueJsx()],
+  base: "", 
+  plugins: [
+    vue(),
+    vueJsx(),
+  ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
   },
   build: {
     // minify: false,
@@ -19,16 +22,17 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('src/components')) {
-            return 'components'
+            return 'components';
           }
           if (id.includes('src/controllers')) {
-            return 'controllers'
+            return 'controllers';
           }
           if (id.includes('src/types')) {
-            return 'types'
+            return 'types';
           }
-        },
-      },
-    },
-  },
+        }
+      }
+    }
+  }
+  
 })

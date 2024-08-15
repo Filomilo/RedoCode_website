@@ -20,12 +20,11 @@ import java.util.UUID;
 @Component
 public class CustomHandshakeHandler extends DefaultHandshakeHandler {
 
-    //    @Autowired
+//    @Autowired
 //    private RedoCodeController redoCodeController;
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-        String uuid = UUID.randomUUID().toString();
-        request.getHeaders().getFirst("token");
+       String uuid=UUID.randomUUID().toString();request.getHeaders().getFirst("token");
 
         return new StompPrincipal(uuid);
     }

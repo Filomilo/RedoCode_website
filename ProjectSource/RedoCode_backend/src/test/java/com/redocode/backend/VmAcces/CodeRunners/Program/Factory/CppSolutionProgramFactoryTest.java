@@ -33,289 +33,303 @@ public class CppSolutionProgramFactoryTest {
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
     void getInputGeneratorCodeSingleInt(Integer var) {
-        log.info("argemnt value: " + var);
-        SolutionProgram program = ProgramFactory
+        log.info("argemnt value: "+ var);
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(var))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "int " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "int "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
-                        "return " + var + ";\n" +
+                        "return "+var+";\n" +
                         "}";
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
     void getInputGeneratorCodeArrayInt(Integer[] var) {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfIntegers(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "std::vector<int> " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "std::vector<int> "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return std::vector<int> {";
 
         for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += var[i];
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+=var[i];
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "};\n" +
+        inputCodeGenerationExpected+="};\n" +
                 "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
     void getInputGeneratorCodeDoubleArrayInt(Integer[][] var) {
-        log.info("var: " + Arrays.deepToString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("var: "+ Arrays.deepToString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfIntegers(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "std::vector<std::vector<int>> " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "std::vector<std::vector<int>> "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "std::vector<std::vector<int>> arr;\n";
-        for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "arr.push_back(std::vector<int>());\n";
+        for (int i = 0; i <var.length ; i++) {
+            inputCodeGenerationExpected+="arr.push_back(std::vector<int>());\n";
         }
-        for (int i = 0; i < var.length; i++) {
+        for (int i = 0; i <var.length ; i++) {
             for (int j = 0; j < var[0].length; j++) {
-                inputCodeGenerationExpected += "arr[" + i + "].push_back(" + var[i][j] + ");\n";
+                inputCodeGenerationExpected+="arr["+i+"].push_back("+var[i][j]+");\n";
             }
 
         }
-        inputCodeGenerationExpected += "return arr;\n}";
-        log.info("code: \n" + inputCodeGenerationExpected);
+        inputCodeGenerationExpected+="return arr;\n}";
+        log.info("code: \n"+inputCodeGenerationExpected);
 
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
+
+
+
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
     void getInputGeneratorCodeSingleFloat(Float var) {
-        log.info("argemnt value: " + var);
-        SolutionProgram program = ProgramFactory
+        log.info("argemnt value: "+ var);
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new SingleFloat(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "float " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "float "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
-                        "return " + var + ";\n" +
+                        "return "+var+";\n" +
                         "}";
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
+
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
     void getInputGeneratorCodeArrayFloat(Float[] var) {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(500)
                 .setInputVaraiable(new ArrayOfFloats(var))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "std::vector<float> " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "std::vector<float> "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return std::vector<float> {";
 
         for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += var[i];
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+=var[i];
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "};\n" +
+        inputCodeGenerationExpected+="};\n" +
                 "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
     void getInputGeneratorCodeDoubleArrayFloat(Float[][] var) {
-        log.info("var: " + Arrays.deepToString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("var: "+ Arrays.deepToString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfFloats(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "std::vector<std::vector<float>> " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "std::vector<std::vector<float>> "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "std::vector<std::vector<float>> arr;\n";
-        for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "arr.push_back(std::vector<float>());\n";
+        for (int i = 0; i <var.length ; i++) {
+            inputCodeGenerationExpected+="arr.push_back(std::vector<float>());\n";
         }
-        for (int i = 0; i < var.length; i++) {
+        for (int i = 0; i <var.length ; i++) {
             for (int j = 0; j < var[0].length; j++) {
-                inputCodeGenerationExpected += "arr[" + i + "].push_back(" + var[i][j] + ");\n";
+                inputCodeGenerationExpected+="arr["+i+"].push_back("+var[i][j]+");\n";
             }
 
         }
-        inputCodeGenerationExpected += "return arr;\n}";
-        log.info("code: \n" + inputCodeGenerationExpected);
+        inputCodeGenerationExpected+="return arr;\n}";
+        log.info("code: \n"+inputCodeGenerationExpected);
 
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
+
 
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
     void getInputGeneratorCodeSingleString(String var) {
-        log.info("argemnt value: " + var);
-        SolutionProgram program = ProgramFactory
+        log.info("argemnt value: "+ var);
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleString(var))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "std::string " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "std::string "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
-                        "return \"" + StringFormatter.removeWhiteCharacterss(var) + "\";\n" +
+                        "return \""+ StringFormatter.removeWhiteCharacterss(var)+"\";\n" +
                         "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+ inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
     void getInputGeneratorCodeArrayString(String[] var) {
-        log.info("val: " + Arrays.toString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("val: "+Arrays.toString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new ArrayOfStrings(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "std::vector<std::string> " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "std::vector<std::string> "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "return std::vector<std::string> {";
 
         for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "\"" + StringFormatter.removeWhiteCharacterss(var[i]) + "\"";
-            if (i < var.length - 1)
-                inputCodeGenerationExpected += ", ";
+            inputCodeGenerationExpected+="\""+StringFormatter.removeWhiteCharacterss(var[i])+"\"";
+            if(i<var.length-1)
+                inputCodeGenerationExpected+=", ";
         }
-        inputCodeGenerationExpected += "};\n" +
+        inputCodeGenerationExpected+="};\n" +
                 "}";
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
-
     @ParameterizedTest
     @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
     void getInputGeneratorCodeDoubleArrayString(String[][] var) {
-        log.info("var: " + Arrays.deepToString(var));
-        SolutionProgram program = ProgramFactory
+        log.info("var: "+ Arrays.deepToString(var));
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setInputVaraiable(new DoubleArrayOfStrings(var))
                 .setTimeout(500)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
-        String inputCodeGenerationExpected =
-                "#include <iostream>\n" +
-                        "#include <vector>\n" +
-                        "std::vector<std::vector<std::string>> " + program.getInputGeneratorFunctionName() + "()\n" +
+                .build()
+                ;
+        String inputCodeGenerationExpected=
+                "#include <iostream>\n"+
+                        "#include <vector>\n"+
+                        "std::vector<std::vector<std::string>> "+program.getInputGeneratorFunctionName()+"()\n" +
                         "{\n" +
                         "std::vector<std::vector<std::string>> arr;\n";
-        for (int i = 0; i < var.length; i++) {
-            inputCodeGenerationExpected += "arr.push_back(std::vector<std::string>());\n";
+        for (int i = 0; i <var.length ; i++) {
+            inputCodeGenerationExpected+="arr.push_back(std::vector<std::string>());\n";
         }
-        for (int i = 0; i < var.length; i++) {
+        for (int i = 0; i <var.length ; i++) {
             for (int j = 0; j < var[0].length; j++) {
-                inputCodeGenerationExpected += "arr[" + i + "].push_back(\"" + StringFormatter.removeWhiteCharacterss(var[i][j]) + "\");\n";
+                inputCodeGenerationExpected+="arr["+i+"].push_back(\""+StringFormatter.removeWhiteCharacterss(var[i][j]) +"\");\n";
             }
 
         }
-        inputCodeGenerationExpected += "return arr;\n}";
-        log.info("code: \n" + inputCodeGenerationExpected);
+        inputCodeGenerationExpected+="return arr;\n}";
+        log.info("code: \n"+inputCodeGenerationExpected);
 
-        log.info("code: \n" + inputCodeGenerationExpected);
-        assertEquals(inputCodeGenerationExpected, program.getInputGeneratorCode(), "inputArgs funciton doenst match one prepread in template");
+        log.info("code: \n"+inputCodeGenerationExpected);
+        assertEquals(inputCodeGenerationExpected,program.getInputGeneratorCode(),"inputArgs funciton doenst match one prepread in template");
     }
 
     @Test
     void getOutputGeneratorCodeSingleString() {
 
 
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_STRING)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(1))
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
 
-        String ouputGenerationCode =
+        String ouputGenerationCode=
                 "#include <fstream>\n" +
                         "#include <iostream>\n" +
                         "#include <sstream>\n" +
                         "#include <vector>\n" +
-                        "void " + program.getOutputGeneratorFunctionName() + "(std::string a)\n" +
+                        "void "+program.getOutputGeneratorFunctionName()+"(std::string a)\n" +
                         "{\n" +
                         "std::ofstream myfile;\n" +
-                        "myfile.open (\"" + program.getOutputFileName() + "\");\n" +
+                        "myfile.open (\""+program.getOutputFileName()+"\");\n" +
                         "std::stringstream ss;\n" +
                         "ss<< a;\n" +
                         "std::string s=ss.str();\n" +
@@ -340,32 +354,33 @@ public class CppSolutionProgramFactoryTest {
                         "}\n" +
                         "myfile.close();\n" +
                         "}";
-        assertEquals(ouputGenerationCode, program.getOutputGeneratorCode());
+        assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
 
     }
 
     @Test
     void getOutputGeneratorCodeArrayString() {
 
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.ARRAY_STRINGS)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(1))
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
 
-        String ouputGenerationCode =
+        String ouputGenerationCode=
                 "#include <fstream>\n" +
                         "#include <iostream>\n" +
                         "#include <sstream>\n" +
                         "#include <vector>\n" +
-                        "void " + program.getOutputGeneratorFunctionName() + "(std::vector<std::string> a)\n" +
+                        "void "+program.getOutputGeneratorFunctionName()+"(std::vector<std::string> a)\n" +
                         "{\n" +
                         "std::ofstream myfile;\n" +
-                        "myfile.open (\"" + program.getOutputFileName() + "\");\n" +
+                        "myfile.open (\""+program.getOutputFileName()+"\");\n" +
                         "size_t l=a.size();\n" +
                         "for (size_t i = 0; i < l; i++)\n" +
                         "{\n" +
@@ -391,33 +406,34 @@ public class CppSolutionProgramFactoryTest {
                         "};\n" +
                         "myfile << str;\n" +
                         "}\n" +
-                        "if(i+1<l)\n" +
+                        "if(i+1<l)\n"+
                         "myfile <<\"\\t\";\n" +
                         "}\n" +
                         "myfile.close();\n" +
                         "}";
 
-        log.info("Code: \n" + ouputGenerationCode);
-        assertEquals(ouputGenerationCode, program.getOutputGeneratorCode());
+        log.info("Code: \n"+ ouputGenerationCode);
+        assertEquals(ouputGenerationCode,program.getOutputGeneratorCode());
     }
 
     @Test
     void getOutputGeneratorCodeMultiArrayString() {
 
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setOutputBase(Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(1))
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
         String code =
-                " void " + program.getOutputGeneratorFunctionName() + "(std::string** a)\n" +
+                " void "+program.getOutputGeneratorFunctionName()+"(std::string** a)\n" +
                         "{\n" +
                         "std::ofstream myfile;\n" +
-                        "myfile.open (\"" + program.getOutputFileName() + "\");\n" +
+                        "myfile.open (\""+program.getOutputFileName()+"\");\n" +
 //                        "size_t h="+program.getOutput().getH()+";\n" +
 //                        "size_t w="+program.getOutput().getW()+";\n" +
                         "for (size_t i = 0; i < h; i++)\n" +
@@ -458,94 +474,98 @@ public class CppSolutionProgramFactoryTest {
     @Deprecated
     @Disabled("Depracted functionality, there canot be arguemnt less solution program")
     void getActivationFunctionNOArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger())
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
-        String code =
+        String code=
                 "int main()\n" +
                         "{\n" +
-                        program.getOutputGeneratorFunctionName() + "(solution());\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution());\n" +
                         "return 0;\n" +
                         "}";
-        log.info("Code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
     }
 
     @Test
     void getActivationFunctionSingleArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(500)
                 .setInputVaraiable(new SingleInteger(1))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
-        String code =
+        String code=
                 "int main()\n" +
                         "{\n" +
-                        program.getOutputGeneratorFunctionName() + "(solution(" + program.getInputGeneratorFunctionName() + "()));\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));\n" +
                         "return 0;\n" +
                         "}";
-        log.info("code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+        log.info("code: \n"+ code);
+        assertEquals(code,program.getActivationFunction());
 
     }
 
     @Test
     void getActivationFunctionArrayAsArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(500)
                 .setInputVaraiable(new ArrayOfIntegers(new Integer[]{1, 8, 5, 4}))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
-        String code =
+        String code=
                 "int main()\n" +
                         "{\n" +
-                        program.getOutputGeneratorFunctionName() + "(solution(" + program.getInputGeneratorFunctionName() + "()));\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));\n" +
                         "return 0;\n" +
                         "}";
-        log.info("Code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
     }
 
 
     @Test
     void getActivationFunctionMultiArrayAsArumgument() {
-        SolutionProgram program = ProgramFactory
+        SolutionProgram program=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
                 .setTimeout(500)
-                .setInputVaraiable(new DoubleArrayOfIntegers(new Integer[][]{{1, 8, 5, 4}, {1, 8, 5, 4}}))
+                .setInputVaraiable(new DoubleArrayOfIntegers(new Integer[][]{{1, 8, 5, 4},{1, 8, 5, 4}}))
                 .setOutputBase(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .setSolutionCode("")
-                .build();
+                .build()
+                ;
 
-        String code =
+        String code=
                 "int main()\n" +
                         "{\n" +
-                        program.getOutputGeneratorFunctionName() + "(solution(" + program.getInputGeneratorFunctionName() + "()));\n" +
+                        program.getOutputGeneratorFunctionName() +"(solution("+program.getInputGeneratorFunctionName()+"()));\n" +
                         "return 0;\n" +
                         "}";
-        log.info("Code: \n" + code);
-        assertEquals(code, program.getActivationFunction());
+        log.info("Code: \n"+code);
+        assertEquals(code,program.getActivationFunction());
     }
-
     @Test
-    void FibonachiCodeTest() {
-        List<SolutionPrograms> list = solutionProgramsRepository.findAll();
-        SolutionProgram solutionProgram = ProgramFactory
+    void FibonachiCodeTest()
+    {
+        List<SolutionPrograms> list=solutionProgramsRepository.findAll();
+        SolutionProgram solutionProgram=ProgramFactory
                 .createSolutionProgram()
                 .setSolutionCodeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)// TODO: add class mapping data base string to Code runner enum
                 .setInputVaraiable(new SingleInteger(1))
@@ -553,7 +573,7 @@ public class CppSolutionProgramFactoryTest {
                 .setSolutionCode(list.get(0).getCode())
                 .setTimeout(500)
                 .build();
-        String correctCode = "int solution(int val)\n" +
+        String correctCode="int solution(int val)\n" +
                 "{\n" +
                 "    int* arr=new int[val];\n" +
                 "\n" +
@@ -571,7 +591,7 @@ public class CppSolutionProgramFactoryTest {
                 "\n" +
                 "#include <iostream>\n" +
                 "#include <vector>\n" +
-                "int " + solutionProgram.getInputGeneratorFunctionName() + "()\n" +
+                "int "+solutionProgram.getInputGeneratorFunctionName()+"()\n" +
                 "{\n" +
                 "return 1;\n" +
                 "}\n" +
@@ -580,10 +600,10 @@ public class CppSolutionProgramFactoryTest {
                 "#include <iostream>\n" +
                 "#include <sstream>\n" +
                 "#include <vector>\n" +
-                "void " + solutionProgram.getOutputGeneratorFunctionName() + "(int a)\n" +
+                "void "+solutionProgram.getOutputGeneratorFunctionName()+"(int a)\n" +
                 "{\n" +
                 "std::ofstream myfile;\n" +
-                "myfile.open (\"" + solutionProgram.getOutputFileName() + "\");\n" +
+                "myfile.open (\""+solutionProgram.getOutputFileName()+"\");\n" +
                 "std::stringstream ss;\n" +
                 "ss<< a;\n" +
                 "std::string s=ss.str();\n" +
@@ -611,10 +631,10 @@ public class CppSolutionProgramFactoryTest {
                 "\n" +
                 "int main()\n" +
                 "{\n" +
-                solutionProgram.getOutputGeneratorFunctionName() + "(solution(" + solutionProgram.getInputGeneratorFunctionName() + "()));\n" +
+                solutionProgram.getOutputGeneratorFunctionName()+"(solution("+solutionProgram.getInputGeneratorFunctionName()+"()));\n" +
                 "return 0;\n" +
                 "}";
-        assertEquals(correctCode, solutionProgram.getProgramCode());
+        assertEquals(correctCode,solutionProgram.getProgramCode());
     }
 
 

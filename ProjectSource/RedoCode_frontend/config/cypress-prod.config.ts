@@ -8,4 +8,7 @@ export default defineConfig({
     supportFile: false,
     experimentalMemoryManagement: true,
   },
-})
+}
+
+
+)
