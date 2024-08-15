@@ -22,5 +22,5 @@ jobs:
           maven-version: 3.8.2
       - name: Generate Javadoc
         run: |
-          cd ./ProjectSource/RedoCode_backend
+          ls
           mvn javadoc:javadoc
