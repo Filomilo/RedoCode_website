@@ -29,7 +29,8 @@ jobs:
           javadoc-branch: javadoc
           java-version: 21
           project: maven 
+          javadoc-source-folder: ./docs/Backend_docs/
           working-directory: ./ProjectSource/RedoCode_backend
           custom-command: |
-           cd ProjectSource/RedoCode_backend
-           mvn javadoc:javadoc
+            cd ProjectSource/RedoCode_backend
+            mvn javadoc:javadoc
