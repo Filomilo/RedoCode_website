@@ -1,8 +1,6 @@
 name: generate documantation
 on:
-  push:
-    branches:
-      - main
+  push
 
 jobs:
   publish:
@@ -28,9 +26,10 @@ jobs:
         uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          javadoc-branch: javadoc
+          javadoc-branch: gh-pages
           java-version: 21
           project: maven 
+          target-folder: backend_docs
           javadoc-source-folder: ./docs/Backend_docs/
           working-directory: ./ProjectSource/RedoCode_backend
           custom-command: |
