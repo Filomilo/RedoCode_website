@@ -179,7 +179,9 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<outputDirectory>../../docs/javadoc</outputDirectory>
+					<outputDirectory>/docs</outputDirectory>
+					<reportOutputDirectory>${project.build.directory}../../../../docs</reportOutputDirectory>
+					<destDir>Backend_docs</destDir>
 				</configuration>
 			</plugin>
 		</plugins>
