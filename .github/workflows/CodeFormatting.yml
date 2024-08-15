@@ -4,16 +4,13 @@ on:
   push
 
 jobs:
-  reformat:
+  formatting-java:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: joutvhu/intellij-format@v1
+      - uses: actions/checkout@v4 # v2 minimum required
+      - uses: axel-op/googlejavaformat-action@v3
         with:
-          path: './ProjectSource/RedoCode_backend'
-          mask: '**/*.java'
+          args: "--skip-sorting-imports --replace"
 
   prettier:
     runs-on: ubuntu-latest
