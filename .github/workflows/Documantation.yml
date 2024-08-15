@@ -32,5 +32,4 @@ jobs:
           working-directory: ./ProjectSource/RedoCode_backend
           custom-command: |
            cd ProjectSource/RedoCode_backend
-           javadoc -d javadoc -sourcepath src/main/java -subpackages .
-        
+           mvn javadoc:javadoc
