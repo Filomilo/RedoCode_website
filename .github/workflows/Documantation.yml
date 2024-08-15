@@ -25,3 +25,4 @@ jobs:
           ls
           mvn javadoc:javadoc
           ls ../../docs
+          ls
