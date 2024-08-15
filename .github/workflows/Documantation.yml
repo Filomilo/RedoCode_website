@@ -19,7 +19,7 @@ jobs:
           maven-version: 3.8.2
       - name: Generate Javadoc
         run: |
-          cd /ProjectSource/RedoCode_backend
+          cd ProjectSource/RedoCode_backend
           mvn clean install -DskipTests 
           mvn javadoc:javadoc
           ls ../../docs
