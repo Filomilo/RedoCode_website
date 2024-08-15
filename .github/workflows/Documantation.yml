@@ -3,7 +3,7 @@ on:
   push
 
 jobs:
-  publish:
+  generate_java_doc:
     runs-on: ubuntu-latest
     defaults:
       run:
