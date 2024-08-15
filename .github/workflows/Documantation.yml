@@ -24,6 +24,6 @@ jobs:
         run: |
           ls
           mvn clean install -DskipTests 
-          javadoc -d docs -sourcepath src/main/java com.redocode.backend
+          mvn javadoc -d docs -sourcepath src/main/java com.redocode.backend
           ls ../../docs
           ls
