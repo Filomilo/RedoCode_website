@@ -23,6 +23,6 @@ jobs:
       - name: Generate Javadoc
         run: |
           ls
-          javadoc src/
+          javadoc -d docs src
           ls ../../docs
           ls
