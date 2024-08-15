@@ -1,8 +1,9 @@
 name: code-formatting
 
 on:
-  push
-
+  push:
+    branches:
+      - main
 jobs:
   formatting-java:
     runs-on: ubuntu-latest
