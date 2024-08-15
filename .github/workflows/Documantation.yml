@@ -24,6 +24,6 @@ jobs:
         run: |
           ls
           mvn clean install -DskipTests 
-          mvn javadoc
+          mvn javadoc:javadoc
           ls ../../docs
           ls
