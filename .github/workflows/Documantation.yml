@@ -23,6 +23,7 @@ jobs:
       - name: Generate Javadoc
         run: |
           ls
+          mvn clean install -DskipTests 
           javadoc -d docs -sourcepath src/main/java com.redocode.backend
           ls ../../docs
           ls
