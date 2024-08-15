@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 public class ValuesProvider {
 
 
-    static final Random rand=new Random();
+              static final Random rand=new Random();
     private static Integer[] generateRadnomIntArray(int length)
     {
         Integer[] arr= new Integer[length];
