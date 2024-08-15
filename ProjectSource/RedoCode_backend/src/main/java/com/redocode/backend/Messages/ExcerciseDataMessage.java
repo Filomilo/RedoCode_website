@@ -46,37 +46,36 @@ public class ExcerciseDataMessage {
     List<ExcerciseTestMessage> automaticTests;
 
     @JsonProperty
-    Map<String,String> startingFunction;
+    Map<String, String> startingFunction;
 
     public ExcerciseDataMessage(Excersize excersize) throws JsonProcessingException {
-        this.title=excersize.getExcersizeName();
-        this.desc=excersize.getDescription();
-        this.outputType= String.valueOf(excersize.getOutputType());
-        this.inputType= String.valueOf(excersize.getInputType());
-        this.id=excersize.getId();
-        this.automaticTests=new ArrayList<>();
-        availbleCodeRunners=new ArrayList<>();
-        tests=new ArrayList<>();
-        for (ExerciseTests tst: excersize.getExerciseTests()
-             ) {
+        this.title = excersize.getExcersizeName();
+        this.desc = excersize.getDescription();
+        this.outputType = String.valueOf(excersize.getOutputType());
+        this.inputType = String.valueOf(excersize.getInputType());
+        this.id = excersize.getId();
+        this.automaticTests = new ArrayList<>();
+        availbleCodeRunners = new ArrayList<>();
+        tests = new ArrayList<>();
+        for (ExerciseTests tst : excersize.getExerciseTests()
+        ) {
             tests.add(ExcerciseTestMessage.builder()
-                            .input(tst.getParsedInput(excersize.getInputType()))
-                            .expectedOutput(tst.getParsedOutput(excersize.getOutputType()))
-                            .consoleOutput("")
-                            .errorOutput("")
+                    .input(tst.getParsedInput(excersize.getInputType()))
+                    .expectedOutput(tst.getParsedOutput(excersize.getOutputType()))
+                    .consoleOutput("")
+                    .errorOutput("")
                     .build());
         }
-        for (ProgrammingLanguage programmingLanguage:excersize.getLanguages()
-             ) {
+        for (ProgrammingLanguage programmingLanguage : excersize.getLanguages()
+        ) {
             availbleCodeRunners.add(programmingLanguage.getName());
         }
-        startingFunction=new HashMap<>();
-        for (String lang:availbleCodeRunners
-             ) {
-            startingFunction.put(lang, StartingFuncitonGeneratorFactory.getStartingFunctionGeneratorForLanguage(lang).getStartingFunction(excersize.getInputType(),excersize.getOutputType()));
+        startingFunction = new HashMap<>();
+        for (String lang : availbleCodeRunners
+        ) {
+            startingFunction.put(lang, StartingFuncitonGeneratorFactory.getStartingFunctionGeneratorForLanguage(lang).getStartingFunction(excersize.getInputType(), excersize.getOutputType()));
         }
     }
-
 
 
 }

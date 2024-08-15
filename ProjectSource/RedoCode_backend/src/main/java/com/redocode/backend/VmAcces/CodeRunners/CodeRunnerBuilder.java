@@ -11,23 +11,19 @@ public class CodeRunnerBuilder {
     CodeRunner instance;
 
     public CodeRunnerBuilder(CODE_RUNNER_TYPE type, int ram) {
-        switch (type)
-        {
-            case CPP_RUNNER -> instance=new CppCodeRunner(ram);
-            case JS_RUNNER -> instance=new JsCodeRunner(ram);
+        switch (type) {
+            case CPP_RUNNER -> instance = new CppCodeRunner(ram);
+            case JS_RUNNER -> instance = new JsCodeRunner(ram);
         }
     }
 
 
-    CodeRunner build()
-    {
+    CodeRunner build() {
         return instance;
     }
 
 
-
-    public static CodeRunner build(CodeRunnerRequest codeRunnerRequest)
-    {
+    public static CodeRunner build(CodeRunnerRequest codeRunnerRequest) {
         return new CodeRunnerBuilder(codeRunnerRequest.getCodeRunnerType(), codeRunnerRequest.getRam())
                 .build();
     }

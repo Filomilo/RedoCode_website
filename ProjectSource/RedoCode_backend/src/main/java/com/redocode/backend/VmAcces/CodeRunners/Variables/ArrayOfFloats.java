@@ -13,14 +13,14 @@ import java.util.List;
 
 @JsonSerialize
 @JsonDeserialize
-public class ArrayOfFloats  extends Variables<Float[]> {
+public class ArrayOfFloats extends Variables<Float[]> {
     public ArrayOfFloats(Float[] value) {
         super(value);
     }
+
     public ArrayOfFloats() {
         super();
     }
-
 
 
     @Override

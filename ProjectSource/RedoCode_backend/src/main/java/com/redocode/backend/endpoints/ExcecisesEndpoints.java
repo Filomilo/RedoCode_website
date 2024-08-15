@@ -27,11 +27,10 @@ public class ExcecisesEndpoints {
     ExerciseRepository exerciseRepository;
 
     @GetMapping("/data")
-    public ExcerciseDataMessage getExceciseData(Long id)
-    {
+    public ExcerciseDataMessage getExceciseData(Long id) {
         log.info("Getting ExcerciseDataMessage reuqest for" + String.valueOf(id));
-        Excersize exercise=exerciseRepository.findById(id).orElse(null);
-        ExcerciseDataMessage excerciseDataMessage= null;
+        Excersize exercise = exerciseRepository.findById(id).orElse(null);
+        ExcerciseDataMessage excerciseDataMessage = null;
         try {
             excerciseDataMessage = new ExcerciseDataMessage(exercise);
         } catch (JsonProcessingException e) {
@@ -41,11 +40,10 @@ public class ExcecisesEndpoints {
     }
 
     @GetMapping("/list")
-    public   List<ExcersizeListEntry> getExercises(ExerciseListRequestMessage mes)
-    {
-        log.info("experiences list request: "+ mes);
-        log.info("sending exercse list: "+ exerciseRepository.getSimpleExcersizeList());
-        return  exerciseRepository.getSimpleExcersizeList();
+    public List<ExcersizeListEntry> getExercises(ExerciseListRequestMessage mes) {
+        log.info("experiences list request: " + mes);
+        log.info("sending exercse list: " + exerciseRepository.getSimpleExcersizeList());
+        return exerciseRepository.getSimpleExcersizeList();
     }
 
 }

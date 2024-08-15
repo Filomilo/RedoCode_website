@@ -13,12 +13,15 @@ public class SingleFloat extends Variables<Float> {
     public SingleFloat(Float value) {
         super(value);
     }
+
     public SingleFloat(Double value) {
         super(value.floatValue());
     }
+
     public SingleFloat() {
         super();
     }
+
     @Override
     @JsonIgnore
     public VARIABLES_TYPES getType() {

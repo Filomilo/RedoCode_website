@@ -17,9 +17,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class RequestBase {
 
-   @NotNull
-   protected User user ;
     @NotNull
-    protected  final Date requestTime=new Date();
+    protected User user;
+    @NotNull
+    protected final Date requestTime = new Date();
 
 }

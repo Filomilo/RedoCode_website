@@ -15,14 +15,13 @@ import java.util.Objects;
 @Getter
 @Setter
 @SuperBuilder
-@ToString(callSuper=true)
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class CodeRunnerRequest extends RequestBase implements Comparable {
 
     protected CODE_RUNNER_TYPE codeRunnerType;
     protected int ram;
-
 
 
     public CodeRunnerRequest(User user, CODE_RUNNER_TYPE codeRunnerType) {
@@ -34,12 +33,11 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
     }
 
 
-
     public CodeRunnerRequest(User user, CodeRunnerRequestMessage requestMessageSource) {
 
         super(user);
-        log.info("handling code runner request: "+ requestMessageSource );
-        this.codeRunnerType=requestMessageSource.getCodeRunnerType();
+        log.info("handling code runner request: " + requestMessageSource);
+        this.codeRunnerType = requestMessageSource.getCodeRunnerType();
 //       switch (requestMessageSource.getCodeRunnerType())
 //       {
 //           case "cpp": this.codeRunnerType= CODE_RUNNER_TYPE.CPP_RUNNER; break;
@@ -47,7 +45,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
 //           default: throw new RuntimeException("Wrong code runner specified: "+requestMessageSource.getCodeRunnerType() );
 //       }
 
-       this.user=user;
+        this.user = user;
 
     }
 
@@ -57,7 +55,7 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CodeRunnerRequest that = (CodeRunnerRequest) o;
-        return Objects.equals(user, that.user) ;
+        return Objects.equals(user, that.user);
     }
 
     @Override
@@ -66,17 +64,17 @@ public class CodeRunnerRequest extends RequestBase implements Comparable {
     }
 
     @Override
-    public int compareTo( Object o) {
-        CodeRunnerRequest crm=(CodeRunnerRequest)o;
-        log.info("Comparing: "+ this+" to "+ crm);
-        if(this.user.getUserType()==crm.getUser().getUserType() && this.requestTime!=null && crm.requestTime!=null) {
-            log.info("Comapring "+this.requestTime.getTime()+" with "+ crm.getRequestTime()+": "+ this.requestTime.compareTo(crm.getRequestTime()));
-            if( this.requestTime.compareTo(crm.getRequestTime())==0)
-                return (int) (this.requestTime.getTime()-crm.getRequestTime().getTime());
-            log.info("user time comparison result: "+ this.requestTime.compareTo(crm.getRequestTime()));
+    public int compareTo(Object o) {
+        CodeRunnerRequest crm = (CodeRunnerRequest) o;
+        log.info("Comparing: " + this + " to " + crm);
+        if (this.user.getUserType() == crm.getUser().getUserType() && this.requestTime != null && crm.requestTime != null) {
+            log.info("Comapring " + this.requestTime.getTime() + " with " + crm.getRequestTime() + ": " + this.requestTime.compareTo(crm.getRequestTime()));
+            if (this.requestTime.compareTo(crm.getRequestTime()) == 0)
+                return (int) (this.requestTime.getTime() - crm.getRequestTime().getTime());
+            log.info("user time comparison result: " + this.requestTime.compareTo(crm.getRequestTime()));
             return this.requestTime.compareTo(crm.getRequestTime());
         }
-        log.info("user type comparison result: "+ (this.user.compareTo(crm.getUser() )));
+        log.info("user type comparison result: " + (this.user.compareTo(crm.getUser())));
         return this.user.compareTo(crm.getUser());
     }
 
