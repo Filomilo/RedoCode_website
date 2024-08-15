@@ -32,4 +32,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           message: backend documentation generation 
-          branch: ${GITHUB_REF#refs/heads/}
+          branch: ${{ github.ref_name }}
