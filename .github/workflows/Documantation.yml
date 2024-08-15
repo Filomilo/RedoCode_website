@@ -5,9 +5,6 @@ on:
 jobs:
   generate-javadoc:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./ProjectSource/RedoCode_backend
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 21
@@ -22,7 +19,7 @@ jobs:
           maven-version: 3.8.2
       - name: Generate Javadoc
         run: |
-          ls
+          cd /ProjectSource/RedoCode_backend
           mvn clean install -DskipTests 
           mvn javadoc:javadoc
           ls ../../docs
