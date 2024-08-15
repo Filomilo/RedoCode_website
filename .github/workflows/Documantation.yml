@@ -23,6 +23,6 @@ jobs:
       - name: Generate Javadoc
         run: |
           ls
-          javadoc -d docs src
+          javadoc -d docs -sourcepath src/main/java com.redocode.backend
           ls ../../docs
           ls
