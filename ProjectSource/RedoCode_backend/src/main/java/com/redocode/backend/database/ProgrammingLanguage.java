@@ -13,11 +13,10 @@ import lombok.ToString;
 @Setter
 public class ProgrammingLanguage {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    private Long id;
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
+  private Long id;
 
-
+  private String name;
 }

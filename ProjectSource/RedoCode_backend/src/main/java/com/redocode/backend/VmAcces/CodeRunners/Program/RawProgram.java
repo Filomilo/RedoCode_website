@@ -1,6 +1,5 @@
 package com.redocode.backend.VmAcces.CodeRunners.Program;
 
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -10,21 +9,20 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 public class RawProgram extends Program {
 
-    String code = "";
+  String code = "";
 
-    public RawProgram(String code) {
-        super();
-        this.code = code;
-    }
+  public RawProgram(String code) {
+    super();
+    this.code = code;
+  }
 
+  @Override
+  public String getProgramCode() {
+    return code;
+  }
 
-    @Override
-    public String getProgramCode() {
-        return code;
-    }
-
-    @Override
-    public long getExecutionTimeLimitMs() {
-        return 500;
-    }
+  @Override
+  public long getExecutionTimeLimitMs() {
+    return 500;
+  }
 }

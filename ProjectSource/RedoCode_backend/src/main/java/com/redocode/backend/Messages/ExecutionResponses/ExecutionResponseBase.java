@@ -1,12 +1,10 @@
 package com.redocode.backend.Messages.ExecutionResponses;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Setter
@@ -17,13 +15,10 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 @EqualsAndHashCode
 public abstract class ExecutionResponseBase {
-    public enum EXECUTION_RESPONSE_TYPE {
-        CHAIN_SCHEME,
-        STATUS_UPDATE
-    }
+  public enum EXECUTION_RESPONSE_TYPE {
+    CHAIN_SCHEME,
+    STATUS_UPDATE
+  }
 
-    @JsonProperty
-    @NotNull
-    EXECUTION_RESPONSE_TYPE messageType;
-
+  @JsonProperty @NotNull EXECUTION_RESPONSE_TYPE messageType;
 }

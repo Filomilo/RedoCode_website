@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 @Builder
 public class AuthenticationRequest {
-    String email;
-    String password;
+  String email;
+  String password;
 }

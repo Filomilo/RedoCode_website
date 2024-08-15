@@ -3,64 +3,63 @@ package com.redocode.backend.RequstHandling.Handlers;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
-import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.VmAcces.VmStatus;
-import com.redocode.backend.database.ExerciseTests;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 
 @Slf4j
-
 public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
-    private static final CodeRunnersController codeRunnersController = SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
+  private static final CodeRunnersController codeRunnersController =
+      SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
+  @Override
+  String getChainNodeName() {
+    return "validating access to coderunner";
+  }
 
-    @Override
-    String getChainNodeName() {
-        return "validating access to coderunner";
+  @Override
+  RequestBase handle(RequestBase request) throws RequestHadndlingException {
+    this.nodeUpdate(
+        request,
+        "validating access to " + ((CodeRunnerRequest) request).getCodeRunnerType(),
+        ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+    log.info(
+        "CodeRunnerAccesValidationHandler hadnling: " + request + " from " + request.getUser());
+    CodeRunner currentCodeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
+
+    if (((CodeRunnerRequest) request).getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED
+        && currentCodeRunner != null) {
+      return request;
     }
 
-    @Override
-    RequestBase handle(RequestBase request) throws RequestHadndlingException {
-        this.nodeUpdate(request, "validating access to " + ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
-        log.info("CodeRunnerAccesValidationHandler hadnling: " + request + " from " + request.getUser());
-        CodeRunner currentCodeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-
-        if (((CodeRunnerRequest) request).getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED && currentCodeRunner != null) {
-            return request;
-        }
-
-        if (currentCodeRunner != null
-                && currentCodeRunner.getType() == ((CodeRunnerRequest) request).getCodeRunnerType()
-                && currentCodeRunner.getRamMb() == ((CodeRunnerRequest) request).getRam()
-        ) {
-            return request;
-        }
-
-        codeRunnersController.requestVm((CodeRunnerRequest) request);
-        CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-        log.info("code unner: " + codeRunner);
-        CodeRunner userCodeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-
-        if (userCodeRunner != null &&
-                userCodeRunner.getType() == ((CodeRunnerRequest) request).getCodeRunnerType() &&
-                codeRunner.getStatus() == VmStatus.RUNNING_MACHINE) {
-            log.info("CodeRunnerAccesValidationHandler: succses");
-            this.nodeUpdate(request, "Validated access to " + ((CodeRunnerRequest) request).getCodeRunnerType(), ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
-
-            return request;
-        } else {
-            log.info("CodeRunnerAccesValidationHandler: FAilure");
-            return null;
-        }
-
+    if (currentCodeRunner != null
+        && currentCodeRunner.getType() == ((CodeRunnerRequest) request).getCodeRunnerType()
+        && currentCodeRunner.getRamMb() == ((CodeRunnerRequest) request).getRam()) {
+      return request;
     }
+
+    codeRunnersController.requestVm((CodeRunnerRequest) request);
+    CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
+    log.info("code unner: " + codeRunner);
+    CodeRunner userCodeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
+
+    if (userCodeRunner != null
+        && userCodeRunner.getType() == ((CodeRunnerRequest) request).getCodeRunnerType()
+        && codeRunner.getStatus() == VmStatus.RUNNING_MACHINE) {
+      log.info("CodeRunnerAccesValidationHandler: succses");
+      this.nodeUpdate(
+          request,
+          "Validated access to " + ((CodeRunnerRequest) request).getCodeRunnerType(),
+          ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+
+      return request;
+    } else {
+      log.info("CodeRunnerAccesValidationHandler: FAilure");
+      return null;
+    }
+  }
 }

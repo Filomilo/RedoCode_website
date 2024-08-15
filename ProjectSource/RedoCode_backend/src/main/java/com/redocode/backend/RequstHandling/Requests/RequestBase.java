@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
-
 @Slf4j
 @Getter
 @SuperBuilder
@@ -17,9 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class RequestBase {
 
-    @NotNull
-    protected User user;
-    @NotNull
-                                     protected final Date requestTime = new Date();
-
+  @NotNull protected User user;
+  @NotNull protected final Date requestTime = new Date();
 }

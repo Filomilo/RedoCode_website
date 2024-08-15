@@ -10,7 +10,5 @@ import java.security.Principal;
 @ToString
 @Getter
 public class StompPrincipal implements Principal {
-    String name;
-
-
+  String name;
 }

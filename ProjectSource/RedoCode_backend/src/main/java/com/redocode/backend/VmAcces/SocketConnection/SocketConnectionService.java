@@ -9,13 +9,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SocketConnectionService {
 
+  private SimpMessagingTemplate simpMessagingTemplate;
 
-    private SimpMessagingTemplate simpMessagingTemplate;
-
-    @Autowired
-    public SocketConnectionService(SimpMessagingTemplate simpMessagingTemplate) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }
-
-
+  @Autowired
+  public SocketConnectionService(SimpMessagingTemplate simpMessagingTemplate) {
+    this.simpMessagingTemplate = simpMessagingTemplate;
+  }
 }

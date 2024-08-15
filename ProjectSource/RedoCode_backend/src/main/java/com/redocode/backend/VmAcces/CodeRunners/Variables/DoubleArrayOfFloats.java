@@ -4,23 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 
 @JsonSerialize
 @JsonDeserialize
 @AllArgsConstructor
 public class DoubleArrayOfFloats extends Variables<Float[][]> {
-    public DoubleArrayOfFloats(Float[][] value) {
-        super(value);
-    }
+  public DoubleArrayOfFloats(Float[][] value) {
+    super(value);
+  }
 
-
-    @Override
-    @JsonIgnore
-    public VARIABLES_TYPES getType() {
-        return VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS;
-    }
-
+  @Override
+  @JsonIgnore
+  public VARIABLES_TYPES getType() {
+    return VARIABLES_TYPES.DOUBLE_ARRAY_OF_FLOATS;
+  }
 }

@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Authentication {
-    @NotNull
-    private String token;
+  @NotNull private String token;
 }

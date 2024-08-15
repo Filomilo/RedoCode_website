@@ -15,9 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 public class ChainNodeStatusMessage {
 
-    int nodeNumber;
-    String message;
-    ProcessingStatus status;
-
-
+  int nodeNumber;
+  String message;
+  ProcessingStatus status;
 }

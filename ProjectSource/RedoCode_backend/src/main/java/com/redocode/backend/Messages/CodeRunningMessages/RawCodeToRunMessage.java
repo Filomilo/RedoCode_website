@@ -8,7 +8,6 @@ import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.Dictionary;
 
 @Value
 @SuperBuilder
@@ -17,6 +16,5 @@ import java.util.Dictionary;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class RawCodeToRunMessage {
-    @JsonProperty
-    private String code;
+  @JsonProperty private String code;
 }

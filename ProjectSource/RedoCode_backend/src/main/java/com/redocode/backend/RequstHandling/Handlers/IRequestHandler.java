@@ -4,5 +4,5 @@ import com.redocode.backend.RequstHandling.Requests.RequestBase;
 
 public interface IRequestHandler {
 
-    public boolean next(RequestBase request);
+  public boolean next(RequestBase request);
 }

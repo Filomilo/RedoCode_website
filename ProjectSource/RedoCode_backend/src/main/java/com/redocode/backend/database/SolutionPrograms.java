@@ -11,19 +11,15 @@ import lombok.ToString;
 @Getter
 @Setter
 public class SolutionPrograms {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String code;
-    @ManyToOne
-    private ProgrammingLanguage language;
+  private String code;
+  @ManyToOne private ProgrammingLanguage language;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "excersize")
-    @ToString.Exclude
-    private Excersize excersize;
-
-
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "excersize")
+  @ToString.Exclude
+  private Excersize excersize;
 }

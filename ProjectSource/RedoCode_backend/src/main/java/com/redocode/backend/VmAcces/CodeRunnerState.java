@@ -1,14 +1,13 @@
 package com.redocode.backend.VmAcces;
 
 public enum CodeRunnerState {
-    //   inactive
-//   awaitng
-//   active
-//   closing
+  //   inactive
+  //   awaitng
+  //   active
+  //   closing
 
-    INACTIVE,
-    AWAITING,
-    ACTIVE,
-    CLOSING
-
+  INACTIVE,
+  AWAITING,
+  ACTIVE,
+  CLOSING
 }
