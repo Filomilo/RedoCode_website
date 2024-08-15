@@ -180,7 +180,7 @@
 				<version>3.8.0</version>
 				<configuration>
 					<outputDirectory>/docs</outputDirectory>
-					<reportOutputDirectory>${project.build.directory}../../../../docs</reportOutputDirectory>
+					<reportOutputDirectory>${project.basedir}/../../docs</reportOutputDirectory>
 					<destDir>Backend_docs</destDir>
 				</configuration>
 			</plugin>
