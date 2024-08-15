@@ -20,6 +20,7 @@ jobs:
         uses: stCarolas/setup-maven@v5
         with:
           maven-version: 3.8.2
-      - name: generate-javadpc
+      - name: Generate Javadoc
         run: |
-          javadoc
+          cd ./ProjectSource/RedoCode_backend
+          mvn javadoc:javadoc
