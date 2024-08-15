@@ -1,6 +1,8 @@
 name: generate documantation
 on:
-  push
+  push:
+    branches:
+      - main
 
 jobs:
   publish:
