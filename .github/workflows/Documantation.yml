@@ -27,7 +27,8 @@ jobs:
           mvn javadoc:javadoc
           ls ../../docs
           ls
-      - name: Commit & Push changes
-        uses: actions-js/push@master
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
