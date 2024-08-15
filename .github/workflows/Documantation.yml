@@ -31,4 +31,5 @@ jobs:
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+          message: backend documentation generation 
+          branch: ${GITHUB_REF#refs/heads/}
