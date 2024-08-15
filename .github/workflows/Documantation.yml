@@ -30,4 +30,7 @@ jobs:
           java-version: 21
           project: maven 
           working-directory: ./ProjectSource/RedoCode_backend
+          custom-command: |
+           cd ProjectSource/RedoCode_backend
+           javadoc -d javadoc -sourcepath src/main/java -subpackages .
         
