@@ -35,3 +35,4 @@ jobs:
           custom-command: |
             cd ProjectSource/RedoCode_backend
             mvn javadoc:javadoc
+            
