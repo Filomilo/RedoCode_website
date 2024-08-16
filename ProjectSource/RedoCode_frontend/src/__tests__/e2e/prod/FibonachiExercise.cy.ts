@@ -1,4 +1,4 @@
-describe('spec', () => {
+describe('Phibonachi new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

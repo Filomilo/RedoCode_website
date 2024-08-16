@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('hello world js run ', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

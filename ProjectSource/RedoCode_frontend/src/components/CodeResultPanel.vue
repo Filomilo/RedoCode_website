@@ -13,8 +13,8 @@
       </div>
 
       <div class="EngineStatusPanel">
-        <div class="EngineStatusTitle" id="coderunner-status">Status:</div>
-        <div class="EngineStatusStatus">
+        <div class="EngineStatusTitle">Status:</div>
+        <div class="EngineStatusStatus"  id="coderunner-status">
           {{ codeRunnerStore.codeRunnerConnection.codeRunnerState.state }}
         </div>
       </div>

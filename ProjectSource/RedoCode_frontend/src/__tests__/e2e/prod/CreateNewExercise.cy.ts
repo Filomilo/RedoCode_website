@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('Create new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
@@ -248,6 +248,7 @@ describe('template spec', () => {
       cy.get(codeEditorSequance).focus()
       cy.get(codeEditorSequance).type(JSsecondHalf[i], { force: true })
     }
+    cy.wait(200)
     // cy.get(codeEditorSequance).type(JSsecondHalf, { force: true });
     cy.get('#coderunner-run-button').click()
 
