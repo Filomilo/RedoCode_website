@@ -1,6 +1,7 @@
 package com.redocode.backend.RequstHandling.Requests;
 
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeRunnerRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.database.User;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.Objects;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CodeRunnerRequest extends RequestBase implements Comparable {
+public class CodeRunnerRequest extends RequestBase implements Comparable, ICodeRunnerRequest {
 
   protected CODE_RUNNER_TYPE codeRunnerType;
   protected int ram;

@@ -59,6 +59,15 @@ public class ResponsibilityChainRepository {
           .setContinueOnError(true)
           .next(new SendProgramResultsHandler())
           .build();
+    public static final BaseRequestHandler runDataBaseTestCode =
+            new ResposibilityChainBuilder()
+                    .setSteps()
+                    .next(new CodeRunnerAccesValidationHandler())
+                    .next(new AutoTestGeneratorHandler())
+                    .next(new CodeTestHandler())
+                    .setContinueOnError(true)
+                    .next(new SendProgramResultsHandler())
+                    .build();
 
   public static final BaseRequestHandler runRawCode =
       new ResposibilityChainBuilder()

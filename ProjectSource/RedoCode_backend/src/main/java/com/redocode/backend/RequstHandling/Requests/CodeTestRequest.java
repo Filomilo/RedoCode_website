@@ -1,6 +1,7 @@
 package com.redocode.backend.RequstHandling.Requests;
 
 import com.redocode.backend.Messages.UtilContainers.Range;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestsToRunRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.ExerciseTests;
@@ -18,7 +19,7 @@ import java.util.Map;
 @Getter
 @ToString
 @Setter
-public class CodeTestRequest extends RawCodeRunRequest {
+public class CodeTestRequest extends RawCodeRunRequest implements ITestsToRunRequest {
 
   List<ExerciseTests> testsToRun;
   List<ExerciseTests> AutotestsToRun = new ArrayList<>();
