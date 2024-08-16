@@ -14,7 +14,7 @@
 
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Status:</div>
-        <div class="EngineStatusStatus"  id="coderunner-status">
+        <div class="EngineStatusStatus" id="coderunner-status">
           {{ codeRunnerStore.codeRunnerConnection.codeRunnerState.state }}
         </div>
       </div>
