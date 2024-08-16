@@ -54,7 +54,7 @@ public class DataBaseSolutionsRun {
                           .setOutputBase(
                               Variables.VARIABLES_TYPES
                                   .SINGLE_INTEGER) // todo: mapping type from data base to Varaible
-                                                   // type
+                          // type
                           .setInputVaraiable(
                               test.getParsedInput(
                                   Variables.VARIABLES_TYPES

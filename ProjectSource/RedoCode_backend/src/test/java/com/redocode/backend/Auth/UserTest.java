@@ -3,7 +3,6 @@ package com.redocode.backend.Auth;
 import com.redocode.backend.database.User;
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 // @Disabled("Islotating specific test for debugging")

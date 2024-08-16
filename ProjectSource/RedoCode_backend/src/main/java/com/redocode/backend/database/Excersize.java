@@ -9,7 +9,6 @@ import com.redocode.backend.Messages.UtilContainers.Range;
 
 import java.util.*;
 
-
 @Entity
 @Table(name = "excersizes")
 @Data

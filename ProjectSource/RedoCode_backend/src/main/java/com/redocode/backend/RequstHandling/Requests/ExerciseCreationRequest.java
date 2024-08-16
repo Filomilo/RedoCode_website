@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
-
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor

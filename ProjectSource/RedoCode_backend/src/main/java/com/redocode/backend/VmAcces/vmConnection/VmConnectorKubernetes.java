@@ -217,7 +217,7 @@ public class VmConnectorKubernetes extends VmConnector {
       int exitCode =
           exec.exitCode()
               .get(); // todo: exit code might be useful or not in the future, might need delete,
-                      // need closelook in  later stages of development
+      // need closelook in  later stages of development
       logger.info("EXIT CODE: " + exitCode);
 
       // String  outputString = outputStream.toString();
@@ -262,7 +262,7 @@ public class VmConnectorKubernetes extends VmConnector {
       int exitCode =
           exec.exitCode()
               .get(); // todo: exit code might be useful or not in the future, might need delete,
-                      // need closelook in  later stages of development
+      // need closelook in  later stages of development
       logger.info("EXIT CODE: " + exitCode);
 
       // String outputString = outputStream.toString();

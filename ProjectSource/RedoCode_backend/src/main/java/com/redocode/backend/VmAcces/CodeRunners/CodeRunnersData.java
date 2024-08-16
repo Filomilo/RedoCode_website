@@ -1,6 +1,5 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
-
 public class CodeRunnersData {
 
   public static CODE_RUNNER_TYPE getCodeRunnerByLanuageName(String name) {
