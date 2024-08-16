@@ -50,14 +50,17 @@ public class CodeRunHandler {
         log.info("user: "+ userId +" runs runExercsieIdValidationCode: "+ exerciseIdValidationMessage);
     }
 
-    @MessageMapping({ConnectionTargets.INrunExercsieTestsCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest) {
         String useruuid = principal.getName();
         log.info("user: " + useruuid + " runs runExercsieTestsCode: " + codeTestRequest);
         User user = redoCodeController.getUserByConnectionUUID(useruuid);
         CodeRunner activeCodeRunner = codeRunnersController.getUserCodeRunner(user);
-        CodeTestRequest exerciseCreationRequest = RedoCodeObjectMapper.toExerciseTestsRunRequest(codeTestRequest, user, activeCodeRunner.getType());
+        CodeTestRequest exerciseCreationRequest =
+                RedoCodeObjectMapper.toExerciseTestsRunRequest(
+                        codeTestRequest, user, activeCodeRunner.getType());
 
+        log.info("runExerciseTestsCode chain start");
+        ResponsibilityChainRepository.runExercisesTests.startChain(exerciseCreationRequest);
     }
     @MessageMapping({ConnectionTargets.INrunExerciseCreatorValidationCode})
     // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
