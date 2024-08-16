@@ -2,7 +2,6 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
-import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.SingleDatabaseExerciseTestRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.database.Excersize;
@@ -11,7 +10,6 @@ import com.redocode.backend.database.ExerciseTests;
 import com.redocode.backend.database.User;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Loader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,7 +52,7 @@ class GetExerciseTestsFromDataBaseTest {
                 .solutionCodes(solutionCodes)
                 .build()
                 ;
-        GetExerciseTestsFromDataBase getExerciseTestsFromDataBaseTest= new GetExerciseTestsFromDataBase();
+        GetExerciseDataFromDataBase getExerciseTestsFromDataBaseTest= new GetExerciseDataFromDataBase();
         singleDatabaseExerciseTestRequest.getIdOfExercise();
         CodeTestRequest codeTestRequest= (CodeTestRequest) getExerciseTestsFromDataBaseTest.handle(singleDatabaseExerciseTestRequest);
         for (int i=0;i<exerciseTests.size();i++)

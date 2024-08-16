@@ -2,17 +2,13 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
-import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestsToRunRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
-import com.redocode.backend.Tools.ExerciseTestFactory;
-import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.ExerciseRepository;
 import com.redocode.backend.database.ExerciseTests;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +16,7 @@ import java.util.List;
  * <br/><br/>
  * Request handled by this handler must implements interfaces <b>IExerciseIdRequest</b> and <b>ITestsToRunRequest</b>
  */
-public class GetExerciseTestsFromDataBase extends MessageRequestHandler {
+public class GetExerciseDataFromDataBase extends MessageRequestHandler {
 
 
     protected static final ExerciseRepository exerciseRepository =

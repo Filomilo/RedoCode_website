@@ -99,4 +99,27 @@ public class ResponsibilityChainRepository {
           .next(new RawCodeRunHandler())
           .next(new SendProgramResultsHandler())
           .build();
+    /**
+     * chain reposible for running code tests for exercise code run from databse before submiting
+     * <br/> chian steps aee
+     * <ul>
+     *     <li>{@link CodeRunnerAccesValidationHandler validating acces to code required code runner}</li>
+     *     <li>{@link GetExerciseDataFromDataBase retrives exercsie data from database  }</li>
+     *     <li>{@link AutoTestGeneratorHandler generate automatic test  } </li>
+     *     <li>{@link UnsolvedDatabaseTestsHandler run solution code From data base to get expected ouput for automatic tests}</li>
+     *     <li>{@link CodeTestHandler run tests for to check if solution is correct }</li>
+     *     <li>{@link SendProgramResultsHandler send results to user}</li>
+     * </ul>
+     */
+  public static final BaseRequestHandler runExerciseIdCode=
+          new ResposibilityChainBuilder()
+                  .setSteps()
+                  .next(new CodeRunnerAccesValidationHandler())
+                  .next(new GetExerciseDataFromDataBase())
+                  .next(new AutoTestGeneratorHandler())
+                  .next(new UnsolvedDatabaseTestsHandler())
+                  .next(new CodeTestHandler())
+                  .setContinueOnError(true)
+                  .next(new SendProgramResultsHandler())
+                  .build();
 }
