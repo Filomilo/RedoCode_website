@@ -28,8 +28,7 @@ public class CodeRunHandler {
   @Autowired CodeRunnersController codeRunnersController;
   @Autowired MessageSender messageSender;
 
-        messageSender.sendMessage(principal.getName(), CodeRunnersConnectionController.codeRunnerStateEndPoint, CoderunnerStateMessage.builder().state(CodeRunnerState.ACTIVE).codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER).build() );
-    }
+
     @MessageMapping({ConnectionTargets.INrunRawCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
     public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage)
     {
@@ -52,69 +51,29 @@ public class CodeRunHandler {
     }
 
     @MessageMapping({ConnectionTargets.INrunExercsieTestsCode}) //todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem global config
-    public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest)
-    {
-        String useruuid=principal.getName();
-        log.info("user: "+ useruuid +" runs runExercsieTestsCode: "+ codeTestRequest);
-        User user=redoCodeController.getUserByConnectionUUID(useruuid);
-        CodeRunner activeCodeRunner=codeRunnersController.getUserCodeRunner(user);
-        CodeTestRequest exerciseCreationRequest= RedoCodeObjectMapper.toExerciseTestsRunRequest(codeTestRequest,user,activeCodeRunner.getType());
+    public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest) {
+        String useruuid = principal.getName();
+        log.info("user: " + useruuid + " runs runExercsieTestsCode: " + codeTestRequest);
+        User user = redoCodeController.getUserByConnectionUUID(useruuid);
+        CodeRunner activeCodeRunner = codeRunnersController.getUserCodeRunner(user);
+        CodeTestRequest exerciseCreationRequest = RedoCodeObjectMapper.toExerciseTestsRunRequest(codeTestRequest, user, activeCodeRunner.getType());
 
-  @MessageMapping({ConnectionTargets.INrunRawCode})
-  // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
-  // global config
-  public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage) {
-    String useruuid = principal.getName();
-    log.info("user: " + useruuid + " runs runRawCode: " + rawCodeToRunMessage);
-    User user = redoCodeController.getUserByConnectionUUID(useruuid);
-    RawCodeRunRequest rawCodeRunRequest =
-        RedoCodeObjectMapper.toRunRawCodeRequest(
-            rawCodeToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
-    log.info("runRawCode chain start");
-    ResponsibilityChainRepository.runRawCode.startChain(rawCodeRunRequest);
-  }
-
-  @MessageMapping({ConnectionTargets.INrunExercsieIdValidationCode})
-  // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
-  // global config
-  public void runExercsieIdValidationCode(
-      Principal principal, ExerciseIdToRunMessage exerciseIdValidationMessage) {
-    String userId = principal.getName();
-    log.info(
-        "user: " + userId + " runs runExercsieIdValidationCode: " + exerciseIdValidationMessage);
-  }
-
-  @MessageMapping({ConnectionTargets.INrunExercsieTestsCode})
-  // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
-  // global config
-  public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest) {
-    String useruuid = principal.getName();
-    log.info("user: " + useruuid + " runs runExercsieTestsCode: " + codeTestRequest);
-    User user = redoCodeController.getUserByConnectionUUID(useruuid);
-    CodeRunner activeCodeRunner = codeRunnersController.getUserCodeRunner(user);
-    CodeTestRequest exerciseCreationRequest =
-        RedoCodeObjectMapper.toExerciseTestsRunRequest(
-            codeTestRequest, user, activeCodeRunner.getType());
-
-    log.info("runExerciseTestsCode chain start");
-    ResponsibilityChainRepository.runExercisesTests.startChain(exerciseCreationRequest);
-  }
-
-  @MessageMapping({ConnectionTargets.INrunExerciseCreatorValidationCode})
-  // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
-  // global config
-  public void runExerciseCreatorValidationCode(
-      Principal principal, ExerciseCreatorValidationMessage exerciseCreatorValidationMessage) {
-    String useruuid = principal.getName();
-    log.info(
-        "user: "
-            + useruuid
-            + " runs runExerciseCreatorValidationCode: "
-            + exerciseCreatorValidationMessage);
-    User user = redoCodeController.getUserByConnectionUUID(useruuid);
-    ExerciseCreationRequest exerciseCreationRequest =
-        RedoCodeObjectMapper.toExerciseCreationRequest(exerciseCreatorValidationMessage, user);
-    log.info("createNewExercise chain start");
-    ResponsibilityChainRepository.createNewExercise.startChain(exerciseCreationRequest);
-  }
+    }
+    @MessageMapping({ConnectionTargets.INrunExerciseCreatorValidationCode})
+    // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
+    // global config
+    public void runExerciseCreatorValidationCode(
+            Principal principal, ExerciseCreatorValidationMessage exerciseCreatorValidationMessage) {
+        String useruuid = principal.getName();
+        log.info(
+                "user: "
+                        + useruuid
+                        + " runs runExerciseCreatorValidationCode: "
+                        + exerciseCreatorValidationMessage);
+        User user = redoCodeController.getUserByConnectionUUID(useruuid);
+        ExerciseCreationRequest exerciseCreationRequest =
+                RedoCodeObjectMapper.toExerciseCreationRequest(exerciseCreatorValidationMessage, user);
+        log.info("createNewExercise chain start");
+        ResponsibilityChainRepository.createNewExercise.startChain(exerciseCreationRequest);
+    }
 }
