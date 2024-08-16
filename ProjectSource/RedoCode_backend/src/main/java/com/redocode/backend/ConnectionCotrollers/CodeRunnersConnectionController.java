@@ -16,31 +16,27 @@ import java.security.Principal;
 @Slf4j
 public class CodeRunnersConnectionController {
 
-    private final SimpMessagingTemplate template;
-    public static final String  codeRunnerStateEndPoint="public/topic/codeRunnerState";
-    public static final String  codeRunnerResultEndPoint="public/topic/codeRunnerResults";
+  private final SimpMessagingTemplate template;
+  public static final String codeRunnerStateEndPoint = "public/topic/codeRunnerState";
+  public static final String codeRunnerResultEndPoint = "public/topic/codeRunnerResults";
 
-    @Autowired
-    private CodeRunnersController codeRunnersController;
+  @Autowired private CodeRunnersController codeRunnersController;
 
-    @Autowired
-    private RedoCodeController redoCodeController;
+  @Autowired private RedoCodeController redoCodeController;
 
-    @Autowired
-    CodeRunnersConnectionController(SimpMessagingTemplate template){
-        this.template = template;
-    }
-    @MessageMapping("/codeRunnerRequest")
-    public void codeRunnerRequest(Principal principal, CodeRunnerRequestMessage requestMessageSource) throws Exception{
-        String userId=principal.getName();
-        log.info("code runner reuqest from: "+ userId+" : "+requestMessageSource);
-        CodeRunnerRequest req= new CodeRunnerRequest(redoCodeController.getUserByConnectionUUID(userId), requestMessageSource);
-        codeRunnersController.requestVm(req);
-    }
+  @Autowired
+  CodeRunnersConnectionController(SimpMessagingTemplate template) {
+    this.template = template;
+  }
 
-
-
-
-
-
+  @MessageMapping("/codeRunnerRequest")
+  public void codeRunnerRequest(Principal principal, CodeRunnerRequestMessage requestMessageSource)
+      throws Exception {
+    String userId = principal.getName();
+    log.info("code runner reuqest from: " + userId + " : " + requestMessageSource);
+    CodeRunnerRequest req =
+        new CodeRunnerRequest(
+            redoCodeController.getUserByConnectionUUID(userId), requestMessageSource);
+    codeRunnersController.requestVm(req);
+  }
 }

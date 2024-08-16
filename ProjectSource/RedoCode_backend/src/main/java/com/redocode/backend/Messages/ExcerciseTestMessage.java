@@ -15,16 +15,10 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class ExcerciseTestMessage {
-    @JsonProperty
-    Object input;
-    @JsonProperty
-    Object output;
-    @JsonProperty
-    Object expectedOutput;
-    @JsonProperty
-    String errorOutput;
-    @JsonProperty
-    String consoleOutput;
-    @JsonProperty
-    Boolean isSolved;
+  @JsonProperty Object input;
+  @JsonProperty Object output;
+  @JsonProperty Object expectedOutput;
+  @JsonProperty String errorOutput;
+  @JsonProperty String consoleOutput;
+  @JsonProperty Boolean isSolved;
 }

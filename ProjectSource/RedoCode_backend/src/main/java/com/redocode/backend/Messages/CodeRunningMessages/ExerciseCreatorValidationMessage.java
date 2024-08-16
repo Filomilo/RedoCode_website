@@ -23,23 +23,71 @@ import java.util.Map;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class ExerciseCreatorValidationMessage {
-    @NotNull @JsonProperty("title") private String title;
-    @NotNull @JsonProperty("description") private String description;
-    @NotNull @JsonProperty("inputType") private Variables.VARIABLES_TYPES inputType;
-    @NotNull @JsonProperty("outputType") private Variables.VARIABLES_TYPES outputType;
-    @NotNull @JsonProperty("amountOfAutoTests") private float amountOfAutoTests;
-    @NotNull @JsonProperty("lengthRange") private Range lengthRange;
-    @JsonProperty("xArrayRange") private Range xArrayRange;
-    @JsonProperty("yArrayRange") private Range yArrayRange;
-    @JsonProperty("upperCaseInput") private boolean upperCaseInput;
-    @JsonProperty("lowerCaseInput") private boolean lowerCaseInput;
-    @JsonProperty("numberInput") private boolean numberInput;
-    @JsonProperty("specialCharacterInput") private boolean specialCharacterInput;
-    @JsonProperty("breakCharacterInupt") private boolean breakCharacterInupt;
-    @JsonProperty("spaceInupt") private boolean spaceInupt;
-    @NotNull @JsonProperty("timeForTaskMin") private Long timeForTaskMin;
-    @NotNull @JsonProperty("timeForExecutionMs") private Long timeForExecutionMs;
-    @NotNull @JsonProperty("solutionCodes") private Map<CODE_RUNNER_TYPE,String> solutionCodes;
-    @NotNull @JsonProperty("manualTests") private List<ExerciseTests> manualTests;
-    @NotNull @JsonProperty("ram") private int ram;
+  @NotNull
+  @JsonProperty("title")
+  private String title;
+
+  @NotNull
+  @JsonProperty("description")
+  private String description;
+
+  @NotNull
+  @JsonProperty("inputType")
+  private Variables.VARIABLES_TYPES inputType;
+
+  @NotNull
+  @JsonProperty("outputType")
+  private Variables.VARIABLES_TYPES outputType;
+
+  @NotNull
+  @JsonProperty("amountOfAutoTests")
+  private float amountOfAutoTests;
+
+  @NotNull
+  @JsonProperty("lengthRange")
+  private Range lengthRange;
+
+  @JsonProperty("xArrayRange")
+  private Range xArrayRange;
+
+  @JsonProperty("yArrayRange")
+  private Range yArrayRange;
+
+  @JsonProperty("upperCaseInput")
+  private boolean upperCaseInput;
+
+  @JsonProperty("lowerCaseInput")
+  private boolean lowerCaseInput;
+
+  @JsonProperty("numberInput")
+  private boolean numberInput;
+
+  @JsonProperty("specialCharacterInput")
+  private boolean specialCharacterInput;
+
+  @JsonProperty("breakCharacterInupt")
+  private boolean breakCharacterInupt;
+
+  @JsonProperty("spaceInupt")
+  private boolean spaceInupt;
+
+  @NotNull
+  @JsonProperty("timeForTaskMin")
+  private Long timeForTaskMin;
+
+  @NotNull
+  @JsonProperty("timeForExecutionMs")
+  private Long timeForExecutionMs;
+
+  @NotNull
+  @JsonProperty("solutionCodes")
+  private Map<CODE_RUNNER_TYPE, String> solutionCodes;
+
+  @NotNull
+  @JsonProperty("manualTests")
+  private List<ExerciseTests> manualTests;
+
+  @NotNull
+  @JsonProperty("ram")
+  private int ram;
 }

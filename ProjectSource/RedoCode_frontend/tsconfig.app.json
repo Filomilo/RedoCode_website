@@ -12,9 +12,6 @@
     },
     "module": "esNext",
     "types": ["node"],
-    "typeRoots": [ "./node_modules/@types" ]
-  },
-
-  
-  
+    "typeRoots": ["./node_modules/@types"]
+  }
 }

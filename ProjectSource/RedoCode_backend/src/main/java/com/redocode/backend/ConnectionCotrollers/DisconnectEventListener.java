@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DisconnectEventListener implements ApplicationListener<SessionDisconnectEvent> {
 
-    @Autowired
-    private RedoCodeController redoCodeController;
-    @Override
-    public void onApplicationEvent(SessionDisconnectEvent event) {
-        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
-        String userName=accessor.getUser().getName();
-        log.info("User "+ userName+ " diconnected");
-        redoCodeController.removeConnectedUser(userName);
-    }
+  @Autowired private RedoCodeController redoCodeController;
+
+  @Override
+  public void onApplicationEvent(SessionDisconnectEvent event) {
+    StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
+    String userName = accessor.getUser().getName();
+    log.info("User " + userName + " diconnected");
+    redoCodeController.removeConnectedUser(userName);
+  }
 }

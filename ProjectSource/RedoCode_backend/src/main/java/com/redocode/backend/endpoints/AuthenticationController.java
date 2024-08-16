@@ -1,6 +1,5 @@
 package com.redocode.backend.endpoints;
 
-
 import com.redocode.backend.Messages.Authentication.AuthenticationRequest;
 import com.redocode.backend.Messages.Authentication.Authentication;
 import com.redocode.backend.Messages.Authentication.RegisterRequest;
@@ -26,53 +25,42 @@ import java.util.regex.Pattern;
 @RequestMapping("/public/auth")
 public class AuthenticationController {
 
-    @Autowired
-    final private PasswordEncoder passwordEncoder;
-    @Autowired
-    final private UsersRepository usersRepository;
-    @Autowired
-    final private JwtService jwtService;
-    @Autowired
-    final private AuthenticationManager authenticationManager;
+  @Autowired private final PasswordEncoder passwordEncoder;
+  @Autowired private final UsersRepository usersRepository;
+  @Autowired private final JwtService jwtService;
+  @Autowired private final AuthenticationManager authenticationManager;
 
+  private static final Pattern pattern =
+      Pattern.compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{12,25}");
 
-    private static final Pattern pattern = Pattern.compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{12,25}");
+  @PostMapping("/register")
+  public Authentication registerUser(@RequestBody RegisterRequest request) {
 
-    @PostMapping("/register")
-    public Authentication registerUser(@RequestBody RegisterRequest request) {
-
-        if(!pattern.matcher(request.getPassword()).matches())
-        {
-            throw  new RuntimeException     ("Invalid password"); //todo: add own exception
-        }
-        if(usersRepository.findByEmail(request.getEmail()) != null)
-        {
-            throw  new RuntimeException  ("User already exists");
-        }
-
-        User user= User.builder()
-                .email(request.getEmail())
-                .nickname(request.getNickname())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .type(User.USER_TYPE.AUTHENTICATED)
-                .build();
-        usersRepository.save(user);
-        String token= jwtService.generateToken(user);
-        return Authentication.builder()
-                .token(token)
-                .build();
+    if (!pattern.matcher(request.getPassword()).matches()) {
+      throw new RuntimeException("Invalid password"); // todo: add own exception
+    }
+    if (usersRepository.findByEmail(request.getEmail()) != null) {
+      throw new RuntimeException("User already exists");
     }
 
-    @PostMapping("/login")
-    public Authentication login(@RequestBody AuthenticationRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getEmail(),
-                request.getPassword())
-        );
-        User user= usersRepository.findByEmail(request.getEmail());
-        String token= jwtService.generateToken(user);
-        return Authentication.builder()
-                .token(token)
-                .build();
-    }
+    User user =
+        User.builder()
+            .email(request.getEmail())
+            .nickname(request.getNickname())
+            .password(passwordEncoder.encode(request.getPassword()))
+            .type(User.USER_TYPE.AUTHENTICATED)
+            .build();
+    usersRepository.save(user);
+    String token = jwtService.generateToken(user);
+    return Authentication.builder().token(token).build();
+  }
+
+  @PostMapping("/login")
+  public Authentication login(@RequestBody AuthenticationRequest request) {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+    User user = usersRepository.findByEmail(request.getEmail());
+    String token = jwtService.generateToken(user);
+    return Authentication.builder().token(token).build();
+  }
 }

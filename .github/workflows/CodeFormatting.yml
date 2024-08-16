@@ -1,0 +1,30 @@
+name: code-formatting
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  formatting-java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "--skip-sorting-imports --replace"
+
+  prettier:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write "**/*.{js,ts,vue,json,md,css,scss,html}"

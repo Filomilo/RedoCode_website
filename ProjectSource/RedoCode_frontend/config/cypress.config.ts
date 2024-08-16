@@ -6,7 +6,4 @@ export default defineConfig({
     baseUrl: 'http://localhost',
     defaultCommandTimeout: 1000000,
   },
-}
-
-
-)
+})

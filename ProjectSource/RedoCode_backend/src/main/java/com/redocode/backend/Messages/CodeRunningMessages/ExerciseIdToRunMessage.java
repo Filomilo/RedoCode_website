@@ -15,8 +15,6 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class ExerciseIdToRunMessage {
-    @JsonProperty
-    private String code;
-    @JsonProperty
-    private String exercise_id;
+  @JsonProperty private String code;
+  @JsonProperty private String exercise_id;
 }

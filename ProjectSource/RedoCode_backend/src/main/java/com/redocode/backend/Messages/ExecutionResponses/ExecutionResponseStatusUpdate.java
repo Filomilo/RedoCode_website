@@ -1,6 +1,5 @@
 package com.redocode.backend.Messages.ExecutionResponses;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import jakarta.validation.constraints.NotNull;
@@ -15,9 +14,9 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @EqualsAndHashCode
 @Getter
-public class ExecutionResponseStatusUpdate extends ExecutionResponseBase{
+public class ExecutionResponseStatusUpdate extends ExecutionResponseBase {
 
-    @JsonProperty @NotNull int stepUpdate;
-    @JsonProperty @NotNull ChainNodeInfo.CHAIN_NODE_STATUS lvlStatus;
-    @JsonProperty  @NotNull String message;
+  @JsonProperty @NotNull int stepUpdate;
+  @JsonProperty @NotNull ChainNodeInfo.CHAIN_NODE_STATUS lvlStatus;
+  @JsonProperty @NotNull String message;
 }

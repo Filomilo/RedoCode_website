@@ -5,62 +5,45 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.messaging.simp.stomp.StompFrameHandler;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
-import org.springframework.web.socket.sockjs.client.SockJsClient;
-import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import java.lang.reflect.Type;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 
-import static java.util.Arrays.asList;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
-//@RunWith(SpringRunner.class)
+
+// @RunWith(SpringRunner.class)
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
 class StompHealthCheckTest extends WebSocketTestBase {
 
-    WebSocketStompClient stompClient;
-    static final String WEBSOCKET_TOPIC_HEALTH_RESPONSE = "/user/public/topic/health";
-    static final String WEBSOCKET_TOPIC_HEALTH_DESTIN = "/public/app/public/Health";
+  WebSocketStompClient stompClient;
+  static final String WEBSOCKET_TOPIC_HEALTH_RESPONSE = "/user/public/topic/health";
+  static final String WEBSOCKET_TOPIC_HEALTH_DESTIN = "/public/app/public/Health";
 
+  @LocalServerPort int port;
 
-    @LocalServerPort
-    int port;
-    @Override
-    protected String getWebSocketUri() {
-        return getWebSocketUri(port);
-    }
+  @Override
+  protected String getWebSocketUri() {
+    return getWebSocketUri(port);
+  }
 
-    @BeforeEach
-    public void setup() {
+  @BeforeEach
+  public void setup() {
 
-        assertDoesNotThrow(()->{
-            super.setup();
+    assertDoesNotThrow(
+        () -> {
+          super.setup();
         });
+  }
 
-    }
-
-    @Test
-    public void healthCheck() throws Exception {
-        subscribe(WEBSOCKET_TOPIC_HEALTH_RESPONSE);
-        String message = "MESSAGE TEST";
-        session.send(WEBSOCKET_TOPIC_HEALTH_DESTIN, message.getBytes());
-        assertEquals(message, blockingQueue.poll(1, SECONDS));
-    }
-
-
-
-
+  @Test
+  public void healthCheck() throws Exception {
+    subscribe(WEBSOCKET_TOPIC_HEALTH_RESPONSE);
+    String message = "MESSAGE TEST";
+    session.send(WEBSOCKET_TOPIC_HEALTH_DESTIN, message.getBytes());
+    assertEquals(message, blockingQueue.poll(1, SECONDS));
+  }
 }
