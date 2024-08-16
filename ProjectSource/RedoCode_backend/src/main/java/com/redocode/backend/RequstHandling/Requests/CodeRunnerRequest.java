@@ -18,7 +18,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CodeRunnerRequest extends RequestBase implements Comparable, ICodeRunnerRequest {
-
   protected CODE_RUNNER_TYPE codeRunnerType;
   protected int ram;
 

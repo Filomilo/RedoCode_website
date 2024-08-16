@@ -1,14 +1,20 @@
 package com.redocode.backend.database;
 
+import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
+import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ContextConfiguration
@@ -17,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SolutionProgramsRepositoryTest {
 
   @Autowired private SolutionProgramsRepository solutionProgramsRepository;
+  @Autowired private ProgrammingLanguageRepository programmingLanguageRepository;
+  @Autowired private ExerciseRepository exerciseRepository;
 
   @Test
   public void testGetFibonachiExercise() {
@@ -42,4 +50,17 @@ public class SolutionProgramsRepositoryTest {
     assertEquals("cpp", solutionCpp.getLanguage().getName());
     assertEquals(code, solutionCpp.getCode());
   }
+
+
+  @Test
+  public void retiveOSlutionCodeByIdOfExercsieAndLangueId()
+  {
+     SolutionPrograms solutionPrograms= solutionProgramsRepository.findByLanguageIdAndExerciseId(
+             programmingLanguageRepository.findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CODE_RUNNER_TYPE.CPP_RUNNER)).getId()
+             ,exerciseRepository.findAll().get(0).id
+     );
+     log.info("solution programs: " + solutionPrograms.toString());
+  assertNotNull(solutionPrograms);
+  }
+
 }

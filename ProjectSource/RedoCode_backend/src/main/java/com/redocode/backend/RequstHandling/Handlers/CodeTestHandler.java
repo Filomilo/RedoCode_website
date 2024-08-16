@@ -59,7 +59,7 @@ public class CodeTestHandler extends BaseRequestHandler {
         throw new CodeErroeException(result.getConsoleOutput().getErrorOutput());
       }
       Variables recived = result.getVariables();
-      if (test.getExpectedOutput() == "") return result;
+      if (test.getExpectedOutput() == null) return result;
       Variables expcected = test.getParsedOutput(request.getOutputType());
       log.info("program resuult: " + recived);
       log.info("expected program resuult: " + expcected);
@@ -108,6 +108,8 @@ public class CodeTestHandler extends BaseRequestHandler {
         ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     ;
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
+    if(codeRunner==null)
+      throw new RequestHadndlingException("Could not acces code runner");
     log.info("Staring handler: CodeTestHandler+" + "for " + codeTestRequest);
     int i = 0;
     List<ExerciseTests> tests = new LinkedList<ExerciseTests>();

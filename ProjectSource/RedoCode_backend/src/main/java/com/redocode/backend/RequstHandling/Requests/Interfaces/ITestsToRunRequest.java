@@ -1,5 +1,6 @@
 package com.redocode.backend.RequstHandling.Requests.Interfaces;
 
+import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.ExerciseTests;
 
 import java.util.List;
@@ -20,5 +21,10 @@ public interface ITestsToRunRequest {
      * @param tests List of type ExerciseTests
      */
     public void setTestsToRun(List<ExerciseTests>  tests);
+
+    public List<ExerciseTests> getAutotestsToRun();
+
+    public Variables.VARIABLES_TYPES getInputType();
+    public Variables.VARIABLES_TYPES getOutputType();
 
 }

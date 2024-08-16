@@ -1,5 +1,6 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
+import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.SingleDatabaseExerciseTestRequest;
@@ -38,6 +39,12 @@ class GetExerciseTestsFromDataBaseTest {
 
         HashMap solutionCodes = new HashMap();
         solutionCodes.put(CODE_RUNNER_TYPE.CPP_RUNNER,"test");
+        CodeRunnerRequest codeRunnerRequest= CodeRunnerRequest.builder()
+                .user(user)
+                .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
+                .build();
+        CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler = new CodeRunnerAccesValidationHandler();
+        codeRunnerAccesValidationHandler.handle(codeRunnerRequest);
 
         SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest= SingleDatabaseExerciseTestRequest.builder()
                 .idOfExercise(excersize.getId())

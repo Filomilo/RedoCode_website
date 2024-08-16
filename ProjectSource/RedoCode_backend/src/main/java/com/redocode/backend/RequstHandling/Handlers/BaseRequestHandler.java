@@ -111,6 +111,14 @@ public abstract class BaseRequestHandler implements IRequestHandler {
     return false;
   }
 
+  /**
+   * A method in exectuion chani node that can be actvted somewhere during the processing of node to get feed back about procesign statuus <br/>
+   * main use fo it is send user feedback about procesing his request <br/>
+   * Each request handelr should have at least startign update and finish update
+   * @param request request currently procces, it required to get user to which should be send update
+   * @param updateMessage Text update messeage informaing about current procceing
+   * @param status {@link  ChainNodeInfo.CHAIN_NODE_STATUS status value that represent state of processing}
+   */
   protected void nodeUpdate(
       RequestBase request, String updateMessage, ChainNodeInfo.CHAIN_NODE_STATUS status) {
     messageMethod.apply(

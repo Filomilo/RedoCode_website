@@ -7,6 +7,7 @@ import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.VariablesParser;
 import lombok.Getter;
 import lombok.Synchronized;
+import org.jetbrains.annotations.NotNull;
 
 @Getter
 public abstract class CodeRunner extends ContainerController {
@@ -15,7 +16,7 @@ public abstract class CodeRunner extends ContainerController {
     super(image, ramMb);
     type = CODE_RUNNER_TYPE.UNIDENTIFIED;
   }
-
+@NotNull
   protected CODE_RUNNER_TYPE type;
 
   abstract String createProgramCodeFile(Program program);
