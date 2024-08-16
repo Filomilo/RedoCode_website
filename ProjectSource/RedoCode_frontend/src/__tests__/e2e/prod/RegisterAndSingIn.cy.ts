@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('register and sign in', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

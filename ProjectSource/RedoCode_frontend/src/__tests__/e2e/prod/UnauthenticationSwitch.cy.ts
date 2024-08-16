@@ -1,4 +1,4 @@
-describe('spec', () => {
+describe('switch without authentication', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
