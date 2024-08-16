@@ -1,13 +1,17 @@
 name: generate documantation
 on:
-  push
+  push:
+    branches:
+      - main
 
 jobs:
-  generate-javadoc:
+  generate_java_doc:
     runs-on: ubuntu-latest
-    permissions:              
-      contents: write           
-      pull-requests: write 
+    defaults:
+      run:
+        working-directory: ./ProjectSource/RedoCode_backend
+    permissions:
+      contents: write  
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 21
@@ -20,15 +24,16 @@ jobs:
         uses: stCarolas/setup-maven@v5
         with:
           maven-version: 3.8.2
-      - name: Generate Javadoc
-        run: |
-          cd ProjectSource/RedoCode_backend
-          mvn clean install -DskipTests 
-          mvn javadoc:javadoc
-          ls ../../docs
-          ls
-      - name: Commit & Push changes
-        uses: actions-js/push@master
+      - name: Deploy JavaDoc 
+        uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          javadoc-branch: gh-pages
+          java-version: 21
+          project: maven 
+          target-folder: backend
+          javadoc-source-folder: ./docs/Backend_docs/
+          working-directory: ./ProjectSource/RedoCode_backend
+          custom-command: |
+            cd ProjectSource/RedoCode_backend
+            mvn javadoc:javadoc
