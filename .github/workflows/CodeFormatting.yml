@@ -18,6 +18,8 @@ jobs:
           args: "--skip-sorting-imports --replace"
 
   prettier:
+    needs:
+      - formatting-java
     runs-on: ubuntu-latest
     permissions:
       contents: write
