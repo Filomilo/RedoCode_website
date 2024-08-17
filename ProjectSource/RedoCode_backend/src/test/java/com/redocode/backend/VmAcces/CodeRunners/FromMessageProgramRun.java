@@ -69,7 +69,7 @@ public class FromMessageProgramRun {
             + "}";
 
     ExerciseIdToRunMessage exerciseIdToRunMessage =
-        ExerciseIdToRunMessage.builder().code(anwserCode).exercise_id("1").build();
+        ExerciseIdToRunMessage.builder().code(anwserCode).exercise_id(1L).build();
 
     List<ProgramResult> resultList =
         codeRunnersController.runProgramFromMessage(cppCodeRunner, exerciseIdToRunMessage);

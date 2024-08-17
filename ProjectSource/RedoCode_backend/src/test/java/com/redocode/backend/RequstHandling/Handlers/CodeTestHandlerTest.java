@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
-//// @Disabled("not working under guthub pipilene")
+// @Disabled("not working under guthub pipilene")
 // @Disabled("Isotating specific test for debugging")
 @DisabledOnOs(OS.LINUX)
 class CodeTestHandlerTest {
