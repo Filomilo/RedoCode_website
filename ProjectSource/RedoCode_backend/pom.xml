@@ -182,6 +182,7 @@
 					<outputDirectory>/docs</outputDirectory>
 					<reportOutputDirectory>${project.basedir}/../../docs</reportOutputDirectory>
 					<destDir>Backend_docs</destDir>
+					<showWarnings>false</showWarnings>
 				</configuration>
 			</plugin>
 		</plugins>

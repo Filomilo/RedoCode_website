@@ -24,9 +24,9 @@ public class ResponsibilityChainRepository {
       };
 
   /**
-   * Chian resposible for tesing just a single code on multiple tests provided <lu>
-   * <li>{@link CodeRunnerAccesValidationHandler validates user acces to requried code runner},
-   * <li>{@link CodeTestHandler tests code using CodeTestHandler} </lu>
+   * Chian resposible for tesing just a single code on multiple tests provided <ul>
+   * <li>{@link CodeRunnerAccesValidationHandler validates user acces to requried code runner}</li>
+   * <li>{@link CodeTestHandler tests code using CodeTestHandler}</li> </ul>
    *
    * @see MultipleCodeTestHandler use as part of MultipleCodeTestHandler test handler
    */
