@@ -215,7 +215,7 @@ public class CodeRunnersController {
     log.info("Ruunnign code to run on exercise of id: " + exerciseIdToRunMessage.getExercise_id());
     Excersize exercise =
         exerciseRepository
-            .findById(Long.parseLong(exerciseIdToRunMessage.getExercise_id()))
+            .findById(exerciseIdToRunMessage.getExercise_id())
             .orElse(null);
     List<ExerciseTests> tests = exercise.getExerciseTests();
     log.info("Exercise Tests: " + Arrays.toString(tests.toArray()));

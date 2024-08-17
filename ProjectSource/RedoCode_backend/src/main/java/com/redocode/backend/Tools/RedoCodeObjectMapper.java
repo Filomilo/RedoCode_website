@@ -3,17 +3,20 @@ package com.redocode.backend.Tools;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseCreatorValidationMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseTestToRunMesseage;
 import com.redocode.backend.Messages.CodeRunningMessages.RawCodeToRunMessage;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
+import com.redocode.backend.RequstHandling.Requests.SingleDatabaseExerciseTestRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import com.redocode.backend.database.User;
 import lombok.SneakyThrows;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class RedoCodeObjectMapper {
   public static ObjectMapper mapper = new ObjectMapper();
@@ -134,4 +137,20 @@ public class RedoCodeObjectMapper {
       case UNIDENTIFIED -> "";
     };
   }
+
+  public static SingleDatabaseExerciseTestRequest toSingleDatabaseExerciseTestRequest(
+          ExerciseIdToRunMessage exerciseIdToRunMessage, User user, CODE_RUNNER_TYPE codeRunnerType
+  )
+  {
+    Map<CODE_RUNNER_TYPE,String> solutions=new HashMap<>();
+    solutions.put(codeRunnerType, exerciseIdToRunMessage.getCode());
+
+
+    return SingleDatabaseExerciseTestRequest.builder()
+            .user(user)
+            .solutionCodes(solutions)
+            .idOfExercise(exerciseIdToRunMessage.getExercise_id())
+            .build();
+  }
+
 }
