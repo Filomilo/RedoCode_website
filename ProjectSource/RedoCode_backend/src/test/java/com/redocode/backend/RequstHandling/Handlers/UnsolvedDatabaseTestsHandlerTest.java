@@ -33,6 +33,10 @@ class UnsolvedDatabaseTestsHandlerTest {
     UsersRepository usersRepository;
     @Autowired
     CodeRunnersController codeRunnersControlle;
+    @Autowired
+    private ProgrammingLanguageRepository programmingLanguageRepository;
+    @Autowired
+    private SolutionProgramsRepository solutionProgramsRepository;
 
     @AfterEach
     void clearCodeRunners()
@@ -44,10 +48,31 @@ class UnsolvedDatabaseTestsHandlerTest {
     @Test
     @SneakyThrows
     void handle() {
-        Excersize excersize= exerciseRepository.findAll().get(0);
+        User user = usersRepository.findAll().get(0);
+        Excersize excersize= Excersize.builder()
+                .ram_mb(128)
+                .timeForTaskMin(5L)
+                .author(user)
+                .description("test")
+                .valueLengthRangeMin(-50.0f)
+                .valueLengthRangeMax(50f)
+                .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .inputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                .maxExecutionTimeMS(600L)
+                .excersizeName("test")
+                .build();
+        exerciseRepository.save(excersize);
+
+        SolutionPrograms solutionPrograms = SolutionPrograms.builder()
+                .code("int solution(int x){return x+1;}")
+                .language(programmingLanguageRepository.findByName("cpp"))
+                .excersize(excersize)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
         List<ExerciseTests> exerciseTests=  excersize.getExerciseTests();
 
-        User user = User.builder().email("test").build();
+
 
         HashMap solutionCodes = new HashMap();
         solutionCodes.put(CODE_RUNNER_TYPE.CPP_RUNNER,"int solution(int x){return x+1;}");
@@ -104,7 +129,5 @@ class UnsolvedDatabaseTestsHandlerTest {
 //        }
 
 
-
-        log.info(Arrays.toString(exerciseTests.toArray()));
     }
 }
