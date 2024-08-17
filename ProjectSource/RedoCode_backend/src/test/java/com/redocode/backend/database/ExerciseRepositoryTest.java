@@ -68,6 +68,7 @@ class ExerciseRepositoryTest {
             .excersizeName("Test")
             .inputType(null)
             .outputType(Variables.VARIABLES_TYPES.SINGLE_STRING)
+                .ram_mb(512)
             .build();
 
     try {

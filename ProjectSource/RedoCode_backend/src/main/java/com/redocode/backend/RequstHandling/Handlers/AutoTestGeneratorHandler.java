@@ -2,7 +2,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
-import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.Tools.ExerciseTestFactory;
 import com.redocode.backend.database.ExerciseTests;
@@ -20,26 +20,30 @@ public class AutoTestGeneratorHandler extends MessageRequestHandler {
 
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
+
+    if(!(request instanceof ITestsToRunRequest)) {
+      throw new RequestHadndlingException("Request must implement IExerciseIdRequest,ISolutionCodesRequest");
+    }
+ ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest)request;
     this.nodeUpdate(request, "generation", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
-    CodeTestRequest codeTestRequest = (CodeTestRequest) request;
 
     ExerciseTests[] tests =
         new ExerciseTestFactory()
-            .setAmount(codeTestRequest.getAmountOfAutoTests())
-            .setInputType(codeTestRequest.getInputType())
-            .setLengthRange(codeTestRequest.getLengthRange())
-            .setXArrayRange(codeTestRequest.getXArrayRange())
-            .setYArrayRange(codeTestRequest.getYArrayRange())
-            .setCapitalLetters(codeTestRequest.isUpperCaseInput())
-            .setSpaceCharacters(codeTestRequest.isSpaceInput())
-            .setUnderscoreLetters(codeTestRequest.isLowerCaseInput())
-            .setBreakCharacters(codeTestRequest.isBreakCharacterInput())
-            .setNumbers(codeTestRequest.isNumberInput())
-            .setSpaceCharacters(codeTestRequest.isSpecialCharacterInput())
+            .setAmount(testsToRunRequest.getAmountOfAutoTests())
+            .setInputType(testsToRunRequest.getInputType())
+            .setLengthRange(testsToRunRequest.getLengthRange())
+            .setXArrayRange(testsToRunRequest.getXArrayRange())
+            .setYArrayRange(testsToRunRequest.getYArrayRange())
+            .setCapitalLetters(testsToRunRequest.isUpperCaseInput())
+            .setSpaceCharacters(testsToRunRequest.isSpaceInput())
+            .setUnderscoreLetters(testsToRunRequest.isLowerCaseInput())
+            .setBreakCharacters(testsToRunRequest.isBreakCharacterInput())
+            .setNumbers(testsToRunRequest.isNumberInput())
+            .setSpaceCharacters(testsToRunRequest.isSpecialCharacterInput())
             .build();
 
-    codeTestRequest.setAutotestsToRun(Arrays.stream(tests).toList());
+    testsToRunRequest.setAutotestsToRun(Arrays.stream(tests).toList());
 
     this.nodeUpdate(request, "generated", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 

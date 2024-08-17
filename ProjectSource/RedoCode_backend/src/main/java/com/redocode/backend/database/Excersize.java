@@ -26,6 +26,7 @@ public class Excersize {
   @NotNull
   String excersizeName;
 
+  @NonNull
   @Column(name = "ram_Mb")
   Integer ram_mb;
 
@@ -73,7 +74,7 @@ public class Excersize {
   Variables.VARIABLES_TYPES inputType;
   Variables.VARIABLES_TYPES outputType;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.PERSIST)
   private List<ExerciseTests> exerciseTests = new ArrayList<>();
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)

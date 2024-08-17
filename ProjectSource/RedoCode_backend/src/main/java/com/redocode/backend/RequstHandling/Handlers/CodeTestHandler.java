@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Excpetions.CodeErroeException;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
-import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
 import com.redocode.backend.RequstHandling.Requests.PorgramReusltsSendRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
@@ -23,6 +23,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Code test hadnler used hadnle running test on code on only one code runner, <br/>
+ * it needs to implement:<br/>
+ * {@link ISolutionCodesRequest ISolutionCodesRequest}<br/>
+ * {@link ITestsToRunRequest ITestsToRunRequest }<br/>
+ *  {@link ICodeRunnerRequest ICodeRunnerRequest }<br/>
+ *   {@link ICodeRunSpecificationParametersRequest ICodeRunSpecificationParametersRequest }<br/>
+ * <br/> and returns results in form of {@link PorgramReusltsSendRequest PorgramReusltsSendRequest }
+ */
 @Slf4j
 public class CodeTestHandler extends BaseRequestHandler {
 
@@ -31,25 +40,30 @@ public class CodeTestHandler extends BaseRequestHandler {
           SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
   protected ProgramResult checkTest(
-      ExerciseTests test, CodeTestRequest request, CodeRunner codeRunner)
+      ExerciseTests test, RequestBase request, CodeRunner codeRunner)
       throws RequestHadndlingException, CodeErroeException {
+
+    ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest)request;
+    ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest)request;
+    ICodeRunnerRequest codeRunnerRequest= (ICodeRunnerRequest) request;
+    ICodeRunSpecificationParametersRequest codeRunSpecificationParametersRequest= (ICodeRunSpecificationParametersRequest)request;
     log.info("Testing: " + test);
 
     try {
-      log.info("TEST inpupt: " + test.getParsedInput(request.getInputType()));
+      log.info("TEST inpupt: " + test.getParsedInput(testsToRunRequest.getInputType()));
       SolutionProgram solutionProgram =
           ProgramFactory.createSolutionProgram()
-              .setSolutionCodeRunner(request.getCodeRunnerType())
-              .setInputVaraiable(test.getParsedInput(request.getInputType()))
-              .setOutputBase(request.getOutputType())
+              .setSolutionCodeRunner(codeRunnerRequest.getCodeRunnerType())
+              .setInputVaraiable(test.getParsedInput(testsToRunRequest.getInputType()))
+              .setOutputBase(testsToRunRequest.getOutputType())
               .setSolutionCode(
-                  request
+                      solutionCodesRequest
                       .getSolutionCodes()
                       .get(
-                          request.getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED
+                              codeRunnerRequest.getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED
                               ? CODE_RUNNER_TYPE.UNIDENTIFIED
                               : codeRunner.getType()))
-              .setTimeout(request.getTimeForExecution())
+              .setTimeout(codeRunSpecificationParametersRequest.getTimeForExecution())
               .build();
       log.info("solution program being tested: " + solutionProgram.getInput());
       ProgramResult result = codeRunner.runProgram(solutionProgram);
@@ -59,14 +73,14 @@ public class CodeTestHandler extends BaseRequestHandler {
         throw new CodeErroeException(result.getConsoleOutput().getErrorOutput());
       }
       Variables recived = result.getVariables();
-      if (test.getExpectedOutput() == "") return result;
-      Variables expcected = test.getParsedOutput(request.getOutputType());
+      if (test.getExpectedOutput() == null) return result;
+      Variables expcected = test.getParsedOutput(testsToRunRequest.getOutputType());
       log.info("program resuult: " + recived);
       log.info("expected program resuult: " + expcected);
       if (recived == null || !recived.equals(expcected)) {
         throw new RequestHadndlingException(
             "expected: "
-                        + test.getParsedOutput(request.getOutputType()).getValue()
+                        + test.getParsedOutput(testsToRunRequest.getOutputType()).getValue()
                         + " but recived: "
                         + result.getVariables()
                     != null
@@ -90,34 +104,34 @@ public class CodeTestHandler extends BaseRequestHandler {
 
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
+      assert request instanceof ISolutionCodesRequest;
+      assert request instanceof ITestsToRunRequest;
+    assert request instanceof ICodeRunnerRequest;
+    assert request instanceof ICodeRunSpecificationParametersRequest;
+      ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest)request;
+      ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest)request;
+      ICodeRunnerRequest codeRunnerRequest= (ICodeRunnerRequest) request;
     List<ProgramResult> programResults = new ArrayList<>();
-    if (!(request instanceof CodeTestRequest)) {
 
-      try {
-        CodeTestRequest codeTestRequest = (CodeTestRequest) request;
-
-      } catch (Exception ex) {
-        log.error("Excpetion: " + ex.getMessage());
-      }
-      throw new RequestHadndlingException("Wrong reguest was privided to handler");
-    }
-    CodeTestRequest codeTestRequest = (CodeTestRequest) request;
     this.nodeUpdate(
         request,
-        "running " + codeTestRequest.getCodeRunnerType() + " tests",
+        "running " + codeRunnerRequest.getCodeRunnerType() + " tests",
         ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     ;
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-    log.info("Staring handler: CodeTestHandler+" + "for " + codeTestRequest);
+    if(codeRunner==null)
+      throw new RequestHadndlingException("Could not acces code runner");
+
+    log.info("Staring handler: CodeTestHandler+" + "for " + request.getUser());
     int i = 0;
     List<ExerciseTests> tests = new LinkedList<ExerciseTests>();
-    tests.addAll(codeTestRequest.getTestsToRun());
-    if (codeTestRequest.getAutotestsToRun() != null) {
-      tests.addAll(codeTestRequest.getAutotestsToRun());
+    tests.addAll(testsToRunRequest.getTestsToRun());
+    if (testsToRunRequest.getAutotestsToRun() != null) {
+      tests.addAll(testsToRunRequest.getAutotestsToRun());
     }
     for (ExerciseTests exTest : tests) {
       try {
-        programResults.add(checkTest(exTest, codeTestRequest, codeRunner));
+        programResults.add(checkTest(exTest, request, codeRunner));
       } catch (Exception ex) {
         programResults.add(
             ProgramResult.builder()
@@ -129,10 +143,10 @@ public class CodeTestHandler extends BaseRequestHandler {
       }
       i++;
     }
-    log.info("CodeTestHandler handles: " + codeTestRequest);
+    log.info("CodeTestHandler handles: " + request);
     this.nodeUpdate(
         request,
-        "correct " + codeTestRequest.getCodeRunnerType() + " tests",
+        "correct " + codeRunnerRequest.getCodeRunnerType() + " tests",
         ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
     PorgramReusltsSendRequest porgramReusltsSendRequest =
         PorgramReusltsSendRequest.builder()

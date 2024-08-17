@@ -292,7 +292,7 @@ public class ExerciseTestFactory {
     for (int i = 0; i < amount; i++) {
       tests.add(
           ExerciseTests.builder()
-              .expectedOutput("")
+              .expectedOutput(null)
               .input(RedoCodeObjectMapper.VarAsString(generateFinalVar()))
               .build());
     }
