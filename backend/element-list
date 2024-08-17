@@ -13,6 +13,7 @@ com.redocode.backend.Messages.UtilContainers
 com.redocode.backend.RequstHandling
 com.redocode.backend.RequstHandling.Handlers
 com.redocode.backend.RequstHandling.Requests
+com.redocode.backend.RequstHandling.Requests.Interfaces
 com.redocode.backend.Secuirity
 com.redocode.backend.Tools
 com.redocode.backend.VmAcces
