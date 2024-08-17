@@ -139,18 +139,14 @@ public class RedoCodeObjectMapper {
   }
 
   public static SingleDatabaseExerciseTestRequest toSingleDatabaseExerciseTestRequest(
-          ExerciseIdToRunMessage exerciseIdToRunMessage, User user, CODE_RUNNER_TYPE codeRunnerType
-  )
-  {
-    Map<CODE_RUNNER_TYPE,String> solutions=new HashMap<>();
+      ExerciseIdToRunMessage exerciseIdToRunMessage, User user, CODE_RUNNER_TYPE codeRunnerType) {
+    Map<CODE_RUNNER_TYPE, String> solutions = new HashMap<>();
     solutions.put(codeRunnerType, exerciseIdToRunMessage.getCode());
 
-
     return SingleDatabaseExerciseTestRequest.builder()
-            .user(user)
-            .solutionCodes(solutions)
-            .idOfExercise(exerciseIdToRunMessage.getExercise_id())
-            .build();
+        .user(user)
+        .solutionCodes(solutions)
+        .idOfExercise(exerciseIdToRunMessage.getExercise_id())
+        .build();
   }
-
 }

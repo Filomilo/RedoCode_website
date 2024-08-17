@@ -1,15 +1,12 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 import com.redocode.backend.Messages.CodeRunningMessages.*;
-import com.redocode.backend.Messages.CoderunnerStateMessage;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
 import com.redocode.backend.RequstHandling.Requests.SingleDatabaseExerciseTestRequest;
 import com.redocode.backend.RequstHandling.ResponsibilityChainRepository;
-import com.redocode.backend.VmAcces.CodeRunnerState;
-import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.User;
@@ -39,27 +36,24 @@ public class CodeRunHandler {
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
 
-    SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest=
-    RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
-            exerciseIdToRunMessage
-            , user
-            ,codeRunnersController.getUserCodeRunner(user).getType()
-    );
+    SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
+        RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
+            exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
     runExerciseIdCode.startChain(singleDatabaseExerciseTestRequest);
 
     //    log.info("user: " + userId + " runs runExerciseIdCode: " + exerciseIdToRunMessage);
-//    //        codeRunnersController.runCode(
-//    //                redoCodeController.getUserById(userId),
-//    //                exerciseIdToRunMessage
-//    //        );
-//
-//    messageSender.sendMessage(
-//        principal.getName(),
-//        CodeRunnersConnectionController.codeRunnerStateEndPoint,
-//        CoderunnerStateMessage.builder()
-//            .state(CodeRunnerState.ACTIVE)
-//            .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
-//            .build());
+    //    //        codeRunnersController.runCode(
+    //    //                redoCodeController.getUserById(userId),
+    //    //                exerciseIdToRunMessage
+    //    //        );
+    //
+    //    messageSender.sendMessage(
+    //        principal.getName(),
+    //        CodeRunnersConnectionController.codeRunnerStateEndPoint,
+    //        CoderunnerStateMessage.builder()
+    //            .state(CodeRunnerState.ACTIVE)
+    //            .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
+    //            .build());
   }
 
   @MessageMapping({ConnectionTargets.INrunRawCode})

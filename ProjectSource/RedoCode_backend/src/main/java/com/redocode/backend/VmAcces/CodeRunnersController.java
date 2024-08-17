@@ -214,9 +214,7 @@ public class CodeRunnersController {
     List<ProgramResult> results = new ArrayList<>();
     log.info("Ruunnign code to run on exercise of id: " + exerciseIdToRunMessage.getExercise_id());
     Excersize exercise =
-        exerciseRepository
-            .findById(exerciseIdToRunMessage.getExercise_id())
-            .orElse(null);
+        exerciseRepository.findById(exerciseIdToRunMessage.getExercise_id()).orElse(null);
     List<ExerciseTests> tests = exercise.getExerciseTests();
     log.info("Exercise Tests: " + Arrays.toString(tests.toArray()));
 
