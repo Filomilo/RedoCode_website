@@ -5,7 +5,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 public interface ICodeRunnerRequest {
     /**
      * gives type of codeRunner requestesd
-     * @return code Runner type
+     * @return  {@link CODE_RUNNER_TYPE code Runner type}
      */
     public CODE_RUNNER_TYPE getCodeRunnerType();
 

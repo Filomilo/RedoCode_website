@@ -1,5 +1,6 @@
 package com.redocode.backend.RequstHandling.Requests;
 
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeRunSpecificationParametersRequest;
 import com.redocode.backend.database.User;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import lombok.*;
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
-public class RawCodeRunRequest extends CodeRunnerRequest {
+public class RawCodeRunRequest extends CodeRunnerRequest  implements ICodeRunSpecificationParametersRequest{
   String Code;
   @NotNull Long timeForExecution;
 

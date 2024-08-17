@@ -144,7 +144,7 @@ public abstract class BaseRequestHandler implements IRequestHandler {
     next(request);
   }
 
-  private BaseRequestHandler getNextRequestHandler() {
+  public BaseRequestHandler getNextRequestHandler() {
     return nextRequestHandler;
   }
 }

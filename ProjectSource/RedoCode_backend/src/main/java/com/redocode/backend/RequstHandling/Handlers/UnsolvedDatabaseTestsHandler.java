@@ -7,6 +7,7 @@ import com.redocode.backend.Messages.ExecutionResponses.ExecutionResponseStatusU
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeRunSpecificationParametersRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestsToRunRequest;
@@ -26,6 +27,8 @@ import java.util.*;
  * Chain of resposibilty handler whcich purpose is to solve All tests in a given requests using a solutin saved in database in a given language
  * <br/><br/>
  * this handler requires request to implement interfaces
+ *  {@link ISolutionCodesRequest ISolutionCodesRequest},
+ *  {@link ICodeRunSpecificationParametersRequest ICodeRunSpecificationParametersRequest},
  *  {@link com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest IExerciseIdRequest}
  *  and
  *  {@link com.redocode.backend.RequstHandling.Requests.Interfaces.ITestsToRunRequest ITestsToRunRequest}
@@ -54,12 +57,13 @@ public class UnsolvedDatabaseTestsHandler extends  MessageRequestHandler {
 
     @Override
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
-        if(!(request instanceof IExerciseIdRequest) && !(request instanceof ITestsToRunRequest) && !(request instanceof ISolutionCodesRequest)) {
+        if(!(request instanceof IExerciseIdRequest) && !(request instanceof ITestsToRunRequest) && !(request instanceof ISolutionCodesRequest) && !(request instanceof  ICodeRunSpecificationParametersRequest)) {
             throw new RequestHadndlingException("Request must implement ISolutionCodesRequest,IExerciseIdRequest and ITestsToRunRequest");
         }
         ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest)request;
         IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest)request;
         ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest)request;
+        ICodeRunSpecificationParametersRequest specificationParametersRequest=(ICodeRunSpecificationParametersRequest)request;
 
         log.info("tests to be filled: "+ Arrays.toString(testsToRunRequest.getAutotestsToRun().toArray()));
 
@@ -67,19 +71,22 @@ public class UnsolvedDatabaseTestsHandler extends  MessageRequestHandler {
                 null).toList();
         CODE_RUNNER_TYPE currentlySolvingCodeRunnerr= (CODE_RUNNER_TYPE) solutionCodesRequest.getSolutionCodes().keySet().toArray()[0];
         String correctSolution= solutionProgramsRepository.findByLanguageIdAndExerciseId(
-                programmingLanguageRepository.findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CODE_RUNNER_TYPE.CPP_RUNNER)).getId()
-                ,exerciseRepository.findAll().get(0).getId()).getCode();
+                programmingLanguageRepository.findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(currentlySolvingCodeRunnerr)).getId()
+                ,exerciseIdRequest.getIdOfExercise()).getCode();
         if(correctSolution==null || correctSolution.isEmpty()){
             throw new RequestHadndlingException("Solution code not found, please report problem with exercise");
         }
+        Map<CODE_RUNNER_TYPE,String> solutions= new HashMap<>();
+        solutions.put(currentlySolvingCodeRunnerr,correctSolution);
+
 
         CodeTestRequest codeTestRequest= CodeTestRequest.builder()
-                .solutionCodes(solutionCodesRequest.getSolutionCodes())
+                .solutionCodes(solutions)
                 .testsToRun(testsToGenerateExpectedOutput)
                 .inputType(testsToRunRequest.getInputType())
                 .outputType(testsToRunRequest.getOutputType())
                 .user(request.getUser())
-                .timeForExecution(solutionCodesRequest.getTimeForExecution())
+                .timeForExecution(specificationParametersRequest.getTimeForExecution())
                 .codeRunnerType(currentlySolvingCodeRunnerr)
                 .build();
 

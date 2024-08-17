@@ -1,15 +1,16 @@
 package com.redocode.backend.database;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name = "Solution_programs")
 @ToString
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SolutionPrograms {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

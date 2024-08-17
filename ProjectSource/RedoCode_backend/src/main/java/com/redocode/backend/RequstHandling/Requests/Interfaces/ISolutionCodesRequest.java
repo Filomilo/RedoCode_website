@@ -21,5 +21,4 @@ public interface ISolutionCodesRequest {
      */
     public Map<CODE_RUNNER_TYPE, String> getSolutionCodes();
 
-    public Long getTimeForExecution();
 }

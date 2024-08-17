@@ -18,19 +18,18 @@ import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleInteger;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
+import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.WebSocketTestBase;
 import com.redocode.backend.database.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,13 +43,14 @@ import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
-
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
 // @RunWith(SpringRunner.class)
 // @DirtiesContext
-// @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
+// @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+
 class CodeRunHandlerStompTest extends WebSocketTestBase {
 
   @LocalServerPort int port;
@@ -63,11 +63,13 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
   @Autowired ExerciseRepository exerciseRepository;
   @Autowired UsersRepository usersRepository;
   @Autowired RedoCodeController redoCodeController;
+  @Autowired
+    CodeRunnersController codeRunnersController;
 
   static final String WEBSOCKET_TOPIC_DESTIN = "/public/app" + INrunExerciseCreatorValidationCode;
   static final ObjectMapper objectMapper = new ObjectMapper();
 
-  @BeforeEach
+  @BeforeAll
   void setUp() {
     assertDoesNotThrow(
         () -> {
@@ -557,7 +559,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         "messge send to /public/app/codeRunnerRequest with content: "
             + mapper.writeValueAsString(codeRunnerRequestMessage));
 
-    TimeUnit.SECONDS.sleep(2);
+    TimeUnit.SECONDS.sleep(20);
     session.send("/public/app" + INrunRawCode, mapper.writeValueAsBytes(rawCodeToRunMessage));
     log.info(
         "messge send to "
@@ -666,7 +668,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     log.info("input size: " + inputs.size());
     assertEquals(amountOfAutoTests + inputs.size(), i);
   }
-
+  @DirtiesContext
   @Test
   void ruNExerciseTestCodesJsReturnOneINcorrect()
       throws InterruptedException, JsonProcessingException {
@@ -769,9 +771,17 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
   @SneakyThrows
   @Override
-  @AfterEach
+  @AfterAll
   protected void tearDown() {
     super.tearDown();
     redoCodeController.reset();
   }
+  @AfterEach
+  @SneakyThrows
+    public void resetController()
+  {
+    this.codeRunnersController.reset();
+    Thread.sleep(1000);
+  }
+
 }

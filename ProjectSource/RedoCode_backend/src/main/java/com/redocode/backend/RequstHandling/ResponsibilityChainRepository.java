@@ -114,8 +114,8 @@ public class ResponsibilityChainRepository {
   public static final BaseRequestHandler runExerciseIdCode=
           new ResposibilityChainBuilder()
                   .setSteps()
-                  .next(new CodeRunnerAccesValidationHandler())
                   .next(new GetExerciseDataFromDataBase())
+                  .next(new CodeRunnerAccesValidationHandler())
                   .next(new AutoTestGeneratorHandler())
                   .next(new UnsolvedDatabaseTestsHandler())
                   .next(new CodeTestHandler())

@@ -4,6 +4,7 @@ import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.SingleDatabaseExerciseTestRequest;
+import com.redocode.backend.RequstHandling.Requests.SpecifiedSingleDatabaseExerciseTestRequest;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleInteger;
@@ -62,23 +63,22 @@ class UnsolvedDatabaseTestsHandlerTest {
         }
 
 
-        SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest= (SingleDatabaseExerciseTestRequest) SingleDatabaseExerciseTestRequest.builder()
+        SpecifiedSingleDatabaseExerciseTestRequest specifiedSingleDatabaseExerciseTestRequest= (SpecifiedSingleDatabaseExerciseTestRequest) SpecifiedSingleDatabaseExerciseTestRequest.builder()
                 .idOfExercise(excersize.getId())
                 .user(user)
                 .timeForExecution(1000L)
-                .timeForTaskMin(100L)
                 .solutionCodes(solutionCodes)
                 .inputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
                 .build();
-        singleDatabaseExerciseTestRequest.setAutotestsToRun(tests);
-        log.info("request: "+ singleDatabaseExerciseTestRequest);
+        specifiedSingleDatabaseExerciseTestRequest.setAutotestsToRun(tests);
+        log.info("request: "+ specifiedSingleDatabaseExerciseTestRequest);
 
         CodeRunnerAccesValidationHandler codeRunnerAccesValidationHandler= new CodeRunnerAccesValidationHandler();
         codeRunnerAccesValidationHandler.handle(CodeRunnerRequest.builder().ram(256).user(user).codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER).build());
 
         UnsolvedDatabaseTestsHandler unsolvedDatabaseTests= new UnsolvedDatabaseTestsHandler();
-        SingleDatabaseExerciseTestRequest resultingRequest= (SingleDatabaseExerciseTestRequest) unsolvedDatabaseTests.handle(singleDatabaseExerciseTestRequest);
+        SpecifiedSingleDatabaseExerciseTestRequest resultingRequest= (SpecifiedSingleDatabaseExerciseTestRequest) unsolvedDatabaseTests.handle(specifiedSingleDatabaseExerciseTestRequest);
 
         log.info("resultingRequest: "+ Arrays.toString(resultingRequest.getAutotestsToRun().toArray()));
 

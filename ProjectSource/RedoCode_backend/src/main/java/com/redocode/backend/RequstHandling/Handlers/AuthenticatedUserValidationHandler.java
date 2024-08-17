@@ -5,6 +5,9 @@ import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.database.User;
 
+/**
+ * Handler vefication used in chain of resposiblity to check if user who sned this request is authentnicated
+ */
 public class AuthenticatedUserValidationHandler extends MessageRequestHandler {
 
   @Override

@@ -3,6 +3,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.SingleDatabaseExerciseTestRequest;
+import com.redocode.backend.RequstHandling.Requests.SpecifiedSingleDatabaseExerciseTestRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.database.Excersize;
 import com.redocode.backend.database.ExerciseRepository;
@@ -21,7 +22,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
-class GetExerciseTestsFromDataBaseTest {
+class GetExerciseDataFromDataBaseTest {
 
     @Autowired
     private ExerciseRepository exerciseRepository;
@@ -47,18 +48,22 @@ class GetExerciseTestsFromDataBaseTest {
         SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest= SingleDatabaseExerciseTestRequest.builder()
                 .idOfExercise(excersize.getId())
                 .user(user)
-                .timeForExecution(1000L)
-                .timeForTaskMin(100L)
                 .solutionCodes(solutionCodes)
                 .build()
                 ;
-        GetExerciseDataFromDataBase getExerciseTestsFromDataBaseTest= new GetExerciseDataFromDataBase();
+        GetExerciseDataFromDataBase getExerciseDataFromDataBase= new GetExerciseDataFromDataBase();
         singleDatabaseExerciseTestRequest.getIdOfExercise();
-        CodeTestRequest codeTestRequest= (CodeTestRequest) getExerciseTestsFromDataBaseTest.handle(singleDatabaseExerciseTestRequest);
+        SpecifiedSingleDatabaseExerciseTestRequest specifiedSingleDatabaseExerciseTestRequest= (SpecifiedSingleDatabaseExerciseTestRequest) getExerciseDataFromDataBase.handle(singleDatabaseExerciseTestRequest);
+
+        assertEquals(excersize.getInputType(), specifiedSingleDatabaseExerciseTestRequest.getInputType());
+        assertEquals(excersize.getOutputType(), specifiedSingleDatabaseExerciseTestRequest.getOutputType());
+        assertEquals(excersize.getMaxExecutionTimeMS(),specifiedSingleDatabaseExerciseTestRequest.getTimeForExecution());
+        assertEquals(excersize.getRam_mb(),specifiedSingleDatabaseExerciseTestRequest.getRam());
+
         for (int i=0;i<exerciseTests.size();i++)
         {
-            assertEquals(exerciseTests.get(i).getInput(),codeTestRequest.getTestsToRun().get(i).getInput());
-            assertEquals(exerciseTests.get(i).getExpectedOutput(),codeTestRequest.getTestsToRun().get(i).getExpectedOutput());
+            assertEquals(exerciseTests.get(i).getInput(),specifiedSingleDatabaseExerciseTestRequest.getTestsToRun().get(i).getInput());
+            assertEquals(exerciseTests.get(i).getExpectedOutput(),specifiedSingleDatabaseExerciseTestRequest.getTestsToRun().get(i).getExpectedOutput());
         }
 
 
