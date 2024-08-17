@@ -28,8 +28,7 @@ import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunE
 import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.INrunRawCode;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -70,7 +69,7 @@ public class CodeRunExerciseIDSingleStompTest extends WebSocketTestBase {
 
         List<MockingMessageAnwserPart> results;
     }
-
+    MockingMessageAnwser result;
     @SneakyThrows
     @Override
     @AfterAll
@@ -110,28 +109,45 @@ public class CodeRunExerciseIDSingleStompTest extends WebSocketTestBase {
 //                        .variables(null)
 //                        .build();
 //
+
         await()
                 .atMost(600, SECONDS)
                 .untilAsserted(
                         () -> {
-                            MockingMessageAnwser result =objectMapper.readValue(
+                            result =objectMapper.readValue(
                                     blockingQueue.poll(600, SECONDS), MockingMessageAnwser.class
                             ) ;
                             ;
                                 log.info("CodeRunExerciseIDSingleStompTest results: "+ result);
-                                for (MockingMessageAnwser.MockingMessageAnwserPart part: result.results) {
-                                    assertEquals("",part.consoleOutput.getErrorOutput());
-                                    assertEquals("",part.consoleOutput.getOutput());
-                                    assertEquals(fibonacci(part.variablesInput),part.variables);
-                                }
+
 
                         });
+        assertNotNull(result);
+        for (MockingMessageAnwser.MockingMessageAnwserPart part: result.results) {
+            assertEquals("",part.consoleOutput.getErrorOutput());
+            assertEquals("",part.consoleOutput.getOutput());
+            assertEquals(fibonacci(part.variablesInput),part.variables);
+        }
     }
 
-    public static int fibonacci(int n) {
-        if (n <= 1) {
-            return n;
+    public static int fibonacci(int val) {
+        if (val <= 0) {
+            return 0;
         }
-        return fibonacci(n - 1) + fibonacci(n - 2);
+
+        int[] arr = new int[val];
+
+        if (val >= 1)
+            arr[0] = 0;
+        if (val >= 2)
+            arr[1] = 1;
+
+        for (int i = 2; i < val; i++) {
+            arr[i] = arr[i - 1] + arr[i - 2];
+        }
+
+        return arr[val - 1];
     }
+
+
 }
