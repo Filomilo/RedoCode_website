@@ -20,7 +20,8 @@ import java.util.Map;
 @Getter
 @ToString
 @Setter
-public class CodeTestRequest extends RawCodeRunRequest implements ITestsToRunRequest, ISolutionCodesRequest {
+public class CodeTestRequest extends RawCodeRunRequest
+    implements ITestsToRunRequest, ISolutionCodesRequest {
 
   List<ExerciseTests> testsToRun;
   List<ExerciseTests> AutotestsToRun = new ArrayList<>();
@@ -38,6 +39,5 @@ public class CodeTestRequest extends RawCodeRunRequest implements ITestsToRunReq
   boolean breakCharacterInput;
   boolean spaceInput;
   Long timeForTaskMin;
-  @Getter
-  @NotNull Map<CODE_RUNNER_TYPE, String> solutionCodes;
+  @Getter @NotNull Map<CODE_RUNNER_TYPE, String> solutionCodes;
 }

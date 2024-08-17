@@ -21,12 +21,12 @@ public class AutoTestGeneratorHandler extends MessageRequestHandler {
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
 
-    if(!(request instanceof ITestsToRunRequest)) {
-      throw new RequestHadndlingException("Request must implement IExerciseIdRequest,ISolutionCodesRequest");
+    if (!(request instanceof ITestsToRunRequest)) {
+      throw new RequestHadndlingException(
+          "Request must implement IExerciseIdRequest,ISolutionCodesRequest");
     }
- ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest)request;
+    ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
     this.nodeUpdate(request, "generation", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
-
 
     ExerciseTests[] tests =
         new ExerciseTestFactory()

@@ -15,33 +15,33 @@ import java.util.List;
 
 @SuperBuilder
 @Data
-public class SpecifiedSingleDatabaseExerciseTestRequest extends SingleDatabaseExerciseTestRequest implements ITestsToRunRequest, ICodeRunSpecificationParametersRequest, ICodeRunnerRequest {
-    @NonNull
-    protected Long timeForExecution;
-    @NonNull protected Variables.VARIABLES_TYPES inputType;
-    @NonNull protected Variables.VARIABLES_TYPES outputType;
-    protected List<ExerciseTests> AutotestsToRun;
-    protected List<ExerciseTests> TestsToRun;
-    protected int ram;
+public class SpecifiedSingleDatabaseExerciseTestRequest extends SingleDatabaseExerciseTestRequest
+    implements ITestsToRunRequest, ICodeRunSpecificationParametersRequest, ICodeRunnerRequest {
+  @NonNull protected Long timeForExecution;
+  @NonNull protected Variables.VARIABLES_TYPES inputType;
+  @NonNull protected Variables.VARIABLES_TYPES outputType;
+  protected List<ExerciseTests> AutotestsToRun;
+  protected List<ExerciseTests> TestsToRun;
+  protected int ram;
 
-    int amountOfAutoTests;
-    Range lengthRange;
-    Range xArrayRange;
-    Range yArrayRange;
-    boolean upperCaseInput;
-    boolean lowerCaseInput;
-    boolean numberInput;
-    boolean specialCharacterInput;
-    boolean breakCharacterInput;
-    boolean spaceInput;
+  int amountOfAutoTests;
+  Range lengthRange;
+  Range xArrayRange;
+  Range yArrayRange;
+  boolean upperCaseInput;
+  boolean lowerCaseInput;
+  boolean numberInput;
+  boolean specialCharacterInput;
+  boolean breakCharacterInput;
+  boolean spaceInput;
 
-
-    /**
-     *  {@inheritDoc}
-     * . <br/>In this case, the should be only one solution provided so code runner requested should be equal to a solution to that code runner
-     */
-    @Override
-    public CODE_RUNNER_TYPE getCodeRunnerType() {
-        return this.solutionCodes.keySet().stream().findFirst().orElse(CODE_RUNNER_TYPE.UNIDENTIFIED);
-    }
+  /**
+   * {@inheritDoc} . <br>
+   * In this case, the should be only one solution provided so code runner requested should be equal
+   * to a solution to that code runner
+   */
+  @Override
+  public CODE_RUNNER_TYPE getCodeRunnerType() {
+    return this.solutionCodes.keySet().stream().findFirst().orElse(CODE_RUNNER_TYPE.UNIDENTIFIED);
+  }
 }

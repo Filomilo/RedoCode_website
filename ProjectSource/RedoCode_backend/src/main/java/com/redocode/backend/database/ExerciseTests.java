@@ -46,8 +46,7 @@ public class ExerciseTests {
 
   public Variables getParsedOutput(Variables.VARIABLES_TYPES outputType)
       throws JsonProcessingException {
-    if(this.getExpectedOutput()==null)
-      return null;
+    if (this.getExpectedOutput() == null) return null;
     return RedoCodeObjectMapper.parseVaraibles(this.getExpectedOutput(), outputType);
   }
 

@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface ExerciseRepository extends JpaRepository<Excersize, Long> {
   /**
-   * Exercise repository query that returns list of exercise in simple format prepared for show casing on webiste exercises list
+   * Exercise repository query that returns list of exercise in simple format prepared for show
+   * casing on webiste exercises list
+   *
    * @return exercises list containg list of solutions, rating and attempts
    */
   @Query(

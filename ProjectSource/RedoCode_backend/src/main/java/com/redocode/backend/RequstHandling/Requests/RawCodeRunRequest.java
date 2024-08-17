@@ -12,7 +12,8 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
-public class RawCodeRunRequest extends CodeRunnerRequest  implements ICodeRunSpecificationParametersRequest{
+public class RawCodeRunRequest extends CodeRunnerRequest
+    implements ICodeRunSpecificationParametersRequest {
   String Code;
   @NotNull Long timeForExecution;
 

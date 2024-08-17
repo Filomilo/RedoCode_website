@@ -127,15 +127,11 @@ public class RedoCodeObjectMapper {
     return parseVaraibles(new String(bytes), variablesTypes);
   }
 
-  public static String CodeRunnerToDataBaseLanguageName(CODE_RUNNER_TYPE codeRunnerType)
-  {
-   return switch (codeRunnerType)
-    {
+  public static String CodeRunnerToDataBaseLanguageName(CODE_RUNNER_TYPE codeRunnerType) {
+    return switch (codeRunnerType) {
       case CPP_RUNNER -> "cpp";
       case JS_RUNNER -> "js";
       case UNIDENTIFIED -> "";
     };
-
   }
-
 }

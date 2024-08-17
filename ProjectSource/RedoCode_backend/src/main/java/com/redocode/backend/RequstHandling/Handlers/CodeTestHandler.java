@@ -24,13 +24,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Code test hadnler used hadnle running test on code on only one code runner, <br/>
- * it needs to implement:<br/>
- * {@link ISolutionCodesRequest ISolutionCodesRequest}<br/>
- * {@link ITestsToRunRequest ITestsToRunRequest }<br/>
- *  {@link ICodeRunnerRequest ICodeRunnerRequest }<br/>
- *   {@link ICodeRunSpecificationParametersRequest ICodeRunSpecificationParametersRequest }<br/>
- * <br/> and returns results in form of {@link PorgramReusltsSendRequest PorgramReusltsSendRequest }
+ * Code test hadnler used hadnle running test on code on only one code runner, <br>
+ * it needs to implement:<br>
+ * {@link ISolutionCodesRequest ISolutionCodesRequest}<br>
+ * {@link ITestsToRunRequest ITestsToRunRequest }<br>
+ * {@link ICodeRunnerRequest ICodeRunnerRequest }<br>
+ * {@link ICodeRunSpecificationParametersRequest ICodeRunSpecificationParametersRequest }<br>
+ * <br>
+ * and returns results in form of {@link PorgramReusltsSendRequest PorgramReusltsSendRequest }
  */
 @Slf4j
 public class CodeTestHandler extends BaseRequestHandler {
@@ -39,14 +40,14 @@ public class CodeTestHandler extends BaseRequestHandler {
       (CodeRunnersController)
           SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
-  protected ProgramResult checkTest(
-      ExerciseTests test, RequestBase request, CodeRunner codeRunner)
+  protected ProgramResult checkTest(ExerciseTests test, RequestBase request, CodeRunner codeRunner)
       throws RequestHadndlingException, CodeErroeException {
 
-    ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest)request;
-    ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest)request;
-    ICodeRunnerRequest codeRunnerRequest= (ICodeRunnerRequest) request;
-    ICodeRunSpecificationParametersRequest codeRunSpecificationParametersRequest= (ICodeRunSpecificationParametersRequest)request;
+    ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
+    ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
+    ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
+    ICodeRunSpecificationParametersRequest codeRunSpecificationParametersRequest =
+        (ICodeRunSpecificationParametersRequest) request;
     log.info("Testing: " + test);
 
     try {
@@ -57,10 +58,10 @@ public class CodeTestHandler extends BaseRequestHandler {
               .setInputVaraiable(test.getParsedInput(testsToRunRequest.getInputType()))
               .setOutputBase(testsToRunRequest.getOutputType())
               .setSolutionCode(
-                      solutionCodesRequest
+                  solutionCodesRequest
                       .getSolutionCodes()
                       .get(
-                              codeRunnerRequest.getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED
+                          codeRunnerRequest.getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED
                               ? CODE_RUNNER_TYPE.UNIDENTIFIED
                               : codeRunner.getType()))
               .setTimeout(codeRunSpecificationParametersRequest.getTimeForExecution())
@@ -104,13 +105,13 @@ public class CodeTestHandler extends BaseRequestHandler {
 
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
-      assert request instanceof ISolutionCodesRequest;
-      assert request instanceof ITestsToRunRequest;
+    assert request instanceof ISolutionCodesRequest;
+    assert request instanceof ITestsToRunRequest;
     assert request instanceof ICodeRunnerRequest;
     assert request instanceof ICodeRunSpecificationParametersRequest;
-      ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest)request;
-      ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest)request;
-      ICodeRunnerRequest codeRunnerRequest= (ICodeRunnerRequest) request;
+    ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
+    ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
+    ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
     List<ProgramResult> programResults = new ArrayList<>();
 
     this.nodeUpdate(
@@ -119,8 +120,7 @@ public class CodeTestHandler extends BaseRequestHandler {
         ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     ;
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-    if(codeRunner==null)
-      throw new RequestHadndlingException("Could not acces code runner");
+    if (codeRunner == null) throw new RequestHadndlingException("Could not acces code runner");
 
     log.info("Staring handler: CodeTestHandler+" + "for " + request.getUser());
     int i = 0;

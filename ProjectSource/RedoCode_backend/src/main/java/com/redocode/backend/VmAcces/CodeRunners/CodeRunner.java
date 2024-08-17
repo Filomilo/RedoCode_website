@@ -16,8 +16,8 @@ public abstract class CodeRunner extends ContainerController {
     super(image, ramMb);
     type = CODE_RUNNER_TYPE.UNIDENTIFIED;
   }
-@NotNull
-  protected CODE_RUNNER_TYPE type;
+
+  @NotNull protected CODE_RUNNER_TYPE type;
 
   abstract String createProgramCodeFile(Program program);
 

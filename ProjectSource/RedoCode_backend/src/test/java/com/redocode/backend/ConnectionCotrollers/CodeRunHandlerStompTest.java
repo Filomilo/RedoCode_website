@@ -43,6 +43,7 @@ import static com.redocode.backend.ConnectionCotrollers.ConnectionTargets.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
+
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Disabled("tet do not owtk when run along sie other for currently uknonwn reason")
@@ -50,7 +51,6 @@ import static org.junit.jupiter.api.Assertions.*;
 // @DirtiesContext
 // @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
 class CodeRunHandlerStompTest extends WebSocketTestBase {
 
   @LocalServerPort int port;
@@ -63,8 +63,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
   @Autowired ExerciseRepository exerciseRepository;
   @Autowired UsersRepository usersRepository;
   @Autowired RedoCodeController redoCodeController;
-  @Autowired
-    CodeRunnersController codeRunnersController;
+  @Autowired CodeRunnersController codeRunnersController;
 
   static final String WEBSOCKET_TOPIC_DESTIN = "/public/app" + INrunExerciseCreatorValidationCode;
   static final ObjectMapper objectMapper = new ObjectMapper();
@@ -668,6 +667,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     log.info("input size: " + inputs.size());
     assertEquals(amountOfAutoTests + inputs.size(), i);
   }
+
   @DirtiesContext
   @Test
   void ruNExerciseTestCodesJsReturnOneINcorrect()
@@ -776,12 +776,11 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
     super.tearDown();
     redoCodeController.reset();
   }
+
   @AfterEach
   @SneakyThrows
-    public void resetController()
-  {
+  public void resetController() {
     this.codeRunnersController.reset();
     Thread.sleep(1000);
   }
-
 }
