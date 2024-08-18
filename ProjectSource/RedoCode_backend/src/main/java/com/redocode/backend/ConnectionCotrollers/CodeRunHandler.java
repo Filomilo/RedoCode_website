@@ -40,20 +40,6 @@ public class CodeRunHandler {
         RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
             exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
     runExerciseIdCode.startChain(singleDatabaseExerciseTestRequest);
-
-    //    log.info("user: " + userId + " runs runExerciseIdCode: " + exerciseIdToRunMessage);
-    //    //        codeRunnersController.runCode(
-    //    //                redoCodeController.getUserById(userId),
-    //    //                exerciseIdToRunMessage
-    //    //        );
-    //
-    //    messageSender.sendMessage(
-    //        principal.getName(),
-    //        CodeRunnersConnectionController.codeRunnerStateEndPoint,
-    //        CoderunnerStateMessage.builder()
-    //            .state(CodeRunnerState.ACTIVE)
-    //            .codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER)
-    //            .build());
   }
 
   @MessageMapping({ConnectionTargets.INrunRawCode})
