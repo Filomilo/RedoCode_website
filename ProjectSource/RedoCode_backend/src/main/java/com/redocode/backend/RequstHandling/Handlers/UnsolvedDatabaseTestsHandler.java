@@ -3,10 +3,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
-import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeRunSpecificationParametersRequest;
-import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
-import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
-import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestsToRunRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
 import com.redocode.backend.RequstHandling.Requests.PorgramReusltsSendRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
@@ -99,8 +96,8 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
             .build();
 
     CodeTestHandler codeTestHandler = new CodeTestHandler();
-    PorgramReusltsSendRequest resultsfromCodeTest =
-        (PorgramReusltsSendRequest) codeTestHandler.handle(codeTestRequest);
+    ICodeResultsRequest resultsfromCodeTest =
+        (ICodeResultsRequest) codeTestHandler.handle(codeTestRequest);
 
     log.info("resultsfromCodeTest: " + resultsfromCodeTest);
     final int[] i = {0};

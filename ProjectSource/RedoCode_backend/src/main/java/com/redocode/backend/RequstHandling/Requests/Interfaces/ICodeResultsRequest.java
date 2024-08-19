@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ICodeResultsRequest {
     public List<ProgramResult> getProgramResults();
-
+    public void setProgramResults(List<ProgramResult> list);
 
 }

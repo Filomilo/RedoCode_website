@@ -46,10 +46,6 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler{
                 .build();
         solutionProgramsRepository.save(solutionProgram);
 
-
-
-
-
         return request;
     }
 
