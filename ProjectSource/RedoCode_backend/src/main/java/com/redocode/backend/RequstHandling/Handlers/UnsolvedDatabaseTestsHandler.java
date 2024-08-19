@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
-import com.redocode.backend.RequstHandling.Requests.PorgramReusltsSendRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
@@ -69,7 +68,7 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
         (CODE_RUNNER_TYPE) solutionCodesRequest.getSolutionCodes().keySet().toArray()[0];
     String correctSolution =
         solutionProgramsRepository
-            .findByLanguageIdAndExerciseId(
+            .findFirstByLanguageIdAndExcersizeId(
                 programmingLanguageRepository
                     .findByName(
                         RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(

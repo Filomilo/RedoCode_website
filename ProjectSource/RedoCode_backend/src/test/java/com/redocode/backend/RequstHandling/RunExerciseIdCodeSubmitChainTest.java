@@ -4,7 +4,6 @@ import com.redocode.backend.RequstHandling.Requests.SingleDatabaseExerciseTestRe
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
-import  org.junit.jupiter.api.Assertions;
 import com.redocode.backend.database.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.CPP_RUNNER;
-import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
@@ -91,7 +89,7 @@ class RunExerciseIdCodeSubmitChainTest {
 
         String solutionCode =
                 solutionProgramsRepository
-                        .findByLanguageIdAndExerciseId(
+                        .findFirstByLanguageIdAndExcersizeId(
                                 programmingLanguageRepository
                                         .findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(type))
                                         .getId(),

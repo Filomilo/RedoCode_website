@@ -88,7 +88,7 @@ class RunExerciseIdCode {
 
     String solutionCode =
         solutionProgramsRepository
-            .findByLanguageIdAndExerciseId(
+            .findFirstByLanguageIdAndExcersizeId(
                 programmingLanguageRepository
                     .findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(type))
                     .getId(),
@@ -116,7 +116,7 @@ class RunExerciseIdCode {
 
     String solutionCode =
         solutionProgramsRepository
-            .findByLanguageIdAndExerciseId(
+            .findFirstByLanguageIdAndExcersizeId(
                 programmingLanguageRepository
                     .findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER))
                     .getId(),
@@ -150,7 +150,7 @@ class RunExerciseIdCode {
 
     String solutionCode =
         solutionProgramsRepository
-            .findByLanguageIdAndExerciseId(
+            .findFirstByLanguageIdAndExcersizeId(
                 programmingLanguageRepository
                     .findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER))
                     .getId(),
