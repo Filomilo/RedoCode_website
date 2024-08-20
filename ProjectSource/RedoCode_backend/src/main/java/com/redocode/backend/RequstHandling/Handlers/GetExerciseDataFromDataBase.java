@@ -33,8 +33,7 @@ public class GetExerciseDataFromDataBase extends MessageRequestHandler {
 
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
-    this.nodeUpdate(
-        request, "Loading data", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+    this.nodeUpdate(request, "Loading data", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     if (!(request instanceof IExerciseIdRequest) && !(request instanceof ISolutionCodesRequest)) {
       throw new RequestHadndlingException(
           "Request must implement IExerciseIdRequest,ISolutionCodesRequest");
@@ -70,8 +69,7 @@ public class GetExerciseDataFromDataBase extends MessageRequestHandler {
                     : null)
             .build();
 
-    this.nodeUpdate(
-        request, "Data loaded", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+    this.nodeUpdate(request, "Data loaded", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
     return specifiedSingleDatabaseExerciseTestRequest;
   }

@@ -63,17 +63,13 @@ public class CodeRunHandler {
   public void runExercsieIdValidationCode(
       Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) {
 
-
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
-    log.info("user: "+useruuid+" runs runExerciseIdCodeSubmit with "+exerciseIdToRunMessage );
+    log.info("user: " + useruuid + " runs runExerciseIdCodeSubmit with " + exerciseIdToRunMessage);
     SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
-            RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
-                    exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
+        RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
+            exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
     runExerciseIdCodeSubmit.startChain(singleDatabaseExerciseTestRequest);
-
-
-
   }
 
   @MessageMapping({ConnectionTargets.INrunExercsieTestsCode})

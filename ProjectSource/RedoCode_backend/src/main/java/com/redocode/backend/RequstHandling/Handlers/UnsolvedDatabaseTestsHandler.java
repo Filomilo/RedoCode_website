@@ -52,8 +52,7 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
       throw new RequestHadndlingException(
           "Request must implement ISolutionCodesRequest,IExerciseIdRequest and ITestsToRunRequest");
     }
-    this.nodeUpdate(
-            request, "solving", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+    this.nodeUpdate(request, "solving", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
     IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest) request;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
@@ -123,8 +122,7 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
                 throw new RuntimeException(e);
               }
             });
-    this.nodeUpdate(
-            request, "solved", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+    this.nodeUpdate(request, "solved", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
     return request;
   }
 }

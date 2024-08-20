@@ -135,30 +135,28 @@ public class ResponsibilityChainRepository {
           .next(new SendProgramResultsHandler())
           .build();
 
-
-    /**
-     * Chian resposible for runinng testing and saving new solution to database
-     * <br/> it consist of those steps: <br/<br/>
-     *
-     * <ul>
-     *     <li>{@link GetExerciseDataFromDataBase  getting exercise data from database}</li>
-     *     <li>{@link CodeRunnerAccesValidationHandler validating acces to specifc code runner }</li>
-     *     <li>{@link AutoTestGeneratorHandler generating automatic tests }</li>
-     *     <li>{@link UnsolvedDatabaseTestsHandler solving autaomted test using correct solution }</li>
-     *     <li>{@link CodeTestHandler testing submitted solution}</li>
-     *     <li>{@link SaveExerciseSolutionHandler saving solution to database}</li>
-     * </ul>
-     */
-    public static final BaseRequestHandler runExerciseIdCodeSubmit =
-            new ResposibilityChainBuilder()
-                    .setMessagehandler(sendExecutionMessage)
-                    .setSteps()
-                    .next(new GetExerciseDataFromDataBase())
-                    .next(new CodeRunnerAccesValidationHandler())
-                    .next(new AutoTestGeneratorHandler())
-                    .next(new UnsolvedDatabaseTestsHandler())
-                    .next(new CodeTestHandler())
-                    .next(new SaveExerciseSolutionHandler())
-                    .build();
-
+  /**
+   * Chian resposible for runinng testing and saving new solution to database <br>
+   * it consist of those steps: <br/<br/>
+   *
+   * <ul>
+   *   <li>{@link GetExerciseDataFromDataBase getting exercise data from database}
+   *   <li>{@link CodeRunnerAccesValidationHandler validating acces to specifc code runner }
+   *   <li>{@link AutoTestGeneratorHandler generating automatic tests }
+   *   <li>{@link UnsolvedDatabaseTestsHandler solving autaomted test using correct solution }
+   *   <li>{@link CodeTestHandler testing submitted solution}
+   *   <li>{@link SaveExerciseSolutionHandler saving solution to database}
+   * </ul>
+   */
+  public static final BaseRequestHandler runExerciseIdCodeSubmit =
+      new ResposibilityChainBuilder()
+          .setMessagehandler(sendExecutionMessage)
+          .setSteps()
+          .next(new GetExerciseDataFromDataBase())
+          .next(new CodeRunnerAccesValidationHandler())
+          .next(new AutoTestGeneratorHandler())
+          .next(new UnsolvedDatabaseTestsHandler())
+          .next(new CodeTestHandler())
+          .next(new SaveExerciseSolutionHandler())
+          .build();
 }

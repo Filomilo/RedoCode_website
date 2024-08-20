@@ -73,7 +73,7 @@ public abstract class WebSocketTestBase {
       log.info("connected: " + stompClient.isRunning());
       log.info("received frame from web socket: " + new String((byte[]) o));
       blockingQueue.offer(new String((byte[]) o));
-      System.out.println("QUEUE STRUCTURE: "+Arrays.toString(blockingQueue.toArray()));
+      System.out.println("QUEUE STRUCTURE: " + Arrays.toString(blockingQueue.toArray()));
     }
 
     @Override

@@ -8,8 +8,10 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+
 @Data
 @SuperBuilder
-public class SaveExerciseSolutionRequest extends SpecifiedSingleDatabaseExerciseTestRequest implements ISolutionCodesRequest, ICodeResultsRequest, IExerciseIdRequest {
-    List<ProgramResult> programResults;
+public class SaveExerciseSolutionRequest extends SpecifiedSingleDatabaseExerciseTestRequest
+    implements ISolutionCodesRequest, ICodeResultsRequest, IExerciseIdRequest {
+  List<ProgramResult> programResults;
 }
