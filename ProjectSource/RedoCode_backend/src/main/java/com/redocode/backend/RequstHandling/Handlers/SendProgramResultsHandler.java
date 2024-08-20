@@ -4,7 +4,6 @@ import com.redocode.backend.ConnectionCotrollers.MessageSender;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.CodeRunningMessages.ProgramResultsMessage;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeResultsRequest;
-import com.redocode.backend.RequstHandling.Requests.PorgramReusltsSendRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +24,10 @@ public class SendProgramResultsHandler extends BaseRequestHandler {
     log.info("SendProgramResultsHandler: " + request.toString());
 
     ProgramResultsMessage programResultsMessage =
-        ProgramResultsMessage.builder()
-            .results(codeResultsRequest.getProgramResults())
-            .build();
+        ProgramResultsMessage.builder().results(codeResultsRequest.getProgramResults()).build();
 
     messageSender.sendMessage(
-        request.getUser(),
-        "/public/topic/codeRunnerResults",
-        programResultsMessage);
+        request.getUser(), "/public/topic/codeRunnerResults", programResultsMessage);
 
     return request;
   }

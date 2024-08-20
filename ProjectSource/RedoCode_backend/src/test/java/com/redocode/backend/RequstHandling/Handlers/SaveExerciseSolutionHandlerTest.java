@@ -17,37 +17,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @Slf4j
 @SpringBootTest
 class SaveExerciseSolutionHandlerTest {
-@Autowired
-    UsersRepository usersRepository;
-@Autowired
-    SolutionProgramsRepository solutionProgramsRepository;
-    @Test
-    @SneakyThrows
-    void handle() {
+  @Autowired UsersRepository usersRepository;
+  @Autowired SolutionProgramsRepository solutionProgramsRepository;
 
-        long amountOfSoultionsBefore=solutionProgramsRepository.count();
+  @Test
+  @SneakyThrows
+  void handle() {
 
-        User user=usersRepository.getReferenceById(1L);
-        Long exerciseId=1L;
-        String solution="Test solution";
-        CODE_RUNNER_TYPE type=CODE_RUNNER_TYPE.CPP_RUNNER;
-        Map<CODE_RUNNER_TYPE,String> solutions=new HashMap<CODE_RUNNER_TYPE,String>();
-        solutions.put(type,solution);
-        SaveExerciseSolutionHandler handler=new SaveExerciseSolutionHandler();
-        SaveExerciseSolutionRequest request=SaveExerciseSolutionRequest.builder()
-                .programResults(new ArrayList<>())
-                .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
-                .user(user)
-                .solutionCodes(solutions)
-                .idOfExercise(exerciseId)
-                .timeForExecution(500L)
-                .inputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
-                .build();
-        assertNotNull(handler.handle(request));
-        long amountOfSoultionsAfter=solutionProgramsRepository.count();
-        assertEquals(amountOfSoultionsBefore+1,amountOfSoultionsAfter);
-    }
+    long amountOfSoultionsBefore = solutionProgramsRepository.count();
+
+    User user = usersRepository.getReferenceById(1L);
+    Long exerciseId = 1L;
+    String solution = "Test solution";
+    CODE_RUNNER_TYPE type = CODE_RUNNER_TYPE.CPP_RUNNER;
+    Map<CODE_RUNNER_TYPE, String> solutions = new HashMap<CODE_RUNNER_TYPE, String>();
+    solutions.put(type, solution);
+    SaveExerciseSolutionHandler handler = new SaveExerciseSolutionHandler();
+    SaveExerciseSolutionRequest request =
+        SaveExerciseSolutionRequest.builder()
+            .programResults(new ArrayList<>())
+            .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+            .user(user)
+            .solutionCodes(solutions)
+            .idOfExercise(exerciseId)
+            .timeForExecution(500L)
+            .inputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+            .build();
+    assertNotNull(handler.handle(request));
+    long amountOfSoultionsAfter = solutionProgramsRepository.count();
+    assertEquals(amountOfSoultionsBefore + 1, amountOfSoultionsAfter);
+  }
 }

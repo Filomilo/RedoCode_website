@@ -115,14 +115,11 @@ public class CodeTestHandler extends BaseRequestHandler {
     ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
     List<ProgramResult> programResults = new ArrayList<>();
 
-
-
     this.nodeUpdate(
         request,
         "running " + codeRunnerRequest.getCodeRunnerType() + " tests",
         ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     ;
-
 
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
     if (codeRunner == null) throw new RequestHadndlingException("Could not access code runner");
@@ -155,7 +152,6 @@ public class CodeTestHandler extends BaseRequestHandler {
         ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
     codeResultsRequest.setProgramResults(programResults);
-
 
     return request;
   }
