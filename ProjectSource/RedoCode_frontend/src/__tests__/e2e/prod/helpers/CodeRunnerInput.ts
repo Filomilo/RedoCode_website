@@ -1,14 +1,23 @@
+import cypress from "cypress"
+
 namespace CodeRunnerInput{
     const codeEditorSequance = '#coderunner-editor-panel textarea'
 
     const backspaces = '{selectAll}{backspace}'
 export function clearCodeRunner()
 {
-    
+    if(Cypress.platform==='linux'){
+    cy.wait(1000);
+    cy.get(codeEditorSequance).focus()
+    cy.wait(1000);
+    cy.get(codeEditorSequance).type(backspaces, { force: true })
+    }
+else{
     cy.get(codeEditorSequance).focus()
     cy.get(codeEditorSequance).type(backspaces, { force: true })
     cy.get(codeEditorSequance).type(backspaces, { force: true })
     cy.get(codeEditorSequance).clear();
+}
 }
 
 export  function inputToCodeRunner(txt :string){
@@ -29,6 +38,8 @@ else{
 
 export function moveToEndOfCodeRunner()
 {
+    if(Cypress.platform==='linux')
+    cy.wait(1000);
     cy.get(codeEditorSequance).type('{moveToEnd}', { force: true }) 
 }
 
