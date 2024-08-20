@@ -28,13 +28,13 @@ public class GetExerciseDataFromDataBase extends MessageRequestHandler {
 
   @Override
   String getChainNodeName() {
-    return "Retrieving tests from DataBase";
+    return "Retrieving information from the database";
   }
 
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
     this.nodeUpdate(
-        request, "reterving tests from database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+        request, "Loading data", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     if (!(request instanceof IExerciseIdRequest) && !(request instanceof ISolutionCodesRequest)) {
       throw new RequestHadndlingException(
           "Request must implement IExerciseIdRequest,ISolutionCodesRequest");
@@ -71,7 +71,7 @@ public class GetExerciseDataFromDataBase extends MessageRequestHandler {
             .build();
 
     this.nodeUpdate(
-        request, "retrived testFrom data base", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+        request, "Data loaded", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
     return specifiedSingleDatabaseExerciseTestRequest;
   }

@@ -9,6 +9,7 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -72,6 +73,7 @@ public abstract class WebSocketTestBase {
       log.info("connected: " + stompClient.isRunning());
       log.info("received frame from web socket: " + new String((byte[]) o));
       blockingQueue.offer(new String((byte[]) o));
+      System.out.println("QUEUE STRUCTURE: "+Arrays.toString(blockingQueue.toArray()));
     }
 
     @Override

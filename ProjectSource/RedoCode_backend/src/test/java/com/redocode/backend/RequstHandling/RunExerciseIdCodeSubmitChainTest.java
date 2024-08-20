@@ -22,96 +22,95 @@ import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.CPP_RUNN
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 class RunExerciseIdCodeSubmitChainTest {
-  @Autowired ExerciseRepository exerciseRepository;
-  @Autowired SolutionProgramsRepository solutionProgramsRepository;
-  @Autowired ProgrammingLanguageRepository programmingLanguageRepository;
-  @Autowired UsersRepository usersRepository;
-  @Autowired ExerciseTestsRepository exerciseTestsRepository;
-  Excersize excersize;
+    @Autowired ExerciseRepository exerciseRepository;
+    @Autowired
+    SolutionProgramsRepository solutionProgramsRepository;
+    @Autowired
+    ProgrammingLanguageRepository programmingLanguageRepository;
+    @Autowired UsersRepository usersRepository;
+    @Autowired ExerciseTestsRepository exerciseTestsRepository;
+    Excersize excersize;
 
-  @BeforeAll
-  void createExerciseInDataBaseThatRreturnSingleIntInput() {
 
-    //        exerciseTestsRepository.saveAll(tests);
-    excersize =
-        Excersize.builder()
-            .excersizeName("TestExercise")
-            .inputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
-            .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
-            .amountOfAutoTests(8)
-            .author(usersRepository.findAll().get(0))
-            .description("Test description")
-            .maxExecutionTimeMS(1000L)
-            .timeForTaskMin(50L)
-            .valueLengthRangeMin(-100.0F)
-            .valueLengthRangeMax(100.0F)
-            .ram_mb(512)
-            .build();
-    exerciseRepository.save(excersize);
+    @BeforeAll
+    void createExerciseInDataBaseThatRreturnSingleIntInput() {
 
-    List<ExerciseTests> tests = new ArrayList<>();
-    tests.add(ExerciseTests.builder().expectedOutput("1").input("1").excersize(excersize).build());
-    tests.add(
-        ExerciseTests.builder().expectedOutput("155").input("155").excersize(excersize).build());
-    tests.add(
-        ExerciseTests.builder().expectedOutput("-155").input("-155").excersize(excersize).build());
-    exerciseTestsRepository.saveAll(tests);
+        //        exerciseTestsRepository.saveAll(tests);
+        excersize =
+                Excersize.builder()
+                        .excersizeName("TestExercise")
+                        .inputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                        .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
+                        .amountOfAutoTests(8)
+                        .author(usersRepository.findAll().get(0))
+                        .description("Test description")
+                        .maxExecutionTimeMS(1000L)
+                        .timeForTaskMin(50L)
+                        .valueLengthRangeMin(-100.0F)
+                        .valueLengthRangeMax(100.0F)
+                        .ram_mb(512)
+                        .build();
+        exerciseRepository.save(excersize);
 
-    solutionProgramsRepository.save(
-        SolutionPrograms.builder()
-            .code("int solution(int x){ return x;}")
-            .language(
-                programmingLanguageRepository.findByName(
-                    RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
-            .excersize(excersize)
-            .build());
-    solutionProgramsRepository.save(
-        SolutionPrograms.builder()
-            .code("function solution(x){ return x;}")
-            .language(
-                programmingLanguageRepository.findByName(
-                    RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
-                        CODE_RUNNER_TYPE.JS_RUNNER)))
-            .excersize(excersize)
-            .build());
-  }
+        List<ExerciseTests> tests = new ArrayList<>();
+        tests.add(ExerciseTests.builder().expectedOutput("1").input("1").excersize(excersize).build());
+        tests.add(ExerciseTests.builder().expectedOutput("155").input("155").excersize(excersize).build());
+        tests.add(ExerciseTests.builder().expectedOutput("-155").input("-155").excersize(excersize).build());
+        exerciseTestsRepository.saveAll(tests);
 
-  @ParameterizedTest
-  @EnumSource(
-      value = CODE_RUNNER_TYPE.class,
-      mode = EnumSource.Mode.EXCLUDE,
-      names = {"UNIDENTIFIED"})
-  public void RunExerciseIdCodeCorrect(CODE_RUNNER_TYPE type) {
-    User user = new User();
-    long IdOfeExercise = exerciseRepository.findAll().get(0).getId();
-    long amountOfSolutionBefore = this.solutionProgramsRepository.count();
+        solutionProgramsRepository.save(
+                SolutionPrograms.builder()
+                        .code("int solution(int x){ return x;}")
+                        .language(
+                                programmingLanguageRepository.findByName(
+                                        RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
+                        .excersize(excersize)
+                        .build());
+        solutionProgramsRepository.save(
+                SolutionPrograms.builder()
+                        .code("function solution(x){ return x;}")
+                        .language(
+                                programmingLanguageRepository.findByName(
+                                        RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
+                                                CODE_RUNNER_TYPE.JS_RUNNER)))
+                        .excersize(excersize)
+                        .build());
+    }
 
-    String solutionCode =
-        solutionProgramsRepository
-            .findFirstByLanguageIdAndExcersizeId(
-                programmingLanguageRepository
-                    .findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(type))
-                    .getId(),
-                IdOfeExercise)
-            .getCode();
+    @ParameterizedTest
+    @EnumSource(
+            value = CODE_RUNNER_TYPE.class,
+            mode = EnumSource.Mode.EXCLUDE,
+            names = {"UNIDENTIFIED"})
+    public void RunExerciseIdCodeCorrect(CODE_RUNNER_TYPE type) {
+        User user = new User();
+        long IdOfeExercise = exerciseRepository.findAll().get(0).getId();
+        long amountOfSolutionBefore=this.solutionProgramsRepository.count();
 
-    Map<CODE_RUNNER_TYPE, String> solutions = new HashMap<CODE_RUNNER_TYPE, String>();
-    solutions.put(type, solutionCode);
+        String solutionCode =
+                solutionProgramsRepository
+                        .findFirstByLanguageIdAndExcersizeId(
+                                programmingLanguageRepository
+                                        .findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(type))
+                                        .getId(),
+                                IdOfeExercise)
+                        .getCode();
 
-    SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
-        SingleDatabaseExerciseTestRequest.builder()
-            .solutionCodes(solutions)
-            .idOfExercise(IdOfeExercise)
-            .user(user)
-            .build();
+        Map<CODE_RUNNER_TYPE, String> solutions = new HashMap<CODE_RUNNER_TYPE, String>();
+        solutions.put(type, solutionCode);
 
-    assertDoesNotThrow(
-        () -> {
-          ResponsibilityChainRepository.runExerciseIdCodeSubmit.startChain(
-              singleDatabaseExerciseTestRequest);
-        });
+        SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
+                SingleDatabaseExerciseTestRequest.builder()
+                        .solutionCodes(solutions)
+                        .idOfExercise(IdOfeExercise)
+                        .user(user)
+                        .build();
 
-    long amountOfSolutionAfter = this.solutionProgramsRepository.count();
-    assertEquals(amountOfSolutionBefore + 1, amountOfSolutionAfter);
-  }
+        assertDoesNotThrow(()->{
+                ResponsibilityChainRepository.runExerciseIdCodeSubmit.startChain(singleDatabaseExerciseTestRequest);});
+
+    long amountOfSolutionAfter=this.solutionProgramsRepository.count();
+    assertEquals(amountOfSolutionBefore+1, amountOfSolutionAfter);
+}
+
 }

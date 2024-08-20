@@ -18,10 +18,7 @@ import java.util.List;
 @SuperBuilder
 @Data
 public class SpecifiedSingleDatabaseExerciseTestRequest extends SingleDatabaseExerciseTestRequest
-    implements ITestsToRunRequest,
-        ICodeRunSpecificationParametersRequest,
-        ICodeRunnerRequest,
-        ICodeResultsRequest {
+    implements ITestsToRunRequest, ICodeRunSpecificationParametersRequest, ICodeRunnerRequest, ICodeResultsRequest {
   @NonNull protected Long timeForExecution;
   @NonNull protected Variables.VARIABLES_TYPES inputType;
   @NonNull protected Variables.VARIABLES_TYPES outputType;
@@ -40,7 +37,7 @@ public class SpecifiedSingleDatabaseExerciseTestRequest extends SingleDatabaseEx
   boolean breakCharacterInput;
   boolean spaceInput;
 
-  protected List<ProgramResult> programResults;
+  protected  List<ProgramResult> programResults;
 
   /**
    * {@inheritDoc} . <br>
