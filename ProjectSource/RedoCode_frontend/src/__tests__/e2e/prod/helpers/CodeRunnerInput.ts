@@ -1,5 +1,3 @@
-import cypress from "cypress"
-
 namespace CodeRunnerInput{
     const codeEditorSequance = '#coderunner-editor-panel textarea'
 
