@@ -24,7 +24,7 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
 
   @Override
   String getChainNodeName() {
-    return "validating access to coderunner";
+    return "Validating access to coderunner";
   }
 
   @Override

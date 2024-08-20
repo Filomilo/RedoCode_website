@@ -151,6 +151,7 @@ public class ResponsibilityChainRepository {
      */
     public static final BaseRequestHandler runExerciseIdCodeSubmit =
             new ResposibilityChainBuilder()
+                    .setMessagehandler(sendExecutionMessage)
                     .setSteps()
                     .next(new GetExerciseDataFromDataBase())
                     .next(new CodeRunnerAccesValidationHandler())

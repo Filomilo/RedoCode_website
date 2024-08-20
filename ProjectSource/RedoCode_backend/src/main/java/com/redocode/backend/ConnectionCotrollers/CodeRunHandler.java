@@ -19,6 +19,7 @@ import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import java.security.Principal;
 
 import static com.redocode.backend.RequstHandling.ResponsibilityChainRepository.runExerciseIdCode;
+import static com.redocode.backend.RequstHandling.ResponsibilityChainRepository.runExerciseIdCodeSubmit;
 
 @Controller
 @Slf4j
@@ -60,10 +61,19 @@ public class CodeRunHandler {
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
   public void runExercsieIdValidationCode(
-      Principal principal, ExerciseIdToRunMessage exerciseIdValidationMessage) {
-    String userId = principal.getName();
-    log.info(
-        "user: " + userId + " runs runExercsieIdValidationCode: " + exerciseIdValidationMessage);
+      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) {
+
+
+    String useruuid = principal.getName();
+    User user = redoCodeController.getUserByConnectionUUID(useruuid);
+    log.info("user: "+useruuid+" runs runExerciseIdCodeSubmit with "+exerciseIdToRunMessage );
+    SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
+            RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
+                    exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
+    runExerciseIdCodeSubmit.startChain(singleDatabaseExerciseTestRequest);
+
+
+
   }
 
   @MessageMapping({ConnectionTargets.INrunExercsieTestsCode})

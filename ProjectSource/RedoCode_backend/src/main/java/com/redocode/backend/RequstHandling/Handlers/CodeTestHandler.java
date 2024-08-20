@@ -100,7 +100,7 @@ public class CodeTestHandler extends BaseRequestHandler {
 
   @Override
   String getChainNodeName() {
-    return "testing code";
+    return "Testing code";
   }
 
   @Override

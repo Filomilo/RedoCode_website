@@ -1,6 +1,7 @@
 package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
+import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
@@ -30,7 +31,8 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler{
 
     @Override
     RequestBase handle(RequestBase request) throws RequestHadndlingException {
-
+        this.nodeUpdate(
+                request, "Saving solution to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
         IExerciseIdRequest exerciseIdRequest=(IExerciseIdRequest)request;
         ISolutionCodesRequest  solutionCodesRequest=(ISolutionCodesRequest )request;
@@ -45,7 +47,8 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler{
                 .excersize(exerciseRepository.getReferenceById(exerciseIdRequest.getIdOfExercise()))
                 .build();
         solutionProgramsRepository.save(solutionProgram);
-
+        this.nodeUpdate(
+                request, "Saved solution", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
         return request;
     }
 

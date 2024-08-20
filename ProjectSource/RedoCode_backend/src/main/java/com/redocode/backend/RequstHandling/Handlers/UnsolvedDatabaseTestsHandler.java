@@ -2,6 +2,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
+import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
@@ -51,6 +52,8 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
       throw new RequestHadndlingException(
           "Request must implement ISolutionCodesRequest,IExerciseIdRequest and ITestsToRunRequest");
     }
+    this.nodeUpdate(
+            request, "solving", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
     IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest) request;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
@@ -120,7 +123,8 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
                 throw new RuntimeException(e);
               }
             });
-
+    this.nodeUpdate(
+            request, "solved", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
     return request;
   }
 }
