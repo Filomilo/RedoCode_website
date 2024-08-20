@@ -3,6 +3,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 import com.redocode.backend.ConnectionCotrollers.MessageSender;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.CodeRunningMessages.ProgramResultsMessage;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeResultsRequest;
 import com.redocode.backend.RequstHandling.Requests.PorgramReusltsSendRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
@@ -20,16 +21,16 @@ public class SendProgramResultsHandler extends BaseRequestHandler {
 
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
-    PorgramReusltsSendRequest porgramReusltsSendRequest = (PorgramReusltsSendRequest) (request);
-    log.info("SendProgramResultsHandler: " + porgramReusltsSendRequest.toString());
+    ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) (request);
+    log.info("SendProgramResultsHandler: " + request.toString());
 
     ProgramResultsMessage programResultsMessage =
         ProgramResultsMessage.builder()
-            .results(porgramReusltsSendRequest.getProgramResults())
+            .results(codeResultsRequest.getProgramResults())
             .build();
 
     messageSender.sendMessage(
-        porgramReusltsSendRequest.getUser(),
+        request.getUser(),
         "/public/topic/codeRunnerResults",
         programResultsMessage);
 

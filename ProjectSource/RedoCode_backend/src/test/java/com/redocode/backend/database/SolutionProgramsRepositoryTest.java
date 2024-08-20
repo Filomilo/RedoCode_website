@@ -51,7 +51,7 @@ public class SolutionProgramsRepositoryTest {
   @Test
   public void retiveOSlutionCodeByIdOfExercsieAndLangueId() {
     SolutionPrograms solutionPrograms =
-        solutionProgramsRepository.findByLanguageIdAndExerciseId(
+        solutionProgramsRepository.findFirstByLanguageIdAndExcersizeId(
             programmingLanguageRepository
                 .findByName(
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(

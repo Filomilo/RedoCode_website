@@ -91,7 +91,7 @@ public class CodeRunExerciseIDSingleStompTest extends WebSocketTestBase {
             .exercise_id(1L)
             .code(
                 solutionProgramsRepository
-                    .findByLanguageIdAndExerciseId(
+                    .findFirstByLanguageIdAndExcersizeId(
                         programmingLanguageRepository.findByName("cpp").getId(), 1L)
                     .getCode())
             .build();

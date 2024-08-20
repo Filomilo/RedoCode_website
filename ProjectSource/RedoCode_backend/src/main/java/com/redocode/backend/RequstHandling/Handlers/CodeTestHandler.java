@@ -108,19 +108,24 @@ public class CodeTestHandler extends BaseRequestHandler {
     assert request instanceof ISolutionCodesRequest;
     assert request instanceof ITestsToRunRequest;
     assert request instanceof ICodeRunnerRequest;
-    assert request instanceof ICodeRunSpecificationParametersRequest;
+    assert request instanceof ICodeResultsRequest;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
     ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
+    ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
     List<ProgramResult> programResults = new ArrayList<>();
+
+
 
     this.nodeUpdate(
         request,
         "running " + codeRunnerRequest.getCodeRunnerType() + " tests",
         ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
     ;
+
+
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-    if (codeRunner == null) throw new RequestHadndlingException("Could not acces code runner");
+    if (codeRunner == null) throw new RequestHadndlingException("Could not access code runner");
 
     log.info("Staring handler: CodeTestHandler+" + "for " + request.getUser());
     int i = 0;
@@ -148,12 +153,11 @@ public class CodeTestHandler extends BaseRequestHandler {
         request,
         "correct " + codeRunnerRequest.getCodeRunnerType() + " tests",
         ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
-    PorgramReusltsSendRequest porgramReusltsSendRequest =
-        PorgramReusltsSendRequest.builder()
-            .programResults(programResults)
-            .user(request.getUser())
-            .build();
-    return porgramReusltsSendRequest;
+
+    codeResultsRequest.setProgramResults(programResults);
+
+
+    return request;
   }
 
   @Override

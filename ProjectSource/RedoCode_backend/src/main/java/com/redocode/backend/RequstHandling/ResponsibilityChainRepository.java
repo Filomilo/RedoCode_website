@@ -121,13 +121,6 @@ public class ResponsibilityChainRepository {
    * chian steps aee
    *
    * <ul>
-   *   <li>{@link CodeRunnerAccesValidationHandler validating acces to code required code runner}
-   *   <li>{@link GetExerciseDataFromDataBase retrives exercsie data from database }
-   *   <li>{@link AutoTestGeneratorHandler generate automatic test }
-   *   <li>{@link UnsolvedDatabaseTestsHandler run solution code From data base to get expected
-   *       ouput for automatic tests}
-   *   <li>{@link CodeTestHandler run tests for to check if solution is correct }
-   *   <li>{@link SendProgramResultsHandler send results to user}
    * </ul>
    */
   public static final BaseRequestHandler runExerciseIdCode =
@@ -141,4 +134,30 @@ public class ResponsibilityChainRepository {
           .setContinueOnError(true)
           .next(new SendProgramResultsHandler())
           .build();
+
+
+    /**
+     * Chian resposible for runinng testing and saving new solution to database
+     * <br/> it consist of those steps: <br/<br/>
+     *
+     * <ul>
+     *     <li>{@link GetExerciseDataFromDataBase  getting exercise data from database}</li>
+     *     <li>{@link CodeRunnerAccesValidationHandler validating acces to specifc code runner }</li>
+     *     <li>{@link AutoTestGeneratorHandler generating automatic tests }</li>
+     *     <li>{@link UnsolvedDatabaseTestsHandler solving autaomted test using correct solution }</li>
+     *     <li>{@link CodeTestHandler testing submitted solution}</li>
+     *     <li>{@link SaveExerciseSolutionHandler saving solution to database}</li>
+     * </ul>
+     */
+    public static final BaseRequestHandler runExerciseIdCodeSubmit =
+            new ResposibilityChainBuilder()
+                    .setSteps()
+                    .next(new GetExerciseDataFromDataBase())
+                    .next(new CodeRunnerAccesValidationHandler())
+                    .next(new AutoTestGeneratorHandler())
+                    .next(new UnsolvedDatabaseTestsHandler())
+                    .next(new CodeTestHandler())
+                    .next(new SaveExerciseSolutionHandler())
+                    .build();
+
 }
