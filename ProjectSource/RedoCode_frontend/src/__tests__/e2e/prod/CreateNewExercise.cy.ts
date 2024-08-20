@@ -1,3 +1,5 @@
+import CodeRunnerInput from "./helpers/CodeRunnerInput"
+
 describe('Create new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
@@ -10,9 +12,8 @@ describe('Create new exercise', () => {
     const description =
       'move every letter in alphabet by 7 so a -> d and z - g, lower case and upper case letters should be handled'
 
-    const codeEditorSequance = '#coderunner-editor-panel textarea'
 
-    const backspaces = '{selectAll}{backspace}'
+
     // for (let index = 0; index < 100; index++) {
     //   backspaces+="{delete}";
 
@@ -175,14 +176,10 @@ describe('Create new exercise', () => {
     cy.get('#code-preview')
       .invoke('text')
       .should('contain', 'function solution(x){')
-    cy.get(codeEditorSequance).type(backspaces, { force: true })
-    cy.get(codeEditorSequance).focus()
-    cy.get(codeEditorSequance).type('{selectAll}', { force: true })
-    for (let i = 0; i < JSfirstHalf.length; i++) {
-      cy.get(codeEditorSequance).focus()
-      cy.get(codeEditorSequance).type(JSfirstHalf[i], { force: true })
-    }
-    // cy.get(codeEditorSequance).type(JSfirstHalf, { force: true });
+      CodeRunnerInput.clearCodeRunner();
+      CodeRunnerInput.inputToCodeRunner(JSfirstHalf)
+
+    
     cy.get('#coderunner-run-button').click()
     cy.get(
       '#TestResultCard' + '0' + ' > div.testValidationSection.wrong'
@@ -204,19 +201,10 @@ describe('Create new exercise', () => {
     cy.get('#code-preview')
       .invoke('text')
       .should('contain', 'std::string solution(std::string x)')
-    cy.get(codeEditorSequance).focus()
 
-    cy.get(codeEditorSequance).focus()
-    cy.get(codeEditorSequance).type('{selectAll}{backspace}', { force: true })
-    cy.get(codeEditorSequance).type('{selectAll}', { force: true })
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(200)
-    cy.get(codeEditorSequance).type('{backspace}', { force: true })
-    cy.get('#code-preview').invoke('text').should('equal', '')
-    for (let i = 0; i < cppSolution.length; i++) {
-      cy.get(codeEditorSequance).focus()
-      cy.get(codeEditorSequance).type(cppSolution[i], { force: true })
-    }
+      CodeRunnerInput.clearCodeRunner();
+      CodeRunnerInput.inputToCodeRunner(cppSolution);
+    
     // cy.get(codeEditorSequance).type(cppSolution, { force: true });
     cy.get('#coderunner-run-button').click()
 
@@ -238,18 +226,8 @@ describe('Create new exercise', () => {
     cy.get('.p-button').contains('span', 'Change').click()
     cy.get('#coderunner-loading-dialog').should('not.exist')
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(400)
-    cy.get(codeEditorSequance).focus()
-    cy.wait(400)
-    cy.get(codeEditorSequance).type('{moveToEnd}', { force: true })
-    cy.wait(400)
-
-    for (let i = 0; i < JSsecondHalf.length; i++) {
-      cy.get(codeEditorSequance).focus()
-      cy.get(codeEditorSequance).type(JSsecondHalf[i], { force: true })
-    }
-    cy.wait(200)
-    // cy.get(codeEditorSequance).type(JSsecondHalf, { force: true });
+    CodeRunnerInput.moveToEndOfCodeRunner();
+    CodeRunnerInput.inputToCodeRunner(JSsecondHalf);
     cy.get('#coderunner-run-button').click()
 
     for (let index = 0; index < inputsAndOutputs.length; index++) {
