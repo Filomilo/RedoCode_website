@@ -237,7 +237,7 @@ namespace CreatePanel{
             }
             export function switchToTestSolution(){
                 cy.get('#ContentConatiner span')
-                .contains('Setup')
+                .contains('Solution')
                 .closest('.p-tabview-nav-link')
                 .click();
             }
