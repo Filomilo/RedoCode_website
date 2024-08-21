@@ -17,7 +17,9 @@ namespace SwitcherControls{
     {
         cy.get('#switch-account').click()
         cy.url().should('eq', Cypress.config().baseUrl + '/Account')
-
     }
+
+
+
 }
 export default SwitcherControls;

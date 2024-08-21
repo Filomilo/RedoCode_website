@@ -4,6 +4,7 @@ import CreatePanel from "./helpers/CreatePanel"
 import ExecutionChain from "./helpers/ExecutionChain"
 import ExercisesPage from "./helpers/ExercisesPage"
 import SwitcherControls from "./helpers/SwitcherControls"
+import UrlControls from "./helpers/UrlControls"
 import UserAuthentication from "./helpers/UserAuthentication"
 
 describe('Create new exercise', () => {
@@ -120,7 +121,7 @@ describe('Create new exercise', () => {
         desc: "saved to database"
       },
     ]
-
+    UrlControls.startPage();
     UserAuthentication.login(email,password)
     SwitcherControls.switchExercises();
     ExercisesPage.gotoCreatePanel();

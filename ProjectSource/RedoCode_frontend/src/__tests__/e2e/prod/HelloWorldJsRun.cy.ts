@@ -1,5 +1,6 @@
 import CodeRunnerPanel from "./helpers/CodeRunnerPanel"
 import SwitcherControls from "./helpers/SwitcherControls"
+import UrlControls from "./helpers/UrlControls"
 
 describe('hello world js run ', () => {
   it('passes', () => {
@@ -9,7 +10,7 @@ describe('hello world js run ', () => {
 
     const helloWorldProgram = 'console.log("Hello World!")'
 
-    cy.visit('/')
+    UrlControls.startPage();
 
     SwitcherControls.switchPlayground()
     CodeRunnerPanel.selectInitialLanguage("js")

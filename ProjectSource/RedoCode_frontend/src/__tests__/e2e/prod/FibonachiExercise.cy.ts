@@ -1,13 +1,14 @@
 import CodeRunnerPanel from "./helpers/CodeRunnerPanel"
 import ExercisesPage from "./helpers/ExercisesPage"
 import SwitcherControls from "./helpers/SwitcherControls"
+import UrlControls from "./helpers/UrlControls"
 
 describe('Phibonachi new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-    cy.visit('/')
+    UrlControls.startPage();
     SwitcherControls.switchExercises();
     ExercisesPage.openExerciseOfName("fibonachi sequance")
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)

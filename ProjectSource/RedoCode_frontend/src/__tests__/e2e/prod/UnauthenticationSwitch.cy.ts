@@ -1,3 +1,6 @@
+import SwitcherControls from "./helpers/SwitcherControls"
+import UrlControls from "./helpers/UrlControls"
+
 describe('switch without authentication', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
@@ -6,12 +9,11 @@ describe('switch without authentication', () => {
     const email = 'mailmail@test.com'
     const password = 'Password+789'
 
-    cy.visit('/')
-    cy.visit('/Account')
-    cy.url().should('eq', Cypress.config().baseUrl + '/Home')
-    cy.visit('/Create')
-    cy.url().should('eq', Cypress.config().baseUrl + '/Home')
-    cy.visit('/Playground')
-    cy.url().should('eq', Cypress.config().baseUrl + '/Playground')
+    UrlControls.startPage();
+    UrlControls.visitUserPanel(false);
+    UrlControls.visitCreatePanel(false);
+    UrlControls.visitPlayground();
+    
+
   })
 })

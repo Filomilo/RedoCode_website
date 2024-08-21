@@ -1,12 +1,13 @@
 import CodeRunnerPanel from "./helpers/CodeRunnerPanel"
 import SwitcherControls from "./helpers/SwitcherControls"
+import UrlControls from "./helpers/UrlControls"
 
 describe('hello world cpp run ', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-    cy.visit('/')
+    UrlControls.startPage();
     SwitcherControls.switchPlayground()
     CodeRunnerPanel.selectInitialLanguage("cpp")
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
