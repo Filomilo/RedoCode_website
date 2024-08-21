@@ -36,7 +36,7 @@ public class CodeRunHandler {
       Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) {
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
-
+log.info(user+" runExerciseIdCode "+ exerciseIdToRunMessage);
     SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
         RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
             exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());

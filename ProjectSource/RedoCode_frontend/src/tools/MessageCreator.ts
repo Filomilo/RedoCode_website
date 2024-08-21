@@ -1,4 +1,6 @@
 import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
+import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
+import ExerciseIdToRunMessage from '@/types/ApiMesseages/ExerciseIdToRunMessage'
 import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
 import ExercsieCreatorValidationMesage, {
   TestsIndexed,
@@ -100,6 +102,14 @@ namespace MessageCreator {
       executionTime: exerciseCreatorController.executionTime,
     }
     return exercsieCreatorValidationMesage
+  }
+
+  export function createExercsieIdToRunMessage(exerciseSolverController: ExerciseSolverController):ExerciseIdToRunMessage {
+    const exerciseIdToRunMessage:ExerciseIdToRunMessage={
+      code: exerciseSolverController.solution,
+      exercise_id: exerciseSolverController.id
+    }
+   return exerciseIdToRunMessage;
   }
 }
 

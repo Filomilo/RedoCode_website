@@ -79,6 +79,7 @@ export default function generateStartingFunction(
   inputVariable: VarType,
   outputVariable: VarType
 ) {
+  console.log("starting function generator: "+ inputVariable+", "+outputVariable)
   switch (codeRunnerType) {
     case CodeRunnerType.CPP_RUNNER:
       return generateCppFunction(inputVariable, outputVariable)

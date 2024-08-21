@@ -1,17 +1,22 @@
 <template>
   <main class="PlayGroundBase">
+
     <CodeRunnerPanel
-      :exerciseInfo="{ title: 'no impelnted', description: 'no implented' }"
-      :languageChoices="languageChoices.map(element => element.value)"
-      starting="not impented"
+      :exerciseInfo="codeRunnerStore.exerciseSolverController"
+      :languageChoices="codeRunnerStore.exerciseSolverController.languages"
+      :starting="codeRunnerStore.exerciseSolverController.startFunction(
+        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+      )"
       :onRunCode="onRunCode"
       :onSubmit="onSubmit"
-      :ManualTests="[]"
-      :AutoTests="[]"
+      :ManualTests="codeRunnerStore.exerciseSolverController.manualTests"
+      :AutoTests="codeRunnerStore.exerciseSolverController.autoTests"
       :codeContainerUpdate="codeConatienrUpdate"
       :onResults="onCodeResult"
       :SubmitAccess="true"
     />
+    {{ JSON.stringify(codeRunnerStore.exerciseSolverController) }}
+
   </main>
 </template>
 
@@ -23,11 +28,11 @@
   import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-  import ExerciseData from '@/types/ExerciseData'
   import { useToastStore } from '@/stores/ToastStore'
   import { languageChoices } from '@/config/Data'
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-  import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
+  import EndpointAcces from '@/controllers/EndpointsAcces'
+  import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
   //#endregion
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
@@ -36,32 +41,22 @@
   const route = useRoute()
 
   const fetchExerciseData = (id: number) => {
-    toastStore.showErrorMessage('not impelented fetchExerciseData')
+
+    EndpointAcces.getExerciseData(id).then(x=>{
+      
+    codeRunnerStore.exerciseSolverController.loadInitialData(id,x)
+
+    });
+
     // codeRunnerStore.exerciseLoading = true
 
     // const params = {
     //   id: route.params.id,
     // }
-    // axios
-    //   .get('http://localhost:8080/public/exercises/data', { params: params })
-    //   .then(response => {
-    //     const data: ExerciseData = response.data
-    //     data.tests = data.tests.map((elem: any) => {
-    //       return {
-    //         ...elem,
-    //         input: elem.input.value,
-    //         expectedOutput: elem.expectedOutput.value,
-    //       }
-    //     })
-    //     codeRunnerStore.setExerciseData(data)
-    //     console.log('data: ' + JSON.stringify(data))
-    //     codeRunnerStore.exerciseLoading = false
-    //   })
+  
   }
 
   onMounted(() => {
-    console.log('axios')
-    console.log(route.params.id)
     let exerciseId: number = parseInt(
       typeof route.params.id === 'string' ? route.params.id : route.params.id[0]
     )
@@ -69,33 +64,26 @@
   })
 
   const codeConatienrUpdate = (code: string) => {
-    toastStore.featureNotImplemented(code)
-    codeRunnerStore.exerciseCreatorController.updateSolutionCode(
-      code,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    )
+    codeRunnerStore.exerciseSolverController.solution=code;
   }
 
   const onRunCode = () => {
-    toastStore.featureNotImplemented('onRunCode')
-    codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(
-      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    codeRunnerStore.codeRunnerSender.runExerciseIdCode(
+      codeRunnerStore.exerciseSolverController as ExerciseSolverController,
     )
+
   }
 
   const onSubmit = () => {
-    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
-      codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
-    )
+    // codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
+    //   codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
+    // )
   }
 
   const onCodeResult = (results: ProgramResultsMessage) => {
-    toastStore.featureNotImplemented('onCodeResult')
     console.log('Exercise view results: ' + JSON.stringify(results))
-    codeRunnerStore.exerciseCreatorController.updateTests(
-      results.results,
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+    codeRunnerStore.exerciseSolverController.updateTests(
+      results.results
     )
   }
 </script>

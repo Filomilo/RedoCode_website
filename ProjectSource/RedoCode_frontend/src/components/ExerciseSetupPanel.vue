@@ -822,7 +822,7 @@
   }
 
   onMounted(() => {
-    codeRunnerStore.exerciseCreatorController.resetParams()
+    codeRunnerStore.exerciseCreatorController.reset()
   })
 
   watch(

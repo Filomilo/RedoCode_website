@@ -100,7 +100,6 @@
     // ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
     //   codeRunnerStore.exerciseCreatorController
     // )
-    console.error('unimplemented')
     codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(
       codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,
       codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType

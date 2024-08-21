@@ -3,6 +3,8 @@ package com.redocode.backend.Messages;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.StartingFunctions.StartingFuncitonGeneratorFactory;
 import com.redocode.backend.database.Excersize;
 import com.redocode.backend.database.ExerciseTests;
@@ -25,7 +27,7 @@ import java.util.Map;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class ExcerciseDataMessage {
-  @JsonProperty List<String> availbleCodeRunners;
+  @JsonProperty List<CODE_RUNNER_TYPE> availbleCodeRunners;
   @JsonProperty String title;
   @JsonProperty String desc;
   @JsonProperty String outputType;
@@ -34,7 +36,6 @@ public class ExcerciseDataMessage {
   @JsonProperty List<ExcerciseTestMessage> tests;
   @JsonProperty List<ExcerciseTestMessage> automaticTests;
 
-  @JsonProperty Map<String, String> startingFunction;
 
   public ExcerciseDataMessage(Excersize excersize) throws JsonProcessingException {
     this.title = excersize.getExcersizeName();
@@ -55,14 +56,8 @@ public class ExcerciseDataMessage {
               .build());
     }
     for (ProgrammingLanguage programmingLanguage : excersize.getLanguages()) {
-      availbleCodeRunners.add(programmingLanguage.getName());
+      availbleCodeRunners.add(RedoCodeObjectMapper.LanguageNameToCodeRunner(programmingLanguage.getName()));
     }
-    startingFunction = new HashMap<>();
-    for (String lang : availbleCodeRunners) {
-      startingFunction.put(
-          lang,
-          StartingFuncitonGeneratorFactory.getStartingFunctionGeneratorForLanguage(lang)
-              .getStartingFunction(excersize.getInputType(), excersize.getOutputType()));
-    }
+
   }
 }

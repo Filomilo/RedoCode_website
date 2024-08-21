@@ -14,6 +14,7 @@ describe('Phibonachi new exercise', () => {
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
     CodeRunnerPanel.selectInitialLanguage("cpp")
     CodeRunnerPanel.stateShouldBe('ACTIVE')
+    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain("int solution(int x){")
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner("console.log('Hello World!')")
   })

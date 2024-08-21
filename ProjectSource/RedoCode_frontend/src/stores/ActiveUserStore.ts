@@ -151,13 +151,14 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const apiConnectionStore = useApiConnectionStore()
   const codeRunnerStore = useCodeRunnerStore()
   apiConnectionStore.stompApiConnection.addOnConnectEvent(() => {
-    console.log('on connected: ' + JSON.stringify(getToken()))
+    console.log('on connected userAuhtenticaton: ' + JSON.stringify(getToken()))
     if (getToken().length > 0) {
       apiConnectionStore.stompApiSender.authenticationStomp({
         token: getToken() as string,
       })
-      codeRunnerStore.codeRunnerConnection.updateCodeRunner()
+     
     }
+    codeRunnerStore.codeRunnerConnection.updateCodeRunner()
   })
 
   return {
