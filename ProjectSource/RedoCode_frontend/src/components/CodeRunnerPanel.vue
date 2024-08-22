@@ -148,7 +148,7 @@
   const tryingToEstablishConnection: Ref<boolean> = ref(false)
   const establishedConnection: Ref<boolean> = ref(false)
   const VmAcces: Ref<boolean> = ref(false)
-  const chosenLangague: Ref<codeRunnerType> = ref(props.languageChoices[0])
+  const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
   const code: Ref<string> = ref('Write Code')
   const resultData = ref(basicResultTemplate)
 

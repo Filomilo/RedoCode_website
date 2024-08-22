@@ -146,6 +146,8 @@ describe('Create new exercise', () => {
     CreatePanel.TestConfig.setStringInputOptions(stringOptions);
     CreatePanel.SolutionPanel.isSolutionPanelActive(true);
     CreatePanel.SolutionPanel.switchToTestSolution();
+    CodeRunnerPanel.information.nameShould(title)
+    CodeRunnerPanel.information.descriptionShouldBe(description)
     CodeRunnerPanel.selectInitialLanguage("js");
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain('function solution(x){')
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner();

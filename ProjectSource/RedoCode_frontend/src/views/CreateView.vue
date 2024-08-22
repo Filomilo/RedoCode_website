@@ -16,6 +16,7 @@
       <TabPanel header="Solution" :disabled="!testValidation">
         <!-- <CodeRunnerPanel /> -->
         <CodeRunnerPanel
+          :v-if="testValidation"
           key="CreateCodeRunner"
           :languageChoices="codeRunnerStore.exerciseCreatorController.languages"
           :exerciseInfo="codeRunnerStore.exerciseCreatorController"
@@ -137,8 +138,8 @@
     return (
       codeRunnerStore.exerciseCreatorController.title.length > 5 &&
       codeRunnerStore.exerciseCreatorController.title.length < 100 &&
-      codeRunnerStore.exerciseCreatorController.description.length > 20 &&
-      codeRunnerStore.exerciseCreatorController.description.length < 5000
+      codeRunnerStore.exerciseCreatorController.desc.length > 20 &&
+      codeRunnerStore.exerciseCreatorController.desc.length < 5000
     )
   })
   const testValidation = computed(() => {

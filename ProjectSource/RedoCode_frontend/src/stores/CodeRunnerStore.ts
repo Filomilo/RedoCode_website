@@ -49,7 +49,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const playGroundBase: ExerciseData = {
     inputType:"SINGLE_INTEGER",
     title: '',
-    description: '',
+    desc: '',
     id: null,
     outputType: 'SINGLE_INTEGER',
     availbleCodeRunners: languageChoices.map(element => element.value),

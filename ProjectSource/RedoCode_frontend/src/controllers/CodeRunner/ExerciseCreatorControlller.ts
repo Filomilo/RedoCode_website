@@ -33,7 +33,9 @@ export type TestsIndexed = { [key in CodeRunnerType]?: TestsController }
 
 export default class ExerciseCreatorController extends  CodeRunnerControllerBase implements IExerciseDescriptionI{ 
   //#region data
-
+  get languages() {
+    return this._languages;
+  }
   set languages(newLanguages: CodeRunnerType[]) {
     this._languages = newLanguages
     this.updateTestsFields()
@@ -41,7 +43,7 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
 
 
   title!: string
-  description!: string
+  desc!: string
 
   ram!: number
   timeForTaskMin!: number

@@ -29,7 +29,27 @@ describe('Phibonachi new exercise', () => {
     const executionChainTemplate: ExecutionChain.ChainNodeType[]=[
       {
         correct: true,
-        desc: ""
+        desc: "Data loaded"
+      },
+      {
+        correct: true,
+        desc: "Validated access to CPP_RUNNER"
+      },
+      {
+        correct: true,
+        desc: "generated"
+      },
+      {
+        correct: true,
+        desc: "solved"
+      },
+      {
+        correct: true,
+        desc: "correct CPP_RUNNER tests"
+      },
+      {
+        correct: true,
+        desc: "Saved solution"
       }
     ]
 
@@ -41,7 +61,8 @@ describe('Phibonachi new exercise', () => {
     CodeRunnerPanel.stateShouldBe('ACTIVE')
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain("int solution(int x){")
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
-  
+    CodeRunnerPanel.information.nameShould("fibonachi sequance")
+    CodeRunnerPanel.information.descriptionShouldBe("Create funciton that returns number at point of fibocnahi squnace so 1->0 2->1 3->1 4->2 5->3 and do on")
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner("test");
     CodeRunnerPanel.shouldSubmitAccess(false)
     CodeRunnerPanel.run();
@@ -51,7 +72,8 @@ describe('Phibonachi new exercise', () => {
     CodeRunnerPanel.run();
     CodeRunnerPanel.Tests.shouldAllTesCorrect(7)
     CodeRunnerPanel.submit()
-
+    ExecutionChain.checkSuccses(executionChainTemplate)
+    ExecutionChain.close();
     
   })
 })

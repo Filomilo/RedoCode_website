@@ -44,7 +44,7 @@
   const fetchExerciseData = (id: number) => {
 
     EndpointAcces.getExerciseData(id).then(x=>{
-      
+      console.log("fetched exercise data: "+ JSON.stringify(x))
     codeRunnerStore.exerciseSolverController.loadInitialData(id,x)
 
     });

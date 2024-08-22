@@ -5,7 +5,7 @@ import VarType from '../VarType'
 export default interface ExcerciseDataMessage extends IExerciseDescriptionI {
   availbleCodeRunners: CodeRunnerType[]
   id: number | null
-  description: string
+  desc:string 
   outputType: VarType
   inputType: VarType
   tests: ExerciseTest[]

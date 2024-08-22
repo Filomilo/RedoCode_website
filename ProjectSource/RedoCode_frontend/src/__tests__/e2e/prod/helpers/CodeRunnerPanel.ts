@@ -160,6 +160,19 @@ export function checkTest(checks: any[])
     }
 
 
+    export namespace information{
+      export function nameShould(name:string)
+      {
+     cy.get("#exercise-title").contains(name)
+      }
+
+      export function descriptionShouldBe(description: string)
+      {
+        cy.get("#exercise-description").contains(description)
+      }
+    }
+
+
 }
 
 

@@ -10,7 +10,7 @@ import IExerciseDescriptionI from "@/types/IExerciseDescriptionI"
 export default class  ExerciseSolverController extends CodeRunnerControllerBase implements IExerciseDescriptionI {
     public id: number=0
     public title!: string
-    public description!: string
+    public desc!: string
     public solution!: string
     public manualTests!: ExerciseTest[]
     public autoTests!: ExerciseTest[]
@@ -30,7 +30,7 @@ export default class  ExerciseSolverController extends CodeRunnerControllerBase 
         this.reset();
         console.log("Loadingi inital ExerciseSolverController "+JSON.stringify(data));
         this.title=data.title;
-        this.description=data.description;
+        this.desc=data.desc;
         this.manualTests=data.tests;
         this._languages=data.availbleCodeRunners;
         this.inputType=data.inputType as VarType;
@@ -48,7 +48,7 @@ export default class  ExerciseSolverController extends CodeRunnerControllerBase 
     
     reset(): void {
         (this.title = ''),
-        (this.description = ''),
+        (this.desc = ''),
         (this.solution = ''),
         (this.manualTests = []),
         (this.autoTests = []),
