@@ -17,7 +17,7 @@ export default defineConfig({
     drop: ['console', 'debugger'],
   },
   build: {
-    minify: false,
+    // minify: false,
     rollupOptions: {
       output: {
         manualChunks(id) {

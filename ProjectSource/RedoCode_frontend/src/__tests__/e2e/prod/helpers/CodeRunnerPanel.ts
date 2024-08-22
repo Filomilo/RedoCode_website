@@ -66,7 +66,15 @@ namespace CodeRunnerPanel{
       )
     }
         }
-
+        export function shouldAllTesCorrect(amountOfTest: number){
+        
+          for (let index = 0; index < amountOfTest; index++) {
+            cy.get(
+              '#TestResultCard' + index + ' > div.testValidationSection.correct'
+            ).should('have.text', 'Correct')
+    
+          }
+              }
 
 
 export function checkTest(checks: any[])
@@ -98,8 +106,12 @@ export function checkTest(checks: any[])
 
     export function run()
     {
+        cy.get('#coderunner-run-button').should('be.enabled')
+        cy.get('#coderunner-run-button').should('be.visible')
+
         cy.get('#coderunner-run-button').click()
-    }
+
+      }
 
     export function submit()
     {
@@ -137,6 +149,15 @@ export function checkTest(checks: any[])
           ).contains(state);
     }
 
+
+    export function shouldSubmitAccess(acces: boolean)
+    {
+      if(acces)
+      cy.get("#coderunner-submit-button").should("be.enabled")
+      else
+      cy.get("#coderunner-submit-button").should("be.disabled")
+
+    }
 
 
 }

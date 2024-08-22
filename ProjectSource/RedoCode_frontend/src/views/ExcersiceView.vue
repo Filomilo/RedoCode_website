@@ -14,7 +14,7 @@
       :AutoTests="codeRunnerStore.exerciseSolverController.autoTests"
       :codeContainerUpdate="codeConatienrUpdate"
       :onResults="onCodeResult"
-      :SubmitAccess="true"
+      :SubmitAccess="codeRunnerStore.exerciseSolverController.isSolved"
     />
     {{ JSON.stringify(codeRunnerStore.exerciseSolverController) }}
 
@@ -76,9 +76,10 @@
   }
 
   const onSubmit = () => {
-    // codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
-    //   codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
-    // )
+
+    codeRunnerStore.codeRunnerSender.runExercsieIdValidationCode(
+      codeRunnerStore.exerciseSolverController as ExerciseSolverController
+    )
   }
 
   const onCodeResult = (results: ProgramResultsMessage) => {

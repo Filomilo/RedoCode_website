@@ -18,7 +18,7 @@ export default class  ExerciseSolverController extends CodeRunnerControllerBase 
 
     public inputType!: VarType;
     public outputType!: VarType;
-
+    public isSolved: boolean=false;
     constructor()
     {
         super();
@@ -27,6 +27,7 @@ export default class  ExerciseSolverController extends CodeRunnerControllerBase 
 
     public loadInitialData(id:number,data: ExcerciseDataMessage)
     {
+        this.reset();
         console.log("Loadingi inital ExerciseSolverController "+JSON.stringify(data));
         this.title=data.title;
         this.description=data.description;
@@ -43,13 +44,15 @@ export default class  ExerciseSolverController extends CodeRunnerControllerBase 
         return  generateStartingFunction(type,this.inputType,this.outputType);
     }
 
+
     
     reset(): void {
         (this.title = ''),
         (this.description = ''),
         (this.solution = ''),
         (this.manualTests = []),
-        (this.autoTests = [])
+        (this.autoTests = []),
+        (this.isSolved = false)
     }
 
     updateTests(results: ProgramResult[])
@@ -62,8 +65,39 @@ export default class  ExerciseSolverController extends CodeRunnerControllerBase 
             })
             this.manualTests=procesedResults.tests;
             this.autoTests=procesedResults.autoTests;
-
+            this.updateSubmitAcces();
         
     }
+    public updateSubmitAcces() {
+        this.isSolved = this.validateAllTests()
+      }
+    
+  private validateAllTests(): boolean {
+    if (Object.values(this.manualTests).length == 0) return false
+    console.log(
+      '---isSolved values: ' + JSON.stringify(this.manualTests)
+    )
+
+
+
+      for (const test of this.manualTests) {
+        console.log('test: ' + JSON.stringify(test))
+        if (test.isSolved !== true) {
+          console.log('false')
+          return false 
+        }
+      }
+      for (const test of this.autoTests) {
+        console.log('test: ' + JSON.stringify(test))
+        if (test.isSolved !== true) {
+          console.log('false')
+          return false 
+        }
+      }
+    
+
+    console.log('TRUe')
+    return true
+  }
 
 }

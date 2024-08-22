@@ -107,26 +107,33 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
   }
 
   private validateAllTests(): boolean {
-    // if (Object.values(this.manualTestsSolutions).length == 0) return false
-    // console.log(
-    //   '---isSolved values: ' + JSON.stringify(this.manualTestsSolutions)
-    // )
-    // console.log(
-    //   '---isSolved values amont: : ' +
-    //     Object.values(this.manualTestsSolutions).length +
-    //     ' : ' +
-    //     JSON.stringify(Object.values(this.manualTestsSolutions))
-    // )
+    if (Object.values(this.manualTestsSolutions).length == 0) return false
+    console.log(
+      '---isSolved values: ' + JSON.stringify(this.manualTestsSolutions)
+    )
+    console.log(
+      '---isSolved values amont: : ' +
+        Object.values(this.manualTestsSolutions).length +
+        ' : ' +
+        JSON.stringify(Object.values(this.manualTestsSolutions))
+    )
 
-    // for (const tests of Object.values(this.manualTestsSolutions)) {
-    //   for (const test of tests) {
-    //     console.log('test: ' + JSON.stringify(test))
-    //     if (test.isSolved !== true) {
-    //       console.log('false')
-    //       return false // Exit the outer function early
-    //     }
-    //   }
-    // }
+    for (const tests of Object.values(this.manualTestsSolutions)) {
+      for (const test of tests.tests) {
+        console.log('test: ' + JSON.stringify(test))
+        if (test.isSolved !== true) {
+          console.log('false')
+          return false 
+        }
+      }
+      for (const test of tests.autoTests) {
+        console.log('test: ' + JSON.stringify(test))
+        if (test.isSolved !== true) {
+          console.log('false')
+          return false 
+        }
+      }
+    }
 
     console.log('TRUe')
     return true

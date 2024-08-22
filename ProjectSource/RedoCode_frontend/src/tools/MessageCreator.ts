@@ -106,7 +106,7 @@ namespace MessageCreator {
 
   export function createExercsieIdToRunMessage(exerciseSolverController: ExerciseSolverController):ExerciseIdToRunMessage {
     const exerciseIdToRunMessage:ExerciseIdToRunMessage={
-      code: exerciseSolverController.solution,
+      code: exerciseSolverController.solution==undefined?"":exerciseSolverController.solution,
       exercise_id: exerciseSolverController.id
     }
    return exerciseIdToRunMessage;

@@ -85,6 +85,17 @@ class CodeRunnerSender {
       )
   }
 
+  
+  runExercsieIdValidationCode(exerciseSolverController: ExerciseSolverController){
+    const exerciseIdToRunMessage: ExerciseIdToRunMessage =
+    MessageCreator.createExercsieIdToRunMessage(
+      exerciseSolverController
+    )
+    this._stompApiSender.runExercsieIdValidationCode(
+      exerciseIdToRunMessage
+    )
+  }
+
 
 }
 
