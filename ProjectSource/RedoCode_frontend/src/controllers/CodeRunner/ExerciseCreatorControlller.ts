@@ -31,7 +31,7 @@ export type StringIndexed = {
 }
 export type TestsIndexed = { [key in CodeRunnerType]?: TestsController }
 
-export default class ExerciseCreatorController extends  CodeRunnerControllerBase{
+export default class ExerciseCreatorController extends  CodeRunnerControllerBase implements IExerciseDescriptionI{ 
   //#region data
 
   set languages(newLanguages: CodeRunnerType[]) {
@@ -84,7 +84,7 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
       (this.numberInput = true),
       (this.specialCharacterInput = true),
       (this.breakCharacterInupt = true),
-      // (this.languages = []),
+      (this._languages = []),
       (this.xArrayRange = { min: 1, max: 10 }),
       (this.yArrayRange = { min: 1, max: 10 }),
       (this.title = ''),
@@ -99,6 +99,7 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
 
   constructor() {
     super();
+    this.reset();
   }
 
   public updateSubmitAcces() {
@@ -232,7 +233,7 @@ this.manualTestsSolutions[langauge]!.autoTests=processedResults.autoTests;
   }
 
   get ExerciseSetupError() {
-    if (this.languages.length == 0) {
+    if (this.languages!== undefined && this.languages.length == 0) {
       return 'at least one programing lnaguage should be available'
     }
     if (this.timeForTaskMin < 15) {

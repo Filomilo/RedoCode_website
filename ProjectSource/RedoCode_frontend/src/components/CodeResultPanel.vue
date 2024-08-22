@@ -38,9 +38,9 @@
     </div>
 
     <DataResultPanel
-      v-if="manualTestArray"
+      v-if="manualTestArray && Array.isArray(manualTestArray)"
       :ManualTests="manualTestArray"
-      :AutoTests="props.AutoTests"
+      :AutoTests="props.AutoTests??[]"
     />
 
     <div

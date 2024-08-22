@@ -2,6 +2,7 @@
   <main class="PlayGroundBase">
 
     <CodeRunnerPanel
+    v-if="codeRunnerStore.exerciseSolverController.manualTests!==undefined"
       :exerciseInfo="codeRunnerStore.exerciseSolverController"
       :languageChoices="codeRunnerStore.exerciseSolverController.languages"
       :starting="codeRunnerStore.exerciseSolverController.startFunction(

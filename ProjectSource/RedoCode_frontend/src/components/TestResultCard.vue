@@ -7,7 +7,7 @@
     </div>
     <div class="testOuputSection">
       <TabView>
-        <TabPanel header="Console" :id="'tab-result-console-' + props.index">
+        <TabPanel header="Console" :pt="{id: 'tab-result-console-' + props.index}">
           <div style="overflow: scroll">
             <div
               class="ConsoleResultConsoleCOntainerText"

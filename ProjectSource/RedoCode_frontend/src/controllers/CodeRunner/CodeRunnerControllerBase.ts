@@ -6,7 +6,7 @@ export default abstract class CodeRunnerControllerBase{
     protected _languages: CodeRunnerType[]=[]
 
     get languages(): CodeRunnerType[] {
-      return this._languages
+      return this._languages??[];
     }
 
     public constructor()
