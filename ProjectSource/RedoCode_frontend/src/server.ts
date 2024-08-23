@@ -156,7 +156,7 @@ export function makeServer({ environment = 'development' } = {}) {
     inputType: "SINGLE_INTEGER",
     id: 1,
     title: 'Fibonacci',
-    description:
+    desc:
       'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
     outputType: "ARRAY_OF_INTEGERS",
     availbleCodeRunners: [CodeRunnerType.JS_RUNNER, CodeRunnerType.CPP_RUNNER],

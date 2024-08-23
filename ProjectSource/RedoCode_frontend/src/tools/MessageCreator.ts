@@ -79,7 +79,7 @@ namespace MessageCreator {
 
     const exercsieCreatorValidationMesage: ExercsieCreatorValidationMesage = {
       title: exerciseCreatorController.title,
-      description: exerciseCreatorController.description,
+      description: exerciseCreatorController.desc,
       ram: exerciseCreatorController.ram,
       inputType: exerciseCreatorController.inputType,
       outputType: exerciseCreatorController.outputType,

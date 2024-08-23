@@ -29,9 +29,9 @@
 
   const desc = computed(() =>{
     console.log("IExerciseDescriptionI: "+ JSON.stringify(props.exerciseInfo))
-    if(props.exerciseInfo.description==undefined)
+    if(props.exerciseInfo.desc==undefined)
     return "";
-    return props.exerciseInfo.description.replace('\n', '<br>')}
+    return props.exerciseInfo.desc.replace('\n', '<br>')}
   )
 
   const mdSrc = `# tile
