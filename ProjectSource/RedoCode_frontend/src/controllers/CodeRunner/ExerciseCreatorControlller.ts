@@ -90,7 +90,7 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
       (this.xArrayRange = { min: 1, max: 10 }),
       (this.yArrayRange = { min: 1, max: 10 }),
       (this.title = ''),
-      (this.description = ''),
+      (this.desc = ''),
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
     ;(this.solutionCodes = {}),
