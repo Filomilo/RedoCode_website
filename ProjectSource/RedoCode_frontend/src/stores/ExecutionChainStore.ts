@@ -42,7 +42,7 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
 
   const updateStatus = async (update: ExecutionResponseStatusUpdate) => {
     console.log('CHAIN  udpate:' + JSON.stringify(update))
-    await waitForScheme(update.stepUpdate, 1000)
+    await waitForScheme(update.stepUpdate, 10000)
       .then(() => {
         executionChain.value[update.stepUpdate].processingMessage =
           update.message
