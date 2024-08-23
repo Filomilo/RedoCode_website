@@ -38,7 +38,12 @@ export function moveToEndOfCodeRunner()
 {
     if(Cypress.platform==='linux')
     cy.wait(1000);
-    cy.get(codeEditorSequance).type('{moveToEnd}', { force: true }) 
+    cy.get(codeEditorSequance).focus();
+    cy.get(codeEditorSequance).type('{moveToEnd}', { force: true }).debug(); 
+    cy.get(codeEditorSequance).type('{moveToEnd}', { force: true }).debug(); 
+    cy.wait(100);
+    cy.get(codeEditorSequance).type('{moveToEnd}', { force: true }).debug(); 
+
 }
 
 
