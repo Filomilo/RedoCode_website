@@ -68,7 +68,7 @@ VALUES (1, DEFAULT, '0', '1'),
        (1, DEFAULT, '3', '5'),
        (1, DEFAULT, '5', '6'),
        (1, DEFAULT, '8', '7');
-INSERT INTO public.solution_programs (id, excersize, language_id, code)
+INSERT INTO public.solution_programs (id, excersize, language_id, code,Avg_execution_time)
 VALUES
 (
            DEFAULT,
@@ -87,7 +87,8 @@ for(int i=2;i<val;i++)
         arr[i]=arr[i-1]+arr[i-2];
 }
     return arr[val-1];
-}'
+}',
+ 1000
 ),
 (
     DEFAULT,
@@ -104,7 +105,8 @@ for (let i = 2; i < val; i++) {
         arr[i] = arr[i - 1] + arr[i - 2];
 }
     return arr[val - 1];
-}'
+}',
+ 1000
 )
 
 ;

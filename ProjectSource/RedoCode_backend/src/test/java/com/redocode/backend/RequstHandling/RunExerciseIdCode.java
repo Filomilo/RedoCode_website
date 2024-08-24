@@ -65,6 +65,7 @@ class RunExerciseIdCode {
                 programmingLanguageRepository.findByName(
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
+                .AvgExecutionTime(100L)
             .build());
     solutionProgramsRepository.save(
         SolutionPrograms.builder()
@@ -73,6 +74,7 @@ class RunExerciseIdCode {
                 programmingLanguageRepository.findByName(
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
                         CODE_RUNNER_TYPE.JS_RUNNER)))
+                .AvgExecutionTime(100L)
             .excersize(excersize)
             .build());
   }

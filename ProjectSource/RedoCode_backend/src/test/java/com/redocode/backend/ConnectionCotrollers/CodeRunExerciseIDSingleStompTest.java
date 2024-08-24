@@ -60,6 +60,7 @@ public class CodeRunExerciseIDSingleStompTest extends WebSocketTestBase {
       ConsoleOutput consoleOutput;
       int variables;
       int variablesInput;
+      Long executionTime;
     }
 
     List<MockingMessageAnwserPart> results;
