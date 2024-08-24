@@ -68,6 +68,7 @@
             :ManualTests="props.ManualTests"
             :AutoTests="props.AutoTests"
             :SubmitAccess="props.SubmitAccess"
+            :ExecutionTime="props.ExecutionTime"
           />
         </SplitterPanel>
       </Splitter>
@@ -138,6 +139,7 @@
     },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
     SubmitAccess: { type: Boolean, required: false },
+    ExecutionTime:{type: Number, required: false}
   })
   //#endregion
 

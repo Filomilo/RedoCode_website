@@ -27,7 +27,7 @@ export default abstract class CodeRunnerControllerBase {
         testGroup.tests[i].errorOutput = results[i].consoleOutput.errorOutput
         testGroup.tests[i].output = results[i].variables
         testGroup.tests[i].isSolved =
-          testGroup.tests[i].expectedOutput === testGroup.tests[i].output
+        testGroup.tests[i].expectedOutput === testGroup.tests[i].output
       } else {
         console.log('i: ' + i + '::::' + JSON.stringify(testGroup.tests))
         testGroup.autoTests.push({
@@ -38,6 +38,7 @@ export default abstract class CodeRunnerControllerBase {
           consoleOutput: results[i].consoleOutput.output,
           isSolved: results[i].consoleOutput.errorOutput === '',
           uuid: '',
+          executionTime: results[i].executionTime
         })
       }
     }
