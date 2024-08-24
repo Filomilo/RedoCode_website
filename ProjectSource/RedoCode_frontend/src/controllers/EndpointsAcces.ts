@@ -1,8 +1,9 @@
+import ExcerciseDataMessage from '@/types/ApiMesseages/ExcerciseDataMessage'
 import CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import axios from 'axios'
-namespace EnpointAcces {
+namespace EndpointAcces {
   export async function getCodeRunnerState(
     token: string
   ): Promise<CoderunnerState> {
@@ -26,6 +27,35 @@ namespace EnpointAcces {
       }
     }
   }
+
+
+
+
+  export async function getExerciseData(
+    exercsieId: number
+  ): Promise<ExcerciseDataMessage> {
+      const params={
+        id: exercsieId
+      }
+      const response = await axios.get('/public/exercises/data', {params: params})
+      console.log('/public/exercises/data Response:', response)
+      if (
+        response === undefined ||
+        response.data === '' ||
+        response.headers['Content-Length'] == 0
+      )
+        throw 'no exercise data retrived '
+
+        return response.data;
+
+      }
+
+
+      
+
+
+
+
 }
 
-export default EnpointAcces
+export default EndpointAcces

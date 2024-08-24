@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 
 <template>
+  <div class="PlayGroundBase">
   <Dialog
     :visible="false"
     modal
@@ -37,7 +38,7 @@
       codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
       codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
     "
-    class="heightLimit"
+    class="heightLimit widthLimit"
   >
     <Splitter style="max-height: 100%">
       <SplitterPanel
@@ -77,6 +78,7 @@
       :languageChoicesSelection="props.languageChoices"
     />
   </div>
+</div>
 </template>
 
 <script lang="ts" setup>
@@ -146,7 +148,7 @@
   const tryingToEstablishConnection: Ref<boolean> = ref(false)
   const establishedConnection: Ref<boolean> = ref(false)
   const VmAcces: Ref<boolean> = ref(false)
-  const chosenLangague: Ref<codeRunnerType> = ref(props.languageChoices[0])
+  const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
   const code: Ref<string> = ref('Write Code')
   const resultData = ref(basicResultTemplate)
 
@@ -222,9 +224,12 @@
 </script>
 
 <style>
-  .heightLimit {
-    max-height: 100%;
-    height: 100%;
-  }
+.heightLimit {
+  max-height: 100%;
+  height: 100%;
+}
+.widthLimit {
+  max-width: 100%;
+  width: 100%;
+}
 </style>
-../controllers/StompApiConnection

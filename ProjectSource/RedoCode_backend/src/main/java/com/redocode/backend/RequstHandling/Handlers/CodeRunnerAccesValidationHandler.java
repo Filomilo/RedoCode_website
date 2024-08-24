@@ -27,6 +27,26 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
     return "Validating access to coderunner";
   }
 
+
+  boolean validateCodeRunner(RequestBase request)
+  {
+    ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
+
+    CodeRunner currentCodeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
+    if (codeRunnerRequest.getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED
+            && currentCodeRunner != null) {
+      return true;
+    }
+
+    if (currentCodeRunner != null
+            && currentCodeRunner.getType() == ((ICodeRunnerRequest) request).getCodeRunnerType()
+            && currentCodeRunner.getRamMb() == ((ICodeRunnerRequest) request).getRam()) {
+      return true;
+    }
+    return false;
+  }
+
+
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
     if (!(request instanceof ICodeRunnerRequest)) {
@@ -43,35 +63,28 @@ public class CodeRunnerAccesValidationHandler extends MessageRequestHandler {
         "CodeRunnerAccesValidationHandler hadnling: " + request + " from " + request.getUser());
     CodeRunner currentCodeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
 
-    if (codeRunnerRequest.getCodeRunnerType() == CODE_RUNNER_TYPE.UNIDENTIFIED
-        && currentCodeRunner != null) {
-      return request;
+    if(!validateCodeRunner(request))
+    {
+      codeRunnersController.requestVm(
+              CodeRunnerRequest.builder()
+                      .codeRunnerType(((ICodeRunnerRequest) request).getCodeRunnerType())
+                      .user(request.getUser())
+                      .ram(((ICodeRunnerRequest) request).getRam())
+                      .build());
     }
 
-    if (currentCodeRunner != null
-        && currentCodeRunner.getType() == ((ICodeRunnerRequest) request).getCodeRunnerType()
-        && currentCodeRunner.getRamMb() == ((ICodeRunnerRequest) request).getRam()) {
-      return request;
-    }
 
-    codeRunnersController.requestVm(
-        CodeRunnerRequest.builder()
-            .codeRunnerType(((ICodeRunnerRequest) request).getCodeRunnerType())
-            .user(request.getUser())
-            .ram(((ICodeRunnerRequest) request).getRam())
-            .build());
-    CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-    log.info("code unner: " + codeRunner);
-    CodeRunner userCodeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
 
-    if (userCodeRunner != null
-        && userCodeRunner.getType() == codeRunnerRequest.getCodeRunnerType()
-        && codeRunner.getStatus() == VmStatus.RUNNING_MACHINE) {
+
+
+
+    if (validateCodeRunner(request))
+    {
       log.info("CodeRunnerAccesValidationHandler: succses");
       this.nodeUpdate(
-          request,
-          "Validated access to " + codeRunnerRequest.getCodeRunnerType(),
-          ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+              request,
+              "Validated access to " + codeRunnerRequest.getCodeRunnerType(),
+              ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
       return request;
     } else {

@@ -1,4 +1,4 @@
 export default interface IExerciseDescriptionI {
   title: string
-  description: string
+  desc: string
 }

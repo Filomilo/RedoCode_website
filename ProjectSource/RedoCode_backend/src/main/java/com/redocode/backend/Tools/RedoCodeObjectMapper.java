@@ -18,6 +18,9 @@ import lombok.SneakyThrows;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.JS_RUNNER;
+import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.UNIDENTIFIED;
+
 public class RedoCodeObjectMapper {
   public static ObjectMapper mapper = new ObjectMapper();
 
@@ -135,6 +138,14 @@ public class RedoCodeObjectMapper {
       case CPP_RUNNER -> "cpp";
       case JS_RUNNER -> "js";
       case UNIDENTIFIED -> "";
+    };
+  }
+
+  public static CODE_RUNNER_TYPE  LanguageNameToCodeRunner(String languageName) {
+    return switch (languageName) {
+      case "cpp"-> CODE_RUNNER_TYPE.CPP_RUNNER;
+      case  "js" -> JS_RUNNER;
+      default ->  UNIDENTIFIED;
     };
   }
 

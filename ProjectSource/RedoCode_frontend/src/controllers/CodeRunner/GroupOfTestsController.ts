@@ -4,7 +4,7 @@ import VarType, {
   isTypeArray,
   isTypeDoubleArray,
   isTypeSingle,
-  isTypeString,
+  isTypeString
 } from '@/types/VarType'
 import { randomUUID } from 'crypto'
 //#endregion

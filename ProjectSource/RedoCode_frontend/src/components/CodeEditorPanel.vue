@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  choces:
-  {{ JSON.stringify(props.languageChoices) }}
+
+<div  class="CodeEditorContainer" style="display:contents;">
   <ConfirmDialog></ConfirmDialog>
   <div class="CodeEditorPanelSetting">
     <Dropdown
@@ -34,7 +34,7 @@
   </div>
   <div class="CodeEditorContainer">
     <vue-monaco-editor
-      style="width: 100%; height: 100%"
+      style="width: 100%; height: 100%; max=width:100%"
       v-model:value="codeRef"
       theme="vs-dark"
       :options="MONACO_EDITOR_OPTIONS"
@@ -49,6 +49,7 @@
       id="coderunner-editor-panel"
     />
   </div>
+</div>
 </template>
 
 <script lang="ts" setup>
@@ -170,3 +171,14 @@
     props.onRunCode()
   }
 </script>
+
+
+<style lang="scss">
+.main{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+</style>

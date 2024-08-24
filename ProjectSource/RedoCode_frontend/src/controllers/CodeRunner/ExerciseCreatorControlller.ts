@@ -1,6 +1,6 @@
 import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
 import ExerciseTest from '@/types/ExcericseTest'
-import ExerciseData from '@/types/ExerciseData'
+import ExerciseData from '@/types/ApiMesseages/ExcerciseDataMessage'
 import ExerciseParametersType from '@/types/ExerciseParametersType'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 import ITestParameters from '@/types/ITestParameters'
@@ -24,28 +24,26 @@ import VarType, {
 } from '@/types/VarType'
 import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
 import ProgramResult from '@/types/ProgramResults'
+import CodeRunnerControllerBase from './CodeRunnerControllerBase'
 
 export type StringIndexed = {
   [key in CodeRunnerType]?: string
 }
 export type TestsIndexed = { [key in CodeRunnerType]?: TestsController }
 
-export default class ExerciseCreatorController {
+export default class ExerciseCreatorController extends  CodeRunnerControllerBase implements IExerciseDescriptionI{ 
   //#region data
-
-  private _languages!: CodeRunnerType[]
-
-  get languages(): CodeRunnerType[] {
-    return this._languages
+  get languages() {
+    return this._languages;
   }
-
   set languages(newLanguages: CodeRunnerType[]) {
     this._languages = newLanguages
     this.updateTestsFields()
   }
 
+
   title!: string
-  description!: string
+  desc!: string
 
   ram!: number
   timeForTaskMin!: number
@@ -73,8 +71,9 @@ export default class ExerciseCreatorController {
 
   //#region
 
-  resetParams(this: any): void {
-    ;(this.ram = 128),
+  reset(this: any): void {
+    console.log("creator reset");
+    (this.ram = 128),
       (this.timeForTaskMin = 15),
       (this.timeForExecutionMs = 100),
       (this.inputType = 'SINGLE_INTEGER' as VarType),
@@ -87,20 +86,22 @@ export default class ExerciseCreatorController {
       (this.numberInput = true),
       (this.specialCharacterInput = true),
       (this.breakCharacterInupt = true),
-      (this.languages = []),
+      (this._languages = []),
       (this.xArrayRange = { min: 1, max: 10 }),
       (this.yArrayRange = { min: 1, max: 10 }),
-      (this.title = 'TESTESTTEST'),
-      (this.description = 'DEscritptionDescription'),
+      (this.title = ''),
+      (this.desc = ''),
       (this.lengthRange = { min: 1, max: 10 }),
       (this.spaceInupt = false)
     ;(this.solutionCodes = {}),
       (this.manualTestsSolutions = {} as TestsIndexed),
       (this.executionTime = 100)
+      console.log("this.languages: "+ JSON.stringify (this.languages))
   }
 
   constructor() {
-    this.resetParams()
+    super();
+    this.reset();
   }
 
   public updateSubmitAcces() {
@@ -108,26 +109,33 @@ export default class ExerciseCreatorController {
   }
 
   private validateAllTests(): boolean {
-    // if (Object.values(this.manualTestsSolutions).length == 0) return false
-    // console.log(
-    //   '---isSolved values: ' + JSON.stringify(this.manualTestsSolutions)
-    // )
-    // console.log(
-    //   '---isSolved values amont: : ' +
-    //     Object.values(this.manualTestsSolutions).length +
-    //     ' : ' +
-    //     JSON.stringify(Object.values(this.manualTestsSolutions))
-    // )
+    if (Object.values(this.manualTestsSolutions).length == 0) return false
+    console.log(
+      '---isSolved values: ' + JSON.stringify(this.manualTestsSolutions)
+    )
+    console.log(
+      '---isSolved values amont: : ' +
+        Object.values(this.manualTestsSolutions).length +
+        ' : ' +
+        JSON.stringify(Object.values(this.manualTestsSolutions))
+    )
 
-    // for (const tests of Object.values(this.manualTestsSolutions)) {
-    //   for (const test of tests) {
-    //     console.log('test: ' + JSON.stringify(test))
-    //     if (test.isSolved !== true) {
-    //       console.log('false')
-    //       return false // Exit the outer function early
-    //     }
-    //   }
-    // }
+    for (const tests of Object.values(this.manualTestsSolutions)) {
+      for (const test of tests.tests) {
+        console.log('test: ' + JSON.stringify(test))
+        if (test.isSolved !== true) {
+          console.log('false')
+          return false 
+        }
+      }
+      for (const test of tests.autoTests) {
+        console.log('test: ' + JSON.stringify(test))
+        if (test.isSolved !== true) {
+          console.log('false')
+          return false 
+        }
+      }
+    }
 
     console.log('TRUe')
     return true
@@ -136,11 +144,11 @@ export default class ExerciseCreatorController {
   //#region
 
   private getAmountOfLanguages(): number {
-    return this.languages.length
+    return this._languages.length
   }
 
   private getSingleCodeRunnerKey(): CodeRunnerType {
-    return this.languages[0]
+    return this._languages[0]
   }
 
   //#endregion
@@ -157,7 +165,7 @@ export default class ExerciseCreatorController {
 
   private updateTestsFields() {
     this.manualTestsSolutions = {}
-    this.languages.forEach((x: CodeRunnerType) => {
+    this._languages.forEach((x: CodeRunnerType) => {
       this.manualTestsSolutions[x] = new TestsController()
     })
     console.log(
@@ -217,56 +225,24 @@ export default class ExerciseCreatorController {
     })
   }
 
-  // private updateCreationTestData(reuslts: ProgramResult[])  {
-  //   console.log(
-  //     '----updateTestData: ' +
-  //       JSON.stringify(
-  //         this.manualTestsSolutions[
-  //           apiConnectionStore.codeRunnerConnection.codeRunnerState
-  //             .codeRunnerType
-  //         ]
-  //       )
-  //   )
-
   public updateTests(results: ProgramResult[], langauge: CodeRunnerType) {
     console.log('create test rtesult update: ' + JSON.stringify(results))
-    this.manualTestsSolutions[langauge]!.autoTests = []
-    for (let i = 0; i < results.length; i++) {
-      if (i < this.manualTestsSolutions[langauge]!.tests.length) {
-        this.manualTestsSolutions[langauge]!.tests[i].consoleOutput =
-          results[i].consoleOutput.output
-        this.manualTestsSolutions[langauge]!.tests[i].errorOutput =
-          results[i].consoleOutput.errorOutput
-        this.manualTestsSolutions[langauge]!.tests[i].output =
-          results[i].variables
-        this.manualTestsSolutions[langauge]!.tests[i].isSolved =
-          this.manualTestsSolutions[langauge]!.tests[i].expectedOutput ===
-          this.manualTestsSolutions[langauge]!.tests[i].output
-      } else {
-        console.log(
-          'i: ' +
-            i +
-            '::::' +
-            JSON.stringify(this.manualTestsSolutions[langauge]!.autoTests)
-        )
-        this.manualTestsSolutions[langauge]!.autoTests.push({
-          input: results[i].variablesInput!,
-          output: results[i].variables,
-          expectedOutput: null,
-          errorOutput: results[i].consoleOutput.errorOutput,
-          consoleOutput: results[i].consoleOutput.output,
-          isSolved: results[i].consoleOutput.errorOutput === '',
-          uuid: '',
-        })
+   const processedResults= this.processCodeResultLoad(results,
+      {
+        tests: this.manualTestsSolutions[langauge]!.tests,
+        autoTests:this.manualTestsSolutions[langauge]!.autoTests
       }
-    }
+      )
+
+this.manualTestsSolutions[langauge]!.tests=processedResults.tests;
+this.manualTestsSolutions[langauge]!.autoTests=processedResults.autoTests;
 
     // this.updateCreationTestData(results.results)
     this.updateSubmitAcces()
   }
 
   get ExerciseSetupError() {
-    if (this.languages.length == 0) {
+    if (this.languages!== undefined && this.languages.length == 0) {
       return 'at least one programing lnaguage should be available'
     }
     if (this.timeForTaskMin < 15) {

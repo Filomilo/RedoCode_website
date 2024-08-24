@@ -1,24 +1,80 @@
+import CodeRunnerPanel from "./helpers/CodeRunnerPanel"
+import ExecutionChain from "./helpers/ExecutionChain"
+import ExercisesPage from "./helpers/ExercisesPage"
+import SwitcherControls from "./helpers/SwitcherControls"
+import UrlControls from "./helpers/UrlControls"
+
 describe('Phibonachi new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-    cy.visit('/')
-    cy.get('#switch-exercises').click()
-    cy.url().should('eq', Cypress.config().baseUrl + '/Exercises')
-    cy.get('#try_exercise-button-1').click()
-    cy.url().should('eq', Cypress.config().baseUrl + '/Exercises/1')
-    cy.get('#coderunner-dropdown').click()
-    cy.get('#coderunner-dropdown_0').click()
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000)
-    cy.get('.p-button-label').click()
-    cy.get(
-      'html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div.heightLimit div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContianer div.EngineStatusPanel div.EngineStatusStatus'
-    ).contains('ACTIVE')
-    cy.get(
-      'html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div.heightLimit div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeEditorContainer div div div.monaco-editor.no-user-select.showUnused.showDeprecated.vs-dark div.overflow-guard div.monaco-scrollable-element.editor-scrollable.vs-dark div.lines-content.monaco-editor-background div.view-lines.monaco-mouse-cursor-text div.view-line'
-    ).type("console.log('Hello World!')")
+
+    const cppSolution=`int solution(int val)
+    {
+        int* arr=new int[val];
+    
+    if(val>=0)
+      arr[0]=0;
+    if (val>=2)
+       arr[1]=1;
+    for(int i=2;i<val;i++)
+        {
+            arr[i]=arr[i-1]+arr[i-2];
+    }
+        return arr[val-1];
+    }`;
+
+
+    const executionChainTemplate: ExecutionChain.ChainNodeType[]=[
+      {
+        correct: true,
+        desc: "Data loaded"
+      },
+      {
+        correct: true,
+        desc: "Validated access to CPP_RUNNER"
+      },
+      {
+        correct: true,
+        desc: "generated"
+      },
+      {
+        correct: true,
+        desc: "solved"
+      },
+      {
+        correct: true,
+        desc: "correct CPP_RUNNER tests"
+      },
+      {
+        correct: true,
+        desc: "Saved solution"
+      }
+    ]
+
+    UrlControls.startPage();
+    SwitcherControls.switchExercises();
+    ExercisesPage.openExerciseOfName("fibonachi sequance")
+    ExercisesPage.shouldBeOnUrlOfExerciseId(1)
+    CodeRunnerPanel.selectInitialLanguage("cpp")
+    CodeRunnerPanel.stateShouldBe('ACTIVE')
+    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain("int solution(int x){")
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
+    CodeRunnerPanel.information.nameShould("fibonachi sequance")
+    CodeRunnerPanel.information.descriptionShouldBe("Create funciton that returns number at point of fibocnahi squnace so 1->0 2->1 3->1 4->2 5->3 and do on")
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner("test");
+    CodeRunnerPanel.shouldSubmitAccess(false)
+    CodeRunnerPanel.run();
+    CodeRunnerPanel.Tests.shouldAllTestFail(1);
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner();
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution)
+    CodeRunnerPanel.run();
+    CodeRunnerPanel.Tests.shouldAllTesCorrect(7)
+    CodeRunnerPanel.submit()
+    ExecutionChain.checkSuccses(executionChainTemplate)
+    ExecutionChain.close();
+    
   })
 })
 

@@ -16,7 +16,6 @@
 <script setup lang="ts">
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { computed } from 'vue'
-  import ExerciseData from '@/types/ExerciseData'
   import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
 
   const props = defineProps({
@@ -28,8 +27,11 @@
 
   const codeRunnerStore = useCodeRunnerStore()
 
-  const desc = computed(() =>
-    props.exerciseInfo.description.replace('\n', '<br>')
+  const desc = computed(() =>{
+    console.log("IExerciseDescriptionI: "+ JSON.stringify(props.exerciseInfo))
+    if(props.exerciseInfo.desc==undefined)
+    return "";
+    return props.exerciseInfo.desc.replace('\n', '<br>')}
   )
 
   const mdSrc = `# tile

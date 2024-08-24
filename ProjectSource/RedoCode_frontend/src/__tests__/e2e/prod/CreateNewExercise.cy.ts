@@ -1,4 +1,11 @@
-import CodeRunnerInput from "./helpers/CodeRunnerInput"
+
+import CodeRunnerPanel from "./helpers/CodeRunnerPanel"
+import CreatePanel from "./helpers/CreatePanel"
+import ExecutionChain from "./helpers/ExecutionChain"
+import ExercisesPage from "./helpers/ExercisesPage"
+import SwitcherControls from "./helpers/SwitcherControls"
+import UrlControls from "./helpers/UrlControls"
+import UserAuthentication from "./helpers/UserAuthentication"
 
 describe('Create new exercise', () => {
   it('passes', () => {
@@ -11,13 +18,6 @@ describe('Create new exercise', () => {
     const title = 'Cesar cipher'
     const description =
       'move every letter in alphabet by 7 so a -> d and z - g, lower case and upper case letters should be handled'
-
-
-
-    // for (let index = 0; index < 100; index++) {
-    //   backspaces+="{delete}";
-
-    // }
 
     const cppSolution =
       '#include <iostream>\n' +
@@ -85,170 +85,91 @@ describe('Create new exercise', () => {
       },
     ]
 
-    cy.visit('/')
-    cy.get('#login-email').clear()
-    cy.get('#login-email').type(email)
-    cy.get('#login-password').clear()
-    cy.get('#login-password').type(password)
-    cy.get('#login').click()
-    cy.get('.p-toast-detail')
-      .contains('Succesfully logged in')
-      .should('be.visible')
-    cy.get('.p-toast-detail').should('not.exist')
-    cy.get('#switch-exercises').click()
-    cy.url().should('eq', Cypress.config().baseUrl + '/Exercises')
-    cy.get('#Create-button').click()
-    cy.url().should('eq', Cypress.config().baseUrl + '/Create')
-    cy.get('.p-toast-detail')
-      .contains('successfully connected')
-      .should('be.visible')
-    cy.get('.p-toast-detail').should('not.exist')
-    cy.get('#Exercise-title-input').click()
-    cy.get('#Exercise-title-input').clear()
-    cy.get('#Exercise-description-input').click()
-    cy.get('#Exercise-description-input').clear()
-    cy.get('#ContentConatiner span')
-      .contains('Setup')
-      .closest('.p-tabview-nav-link')
-      .should('have.attr', 'aria-disabled', 'true')
-    cy.get('#Exercise-title-input').click()
-    cy.get('#Exercise-title-input').type(title)
-    cy.get('#Exercise-description-input').click()
-    cy.get('#Exercise-description-input').clear()
-    cy.get('#Exercise-description-input').type(description)
-    cy.get('#ContentConatiner span')
-      .contains('Setup')
-      .closest('.p-tabview-nav-link')
-      .should('have.attr', 'aria-disabled', 'false')
-      .click()
 
-    //exercise test panel setup
-    cy.get('#language-selection').click()
-    cy.get('#language-selection_0').click()
-    cy.get('#language-selection_1').click()
-    cy.get('#ms-number-input').click()
-    cy.get('#ms-number-input').type('222')
-    cy.get('#hour-number-input').click()
-    cy.get('#hour-number-input').type('1')
-    cy.get('#minute-number-input').click()
-    cy.get('#minute-number-input').type('22')
-    cy.get('#ram-number-input').click()
-    cy.get('#ram-number-input').type('512')
-    cy.get('#radio-input-string').click()
-    cy.get('#radio-output-string').click()
-    for (let index = 0; index < inputsAndOutputs.length; index++) {
-      cy.get('#add-exercise-button').click()
-      cy.get('#test-input-' + index + '-input').click()
-      cy.get('#test-input-' + index + '-input').clear()
-      cy.get('#test-input-' + index + '-input').type(
-        inputsAndOutputs[index].input
-      )
-      cy.get('#test-input-' + index + '-output').click()
-      cy.get('#test-input-' + index + '-output').clear()
-      cy.get('#test-input-' + index + '-output').type(
-        inputsAndOutputs[index].output
-      )
-    }
-    cy.get('#amount-of-auto-test-input > input').click()
-    cy.get('#amount-of-auto-test-input > input').type('6')
-    cy.get('#string-range-low-input > input').click()
-    cy.get('#string-range-low-input > input').clear()
-    cy.get('#string-range-low-input > input').type('1')
-    cy.get('#string-range-up-input > input').click()
-    cy.get('#string-range-up-input > input').clear()
-    cy.get('#string-range-up-input > input').type('20')
-    cy.get('#number-checkbox').click()
-    cy.get('#special-char-checkbox').click()
-    cy.get('#character-breaks-checkbox').click()
-    cy.get('#ContentConatiner span')
-      .contains('Solution')
-      .closest('.p-tabview-nav-link')
-      .should('have.attr', 'aria-disabled', 'false')
-      .click()
-    cy.get('#coderunner-dropdown').click()
-    cy.get('.p-dropdown-item').contains('js').click()
-    cy.get('#connect-button').click()
+    const stringOptions={
+      UpperCase: true,
+      LowerCase: true,
+      Number: true,
+      SpecialChar: true,
+      breakCharacter: true,
+      spaceCharacter: false
+    };
 
-    // js first half
-    cy.get('#coderunner-loading-dialog').should('not.exist')
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(200)
-    cy.get('#code-preview')
-      .invoke('text')
-      .should('contain', 'function solution(x){')
-      CodeRunnerInput.clearCodeRunner();
-      CodeRunnerInput.inputToCodeRunner(JSfirstHalf)
+    const chainTests=[
+      {
+        correct: true,
+        desc: "Correct user type"
+      },
+      {
+        correct: true,
+        desc: "Correct exercise setup"
+      },
+      {
+        correct: true,
+        desc: "generated"
+      },
+      {
+        correct: true,
+        desc: "prepared tests"
+      },
+      {
+        correct: true,
+        desc: "tests finished correctly"
+      },
+      {
+        correct: true,
+        desc: "saved to database"
+      },
+    ]
+    UrlControls.startPage();
+    UserAuthentication.login(email,password)
+    SwitcherControls.switchExercises();
+    ExercisesPage.gotoCreatePanel();
+    CreatePanel.infoSetup.clearAll();
+    CreatePanel.TestConfig.isTestPanelActive(false)
+    CreatePanel.infoSetup.setTitle(title);
+    CreatePanel.infoSetup.setDescription(description)
+    CreatePanel.TestConfig.isTestPanelActive(true)
+    CreatePanel.TestConfig.switchToTestConfig();
+    CreatePanel.SolutionPanel.isSolutionPanelActive(false);
+    CreatePanel.TestConfig.selectLanguages(["cpp","js"])
+    CreatePanel.TestConfig.setExecutionTime(2000);
+    CreatePanel.TestConfig.setHoursTime(1);
+    CreatePanel.TestConfig.setMinutesTime(22);
+    CreatePanel.TestConfig.setRam(512);
+    CreatePanel.TestConfig.setInputType(CreatePanel.TestConfig.TYPES.STRING,CreatePanel.TestConfig.SIZE.SINGLE);
+    CreatePanel.TestConfig.setOutputType(CreatePanel.TestConfig.TYPES.STRING,CreatePanel.TestConfig.SIZE.SINGLE);
+    CreatePanel.TestConfig.createTests(inputsAndOutputs)
+    CreatePanel.TestConfig.setAmountOfAutoTests(6);
+    CreatePanel.TestConfig.setLengthMin(1)
+    CreatePanel.TestConfig.setLengthMax(20)
+    CreatePanel.TestConfig.setStringInputOptions(stringOptions);
+    CreatePanel.SolutionPanel.isSolutionPanelActive(true);
+    CreatePanel.SolutionPanel.switchToTestSolution();
+    CodeRunnerPanel.selectInitialLanguage("js");
+    CodeRunnerPanel.information.nameShould(title)
+    CodeRunnerPanel.information.descriptionShouldBe(description)
+    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain('function solution(x){')
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner();
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(JSfirstHalf)
+    CodeRunnerPanel.run()
+    CodeRunnerPanel.Tests.shouldAllTestFail(inputsAndOutputs.length)
+    CodeRunnerPanel.switchLanguage("cpp")
+    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain( 'std::string solution(std::string x)')
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner();
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution);
+    CodeRunnerPanel.run();
+    CodeRunnerPanel.Tests.checkTest(inputsAndOutputs)
+    CodeRunnerPanel.switchLanguage("js")
+    CodeRunnerPanel.CodeRunnerInput.moveToEndOfCodeRunner();
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(JSsecondHalf);
+    CodeRunnerPanel.run()
+    CodeRunnerPanel.Tests.checkTest(inputsAndOutputs)
+    CodeRunnerPanel.submit();
+    ExecutionChain.checkSuccses(chainTests)
+    ExecutionChain.close()
+    SwitcherControls.switchExercises()
+    ExercisesPage.shouldBeExerciseOfName(title)
 
-    
-    cy.get('#coderunner-run-button').click()
-    cy.get(
-      '#TestResultCard' + '0' + ' > div.testValidationSection.wrong'
-    ).should('have.text', 'Failed')
-    for (let index = 1; index < inputsAndOutputs.length; index++) {
-      cy.get('#TestResultCard' + index + ' > div.testValidationSection').should(
-        'be.empty'
-      )
-    }
-
-    cy.get('#coderunner-langage-dropdown').click()
-    cy.get('.p-dropdown-item').contains('cpp').click()
-    cy.get('.p-button').contains('span', 'Change').click()
-
-    // cpp run
-    cy.get('#coderunner-loading-dialog').should('not.exist')
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(200)
-    cy.get('#code-preview')
-      .invoke('text')
-      .should('contain', 'std::string solution(std::string x)')
-
-      CodeRunnerInput.clearCodeRunner();
-      CodeRunnerInput.inputToCodeRunner(cppSolution);
-    
-    // cy.get(codeEditorSequance).type(cppSolution, { force: true });
-    cy.get('#coderunner-run-button').click()
-
-    // cy.wait(5000);
-    for (let index = 0; index < inputsAndOutputs.length; index++) {
-      cy.get('#TestResultCard' + index)
-        .contains('span', 'Result')
-        .click()
-      cy.get('#tab-result-expected-container-' + index).contains(
-        'expeteced: "' + inputsAndOutputs[index].output + '"'
-      )
-      cy.get('#tab-result-achived-container-' + index).contains(
-        'achived: "' + inputsAndOutputs[index].output + '"'
-      )
-    }
-
-    cy.get('#coderunner-langage-dropdown').click()
-    cy.get('.p-dropdown-item').contains('js').click()
-    cy.get('.p-button').contains('span', 'Change').click()
-    cy.get('#coderunner-loading-dialog').should('not.exist')
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    CodeRunnerInput.moveToEndOfCodeRunner();
-    CodeRunnerInput.inputToCodeRunner(JSsecondHalf);
-    cy.get('#coderunner-run-button').click()
-
-    for (let index = 0; index < inputsAndOutputs.length; index++) {
-      cy.get('#TestResultCard' + index)
-        .contains('span', 'Result')
-        .click()
-      cy.get('#tab-result-expected-container-' + index).contains(
-        'expeteced: "' + inputsAndOutputs[index].output + '"'
-      )
-      cy.get('#tab-result-achived-container-' + index).contains(
-        'achived: "' + inputsAndOutputs[index].output + '"'
-      )
-    }
-
-    cy.get('#coderunner-submit-button').click()
-    cy.get(
-      'html > div.floatWindowContainer > div > div > div:nth-child(6) > div.p-timeline-event-content > h2'
-    ).contains('saved to database')
-    cy.get('button').contains('Close').click()
-    cy.get('#switch-exercises').click()
-    cy.url().should('eq', Cypress.config().baseUrl + '/Exercises')
-    cy.get('tbody').find('td').contains(title)
   })
 })

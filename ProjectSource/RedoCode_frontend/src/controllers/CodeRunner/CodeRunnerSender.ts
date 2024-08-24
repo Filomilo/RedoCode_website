@@ -8,6 +8,8 @@ import ExerciseCreatorController from './ExerciseCreatorControlller'
 import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
 import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
 import MessageCreator from '@/tools/MessageCreator'
+import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
+import ExerciseIdToRunMessage from '@/types/ApiMesseages/ExerciseIdToRunMessage'
 
 class CodeRunnerSender {
   private _stompApiSender: StompApiSender
@@ -70,6 +72,31 @@ class CodeRunnerSender {
       exercsieCreatorValidationMesage
     )
   }
+
+
+  runExerciseIdCode(exerciseSolverController: ExerciseSolverController)
+  {
+    const exerciseIdToRunMessage: ExerciseIdToRunMessage =
+      MessageCreator.createExercsieIdToRunMessage(
+        exerciseSolverController
+      )
+      this._stompApiSender.runExerciseIdCode(
+        exerciseIdToRunMessage
+      )
+  }
+
+  
+  runExercsieIdValidationCode(exerciseSolverController: ExerciseSolverController){
+    const exerciseIdToRunMessage: ExerciseIdToRunMessage =
+    MessageCreator.createExercsieIdToRunMessage(
+      exerciseSolverController
+    )
+    this._stompApiSender.runExercsieIdValidationCode(
+      exerciseIdToRunMessage
+    )
+  }
+
+
 }
 
 export default CodeRunnerSender

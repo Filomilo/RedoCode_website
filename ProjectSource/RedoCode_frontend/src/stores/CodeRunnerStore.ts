@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed, type Ref, reactive, ComputedRef } from 'vue'
 import type CodeRunnerState from '../types/CodeRunnerState'
-import ExerciseData from '@/types/ExerciseData'
+import ExerciseData from '@/types/ApiMesseages/ExcerciseDataMessage'
 import axios from 'axios'
 import '../interceptors/axios'
 import { languageChoices } from '../config/Data'
@@ -29,6 +29,7 @@ import StompApiSubsciptionContorller from '@/controllers/Stomp/StompApiSubsripti
 import codeRunnerSender from '@/controllers/CodeRunner/CodeRunnerSender'
 import CodeRunnerSender from '@/controllers/CodeRunner/CodeRunnerSender'
 import PlayGroundRunnerCotroller from '@/controllers/CodeRunner/PlayGroundRunnerCotroller'
+import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
 export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const apiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
@@ -43,13 +44,14 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const playGroundRunnerCotroller: PlayGroundRunnerCotroller =
     new PlayGroundRunnerCotroller()
-
+  const exerciseCreatorController = reactive(new ExerciseCreatorController())
+  const exerciseSolverController:Ref< ExerciseSolverController>= ref( new ExerciseSolverController()) as Ref< ExerciseSolverController>
   const playGroundBase: ExerciseData = {
-    inputType: '',
+    inputType:"SINGLE_INTEGER",
     title: '',
-    description: '',
+    desc: '',
     id: null,
-    outputType: '',
+    outputType: 'SINGLE_INTEGER',
     availbleCodeRunners: languageChoices.map(element => element.value),
     tests: [
       {
@@ -81,58 +83,21 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     exerciseLoading.value = state
   }
 
-  const exerciseCreatorController = reactive(new ExerciseCreatorController())
+
+
+
+
 
   const manualTestBuffer: Ref<ExerciseTest[]> = ref([])
 
-  const updateTestData = (reuslts: ProgramResult[]) => {
-    console.log('----updateTestData')
-    exerciseData.value.tests.forEach((val: ExerciseTest, index: number) => {
-      val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
-        ? ''
-        : reuslts[index].consoleOutput.output
-      val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
-        ? ''
-        : reuslts[index].consoleOutput.errorOutput
-      val.output = isNullOrUndef(reuslts[index].variables)
-        ? null
-        : reuslts[index].variables
-      val.isSolved = val.expectedOutput === reuslts[index].variables
-    })
-  }
 
-  //   const test: ExerciseTest[] =
-  //     exerciseCreatorController.manualTestsSolutions[
-  //       apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-  //     ] ?? []
-  //   console.log('tests: ' + test.length + ' : ' + JSON.stringify(test))
-  //   test.forEach((val: ExerciseTest, index: number) => {
-  //     console.log(
-  //       '--Test: val' + JSON.stringify(val) + ' index: ' + JSON.stringify(index)
-  //     )
-
-  //     val.consoleOutput = isNullOrUndef(reuslts[index].consoleOutput.output)
-  //       ? ''
-  //       : reuslts[index].consoleOutput.output
-  //     val.errorOutput = isNullOrUndef(reuslts[index].consoleOutput.errorOutput)
-  //       ? ''
-  //       : reuslts[index].consoleOutput.errorOutput
-  //     val.output = isNullOrUndef(reuslts[index].variables)
-  //       ? null
-  //       : reuslts[index].variables
-  //     val.isSolved = val.expectedOutput === reuslts[index].variables
-  //   })
-
-  //   exerciseCreatorController.manualTestsSolutions[
-  //     apiConnectionStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-  //   ] = test
-  // }
 
   return {
     codeRunnerConnection,
     exerciseCreatorController,
     codeRunnerSender,
     playGroundRunnerCotroller,
+    exerciseSolverController,
     // codeRunnerActive,
     // doesHaveACtiveToCodeRunner,
     // requestCodeRunner,

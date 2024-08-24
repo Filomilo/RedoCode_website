@@ -1,5 +1,6 @@
 <template>
   <div class="DataResultContainer">
+    {{ JSON.stringify(props.AutoTests) }}
     <TestResultCard
       v-for="(item, index) in tests"
       :key="index"
@@ -27,8 +28,10 @@
     },
   })
   const tests = computed(() => {
-    if (props.ManualTests !== undefined && props.AutoTests !== undefined) {
+    if (props.ManualTests !== undefined) {
+      if(props.AutoTests!== undefined)
       return props.ManualTests.concat(props.AutoTests)
+    return props.ManualTests;
     }
     return []
   })
