@@ -28,34 +28,25 @@ namespace EndpointAcces {
     }
   }
 
-
-
-
   export async function getExerciseData(
     exercsieId: number
   ): Promise<ExcerciseDataMessage> {
-      const params={
-        id: exercsieId
-      }
-      const response = await axios.get('/public/exercises/data', {params: params})
-      console.log('/public/exercises/data Response:', response)
-      if (
-        response === undefined ||
-        response.data === '' ||
-        response.headers['Content-Length'] == 0
-      )
-        throw 'no exercise data retrived '
+    const params = {
+      id: exercsieId,
+    }
+    const response = await axios.get('/public/exercises/data', {
+      params: params,
+    })
+    console.log('/public/exercises/data Response:', response)
+    if (
+      response === undefined ||
+      response.data === '' ||
+      response.headers['Content-Length'] == 0
+    )
+      throw 'no exercise data retrived '
 
-        return response.data;
-
-      }
-
-
-      
-
-
-
-
+    return response.data
+  }
 }
 
 export default EndpointAcces

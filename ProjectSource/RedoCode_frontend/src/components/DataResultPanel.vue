@@ -29,9 +29,9 @@
   })
   const tests = computed(() => {
     if (props.ManualTests !== undefined) {
-      if(props.AutoTests!== undefined)
-      return props.ManualTests.concat(props.AutoTests)
-    return props.ManualTests;
+      if (props.AutoTests !== undefined)
+        return props.ManualTests.concat(props.AutoTests)
+      return props.ManualTests
     }
     return []
   })

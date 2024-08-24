@@ -45,9 +45,11 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
   const playGroundRunnerCotroller: PlayGroundRunnerCotroller =
     new PlayGroundRunnerCotroller()
   const exerciseCreatorController = reactive(new ExerciseCreatorController())
-  const exerciseSolverController:Ref< ExerciseSolverController>= ref( new ExerciseSolverController()) as Ref< ExerciseSolverController>
+  const exerciseSolverController: Ref<ExerciseSolverController> = ref(
+    new ExerciseSolverController()
+  ) as Ref<ExerciseSolverController>
   const playGroundBase: ExerciseData = {
-    inputType:"SINGLE_INTEGER",
+    inputType: 'SINGLE_INTEGER',
     title: '',
     desc: '',
     id: null,
@@ -83,14 +85,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     exerciseLoading.value = state
   }
 
-
-
-
-
-
   const manualTestBuffer: Ref<ExerciseTest[]> = ref([])
-
-
 
   return {
     codeRunnerConnection,

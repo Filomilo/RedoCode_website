@@ -104,12 +104,17 @@ namespace MessageCreator {
     return exercsieCreatorValidationMesage
   }
 
-  export function createExercsieIdToRunMessage(exerciseSolverController: ExerciseSolverController):ExerciseIdToRunMessage {
-    const exerciseIdToRunMessage:ExerciseIdToRunMessage={
-      code: exerciseSolverController.solution==undefined?"":exerciseSolverController.solution,
-      exercise_id: exerciseSolverController.id
+  export function createExercsieIdToRunMessage(
+    exerciseSolverController: ExerciseSolverController
+  ): ExerciseIdToRunMessage {
+    const exerciseIdToRunMessage: ExerciseIdToRunMessage = {
+      code:
+        exerciseSolverController.solution == undefined
+          ? ''
+          : exerciseSolverController.solution,
+      exercise_id: exerciseSolverController.id,
     }
-   return exerciseIdToRunMessage;
+    return exerciseIdToRunMessage
   }
 }
 

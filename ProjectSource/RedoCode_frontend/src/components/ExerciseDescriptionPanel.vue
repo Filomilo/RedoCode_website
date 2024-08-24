@@ -27,12 +27,11 @@
 
   const codeRunnerStore = useCodeRunnerStore()
 
-  const desc = computed(() =>{
-    console.log("IExerciseDescriptionI: "+ JSON.stringify(props.exerciseInfo))
-    if(props.exerciseInfo.desc==undefined)
-    return "";
-    return props.exerciseInfo.desc.replace('\n', '<br>')}
-  )
+  const desc = computed(() => {
+    console.log('IExerciseDescriptionI: ' + JSON.stringify(props.exerciseInfo))
+    if (props.exerciseInfo.desc == undefined) return ''
+    return props.exerciseInfo.desc.replace('\n', '<br>')
+  })
 
   const mdSrc = `# tile
         descitpiron of taks, create fibonachi sewaunce`

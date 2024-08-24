@@ -156,7 +156,6 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       apiConnectionStore.stompApiSender.authenticationStomp({
         token: getToken() as string,
       })
-     
     }
     codeRunnerStore.codeRunnerConnection.updateCodeRunner()
   })

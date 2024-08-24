@@ -73,30 +73,19 @@ class CodeRunnerSender {
     )
   }
 
-
-  runExerciseIdCode(exerciseSolverController: ExerciseSolverController)
-  {
+  runExerciseIdCode(exerciseSolverController: ExerciseSolverController) {
     const exerciseIdToRunMessage: ExerciseIdToRunMessage =
-      MessageCreator.createExercsieIdToRunMessage(
-        exerciseSolverController
-      )
-      this._stompApiSender.runExerciseIdCode(
-        exerciseIdToRunMessage
-      )
+      MessageCreator.createExercsieIdToRunMessage(exerciseSolverController)
+    this._stompApiSender.runExerciseIdCode(exerciseIdToRunMessage)
   }
 
-  
-  runExercsieIdValidationCode(exerciseSolverController: ExerciseSolverController){
+  runExercsieIdValidationCode(
+    exerciseSolverController: ExerciseSolverController
+  ) {
     const exerciseIdToRunMessage: ExerciseIdToRunMessage =
-    MessageCreator.createExercsieIdToRunMessage(
-      exerciseSolverController
-    )
-    this._stompApiSender.runExercsieIdValidationCode(
-      exerciseIdToRunMessage
-    )
+      MessageCreator.createExercsieIdToRunMessage(exerciseSolverController)
+    this._stompApiSender.runExercsieIdValidationCode(exerciseIdToRunMessage)
   }
-
-
 }
 
 export default CodeRunnerSender

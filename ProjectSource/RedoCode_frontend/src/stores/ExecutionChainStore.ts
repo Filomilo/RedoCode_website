@@ -9,7 +9,7 @@ import { rejects } from 'assert'
 
 export const useExecutionChainStore = defineStore('executionChainStore', () => {
   const apiConnectionStore = useApiConnectionStore()
-  console.log("test")
+  console.log('test')
   const executionChain: Ref<ChainNodeStatus[]> = ref([])
 
   const loadChainScheme = (scheme: ExecutionChainScheme) => {
@@ -21,9 +21,9 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
   apiConnectionStore.stompApiSubsciptionContorller.addExecutionChainSchemeSubscription(
     loadChainScheme.bind(this)
   )
-  console.log("Execution chain add")
+  console.log('Execution chain add')
   const waitForScheme = (expectedLvl: number, timeout: number) => {
-    console.log("CHAIN waiting for"+ expectedLvl)
+    console.log('CHAIN waiting for' + expectedLvl)
     return new Promise<void>((resolve, reject) => {
       const interval = 50
       const checkArraySize = () => {

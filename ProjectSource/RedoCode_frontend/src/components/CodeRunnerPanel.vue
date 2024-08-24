@@ -2,83 +2,83 @@
 
 <template>
   <div class="PlayGroundBase">
-  <Dialog
-    :visible="false"
-    modal
-    header="Edit Profile"
-    :style="{ width: '25rem' }"
-  >
-    <template #container>
-      <div class="CodeRunnerLoadingPanel" id="data-loading-dialog">
-        <LoadingIndicator />
-        <div>Loading data</div>
-      </div>
-    </template>
-  </Dialog>
-
-  <Dialog
-    :visible="awaiting"
-    modal
-    header="Edit Profile"
-    :style="{ width: '25rem' }"
-  >
-    <template #container>
-      <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
-        <LoadingIndicator />
-        <div>
-          Awiating acces to code runner, plase be patient. Consider Creating and
-          account to have priority in queue
+    <Dialog
+      :visible="false"
+      modal
+      header="Edit Profile"
+      :style="{ width: '25rem' }"
+    >
+      <template #container>
+        <div class="CodeRunnerLoadingPanel" id="data-loading-dialog">
+          <LoadingIndicator />
+          <div>Loading data</div>
         </div>
-      </div>
-    </template>
-  </Dialog>
+      </template>
+    </Dialog>
 
-  <div
-    v-if="
-      codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
-      codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
-    "
-    class="heightLimit widthLimit"
-  >
-    <Splitter style="max-height: 100%">
-      <SplitterPanel
-        v-if="props.exerciseInfo !== undefined"
-        style="width: 5rem"
-        :size="15"
-      >
-        <Splitter layout="vertical" style="">
-          <SplitterPanel style="">
-            <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
-          </SplitterPanel>
-        </Splitter>
-      </SplitterPanel>
+    <Dialog
+      :visible="awaiting"
+      modal
+      header="Edit Profile"
+      :style="{ width: '25rem' }"
+    >
+      <template #container>
+        <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
+          <LoadingIndicator />
+          <div>
+            Awiating acces to code runner, plase be patient. Consider Creating
+            and account to have priority in queue
+          </div>
+        </div>
+      </template>
+    </Dialog>
 
-      <SplitterPanel :size="70" :min-size="40" style="max-width: 100%">
-        <CodeEditor
-          class="CodeEditorContainer"
-          :starting="props.starting"
-          :codeUpdateMethod="props.codeContainerUpdate"
-          :onRunCode="props.onRunCode"
-          :languageChoices="props.languageChoices"
-        />
-      </SplitterPanel>
-      <SplitterPanel :size="15" style="max-width: 100%; width: 5rem">
-        <CodeResultPanel
-          :onSubmit="props.onSubmit"
-          :ManualTests="props.ManualTests"
-          :AutoTests="props.AutoTests"
-          :SubmitAccess="props.SubmitAccess"
-        />
-      </SplitterPanel>
-    </Splitter>
+    <div
+      v-if="
+        codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
+        codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
+      "
+      class="heightLimit widthLimit"
+    >
+      <Splitter style="max-height: 100%">
+        <SplitterPanel
+          v-if="props.exerciseInfo !== undefined"
+          style="width: 5rem"
+          :size="15"
+        >
+          <Splitter layout="vertical" style="">
+            <SplitterPanel style="">
+              <ExerciseDescriptionPanel :exerciseInfo="props.exerciseInfo" />
+            </SplitterPanel>
+          </Splitter>
+        </SplitterPanel>
+
+        <SplitterPanel :size="70" :min-size="40" style="max-width: 100%">
+          <CodeEditor
+            class="CodeEditorContainer"
+            :starting="props.starting"
+            :codeUpdateMethod="props.codeContainerUpdate"
+            :onRunCode="props.onRunCode"
+            :languageChoices="props.languageChoices"
+          />
+        </SplitterPanel>
+        <SplitterPanel :size="15" style="max-width: 100%; width: 5rem">
+          <CodeResultPanel
+            :onSubmit="props.onSubmit"
+            :ManualTests="props.ManualTests"
+            :AutoTests="props.AutoTests"
+            :SubmitAccess="props.SubmitAccess"
+          />
+        </SplitterPanel>
+      </Splitter>
+    </div>
+    <div v-else style="height: 100%">
+      {{ JSON.stringify(props.languageChoices) }}
+      <ConnectToCodeRunnerPanel
+        :languageChoicesSelection="props.languageChoices"
+      />
+    </div>
   </div>
-  <div v-else style="height: 100%">
-    {{ JSON.stringify(props.languageChoices) }}
-    <ConnectToCodeRunnerPanel
-      :languageChoicesSelection="props.languageChoices"
-    />
-  </div>
-</div>
 </template>
 
 <script lang="ts" setup>
@@ -224,12 +224,12 @@
 </script>
 
 <style>
-.heightLimit {
-  max-height: 100%;
-  height: 100%;
-}
-.widthLimit {
-  max-width: 100%;
-  width: 100%;
-}
+  .heightLimit {
+    max-height: 100%;
+    height: 100%;
+  }
+  .widthLimit {
+    max-width: 100%;
+    width: 100%;
+  }
 </style>

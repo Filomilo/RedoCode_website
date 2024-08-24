@@ -1,55 +1,54 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-
-<div  class="CodeEditorContainer" style="display:contents;">
-  <ConfirmDialog></ConfirmDialog>
-  <div class="CodeEditorPanelSetting">
-    <Dropdown
-      :modelValue="
-        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-      "
-      :options="laguageDropDown"
-      placeholder="Select programming langauge"
-      class="dropDown"
-      @change="onChangeLnageugeDropDown"
-      id="coderunner-langage-dropdown"
-      optionLabel="label"
-      optionValue="value"
-    />
-    <div class="CodeEditorDropDownContainer"></div>
-    <div class="CodeEditorPlayButton">
-      <Button @click="codeRunButton" v-if="true" id="coderunner-run-button">
-        <IconPlay style="z-index: 9" />
-      </Button>
-      <div v-else>
-        <LoadingIndicator
-          style="height: 2rem; width: 2rem"
-          id="coderunner-wait-button"
-        />
+  <div class="CodeEditorContainer" style="display: contents">
+    <ConfirmDialog></ConfirmDialog>
+    <div class="CodeEditorPanelSetting">
+      <Dropdown
+        :modelValue="
+          codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+        "
+        :options="laguageDropDown"
+        placeholder="Select programming langauge"
+        class="dropDown"
+        @change="onChangeLnageugeDropDown"
+        id="coderunner-langage-dropdown"
+        optionLabel="label"
+        optionValue="value"
+      />
+      <div class="CodeEditorDropDownContainer"></div>
+      <div class="CodeEditorPlayButton">
+        <Button @click="codeRunButton" v-if="true" id="coderunner-run-button">
+          <IconPlay style="z-index: 9" />
+        </Button>
+        <div v-else>
+          <LoadingIndicator
+            style="height: 2rem; width: 2rem"
+            id="coderunner-wait-button"
+          />
+        </div>
       </div>
     </div>
+    <div style="display: none" id="code-preview">
+      {{ codeRef }}
+    </div>
+    <div class="CodeEditorContainer">
+      <vue-monaco-editor
+        style="width: 100%; height: 100%; max=width: 100%"
+        v-model:value="codeRef"
+        theme="vs-dark"
+        :options="MONACO_EDITOR_OPTIONS"
+        @mount="handleMount"
+        :language="
+          EditorLanguagesMap[
+            codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+          ]
+        "
+        @keyup.ctrl.enter.prevent="onShortCutRun"
+        :onChange="onCodeChnaage"
+        id="coderunner-editor-panel"
+      />
+    </div>
   </div>
-  <div style="display: none" id="code-preview">
-    {{ codeRef }}
-  </div>
-  <div class="CodeEditorContainer">
-    <vue-monaco-editor
-      style="width: 100%; height: 100%; max=width:100%"
-      v-model:value="codeRef"
-      theme="vs-dark"
-      :options="MONACO_EDITOR_OPTIONS"
-      @mount="handleMount"
-      :language="
-        EditorLanguagesMap[
-          codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-        ]
-      "
-      @keyup.ctrl.enter.prevent="onShortCutRun"
-      :onChange="onCodeChnaage"
-      id="coderunner-editor-panel"
-    />
-  </div>
-</div>
 </template>
 
 <script lang="ts" setup>
@@ -172,13 +171,12 @@
   }
 </script>
 
-
 <style lang="scss">
-.main{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-}
+  .main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  }
 </style>

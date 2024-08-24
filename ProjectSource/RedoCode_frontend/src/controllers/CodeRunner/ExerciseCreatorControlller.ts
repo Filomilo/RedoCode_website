@@ -31,16 +31,18 @@ export type StringIndexed = {
 }
 export type TestsIndexed = { [key in CodeRunnerType]?: TestsController }
 
-export default class ExerciseCreatorController extends  CodeRunnerControllerBase implements IExerciseDescriptionI{ 
+export default class ExerciseCreatorController
+  extends CodeRunnerControllerBase
+  implements IExerciseDescriptionI
+{
   //#region data
   get languages() {
-    return this._languages;
+    return this._languages
   }
   set languages(newLanguages: CodeRunnerType[]) {
     this._languages = newLanguages
     this.updateTestsFields()
   }
-
 
   title!: string
   desc!: string
@@ -72,8 +74,8 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
   //#region
 
   reset(this: any): void {
-    console.log("creator reset");
-    (this.ram = 128),
+    console.log('creator reset')
+    ;(this.ram = 128),
       (this.timeForTaskMin = 15),
       (this.timeForExecutionMs = 100),
       (this.inputType = 'SINGLE_INTEGER' as VarType),
@@ -96,12 +98,12 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
     ;(this.solutionCodes = {}),
       (this.manualTestsSolutions = {} as TestsIndexed),
       (this.executionTime = 100)
-      console.log("this.languages: "+ JSON.stringify (this.languages))
+    console.log('this.languages: ' + JSON.stringify(this.languages))
   }
 
   constructor() {
-    super();
-    this.reset();
+    super()
+    this.reset()
   }
 
   public updateSubmitAcces() {
@@ -125,14 +127,14 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
         console.log('test: ' + JSON.stringify(test))
         if (test.isSolved !== true) {
           console.log('false')
-          return false 
+          return false
         }
       }
       for (const test of tests.autoTests) {
         console.log('test: ' + JSON.stringify(test))
         if (test.isSolved !== true) {
           console.log('false')
-          return false 
+          return false
         }
       }
     }
@@ -227,22 +229,20 @@ export default class ExerciseCreatorController extends  CodeRunnerControllerBase
 
   public updateTests(results: ProgramResult[], langauge: CodeRunnerType) {
     console.log('create test rtesult update: ' + JSON.stringify(results))
-   const processedResults= this.processCodeResultLoad(results,
-      {
-        tests: this.manualTestsSolutions[langauge]!.tests,
-        autoTests:this.manualTestsSolutions[langauge]!.autoTests
-      }
-      )
+    const processedResults = this.processCodeResultLoad(results, {
+      tests: this.manualTestsSolutions[langauge]!.tests,
+      autoTests: this.manualTestsSolutions[langauge]!.autoTests,
+    })
 
-this.manualTestsSolutions[langauge]!.tests=processedResults.tests;
-this.manualTestsSolutions[langauge]!.autoTests=processedResults.autoTests;
+    this.manualTestsSolutions[langauge]!.tests = processedResults.tests
+    this.manualTestsSolutions[langauge]!.autoTests = processedResults.autoTests
 
     // this.updateCreationTestData(results.results)
     this.updateSubmitAcces()
   }
 
   get ExerciseSetupError() {
-    if (this.languages!== undefined && this.languages.length == 0) {
+    if (this.languages !== undefined && this.languages.length == 0) {
       return 'at least one programing lnaguage should be available'
     }
     if (this.timeForTaskMin < 15) {

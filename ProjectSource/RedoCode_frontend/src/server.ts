@@ -153,12 +153,11 @@ export function makeServer({ environment = 'development' } = {}) {
   ]
 
   const activeExerciseData: ExerciseData = {
-    inputType: "SINGLE_INTEGER",
+    inputType: 'SINGLE_INTEGER',
     id: 1,
     title: 'Fibonacci',
-    desc:
-      'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
-    outputType: "ARRAY_OF_INTEGERS",
+    desc: 'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
+    outputType: 'ARRAY_OF_INTEGERS',
     availbleCodeRunners: [CodeRunnerType.JS_RUNNER, CodeRunnerType.CPP_RUNNER],
     tests: [
       {

@@ -1,13 +1,14 @@
 <template>
   <main class="PlayGroundBase">
-
     <CodeRunnerPanel
-    v-if="codeRunnerStore.exerciseSolverController.manualTests!==undefined"
+      v-if="codeRunnerStore.exerciseSolverController.manualTests !== undefined"
       :exerciseInfo="codeRunnerStore.exerciseSolverController"
       :languageChoices="codeRunnerStore.exerciseSolverController.languages"
-      :starting="codeRunnerStore.exerciseSolverController.startFunction(
-        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-      )"
+      :starting="
+        codeRunnerStore.exerciseSolverController.startFunction(
+          codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
+        )
+      "
       :onRunCode="onRunCode"
       :onSubmit="onSubmit"
       :ManualTests="codeRunnerStore.exerciseSolverController.manualTests"
@@ -17,7 +18,6 @@
       :SubmitAccess="codeRunnerStore.exerciseSolverController.isSolved"
     />
     {{ JSON.stringify(codeRunnerStore.exerciseSolverController) }}
-
   </main>
 </template>
 
@@ -42,19 +42,16 @@
   const route = useRoute()
 
   const fetchExerciseData = (id: number) => {
-
-    EndpointAcces.getExerciseData(id).then(x=>{
-      console.log("fetched exercise data: "+ JSON.stringify(x))
-    codeRunnerStore.exerciseSolverController.loadInitialData(id,x)
-
-    });
+    EndpointAcces.getExerciseData(id).then(x => {
+      console.log('fetched exercise data: ' + JSON.stringify(x))
+      codeRunnerStore.exerciseSolverController.loadInitialData(id, x)
+    })
 
     // codeRunnerStore.exerciseLoading = true
 
     // const params = {
     //   id: route.params.id,
     // }
-  
   }
 
   onMounted(() => {
@@ -65,18 +62,16 @@
   })
 
   const codeConatienrUpdate = (code: string) => {
-    codeRunnerStore.exerciseSolverController.solution=code;
+    codeRunnerStore.exerciseSolverController.solution = code
   }
 
   const onRunCode = () => {
     codeRunnerStore.codeRunnerSender.runExerciseIdCode(
-      codeRunnerStore.exerciseSolverController as ExerciseSolverController,
+      codeRunnerStore.exerciseSolverController as ExerciseSolverController
     )
-
   }
 
   const onSubmit = () => {
-
     codeRunnerStore.codeRunnerSender.runExercsieIdValidationCode(
       codeRunnerStore.exerciseSolverController as ExerciseSolverController
     )
@@ -84,8 +79,6 @@
 
   const onCodeResult = (results: ProgramResultsMessage) => {
     console.log('Exercise view results: ' + JSON.stringify(results))
-    codeRunnerStore.exerciseSolverController.updateTests(
-      results.results
-    )
+    codeRunnerStore.exerciseSolverController.updateTests(results.results)
   }
 </script>

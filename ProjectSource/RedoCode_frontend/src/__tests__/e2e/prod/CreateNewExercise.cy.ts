@@ -1,11 +1,10 @@
-
-import CodeRunnerPanel from "./helpers/CodeRunnerPanel"
-import CreatePanel from "./helpers/CreatePanel"
-import ExecutionChain from "./helpers/ExecutionChain"
-import ExercisesPage from "./helpers/ExercisesPage"
-import SwitcherControls from "./helpers/SwitcherControls"
-import UrlControls from "./helpers/UrlControls"
-import UserAuthentication from "./helpers/UserAuthentication"
+import CodeRunnerPanel from './helpers/CodeRunnerPanel'
+import CreatePanel from './helpers/CreatePanel'
+import ExecutionChain from './helpers/ExecutionChain'
+import ExercisesPage from './helpers/ExercisesPage'
+import SwitcherControls from './helpers/SwitcherControls'
+import UrlControls from './helpers/UrlControls'
+import UserAuthentication from './helpers/UserAuthentication'
 
 describe('Create new exercise', () => {
   it('passes', () => {
@@ -85,91 +84,99 @@ describe('Create new exercise', () => {
       },
     ]
 
-
-    const stringOptions={
+    const stringOptions = {
       UpperCase: true,
       LowerCase: true,
       Number: true,
       SpecialChar: true,
       breakCharacter: true,
-      spaceCharacter: false
-    };
+      spaceCharacter: false,
+    }
 
-    const chainTests=[
+    const chainTests = [
       {
         correct: true,
-        desc: "Correct user type"
+        desc: 'Correct user type',
       },
       {
         correct: true,
-        desc: "Correct exercise setup"
+        desc: 'Correct exercise setup',
       },
       {
         correct: true,
-        desc: "generated"
+        desc: 'generated',
       },
       {
         correct: true,
-        desc: "prepared tests"
+        desc: 'prepared tests',
       },
       {
         correct: true,
-        desc: "tests finished correctly"
+        desc: 'tests finished correctly',
       },
       {
         correct: true,
-        desc: "saved to database"
+        desc: 'saved to database',
       },
     ]
-    UrlControls.startPage();
-    UserAuthentication.login(email,password)
-    SwitcherControls.switchExercises();
-    ExercisesPage.gotoCreatePanel();
-    CreatePanel.infoSetup.clearAll();
+    UrlControls.startPage()
+    UserAuthentication.login(email, password)
+    SwitcherControls.switchExercises()
+    ExercisesPage.gotoCreatePanel()
+    CreatePanel.infoSetup.clearAll()
     CreatePanel.TestConfig.isTestPanelActive(false)
-    CreatePanel.infoSetup.setTitle(title);
+    CreatePanel.infoSetup.setTitle(title)
     CreatePanel.infoSetup.setDescription(description)
     CreatePanel.TestConfig.isTestPanelActive(true)
-    CreatePanel.TestConfig.switchToTestConfig();
-    CreatePanel.SolutionPanel.isSolutionPanelActive(false);
-    CreatePanel.TestConfig.selectLanguages(["cpp","js"])
-    CreatePanel.TestConfig.setExecutionTime(2000);
-    CreatePanel.TestConfig.setHoursTime(1);
-    CreatePanel.TestConfig.setMinutesTime(22);
-    CreatePanel.TestConfig.setRam(512);
-    CreatePanel.TestConfig.setInputType(CreatePanel.TestConfig.TYPES.STRING,CreatePanel.TestConfig.SIZE.SINGLE);
-    CreatePanel.TestConfig.setOutputType(CreatePanel.TestConfig.TYPES.STRING,CreatePanel.TestConfig.SIZE.SINGLE);
+    CreatePanel.TestConfig.switchToTestConfig()
+    CreatePanel.SolutionPanel.isSolutionPanelActive(false)
+    CreatePanel.TestConfig.selectLanguages(['cpp', 'js'])
+    CreatePanel.TestConfig.setExecutionTime(2000)
+    CreatePanel.TestConfig.setHoursTime(1)
+    CreatePanel.TestConfig.setMinutesTime(22)
+    CreatePanel.TestConfig.setRam(512)
+    CreatePanel.TestConfig.setInputType(
+      CreatePanel.TestConfig.TYPES.STRING,
+      CreatePanel.TestConfig.SIZE.SINGLE
+    )
+    CreatePanel.TestConfig.setOutputType(
+      CreatePanel.TestConfig.TYPES.STRING,
+      CreatePanel.TestConfig.SIZE.SINGLE
+    )
     CreatePanel.TestConfig.createTests(inputsAndOutputs)
-    CreatePanel.TestConfig.setAmountOfAutoTests(6);
+    CreatePanel.TestConfig.setAmountOfAutoTests(6)
     CreatePanel.TestConfig.setLengthMin(1)
     CreatePanel.TestConfig.setLengthMax(20)
-    CreatePanel.TestConfig.setStringInputOptions(stringOptions);
-    CreatePanel.SolutionPanel.isSolutionPanelActive(true);
-    CreatePanel.SolutionPanel.switchToTestSolution();
-    CodeRunnerPanel.selectInitialLanguage("js");
+    CreatePanel.TestConfig.setStringInputOptions(stringOptions)
+    CreatePanel.SolutionPanel.isSolutionPanelActive(true)
+    CreatePanel.SolutionPanel.switchToTestSolution()
+    CodeRunnerPanel.selectInitialLanguage('js')
     CodeRunnerPanel.information.nameShould(title)
     CodeRunnerPanel.information.descriptionShouldBe(description)
-    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain('function solution(x){')
-    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner();
+    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
+      'function solution(x){'
+    )
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(JSfirstHalf)
     CodeRunnerPanel.run()
     CodeRunnerPanel.Tests.shouldAllTestFail(inputsAndOutputs.length)
-    CodeRunnerPanel.switchLanguage("cpp")
-    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain( 'std::string solution(std::string x)')
-    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner();
-    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution);
-    CodeRunnerPanel.run();
-    CodeRunnerPanel.Tests.checkTest(inputsAndOutputs)
-    CodeRunnerPanel.switchLanguage("js")
-    CodeRunnerPanel.CodeRunnerInput.moveToEndOfCodeRunner();
-    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(JSsecondHalf);
+    CodeRunnerPanel.switchLanguage('cpp')
+    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
+      'std::string solution(std::string x)'
+    )
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution)
     CodeRunnerPanel.run()
     CodeRunnerPanel.Tests.checkTest(inputsAndOutputs)
-    CodeRunnerPanel.submit();
+    CodeRunnerPanel.switchLanguage('js')
+    CodeRunnerPanel.CodeRunnerInput.moveToEndOfCodeRunner()
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(JSsecondHalf)
+    CodeRunnerPanel.run()
+    CodeRunnerPanel.Tests.checkTest(inputsAndOutputs)
+    CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(chainTests)
     ExecutionChain.close()
     SwitcherControls.switchExercises()
     ExercisesPage.shouldBeExerciseOfName(title)
-
   })
 })
