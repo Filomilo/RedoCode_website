@@ -1,6 +1,9 @@
 package com.redocode.backend.database;
 
+import com.google.common.primitives.UnsignedLong;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -25,4 +28,9 @@ public class SolutionPrograms {
   @JoinColumn(name = "excersize")
   @ToString.Exclude
   private Excersize excersize;
+
+  @NotNull
+  @Column(name = "Avg_execution_time")
+  @Min(1)
+  private Long AvgExecutionTime;
 }
