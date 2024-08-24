@@ -34,31 +34,43 @@ public abstract class CodeRunner extends ContainerController {
 
   @Synchronized
   public ProgramResult runProgram(Program program) {
+    long executionTime=-1;
+    Variables inputVar=null;
+    Variables outputVar=null;
     try {
       logger.info("running program: " + program + "--------" + program.getProgramCode());
       String fileName = createProgramCodeFile(program);
       String programName = compileProgram(fileName);
       String runCommand = getRunCommand(programName);
-      ConsoleOutput consoleOutput = executeBash(runCommand, program.getExecutionTimeLimitMs());
-      Variables programOutput = null;
-      if (program.getOutuputType() != null) {
-        String resultFileContent = getFileContnt(((SolutionProgram) program).getOutputFileName());
-        logger.info("Program outoput file: \n" + resultFileContent);
-        programOutput =
-            VariablesParser.parseVaraiables(program.getOutuputType(), resultFileContent);
-      }
-
-      Variables inputVar = null;
-
       if (program instanceof SolutionProgram) {
         inputVar = ((SolutionProgram) program).getInput();
       }
 
+      long start = System.currentTimeMillis();
+      ConsoleOutput consoleOutput = executeBash(runCommand, program.getExecutionTimeLimitMs()+500);
+      executionTime = System.currentTimeMillis() - start;
+      if(executionTime>program.getExecutionTimeLimitMs()) {
+        throw new Exception("Execution time limit exceeded: "+executionTime+" ms");
+      }
+
+      if (program.getOutuputType() != null) {
+        String resultFileContent = getFileContnt(((SolutionProgram) program).getOutputFileName());
+        logger.info("Program outoput file: \n" + resultFileContent);
+        outputVar =
+            VariablesParser.parseVaraiables(program.getOutuputType(), resultFileContent);
+      }
+
+
+
+
       cleanup();
-      return new ProgramResult(consoleOutput, programOutput, inputVar);
+      return new ProgramResult(consoleOutput, outputVar, inputVar,executionTime);
     } catch (Exception ex) {
       return ProgramResult.builder()
           .consoleOutput(ConsoleOutput.builder().output("").errorOutput(ex.getMessage()).build())
+              .variablesInput(inputVar)
+              .variables(outputVar)
+          .executionTime(executionTime)
           .build();
     }
   }

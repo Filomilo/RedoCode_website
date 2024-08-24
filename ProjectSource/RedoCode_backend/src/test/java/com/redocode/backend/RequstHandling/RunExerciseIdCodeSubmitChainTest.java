@@ -64,6 +64,7 @@ class RunExerciseIdCodeSubmitChainTest {
                 programmingLanguageRepository.findByName(
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
+                .AvgExecutionTime(100L)
             .build());
     solutionProgramsRepository.save(
         SolutionPrograms.builder()
@@ -73,6 +74,7 @@ class RunExerciseIdCodeSubmitChainTest {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
                         CODE_RUNNER_TYPE.JS_RUNNER)))
             .excersize(excersize)
+                .AvgExecutionTime(100L)
             .build());
   }
 
@@ -93,7 +95,7 @@ class RunExerciseIdCodeSubmitChainTest {
                     .findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(type))
                     .getId(),
                 IdOfeExercise)
-            .getCode();
+            .getCode()+"\n";
 
     Map<CODE_RUNNER_TYPE, String> solutions = new HashMap<CODE_RUNNER_TYPE, String>();
     solutions.put(type, solutionCode);
@@ -111,7 +113,12 @@ class RunExerciseIdCodeSubmitChainTest {
               singleDatabaseExerciseTestRequest);
         });
 
+
     long amountOfSolutionAfter = this.solutionProgramsRepository.count();
     assertEquals(amountOfSolutionBefore + 1, amountOfSolutionAfter);
+    SolutionPrograms savedSolution=this.solutionProgramsRepository.findFirstByCode(solutionCode);
+    assertNotNull(savedSolution);
+    assertEquals(type, RedoCodeObjectMapper.LanguageNameToCodeRunner(savedSolution.getLanguage().getName()));
+    assertTrue(savedSolution.getAvgExecutionTime()<1000L);
   }
 }
