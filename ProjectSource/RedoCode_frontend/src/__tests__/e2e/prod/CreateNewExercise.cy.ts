@@ -133,7 +133,7 @@ describe('Create new exercise', () => {
     CreatePanel.TestConfig.switchToTestConfig();
     CreatePanel.SolutionPanel.isSolutionPanelActive(false);
     CreatePanel.TestConfig.selectLanguages(["cpp","js"])
-    CreatePanel.TestConfig.setExecutionTime(1000);
+    CreatePanel.TestConfig.setExecutionTime(2000);
     CreatePanel.TestConfig.setHoursTime(1);
     CreatePanel.TestConfig.setMinutesTime(22);
     CreatePanel.TestConfig.setRam(512);
