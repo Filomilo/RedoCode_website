@@ -141,11 +141,11 @@ public class RedoCodeObjectMapper {
     };
   }
 
-  public static CODE_RUNNER_TYPE  LanguageNameToCodeRunner(String languageName) {
+  public static CODE_RUNNER_TYPE LanguageNameToCodeRunner(String languageName) {
     return switch (languageName) {
-      case "cpp"-> CODE_RUNNER_TYPE.CPP_RUNNER;
-      case  "js" -> JS_RUNNER;
-      default ->  UNIDENTIFIED;
+      case "cpp" -> CODE_RUNNER_TYPE.CPP_RUNNER;
+      case "js" -> JS_RUNNER;
+      default -> UNIDENTIFIED;
     };
   }
 

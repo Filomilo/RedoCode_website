@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.StartingFunctions.StartingFuncitonGeneratorFactory;
 import com.redocode.backend.database.Excersize;
 import com.redocode.backend.database.ExerciseTests;
 import com.redocode.backend.database.ProgrammingLanguage;
@@ -16,9 +15,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Value
 @SuperBuilder
@@ -35,7 +32,6 @@ public class ExcerciseDataMessage {
   @JsonProperty Long id;
   @JsonProperty List<ExcerciseTestMessage> tests;
   @JsonProperty List<ExcerciseTestMessage> automaticTests;
-
 
   public ExcerciseDataMessage(Excersize excersize) throws JsonProcessingException {
     this.title = excersize.getExcersizeName();
@@ -56,8 +52,8 @@ public class ExcerciseDataMessage {
               .build());
     }
     for (ProgrammingLanguage programmingLanguage : excersize.getLanguages()) {
-      availbleCodeRunners.add(RedoCodeObjectMapper.LanguageNameToCodeRunner(programmingLanguage.getName()));
+      availbleCodeRunners.add(
+          RedoCodeObjectMapper.LanguageNameToCodeRunner(programmingLanguage.getName()));
     }
-
   }
 }

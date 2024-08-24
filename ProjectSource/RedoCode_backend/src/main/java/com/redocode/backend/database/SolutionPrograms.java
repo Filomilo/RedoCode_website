@@ -15,8 +15,10 @@ public class SolutionPrograms {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   @Column(length = 30000)
   private String code;
+
   @ManyToOne private ProgrammingLanguage language;
 
   @ManyToOne(fetch = FetchType.LAZY)
