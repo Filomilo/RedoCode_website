@@ -50,7 +50,7 @@ public abstract class CodeRunner extends ContainerController {
       ConsoleOutput consoleOutput = executeBash(runCommand, program.getExecutionTimeLimitMs()+500);
       executionTime = System.currentTimeMillis() - start;
       if(executionTime>program.getExecutionTimeLimitMs()) {
-        throw new Exception("Execution time limit exceeded: "+executionTime+" ms");
+        throw new Exception("Execution timeout exceeded: "+executionTime+" ms");
       }
 
       if (program.getOutuputType() != null) {
