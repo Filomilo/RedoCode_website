@@ -50,32 +50,35 @@ class ExecutionChainController{
     private  waitForScheme = (expectedLvl: number, timeout: number) => {
         console.log('CHAIN waiting for' + expectedLvl)
         return new Promise<void>((resolve, reject) => {
-          const interval = 50
-          const checkArraySize = () => {
-            if (this.executionChain.length > expectedLvl) {
-              resolve()
-            } else if (timeout <= 0) {
-              reject(new Error('Error receiving messages'))
-            } else {
-              timeout -= interval
-              setTimeout(checkArraySize, interval)
-            }
-          }
-          checkArraySize()
+          resolve();
+          // const interval = 50
+          // const checkArraySize = () => {
+          //   if (this.executionChain.length > expectedLvl) {
+          //     resolve()
+          //   } else if (timeout <= 0) {
+          //     reject(new Error('Error receiving messages'))
+          //   } else {
+          //     timeout -= interval
+          //     setTimeout(checkArraySize, interval)
+          //   }
+          // }
+          // checkArraySize()
         })
       }
 
 
       public updateStatus = async (update: ExecutionResponseStatusUpdate) => {
         console.log('CHAIN  udpate:' + JSON.stringify(update))
-        await this.waitForScheme(update.stepUpdate, 10000)
+        this.waitForScheme(update.stepUpdate, 10000)
           .then(() => {
+            console.log("_______________UPDATE: "+ JSON.stringify( update))
             this. executionChain[update.stepUpdate].processingMessage =
               update.message
             this.executionChain[update.stepUpdate].status = update.lvlStatus
+            console.log("UPdate check if can close: "+JSON.stringify(update))
             if (
               update.lvlStatus === 'FAILED' ||
-              (update.stepUpdate === this.executionChain.values.length - 1 &&
+              (update.stepUpdate === this.executionChain.length - 1 &&
                 update.lvlStatus === 'SUCCESS')
             ) {
                 this._closeReady = true
