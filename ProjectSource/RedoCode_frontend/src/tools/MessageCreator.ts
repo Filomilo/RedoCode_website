@@ -10,6 +10,7 @@ import ExerciseTest from '@/types/ExcericseTest'
 import VarType from '@/types/VarType'
 
 namespace MessageCreator {
+  // eslint-disable-next-line no-inner-declarations
   function testStringParser(
     tests: ExerciseTest[],
     inputType: VarType,

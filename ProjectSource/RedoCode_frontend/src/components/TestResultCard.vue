@@ -57,6 +57,7 @@
     >
     <div
     class="statusSector"
+    :id="'testResultStatus_'+props.index"
     >
       {{ data.isSolved !== null ? (data.isSolved ? 'Correct' : 'Failed') : '' }} 
     </div>
@@ -80,7 +81,7 @@
 
 
   const executionTimeLabel=computed<string>(()=>{
-    if(props.data.executionTime===undefined || props.data.executionTime<0)
+    if(props.data.executionTime===undefined ||props.data.executionTime===null || props.data.executionTime<0)
     return "";
   return props.data.executionTime+" ms"
 

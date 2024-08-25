@@ -118,7 +118,7 @@
   })
 
   const executionTimeString=computed<string>(()=>{
-      return props.ExecutionTime===undefined||props.ExecutionTime<0?"":props.ExecutionTime+" ms";
+      return props.ExecutionTime===undefined||props.ExecutionTime===null||props.ExecutionTime<0?"":props.ExecutionTime+" ms";
   })
 
   const isCorrect = computed<boolean>(() => {
