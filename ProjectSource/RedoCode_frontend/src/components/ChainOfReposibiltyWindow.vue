@@ -2,7 +2,7 @@
   <div class="floatWindowContainer">
     <div class="floatWindow">
       <Timeline
-        :value="executionChainStore.executionChain"
+        :value="executionChainStore.executionChainController.executionChain"
         class="chainContainer"
         align="left"
       >
@@ -59,7 +59,7 @@
 
   const onCloseButton = () => {
     console.log('ExecutionResponses close')
-    executionChainStore.close()
+    executionChainStore.executionChainController.close()
   }
 </script>
 

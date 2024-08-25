@@ -8,10 +8,10 @@
 
 <template>
   <html lang="pl" data-bs-theme="dark">
-    <ChainOfReposibiltyWindow v-if="executionChainStore.showExecutionChain" />
+    <ChainOfReposibiltyWindow v-if="executionChainStore.executionChainController.shouldBeVisible" />
     <div
       id="MainPageContainer"
-      :class="executionChainStore.showExecutionChain ? 'lock' : ''"
+      :class="executionChainStore.executionChainController.shouldBeVisible ? 'lock' : ''"
     >
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
