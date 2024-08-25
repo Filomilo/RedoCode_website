@@ -15,20 +15,19 @@ namespace MessageCreator {
     inputType: VarType,
     outputType: VarType
   ): ExerciseTest[] {
-    let newTest: ExerciseTest[] = []
+    const newTest: ExerciseTest[] = []
     tests.forEach((x: ExerciseTest) => {
       newTest.push({
-        input:
-          inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
+        input: inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
         output: null,
-        expectedOutput:
-          outputType === 'SINGLE_STRING'
-            ? JSON.stringify(x.expectedOutput)
-            : x.expectedOutput,
+        expectedOutput: outputType === 'SINGLE_STRING'
+          ? JSON.stringify(x.expectedOutput)
+          : x.expectedOutput,
         errorOutput: '',
         consoleOutput: '',
         isSolved: null,
         uuid: '',
+        executionTime: -1
       })
     })
 

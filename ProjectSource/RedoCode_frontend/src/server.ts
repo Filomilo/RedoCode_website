@@ -168,6 +168,7 @@ export function makeServer({ environment = 'development' } = {}) {
         consoleOutput: '',
         isSolved: null,
         uuid: '',
+        executionTime: 50
       },
       {
         input: 2,
@@ -177,6 +178,7 @@ export function makeServer({ environment = 'development' } = {}) {
         consoleOutput: '',
         isSolved: null,
         uuid: '',
+        executionTime: 50
       },
       {
         input: 3,
@@ -186,6 +188,7 @@ export function makeServer({ environment = 'development' } = {}) {
         consoleOutput: '',
         isSolved: null,
         uuid: '',
+        executionTime: 50
       },
       {
         input: 4,
@@ -195,6 +198,7 @@ export function makeServer({ environment = 'development' } = {}) {
         consoleOutput: '',
         isSolved: null,
         uuid: '',
+        executionTime: 50
       },
     ],
     automaticTests: [],

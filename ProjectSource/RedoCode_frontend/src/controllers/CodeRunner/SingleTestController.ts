@@ -8,4 +8,5 @@ export default class SingleTestController implements ExerciseTest {
   consoleOutput: string = ''
   isSolved: boolean | null = false
   uuid: string = '' //compatilbty with guii
+  executionTime: number=-1
 }
