@@ -10,12 +10,13 @@ import ExerciseTest from '@/types/ExcericseTest'
 import VarType from '@/types/VarType'
 
 namespace MessageCreator {
+  // eslint-disable-next-line no-inner-declarations
   function testStringParser(
     tests: ExerciseTest[],
     inputType: VarType,
     outputType: VarType
   ): ExerciseTest[] {
-    let newTest: ExerciseTest[] = []
+    const newTest: ExerciseTest[] = []
     tests.forEach((x: ExerciseTest) => {
       newTest.push({
         input:
@@ -70,7 +71,7 @@ namespace MessageCreator {
   export function createExercsieCreatorValidationMesage(
     exerciseCreatorController: ExerciseCreatorController
   ): ExercsieCreatorValidationMesage {
-    let parsedTests: ExerciseTest[] = testStringParser(
+    const parsedTests: ExerciseTest[] = testStringParser(
       exerciseCreatorController.getSingleRowOfManualTests,
       exerciseCreatorController.inputType,
       exerciseCreatorController.outputType

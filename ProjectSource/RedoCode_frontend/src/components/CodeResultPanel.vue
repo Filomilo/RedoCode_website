@@ -51,7 +51,7 @@
       <Button
         class="submitButton"
         :disabled="!SubmitAccess"
-        @click="props.onSubmit"
+        @click="(event: MouseEvent)=>{ if (props.onSubmit!==undefined)props.onSubmit()}"
         id="coderunner-submit-button"
       >
         Submit
