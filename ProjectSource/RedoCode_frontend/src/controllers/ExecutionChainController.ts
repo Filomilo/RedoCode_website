@@ -3,14 +3,21 @@ import ExecutionChainScheme from "@/types/ApiMesseages/ExecutionResponses/Execut
 import StompApiSubsciptionContorller from "./Stomp/StompApiSubsriptionsController";
 import ExecutionResponseStatusUpdate from "@/types/ApiMesseages/ExecutionResponses/ExecutionResponseStatusUpdate";
 
-class ExecutionChainController{
+export interface ExecutionChainControls{
+  _executionChain: ChainNodeStatus[]
+  _shouldBeVisible: boolean
+  _closeReady: boolean
+}
+
+class ExecutionChainController implements ExecutionChainControls{
 
 
-    private _executionChain: ChainNodeStatus[]=[]
+    public _executionChain: ChainNodeStatus[]=[]
 
-    private _shouldBeVisible: boolean=false;
-    private _closeReady: boolean=false;
+    public _shouldBeVisible: boolean=false;
+    public _closeReady: boolean=false;
 
+    public onVisibiltyUpdate:(state: ExecutionChainController)=>void=(state: ExecutionChainController)=>{}
 
     get executionChain () :ChainNodeStatus[]{
         return this._executionChain;
@@ -39,12 +46,14 @@ class ExecutionChainController{
         this._executionChain=[];
         this._shouldBeVisible = false
         this._closeReady = false
+        this.onVisibiltyUpdate(this);
     }
 
     public loadChainScheme = (scheme: ExecutionChainScheme) => {
         console.log('ExecutionResponses  loadChainScheme:' + JSON.stringify(scheme))
         this._executionChain = scheme.levels
         this._shouldBeVisible = true
+        this.onVisibiltyUpdate(this);
     }
 
     private  waitForScheme = (expectedLvl: number, timeout: number) => {
@@ -82,10 +91,13 @@ class ExecutionChainController{
                 update.lvlStatus === 'SUCCESS')
             ) {
                 this._closeReady = true
+                
             }
+            this.onVisibiltyUpdate(this);
           })
           .catch(() => {
             this._closeReady = true
+            this.onVisibiltyUpdate(this);
           })
       }
 

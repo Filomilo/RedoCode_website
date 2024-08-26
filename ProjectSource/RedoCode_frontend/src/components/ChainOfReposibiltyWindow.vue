@@ -1,8 +1,8 @@
 <template>
-  <div class="floatWindowContainer">
+  <div class="floatWindowContainer"  v-if="shouldBevisable">
     <div class="floatWindow">
       <Timeline
-        :value="executionChainStore.executionChainController.executionChain"
+        :value="chain"
         class="chainContainer"
         align="left"
       >
@@ -41,6 +41,7 @@
         class="BasicButton"
         style="font-size: 1rem; padding: 0.8rem"
         @click="onCloseButton"
+        v-if="canBeclosed"
       >
         Close
       </Button>
@@ -48,18 +49,39 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
+  import { computed, reactive, Ref, ref } from 'vue'
   import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
   import ChainNodeInfo from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
   import IconStatusSuccess from '@/assets/icons/IconStatusSuccess.vue'
   import IconStatusFail from '@/assets/icons/IconStatusFail.vue'
   import IconStatusPending from '@/assets/icons/IconStatusPending.vue'
+import ExecutionChainController,{type ExecutionChainControls} from '@/controllers/ExecutionChainController'
+import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
   const executionChainStore = useExecutionChainStore()
+
+  const onVisibiltyUpdate=(state: ExecutionChainController)=>{
+    console.log("updare: "+JSON.stringify(state._executionChain))
+    chainData.value=[...state.executionChain];
+    shouldBevisable.value=state.shouldBeVisible;
+    canBeclosed.value=state.closeReady;
+    executionChainStore.lock=state.shouldBeVisible
+  }
+  executionChainStore.executionChainController.onVisibiltyUpdate=onVisibiltyUpdate;
+  console.log("seted")
+
+
+  const shouldBevisable=ref(false);
+  const canBeclosed=ref(false);
+  const chainData:Ref<ChainNodeStatus[]> = ref([]);
+
+const chain = computed(() => chainData.value);
+
 
   const onCloseButton = () => {
     console.log('ExecutionResponses close')
     executionChainStore.executionChainController.close()
+
   }
 </script>
 

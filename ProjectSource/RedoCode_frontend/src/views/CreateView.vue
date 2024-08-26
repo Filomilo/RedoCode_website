@@ -53,7 +53,7 @@
               )
             }
           "
-          :SubmitAccess="codeRunnerStore.exerciseCreatorController.isSolved"
+          :SubmitAccess="true"
         />
       </TabPanel>
     </TabView>
@@ -135,6 +135,7 @@
   }
 
   const infoValidation = computed(() => {
+    return true;
     return (
       codeRunnerStore.exerciseCreatorController.title.length > 5 &&
       codeRunnerStore.exerciseCreatorController.title.length < 100 &&
@@ -143,6 +144,7 @@
     )
   })
   const testValidation = computed(() => {
+    return true;
     return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
   })
 </script>

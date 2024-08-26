@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, Ref } from 'vue'
+import { ref, computed, Ref, reactive } from 'vue'
 import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import ExecutionResponseBase from '@/types/ApiMesseages/ExecutionResponses/ExecutionResponseBase'
@@ -12,12 +12,13 @@ import StompApiSubsciptionContorller from '@/controllers/Stomp/StompApiSubsripti
 export const useExecutionChainStore = defineStore('executionChainStore', () => {
   const apiConnectionStore = useApiConnectionStore()
 
-  const executionChainController: Ref<ExecutionChainController> =ref(new ExecutionChainController(apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller) )as Ref<ExecutionChainController>
+  const executionChainController =reactive(new ExecutionChainController(apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller) )
 
 
-
+  const lock=ref(false)
 
   return {
     executionChainController,
+    lock
   }
 })
