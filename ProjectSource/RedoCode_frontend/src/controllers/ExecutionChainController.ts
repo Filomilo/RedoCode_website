@@ -29,8 +29,15 @@ class ExecutionChainController implements ExecutionChainControls{
     get closeReady () :boolean{
         return this._closeReady;
     }
+
+
+    get resolvedLength(): number
+    {
+    return this.executionChain.filter(x=>x.status==='SUCCESS').length; 
+    }
     constructor(stompApiSubsciptionContorller: StompApiSubsciptionContorller)
     {
+      this. reset();
         stompApiSubsciptionContorller.addExecutionChainSchemeSubscription(
             this.loadChainScheme.bind(this)
           )
@@ -53,32 +60,50 @@ class ExecutionChainController implements ExecutionChainControls{
         console.log('ExecutionResponses  loadChainScheme:' + JSON.stringify(scheme))
         this._executionChain = scheme.levels
         this._shouldBeVisible = true
+        
         this.onVisibiltyUpdate(this);
     }
 
-    private  waitForScheme = (expectedLvl: number, timeout: number) => {
-        console.log('CHAIN waiting for' + expectedLvl)
+    private  waitForScheme = (update: ExecutionResponseStatusUpdate, timeout: number) => {
+        console.log('CHAIN waiting for' + update)
         return new Promise<void>((resolve, reject) => {
-          resolve();
-          // const interval = 50
-          // const checkArraySize = () => {
-          //   if (this.executionChain.length > expectedLvl) {
-          //     resolve()
-          //   } else if (timeout <= 0) {
-          //     reject(new Error('Error receiving messages'))
-          //   } else {
-          //     timeout -= interval
-          //     setTimeout(checkArraySize, interval)
-          //   }
-          // }
-          // checkArraySize()
+          // resolve();
+          const interval = 50
+          const checkArraySize = () => {
+            if (
+      (        this.executionChain[update.stepUpdate].status==='PENDING'
+              && update.lvlStatus==='RUNNING')
+              ||
+           (   this.executionChain[update.stepUpdate].status==='RUNNING'
+              &&
+       (       update.lvlStatus==='FAILED' ||
+              update.lvlStatus==='SUCCESS' )
+              )
+              
+              
+              
+              ) {
+              resolve()
+            } else if (timeout <= 0) {
+              reject(new Error('Error receiving messages'))
+            } else {
+              timeout -= interval
+              setTimeout(checkArraySize, interval)
+            }
+          }
+          checkArraySize()
         })
       }
 
 
+      public get isAllSolved()
+      {
+        return this.executionChain.filter(x=>x.status==='SUCCESS').length===this.executionChain.length
+      }
+
       public updateStatus = async (update: ExecutionResponseStatusUpdate) => {
         console.log('CHAIN  udpate:' + JSON.stringify(update))
-        this.waitForScheme(update.stepUpdate, 10000)
+        this.waitForScheme(update, 10000)
           .then(() => {
             console.log("_______________UPDATE: "+ JSON.stringify( update))
             this. executionChain[update.stepUpdate].processingMessage =
@@ -86,9 +111,7 @@ class ExecutionChainController implements ExecutionChainControls{
             this.executionChain[update.stepUpdate].status = update.lvlStatus
             console.log("UPdate check if can close: "+JSON.stringify(update))
             if (
-              update.lvlStatus === 'FAILED' ||
-              (update.stepUpdate === this.executionChain.length - 1 &&
-                update.lvlStatus === 'SUCCESS')
+              this.isAllSolved
             ) {
                 this._closeReady = true
                 

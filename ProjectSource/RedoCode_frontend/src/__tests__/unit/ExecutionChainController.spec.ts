@@ -10,7 +10,7 @@ import exp from 'constants'
 import { describe, it, expect } from 'vitest'
 import {  waitFor } from '@testing-library/vue';
 describe('Exercsie creation controller tests', () => {
-
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     const stompApiConnection: StompApiConnection= new StompApiConnection("",()=>{},()=>{},()=>{});
     const stompApiSubsciptionContorlle: StompApiSubsciptionContorller=new StompApiSubsciptionContorller(stompApiConnection)
 
@@ -124,9 +124,11 @@ describe('Exercsie creation controller tests', () => {
   
 
   it('load correct but in wrong order',async ()=>{
+    executionChainController.close()
     executionChainController.loadChainScheme(ExecutionChainTemplate);
     expect(executionChainController.executionChain).toBe(ExecutionChainTemplate.levels)
-
+    expect(executionChainController.shouldBeVisible).toBeTruthy();
+    expect(executionChainController._closeReady).toBeFalsy();
     for (let index = CorrectUpdates.length-1; index >=1; index--) {
         
         const nodeIndex=Math.floor(index/2);
@@ -134,22 +136,27 @@ describe('Exercsie creation controller tests', () => {
         executionChainController.updateStatus(CorrectUpdates[index])
         console.log(CorrectUpdates.length+" Update: "+index)
         console.log(" nodeIndex: "+nodeIndex)
+        await sleep(100)
         expect (executionChainController.executionChain[nodeIndex].processingMessage).toBe(ExecutionChainTemplate.levels[nodeIndex].processingMessage);
         expect  (executionChainController.executionChain[nodeIndex].status).toBe( ExecutionChainTemplate.levels[nodeIndex].status);
+        console.log("executionChainController.shouldBeVisible. "+executionChainController.shouldBeVisible)
         expect(executionChainController.shouldBeVisible).toBeTruthy();
-        expect(executionChainController.closeReady).toBeFalsy();
+        console.log("executionChainController.closeReady. "+executionChainController.closeReady)
 
+        expect(executionChainController.closeReady).toBeFalsy();
+        
         
     }
     await executionChainController.updateStatus(CorrectUpdates[0])
-    await waitFor(() => {
-        expect(executionChainController.closeReady).toBeTruthy();
 
+    
+    await waitFor(() => {
+        expect(executionChainController.closeReady).toBeTruthy()
       });
  
 
 
-    for (let index = 0; index < CorrectUpdates.length; index++) {
+    for (let index = 1; index < CorrectUpdates.length; index+=2) {
         const nodeIndex=Math.floor(index/2);
         const nodeNum=nodeIndex-1;
         await executionChainController.updateStatus(CorrectUpdates[index])
@@ -164,7 +171,7 @@ describe('Exercsie creation controller tests', () => {
   });
 
   it('load But late chain',async ()=>{
-
+    executionChainController.close();
     expect(executionChainController.executionChain).toHaveLength(0)
 
     for (let index = CorrectUpdates.length-1; index >=0; index--) {
@@ -194,6 +201,7 @@ describe('Exercsie creation controller tests', () => {
 
 
   it('execution Failed',async ()=>{
+    executionChainController.close();
     expect(executionChainController.executionChain).toHaveLength(0)
     executionChainController.loadChainScheme(ExecutionChainTemplate);
     expect(executionChainController.executionChain).toBe(ExecutionChainTemplate.levels)
