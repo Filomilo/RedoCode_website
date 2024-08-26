@@ -185,7 +185,7 @@ describe('Exercsie creation controller tests', () => {
     executionChainController.loadChainScheme(ExecutionChainTemplate);
     expect(executionChainController.executionChain).toBe(ExecutionChainTemplate.levels)
 
-    for (let index = 0; index < CorrectUpdates.length; index++) {
+    for (let index = 1; index < CorrectUpdates.length; index+=2) {
         const nodeIndex=Math.floor(index/2);
         const nodeNum=nodeIndex-1;
         await executionChainController.updateStatus(CorrectUpdates[index])

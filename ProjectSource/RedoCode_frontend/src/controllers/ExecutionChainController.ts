@@ -79,7 +79,8 @@ class ExecutionChainController implements ExecutionChainControls{
        (       update.lvlStatus==='FAILED' ||
               update.lvlStatus==='SUCCESS' )
               )
-              
+              || 
+              update.lvlStatus==='FAILED'
               
               
               ) {
@@ -103,7 +104,7 @@ class ExecutionChainController implements ExecutionChainControls{
 
       public updateStatus = async (update: ExecutionResponseStatusUpdate) => {
         console.log('CHAIN  udpate:' + JSON.stringify(update))
-        this.waitForScheme(update, 10000)
+        this.waitForScheme(update, 1000)
           .then(() => {
             console.log("_______________UPDATE: "+ JSON.stringify( update))
             this. executionChain[update.stepUpdate].processingMessage =
@@ -111,7 +112,8 @@ class ExecutionChainController implements ExecutionChainControls{
             this.executionChain[update.stepUpdate].status = update.lvlStatus
             console.log("UPdate check if can close: "+JSON.stringify(update))
             if (
-              this.isAllSolved
+              this.isAllSolved 
+              || update.lvlStatus==='FAILED'
             ) {
                 this._closeReady = true
                 
