@@ -53,7 +53,7 @@
               )
             }
           "
-          :SubmitAccess="submitACces"
+          :SubmitAccess="submitValidation"
         />
       </TabPanel>
     </TabView>
@@ -115,9 +115,9 @@
     )
   }
 
-  const submitACces = computed(() => {
+  const exerciseLnageus = computed(() => {
     return languageChoices.filter(x =>
-      codeRunnerStore.exerciseCreatorController.isSolved
+      codeRunnerStore.exerciseCreatorController.languages.includes(x.value)
     )
   })
 
@@ -146,7 +146,7 @@
     return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
   })
   const submitValidation = computed(() => {
-    return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
+    return codeRunnerStore.exerciseCreatorController.isSolved
   })
 </script>
 
