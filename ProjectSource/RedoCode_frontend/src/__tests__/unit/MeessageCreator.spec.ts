@@ -30,7 +30,7 @@ describe('MessageCreaator', () => {
       JS_RUNNER: testController,
     }
 
-    let exerciseCreatorController: ExerciseCreatorController =
+    const exerciseCreatorController: ExerciseCreatorController =
       new ExerciseCreatorController()
     exerciseCreatorController.languages = [
       CodeRunnerType.CPP_RUNNER,
