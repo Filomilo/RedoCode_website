@@ -37,8 +37,7 @@ describe('Create new exercise', () => {
       '    return result;\n' +
       '}'
 
-    const jsSolution =
-      `function solution(input) {
+    const jsSolution = `function solution(input) {
           let result = "";
           const shift = 7;
 

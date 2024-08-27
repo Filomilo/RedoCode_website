@@ -21,7 +21,7 @@ describe('MessageCreaator', () => {
       consoleOutput: '',
       isSolved: null,
       uuid: '',
-      executionTime: -1
+      executionTime: -1,
     }
 
     const testController = new TestsController()

@@ -9,10 +9,7 @@
 <template>
   <html lang="pl" data-bs-theme="dark">
     <ChainOfReposibiltyWindow />
-    <div
-      id="MainPageContainer"
-      :class="executionChainStore.lock ? 'lock' : ''"
-    >
+    <div id="MainPageContainer" :class="executionChainStore.lock ? 'lock' : ''">
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
         <Toast style="margin-top: 4rem" />
