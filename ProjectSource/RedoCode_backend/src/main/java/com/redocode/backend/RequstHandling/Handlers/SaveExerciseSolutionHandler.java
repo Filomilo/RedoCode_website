@@ -6,7 +6,6 @@ import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeResultsReque
 import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
-import com.redocode.backend.RequstHandling.Requests.SaveExerciseSolutionRequest;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
@@ -37,8 +36,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
 
     IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest) request;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
-    ICodeResultsRequest codeResultsRequest=(ICodeResultsRequest) request;
-
+    ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
 
     CODE_RUNNER_TYPE codeRunnerType =
         solutionCodesRequest.getSolutionCodes().keySet().stream().findFirst().get();
@@ -47,15 +45,20 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
         programmingLanguageRepository.findByName(
             RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(codeRunnerType));
 
-
-    Long avgExecutionTime= (long) Math.ceil(codeResultsRequest.getProgramResults().stream().mapToLong(x->x.getExecutionTime().longValue()).average().orElse(-1.0));
+    Long avgExecutionTime =
+        (long)
+            Math.ceil(
+                codeResultsRequest.getProgramResults().stream()
+                    .mapToLong(x -> x.getExecutionTime().longValue())
+                    .average()
+                    .orElse(-1.0));
 
     SolutionPrograms solutionProgram =
         SolutionPrograms.builder()
             .code(code)
             .language(programmingLanguage)
             .excersize(exerciseRepository.getReferenceById(exerciseIdRequest.getIdOfExercise()))
-                .AvgExecutionTime(avgExecutionTime)
+            .AvgExecutionTime(avgExecutionTime)
             .build();
     solutionProgramsRepository.save(solutionProgram);
     this.nodeUpdate(request, "Saved solution", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);

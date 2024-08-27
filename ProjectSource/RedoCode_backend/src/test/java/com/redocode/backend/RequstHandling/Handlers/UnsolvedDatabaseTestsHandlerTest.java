@@ -60,7 +60,7 @@ class UnsolvedDatabaseTestsHandlerTest {
             .code("int solution(int x){return x+1;}")
             .language(programmingLanguageRepository.findByName("cpp"))
             .excersize(excersize)
-                .AvgExecutionTime(100L)
+            .AvgExecutionTime(100L)
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 

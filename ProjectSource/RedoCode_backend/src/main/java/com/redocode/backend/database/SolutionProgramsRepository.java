@@ -7,9 +7,11 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
   SolutionPrograms findFirstByLanguageIdAndExcersizeId(Long languageId, Long exerciseId);
 
   /**
-   * sql query method that returns Solution by its code <br/> <br/>
-   * <b>Warrning</b> searching by entire solution code its not effective and this method should only be used
-   * for testing purpuses only
+   * sql query method that returns Solution by its code <br>
+   * <br>
+   * <b>Warrning</b> searching by entire solution code its not effective and this method should only
+   * be used for testing purpuses only
+   *
    * @param code Code wchich first occurance in database should be found
    * @return first SolutionPrograms entry in databse with provided code
    */

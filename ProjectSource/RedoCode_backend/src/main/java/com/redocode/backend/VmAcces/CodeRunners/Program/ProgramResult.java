@@ -21,7 +21,8 @@ public class ProgramResult {
   @NonNull private ConsoleOutput consoleOutput;
   private Variables variables;
   private Variables variablesInput;
+
   @NotNull
-  @Range(min = 0 )
+  @Range(min = 0)
   private Long executionTime;
 }

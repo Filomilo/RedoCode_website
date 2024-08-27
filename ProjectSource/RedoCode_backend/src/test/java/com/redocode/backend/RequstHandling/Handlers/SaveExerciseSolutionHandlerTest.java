@@ -43,21 +43,18 @@ class SaveExerciseSolutionHandlerTest {
     Map<CODE_RUNNER_TYPE, String> solutions = new HashMap<CODE_RUNNER_TYPE, String>();
     solutions.put(type, solution);
     SaveExerciseSolutionHandler handler = new SaveExerciseSolutionHandler();
-    Long[] ExecutionTimes= new Long[]{1L,5L,8L,4L,10L,5L,5L};
-    ArrayList <ProgramResult> results=new ArrayList<>();
+    Long[] ExecutionTimes = new Long[] {1L, 5L, 8L, 4L, 10L, 5L, 5L};
+    ArrayList<ProgramResult> results = new ArrayList<>();
     for (Long executionTime : ExecutionTimes) {
       results.add(
-              ProgramResult.builder()
-                      .variables(new SingleInteger(0))
-                      .variablesInput(new SingleInteger(0))
-                      .executionTime(executionTime)
-                      .consoleOutput(ConsoleOutput.builder()
-                              .output("")
-                              .errorOutput("")
-                              .build())
-                      .build()
-      );
-    };
+          ProgramResult.builder()
+              .variables(new SingleInteger(0))
+              .variablesInput(new SingleInteger(0))
+              .executionTime(executionTime)
+              .consoleOutput(ConsoleOutput.builder().output("").errorOutput("").build())
+              .build());
+    }
+    ;
     SaveExerciseSolutionRequest request =
         SaveExerciseSolutionRequest.builder()
             .programResults(results)
@@ -71,10 +68,13 @@ class SaveExerciseSolutionHandlerTest {
     assertNotNull(handler.handle(request));
     long amountOfSoultionsAfter = solutionProgramsRepository.count();
     assertEquals(amountOfSoultionsBefore + 1, amountOfSoultionsAfter);
-    SolutionPrograms solutionSaved= solutionProgramsRepository.findFirstByCode(solution);
+    SolutionPrograms solutionSaved = solutionProgramsRepository.findFirstByCode(solution);
     assertNotNull(solutionSaved);
-    assertEquals(exerciseId,solutionSaved.getExcersize().getId());
-    assertEquals(type, RedoCodeObjectMapper.LanguageNameToCodeRunner(solutionSaved.getLanguage().getName()));
-    assertEquals(Math.ceil( Arrays.stream(ExecutionTimes).mapToLong(x->x).average().orElse(Long.MIN_VALUE)),solutionSaved.getAvgExecutionTime().longValue());
+    assertEquals(exerciseId, solutionSaved.getExcersize().getId());
+    assertEquals(
+        type, RedoCodeObjectMapper.LanguageNameToCodeRunner(solutionSaved.getLanguage().getName()));
+    assertEquals(
+        Math.ceil(Arrays.stream(ExecutionTimes).mapToLong(x -> x).average().orElse(Long.MIN_VALUE)),
+        solutionSaved.getAvgExecutionTime().longValue());
   }
 }

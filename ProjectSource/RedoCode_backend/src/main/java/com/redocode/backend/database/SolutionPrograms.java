@@ -1,6 +1,5 @@
 package com.redocode.backend.database;
 
-import com.google.common.primitives.UnsignedLong;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
