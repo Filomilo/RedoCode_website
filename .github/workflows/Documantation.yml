@@ -2,7 +2,7 @@ name: generate documantation
 on:
   push:
     branches:
-      - main
+      - none
 
 jobs:
   generate_java_doc:

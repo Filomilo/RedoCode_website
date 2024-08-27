@@ -37,3 +37,11 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           prettier_options: --write "**/*.{js,ts,vue,json,md,css,scss,html}"
+      - name: Commit and Push Changes (Prettier)
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git pull --rebase origin main
+          git add -A
+          git commit -m "Prettier code formatting"
+          git push origin ${{ github.ref }}
