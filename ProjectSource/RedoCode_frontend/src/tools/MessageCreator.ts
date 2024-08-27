@@ -40,6 +40,7 @@ namespace MessageCreator {
     exerciseCreatorController: ExerciseCreatorController,
     type: CodeRunnerType
   ): ExerciseTestToRunMesseage {
+    console.log("exerciseCreatorController: "+JSON.stringify(exerciseCreatorController))
     const exerciseCreatorControllercopy: ExerciseCreatorController =
       exerciseCreatorController //JSON.parse(JSON.stringify(exerciseCreatorController)) as ExerciseCreatorController;
     return {
@@ -64,7 +65,7 @@ namespace MessageCreator {
         exerciseCreatorControllercopy.specialCharacterInput,
       breakCharacterInupt: exerciseCreatorControllercopy.breakCharacterInupt,
       spaceInupt: exerciseCreatorControllercopy.spaceInupt,
-      executionTime: exerciseCreatorControllercopy.executionTime,
+      executionTime: exerciseCreatorControllercopy.timeForExecutionMs,
     }
   }
 
@@ -100,7 +101,7 @@ namespace MessageCreator {
       specialCharacterInput: exerciseCreatorController.specialCharacterInput,
       breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
       spaceInupt: exerciseCreatorController.spaceInupt,
-      executionTime: exerciseCreatorController.executionTime,
+      executionTime: exerciseCreatorController.timeForExecutionMs,
     }
     return exercsieCreatorValidationMesage
   }
