@@ -55,17 +55,14 @@
           : 'unknown'
       "
     >
-    <div
-    class="statusSector"
-    :id="'testResultStatus_'+props.index"
-    >
-      {{ data.isSolved !== null ? (data.isSolved ? 'Correct' : 'Failed') : '' }} 
-    </div>
-    <div
-    class="executionTimeSector"
-    >
-{{  executionTimeLabel }}
-    </div>
+      <div class="statusSector" :id="'testResultStatus_' + props.index">
+        {{
+          data.isSolved !== null ? (data.isSolved ? 'Correct' : 'Failed') : ''
+        }}
+      </div>
+      <div class="executionTimeSector">
+        {{ executionTimeLabel }}
+      </div>
     </div>
   </div>
 </template>
@@ -79,12 +76,14 @@
     index: number
   }>()
 
-
-  const executionTimeLabel=computed<string>(()=>{
-    if(props.data.executionTime===undefined ||props.data.executionTime===null || props.data.executionTime<0)
-    return "";
-  return props.data.executionTime+" ms"
-
+  const executionTimeLabel = computed<string>(() => {
+    if (
+      props.data.executionTime === undefined ||
+      props.data.executionTime === null ||
+      props.data.executionTime < 0
+    )
+      return ''
+    return props.data.executionTime + ' ms'
   })
 
   const formattedConsole = computed<string>(() =>
@@ -110,14 +109,11 @@
     border-color: transparent;
   }
 
-  .statusSector{
-
-      text-align: left;
+  .statusSector {
+    text-align: left;
   }
-  .executionTimeSector{
-
+  .executionTimeSector {
     text-align: right;
-
   }
 
   .testValidationSection {
@@ -127,10 +123,8 @@
     border-top: solid;
     display: flex;
     justify-content: center;
-
-   
   }
-  .testValidationSection *{
+  .testValidationSection * {
     width: 100%;
     margin: 0.5rem;
   }

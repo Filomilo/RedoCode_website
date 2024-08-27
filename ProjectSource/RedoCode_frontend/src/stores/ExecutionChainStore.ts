@@ -12,13 +12,16 @@ import StompApiSubsciptionContorller from '@/controllers/Stomp/StompApiSubsripti
 export const useExecutionChainStore = defineStore('executionChainStore', () => {
   const apiConnectionStore = useApiConnectionStore()
 
-  const executionChainController =reactive(new ExecutionChainController(apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller) )
+  const executionChainController = reactive(
+    new ExecutionChainController(
+      apiConnectionStore.stompApiSubsciptionContorller as StompApiSubsciptionContorller
+    )
+  )
 
-
-  const lock=ref(false)
+  const lock = ref(false)
 
   return {
     executionChainController,
-    lock
+    lock,
   }
 })

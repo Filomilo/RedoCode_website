@@ -74,7 +74,6 @@
       </Splitter>
     </div>
     <div v-else style="height: 100%">
-
       <ConnectToCodeRunnerPanel
         :languageChoicesSelection="props.languageChoices"
       />
@@ -139,7 +138,7 @@
     },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
     SubmitAccess: { type: Boolean, required: false },
-    ExecutionTime:{type: Number, required: false}
+    ExecutionTime: { type: Number, required: false },
   })
   //#endregion
 

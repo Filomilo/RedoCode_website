@@ -19,16 +19,18 @@ namespace MessageCreator {
     const newTest: ExerciseTest[] = []
     tests.forEach((x: ExerciseTest) => {
       newTest.push({
-        input: inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
+        input:
+          inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
         output: null,
-        expectedOutput: outputType === 'SINGLE_STRING'
-          ? JSON.stringify(x.expectedOutput)
-          : x.expectedOutput,
+        expectedOutput:
+          outputType === 'SINGLE_STRING'
+            ? JSON.stringify(x.expectedOutput)
+            : x.expectedOutput,
         errorOutput: '',
         consoleOutput: '',
         isSolved: null,
         uuid: '',
-        executionTime: -1
+        executionTime: -1,
       })
     })
 
@@ -39,7 +41,9 @@ namespace MessageCreator {
     exerciseCreatorController: ExerciseCreatorController,
     type: CodeRunnerType
   ): ExerciseTestToRunMesseage {
-    console.log("exerciseCreatorController: "+JSON.stringify(exerciseCreatorController))
+    console.log(
+      'exerciseCreatorController: ' + JSON.stringify(exerciseCreatorController)
+    )
     const exerciseCreatorControllercopy: ExerciseCreatorController =
       exerciseCreatorController //JSON.parse(JSON.stringify(exerciseCreatorController)) as ExerciseCreatorController;
     return {

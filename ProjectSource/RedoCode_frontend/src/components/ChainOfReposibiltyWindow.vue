@@ -1,11 +1,7 @@
 <template>
-  <div class="floatWindowContainer"  v-if="shouldBevisable">
+  <div class="floatWindowContainer" v-if="shouldBevisable">
     <div class="floatWindow">
-      <Timeline
-        :value="chain"
-        class="chainContainer"
-        align="left"
-      >
+      <Timeline :value="chain" class="chainContainer" align="left">
         <template #marker="slotProps" class="iconContainer">
           <div v-if="slotProps.item.status === 'PENDING'" class="iconContainer">
             <IconStatusPending
@@ -56,32 +52,32 @@
   import IconStatusSuccess from '@/assets/icons/IconStatusSuccess.vue'
   import IconStatusFail from '@/assets/icons/IconStatusFail.vue'
   import IconStatusPending from '@/assets/icons/IconStatusPending.vue'
-import ExecutionChainController,{type ExecutionChainControls} from '@/controllers/ExecutionChainController'
-import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
+  import ExecutionChainController, {
+    type ExecutionChainControls,
+  } from '@/controllers/ExecutionChainController'
+  import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
   const executionChainStore = useExecutionChainStore()
 
-  const onVisibiltyUpdate=(state: ExecutionChainController)=>{
-    console.log("updare: "+JSON.stringify(state._executionChain))
-    chainData.value=[...state.executionChain];
-    shouldBevisable.value=state.shouldBeVisible;
-    canBeclosed.value=state.closeReady;
-    executionChainStore.lock=state.shouldBeVisible
+  const onVisibiltyUpdate = (state: ExecutionChainController) => {
+    console.log('updare: ' + JSON.stringify(state._executionChain))
+    chainData.value = [...state.executionChain]
+    shouldBevisable.value = state.shouldBeVisible
+    canBeclosed.value = state.closeReady
+    executionChainStore.lock = state.shouldBeVisible
   }
-  executionChainStore.executionChainController.onVisibiltyUpdate=onVisibiltyUpdate;
-  console.log("seted")
+  executionChainStore.executionChainController.onVisibiltyUpdate =
+    onVisibiltyUpdate
+  console.log('seted')
 
+  const shouldBevisable = ref(false)
+  const canBeclosed = ref(false)
+  const chainData: Ref<ChainNodeStatus[]> = ref([])
 
-  const shouldBevisable=ref(false);
-  const canBeclosed=ref(false);
-  const chainData:Ref<ChainNodeStatus[]> = ref([]);
-
-const chain = computed(() => chainData.value);
-
+  const chain = computed(() => chainData.value)
 
   const onCloseButton = () => {
     console.log('ExecutionResponses close')
     executionChainStore.executionChainController.close()
-
   }
 </script>
 
