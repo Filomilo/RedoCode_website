@@ -25,6 +25,14 @@
       v-if="!isDataResult"
       style="display: flex; overflow: hidden"
     >
+    <div class="executionTimeContainer"
+    v-if="executionTimeString.length>0"
+    >
+      <p>
+        {{ executionTimeString }}
+      </p>
+        
+    </div>
       <div
         class="ConsoleResultConsoleCOntainerText"
         style="color: red; height: fit-content; max-height: fit-content"
@@ -51,6 +59,7 @@
       <Button
         class="submitButton"
         :disabled="!SubmitAccess"
+
         @click="(event: MouseEvent)=>{ if (props.onSubmit!==undefined)props.onSubmit()}"
         id="coderunner-submit-button"
       >
@@ -80,6 +89,7 @@
     },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
     SubmitAccess: { type: Boolean, required: true },
+    ExecutionTime: {type: Number, required: false}
   })
   console.log('CodeReults props: ' + JSON.stringify(props))
 
@@ -108,6 +118,10 @@
       : ''
   })
 
+  const executionTimeString=computed<string>(()=>{
+      return props.ExecutionTime===undefined||props.ExecutionTime===null||props.ExecutionTime<0?"":props.ExecutionTime+" ms";
+  })
+
   const isCorrect = computed<boolean>(() => {
     return false
   })
@@ -117,5 +131,25 @@
   .disabled {
     opacity: 0.5;
     pointer-events: none;
+  }
+
+
+  .executionTimeContainer{
+    border-bottom:  0.1rem solid white;
+    color: white;
+    justify-content: center;
+    justify-items: center;
+    display: flex;
+    align-items: center;
+    align-content: center;
+  }
+
+
+  
+  .executionTimeContainer p{
+    background-attachment: red;
+    margin: 0.3rem;
+
+    
   }
 </style>

@@ -9,4 +9,5 @@ export default interface ProgramResult {
   consoleOutput: ConsoleOutput
   variables: Vars
   variablesInput: Vars | null
+  executionTime: number
 }

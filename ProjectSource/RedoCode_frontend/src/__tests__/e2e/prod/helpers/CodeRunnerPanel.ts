@@ -42,18 +42,18 @@ namespace CodeRunnerPanel {
   export namespace Tests {
     export function shouldAllTestFail(amountOfTest: number) {
       cy.get(
-        '#TestResultCard' + '0' + ' > div.testValidationSection.wrong'
+        '#testResultStatus_' + '0'
       ).should('have.text', 'Failed')
       for (let index = 1; index < amountOfTest; index++) {
         cy.get(
-          '#TestResultCard' + index + ' > div.testValidationSection'
+          '#testResultStatus_' + index
         ).should('be.empty')
       }
     }
     export function shouldAllTesCorrect(amountOfTest: number) {
       for (let index = 0; index < amountOfTest; index++) {
         cy.get(
-          '#TestResultCard' + index + ' > div.testValidationSection.correct'
+          '#testResultStatus_' + index
         ).should('have.text', 'Correct')
       }
     }
