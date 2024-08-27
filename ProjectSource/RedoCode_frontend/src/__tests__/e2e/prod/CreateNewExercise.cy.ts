@@ -38,27 +38,22 @@ describe('Create new exercise', () => {
       '}'
 
     const jsSolution =
-      'function solution(input) {\n' +
-      '    let result = "";\n' +
-      '    const shift = 7;\n' +
-      '\n' +
-      '    for (let i = 0; i < input.length; i++) {\n' +
-      '        let c = input[i];\n' +
-      '        if (/[a-zA-Z]/.test(c)) {\n' +
-      "            let base = c >= 'a' && c <= 'z' ? 'a'.charCodeAt(0) : 'A'.charCodeAt(0);\n" +
-      '            result += String.fromCharCode((c.charCodeAt(0) - base + shift) % 26 + base);\n' +
-      '        } else {\n' +
-      '            result += c;\n' +
-      '        }\n' +
-      '    }\n' +
-      '\n' +
-      '    return result;\n' +
-      '}\n' +
-      '\n' +
-      '// Example usage:\n' +
-      'const input = "Hello, World!";\n' +
-      'const output = solution(input);\n' +
-      'console.log(output); // Outputs: "Olssv, Dvysk!"'
+      `function solution(input) {
+          let result = "";
+          const shift = 7;
+
+          for (let i = 0; i < input.length; i++) {
+              let c = input[i];
+              if (/[a-zA-Z]/.test(c)) {
+                  let base = c >= 'a' && c <= 'z' ? 'a'.charCodeAt(0) : 'A'.charCodeAt(0);
+                  result += String.fromCharCode((c.charCodeAt(0) - base + shift) % 26 + base);
+              } else {
+                  result += c;
+              }
+          }
+     
+          return result;
+      }`
 
     const midpoint = Math.ceil(jsSolution.length / 2)
 

@@ -42,6 +42,7 @@ export default class GroupOfTestsController {
       consoleOutput: '',
       isSolved: null,
       uuid: crypto.randomUUID(),
+      executionTime:-1
     })
     console.log('added: ' + JSON.stringify(this.tests))
   }

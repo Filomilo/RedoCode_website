@@ -53,7 +53,7 @@
               )
             }
           "
-          :SubmitAccess="codeRunnerStore.exerciseCreatorController.isSolved"
+          :SubmitAccess="submitValidation"
         />
       </TabPanel>
     </TabView>
@@ -144,6 +144,9 @@
   })
   const testValidation = computed(() => {
     return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
+  })
+  const submitValidation = computed(() => {
+    return codeRunnerStore.exerciseCreatorController.isSolved
   })
 </script>
 

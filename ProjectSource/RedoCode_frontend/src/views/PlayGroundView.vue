@@ -7,6 +7,7 @@
       :onRunCode="onRunCode"
       :onResults="onCodeResult"
       :ManualTests="codeRunnerStore.playGroundRunnerCotroller.consoleOutput"
+      :ExecutionTime="codeRunnerStore.playGroundRunnerCotroller.executionTime"
     />
   </main>
 </template>

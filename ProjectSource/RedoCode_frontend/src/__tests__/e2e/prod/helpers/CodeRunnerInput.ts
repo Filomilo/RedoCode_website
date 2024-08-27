@@ -28,7 +28,7 @@ namespace CodeRunnerInput {
   }
 
   export function moveToEndOfCodeRunner() {
-    if (Cypress.platform === 'linux') cy.wait(1000)
+    cy.wait(1000)
     cy.get(codeEditorSequance).focus()
     cy.get(codeEditorSequance).type('{moveToEnd}', { force: true }).debug()
     cy.get(codeEditorSequance).type('{moveToEnd}', { force: true }).debug()

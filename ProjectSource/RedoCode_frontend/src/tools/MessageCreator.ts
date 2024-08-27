@@ -10,25 +10,25 @@ import ExerciseTest from '@/types/ExcericseTest'
 import VarType from '@/types/VarType'
 
 namespace MessageCreator {
+  // eslint-disable-next-line no-inner-declarations
   function testStringParser(
     tests: ExerciseTest[],
     inputType: VarType,
     outputType: VarType
   ): ExerciseTest[] {
-    let newTest: ExerciseTest[] = []
+    const newTest: ExerciseTest[] = []
     tests.forEach((x: ExerciseTest) => {
       newTest.push({
-        input:
-          inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
+        input: inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
         output: null,
-        expectedOutput:
-          outputType === 'SINGLE_STRING'
-            ? JSON.stringify(x.expectedOutput)
-            : x.expectedOutput,
+        expectedOutput: outputType === 'SINGLE_STRING'
+          ? JSON.stringify(x.expectedOutput)
+          : x.expectedOutput,
         errorOutput: '',
         consoleOutput: '',
         isSolved: null,
         uuid: '',
+        executionTime: -1
       })
     })
 
@@ -39,6 +39,7 @@ namespace MessageCreator {
     exerciseCreatorController: ExerciseCreatorController,
     type: CodeRunnerType
   ): ExerciseTestToRunMesseage {
+    console.log("exerciseCreatorController: "+JSON.stringify(exerciseCreatorController))
     const exerciseCreatorControllercopy: ExerciseCreatorController =
       exerciseCreatorController //JSON.parse(JSON.stringify(exerciseCreatorController)) as ExerciseCreatorController;
     return {
@@ -63,14 +64,14 @@ namespace MessageCreator {
         exerciseCreatorControllercopy.specialCharacterInput,
       breakCharacterInupt: exerciseCreatorControllercopy.breakCharacterInupt,
       spaceInupt: exerciseCreatorControllercopy.spaceInupt,
-      executionTime: exerciseCreatorControllercopy.executionTime,
+      executionTime: exerciseCreatorControllercopy.timeForExecutionMs,
     }
   }
 
   export function createExercsieCreatorValidationMesage(
     exerciseCreatorController: ExerciseCreatorController
   ): ExercsieCreatorValidationMesage {
-    let parsedTests: ExerciseTest[] = testStringParser(
+    const parsedTests: ExerciseTest[] = testStringParser(
       exerciseCreatorController.getSingleRowOfManualTests,
       exerciseCreatorController.inputType,
       exerciseCreatorController.outputType
@@ -99,7 +100,7 @@ namespace MessageCreator {
       specialCharacterInput: exerciseCreatorController.specialCharacterInput,
       breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
       spaceInupt: exerciseCreatorController.spaceInupt,
-      executionTime: exerciseCreatorController.executionTime,
+      executionTime: exerciseCreatorController.timeForExecutionMs,
     }
     return exercsieCreatorValidationMesage
   }

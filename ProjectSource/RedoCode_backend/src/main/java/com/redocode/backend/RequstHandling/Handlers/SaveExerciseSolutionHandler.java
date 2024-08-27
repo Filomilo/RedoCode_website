@@ -2,9 +2,11 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeResultsRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
+import com.redocode.backend.RequstHandling.Requests.SaveExerciseSolutionRequest;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
@@ -26,11 +28,18 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
 
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
+
     this.nodeUpdate(
         request, "Saving solution to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+    assert request instanceof IExerciseIdRequest;
+    assert request instanceof ISolutionCodesRequest;
+    assert request instanceof ICodeResultsRequest;
 
     IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest) request;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
+    ICodeResultsRequest codeResultsRequest=(ICodeResultsRequest) request;
+
+
     CODE_RUNNER_TYPE codeRunnerType =
         solutionCodesRequest.getSolutionCodes().keySet().stream().findFirst().get();
     String code = solutionCodesRequest.getSolutionCodes().get(codeRunnerType);
@@ -38,11 +47,15 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
         programmingLanguageRepository.findByName(
             RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(codeRunnerType));
 
+
+    Long avgExecutionTime= (long) Math.ceil(codeResultsRequest.getProgramResults().stream().mapToLong(x->x.getExecutionTime().longValue()).average().orElse(-1.0));
+
     SolutionPrograms solutionProgram =
         SolutionPrograms.builder()
             .code(code)
             .language(programmingLanguage)
             .excersize(exerciseRepository.getReferenceById(exerciseIdRequest.getIdOfExercise()))
+                .AvgExecutionTime(avgExecutionTime)
             .build();
     solutionProgramsRepository.save(solutionProgram);
     this.nodeUpdate(request, "Saved solution", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);

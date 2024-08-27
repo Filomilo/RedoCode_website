@@ -21,6 +21,7 @@ describe('MessageCreaator', () => {
       consoleOutput: '',
       isSolved: null,
       uuid: '',
+      executionTime: -1
     }
 
     const testController = new TestsController()
@@ -30,7 +31,7 @@ describe('MessageCreaator', () => {
       JS_RUNNER: testController,
     }
 
-    let exerciseCreatorController: ExerciseCreatorController =
+    const exerciseCreatorController: ExerciseCreatorController =
       new ExerciseCreatorController()
     exerciseCreatorController.languages = [
       CodeRunnerType.CPP_RUNNER,

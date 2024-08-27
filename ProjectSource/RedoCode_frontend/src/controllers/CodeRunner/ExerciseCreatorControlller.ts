@@ -66,7 +66,6 @@ export default class ExerciseCreatorController
   spaceInupt!: boolean
   solutionCodes!: StringIndexed
   manualTestsSolutions!: TestsIndexed
-  executionTime!: number
   isSolved!: boolean
 
   //#endregion
@@ -228,7 +227,10 @@ export default class ExerciseCreatorController
   }
 
   public updateTests(results: ProgramResult[], langauge: CodeRunnerType) {
+    console.log("---------------------------------------------------\n")
+    console.log('create test langauge update: ' + JSON.stringify(langauge))
     console.log('create test rtesult update: ' + JSON.stringify(results))
+    console.log("---------------------------------------------------\n")
     const processedResults = this.processCodeResultLoad(results, {
       tests: this.manualTestsSolutions[langauge]!.tests,
       autoTests: this.manualTestsSolutions[langauge]!.autoTests,

@@ -68,12 +68,13 @@
             :ManualTests="props.ManualTests"
             :AutoTests="props.AutoTests"
             :SubmitAccess="props.SubmitAccess"
+            :ExecutionTime="props.ExecutionTime"
           />
         </SplitterPanel>
       </Splitter>
     </div>
     <div v-else style="height: 100%">
-      {{ JSON.stringify(props.languageChoices) }}
+
       <ConnectToCodeRunnerPanel
         :languageChoicesSelection="props.languageChoices"
       />
@@ -138,6 +139,7 @@
     },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
     SubmitAccess: { type: Boolean, required: false },
+    ExecutionTime:{type: Number, required: false}
   })
   //#endregion
 
