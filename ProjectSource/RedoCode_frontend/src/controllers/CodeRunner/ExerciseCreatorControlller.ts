@@ -66,7 +66,6 @@ export default class ExerciseCreatorController
   spaceInupt!: boolean
   solutionCodes!: StringIndexed
   manualTestsSolutions!: TestsIndexed
-  executionTime!: number
   isSolved!: boolean
 
   //#endregion
