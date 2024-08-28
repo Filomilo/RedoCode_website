@@ -5,6 +5,7 @@ namespace ExecutionChain {
   }
 
   function getChainNode(i: number): Cypress.Chainable {
+
     return cy.get(
       'html > div.floatWindowContainer > div > div > div:nth-child(' +
         i.toString() +
@@ -14,11 +15,13 @@ namespace ExecutionChain {
 
   export function checkSuccses(states: ChainNodeType[]) {
     let i: number = 1
+    cy.screenshot();
     states.forEach((x: ChainNodeType, index: number) => {
       getChainNode(index + 1)
         .find('.description')
         .contains(x.desc)
     })
+    cy.screenshot();
   }
 
   export function close() {

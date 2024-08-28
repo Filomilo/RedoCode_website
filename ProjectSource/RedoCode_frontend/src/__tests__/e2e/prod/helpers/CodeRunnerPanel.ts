@@ -8,6 +8,10 @@ namespace CodeRunnerPanel {
       cy.get('#code-preview').invoke('text').should('contain', code)
     }
 
+    export function codeRunnerShouldBeEmpty() {
+      cy.get('#code-preview').invoke('text').should('be.empty')
+    }
+
     export function clearCodeRunner() {
       if (Cypress.platform === 'linux') {
         cy.wait(1000)
@@ -20,6 +24,7 @@ namespace CodeRunnerPanel {
         cy.get(codeEditorSequance).type(backspaces, { force: true })
         cy.get(codeEditorSequance).clear()
       }
+      codeRunnerShouldBeEmpty();
     }
 
     export function inputToCodeRunner(txt: string) {
@@ -30,6 +35,8 @@ namespace CodeRunnerPanel {
         }
       } else {
         cy.get(codeEditorSequance).type(txt, { force: true })
+        // cy.get(codeEditorSequance).debug()
+        cy.screenshot()
       }
     }
 
