@@ -68,7 +68,7 @@ class ExecutionChainController implements ExecutionChainControls {
       const interval = 50
       const checkArraySize = () => {
         if (
-          this.validateUpdate(update.stepUpdate)
+          this.validateUpdate(update.stepUpdate,update)
          ) {
           resolve()
         } else if (timeout <= 0) {
@@ -83,8 +83,8 @@ class ExecutionChainController implements ExecutionChainControls {
   }
 
   private validateUpdate(stepUpdate: number, updateStatus: ExecutionResponseStatusUpdate ):boolean{
-    if(this.executionChain.length>0)
-    return true;
+    if(this.executionChain===undefined || this.executionChain===null || this.executionChain.length==0)
+    return false;
     if(
     this.executionChain[stepUpdate].status === 'PENDING' 
     &&
@@ -122,11 +122,14 @@ class ExecutionChainController implements ExecutionChainControls {
         this.executionChain[update.stepUpdate].status = update.lvlStatus
         console.log('UPdate check if can close: ' + JSON.stringify(update))
         if (this.isAllSolved || update.lvlStatus === 'FAILED') {
+          console.log('UPdate check if can close: ' + JSON.stringify(update)+"rESULRED IN TRUE")
           this._closeReady = true
         }
+        console.log('UPdate check if can close: ' + JSON.stringify(update)+"rESULRED IN fasle")
         this.onVisibiltyUpdate(this)
       })
       .catch(() => {
+        console.log('UPdate check if can close: ' + JSON.stringify(update)+"rESULRED IN TRUE")
         this._closeReady = true
         this.onVisibiltyUpdate(this)
       })

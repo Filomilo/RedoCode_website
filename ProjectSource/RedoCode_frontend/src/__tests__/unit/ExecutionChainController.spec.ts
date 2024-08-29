@@ -6,9 +6,10 @@ import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeSt
 import ExecutionChainScheme from '@/types/ApiMesseages/ExecutionResponses/ExecutionChainScheme'
 import ExecutionResponseStatusUpdate from '@/types/ApiMesseages/ExecutionResponses/ExecutionResponseStatusUpdate'
 import exp from 'constants'
-import { describe, it, expect } from 'vitest'
+import {Mutex, MutexInterface, Semaphore, SemaphoreInterface, withTimeout} from 'async-mutex';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { waitFor } from '@testing-library/vue'
-describe('Exercsie creation controller tests', () => {
+describe('Exercsie creation controller tests', async () => {
   const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     '',
@@ -79,22 +80,37 @@ describe('Exercsie creation controller tests', () => {
       messageType: 'STATUS_UPDATE',
     },
   ]
-  const executionChainController: ExecutionChainController =
+
+  let executionChainController: ExecutionChainController =
     new ExecutionChainController(stompApiSubsciptionContorlle)
+  beforeEach(() => {
+    executionChainController = new ExecutionChainController(stompApiSubsciptionContorlle);
+  });
 
-  it('loading chain Scheeme', () => {
-    executionChainController.loadChainScheme(ExecutionChainTemplate)
-    for (let index = 0; index < ExecutionChainTemplate.levels.length; index++) {
-      expect(executionChainController.executionChain[index]).toBe(
-        ExecutionChainTemplate.levels[index]
-      )
-    }
-
-    expect(executionChainController.shouldBeVisible).toBeTruthy()
-    expect(executionChainController.closeReady).toBeFalsy()
+  afterEach(() => {
+    executionChainController.close();
+  });
+  const mutex = new Mutex();
+  mutex
+  .runExclusive(() => {
+    it('loading chain Scheeme', () => {
+      executionChainController.loadChainScheme(ExecutionChainTemplate)
+      for (let index = 0; index < ExecutionChainTemplate.levels.length; index++) {
+        expect(executionChainController.executionChain[index]).toBe(
+          ExecutionChainTemplate.levels[index]
+        )
+      }
+  
+      expect(executionChainController.shouldBeVisible).toBeTruthy()
+      expect(executionChainController.closeReady).toBeFalsy()
+    })   
   })
 
-  it('load updates in correct order', async () => {
+  mutex
+  .runExclusive(() => {
+     it('load updates in correct order', async () => {
+    executionChainController.close();
+    executionChainController.loadChainScheme(ExecutionChainTemplate)
     for (let index = 0; index < CorrectUpdates.length; index++) {
       const nodeIndex = Math.floor(index / 2)
       const nodeNum = nodeIndex - 1
@@ -112,16 +128,25 @@ describe('Exercsie creation controller tests', () => {
       else expect(executionChainController.closeReady).toBeFalsy()
     }
   })
+  })
 
-  it('reset a dissaper after closing', () => {
+
+  mutex
+  .runExclusive(() => {
+    it('reset a dissaper after closing', () => {
     executionChainController.close()
     expect(executionChainController.executionChain).toHaveLength(0)
     expect(executionChainController.closeReady).toBeFalsy()
     expect(executionChainController.shouldBeVisible).toBeFalsy()
   })
+  })
 
-  it('load correct but in wrong order', async () => {
-    executionChainController.close()
+  mutex
+  .runExclusive(() => {
+   it('load correct but in wrong order', async () => {
+    
+    const executionChainController: ExecutionChainController =
+    new ExecutionChainController(stompApiSubsciptionContorlle)
     executionChainController.loadChainScheme(ExecutionChainTemplate)
     expect(executionChainController.executionChain).toBe(
       ExecutionChainTemplate.levels
@@ -154,7 +179,7 @@ describe('Exercsie creation controller tests', () => {
       expect(executionChainController.closeReady).toBeFalsy()
     }
     await executionChainController.updateStatus(CorrectUpdates[0])
-
+    await sleep(1000)
     await waitFor(() => {
       expect(executionChainController.closeReady).toBeTruthy()
     })
@@ -175,8 +200,11 @@ describe('Exercsie creation controller tests', () => {
 
     executionChainController.close()
   })
+  })
 
-  it('load But late chain', async () => {
+  mutex
+  .runExclusive(() => {
+    it('load But late chain', async () => {
     executionChainController.close()
     expect(executionChainController.executionChain).toHaveLength(0)
 
@@ -213,8 +241,11 @@ describe('Exercsie creation controller tests', () => {
 
     executionChainController.close()
   })
+  })
 
-  it('execution Failed', async () => {
+  mutex
+  .runExclusive(() => {
+   it('execution Failed', async () => {
     executionChainController.close()
     expect(executionChainController.executionChain).toHaveLength(0)
     executionChainController.loadChainScheme(ExecutionChainTemplate)
@@ -237,4 +268,7 @@ describe('Exercsie creation controller tests', () => {
       )
     }
   })
+  })
+
+  
 })
