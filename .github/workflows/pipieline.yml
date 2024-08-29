@@ -167,7 +167,7 @@ jobs:
       - name: run test
         working-directory: ./ProjectSource/RedoCode_frontend
         run: |
-          docker run --network="host" -v $PWD:/e2e  -w /e2e --entrypoint "cypress run --e2e -C config/cypress-dev.config.ts"  cypress/included:12.3.0 
+          docker run --network="host" -v $PWD:/e2e -w /e2e --entrypoint cypress cypress/included:12.3.0 run --e2e -C config/cypress-dev.config.ts
       - name: file testing
         working-directory: ./ProjectSource/RedoCode_frontend
         if: always()
