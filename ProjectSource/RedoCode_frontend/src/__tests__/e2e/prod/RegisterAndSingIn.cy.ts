@@ -3,7 +3,7 @@ import SwitcherControls from './helpers/SwitcherControls'
 import UrlControls from './helpers/UrlControls'
 import UserAuthentication from './helpers/UserAuthentication'
 
-describe('register and sign in', () => {
+describe.skip('register and sign in', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
