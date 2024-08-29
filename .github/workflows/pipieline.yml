@@ -163,12 +163,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
           npm install cypress
-          npm install cypress@latest cypress-terminal-report@latest
           npm install
       - name: run test
         working-directory: ./ProjectSource/RedoCode_frontend
         run: |
-              docker run --network="host" -v $PWD:/e2e -w /e2e cypress/included:12.3.0 cypress open --config-file=config/cypress-prod.config.ts
+          docker run --network="host" -v $PWD:/e2e  -w /e2e --entrypoint "yarn test:prod:e2e"  cypress/included:12.3.0 
       - name: file testing
         working-directory: ./ProjectSource/RedoCode_frontend
         if: always()
