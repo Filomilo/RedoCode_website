@@ -187,6 +187,7 @@ describe('Exercsie creation controller tests', () => {
       console.log(CorrectUpdates.length + ' Update: ' + index)
       console.log(' nodeIndex: ' + nodeIndex)
     }
+    sleep(1000);
     executionChainController.loadChainScheme(ExecutionChainTemplate)
     expect(executionChainController.executionChain).toBe(
       ExecutionChainTemplate.levels
@@ -197,6 +198,9 @@ describe('Exercsie creation controller tests', () => {
       const nodeNum = nodeIndex - 1
       await executionChainController.updateStatus(CorrectUpdates[index])
       console.log('Finsehs')
+      await waitFor(() => {
+       
+  
       expect(
         executionChainController.executionChain[nodeIndex].processingMessage
       ).toBe(CorrectUpdates[index].message)
@@ -204,6 +208,7 @@ describe('Exercsie creation controller tests', () => {
         CorrectUpdates[index].lvlStatus
       )
       expect(executionChainController.shouldBeVisible).toBeTruthy()
+    })
     }
 
     executionChainController.close()

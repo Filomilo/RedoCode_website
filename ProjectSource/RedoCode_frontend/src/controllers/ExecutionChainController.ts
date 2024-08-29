@@ -62,19 +62,14 @@ class ExecutionChainController implements ExecutionChainControls {
     update: ExecutionResponseStatusUpdate,
     timeout: number
   ) => {
-    console.log('CHAIN waiting for' + update)
+    console.log('CHAIN waiting for' + JSON.stringify(update))
     return new Promise<void>((resolve, reject) => {
       // resolve();
       const interval = 50
       const checkArraySize = () => {
         if (
-          (this.executionChain[update.stepUpdate].status === 'PENDING' &&
-            update.lvlStatus === 'RUNNING') ||
-          (this.executionChain[update.stepUpdate].status === 'RUNNING' &&
-            (update.lvlStatus === 'FAILED' ||
-              update.lvlStatus === 'SUCCESS')) ||
-          update.lvlStatus === 'FAILED'
-        ) {
+          this.validateUpdate(update.stepUpdate)
+         ) {
           resolve()
         } else if (timeout <= 0) {
           reject(new Error('Error receiving messages'))
@@ -87,6 +82,29 @@ class ExecutionChainController implements ExecutionChainControls {
     })
   }
 
+  private validateUpdate(stepUpdate: number, updateStatus: ExecutionResponseStatusUpdate ):boolean{
+    if(this.executionChain.length>0)
+    return true;
+    if(
+    this.executionChain[stepUpdate].status === 'PENDING' 
+    &&
+    updateStatus.lvlStatus === 'RUNNING'
+    )
+    return true;
+
+
+    if(this.executionChain[stepUpdate].status === 'RUNNING' &&
+     (updateStatus.lvlStatus === 'FAILED' ||
+     updateStatus.lvlStatus === 'SUCCESS'))
+     return true;
+
+     
+     if(    updateStatus.lvlStatus === 'FAILED')
+     return true;
+
+    return false;
+  }
+
   public get isAllSolved() {
     return (
       this.executionChain.filter(x => x.status === 'SUCCESS').length ===
@@ -96,7 +114,7 @@ class ExecutionChainController implements ExecutionChainControls {
 
   public updateStatus = async (update: ExecutionResponseStatusUpdate) => {
     console.log('CHAIN  udpate:' + JSON.stringify(update))
-    this.waitForScheme(update, 1000)
+    this.waitForScheme(update, 5000)
       .then(() => {
         console.log('_______________UPDATE: ' + JSON.stringify(update))
         this.executionChain[update.stepUpdate].processingMessage =
