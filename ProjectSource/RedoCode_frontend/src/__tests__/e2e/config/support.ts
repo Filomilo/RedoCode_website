@@ -1,2 +1,2 @@
-  console.log("------------SUpport file------------------")
+console.log("------------SUpport file------------------")
 require('cypress-terminal-report/src/installLogsCollector')();

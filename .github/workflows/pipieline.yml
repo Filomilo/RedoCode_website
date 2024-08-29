@@ -187,3 +187,8 @@ jobs:
         with:
           name: cypress-videos
           path: ./ProjectSource/RedoCode_frontend/cypress/videos
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-logs
+          path: ./ProjectSource/RedoCode_frontend/logs

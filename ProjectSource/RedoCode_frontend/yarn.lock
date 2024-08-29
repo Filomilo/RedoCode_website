@@ -2700,6 +2700,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cypress-terminal-report@npm:^6.1.2":
+  version: 6.1.2
+  resolution: "cypress-terminal-report@npm:6.1.2"
+  dependencies:
+    chalk: "npm:^4.0.0"
+    fs-extra: "npm:^10.1.0"
+    process: "npm:^0.11.10"
+    semver: "npm:^7.5.4"
+    tv4: "npm:^1.3.0"
+  peerDependencies:
+    cypress: ">=10.0.0"
+  checksum: 855ffc841df61bb71b0fde2c652e3e6f913ab1f48a24e8e88422a3fa4442505913c4f9ab661becbf894665538dc45598ec1030280fd71b9263e686ce46c1f1bc
+  languageName: node
+  linkType: hard
+
 "cypress@npm:^13.6.3":
   version: 13.6.4
   resolution: "cypress@npm:13.6.4"
@@ -3744,6 +3759,17 @@ __metadata:
   version: 0.1.7
   resolution: "from@npm:0.1.7"
   checksum: 3aab5aea8fe8e1f12a5dee7f390d46a93431ce691b6222dcd5701c5d34378e51ca59b44967da1105a0f90fcdf5d7629d963d51e7ccd79827d19693bdcfb688d4
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "fs-extra@npm:10.1.0"
+  dependencies:
+    graceful-fs: "npm:^4.2.0"
+    jsonfile: "npm:^6.0.1"
+    universalify: "npm:^2.0.0"
+  checksum: 5f579466e7109719d162a9249abbeffe7f426eb133ea486e020b89bc6d67a741134076bf439983f2eb79276ceaf6bd7b7c1e43c3fd67fe889863e69072fb0a5e
   languageName: node
   linkType: hard
 
@@ -7045,6 +7071,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tv4@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "tv4@npm:1.3.0"
+  checksum: 714a37d005a902db0099379ed473c4780f6473f31c223cb0f023640cb32e0be9957cf2c95add8ec07665c6a699d45e6fd5c6ef49162b4e92000038b13fd8b759
+  languageName: node
+  linkType: hard
+
 "tweetnacl@npm:^0.14.3, tweetnacl@npm:~0.14.0":
   version: 0.14.5
   resolution: "tweetnacl@npm:0.14.5"
@@ -7790,6 +7823,7 @@ __metadata:
     bootstrap: "npm:^5.3.2"
     chart.js: "npm:^4.4.2"
     cypress: "npm:^13.6.3"
+    cypress-terminal-report: "npm:^6.1.2"
     eslint: "npm:^8.49.0"
     eslint-plugin-cypress: "npm:^2.15.1"
     eslint-plugin-vue: "npm:^9.17.0"
