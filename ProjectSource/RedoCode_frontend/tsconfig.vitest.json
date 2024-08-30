@@ -1,7 +1,8 @@
 {
   "extends": "./tsconfig.app.json",
-  "exclude": [],
+  "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
+    "esModuleInterop": true,
     "composite": true,
     "verbatimModuleSyntax": false,
     "lib": [],
