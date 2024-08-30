@@ -24,7 +24,7 @@ namespace CodeRunnerPanel {
         cy.get(codeEditorSequance).type(backspaces, { force: true })
         cy.get(codeEditorSequance).clear()
       }
-      codeRunnerShouldBeEmpty();
+      codeRunnerShouldBeEmpty()
     }
 
     export function inputToCodeRunner(txt: string) {

@@ -67,9 +67,7 @@ class ExecutionChainController implements ExecutionChainControls {
       // resolve();
       const interval = 50
       const checkArraySize = () => {
-        if (
-          this.validateUpdate(update.stepUpdate,update)
-         ) {
+        if (this.validateUpdate(update.stepUpdate, update)) {
           resolve()
         } else if (timeout <= 0) {
           reject(new Error('Error receiving messages'))
@@ -82,27 +80,32 @@ class ExecutionChainController implements ExecutionChainControls {
     })
   }
 
-  private validateUpdate(stepUpdate: number, updateStatus: ExecutionResponseStatusUpdate ):boolean{
-    if(this.executionChain===undefined || this.executionChain===null || this.executionChain.length==0)
-    return false;
-    if(
-    this.executionChain[stepUpdate].status === 'PENDING' 
-    &&
-    updateStatus.lvlStatus === 'RUNNING'
+  private validateUpdate(
+    stepUpdate: number,
+    updateStatus: ExecutionResponseStatusUpdate
+  ): boolean {
+    if (
+      this.executionChain === undefined ||
+      this.executionChain === null ||
+      this.executionChain.length == 0
     )
-    return true;
+      return false
+    if (
+      this.executionChain[stepUpdate].status === 'PENDING' &&
+      updateStatus.lvlStatus === 'RUNNING'
+    )
+      return true
 
+    if (
+      this.executionChain[stepUpdate].status === 'RUNNING' &&
+      (updateStatus.lvlStatus === 'FAILED' ||
+        updateStatus.lvlStatus === 'SUCCESS')
+    )
+      return true
 
-    if(this.executionChain[stepUpdate].status === 'RUNNING' &&
-     (updateStatus.lvlStatus === 'FAILED' ||
-     updateStatus.lvlStatus === 'SUCCESS'))
-     return true;
+    if (updateStatus.lvlStatus === 'FAILED') return true
 
-     
-     if(    updateStatus.lvlStatus === 'FAILED')
-     return true;
-
-    return false;
+    return false
   }
 
   public get isAllSolved() {
@@ -122,14 +125,26 @@ class ExecutionChainController implements ExecutionChainControls {
         this.executionChain[update.stepUpdate].status = update.lvlStatus
         console.log('UPdate check if can close: ' + JSON.stringify(update))
         if (this.isAllSolved || update.lvlStatus === 'FAILED') {
-          console.log('UPdate check if can close: ' + JSON.stringify(update)+"rESULRED IN TRUE")
+          console.log(
+            'UPdate check if can close: ' +
+              JSON.stringify(update) +
+              'rESULRED IN TRUE'
+          )
           this._closeReady = true
         }
-        console.log('UPdate check if can close: ' + JSON.stringify(update)+"rESULRED IN fasle")
+        console.log(
+          'UPdate check if can close: ' +
+            JSON.stringify(update) +
+            'rESULRED IN fasle'
+        )
         this.onVisibiltyUpdate(this)
       })
       .catch(() => {
-        console.log('UPdate check if can close: ' + JSON.stringify(update)+"rESULRED IN TRUE")
+        console.log(
+          'UPdate check if can close: ' +
+            JSON.stringify(update) +
+            'rESULRED IN TRUE'
+        )
         this._closeReady = true
         this.onVisibiltyUpdate(this)
       })

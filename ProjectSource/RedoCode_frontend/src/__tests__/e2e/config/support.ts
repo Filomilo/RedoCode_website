@@ -1,4 +1,4 @@
-import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
+import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector'
 
-console.log("------------SUpport file------------------")
-installLogsCollector();
+console.log('------------SUpport file------------------')
+installLogsCollector()

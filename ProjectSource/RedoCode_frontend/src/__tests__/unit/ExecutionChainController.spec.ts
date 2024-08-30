@@ -6,7 +6,13 @@ import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeSt
 import ExecutionChainScheme from '@/types/ApiMesseages/ExecutionResponses/ExecutionChainScheme'
 import ExecutionResponseStatusUpdate from '@/types/ApiMesseages/ExecutionResponses/ExecutionResponseStatusUpdate'
 import exp from 'constants'
-import {Mutex, MutexInterface, Semaphore, SemaphoreInterface, withTimeout} from 'async-mutex';
+import {
+  Mutex,
+  MutexInterface,
+  Semaphore,
+  SemaphoreInterface,
+  withTimeout,
+} from 'async-mutex'
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { waitFor } from '@testing-library/vue'
 describe('Exercsie creation controller tests', async () => {
@@ -84,191 +90,189 @@ describe('Exercsie creation controller tests', async () => {
   let executionChainController: ExecutionChainController =
     new ExecutionChainController(stompApiSubsciptionContorlle)
   beforeEach(() => {
-    executionChainController = new ExecutionChainController(stompApiSubsciptionContorlle);
-  });
+    executionChainController = new ExecutionChainController(
+      stompApiSubsciptionContorlle
+    )
+  })
 
   afterEach(() => {
-    executionChainController.close();
-  });
-  const mutex = new Mutex();
-  mutex
-  .runExclusive(() => {
+    executionChainController.close()
+  })
+  const mutex = new Mutex()
+  mutex.runExclusive(() => {
     it('loading chain Scheeme', () => {
       executionChainController.loadChainScheme(ExecutionChainTemplate)
-      for (let index = 0; index < ExecutionChainTemplate.levels.length; index++) {
+      for (
+        let index = 0;
+        index < ExecutionChainTemplate.levels.length;
+        index++
+      ) {
         expect(executionChainController.executionChain[index]).toBe(
           ExecutionChainTemplate.levels[index]
         )
       }
-  
+
       expect(executionChainController.shouldBeVisible).toBeTruthy()
       expect(executionChainController.closeReady).toBeFalsy()
-    })   
+    })
   })
 
-  mutex
-  .runExclusive(() => {
-     it('load updates in correct order', async () => {
-    executionChainController.close();
-    executionChainController.loadChainScheme(ExecutionChainTemplate)
-    for (let index = 0; index < CorrectUpdates.length; index++) {
-      const nodeIndex = Math.floor(index / 2)
-      const nodeNum = nodeIndex - 1
-      await executionChainController.updateStatus(CorrectUpdates[index])
-      console.log('Finsehs')
-      expect(
-        executionChainController.executionChain[nodeIndex].processingMessage
-      ).toBe(CorrectUpdates[index].message)
-      expect(executionChainController.executionChain[nodeIndex].status).toBe(
-        CorrectUpdates[index].lvlStatus
-      )
-      expect(executionChainController.shouldBeVisible).toBeTruthy()
-      if (index == CorrectUpdates.length - 1)
-        expect(executionChainController.closeReady).toBeTruthy
-      else expect(executionChainController.closeReady).toBeFalsy()
-    }
-  })
+  mutex.runExclusive(() => {
+    it('load updates in correct order', async () => {
+      executionChainController.close()
+      executionChainController.loadChainScheme(ExecutionChainTemplate)
+      for (let index = 0; index < CorrectUpdates.length; index++) {
+        const nodeIndex = Math.floor(index / 2)
+        const nodeNum = nodeIndex - 1
+        await executionChainController.updateStatus(CorrectUpdates[index])
+        console.log('Finsehs')
+        expect(
+          executionChainController.executionChain[nodeIndex].processingMessage
+        ).toBe(CorrectUpdates[index].message)
+        expect(executionChainController.executionChain[nodeIndex].status).toBe(
+          CorrectUpdates[index].lvlStatus
+        )
+        expect(executionChainController.shouldBeVisible).toBeTruthy()
+        if (index == CorrectUpdates.length - 1)
+          expect(executionChainController.closeReady).toBeTruthy
+        else expect(executionChainController.closeReady).toBeFalsy()
+      }
+    })
   })
 
-
-  mutex
-  .runExclusive(() => {
+  mutex.runExclusive(() => {
     it('reset a dissaper after closing', () => {
-    executionChainController.close()
-    expect(executionChainController.executionChain).toHaveLength(0)
-    expect(executionChainController.closeReady).toBeFalsy()
-    expect(executionChainController.shouldBeVisible).toBeFalsy()
-  })
-  })
-
-  mutex
-  .runExclusive(() => {
-   it('load correct but in wrong order', async () => {
-    
-    const executionChainController: ExecutionChainController =
-    new ExecutionChainController(stompApiSubsciptionContorlle)
-    executionChainController.loadChainScheme(ExecutionChainTemplate)
-    expect(executionChainController.executionChain).toBe(
-      ExecutionChainTemplate.levels
-    )
-    expect(executionChainController.shouldBeVisible).toBeTruthy()
-    expect(executionChainController._closeReady).toBeFalsy()
-    for (let index = CorrectUpdates.length - 1; index >= 1; index--) {
-      const nodeIndex = Math.floor(index / 2)
-      const nodeNum = nodeIndex - 1
-      executionChainController.updateStatus(CorrectUpdates[index])
-      console.log(CorrectUpdates.length + ' Update: ' + index)
-      console.log(' nodeIndex: ' + nodeIndex)
-      await sleep(100)
-      expect(
-        executionChainController.executionChain[nodeIndex].processingMessage
-      ).toBe(ExecutionChainTemplate.levels[nodeIndex].processingMessage)
-      expect(executionChainController.executionChain[nodeIndex].status).toBe(
-        ExecutionChainTemplate.levels[nodeIndex].status
-      )
-      console.log(
-        'executionChainController.shouldBeVisible. ' +
-          executionChainController.shouldBeVisible
-      )
-      expect(executionChainController.shouldBeVisible).toBeTruthy()
-      console.log(
-        'executionChainController.closeReady. ' +
-          executionChainController.closeReady
-      )
-
+      executionChainController.close()
+      expect(executionChainController.executionChain).toHaveLength(0)
       expect(executionChainController.closeReady).toBeFalsy()
-    }
-    await executionChainController.updateStatus(CorrectUpdates[0])
-    await sleep(1000)
-    await waitFor(() => {
-      expect(executionChainController.closeReady).toBeTruthy()
+      expect(executionChainController.shouldBeVisible).toBeFalsy()
     })
+  })
 
-    for (let index = 1; index < CorrectUpdates.length; index += 2) {
-      const nodeIndex = Math.floor(index / 2)
-      const nodeNum = nodeIndex - 1
-      await executionChainController.updateStatus(CorrectUpdates[index])
-      console.log('Finsehs')
-      expect(
-        executionChainController.executionChain[nodeIndex].processingMessage
-      ).toBe(CorrectUpdates[index].message)
-      expect(executionChainController.executionChain[nodeIndex].status).toBe(
-        CorrectUpdates[index].lvlStatus
+  mutex.runExclusive(() => {
+    it('load correct but in wrong order', async () => {
+      const executionChainController: ExecutionChainController =
+        new ExecutionChainController(stompApiSubsciptionContorlle)
+      executionChainController.loadChainScheme(ExecutionChainTemplate)
+      expect(executionChainController.executionChain).toBe(
+        ExecutionChainTemplate.levels
       )
       expect(executionChainController.shouldBeVisible).toBeTruthy()
-    }
+      expect(executionChainController._closeReady).toBeFalsy()
+      for (let index = CorrectUpdates.length - 1; index >= 1; index--) {
+        const nodeIndex = Math.floor(index / 2)
+        const nodeNum = nodeIndex - 1
+        executionChainController.updateStatus(CorrectUpdates[index])
+        console.log(CorrectUpdates.length + ' Update: ' + index)
+        console.log(' nodeIndex: ' + nodeIndex)
+        await sleep(100)
+        expect(
+          executionChainController.executionChain[nodeIndex].processingMessage
+        ).toBe(ExecutionChainTemplate.levels[nodeIndex].processingMessage)
+        expect(executionChainController.executionChain[nodeIndex].status).toBe(
+          ExecutionChainTemplate.levels[nodeIndex].status
+        )
+        console.log(
+          'executionChainController.shouldBeVisible. ' +
+            executionChainController.shouldBeVisible
+        )
+        expect(executionChainController.shouldBeVisible).toBeTruthy()
+        console.log(
+          'executionChainController.closeReady. ' +
+            executionChainController.closeReady
+        )
 
-    executionChainController.close()
-  })
-  })
-
-  mutex
-  .runExclusive(() => {
-    it('load But late chain', async () => {
-    executionChainController.close()
-    expect(executionChainController.executionChain).toHaveLength(0)
-
-    for (let index = CorrectUpdates.length - 1; index >= 0; index--) {
-      const nodeIndex = Math.floor(index / 2)
-      const nodeNum = nodeIndex - 1
-      executionChainController.updateStatus(CorrectUpdates[index])
-      console.log(CorrectUpdates.length + ' Update: ' + index)
-      console.log(' nodeIndex: ' + nodeIndex)
-    }
-    sleep(1000);
-    executionChainController.loadChainScheme(ExecutionChainTemplate)
-    expect(executionChainController.executionChain).toBe(
-      ExecutionChainTemplate.levels
-    )
-
-    for (let index = 1; index < CorrectUpdates.length; index += 2) {
-      const nodeIndex = Math.floor(index / 2)
-      const nodeNum = nodeIndex - 1
-      await executionChainController.updateStatus(CorrectUpdates[index])
-      console.log('Finsehs')
+        expect(executionChainController.closeReady).toBeFalsy()
+      }
+      await executionChainController.updateStatus(CorrectUpdates[0])
+      await sleep(1000)
       await waitFor(() => {
-       
-  
-      expect(
-        executionChainController.executionChain[nodeIndex].processingMessage
-      ).toBe(CorrectUpdates[index].message)
-      expect(executionChainController.executionChain[nodeIndex].status).toBe(
-        CorrectUpdates[index].lvlStatus
-      )
-      expect(executionChainController.shouldBeVisible).toBeTruthy()
+        expect(executionChainController.closeReady).toBeTruthy()
+      })
+
+      for (let index = 1; index < CorrectUpdates.length; index += 2) {
+        const nodeIndex = Math.floor(index / 2)
+        const nodeNum = nodeIndex - 1
+        await executionChainController.updateStatus(CorrectUpdates[index])
+        console.log('Finsehs')
+        expect(
+          executionChainController.executionChain[nodeIndex].processingMessage
+        ).toBe(CorrectUpdates[index].message)
+        expect(executionChainController.executionChain[nodeIndex].status).toBe(
+          CorrectUpdates[index].lvlStatus
+        )
+        expect(executionChainController.shouldBeVisible).toBeTruthy()
+      }
+
+      executionChainController.close()
     })
-    }
-
-    executionChainController.close()
-  })
   })
 
-  mutex
-  .runExclusive(() => {
-   it('execution Failed', async () => {
-    executionChainController.close()
-    expect(executionChainController.executionChain).toHaveLength(0)
-    executionChainController.loadChainScheme(ExecutionChainTemplate)
-    expect(executionChainController.executionChain).toBe(
-      ExecutionChainTemplate.levels
-    )
-    await executionChainController.updateStatus({
-      message: 'Failed',
-      lvlStatus: 'FAILED',
-      stepUpdate: 0,
-      messageType: 'STATUS_UPDATE',
-    })
+  mutex.runExclusive(() => {
+    it('load But late chain', async () => {
+      executionChainController.close()
+      expect(executionChainController.executionChain).toHaveLength(0)
 
-    expect(executionChainController.closeReady).toBeTruthy()
-    expect(executionChainController.executionChain[0].status).toBe('FAILED')
-
-    for (let index = 1; index < ExecutionChainTemplate.levels.length; index++) {
-      expect(executionChainController.executionChain[index].status).toBe(
-        ExecutionChainTemplate.levels[index].status
+      for (let index = CorrectUpdates.length - 1; index >= 0; index--) {
+        const nodeIndex = Math.floor(index / 2)
+        const nodeNum = nodeIndex - 1
+        executionChainController.updateStatus(CorrectUpdates[index])
+        console.log(CorrectUpdates.length + ' Update: ' + index)
+        console.log(' nodeIndex: ' + nodeIndex)
+      }
+      sleep(1000)
+      executionChainController.loadChainScheme(ExecutionChainTemplate)
+      expect(executionChainController.executionChain).toBe(
+        ExecutionChainTemplate.levels
       )
-    }
-  })
+
+      for (let index = 1; index < CorrectUpdates.length; index += 2) {
+        const nodeIndex = Math.floor(index / 2)
+        const nodeNum = nodeIndex - 1
+        await executionChainController.updateStatus(CorrectUpdates[index])
+        console.log('Finsehs')
+        await waitFor(() => {
+          expect(
+            executionChainController.executionChain[nodeIndex].processingMessage
+          ).toBe(CorrectUpdates[index].message)
+          expect(
+            executionChainController.executionChain[nodeIndex].status
+          ).toBe(CorrectUpdates[index].lvlStatus)
+          expect(executionChainController.shouldBeVisible).toBeTruthy()
+        })
+      }
+
+      executionChainController.close()
+    })
   })
 
-  
+  mutex.runExclusive(() => {
+    it('execution Failed', async () => {
+      executionChainController.close()
+      expect(executionChainController.executionChain).toHaveLength(0)
+      executionChainController.loadChainScheme(ExecutionChainTemplate)
+      expect(executionChainController.executionChain).toBe(
+        ExecutionChainTemplate.levels
+      )
+      await executionChainController.updateStatus({
+        message: 'Failed',
+        lvlStatus: 'FAILED',
+        stepUpdate: 0,
+        messageType: 'STATUS_UPDATE',
+      })
+
+      expect(executionChainController.closeReady).toBeTruthy()
+      expect(executionChainController.executionChain[0].status).toBe('FAILED')
+
+      for (
+        let index = 1;
+        index < ExecutionChainTemplate.levels.length;
+        index++
+      ) {
+        expect(executionChainController.executionChain[index].status).toBe(
+          ExecutionChainTemplate.levels[index].status
+        )
+      }
+    })
+  })
 })
