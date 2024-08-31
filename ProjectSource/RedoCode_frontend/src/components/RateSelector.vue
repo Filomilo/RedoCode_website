@@ -70,7 +70,7 @@ const getColorForcolumnOfIndex=(index:number):string=>{
     
 }
 else{
-    return getColorSelection(index);
+    return getColorSelection(hoverIndex.value<0?selectedIndex.value:hoverIndex.value);
 }
 }
 

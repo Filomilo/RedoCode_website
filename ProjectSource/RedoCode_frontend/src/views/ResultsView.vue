@@ -207,9 +207,10 @@ import CodeRatingPanel from '@/components/CodeRatingPanel.vue';
 
 <style>
 .CodeRatingPanel{
-  background-color: red;
+
   width: 80%;
   height: 30%;
+  min-height: 15rem;
 }
 
 .RateSelectorContainer{
