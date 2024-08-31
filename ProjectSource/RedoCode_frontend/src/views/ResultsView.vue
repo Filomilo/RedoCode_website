@@ -1,94 +1,31 @@
 <template>
-  <main style="margin-top: 15rem">
-    <div class="VerticalLine">
-      <h1>Time for task: x:xx</h1>
-    </div>
-    <div class="VerticalLine" style="margin-top: 5rem">
-      <h1>Execution Time: x:xx:xx</h1>
-    </div>
-    <CodeRatingPanel 
-    class="CodeRatingPanel"
-    :ExecutionTime="454"
-    :MaxExecutionTime="1250"
-    :BetterThanProcent="47"
-    :RankingPlacement="3"
-    />
-    <div class="VerticalLine" style="margin-top: 5rem">
-      <h2>Rate diffuciulty</h2>
-    </div>
-    <RateSelector
-    class="RateSelectorContainer"
-    :rateOptions="rateOptions"
-    v-model="selectedRating"
-    />
-    {{ selectedRating }}
-    <div class="VerticalLine algainBottom" style="margin-top: 5rem">
-      <Button
-        class="rateButton level1"
-        :disabled="alreadyRated"
-        :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 1
-            ? 'filledBar'
-            : 'unfilledBar'
-        "
-        @mouseover="ratingLevelShow = 1"
-        @mouseleave="ratingLevelShow = selectedRating"
-        @click="selectedRating = 1"
-      />
-      <Button
-        class="rateButton level2"
-        :disabled="alreadyRated"
-        :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 2
-            ? 'filledBar'
-            : 'unfilledBar'
-        "
-        @mouseover="ratingLevelShow = 2"
-        @mouseleave="ratingLevelShow = selectedRating"
-        @click="selectedRating = 2"
-      />
-      <Button
-        class="rateButton level3"
-        :disabled="alreadyRated"
-        :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 3
-            ? 'filledBar'
-            : 'unfilledBar'
-        "
-        @mouseover="ratingLevelShow = 3"
-        @mouseleave="ratingLevelShow = selectedRating"
-        @click="selectedRating = 3"
-      />
-      <Button
-        class="rateButton level4"
-        :disabled="alreadyRated"
-        :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 4
-            ? 'filledBar'
-            : 'unfilledBar'
-        "
-        @mouseover="ratingLevelShow = 4"
-        @mouseleave="ratingLevelShow = selectedRating"
-        @click="selectedRating = 4"
-      />
-      <Button
-        class="rateButton level5"
-        :disabled="alreadyRated"
-        :class="
-          (alreadyRated ? selectedRating : ratingLevelShow) >= 5
-            ? 'filledBar'
-            : 'unfilledBar'
-        "
-        @mouseover="ratingLevelShow = 5"
-        @mouseleave="ratingLevelShow = selectedRating"
-        @click="selectedRating = 5"
-      />
-    </div>
-    <div class="VerticalLine" style="margin-top: 5rem" v-if="!alreadyRated">
-      <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
-    </div>
+  <main style="">
+<div class="MainContainer">
+  <CodeRatingPanel 
+  class="CodeRatingPanel"
+  :ExecutionTime="454"
+  :MaxExecutionTime="1250"
+  :BetterThanProcent="47"
+  :RankingPlacement="3"
+  />
+  <div class="" style="margin-top: 5rem">
+    <h2>Rate difficulty to see other solutions</h2>
+  </div>
+  <RateSelector
+  class="RateSelectorContainer"
+  :rateOptions="rateOptions"
+  v-model="selectedRating"
+  />
+  <div class="" style="margin-top: 2rem" v-if="!alreadyRated">
+    <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
+  </div>
+</div>
+    
+ 
 
-    <div class="VerticalLine" style="margin-top: 5rem">
+
+
+    <!-- <div class="VerticalLine" style="margin-top: 5rem">
       <Textarea
         class="CommentArea"
         :disabled="!ActiveUserStore.isLogged"
@@ -120,7 +57,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>
 
   <!-- <Image :src=data.profilePic class="profilePic" /> -->
@@ -206,8 +143,18 @@ import CodeRatingPanel from '@/components/CodeRatingPanel.vue';
 </script>
 
 <style>
-.CodeRatingPanel{
 
+.MainContainer{
+  width: 100%;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.CodeRatingPanel{
+  margin-top: 6rem;
   width: 80%;
   height: 30%;
   min-height: 15rem;
@@ -228,21 +175,6 @@ import CodeRatingPanel from '@/components/CodeRatingPanel.vue';
     align-self: flex-end;
   }
 
-  .level1 {
-    height: 0.1rem;
-  }
-  .level2 {
-    height: 2rem;
-  }
-  .level3 {
-    height: 3rem;
-  }
-  .level4 {
-    height: 4rem;
-  }
-  .level5 {
-    height: 5rem;
-  }
   .algainBottom {
     display: flex;
     flex-direction: row;
