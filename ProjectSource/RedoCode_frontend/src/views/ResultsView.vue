@@ -6,14 +6,22 @@
     <div class="VerticalLine" style="margin-top: 5rem">
       <h1>Execution Time: x:xx:xx</h1>
     </div>
+    <CodeRatingPanel 
+    class="CodeRatingPanel"
+    :ExecutionTime="454"
+    :MaxExecutionTime="1250"
+    :BetterThanProcent="47"
+    :RankingPlacement="3"
+    />
     <div class="VerticalLine" style="margin-top: 5rem">
       <h2>Rate diffuciulty</h2>
     </div>
     <RateSelector
     class="RateSelectorContainer"
     :rateOptions="rateOptions"
-    
+    v-model="selectedRating"
     />
+    {{ selectedRating }}
     <div class="VerticalLine algainBottom" style="margin-top: 5rem">
       <Button
         class="rateButton level1"
@@ -122,6 +130,7 @@
   import { computed, Ref, ref } from 'vue'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
 import RateSelector,{ RateOption } from '@/components/RateSelector.vue';
+import CodeRatingPanel from '@/components/CodeRatingPanel.vue';
 
 
 
@@ -175,7 +184,7 @@ import RateSelector,{ RateOption } from '@/components/RateSelector.vue';
 
   const ratingLevelShow: Ref<number> = ref(0)
 
-  const selectedRating: Ref<number> = ref(0)
+  const selectedRating: Ref<number> = ref(-1)
   const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
   const validatedComment = computed(() => {
     return commentInput.value.length > 0 && commentInput.value.length < 3000
@@ -197,12 +206,15 @@ import RateSelector,{ RateOption } from '@/components/RateSelector.vue';
 </script>
 
 <style>
-
+.CodeRatingPanel{
+  background-color: red;
+  width: 80%;
+  height: 30%;
+}
 
 .RateSelectorContainer{
-  width: 10rem;
+  width: 20rem;
   height: 10rem;
-  background-color: blue;
 }
   .VerticalLine {
     width: 100%;

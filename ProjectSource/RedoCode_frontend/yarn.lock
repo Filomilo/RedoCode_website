@@ -2387,12 +2387,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^4.4.2":
-  version: 4.4.2
-  resolution: "chart.js@npm:4.4.2"
+"chart.js@npm:^4.4.4":
+  version: 4.4.4
+  resolution: "chart.js@npm:4.4.4"
   dependencies:
     "@kurkle/color": "npm:^0.3.0"
-  checksum: 4233bdc3cce9e4d5aca575f8ef9313f56867491b9eac027f3514ca807aca9a2ba2087f85ca3c68f022974f948ce688a178b0ce21d95706116abca5acf19e072f
+  checksum: 9fa3206403a6103916f7762c2665d322c42b0cc07fba91526b1d033ddb887c1ba74b3ebc0bd0748a9e55abd1017f25fdb2292cdd6579d8c2d3bcb1c58f71281c
   languageName: node
   linkType: hard
 
@@ -2433,6 +2433,13 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: 594754e1303672171cc04e50f6c398ae16128eb134a88f801bf5354fd96f205320f23536a045d9abd8b51024a149696e51231565891d4efdab8846021ecf88e6
+  languageName: node
+  linkType: hard
+
+"chroma-js@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "chroma-js@npm:3.0.0"
+  checksum: b7aade3f6e20d5f1f3e07a890fbdc6e6390663affeb0071330d0325368915612b6133124aeb0b29b56d6bcdff489b0223deba8cc86a656bb601c6bc3f06e2c7c
   languageName: node
   linkType: hard
 
@@ -2536,30 +2543,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:^1.0.0, color-name@npm:~1.1.4":
+"color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95
-  languageName: node
-  linkType: hard
-
-"color-string@npm:^1.9.0":
-  version: 1.9.1
-  resolution: "color-string@npm:1.9.1"
-  dependencies:
-    color-name: "npm:^1.0.0"
-    simple-swizzle: "npm:^0.2.2"
-  checksum: b0bfd74c03b1f837f543898b512f5ea353f71630ccdd0d66f83028d1f0924a7d4272deb278b9aef376cacf1289b522ac3fb175e99895283645a2dc3a33af2404
-  languageName: node
-  linkType: hard
-
-"color@npm:>=0.4.0":
-  version: 4.2.3
-  resolution: "color@npm:4.2.3"
-  dependencies:
-    color-convert: "npm:^2.0.1"
-    color-string: "npm:^1.9.0"
-  checksum: 7fbe7cfb811054c808349de19fb380252e5e34e61d7d168ec3353e9e9aacb1802674bddc657682e4e9730c2786592a4de6f8283e7e0d3870b829bb0b7b2f6118
   languageName: node
   linkType: hard
 
@@ -4107,15 +4094,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gradient@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "gradient@npm:0.2.0"
-  dependencies:
-    color: "npm:>=0.4.0"
-  checksum: 0202c91f1acec405cb2c037e2a35d55aba3282ad8bda3affa201c58fdc3d15105b771b9144ad5d403ed677f88bae473a86388f3736b3986749e618b2d10e0521
-  languageName: node
-  linkType: hard
-
 "graphemer@npm:^1.4.0":
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
@@ -4432,13 +4410,6 @@ __metadata:
     call-bind: "npm:^1.0.2"
     get-intrinsic: "npm:^1.2.1"
   checksum: 42a49d006cc6130bc5424eae113e948c146f31f9d24460fc0958f855d9d810e6fd2e4519bf19aab75179af9c298ea6092459d8cafdec523cd19e529b26eab860
-  languageName: node
-  linkType: hard
-
-"is-arrayish@npm:^0.3.1":
-  version: 0.3.2
-  resolution: "is-arrayish@npm:0.3.2"
-  checksum: f59b43dc1d129edb6f0e282595e56477f98c40278a2acdc8b0a5c57097c9eff8fe55470493df5775478cf32a4dc8eaf6d3a749f07ceee5bc263a78b2434f6a54
   languageName: node
   linkType: hard
 
@@ -6651,15 +6622,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-swizzle@npm:^0.2.2":
-  version: 0.2.2
-  resolution: "simple-swizzle@npm:0.2.2"
-  dependencies:
-    is-arrayish: "npm:^0.3.1"
-  checksum: df5e4662a8c750bdba69af4e8263c5d96fe4cd0f9fe4bdfa3cbdeb45d2e869dff640beaaeb1ef0e99db4d8d2ec92f85508c269f50c972174851bc1ae5bd64308
-  languageName: node
-  linkType: hard
-
 "slash@npm:^3.0.0":
   version: 3.0.0
   resolution: "slash@npm:3.0.0"
@@ -7444,6 +7406,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-chartjs@npm:^5.3.1":
+  version: 5.3.1
+  resolution: "vue-chartjs@npm:5.3.1"
+  peerDependencies:
+    chart.js: ^4.1.1
+    vue: ^3.0.0-0 || ^2.7.0
+  checksum: a5788cd62b8e662207c9762794e542f84144e777fd0a907eead1ece7301c74b549f9f5cf402ce972b78a8dbed41baee6603dcc57d3eb11257a663c0c17ad6035
+  languageName: node
+  linkType: hard
+
 "vue-component-type-helpers@npm:^1.8.21":
   version: 1.8.27
   resolution: "vue-component-type-helpers@npm:1.8.27"
@@ -7883,14 +7855,14 @@ __metadata:
     agent-base: "npm:^7.1.1"
     async-mutex: "npm:^0.5.0"
     bootstrap: "npm:^5.3.2"
-    chart.js: "npm:^4.4.2"
+    chart.js: "npm:^4.4.4"
+    chroma-js: "npm:^3.0.0"
     cypress: "npm:^13.6.3"
     cypress-terminal-report: "npm:^6.1.2"
     eslint: "npm:^8.49.0"
     eslint-plugin-cypress: "npm:^2.15.1"
     eslint-plugin-vue: "npm:^9.17.0"
     gh-pages: "npm:^6.1.1"
-    gradient: "npm:^0.2.0"
     jsdom: "npm:^23.0.1"
     miragejs: "npm:^0.1.48"
     npm-run-all2: "npm:^6.1.1"
@@ -7906,6 +7878,7 @@ __metadata:
     vite-bundle-visualizer: "npm:^1.2.1"
     vitest: "npm:^2.0.5"
     vue: "npm:^3.3.11"
+    vue-chartjs: "npm:^5.3.1"
     vue-cookies: "npm:^1.8.4"
     vue-router: "npm:^4.2.5"
     vue-slider-component: "npm:^4.1.0-beta.7"
