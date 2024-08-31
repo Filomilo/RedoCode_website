@@ -9,6 +9,11 @@
     <div class="VerticalLine" style="margin-top: 5rem">
       <h2>Rate diffuciulty</h2>
     </div>
+    <RateSelector
+    class="RateSelectorContainer"
+    :rateOptions="rateOptions"
+    
+    />
     <div class="VerticalLine algainBottom" style="margin-top: 5rem">
       <Button
         class="rateButton level1"
@@ -116,6 +121,32 @@
 <script setup lang="ts">
   import { computed, Ref, ref } from 'vue'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
+import RateSelector,{ RateOption } from '@/components/RateSelector.vue';
+
+
+
+  const rateOptions:RateOption[]=[
+    {
+      value: 1,
+      label: 'Very easy',
+    },
+    {
+      value: 2,
+      label: 'Easy',
+    },
+    {
+      value: 3,
+      label: 'Moderate',
+    },
+    {
+      value: 4,
+      label: 'Hard',
+    },
+    {
+      value: 5,
+      label: 'Very hard',
+    }
+  ]
 
   const ActiveUserStore = useActiveUserStore()
   const commentInput: Ref<string> = ref('')
@@ -166,6 +197,13 @@
 </script>
 
 <style>
+
+
+.RateSelectorContainer{
+  width: 10rem;
+  height: 10rem;
+  background-color: blue;
+}
   .VerticalLine {
     width: 100%;
   }
