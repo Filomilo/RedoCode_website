@@ -10,10 +10,10 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        quietDeps: true, 
-        warnRuleAsError: false 
+        quietDeps: true,
+        warnRuleAsError: false,
       },
-    }
+    },
   },
   plugins: [vue(), vueJsx()],
   resolve: {

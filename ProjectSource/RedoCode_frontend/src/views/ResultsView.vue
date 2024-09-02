@@ -1,29 +1,25 @@
 <template>
   <main style="">
-<div class="MainContainer">
-  <CodeRatingPanel 
-  class="CodeRatingPanel"
-  :ExecutionTime="454"
-  :MaxExecutionTime="1250"
-  :BetterThanProcent="47"
-  :RankingPlacement="3"
-  />
-  <div class="" style="margin-top: 5rem">
-    <h2>Rate difficulty to see other solutions</h2>
-  </div>
-  <RateSelector
-  class="RateSelectorContainer"
-  :rateOptions="rateOptions"
-  v-model="selectedRating"
-  />
-  <div class="" style="margin-top: 2rem" v-if="!alreadyRated">
-    <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
-  </div>
-</div>
-    
- 
-
-
+    <div class="MainContainer">
+      <CodeRatingPanel
+        class="CodeRatingPanel"
+        :ExecutionTime="454"
+        :MaxExecutionTime="1250"
+        :BetterThanProcent="47"
+        :RankingPlacement="3"
+      />
+      <div class="" style="margin-top: 5rem">
+        <h2>Rate difficulty to see other solutions</h2>
+      </div>
+      <RateSelector
+        class="RateSelectorContainer"
+        :rateOptions="rateOptions"
+        v-model="selectedRating"
+      />
+      <div class="" style="margin-top: 2rem" v-if="!alreadyRated">
+        <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
+      </div>
+    </div>
 
     <!-- <div class="VerticalLine" style="margin-top: 5rem">
       <Textarea
@@ -66,12 +62,10 @@
 <script setup lang="ts">
   import { computed, Ref, ref } from 'vue'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
-import RateSelector,{ RateOption } from '@/components/RateSelector.vue';
-import CodeRatingPanel from '@/components/CodeRatingPanel.vue';
+  import RateSelector, { RateOption } from '@/components/RateSelector.vue'
+  import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
 
-
-
-  const rateOptions:RateOption[]=[
+  const rateOptions: RateOption[] = [
     {
       value: 1,
       label: 'Very easy',
@@ -91,7 +85,7 @@ import CodeRatingPanel from '@/components/CodeRatingPanel.vue';
     {
       value: 5,
       label: 'Very hard',
-    }
+    },
   ]
 
   const ActiveUserStore = useActiveUserStore()
@@ -143,27 +137,26 @@ import CodeRatingPanel from '@/components/CodeRatingPanel.vue';
 </script>
 
 <style>
-
-.MainContainer{
-  width: 100%;
+  .MainContainer {
+    width: 100%;
     display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-}
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+  }
 
-.CodeRatingPanel{
-  margin-top: 6rem;
-  width: 80%;
-  height: 30%;
-  min-height: 15rem;
-}
+  .CodeRatingPanel {
+    margin-top: 6rem;
+    width: 80%;
+    height: 30%;
+    min-height: 15rem;
+  }
 
-.RateSelectorContainer{
-  width: 20rem;
-  height: 10rem;
-}
+  .RateSelectorContainer {
+    width: 20rem;
+    height: 10rem;
+  }
   .VerticalLine {
     width: 100%;
   }

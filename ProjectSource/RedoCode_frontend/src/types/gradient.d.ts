@@ -1,1 +1,1 @@
-declare module 'gradient';
+declare module 'gradient'
