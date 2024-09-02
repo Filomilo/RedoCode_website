@@ -22,7 +22,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const validateToken = (): boolean => {
     if (import.meta.env.MODE === 'development') {
-      return true
+      return false
     }
     if (_token.value === '') return false
     return true
