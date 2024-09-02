@@ -68,6 +68,37 @@ const router = createRouter({
       path: '/Results',
       name: 'Results',
       component: () => import('@/views/ResultsView.vue'),
+      beforeEnter: (to, from, next) => {
+        const activeUserStore = useActiveUserStore()
+        console.log('authethication')
+        if (activeUserStore.validateToken()) {
+          next()
+        } else {
+          console.log('ResultsUnauthenticated')
+          next({ name: 'ResultsUnauthenticated' })
+        }
+      },
+    },
+    {
+      path: '/Results',
+      name: 'ResultsUnauthenticated',
+      component: () => import('@/views/ResultsUnathenticatedView.vue'),
+      beforeEnter: (to, from, next) => {
+        const activeUserStore = useActiveUserStore()
+        console.log('authethication')
+        if (activeUserStore.validateToken()) {
+          next({ name: 'ResultsUnauthenticated' })
+        } else {
+          console.log('ResultsUnauthenticated')
+          next()
+        }
+      },
+    },
+
+    {
+      path: '/Solutions',
+      name: 'Solutions',
+      component: () => import('@/views/SolutionsView.vue'),
     },
     {
       path: '/test',

@@ -21,7 +21,7 @@ import 'primevue/resources/primevue.css'
 // import 'primevue/resources/themes/saga-blue/theme.css';
 // import 'primevue/resources/primevue.min.css';
 // import 'primeicons/primeicons.css';
-import 'primevue/resources/themes/aura-light-green/theme.css'
+import 'primevue/resources/themes/aura-dark-green/theme.css'
 import '@/assets/styles/styles.scss'
 import '@/assets/styles/base.css'
 import 'primevue/inputtext'
@@ -37,8 +37,7 @@ import Slider from 'primevue/slider'
 import InputNumber from 'primevue/inputnumber'
 import RadioButton from 'primevue/radiobutton'
 import Checkbox from 'primevue/checkbox'
-import 'primevue/resources/themes/saga-blue/theme.css'
-import 'primevue/resources/primevue.min.css'
+
 import Textarea from 'primevue/textarea'
 import { createPinia } from 'pinia'
 import Dialog from 'primevue/dialog'

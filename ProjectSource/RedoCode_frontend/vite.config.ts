@@ -7,6 +7,14 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '',
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true, 
+        warnRuleAsError: false 
+      },
+    }
+  },
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
