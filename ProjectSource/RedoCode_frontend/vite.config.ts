@@ -23,20 +23,29 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          const splits=id.split("/")
+          const name=splits[splits.length-1];
          
           if (id.includes('src/components')) {
-          //   const splits=id.split("/")
-
-          
-          // return `components/${splits[splits.length-1]}`;
-          return 'components'
+    
+          return `components/${name}`
           }
           if (id.includes('src/controllers')) {
-            return 'controllers'
+            return  `controllers/${name}`
           }
           if (id.includes('src/types')) {
-            return 'types'
+            return `types/${name}`
           }
+          if (id.includes('node_modules')) {
+            return `node_modules/${name}`
+          }
+          if (id.includes('node_modules')) {
+            return `node_modules/${name}`
+          }
+          if (id.includes('views')) {
+            return `views/${name}`
+          }
+          
         },
       },
     },
