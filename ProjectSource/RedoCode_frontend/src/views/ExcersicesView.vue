@@ -77,6 +77,7 @@
   import { isArray } from 'chart.js/helpers'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
+import EndpointAcces from '@/controllers/EndpointsAcces'
 
   const ActiveUserStore = useActiveUserStore()
   const CodeRunnerStore = useCodeRunnerStore()
@@ -109,21 +110,25 @@
           ? serverOptions.value.sortBy[0]
           : serverOptions.value.sortBy
 
-    const request: ExerciseListRequestMessage = {
-      sortBy: sortby,
-      rowsPerPage: serverOptions.value.rowsPerPage,
-      page: serverOptions.value.page,
-      sortDirection: serverOptions.value.sortType === 'desc',
-    }
-    console.log('Getting exercises')
-    axios.get('/public/exercises/list', { params: request }).then(response => {
-      if (response === undefined) {
-        console.error("couldn't retrieve excercise list from server")
-        throw "couldn't retrieve excercise list from server"
-      }
-      console.log('Exercises respones: ' + JSON.stringify(response))
-      exerciseData.value = response.data
-      console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
+    // const request: ExerciseListRequestMessage = {
+    //   sortBy: sortby,
+    //   rowsPerPage: serverOptions.value.rowsPerPage,
+    //   page: serverOptions.value.page,
+    //   sortDirection: serverOptions.value.sortType === 'desc',
+    // }
+    // console.log('Getting exercises')
+    // axios.get('/public/exercises/list', { params: request }).then(response => {
+    //   if (response === undefined) {
+    //     console.error("couldn't retrieve excercise list from server")
+    //     throw "couldn't retrieve excercise list from server"
+    //   }
+    //   console.log('Exercises respones: ' + JSON.stringify(response))
+    //   exerciseData.value = response.data
+    //   console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
+    // })
+  
+    EndpointAcces.unauthorized.getListOfExercises(sortby,sortby,serverOptions.value.rowsPerPage,serverOptions.value.page).then((data: ExerciseType[])=>{
+      exerciseData.value = data;
     })
   }
 

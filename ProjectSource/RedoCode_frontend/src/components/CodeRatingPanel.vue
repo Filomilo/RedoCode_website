@@ -6,28 +6,39 @@
           Your execution time compared to maximum
         </div>
         <div class="RatingPanel">
-          <div class="DougnoutInsidesContainer MsText">
-            {{ props.ExecutionTime }} ms
-          </div>
-          <Doughnut
-            :data="ExeceutionData"
-            :options="PieChartOptions"
-            class="DugoutContainer"
+          <div class="DugoutContainer">
+          <ProcentDonout 
+          :value="props.ExecutionTime"
+          :maxValue="props.MaxExecutionTime"
+          :label="props.ExecutionTime+' ms'"
+          fillColor="#a463ac"
+          basicColor="#ffffff"
+          class="MsText"
+          :radius="65"
           />
+        </div>
         </div>
       </div>
 
       <div class="RatingPanelContaier">
         <div class="RatingPanelHeader">Your solution is better than</div>
         <div class="RatingPanel">
-          <div class="DougnoutInsidesContainer procentText">
+          <!-- <div class="DougnoutInsidesContainer procentText">
             {{ props.BetterThanProcent }}%
+          </div> -->
+          <div class="DugoutContainer">
+            <ProcentDonout 
+            :value="props.BetterThanProcent"
+            :maxValue="100"
+            :label="props.BetterThanProcent+'%'"
+            fillColor="#a463ac"
+            basicColor="#ffffff"
+            class="procentText"
+            :radius="65"
+            />
           </div>
-          <Doughnut
-            :data="ProcentData"
-            :options="PieChartOptions"
-            class="DugoutContainer"
-          />
+  
+     
         </div>
       </div>
 
@@ -49,6 +60,7 @@
 <script setup lang="ts">
   import { Doughnut } from 'vue-chartjs'
   import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+  import ProcentDonout from '@/components/ProcentDonout.vue'
   const props = defineProps<{
     ExecutionTime: number
     MaxExecutionTime: number
@@ -58,38 +70,6 @@
 
   ChartJS.register(ArcElement, Tooltip)
 
-  const ExeceutionData = {
-    labels: ['You execution time', 'Maximum execution time'],
-    datasets: [
-      {
-        backgroundColor: ['#a463ac', '#ffffff'],
-        data: [
-          props.ExecutionTime,
-          props.MaxExecutionTime - props.ExecutionTime,
-        ],
-      },
-    ],
-  }
-  const ProcentData = {
-    labels: [
-      '% of solutions worse than yours',
-      '% of solutions better than yours',
-    ],
-    datasets: [
-      {
-        backgroundColor: ['#a463ac', '#ffffff'],
-        data: [props.BetterThanProcent, 100 - props.BetterThanProcent],
-      },
-    ],
-  }
-  const PieChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    cutout: '90%',
-  }
 </script>
 
 <style lang="css">
@@ -138,6 +118,8 @@
     width: 100%;
     flex-grow: 1;
     overflow: hidden;
+    display: flex;
+
   }
 
   .RankingNumberContainer {
@@ -152,9 +134,18 @@
   }
   .DugoutContainer {
     position: relative;
-    top: -70%;
     z-index: 0;
-    margin: 1rem;
+    margin: 0rem;
+    height: 12rem;
+    
+    align-self: center;
+    justify-self: center;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    padding: 1rem;
+    padding-top: -5rem;
+    overflow: hidden;
+
   }
   .DougnoutInsidesContainer {
     position: relative;
@@ -171,7 +162,7 @@
   }
 
   .procentText {
-    font-size: 3rem;
+    font-size: 2rem;
   }
   .MsText {
     font-size: 1.8rem;

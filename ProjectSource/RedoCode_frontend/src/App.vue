@@ -2,14 +2,16 @@
   import { RouterLink, RouterView } from 'vue-router'
   import TopBar from '@/components/TopBar.vue'
   import ChainOfReposibiltyWindow from '@/components/ChainOfReposibiltyWindow.vue'
-  import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
-  const executionChainStore = useExecutionChainStore()
+  import { useGlobalStateStore } from '@/stores/GlobalStateStore'
+  import LoadingPanelVue from '@/components/LoadingPanel.vue'
+ const globalStateStore = useGlobalStateStore();
 </script>
 
 <template>
   <html lang="pl" data-bs-theme="dark">
+    <LoadingPanelVue v-if="globalStateStore.loadingMessage!==''" />
     <ChainOfReposibiltyWindow />
-    <div id="MainPageContainer" :class="executionChainStore.lock ? 'lock' : ''">
+    <div id="MainPageContainer" :class="globalStateStore.isLocked ? 'lock' : ''">
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
         <Toast style="margin-top: 4rem" />

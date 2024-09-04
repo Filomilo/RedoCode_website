@@ -95,8 +95,14 @@ const router = createRouter({
       },
     },
 
+
     {
       path: '/Solutions',
+      name: 'SolutionsNoData',
+      component: () => import('@/views/SolutionsView.vue'),
+    },
+    {
+      path: '/Solutions/:id',
       name: 'Solutions',
       component: () => import('@/views/SolutionsView.vue'),
     },

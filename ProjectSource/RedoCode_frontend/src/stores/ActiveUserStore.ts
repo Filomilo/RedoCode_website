@@ -13,7 +13,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
   const isLogged = ref(false)
   const nick = ref('')
-  const _token: Ref<String> = ref('')
+  const _token: Ref<string> = ref('')
   const isAwaitingAuthentication: Ref<boolean> = ref(false)
   const $cookies = inject<VueCookies>('$cookies')
   const acoountInfo = computed(() => {
@@ -22,7 +22,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const validateToken = (): boolean => {
     if (import.meta.env.MODE === 'development') {
-      return false
+      return true
     }
     if (_token.value === '') return false
     return true
@@ -140,7 +140,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       })
   }
 
-  const getToken = (): String => {
+  const getToken = (): string => {
     return _token.value
   }
 

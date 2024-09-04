@@ -21,39 +21,7 @@
       </div>
     </div>
 
-    <!-- <div class="VerticalLine" style="margin-top: 5rem">
-      <Textarea
-        class="CommentArea"
-        :disabled="!ActiveUserStore.isLogged"
-        v-model="commentInput"
-        :invalid="!validatedComment"
-      />
-    </div>
-    <div style="margin-left: 3rem">
-      {{ commentInput.length + '/3000' }}
-    </div>
-    <div class="VerticalLine" style="margin-top: 0.5rem; display: flex">
-      <Button
-        class="commentButton"
-        :disabled="!ActiveUserStore.isLogged"
-        @click="onCommentButton"
-      >
-        comment
-      </Button>
-    </div>
-    <div v-for="(data, index) in comments" v-bind:key="index">
-      <div class="VerticalLine" style="margin-top: 0.5rem">
-        <div class="ProfilePicContainer">
-          <img :src="data.profilePic" class="profilePic" />
-        </div>
-        <div class="CommentContainer">
-          <h3 style="margin-left: 2rem; margin-top: 1rem">{{ data.nick }}</h3>
-          <div class="commentContent">
-            {{ data.content }}
-          </div>
-        </div>
-      </div>
-    </div> -->
+  
   </main>
 
   <!-- <Image :src=data.profilePic class="profilePic" /> -->
@@ -64,7 +32,7 @@
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import RateSelector, { RateOption } from '@/components/RateSelector.vue'
   import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
-
+ const ActiveUserStore = useActiveUserStore()
   const rateOptions: RateOption[] = [
     {
       value: 1,
@@ -88,49 +56,11 @@
     },
   ]
 
-  const ActiveUserStore = useActiveUserStore()
-  const commentInput: Ref<string> = ref('')
-  const comments = ref([
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-  ])
-
   const ratingLevelShow: Ref<number> = ref(0)
 
-  const selectedRating: Ref<number> = ref(-1)
-  const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
-  const validatedComment = computed(() => {
-    return commentInput.value.length > 0 && commentInput.value.length < 3000
-  })
+const selectedRating: Ref<number> = ref(-1)
+const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
 
-  const onCommentButton = () => {
-    if (validatedComment.value) {
-      comments.value.unshift({
-        nick: ActiveUserStore.acoountInfo.nick.value,
-        profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-        content: commentInput.value,
-      })
-      commentInput.value = ''
-    }
-  }
   const onSaveRate = () => {
     alreadyRated.value = true
   }
