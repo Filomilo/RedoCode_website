@@ -5,6 +5,17 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import path from 'node:path'
 
+const nodeModulesExcultion=["chroma"]
+
+const isExluded=(name: string)=>{
+  for (let index = 0; index < nodeModulesExcultion.length; index++) {
+    if(name.includes(nodeModulesExcultion[index]))
+    return true;
+    
+  }
+  return false;
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '',
@@ -25,27 +36,28 @@ export default defineConfig({
         manualChunks(id) {
           const splits=id.split("/")
           const name=splits[splits.length-1];
-         
-          if (id.includes('src/components')) {
-    
-          return `components/${name}`
-          }
-          if (id.includes('src/controllers')) {
-            return  `controllers/${name}`
+          if (id.includes('.css')|| id.includes('.scss')) {
+            return `styles`
           }
           if (id.includes('src/types')) {
-            return `types/${name}`
+            return `types`
           }
-          if (id.includes('node_modules')) {
-            return `node_modules/${name}`
+          if (id.includes('src/components')) {
+    
+          return `components`
           }
-          if (id.includes('node_modules')) {
+          if (id.includes('src/controllers')) {
+            return  `controllers`
+          }
+    
+          if (id.includes('node_modules')&& !isExluded(id) ) {
             return `node_modules/${name}`
           }
           if (id.includes('views')) {
             return `views/${name}`
+            return `views`
           }
-          
+       
         },
       },
     },

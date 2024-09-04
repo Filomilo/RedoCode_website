@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { Doughnut } from 'vue-chartjs'
-  import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
   import { computed, Ref, ref, ComputedRef } from 'vue'
 
 const props = defineProps<{

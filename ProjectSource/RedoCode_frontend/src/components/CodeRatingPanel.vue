@@ -59,7 +59,6 @@
 
 <script setup lang="ts">
   import { Doughnut } from 'vue-chartjs'
-  import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
   import ProcentDonout from '@/components/ProcentDonout.vue'
   const props = defineProps<{
     ExecutionTime: number
@@ -68,7 +67,6 @@
     RankingPlacement?: number
   }>()
 
-  ChartJS.register(ArcElement, Tooltip)
 
 </script>
 
