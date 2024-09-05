@@ -57,7 +57,7 @@ public class RedoCodeObjectMapper {
         .user(user)
         .Code(rawCodeToRunMessage.getCode())
         .codeRunnerType(codeRunnerType)
-        .timeForExecution(1000L)
+        .timeForExecution(10000L)
         .build();
   }
 
