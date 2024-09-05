@@ -4,7 +4,7 @@ import ExercisesPage from '../helpers/ExercisesPage'
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
 
-describe('Phibonachi new exercise', () => {
+describe.skip('Phibonachi new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

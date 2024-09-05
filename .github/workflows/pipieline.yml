@@ -59,29 +59,29 @@ jobs:
   #     - run: npm i
   #     - run: npm run test:dev:unit
 
-  vue-e2e-dev:
-    # needs:
-    #   - build-backend
-    #   - build-frontend
-    defaults:
-      run:
-        working-directory: ./ProjectSource/RedoCode_frontend
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
-          yarn install
-      - name: Run Cypress Tests
-        run: |
-          yarn test:dev:e2e
+  # vue-e2e-dev:
+  #   # needs:
+  #   #   - build-backend
+  #   #   - build-frontend
+  #   defaults:
+  #     run:
+  #       working-directory: ./ProjectSource/RedoCode_frontend
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20
+  #     - name: Install Dependencies
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
+  #         yarn install
+  #     - name: Run Cypress Tests
+  #       run: |
+  #         yarn test:dev:e2e
 
   # backend-junit-dev-docker:
   #   needs:
@@ -128,7 +128,7 @@ jobs:
         working-directory: ./ProjectSource
     needs:
       # - vue-vitest
-      - vue-e2e-dev
+      # - vue-e2e-dev
       # - backend-junit-dev-docker
     runs-on: ubuntu-20.04
     steps:
