@@ -126,7 +126,7 @@ jobs:
     defaults:
       run:
         working-directory: ./ProjectSource
-    needs:
+    # needs:
       # - vue-vitest
       # - vue-e2e-dev
       # - backend-junit-dev-docker
