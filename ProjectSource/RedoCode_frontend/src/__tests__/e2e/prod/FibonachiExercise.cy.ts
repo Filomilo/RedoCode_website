@@ -1,8 +1,8 @@
-import CodeRunnerPanel from './helpers/CodeRunnerPanel'
-import ExecutionChain from './helpers/ExecutionChain'
-import ExercisesPage from './helpers/ExercisesPage'
-import SwitcherControls from './helpers/SwitcherControls'
-import UrlControls from './helpers/UrlControls'
+import CodeRunnerPanel from '../helpers/CodeRunnerPanel'
+import ExecutionChain from '../helpers/ExecutionChain'
+import ExercisesPage from '../helpers/ExercisesPage'
+import SwitcherControls from '../helpers/SwitcherControls'
+import UrlControls from '../helpers/UrlControls'
 
 describe('Phibonachi new exercise', () => {
   it('passes', () => {

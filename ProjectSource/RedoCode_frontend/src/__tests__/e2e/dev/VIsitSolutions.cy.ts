@@ -15,7 +15,6 @@ SolutionsList.solutionItemListShouldBeSelected(0);
 SolutionsList.shouldUsernameCommentBe(0,"example user");
 SolutionsList.shouldContentCommentBe(0,"Greate exercise");
 SolutionsList.postComment(comment)
-// SolutionsList.shouldUsernameCommentBe(0,"example user");
 SolutionsList.shouldContentCommentBe(0,comment);
 SolutionsList.shouldContentCommentBe(1,"Greate exercise");
 SolutionsList.solutionListClick(2);

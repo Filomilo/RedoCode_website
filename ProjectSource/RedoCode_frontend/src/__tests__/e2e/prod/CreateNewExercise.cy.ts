@@ -1,10 +1,10 @@
-import CodeRunnerPanel from './helpers/CodeRunnerPanel'
-import CreatePanel from './helpers/CreatePanel'
-import ExecutionChain from './helpers/ExecutionChain'
-import ExercisesPage from './helpers/ExercisesPage'
-import SwitcherControls from './helpers/SwitcherControls'
-import UrlControls from './helpers/UrlControls'
-import UserAuthentication from './helpers/UserAuthentication'
+import CodeRunnerPanel from '../helpers/CodeRunnerPanel'
+import CreatePanel from '../helpers/CreatePanel'
+import ExecutionChain from '../helpers/ExecutionChain'
+import ExercisesPage from '../helpers/ExercisesPage'
+import SwitcherControls from '../helpers/SwitcherControls'
+import UrlControls from '../helpers/UrlControls'
+import UserAuthentication from '../helpers/UserAuthentication'
 
 describe('Create new exercise', () => {
   it('passes', () => {

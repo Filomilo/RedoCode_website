@@ -1,5 +1,5 @@
-import SwitcherControls from './helpers/SwitcherControls'
-import UrlControls from './helpers/UrlControls'
+import SwitcherControls from '../helpers/SwitcherControls'
+import UrlControls from '../helpers/UrlControls'
 
 describe('switch without authentication', () => {
   it('passes', () => {
