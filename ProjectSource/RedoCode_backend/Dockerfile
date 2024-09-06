@@ -6,7 +6,7 @@ RUN mvn clean install -DskipTests
 
 
 # production stage
-FROM eclipse-temurin:17-jdk-alpine  as production-stage
+FROM eclipse-temurin:21  as production-stage
 RUN apk update
 RUN apk upgrade
 RUN apk add curl
