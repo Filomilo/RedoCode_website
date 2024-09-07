@@ -77,7 +77,7 @@
   import { isArray } from 'chart.js/helpers'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
-import EndpointAcces from '@/controllers/EndpointsAcces'
+  import EndpointAcces from '@/controllers/EndpointsAcces'
 
   const ActiveUserStore = useActiveUserStore()
   const CodeRunnerStore = useCodeRunnerStore()
@@ -126,10 +126,17 @@ import EndpointAcces from '@/controllers/EndpointsAcces'
     //   exerciseData.value = response.data
     //   console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
     // })
-  
-    EndpointAcces.unauthorized.getListOfExercises(sortby,sortby,serverOptions.value.rowsPerPage,serverOptions.value.page).then((data: ExerciseType[])=>{
-      exerciseData.value = data;
-    })
+
+    EndpointAcces.unauthorized
+      .getListOfExercises(
+        sortby,
+        sortby,
+        serverOptions.value.rowsPerPage,
+        serverOptions.value.page
+      )
+      .then((data: ExerciseType[]) => {
+        exerciseData.value = data
+      })
   }
 
   watch(

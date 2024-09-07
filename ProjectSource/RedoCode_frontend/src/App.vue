@@ -4,14 +4,17 @@
   import ChainOfReposibiltyWindow from '@/components/ChainOfReposibiltyWindow.vue'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   import LoadingPanelVue from '@/components/LoadingPanel.vue'
- const globalStateStore = useGlobalStateStore();
+  const globalStateStore = useGlobalStateStore()
 </script>
 
 <template>
   <html lang="pl" data-bs-theme="dark">
-    <LoadingPanelVue v-if="globalStateStore.loadingMessage!==''" />
+    <LoadingPanelVue v-if="globalStateStore.loadingMessage !== ''" />
     <ChainOfReposibiltyWindow />
-    <div id="MainPageContainer" :class="globalStateStore.isLocked ? 'lock' : ''">
+    <div
+      id="MainPageContainer"
+      :class="globalStateStore.isLocked ? 'lock' : ''"
+    >
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
         <Toast style="margin-top: 4rem" />

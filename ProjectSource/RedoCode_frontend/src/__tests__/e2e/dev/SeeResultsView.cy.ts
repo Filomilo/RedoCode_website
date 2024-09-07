@@ -6,6 +6,6 @@ import UrlControls from '../helpers/UrlControls'
 
 describe('template spec', () => {
   it('passes', () => {
-    UrlControls.visitResults(3);
+    UrlControls.visitResults(3)
   })
 })

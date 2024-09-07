@@ -7,16 +7,16 @@
         </div>
         <div class="RatingPanel">
           <div class="DugoutContainer">
-          <ProcentDonout 
-          :value="props.ExecutionTime"
-          :maxValue="props.MaxExecutionTime"
-          :label="props.ExecutionTime+' ms'"
-          fillColor="#a463ac"
-          basicColor="#ffffff"
-          class="MsText"
-          :radius="65"
-          />
-        </div>
+            <ProcentDonout
+              :value="props.ExecutionTime"
+              :maxValue="props.MaxExecutionTime"
+              :label="props.ExecutionTime + ' ms'"
+              fillColor="#a463ac"
+              basicColor="#ffffff"
+              class="MsText"
+              :radius="65"
+            />
+          </div>
         </div>
       </div>
 
@@ -27,18 +27,16 @@
             {{ props.BetterThanProcent }}%
           </div> -->
           <div class="DugoutContainer">
-            <ProcentDonout 
-            :value="props.BetterThanProcent"
-            :maxValue="100"
-            :label="props.BetterThanProcent+'%'"
-            fillColor="#a463ac"
-            basicColor="#ffffff"
-            class="procentText"
-            :radius="65"
+            <ProcentDonout
+              :value="props.BetterThanProcent"
+              :maxValue="100"
+              :label="props.BetterThanProcent + '%'"
+              fillColor="#a463ac"
+              basicColor="#ffffff"
+              class="procentText"
+              :radius="65"
             />
           </div>
-  
-     
         </div>
       </div>
 
@@ -66,8 +64,6 @@
     BetterThanProcent: number
     RankingPlacement?: number
   }>()
-
-
 </script>
 
 <style lang="css">
@@ -117,7 +113,6 @@
     flex-grow: 1;
     overflow: hidden;
     display: flex;
-
   }
 
   .RankingNumberContainer {
@@ -135,7 +130,7 @@
     z-index: 0;
     margin: 0rem;
     height: 12rem;
-    
+
     align-self: center;
     justify-self: center;
     overflow: hidden;
@@ -143,7 +138,6 @@
     padding: 1rem;
     padding-top: -5rem;
     overflow: hidden;
-
   }
   .DougnoutInsidesContainer {
     position: relative;

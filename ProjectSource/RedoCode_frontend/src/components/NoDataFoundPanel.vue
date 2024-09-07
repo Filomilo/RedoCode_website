@@ -1,13 +1,9 @@
 <template>
-
-    <div style="noDataFoundContainer">
-        No page found
-    </div>
+  <div style="noDataFoundContainer">No page found</div>
 </template>
 
-
 <style lang="css">
-.noDataFoundContainer{
+  .noDataFoundContainer {
     min-height: 100%;
     max-width: 100%;
     overflow-y: scroll;
@@ -17,6 +13,5 @@
     justify-content: center;
     flex-direction: column;
     border: 1rem solid red;
-    
   }
 </style>

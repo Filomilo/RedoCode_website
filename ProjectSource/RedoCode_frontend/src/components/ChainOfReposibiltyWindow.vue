@@ -56,9 +56,9 @@
     type ExecutionChainControls,
   } from '@/controllers/ExecutionChainController'
   import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
-import { useGlobalStateStore } from '@/stores/GlobalStateStore'
+  import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   const executionChainStore = useExecutionChainStore()
-  const GlobalStateStore = useGlobalStateStore();
+  const GlobalStateStore = useGlobalStateStore()
 
   const onVisibiltyUpdate = (state: ExecutionChainController) => {
     console.log('updare: ' + JSON.stringify(state._executionChain))

@@ -1,29 +1,25 @@
 <template>
-<main>
+  <main>
     <div class="topPanel">
-        <div class="titleContainer" id="solutions-exercise-title">
-            {{ props.title }}
-        </div>
-        <div class="descriptionContainer" id="solutions-exercise-desc">
-            {{ props.description }}
-        </div>
+      <div class="titleContainer" id="solutions-exercise-title">
+        {{ props.title }}
+      </div>
+      <div class="descriptionContainer" id="solutions-exercise-desc">
+        {{ props.description }}
+      </div>
     </div>
-
-</main>
-
+  </main>
 </template>
 
-
 <script setup lang="ts">
-const props = defineProps<{
-  title: string
-  description: string
+  const props = defineProps<{
+    title: string
+    description: string
   }>()
-
 </script>
 
 <style lang="css">
-.topPanel{
+  .topPanel {
     width: 100%;
     min-width: 100%;
     display: flex;
@@ -32,20 +28,18 @@ const props = defineProps<{
     border-end-end-radius: 3rem;
     border-bottom-left-radius: 3rem;
     background-color: rgb(40, 40, 40);
-    box-shadow: 0px 0px 10px rgb(14, 14, 14);;
-}
+    box-shadow: 0px 0px 10px rgb(14, 14, 14);
+  }
 
-.titleContainer{
-font-size: 2rem;
-display: flex   ;
-justify-content: center;
-
-}
-
-.descriptionContainer{
-    font-size: 1rem;
-    display: flex   ;
+  .titleContainer {
+    font-size: 2rem;
+    display: flex;
     justify-content: center;
-    
-}
+  }
+
+  .descriptionContainer {
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+  }
 </style>
