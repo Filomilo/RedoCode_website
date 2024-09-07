@@ -1,20 +1,46 @@
-import { defineConfig } from 'vitest/config'
-import { fileURLToPath } from 'url'
+import { fileURLToPath, URL } from 'node:url'
 
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { resolve } from 'path'
+
+// https://vitejs.dev/config/
 export default defineConfig({
+  base: '',
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true,
+        warnRuleAsError: false,
+      },
+    },
+  },
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  test: {
-    environment: 'jsdom',
-    include: ['src/__tests__/unit/**/*.spec.ts'],
-    exclude: ['e2e/*'],
-    root: fileURLToPath(new URL('./', import.meta.url)),
+  // esbuild: {
+  //   drop: ['console', 'debugger'],
+  // },
+
+  build: {
+    // minify: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('src/components')) {
+            return 'components'
+          }
+          if (id.includes('src/controllers')) {
+            return 'controllers'
+          }
+          if (id.includes('src/types')) {
+            return 'types'
+          }
+        },
+      },
+    },
   },
 })

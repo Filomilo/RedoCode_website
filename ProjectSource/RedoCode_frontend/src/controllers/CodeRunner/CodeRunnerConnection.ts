@@ -3,7 +3,7 @@ import type CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 
 import { computed, ComputedRef, Ref, ref } from 'vue'
-
+import { stringify, parse } from 'flatted'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import StompApiSender from '../Stomp/StompApiSender'
 import StompApiSubsciptionContorller from '../Stomp/StompApiSubsriptionsController'
@@ -28,7 +28,7 @@ export default class CodeRunnerConnection {
   )
 
   public onCodeRunnerStateChanged(codeRunnerState: CoderunnerState) {
-    console.log(JSON.stringify(codeRunnerState))
+    console.log("onCodeRunnerStateChanged: " + stringify(codeRunnerState))
     this.codeRunnerState.value = codeRunnerState
   }
 
@@ -54,9 +54,9 @@ export default class CodeRunnerConnection {
 
   public setAwaiting() {
     console.log('set awaitng')
-    console.log(JSON.stringify(this.codeRunnerState))
+    console.log("set awaitng: "+stringify(this.codeRunnerState))
     this.codeRunnerState.value.state = CodeRunnerStatus.AWAITING
-    console.log(JSON.stringify(this.codeRunnerState.value))
+    console.log("set awaitng after : "+stringify(this.codeRunnerState.value))
   }
   public setNoneStatus() {
     this.codeRunnerState.value.state = CodeRunnerStatus.NONE

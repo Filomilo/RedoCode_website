@@ -6,6 +6,7 @@ RUN yarn
 COPY . .
 RUN npm install
 RUN yarn install
+RUN yarn tsc --skipLibCheck
 RUN yarn build
 
 
