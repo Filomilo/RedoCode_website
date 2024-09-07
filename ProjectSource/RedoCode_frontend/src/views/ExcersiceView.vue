@@ -42,7 +42,7 @@
   const route = useRoute()
 
   const fetchExerciseData = (id: number) => {
-    EndpointAcces.getExerciseData(id).then(x => {
+    EndpointAcces.unauthorized.getExerciseData(id).then((x:any) => {
       console.log('fetched exercise data: ' + JSON.stringify(x))
       codeRunnerStore.exerciseSolverController.loadInitialData(id, x)
     })

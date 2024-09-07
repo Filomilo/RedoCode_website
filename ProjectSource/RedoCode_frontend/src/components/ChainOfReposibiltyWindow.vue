@@ -56,14 +56,16 @@
     type ExecutionChainControls,
   } from '@/controllers/ExecutionChainController'
   import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
+import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   const executionChainStore = useExecutionChainStore()
+  const GlobalStateStore = useGlobalStateStore();
 
   const onVisibiltyUpdate = (state: ExecutionChainController) => {
     console.log('updare: ' + JSON.stringify(state._executionChain))
     chainData.value = [...state.executionChain]
     shouldBevisable.value = state.shouldBeVisible
     canBeclosed.value = state.closeReady
-    executionChainStore.lock = state.shouldBeVisible
+    GlobalStateStore.isLocked = state.shouldBeVisible
   }
   executionChainStore.executionChainController.onVisibiltyUpdate =
     onVisibiltyUpdate

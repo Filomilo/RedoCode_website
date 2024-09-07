@@ -18,10 +18,7 @@ export const useExecutionChainStore = defineStore('executionChainStore', () => {
     )
   )
 
-  const lock = ref(false)
-
   return {
     executionChainController,
-    lock,
   }
 })

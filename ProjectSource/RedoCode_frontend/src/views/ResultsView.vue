@@ -1,12 +1,12 @@
 <template>
   <main style="">
-    <div class="MainContainer">
+    <div class="MainContainer" v-if="refResultData!==undefined">
       <CodeRatingPanel
         class="CodeRatingPanel"
-        :ExecutionTime="454"
-        :MaxExecutionTime="1250"
-        :BetterThanProcent="47"
-        :RankingPlacement="3"
+        :ExecutionTime="refResultData.executionTimeMs"
+        :MaxExecutionTime="refResultData.maxExecutionTimeMs"
+        :BetterThanProcent="refResultData.betterThanProcent"
+        :RankingPlacement="refResultData.SolutionRanking"
       />
       <div class="" style="margin-top: 5rem">
         <h2>Rate difficulty to see other solutions</h2>
@@ -16,56 +16,74 @@
         :rateOptions="rateOptions"
         v-model="selectedRating"
       />
-      <div class="" style="margin-top: 2rem" v-if="!alreadyRated">
+      <div class="" style="margin-top: 2rem">
         <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
       </div>
     </div>
+    <NoDataFoundPanel v-else/>
 
-    <!-- <div class="VerticalLine" style="margin-top: 5rem">
-      <Textarea
-        class="CommentArea"
-        :disabled="!ActiveUserStore.isLogged"
-        v-model="commentInput"
-        :invalid="!validatedComment"
-      />
-    </div>
-    <div style="margin-left: 3rem">
-      {{ commentInput.length + '/3000' }}
-    </div>
-    <div class="VerticalLine" style="margin-top: 0.5rem; display: flex">
-      <Button
-        class="commentButton"
-        :disabled="!ActiveUserStore.isLogged"
-        @click="onCommentButton"
-      >
-        comment
-      </Button>
-    </div>
-    <div v-for="(data, index) in comments" v-bind:key="index">
-      <div class="VerticalLine" style="margin-top: 0.5rem">
-        <div class="ProfilePicContainer">
-          <img :src="data.profilePic" class="profilePic" />
-        </div>
-        <div class="CommentContainer">
-          <h3 style="margin-left: 2rem; margin-top: 1rem">{{ data.nick }}</h3>
-          <div class="commentContent">
-            {{ data.content }}
-          </div>
-        </div>
-      </div>
-    </div> -->
+
+  
   </main>
 
   <!-- <Image :src=data.profilePic class="profilePic" /> -->
 </template>
 
 <script setup lang="ts">
-  import { computed, Ref, ref } from 'vue'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import RateSelector, { RateOption } from '@/components/RateSelector.vue'
   import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
+  import SolutionsPanel from '@/components/SolutionsPanel.vue'
+  import SolutionsData from '@/types/ApiMesseages/SolutionsData'
+  import CodeRunnerType from "@/types/CodeRunnerTypes";
+  import {useGlobalStateStore} from '@/stores/GlobalStateStore'
+  import LoadingIndicator from '@/components/LoadingIndicator.vue'
+  import {ComputedRef,Ref, ref} from 'vue'
+  import EndpointAcces from '@/controllers/EndpointsAcces'
+import { useRoute,useRouter } from 'vue-router';
+import {  onBeforeMount,onMounted } from 'vue';
+import CommentSection from '@/components/CommentSection.vue'
+import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
+import ResultData from '@/types/ApiMesseages/ResultData'
+import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue';
+import { useToastStore } from '@/stores/ToastStore'
 
-  const rateOptions: RateOption[] = [
+const ActiveUserStore= useActiveUserStore();
+const globalStateStore = useGlobalStateStore();
+const route = useRoute();
+ const router = useRouter();
+const toastStore=useToastStore();
+const refResultData:Ref<ResultData|undefined>=ref();
+
+
+
+
+console.log("route.params: "+JSON.stringify(route.params))
+    const exercsieID: number =  Number(route.params.id);
+  console.log("exercsieID: "+exercsieID)
+
+
+  const loadData=async ()=>{
+    console.log("Loading solutions")
+    globalStateStore.showLoadingScreen("Loading solutions");
+    EndpointAcces.authorized.getResultData(exercsieID,ActiveUserStore.getToken()).then((data: ResultData)=>{
+      refResultData.value=data;
+      globalStateStore.hideLoadingScreen();
+  
+    }).finally(()=>{
+      globalStateStore.hideLoadingScreen();
+    })
+
+  }
+
+  onMounted(() => {
+    if(exercsieID!==undefined && exercsieID>0)
+    loadData();
+     
+  
+    });
+
+    const rateOptions: RateOption[] = [
     {
       value: 1,
       label: 'Very easy',
@@ -88,51 +106,20 @@
     },
   ]
 
-  const ActiveUserStore = useActiveUserStore()
-  const commentInput: Ref<string> = ref('')
-  const comments = ref([
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-    {
-      nick: 'nick',
-      content: 'Great exercise',
-      profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-    },
-  ])
+const selectedRating: Ref<number> = ref(-1)
 
-  const ratingLevelShow: Ref<number> = ref(0)
-
-  const selectedRating: Ref<number> = ref(-1)
-  const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
-  const validatedComment = computed(() => {
-    return commentInput.value.length > 0 && commentInput.value.length < 3000
-  })
-
-  const onCommentButton = () => {
-    if (validatedComment.value) {
-      comments.value.unshift({
-        nick: ActiveUserStore.acoountInfo.nick.value,
-        profilePic: 'https://i.imgur.com/Z6fpYPD.png',
-        content: commentInput.value,
-      })
-      commentInput.value = ''
-    }
-  }
   const onSaveRate = () => {
-    alreadyRated.value = true
+    EndpointAcces.authorized.postRate(
+      selectedRating.value
+      ,exercsieID
+      ,ActiveUserStore.getToken()
+    ).then(()=>{
+      toastStore.showSuccessMessage("saved rating");
+      router.push({name: 'Solutions', params: {id: exercsieID}})
+  }).catch((ex)=>{
+    toastStore.showErrorMessage("Couldn't save rating: \n "+ex);
+  }
+)
   }
 </script>
 

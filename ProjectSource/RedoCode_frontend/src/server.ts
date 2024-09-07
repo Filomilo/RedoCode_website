@@ -4,6 +4,8 @@ import type ExerciseListRequestMessage from './types/ExerciseListRequestMessage'
 import ExerciseData from './types/ApiMesseages/ExcerciseDataMessage'
 import CodeRunnerType from './types/CodeRunnerTypes'
 import VarType from './types/VarType'
+import SolutionsData from './types/ApiMesseages/SolutionsData'
+import ResultData from './types/ApiMesseages/ResultData'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -152,6 +154,60 @@ export function makeServer({ environment = 'development' } = {}) {
     },
   ]
 
+  const solutionData: SolutionsData={
+    maxExecutionTimeMs: 100,
+    SolutionsList: [{
+      username: 'Username1 ',
+      date: new Date(),
+      executionTimeMs: 10,
+      profilePic: '',
+      solutionId: 1,
+      codeRunner: CodeRunnerType.CPP_RUNNER
+    },
+    {
+      username: 'Username2',
+      date: new Date(),
+      executionTimeMs: 25,
+      profilePic: '',
+      solutionId: 2,
+      codeRunner: CodeRunnerType.CPP_RUNNER
+    },
+    {
+      username: 'Username3',
+      date: new Date(),
+      executionTimeMs: 44,
+      profilePic: '',
+      solutionId: 3,
+      codeRunner: CodeRunnerType.CPP_RUNNER
+    }
+    ],
+    title: 'Exercise Title',
+    desc: 'Descritpion of exercise',
+    comments: [
+      {
+        username: 'example user',
+        profilePicture: '',
+        comment: 'Greate exercise'
+      }
+    ]
+  }
+
+
+    const solutionsCodes=[
+      {
+        id: 1,
+        code: `11111111111111`
+      },
+      {
+        id: 2,
+        code: `22222222222222`
+      }
+      ,   {
+        id: 3,
+        code: `3333333333`
+      }
+    ]
+
   const activeExerciseData: ExerciseData = {
     inputType: 'SINGLE_INTEGER',
     id: 1,
@@ -205,6 +261,13 @@ export function makeServer({ environment = 'development' } = {}) {
     startingFunction: 'function result(val){\n\n}',
   }
 
+  const resultData:ResultData = {
+    executionTimeMs: 250,
+    maxExecutionTimeMs: 1000 ,
+    betterThanProcent: 66,
+    SolutionRanking: 5
+  }
+
   const exerciseListHandler = (schema: any, request: any) => {
     const req: ExerciseListRequestMessage = request.queryParams
     const start: number = (req.page - 1) * req.rowsPerPage
@@ -218,6 +281,27 @@ export function makeServer({ environment = 'development' } = {}) {
     return activeExerciseData
   }
 
+
+  const solutionsDataHandler=(schema: any, request: any)=>{
+    console.log("solutionsDataHandler "+JSON.stringify(request))
+
+    return solutionData;
+  }
+  const resultDataHandler=(schema: any, request: any)=>{
+    console.log("resultDataHandler "+JSON.stringify(request))
+
+    return resultData;
+  }
+  
+
+  const solutionsCodesDataHandler=(schema: any, request: any)=>{
+    console.log("solutionsCodesDataHandler "+JSON.stringify(request))
+    console.log("request.queryParams.id "+JSON.stringify(request.queryParams.id))
+    const found=solutionsCodes.find(x=>x.id==request.queryParams.id);
+    console.log("found "+JSON.stringify(found))
+
+    return found===undefined?"":found.code;
+  }
   const server = createServer({
     environment,
 
@@ -233,7 +317,41 @@ export function makeServer({ environment = 'development' } = {}) {
         'http://localhost:8080/public/exercises/data',
         exerciseDataHandler
       )
+
+      this.get(
+        'http://localhost:8080/public/exercises/solutions',
+        solutionsDataHandler
+      )
+      this.get(
+        'http://localhost:8080/public/exercises/solutionsCodes',
+        solutionsCodesDataHandler
+      )
+      this.get(
+        'http://localhost:8080/public/exercises/results',
+        resultDataHandler
+      )
+      this.post('http://localhost:8080/public/exercises/comment', (schema, request) => {
+        const attrs = JSON.parse(request.requestBody);
+  
+        return {
+          status: 'success',
+          message: 'comment posted succesfully!',
+          submittedData: attrs 
+        };
+      });
+
+      this.post('http://localhost:8080/public/exercises/rate', (schema, request) => {
+        const attrs = JSON.parse(request.requestBody);
+  
+        return {
+          status: 'success',
+          message: 'rating saved!',
+          submittedData: attrs 
+        };
+      });
+      
     },
+
   })
 
   return server

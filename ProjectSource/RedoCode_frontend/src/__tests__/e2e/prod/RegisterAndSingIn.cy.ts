@@ -1,7 +1,7 @@
-import AccountPanel from './helpers/AccountPanel'
-import SwitcherControls from './helpers/SwitcherControls'
-import UrlControls from './helpers/UrlControls'
-import UserAuthentication from './helpers/UserAuthentication'
+import AccountPanel from '../helpers/AccountPanel'
+import SwitcherControls from '../helpers/SwitcherControls'
+import UrlControls from '../helpers/UrlControls'
+import UserAuthentication from '../helpers/UserAuthentication'
 
 describe('register and sign in', () => {
   it('passes', () => {

@@ -11,13 +11,15 @@ jobs:
         working-directory: ./ProjectSource/RedoCode_frontend
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 20.0
+      - run: ls
+      - name: Use Node.js 20.6.1
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm i
-      - run: npm run build
+          node-version: 21.6.1
+          cache: 'yarn'
+          cache-dependency-path: ./ProjectSource/RedoCode_frontend/yarn.lock
+      - run: yarn install
+      - run: yarn build
 
   build-backend:
     runs-on: ubuntu-latest
@@ -29,7 +31,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           cache: maven
       - name: Set up Maven
@@ -51,13 +53,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 20.0
+      - name: Use Node.js 21.0
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm i
-      - run: npm run test:dev:unit
+          node-version: 21.6.1
+          cache: 'yarn'
+          cache-dependency-path: ./ProjectSource/RedoCode_frontend/yarn.lock
+      - run: yarn install
+      - run: yarn test:dev:unit
 
   vue-e2e-dev:
     needs:
@@ -78,10 +81,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
-          npm install
+          yarn install
       - name: Run Cypress Tests
         run: |
-          npm run test:dev:e2e
+          yarn test:dev:e2e
 
   backend-junit-dev-docker:
     needs:
@@ -162,12 +165,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
-          npm install cypress
-          npm install
+          yarn add cypress
+          yarn install
       - name: run test
         working-directory: ./ProjectSource/RedoCode_frontend
         run: |
-          docker run --network="host" -v $PWD:/e2e -w /e2e --entrypoint cypress cypress/included:latest run --e2e -C config/cypress-prod.config.ts
+          docker run --network="host" -v $PWD:/e2e -w /e2e --entrypoint cypress cypress/included:13.14.1 run --e2e -C config/cypress-prod.config.ts
       - name: file testing
         working-directory: ./ProjectSource/RedoCode_frontend
         if: always()

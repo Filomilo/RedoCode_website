@@ -1,3 +1,9 @@
 
 *.tgz
 /ProjectSource/RedoCode_frontend/dist
+/ProjectSource/node_modules
+PiplineLogs/outputfile.txt
+PiplineLogs/inputfile.txt
+ProjectSource/RedoCode_frontend/.yarn/install-state.gz
+*.gz
+*.mjs
