@@ -1,6 +1,5 @@
-
 export default interface CommentType {
-  username: string,
+  username: string
   profilePicture: string
   comment: string
 }

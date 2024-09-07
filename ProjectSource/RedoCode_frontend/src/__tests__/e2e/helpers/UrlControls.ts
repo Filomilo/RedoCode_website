@@ -20,12 +20,12 @@ namespace UrlControls {
     else cy.url().should('eq', Cypress.config().baseUrl + '/Home')
   }
   export function visitResults(id: number) {
-    cy.visit('/Results/'+id)
-    cy.url().should('eq', Cypress.config().baseUrl + '/Results/'+id)
+    cy.visit('/Results/' + id)
+    cy.url().should('eq', Cypress.config().baseUrl + '/Results/' + id)
   }
   export function visitSolutions(id: number) {
-    cy.visit('/Solutions/'+id)
-    cy.url().should('eq', Cypress.config().baseUrl + '/Solutions/'+id)
+    cy.visit('/Solutions/' + id)
+    cy.url().should('eq', Cypress.config().baseUrl + '/Solutions/' + id)
   }
 }
 

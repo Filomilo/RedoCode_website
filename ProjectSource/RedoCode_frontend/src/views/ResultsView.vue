@@ -1,6 +1,6 @@
 <template>
   <main style="">
-    <div class="MainContainer" v-if="refResultData!==undefined">
+    <div class="MainContainer" v-if="refResultData !== undefined">
       <CodeRatingPanel
         class="CodeRatingPanel"
         :ExecutionTime="refResultData.executionTimeMs"
@@ -20,10 +20,7 @@
         <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
       </div>
     </div>
-    <NoDataFoundPanel v-else/>
-
-
-  
+    <NoDataFoundPanel v-else />
   </main>
 
   <!-- <Image :src=data.profilePic class="profilePic" /> -->
@@ -35,55 +32,49 @@
   import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
   import SolutionsPanel from '@/components/SolutionsPanel.vue'
   import SolutionsData from '@/types/ApiMesseages/SolutionsData'
-  import CodeRunnerType from "@/types/CodeRunnerTypes";
-  import {useGlobalStateStore} from '@/stores/GlobalStateStore'
+  import CodeRunnerType from '@/types/CodeRunnerTypes'
+  import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
-  import {ComputedRef,Ref, ref} from 'vue'
+  import { ComputedRef, Ref, ref } from 'vue'
   import EndpointAcces from '@/controllers/EndpointsAcces'
-import { useRoute,useRouter } from 'vue-router';
-import {  onBeforeMount,onMounted } from 'vue';
-import CommentSection from '@/components/CommentSection.vue'
-import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
-import ResultData from '@/types/ApiMesseages/ResultData'
-import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue';
-import { useToastStore } from '@/stores/ToastStore'
+  import { useRoute, useRouter } from 'vue-router'
+  import { onBeforeMount, onMounted } from 'vue'
+  import CommentSection from '@/components/CommentSection.vue'
+  import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
+  import ResultData from '@/types/ApiMesseages/ResultData'
+  import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue'
+  import { useToastStore } from '@/stores/ToastStore'
 
-const ActiveUserStore= useActiveUserStore();
-const globalStateStore = useGlobalStateStore();
-const route = useRoute();
- const router = useRouter();
-const toastStore=useToastStore();
-const refResultData:Ref<ResultData|undefined>=ref();
+  const ActiveUserStore = useActiveUserStore()
+  const globalStateStore = useGlobalStateStore()
+  const route = useRoute()
+  const router = useRouter()
+  const toastStore = useToastStore()
+  const refResultData: Ref<ResultData | undefined> = ref()
 
+  console.log('route.params: ' + JSON.stringify(route.params))
+  const exercsieID: number = Number(route.params.id)
+  console.log('exercsieID: ' + exercsieID)
 
-
-
-console.log("route.params: "+JSON.stringify(route.params))
-    const exercsieID: number =  Number(route.params.id);
-  console.log("exercsieID: "+exercsieID)
-
-
-  const loadData=async ()=>{
-    console.log("Loading solutions")
-    globalStateStore.showLoadingScreen("Loading solutions");
-    EndpointAcces.authorized.getResultData(exercsieID,ActiveUserStore.getToken()).then((data: ResultData)=>{
-      refResultData.value=data;
-      globalStateStore.hideLoadingScreen();
-  
-    }).finally(()=>{
-      globalStateStore.hideLoadingScreen();
-    })
-
+  const loadData = async () => {
+    console.log('Loading solutions')
+    globalStateStore.showLoadingScreen('Loading solutions')
+    EndpointAcces.authorized
+      .getResultData(exercsieID, ActiveUserStore.getToken())
+      .then((data: ResultData) => {
+        refResultData.value = data
+        globalStateStore.hideLoadingScreen()
+      })
+      .finally(() => {
+        globalStateStore.hideLoadingScreen()
+      })
   }
 
   onMounted(() => {
-    if(exercsieID!==undefined && exercsieID>0)
-    loadData();
-     
-  
-    });
+    if (exercsieID !== undefined && exercsieID > 0) loadData()
+  })
 
-    const rateOptions: RateOption[] = [
+  const rateOptions: RateOption[] = [
     {
       value: 1,
       label: 'Very easy',
@@ -106,20 +97,18 @@ console.log("route.params: "+JSON.stringify(route.params))
     },
   ]
 
-const selectedRating: Ref<number> = ref(-1)
+  const selectedRating: Ref<number> = ref(-1)
 
   const onSaveRate = () => {
-    EndpointAcces.authorized.postRate(
-      selectedRating.value
-      ,exercsieID
-      ,ActiveUserStore.getToken()
-    ).then(()=>{
-      toastStore.showSuccessMessage("saved rating");
-      router.push({name: 'Solutions', params: {id: exercsieID}})
-  }).catch((ex)=>{
-    toastStore.showErrorMessage("Couldn't save rating: \n "+ex);
-  }
-)
+    EndpointAcces.authorized
+      .postRate(selectedRating.value, exercsieID, ActiveUserStore.getToken())
+      .then(() => {
+        toastStore.showSuccessMessage('saved rating')
+        router.push({ name: 'Solutions', params: { id: exercsieID } })
+      })
+      .catch(ex => {
+        toastStore.showErrorMessage("Couldn't save rating: \n " + ex)
+      })
   }
 </script>
 

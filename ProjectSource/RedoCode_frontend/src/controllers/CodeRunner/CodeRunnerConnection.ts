@@ -28,7 +28,7 @@ export default class CodeRunnerConnection {
   )
 
   public onCodeRunnerStateChanged(codeRunnerState: CoderunnerState) {
-    console.log("onCodeRunnerStateChanged: " + stringify(codeRunnerState))
+    console.log('onCodeRunnerStateChanged: ' + stringify(codeRunnerState))
     this.codeRunnerState.value = codeRunnerState
   }
 
@@ -44,19 +44,19 @@ export default class CodeRunnerConnection {
   }
 
   public updateCodeRunner = () => {
-    EnpointAcces.unauthorized.getCodeRunnerState(
-      this.activeUserStore.getToken() as string
-    ).then((data: CoderunnerState) => {
-      console.log('updateCodeRunner: ' + JSON.stringify(data))
-      this.codeRunnerState.value = data
-    })
+    EnpointAcces.unauthorized
+      .getCodeRunnerState(this.activeUserStore.getToken() as string)
+      .then((data: CoderunnerState) => {
+        console.log('updateCodeRunner: ' + JSON.stringify(data))
+        this.codeRunnerState.value = data
+      })
   }
 
   public setAwaiting() {
     console.log('set awaitng')
-    console.log("set awaitng: "+stringify(this.codeRunnerState))
+    console.log('set awaitng: ' + stringify(this.codeRunnerState))
     this.codeRunnerState.value.state = CodeRunnerStatus.AWAITING
-    console.log("set awaitng after : "+stringify(this.codeRunnerState.value))
+    console.log('set awaitng after : ' + stringify(this.codeRunnerState.value))
   }
   public setNoneStatus() {
     this.codeRunnerState.value.state = CodeRunnerStatus.NONE
