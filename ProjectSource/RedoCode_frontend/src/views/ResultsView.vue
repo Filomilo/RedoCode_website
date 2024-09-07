@@ -40,19 +40,24 @@
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
   import {ComputedRef,Ref, ref} from 'vue'
   import EndpointAcces from '@/controllers/EndpointsAcces'
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter } from 'vue-router';
 import {  onBeforeMount,onMounted } from 'vue';
 import CommentSection from '@/components/CommentSection.vue'
 import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
 import ResultData from '@/types/ApiMesseages/ResultData'
 import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue';
+import { useToastStore } from '@/stores/ToastStore'
 
 const ActiveUserStore= useActiveUserStore();
 const globalStateStore = useGlobalStateStore();
-
+const route = useRoute();
+ const router = useRouter();
+const toastStore=useToastStore();
 const refResultData:Ref<ResultData|undefined>=ref();
 
- const route = useRoute();
+
+
+
 console.log("route.params: "+JSON.stringify(route.params))
     const exercsieID: number =  Number(route.params.id);
   console.log("exercsieID: "+exercsieID)
@@ -80,37 +85,20 @@ console.log("route.params: "+JSON.stringify(route.params))
 
 
 
-
-  const rateOptions: RateOption[] = [
-    {
-      value: 1,
-      label: 'Very easy',
-    },
-    {
-      value: 2,
-      label: 'Easy',
-    },
-    {
-      value: 3,
-      label: 'Moderate',
-    },
-    {
-      value: 4,
-      label: 'Hard',
-    },
-    {
-      value: 5,
-      label: 'Very hard',
-    },
-  ]
-
-  const ratingLevelShow: Ref<number> = ref(0)
-
 const selectedRating: Ref<number> = ref(-1)
-const alreadyRated: Ref<boolean> = ref(!ActiveUserStore.isLogged)
 
   const onSaveRate = () => {
-    alreadyRated.value = true
+    EndpointAcces.authorized.postRate(
+      selectedRating.value
+      ,exercsieID
+      ,ActiveUserStore.getToken()
+    ).then(()=>{
+      toastStore.showSuccessMessage("saved rating");
+      router.push({name: 'Solutions', params: {id: exercsieID}})
+  }).catch((ex)=>{
+    toastStore.showErrorMessage("Couldn't save rating: \n "+ex);
+  }
+)
   }
 </script>
 

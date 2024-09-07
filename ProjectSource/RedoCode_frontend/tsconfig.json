@@ -19,9 +19,9 @@
     "checkJs": false,
     "verbatimModuleSyntax": false,
     "typeRoots": ["./src/types", "./node_modules/@types/",],
+    "paths": {
     
+    }
   },
-  "paths": {
-    "vite": ["node_modules/vite"]
-  }
+
 }

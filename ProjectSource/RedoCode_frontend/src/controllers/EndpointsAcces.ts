@@ -7,6 +7,7 @@ import CodeRunnerType from '@/types/CodeRunnerTypes'
 import ExerciseListRequestMessage from '@/types/ExerciseListRequestMessage'
 import axios from 'axios'
 import { isArray } from 'chart.js/helpers'
+import { stringify } from 'flatted'
 
 namespace EndpointAcces {
 
@@ -177,6 +178,21 @@ export async function  getResultData(exerciseid: number, token: string):Promise<
     throw 'no solutions data retrived '
 
   return response.data
+}
+
+export async function postRate(selectedRating: number, exercsieID: number, token: string) {
+    const data = {
+        id: exercsieID,
+        rate: selectedRating
+    };
+    const response=await axios.post('/public/exercises/rate', data, {
+        headers: getAuthHeader(token)
+    })
+    
+    console.log("response postComment: "+ JSON.stringify (response))
+
+    return response.status;
+    
 }
 }
 

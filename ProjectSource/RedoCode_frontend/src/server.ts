@@ -331,7 +331,7 @@ export function makeServer({ environment = 'development' } = {}) {
         resultDataHandler
       )
       this.post('http://localhost:8080/public/exercises/comment', (schema, request) => {
-        let attrs = JSON.parse(request.requestBody);
+        const attrs = JSON.parse(request.requestBody);
   
         return {
           status: 'success',
@@ -340,7 +340,15 @@ export function makeServer({ environment = 'development' } = {}) {
         };
       });
 
-
+      this.post('http://localhost:8080/public/exercises/rate', (schema, request) => {
+        const attrs = JSON.parse(request.requestBody);
+  
+        return {
+          status: 'success',
+          message: 'rating saved!',
+          submittedData: attrs 
+        };
+      });
       
     },
 
