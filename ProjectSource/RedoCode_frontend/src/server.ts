@@ -5,6 +5,7 @@ import ExerciseData from './types/ApiMesseages/ExcerciseDataMessage'
 import CodeRunnerType from './types/CodeRunnerTypes'
 import VarType from './types/VarType'
 import SolutionsData from './types/ApiMesseages/SolutionsData'
+import ResultData from './types/ApiMesseages/ResultData'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -260,6 +261,13 @@ export function makeServer({ environment = 'development' } = {}) {
     startingFunction: 'function result(val){\n\n}',
   }
 
+  const resultData:ResultData = {
+    executionTimeMs: 250,
+    maxExecutionTimeMs: 1000 ,
+    betterThanProcent: 66,
+    SolutionRanking: 5
+  }
+
   const exerciseListHandler = (schema: any, request: any) => {
     const req: ExerciseListRequestMessage = request.queryParams
     const start: number = (req.page - 1) * req.rowsPerPage
@@ -279,7 +287,12 @@ export function makeServer({ environment = 'development' } = {}) {
 
     return solutionData;
   }
+  const resultDataHandler=(schema: any, request: any)=>{
+    console.log("resultDataHandler "+JSON.stringify(request))
 
+    return resultData;
+  }
+  
 
   const solutionsCodesDataHandler=(schema: any, request: any)=>{
     console.log("solutionsCodesDataHandler "+JSON.stringify(request))
@@ -313,6 +326,10 @@ export function makeServer({ environment = 'development' } = {}) {
         'http://localhost:8080/public/exercises/solutionsCodes',
         solutionsCodesDataHandler
       )
+      this.get(
+        'http://localhost:8080/public/exercises/results',
+        resultDataHandler
+      )
       this.post('http://localhost:8080/public/exercises/comment', (schema, request) => {
         let attrs = JSON.parse(request.requestBody);
   
@@ -322,7 +339,11 @@ export function makeServer({ environment = 'development' } = {}) {
           submittedData: attrs 
         };
       });
+
+
+      
     },
+
   })
 
   return server

@@ -14,9 +14,9 @@
     :id="exercsieID"
     />
   </main>
-  <main class="main " v-else>
-    No exercise found
-  </main>
+
+     <NoDataFoundPanel v-else/>
+
 
 
 </div>
@@ -35,6 +35,7 @@ import {  onBeforeMount,onMounted } from 'vue';
 import CommentSection from '@/components/CommentSection.vue'
 import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
 import { useActiveUserStore } from '@/stores/ActiveUserStore';
+import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue';
 console.log("Test")
   const refSolutionData:Ref<SolutionsData|undefined>=ref();
   const ActiveUserStore= useActiveUserStore();

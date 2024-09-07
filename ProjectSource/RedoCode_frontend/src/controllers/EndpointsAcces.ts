@@ -1,4 +1,5 @@
 import ExcerciseDataMessage from '@/types/ApiMesseages/ExcerciseDataMessage'
+import ResultData from '@/types/ApiMesseages/ResultData'
 import SolutionsData from '@/types/ApiMesseages/SolutionsData'
 import CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
@@ -156,6 +157,26 @@ catch(ex)
 {
   return -1;
 }
+}
+
+export async function  getResultData(exerciseid: number, token: string):Promise<ResultData> {
+  console.log("attempitng /public/exercises/solutions ")
+  const params = {
+    id: exerciseid,
+  }
+  const response = await axios.get('/public/exercises/results', {
+    headers: getAuthHeader(token),
+    params: params,
+  })
+  console.log('/public/exercises/solutions Response:', response)
+  if (
+    response === undefined ||
+    response.data === '' ||
+    response.headers['Content-Length'] == 0
+  )
+    throw 'no solutions data retrived '
+
+  return response.data
 }
 }
 

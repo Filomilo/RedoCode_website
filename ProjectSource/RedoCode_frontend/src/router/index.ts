@@ -65,8 +65,23 @@ const router = createRouter({
       },
     },
     {
-      path: '/Results',
+      path: '/Results/:id',
       name: 'Results',
+      component: () => import('@/views/ResultsView.vue'),
+      beforeEnter: (to, from, next) => {
+        const activeUserStore = useActiveUserStore()
+        console.log('authethication')
+        if (activeUserStore.validateToken()) {
+          next()
+        } else {
+          console.log('ResultsUnauthenticated')
+          next({ name: 'ResultsUnauthenticated' })
+        }
+      },
+    },
+    {
+      path: '/Results',
+      name: 'ResultsNotFound',
       component: () => import('@/views/ResultsView.vue'),
       beforeEnter: (to, from, next) => {
         const activeUserStore = useActiveUserStore()
