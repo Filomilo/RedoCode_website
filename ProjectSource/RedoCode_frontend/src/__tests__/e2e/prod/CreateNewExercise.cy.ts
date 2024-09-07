@@ -6,7 +6,7 @@ import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
 import UserAuthentication from '../helpers/UserAuthentication'
 
-describe.skip('Create new exercise', () => {
+describe('Create new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

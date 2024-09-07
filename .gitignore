@@ -6,3 +6,4 @@ PiplineLogs/outputfile.txt
 PiplineLogs/inputfile.txt
 ProjectSource/RedoCode_frontend/.yarn/install-state.gz
 *.gz
+*.mjs
