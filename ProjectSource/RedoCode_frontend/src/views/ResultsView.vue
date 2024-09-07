@@ -16,7 +16,7 @@
         :rateOptions="rateOptions"
         v-model="selectedRating"
       />
-      <div class="" style="margin-top: 2rem" v-if="!alreadyRated">
+      <div class="" style="margin-top: 2rem">
         <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
       </div>
     </div>
@@ -83,7 +83,28 @@ console.log("route.params: "+JSON.stringify(route.params))
   
     });
 
-
+    const rateOptions: RateOption[] = [
+    {
+      value: 1,
+      label: 'Very easy',
+    },
+    {
+      value: 2,
+      label: 'Easy',
+    },
+    {
+      value: 3,
+      label: 'Moderate',
+    },
+    {
+      value: 4,
+      label: 'Hard',
+    },
+    {
+      value: 5,
+      label: 'Very hard',
+    },
+  ]
 
 const selectedRating: Ref<number> = ref(-1)
 
