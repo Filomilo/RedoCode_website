@@ -5,6 +5,6 @@ export default interface SolutionsData {
   title: string
   desc: string
   maxExecutionTimeMs: number
-  SolutionsList: SolutionItemList[]
+  solutionList: SolutionItemList[]
   comments: CommentType[]
 }

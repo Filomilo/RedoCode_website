@@ -2,6 +2,7 @@
   <!-- type: -->
 
   <div class="CodeResultContainer">
+
     <div class="EngineStatusContianer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
@@ -78,6 +79,7 @@
   import ExerciseTest from '@/types/ExcericseTest'
   import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
   import StringParser from '@/tools/StringParser'
+import { stringify } from 'flatted'
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
   const props = defineProps({

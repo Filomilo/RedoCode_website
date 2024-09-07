@@ -40,4 +40,7 @@ public class ExcecisesEndpoints {
     log.info("sending exercse list: " + exerciseRepository.getSimpleExcersizeList());
     return exerciseRepository.getSimpleExcersizeList();
   }
+
+
+
 }

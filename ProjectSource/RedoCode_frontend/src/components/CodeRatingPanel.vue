@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{stringify(props)}}
     <div class="CodeRatingContainer">
       <div class="RatingPanelContaier">
         <div class="RatingPanelHeader">
@@ -58,6 +59,7 @@
 <script setup lang="ts">
   import { Doughnut } from 'vue-chartjs'
   import ProcentDonout from '@/components/ProcentDonout.vue'
+import { stringify } from 'flatted';
   const props = defineProps<{
     ExecutionTime: number
     MaxExecutionTime: number

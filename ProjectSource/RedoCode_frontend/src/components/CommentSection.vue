@@ -23,7 +23,7 @@
           comment
         </Button>
       </div>
-      <div v-for="(data, index) in comments" v-bind:key="index">
+      <div v-for="(data, index) in commentsRef" v-bind:key="index">
         <div
           class="VerticalLine"
           :id="'comment-' + index"
@@ -60,6 +60,8 @@
     id: number
   }>()
 
+  const commentsRef: Ref<CommentType[]>=ref(props.comments);
+
   const ActiveUserStore = useActiveUserStore()
   const ToastStore = useToastStore()
   const commentInput: Ref<string> = ref('')
@@ -73,15 +75,16 @@
       .postComment(commentInput.value, props.id, ActiveUserStore.getToken())
       .then(x => {
         console.log('token: ' + JSON.stringify(x))
-        if (x !== 201) {
+        if (x < 200 || x > 201 ) {
           ToastStore.showErrorMessage("Couldn't' post comment")
         } else {
           if (validatedComment.value) {
-            props.comments.unshift({
+
+            commentsRef.value.unshift({
               username: ActiveUserStore.acoountInfo.nick.value,
               profilePicture: 'https://i.imgur.com/Z6fpYPD.png',
               comment: commentInput.value,
-            })
+            });
             commentInput.value = ''
           }
           ToastStore.showSuccessMessage('Succsefully commented')
