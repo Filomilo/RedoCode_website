@@ -156,7 +156,7 @@ export function makeServer({ environment = 'development' } = {}) {
 
   const solutionData: SolutionsData = {
     maxExecutionTimeMs: 100,
-    SolutionsList: [
+    solutionList: [
       {
         username: 'Username1 ',
         date: new Date(),
