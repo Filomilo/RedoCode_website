@@ -18,7 +18,7 @@ jobs:
           node-version: 21.6.1
           cache: 'yarn'
           cache-dependency-path: ./ProjectSource/RedoCode_frontend/yarn.lock
-      # - run: yarn install
+      - run: yarn install
       - run: yarn buiild
 
   build-backend:
