@@ -31,7 +31,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           cache: maven
       - name: Set up Maven
@@ -53,13 +53,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 20.0
+      - name: Use Node.js 21.0
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm i
-      - run: npm run test:dev:unit
+          node-version: 21.6.1
+          cache: 'yarn'
+          cache-dependency-path: ./ProjectSource/RedoCode_frontend/yarn.lock
+      - run: yarn install
+      - run: yarn test:dev:unit
 
   vue-e2e-dev:
     needs:
