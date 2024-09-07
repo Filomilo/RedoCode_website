@@ -19,7 +19,7 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: ./ProjectSource/RedoCode_frontend/yarn.lock
       - run: yarn install
-      - run: yarn buiild
+      - run: yarn build
 
   build-backend:
     runs-on: ubuntu-latest
