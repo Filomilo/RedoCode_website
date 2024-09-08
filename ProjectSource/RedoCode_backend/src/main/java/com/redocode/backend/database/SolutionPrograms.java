@@ -36,5 +36,5 @@ public class SolutionPrograms {
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "solution_author")
-  private User SolutionAuthor;
+  private User solutionAuthor;
 }

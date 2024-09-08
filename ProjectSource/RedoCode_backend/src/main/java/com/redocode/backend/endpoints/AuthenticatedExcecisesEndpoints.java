@@ -36,9 +36,9 @@ public class AuthenticatedExcecisesEndpoints {
         return resp;
     }
     @GetMapping("/results")
-    public ResultData getResultData(IdRequest mes,@AuthenticationPrincipal User userDetails) {
-        log.info("getResultData request: " + mes+" from: "+userDetails);
-        ResultData resp = exerciseDataControl.getResultDataForExerciseOfUser(mes.getId(),userDetails.getId() );
+    public ResultData getResultData(Long id,@AuthenticationPrincipal User userDetails) {
+        log.info("getResultData request: " + id+" from: "+userDetails);
+        ResultData resp = exerciseDataControl.getResultDataForExerciseOfUser(id,userDetails.getId() );
         log.info("sending getResultData: "+resp);
         return resp;
     }

@@ -19,6 +19,9 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
    */
   SolutionPrograms findFirstByCode(String code);
 
-  List<SolutionPrograms> findAllByExcersizeIdOrderByAvgExecutionTimeDesc(Long exerciseID);
 
+  List<SolutionPrograms> findAllByExcersizeIdOrderByAvgExecutionTimeDesc(Long exerciseID);
+  SolutionPrograms findFirstByExcersizeIdAndSolutionAuthorId(Long exerciseId, Long solutionAuthorId);
+  int countAllByExcersizeId(Long exerciseId);
+  int countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(Long exerciseId, Long avgExecutionTime);
 }

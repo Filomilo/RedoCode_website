@@ -68,7 +68,7 @@ class AuthenticatedExcecisesEndpointsTest {
     private User _authenticaredUser;
     private String _Token;
     private final String _getSolutionsDataEndPont = "/secure/exercises/solutions?id={id}";
-    private final String _getResultDataEndPont = "/secure/exercises/results";
+    private final String _getResultDataEndPont = "/secure/exercises/results?id={id}";
     private final String _getSolutionsCodesDataEndPont = "/secure/exercises/solutionsCodes";
     private final String _postCommentEndPont = "/secure/exercises/comment";
     private final String _postRateEndPont = "/secure/exercises/rate";
@@ -120,7 +120,7 @@ class AuthenticatedExcecisesEndpointsTest {
                             .avgExecutionTime(RANDOM.nextLong(400,500))
                             .code("Code_"+UUID.randomUUID().toString())
                             .excersize(saved)
-                            .SolutionAuthor(user)
+                            .solutionAuthor(user)
                             .language(programmingLanguageRepository.findByName(RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(RANDOM.nextBoolean()? CODE_RUNNER_TYPE.JS_RUNNER: CODE_RUNNER_TYPE.CPP_RUNNER)) )
                             .build();
             solutionProgramsList.add(solutionProgramsRepository.save(solution));
@@ -229,7 +229,7 @@ i=0;
 
 
         SolutionPrograms solutionPrograms= SolutionPrograms.builder()
-                .SolutionAuthor(this._authenticaredUser)
+                .solutionAuthor(this._authenticaredUser)
                 .language(programmingLanguageRepository.getReferenceById(1l))
                 .avgExecutionTime(999999999l)
                 .excersize(exerciseRepository.getReferenceById(this.exerciseID))
@@ -237,15 +237,13 @@ i=0;
 
                 .build();
         solutionProgramsRepository.save(solutionPrograms);
-        IdRequest idRequest = IdRequest.builder()
-                .id(this.exerciseID)
-                .build();
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", exerciseID);
 
-        log.info("idRequest: "+idRequest);
 
 
         ResponseEntity<ResultData> response = restTemplate.exchange(
-                getFullEndpoint(_getResultDataEndPont), HttpMethod.GET, new HttpEntity<IdRequest>(idRequest, getAuthHeaders()), ResultData.class);
+                getFullEndpoint(_getResultDataEndPont), HttpMethod.GET, new HttpEntity<IdRequest>(getAuthHeaders()), ResultData.class,params);
         log.info("response: "+response);
         ResultData responseData =response.getBody();
         assertEquals(solutionPrograms.getAvgExecutionTime(), responseData.getExecutionTimeMs());

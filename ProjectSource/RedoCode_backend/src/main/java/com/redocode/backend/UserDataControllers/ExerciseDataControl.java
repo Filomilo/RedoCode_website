@@ -28,11 +28,15 @@ public class ExerciseDataControl {
 
     public ResultData getResultDataForExerciseOfUser(long idOfExercise, long idOfUser)
     {
+        SolutionPrograms thisUserProgram = solutionProgramsRepository.findFirstByExcersizeIdAndSolutionAuthorId(idOfExercise,idOfUser);
+        int AllOFSolutions= solutionProgramsRepository.countAllByExcersizeId(idOfExercise);
+        int solutionWorseThanUSer=solutionProgramsRepository.countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(idOfExercise,thisUserProgram.getAvgExecutionTime());
+
         return  ResultData.builder()
-                .betterThanProcent(47.2f)
-                .executionTimeMs(441)
-                .maxExecutionTimeMs(726)
-                .SolutionRanking(4)
+                .betterThanProcent(solutionWorseThanUSer/AllOFSolutions*100)
+                .executionTimeMs(thisUserProgram.getAvgExecutionTime())
+                .maxExecutionTimeMs(thisUserProgram.getExcersize().getMaxExecutionTimeMS())
+                .SolutionRanking(AllOFSolutions-solutionWorseThanUSer)
                 .build();
     }
 
