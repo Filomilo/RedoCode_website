@@ -29,9 +29,9 @@ public class AuthenticatedExcecisesEndpoints {
 
 
     @GetMapping("/solutions")
-    public SolutionsData getSolutionsData(IdRequest mes,@AuthenticationPrincipal User userDetails) {
-        log.info("getSolutionsData request: " + mes+" from: "+userDetails);
-        SolutionsData resp = exerciseDataControl.getSolutionsDataForExerciseOfId(userDetails.getId() );
+    public SolutionsData getSolutionsData(Long id,@AuthenticationPrincipal User userDetails) {
+        log.info("getSolutionsData request: " + id+" from: "+userDetails);
+        SolutionsData resp = exerciseDataControl.getSolutionsDataForExerciseOfId(id);
         log.info("sending getSolutionsData: "+resp);
         return resp;
     }

@@ -16,7 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 public class CommentType {
     @NonNull
     @NotBlank
-    String username;
+    String nickname;
     @NonNull
     String profilePicture;
     @NonNull

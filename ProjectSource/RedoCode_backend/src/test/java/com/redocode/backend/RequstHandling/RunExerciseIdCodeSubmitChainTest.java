@@ -64,7 +64,7 @@ class RunExerciseIdCodeSubmitChainTest {
                 programmingLanguageRepository.findByName(
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
-            .AvgExecutionTime(100L)
+            .avgExecutionTime(100L)
             .build());
     solutionProgramsRepository.save(
         SolutionPrograms.builder()
@@ -74,7 +74,7 @@ class RunExerciseIdCodeSubmitChainTest {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
                         CODE_RUNNER_TYPE.JS_RUNNER)))
             .excersize(excersize)
-            .AvgExecutionTime(100L)
+            .avgExecutionTime(100L)
             .build());
   }
 

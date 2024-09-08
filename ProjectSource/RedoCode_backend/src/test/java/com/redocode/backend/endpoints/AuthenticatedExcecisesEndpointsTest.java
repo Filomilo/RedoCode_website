@@ -1,5 +1,6 @@
 package com.redocode.backend.endpoints;
 
+import com.redocode.backend.Messages.ExercisesInfo.CommentType;
 import com.redocode.backend.Messages.ExercisesInfo.ExerciseSolvingState;
 import com.redocode.backend.Messages.ExercisesInfo.ResultData;
 import com.redocode.backend.Messages.ExercisesInfo.SolutionsData;
@@ -65,7 +66,7 @@ class AuthenticatedExcecisesEndpointsTest {
 
     private User _authenticaredUser;
     private String _Token;
-    private final String _getSolutionsDataEndPont = "/secure/exercises/solutions";
+    private final String _getSolutionsDataEndPont = "/secure/exercises/solutions?id={id}";
     private final String _getResultDataEndPont = "/secure/exercises/results";
     private final String _getSolutionsCodesDataEndPont = "/secure/exercises/solutionsCodes";
     private final String _postCommentEndPont = "/secure/exercises/comment";
@@ -115,7 +116,7 @@ class AuthenticatedExcecisesEndpointsTest {
         for(User user:usersSOlved){
             SolutionPrograms solution=
                     SolutionPrograms.builder()
-                            .AvgExecutionTime(RANDOM.nextLong(400,500))
+                            .avgExecutionTime(RANDOM.nextLong(400,500))
                             .code("Code_"+UUID.randomUUID().toString())
                             .excersize(saved)
                             .SolutionAuthor(user)
@@ -168,31 +169,29 @@ class AuthenticatedExcecisesEndpointsTest {
     void getSolutionsDataCorrect() {
         assertNotNull(restTemplate);
 
-        IdRequest idRequest = IdRequest.builder()
-                .id(this.exerciseID)
-                .build();
 
-    log.info("idRequest: "+idRequest);
 
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", exerciseID);
 
         ResponseEntity<SolutionsData> response = restTemplate.exchange(
-                getFullEndpoint(_getSolutionsDataEndPont), HttpMethod.GET,new HttpEntity<IdRequest>(idRequest, getAuthHeaders()), SolutionsData.class);
+                getFullEndpoint(_getSolutionsDataEndPont), HttpMethod.GET,new HttpEntity<>(getAuthHeaders()), SolutionsData.class,params);
 
         SolutionsData responseData =response.getBody();
-//                this.restTemplate.getForObject(
-//                        getFullEndpoint(_getSolutionsDataEndPont), SolutionsData.class,(Object)idRequest);
+
         log.info(responseData.toString());
         assertNotNull(responseData);
-//        assertEquals(this.exerciseTiitle,responseData.getTitle());
-//        assertEquals(this.exerciseDesc,responseData.getDesc());
-//        assertEquals(this.maxExecutionTIme,responseData.getMaxExecutionTimeMs());
+        assertEquals(this.exerciseTiitle,responseData.getTitle());
+        assertEquals(this.exerciseDesc,responseData.getDesc());
+        assertEquals(this.maxExecutionTIme,responseData.getMaxExecutionTimeMs());
         int i=0;
+        log.info(Arrays.toString(commentsList.stream().sorted((a,b)-> a.getDate().compareTo(b.getDate())).map(x->x.getDate()).toArray()));
         for (Object comment : commentsList.stream().sorted((a,b)-> a.getDate().compareTo(b.getDate())).toArray())
         {
             Comment com = (Comment) comment;
             assertEquals(
-                    com.getAuthor().getUsername()
-                    ,responseData.getComments().get(i).getUsername()
+                    com.getAuthor().getNickname()
+                    ,responseData.getComments().get(i).getNickname()
             );
             assertEquals(
                     com.getComment()
@@ -207,7 +206,7 @@ class AuthenticatedExcecisesEndpointsTest {
         }
 
 i=0;
-        for (Object solution : solutionProgramsList.stream().sorted(Comparator.comparing(SolutionPrograms::getAvgExecutionTime)).toArray())
+        for (Object solution : solutionProgramsList.stream().sorted(Comparator.comparing(SolutionPrograms::getAvgExecutionTime).reversed()).toArray())
         {
             SolutionPrograms sol = (SolutionPrograms) solution;
             assertEquals(sol.getAvgExecutionTime(), responseData.getSolutionList().get(i).getExecutionTimeMs());
@@ -231,7 +230,7 @@ i=0;
         SolutionPrograms solutionPrograms= SolutionPrograms.builder()
                 .SolutionAuthor(this._authenticaredUser)
                 .language(programmingLanguageRepository.getReferenceById(1l))
-                .AvgExecutionTime(999999999l)
+                .avgExecutionTime(999999999l)
                 .excersize(exerciseRepository.getReferenceById(this.exerciseID))
                 .code("Code_"+UUID.randomUUID().toString())
 

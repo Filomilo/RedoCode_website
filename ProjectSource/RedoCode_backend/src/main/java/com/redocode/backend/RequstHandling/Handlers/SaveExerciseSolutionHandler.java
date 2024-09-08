@@ -58,7 +58,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
             .code(code)
             .language(programmingLanguage)
             .excersize(exerciseRepository.getReferenceById(exerciseIdRequest.getIdOfExercise()))
-            .AvgExecutionTime(avgExecutionTime)
+            .avgExecutionTime(avgExecutionTime)
             .build();
     solutionProgramsRepository.save(solutionProgram);
     this.nodeUpdate(request, "Saved solution", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);

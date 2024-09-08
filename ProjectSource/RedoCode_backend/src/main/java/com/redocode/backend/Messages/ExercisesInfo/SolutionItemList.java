@@ -23,9 +23,6 @@ public class SolutionItemList {
             @NotNull
     @JsonProperty("username")
     String username;
-    @NotNull
-    @JsonProperty("date")
-    Date date;
     @JsonProperty("executionTimeMs")
     long executionTimeMs;
     @NotEmpty

@@ -4,18 +4,27 @@ import com.redocode.backend.Messages.ExercisesInfo.CommentType;
 import com.redocode.backend.Messages.ExercisesInfo.ResultData;
 import com.redocode.backend.Messages.ExercisesInfo.SolutionItemList;
 import com.redocode.backend.Messages.ExercisesInfo.SolutionsData;
-import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
+import com.redocode.backend.database.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class ExerciseDataControl {
+
+    @Autowired
+    SolutionProgramsRepository solutionProgramsRepository;
+    @Autowired
+    CommentsRepository commentsRepository;
+    @Autowired
+    ExerciseRepository exerciseRepository;
 
     public ResultData getResultDataForExerciseOfUser(long idOfExercise, long idOfUser)
     {
@@ -28,51 +37,36 @@ public class ExerciseDataControl {
     }
 
 
-    public SolutionsData getSolutionsDataForExerciseOfId(Long id) {
-        List<SolutionItemList>  solutionItemLists= new ArrayList<>();
-        solutionItemLists.add(
-                SolutionItemList.builder()
-                        .date(new Date())
-                        .solutionId(4)
-                        .codeRunner(CODE_RUNNER_TYPE.CPP_RUNNER)
-                        .username("User name")
-                        .profilePic("")
-                        .executionTimeMs(100)
-                        .build()
-        );
+    public SolutionsData getSolutionsDataForExerciseOfId(@NotNull Long ExerciseId) {
+        List<SolutionPrograms> solutionPrograms= solutionProgramsRepository.findAllByExcersizeIdOrderByAvgExecutionTimeDesc(ExerciseId);
 
-        solutionItemLists.add(
-                SolutionItemList.builder()
-                        .date(new Date())
-                        .solutionId(5)
-                        .codeRunner(CODE_RUNNER_TYPE.JS_RUNNER)
-                        .username("User name2")
-                        .profilePic("")
-                        .executionTimeMs(25)
+        List<SolutionItemList> solutionItemLists = solutionPrograms.stream()
+                .map(x -> SolutionItemList.builder()
+                        .solutionId(x.getId())
+                        .codeRunner(RedoCodeObjectMapper.LanguageNameToCodeRunner(x.getLanguage().getName()))
+                        .username(x.getSolutionAuthor().getUsername())
+                        .profilePic(x.getSolutionAuthor().getProfilePicture())
+                        .executionTimeMs(x.getAvgExecutionTime())
                         .build()
-        );
+                )
+                .collect(Collectors.toList());
+        List<Comment> comments= commentsRepository.findAllByExcersizeIdOrderByDateAsc(ExerciseId);
+        log.info(Arrays.toString(comments.stream().map(x -> x.getDate()).toArray()));
+        List<CommentType> commentTypes = comments.stream().map(
+                x-> CommentType.builder()
+                        .comment(x.getComment())
+                        .profilePicture(x.getAuthor().getProfilePicture())
+                        .nickname(x.getAuthor().getNickname())
+                        .build()
+        ).collect(Collectors.toList());
 
-        List<CommentType> commentTypes = new ArrayList<>();
-        commentTypes.add(
-                CommentType.builder()
-                        .comment("Comment ")
-                        .profilePicture("")
-                        .username("Username1")
-                        .build()
-        );
-        commentTypes.add(
-                CommentType.builder()
-                        .comment("Comment2 ")
-                        .profilePicture("")
-                        .username("Username2")
-                        .build()
-        );
+        Excersize excersize= exerciseRepository.findById(ExerciseId).get();
 
         return SolutionsData.builder()
-                .title("Title")
-                .desc("descirtipn")
+                .title(excersize.getExcersizeName())
+                .desc(excersize.getDescription())
                 .solutionList(solutionItemLists)
-                .maxExecutionTimeMs(500)
+                .maxExecutionTimeMs(excersize.getMaxExecutionTimeMS())
                 .comments(commentTypes)
                 .build();
     }

@@ -17,7 +17,9 @@ public class WebConfig implements WebMvcConfigurer {
         .addMapping("/**")
         .allowedMethods("PUT", "GET", "DELETE", "OPTIONS", "PATCH", "POST")
         .allowedOrigins("*")
-            .allowedHeaders("Authorization", "Content-Type")
+            .allowedHeaders("*")
+            .exposedHeaders("Authorization") // Expose certain headers, if needed
+//            .allowedHeaders("Authorization", "Content-Type")
 
     ;
   }

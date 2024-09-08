@@ -1,11 +1,11 @@
 package com.redocode.backend.Messages.Requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+import org.springframework.stereotype.Service;
 
 @Value
 @SuperBuilder
@@ -13,6 +13,10 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
+@Getter
+@Setter
 public class IdRequest {
-    long id;
+    @JsonProperty
+            @NonNull
+    Long id;
 }
