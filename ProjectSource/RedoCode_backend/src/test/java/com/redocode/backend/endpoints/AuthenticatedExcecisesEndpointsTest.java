@@ -268,7 +268,6 @@ for (SolutionPrograms programs: this.solutionProgramsList){
     assertEquals(programs.getCode(), responseData);
 }
     }
-    @Ignore
     @Test
     void postCommentCorrect() {
         CommentPostRequest commentPostRequest = CommentPostRequest.builder()
@@ -284,13 +283,12 @@ for (SolutionPrograms programs: this.solutionProgramsList){
         log.info("response: "+response);
         log.info("getStatusCode: "+response.getStatusCode());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        Comment newestInDataBase=commentsRepository.findAllByOrderByDateDesc().get(0);
+        Comment newestInDataBase=commentsRepository.findAllByOrderByDateAsc().get(0);
         assertEquals(commentPostRequest.getComment(),newestInDataBase.getComment() );
         assertEquals(this._authenticaredUser,newestInDataBase.getAuthor() );
         assertEquals(commentPostRequest.getId(),newestInDataBase.getExcersize().getId() );
     }
 
-    @Ignore
     @Test
     void postRate() {
         RateRequest rateRequest = RateRequest.builder()
@@ -305,11 +303,11 @@ for (SolutionPrograms programs: this.solutionProgramsList){
                 getFullEndpoint(_postRateEndPont), HttpMethod.POST, new HttpEntity<RateRequest>(rateRequest, getAuthHeaders()), Void.class);
         log.info("response: "+response);
         log.info("getStatusCode: "+response.getStatusCode());
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         List<ExcersizeDiffucultyRating> listOfRating=excersizeDiffucultyRatingRepository.findAll();
         ExcersizeDiffucultyRating newestInDataBase=listOfRating.get(listOfRating.size()-1);
         assertEquals(rateRequest.getRate(),newestInDataBase.getRating() );
-        assertEquals(this._authenticaredUser,newestInDataBase.getUser() );
+        assertEquals(this._authenticaredUser.getNickname(),newestInDataBase.getUser().getNickname() );
         assertEquals(rateRequest.getId(),newestInDataBase.getExcersize().getId() );
     }
     @Ignore

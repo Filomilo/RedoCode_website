@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,10 @@ public class ExerciseDataControl {
     CommentsRepository commentsRepository;
     @Autowired
     ExerciseRepository exerciseRepository;
+    @Autowired
+    UsersRepository usersRepository;
+    @Autowired
+    ExcersizeDiffucultyRatingRepository excersizeDiffucultyRatingRepository;
 
     public ResultData getResultDataForExerciseOfUser(long idOfExercise, long idOfUser)
     {
@@ -81,4 +87,22 @@ public class ExerciseDataControl {
     }
 
 
+    public void saveNewComment(Long exerciseID, Long userID, String comment) {
+        Comment newComment = Comment.builder()
+                .date(new Date())
+                .author(usersRepository.getReferenceById(userID))
+                .excersize(exerciseRepository.getReferenceById(exerciseID))
+                .comment(comment).build();
+        commentsRepository.save(newComment);
+    }
+
+    public void saveNewRating(Long exercsieID, Long userId, int rate) {
+        ExcersizeDiffucultyRating excersizeDiffucultyRating=
+                new ExcersizeDiffucultyRating(
+                        usersRepository.getReferenceById(userId)
+                        ,exerciseRepository.getReferenceById(exercsieID)
+                        ,rate
+                );
+        excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+    }
 }

@@ -52,16 +52,17 @@ public class AuthenticatedExcecisesEndpoints {
     }
 
     @PostMapping("/comment")
-    public ResponseEntity postComment(@RequestBody CommentPostRequest request) {
+    public ResponseEntity postComment(@RequestBody CommentPostRequest request,@AuthenticationPrincipal User userDetails) {
         log.info("postComment request: " + request);
-
-        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+        exerciseDataControl.saveNewComment(request.getId(),userDetails.getId(),request.getComment());
+        return new ResponseEntity<>("Comment posted", HttpStatus.CREATED);
     }
     @PostMapping("/rate")
-    public ResponseEntity postRate(@RequestBody RateRequest request) {
+    public ResponseEntity postRate(@RequestBody RateRequest request,@AuthenticationPrincipal User userDetails) {
         log.info("postRate request: " + request);
+        exerciseDataControl.saveNewRating(request.getId(),userDetails.getId(),request.getRate());
 
-        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+        return new ResponseEntity<>("Rating posted", HttpStatus.CREATED);
     }
 
     @GetMapping("/ExerciseSolvingState")
