@@ -44,10 +44,11 @@ public class AuthenticatedExcecisesEndpoints {
     }
 
     @GetMapping("/solutionsCodes")
-    public String getSolutionsCodesData(IdRequest mes) {
-        log.info("getSolutionsCodesData request: " + mes);
-        log.info("sending getSolutionsCodesData: " );
-        return "TEST";
+    public String getSolutionsCodesData(Long id,@AuthenticationPrincipal User userDetails) {
+        log.info("getSolutionsCodesData request: " + id);
+        String code =exerciseDataControl.getSolutionCode(id);
+        log.info("sending getSolutionsCodesData: "+code );
+        return code;
     }
 
     @PostMapping("/comment")

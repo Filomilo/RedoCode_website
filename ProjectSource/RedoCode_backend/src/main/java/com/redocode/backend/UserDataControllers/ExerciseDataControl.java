@@ -74,4 +74,11 @@ public class ExerciseDataControl {
                 .comments(commentTypes)
                 .build();
     }
+
+    public String getSolutionCode(long solutionID)
+    {
+        return solutionProgramsRepository.getReferenceById(solutionID).getCode();
+    }
+
+
 }

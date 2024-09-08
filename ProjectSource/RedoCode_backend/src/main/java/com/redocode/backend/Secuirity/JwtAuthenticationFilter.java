@@ -37,21 +37,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
 
     log.info("JwtAuthenticationFilter: " + request.getRequestURI());
-    log.info("JWT REquest getQueryString: " + request.getQueryString());
-    Enumeration<String> paramEnum= request.getParameterNames();
-    Stream<String> stream = Collections.list(paramEnum).stream();
-    stream.forEach(param ->     {
-      log.info("JWT REquest param: "+ request.getParameter(param)+" : " + request.getParameter(param));
-
-    });
-
-
-    Enumeration<String> paramHead= request.getHeaderNames();
-   stream = Collections.list(paramHead).stream();
-    stream.forEach(head ->     {
-      log.info("JWT REquest haead: "+ request.getParameter(head)+" : " + request.getParameter(head));
-
-    });
 
     final String authHeader = request.getHeader("Authorization");
     if (authHeader == null || !authHeader.startsWith("Bearer ")) {

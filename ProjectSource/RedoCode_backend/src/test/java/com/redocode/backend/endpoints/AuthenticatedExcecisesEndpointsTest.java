@@ -69,7 +69,7 @@ class AuthenticatedExcecisesEndpointsTest {
     private String _Token;
     private final String _getSolutionsDataEndPont = "/secure/exercises/solutions?id={id}";
     private final String _getResultDataEndPont = "/secure/exercises/results?id={id}";
-    private final String _getSolutionsCodesDataEndPont = "/secure/exercises/solutionsCodes";
+    private final String _getSolutionsCodesDataEndPont = "/secure/exercises/solutionsCodes?id={id}";
     private final String _postCommentEndPont = "/secure/exercises/comment";
     private final String _postRateEndPont = "/secure/exercises/rate";
     private final String _getExerciseSolvingStateEndPont = "/secure/exercises/ExerciseSolvingState";
@@ -222,7 +222,6 @@ i=0;
 
 
     }
-    @Ignore
     @Test
     void getResultData() {
         assertNotNull(restTemplate);
@@ -251,20 +250,18 @@ i=0;
         assertEquals(0f,responseData.getBetterThanProcent());
         assertEquals(exerciseRepository.getReferenceById(this.exerciseID).getMaxExecutionTimeMS(),responseData.getMaxExecutionTimeMs());
     }
-    @Ignore
     @Test
     void getSolutionsCodesData() {
         assertNotNull(restTemplate);
 for (SolutionPrograms programs: this.solutionProgramsList){
-    IdRequest idRequest = IdRequest.builder()
-            .id(programs.getId())
-            .build();
+    Map<String, Long> params = new HashMap<>();
+    params.put("id", programs.getId());
 
-    log.info("idRequest: "+idRequest);
+    log.info("idRequest: "+programs.getId());
 
 
     ResponseEntity<String> response = restTemplate.exchange(
-            getFullEndpoint(_getSolutionsCodesDataEndPont), HttpMethod.GET, new HttpEntity<IdRequest>(idRequest, getAuthHeaders()), String.class);
+            getFullEndpoint(_getSolutionsCodesDataEndPont), HttpMethod.GET, new HttpEntity<IdRequest>( getAuthHeaders()), String.class,params);
     log.info("response: "+response);
     String responseData =response.getBody();
     log.info("response body: "+responseData);
