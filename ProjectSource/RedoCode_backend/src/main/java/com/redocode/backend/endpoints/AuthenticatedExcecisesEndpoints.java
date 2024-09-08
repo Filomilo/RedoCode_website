@@ -66,9 +66,10 @@ public class AuthenticatedExcecisesEndpoints {
     }
 
     @GetMapping("/ExerciseSolvingState")
-    public ExerciseSolvingState getExerciseSolvingState(@RequestBody IdRequest request) {
-        log.info("getExerciseSolvingState request: " + request);
-
-        return ExerciseSolvingState.SOLVED;
+    public ExerciseSolvingState getExerciseSolvingState(Long id,@AuthenticationPrincipal User userDetails ) {
+        log.info("getExerciseSolvingState request: " + id);
+        ExerciseSolvingState exerciseSolvingState=exerciseDataControl.getUserSovingState(id,userDetails.getId());
+        log.info("getExerciseSolvingState response: " + exerciseSolvingState);
+        return exerciseSolvingState;
     }
 }

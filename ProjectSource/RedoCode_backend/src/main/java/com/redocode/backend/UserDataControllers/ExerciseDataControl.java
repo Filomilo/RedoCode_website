@@ -1,9 +1,6 @@
 package com.redocode.backend.UserDataControllers;
 
-import com.redocode.backend.Messages.ExercisesInfo.CommentType;
-import com.redocode.backend.Messages.ExercisesInfo.ResultData;
-import com.redocode.backend.Messages.ExercisesInfo.SolutionItemList;
-import com.redocode.backend.Messages.ExercisesInfo.SolutionsData;
+import com.redocode.backend.Messages.ExercisesInfo.*;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.database.*;
 import jakarta.validation.constraints.NotNull;
@@ -104,5 +101,16 @@ public class ExerciseDataControl {
                         ,rate
                 );
         excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+    }
+
+    public ExerciseSolvingState getUserSovingState(Long exerciseId, Long userId) {
+        SolutionPrograms solutionPrograms=solutionProgramsRepository.findFirstByExcersizeIdAndSolutionAuthorId(exerciseId,userId);
+        if(solutionPrograms==null)
+            return ExerciseSolvingState.UNATTEMPTED;
+        ExcersizeDiffucultyRating rating= excersizeDiffucultyRatingRepository.findFirstByUserIdAndExcersizeId(userId,exerciseId);
+        if(rating==null)
+            return ExerciseSolvingState.SOLVED;
+        return  ExerciseSolvingState.RATED;
+
     }
 }

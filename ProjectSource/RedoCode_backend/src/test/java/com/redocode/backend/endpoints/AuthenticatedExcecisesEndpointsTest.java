@@ -72,7 +72,7 @@ class AuthenticatedExcecisesEndpointsTest {
     private final String _getSolutionsCodesDataEndPont = "/secure/exercises/solutionsCodes?id={id}";
     private final String _postCommentEndPont = "/secure/exercises/comment";
     private final String _postRateEndPont = "/secure/exercises/rate";
-    private final String _getExerciseSolvingStateEndPont = "/secure/exercises/ExerciseSolvingState";
+    private final String _getExerciseSolvingStateEndPont = "/secure/exercises/ExerciseSolvingState?id={id}";
 
     private final static Random RANDOM = new Random();
 
@@ -313,11 +313,45 @@ for (SolutionPrograms programs: this.solutionProgramsList){
     @Ignore
     @Test
     void getExerciseSolvingState() {
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", this.exerciseID);
+
         ResponseEntity<ExerciseSolvingState> response = restTemplate.exchange(
-                getFullEndpoint(_getExerciseSolvingStateEndPont), HttpMethod.GET, new HttpEntity<Void>(null, getAuthHeaders()), ExerciseSolvingState.class);
+                getFullEndpoint(_getExerciseSolvingStateEndPont), HttpMethod.GET, new HttpEntity<Void>(getAuthHeaders()), ExerciseSolvingState.class,params);
+
         log.info("response: "+response);
         log.info("getStatusCode: "+response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(ExerciseSolvingState.UNATTEMPTED,response.getBody() );
+
+
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
+        response = restTemplate.exchange(
+                getFullEndpoint(_getExerciseSolvingStateEndPont), HttpMethod.GET, new HttpEntity<Void>(getAuthHeaders()), ExerciseSolvingState.class,params);
+        assertNotNull(response.getBody());
+        assertEquals(ExerciseSolvingState.SOLVED,response.getBody() );
+
+
+        ExcersizeDiffucultyRating excersizeDiffucultyRating=
+                new ExcersizeDiffucultyRating(
+                        this._authenticaredUser
+                        ,exerciseRepository.getReferenceById(this.exerciseID)
+                        ,5
+
+                );
+        excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+
+        response = restTemplate.exchange(
+                getFullEndpoint(_getExerciseSolvingStateEndPont), HttpMethod.GET, new HttpEntity<Void>(getAuthHeaders()), ExerciseSolvingState.class,params);
+        assertNotNull(response.getBody());
+        assertEquals(ExerciseSolvingState.RATED,response.getBody() );
+
     }
 }
