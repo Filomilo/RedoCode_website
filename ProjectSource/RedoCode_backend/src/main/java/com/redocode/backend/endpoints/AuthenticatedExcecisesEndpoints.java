@@ -63,7 +63,7 @@ public class AuthenticatedExcecisesEndpoints {
         return new ResponseEntity<>("Hello World!", HttpStatus.OK);
     }
 
-    @PostMapping("/ExerciseSolvingState")
+    @GetMapping("/ExerciseSolvingState")
     public ExerciseSolvingState getExerciseSolvingState(@RequestBody IdRequest request) {
         log.info("getExerciseSolvingState request: " + request);
 

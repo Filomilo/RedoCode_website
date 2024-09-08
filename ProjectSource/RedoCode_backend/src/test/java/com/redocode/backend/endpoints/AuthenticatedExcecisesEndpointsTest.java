@@ -1,5 +1,6 @@
 package com.redocode.backend.endpoints;
 
+import com.redocode.backend.Messages.ExercisesInfo.ExerciseSolvingState;
 import com.redocode.backend.Messages.ExercisesInfo.ResultData;
 import com.redocode.backend.Messages.ExercisesInfo.SolutionsData;
 import com.redocode.backend.Messages.Requests.CommentPostRequest;
@@ -319,5 +320,11 @@ for (SolutionPrograms programs: this.solutionProgramsList){
 
     @Test
     void getExerciseSolvingState() {
+        ResponseEntity<ExerciseSolvingState> response = restTemplate.exchange(
+                getFullEndpoint(_getExerciseSolvingStateEndPont), HttpMethod.GET, new HttpEntity<Void>(null, getAuthHeaders()), ExerciseSolvingState.class);
+        log.info("response: "+response);
+        log.info("getStatusCode: "+response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(ExerciseSolvingState.UNATTEMPTED,response.getBody() );
     }
 }
