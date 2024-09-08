@@ -12,6 +12,6 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 public class RateRequest {
-    int id;
+    long id;
     int rate;
 }

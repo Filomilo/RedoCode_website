@@ -14,6 +14,6 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class CommentPostRequest {
-    int id;
+    long id;
     String comment;
 }

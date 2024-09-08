@@ -14,5 +14,5 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class IdRequest {
-    int id;
+    long id;
 }

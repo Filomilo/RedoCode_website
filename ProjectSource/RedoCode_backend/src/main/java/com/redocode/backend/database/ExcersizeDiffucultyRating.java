@@ -3,10 +3,17 @@ package com.redocode.backend.database;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "Excersize_Diffuculty_Ratings")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@IdClass( ExcersizeDiffucultyRating.ExcersizeDiffucultyRatingId.class )
+@Getter
 public class ExcersizeDiffucultyRating {
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -23,27 +30,12 @@ public class ExcersizeDiffucultyRating {
   @Column(name = "rating", columnDefinition = "INT CHECK (rating >= 1 AND rating <= 5)")
   private int rating;
 
-  public User getUser() {
-    return user;
+  @EqualsAndHashCode
+  @NoArgsConstructor
+  public class ExcersizeDiffucultyRatingId implements Serializable {
+
+    private Long user;
+    private Long excersize;
   }
 
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public Excersize getExcersize() {
-    return excersize;
-  }
-
-  public void setExcersize(Excersize excersize) {
-    this.excersize = excersize;
-  }
-
-  public int getRating() {
-    return rating;
-  }
-
-  public void setRating(int rating) {
-    this.rating = rating;
-  }
 }
