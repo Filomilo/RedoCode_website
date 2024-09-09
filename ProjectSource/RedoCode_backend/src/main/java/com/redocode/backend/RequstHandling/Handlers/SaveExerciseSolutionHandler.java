@@ -22,7 +22,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
   private static final ProgrammingLanguageRepository programmingLanguageRepository =
       SpringContextUtil.getApplicationContext().getBean(ProgrammingLanguageRepository.class);
   private static final UsersRepository userRepository =
-          SpringContextUtil.getApplicationContext().getBean(UsersRepository.class);
+      SpringContextUtil.getApplicationContext().getBean(UsersRepository.class);
   private static final Logger log = LoggerFactory.getLogger(SaveExerciseSolutionHandler.class);
 
   @Override
@@ -36,12 +36,13 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
     this.nodeUpdate(
         request, "Saving solution to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
-    if(request.getUser().getId()==null) {
+    if (request.getUser().getId() == null) {
       this.nodeUpdate(
-              request, "Not saving result without authentication", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+          request,
+          "Not saving result without authentication",
+          ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-      return request; //not saving for unathenticated
-
+      return request; // not saving for unathenticated
     }
     assert request instanceof IExerciseIdRequest;
     assert request instanceof ISolutionCodesRequest;
@@ -50,8 +51,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
     IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest) request;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
-    log.info("Saving exercise for user: "+ request.getUser());
-
+    log.info("Saving exercise for user: " + request.getUser());
 
     CODE_RUNNER_TYPE codeRunnerType =
         solutionCodesRequest.getSolutionCodes().keySet().stream().findFirst().get();
@@ -74,7 +74,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
             .language(programmingLanguage)
             .excersize(exerciseRepository.getReferenceById(exerciseIdRequest.getIdOfExercise()))
             .avgExecutionTime(avgExecutionTime)
-                .solutionAuthor(request.getUser())
+            .solutionAuthor(request.getUser())
             .build();
     solutionProgramsRepository.save(solutionProgram);
     this.nodeUpdate(request, "Saved solution", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);

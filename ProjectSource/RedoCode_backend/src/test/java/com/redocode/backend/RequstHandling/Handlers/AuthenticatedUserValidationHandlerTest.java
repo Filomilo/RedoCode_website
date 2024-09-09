@@ -26,9 +26,8 @@ class AuthenticatedUserValidationHandlerTest {
             .nickname("nick")
             .type(User.USER_TYPE.ADMIN)
             .password("password")
-                .ProfilePicture("")
-
-                .build();
+            .ProfilePicture("")
+            .build();
 
     User userPremium =
         User.builder()
@@ -37,18 +36,16 @@ class AuthenticatedUserValidationHandlerTest {
             .nickname("nick")
             .type(User.USER_TYPE.PREMIUM)
             .password("password")
-                .ProfilePicture("")
-
-                .build();
+            .ProfilePicture("")
+            .build();
     User userAuthenicated =
         User.builder()
             .sessionID("uuid")
             .email("adminAUTHENTICATED@admin.com")
             .nickname("nick")
             .password("password")
-                .ProfilePicture("")
-
-                .type(User.USER_TYPE.AUTHENTICATED)
+            .ProfilePicture("")
+            .type(User.USER_TYPE.AUTHENTICATED)
             .build();
     User userUnathetniacted =
         User.builder()
@@ -57,7 +54,7 @@ class AuthenticatedUserValidationHandlerTest {
             .nickname("nick")
             .password("password")
             .type(User.USER_TYPE.UNAUTHENTICATED)
-                .ProfilePicture("")
+            .ProfilePicture("")
             .build();
     usersRepository.save(userAdmin);
     usersRepository.save(userPremium);

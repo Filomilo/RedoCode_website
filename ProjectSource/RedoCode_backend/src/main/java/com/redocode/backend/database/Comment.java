@@ -6,8 +6,6 @@ import lombok.*;
 import lombok.extern.java.Log;
 
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "Comments")
@@ -16,23 +14,22 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Log
-public class Comment
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    @NonNull
-    private User author;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exercise_id")
-    @NonNull
-    private Excersize excersize ;
-@NonNull
-@NotBlank
+public class Comment {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  Long id;
 
-    private String comment;
-    @NonNull
-    private Date date;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id")
+  @NonNull
+  private User author;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "exercise_id")
+  @NonNull
+  private Excersize excersize;
+
+  @NonNull @NotBlank private String comment;
+
+  @NonNull private Date date;
 }

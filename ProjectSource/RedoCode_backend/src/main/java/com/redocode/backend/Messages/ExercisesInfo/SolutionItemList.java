@@ -11,30 +11,34 @@ import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.Date;
+
 @Value
 @SuperBuilder
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 public class SolutionItemList {
-    @NotEmpty
-            @NotBlank
-            @NotNull
-    @JsonProperty("username")
-    String username;
-    @JsonProperty("executionTimeMs")
-    long executionTimeMs;
-    @NotEmpty
-    @NotBlank
-    @NotNull
-    @JsonProperty("profilePic")
-    String profilePic;
-    @JsonProperty("solutionId")
-    long solutionId;
-    @NotEmpty
-    @NotBlank
-    @NotNull
-    @JsonProperty("codeRunner")
-    CODE_RUNNER_TYPE codeRunner;
+  @NotEmpty
+  @NotBlank
+  @NotNull
+  @JsonProperty("username")
+  String username;
+
+  @JsonProperty("executionTimeMs")
+  long executionTimeMs;
+
+  @NotEmpty
+  @NotBlank
+  @NotNull
+  @JsonProperty("profilePic")
+  String profilePic;
+
+  @JsonProperty("solutionId")
+  long solutionId;
+
+  @NotEmpty
+  @NotBlank
+  @NotNull
+  @JsonProperty("codeRunner")
+  CODE_RUNNER_TYPE codeRunner;
 }

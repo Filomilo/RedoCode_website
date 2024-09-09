@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Disabled("Not workign along isde other test")
-
 class RunExerciseIdCode {
 
   @Autowired ExerciseRepository exerciseRepository;
@@ -69,7 +68,7 @@ class RunExerciseIdCode {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
             .avgExecutionTime(100L)
-                .solutionAuthor(usersRepository.getReferenceById(1l))
+            .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
     solutionProgramsRepository.save(
         SolutionPrograms.builder()
@@ -80,7 +79,7 @@ class RunExerciseIdCode {
                         CODE_RUNNER_TYPE.JS_RUNNER)))
             .avgExecutionTime(100L)
             .excersize(excersize)
-                .solutionAuthor(usersRepository.getReferenceById(1l))
+            .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
   }
 

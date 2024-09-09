@@ -13,9 +13,10 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 public class ResultData {
-    long executionTimeMs;
-    long  maxExecutionTimeMs;
-    float betterThanProcent;
-    @JsonProperty("SolutionRanking")
-    int SolutionRanking;
+  long executionTimeMs;
+  long maxExecutionTimeMs;
+  float betterThanProcent;
+
+  @JsonProperty("SolutionRanking")
+  int SolutionRanking;
 }

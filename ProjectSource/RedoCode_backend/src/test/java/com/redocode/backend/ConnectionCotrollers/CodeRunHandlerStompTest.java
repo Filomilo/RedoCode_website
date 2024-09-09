@@ -66,8 +66,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
   @Autowired UsersRepository usersRepository;
   @Autowired RedoCodeController redoCodeController;
   @Autowired CodeRunnersController codeRunnersController;
-    @Autowired
-    JwtService jwtService;
+  @Autowired JwtService jwtService;
   static final String WEBSOCKET_TOPIC_DESTIN = "/public/app" + INrunExerciseCreatorValidationCode;
   static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -82,19 +81,14 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
   @Test
   void runExerciseCreatorValidationCode() throws InterruptedException, JsonProcessingException {
 
+    redoCodeController.addConnectedUser(usersRepository.getReferenceById(1l));
+    User user = redoCodeController.getUserByConnectionByID(1l);
 
-      redoCodeController.addConnectedUser(usersRepository.getReferenceById(1l));
-      User user= redoCodeController.getUserByConnectionByID(1l);
+    session.send(
+        "/public/app//tokenAuth",
+        mapper.writeValueAsBytes(Authentication.builder().token(jwtService.generateToken(user))));
 
-      session.send("/public/app//tokenAuth", mapper.writeValueAsBytes(Authentication.builder()
-              .token(jwtService.generateToken(user))
-      ));
-
-
-
-
-
-      subscribe("/user/public/topic/ExecutionResponses");
+    subscribe("/user/public/topic/ExecutionResponses");
     Long userId = 1L;
     Variables.VARIABLES_TYPES inputType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
     Variables.VARIABLES_TYPES ouptutType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;

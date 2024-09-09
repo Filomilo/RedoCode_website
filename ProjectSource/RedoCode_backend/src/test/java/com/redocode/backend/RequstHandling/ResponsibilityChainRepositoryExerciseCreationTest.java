@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 // @Disabled("Not wokrking in gihtub pipleine eveneroment")
 // @Disabled("Islotating specific test for debugging")
 @Disabled("Not workign along isde other test")
-
 class ResponsibilityChainRepositoryExerciseCreationTest {
   @Autowired UsersRepository usersRepository;
   @Autowired CodeRunnersController codeRunnersController;
@@ -46,7 +45,7 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
               .password("aaaa")
               .sessionID("uuid" + UUID.randomUUID())
               .nickname("nick")
-                  .ProfilePicture("")
+              .ProfilePicture("")
               .build();
 
       usersRepository.save(userCorrect);

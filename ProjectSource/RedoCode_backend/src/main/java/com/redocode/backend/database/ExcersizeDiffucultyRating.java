@@ -5,12 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 
 @Entity
 @Table(name = "Excersize_Diffuculty_Ratings")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@IdClass( ExcersizeDiffucultyRatingId.class )
+@IdClass(ExcersizeDiffucultyRatingId.class)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,6 +29,4 @@ public class ExcersizeDiffucultyRating {
 
   @Column(name = "rating", columnDefinition = "INT CHECK (rating >= 1 AND rating <= 5)")
   private int rating;
-
-
 }

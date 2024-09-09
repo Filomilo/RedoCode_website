@@ -56,7 +56,7 @@ public class User implements Comparable, UserDetails {
 
   @Column(name = "profile_pic")
   @NotNull
-  private String ProfilePicture="";
+  private String ProfilePicture = "";
 
   public User(String session, String nick, USER_TYPE userType) {
     this.sessionID = session;

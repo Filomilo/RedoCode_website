@@ -14,12 +14,7 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
 public class CommentType {
-    @NonNull
-    @NotBlank
-    String nickname;
-    @NonNull
-    String profilePicture;
-    @NonNull
-    @NotBlank
-    String comment;
+  @NonNull @NotBlank String nickname;
+  @NonNull String profilePicture;
+  @NonNull @NotBlank String comment;
 }

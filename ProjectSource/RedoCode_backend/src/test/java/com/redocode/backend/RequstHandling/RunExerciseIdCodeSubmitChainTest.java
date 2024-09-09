@@ -23,7 +23,6 @@ import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.CPP_RUNN
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 @Disabled("Not workign along isde other test")
-
 class RunExerciseIdCodeSubmitChainTest {
   @Autowired ExerciseRepository exerciseRepository;
   @Autowired SolutionProgramsRepository solutionProgramsRepository;
@@ -68,7 +67,7 @@ class RunExerciseIdCodeSubmitChainTest {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
             .avgExecutionTime(100L)
-                .solutionAuthor(usersRepository.getReferenceById(1l))
+            .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
     solutionProgramsRepository.save(
         SolutionPrograms.builder()
@@ -78,9 +77,8 @@ class RunExerciseIdCodeSubmitChainTest {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
                         CODE_RUNNER_TYPE.JS_RUNNER)))
             .excersize(excersize)
-                .solutionAuthor(usersRepository.getReferenceById(1l))
-
-                .avgExecutionTime(100L)
+            .solutionAuthor(usersRepository.getReferenceById(1l))
+            .avgExecutionTime(100L)
             .build());
   }
 

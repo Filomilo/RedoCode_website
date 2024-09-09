@@ -16,8 +16,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledOnOs;
-import org.junit.jupiter.api.condition.OS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -30,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 // @Disabled("not working under guthub pipilene")
- @Disabled("Not workign along isde other test")
-//@DisabledOnOs(OS.LINUX)
+@Disabled("Not workign along isde other test")
+// @DisabledOnOs(OS.LINUX)
 class CodeTestHandlerTest {
 
   @Autowired CodeRunnersController codeRunnersController;
