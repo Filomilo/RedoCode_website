@@ -38,7 +38,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
 
     if(request.getUser().getId()==null) {
       this.nodeUpdate(
-              request, "Not saving for unatuhenticteed", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+              request, "Not saving result without authentication", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
       return request; //not saving for unathenticated
 
