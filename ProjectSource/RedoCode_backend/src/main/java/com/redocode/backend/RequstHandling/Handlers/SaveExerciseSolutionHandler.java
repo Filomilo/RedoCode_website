@@ -10,6 +10,8 @@ import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.database.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SaveExerciseSolutionHandler extends MessageRequestHandler {
 
@@ -19,6 +21,9 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
       SpringContextUtil.getApplicationContext().getBean(ExerciseRepository.class);
   private static final ProgrammingLanguageRepository programmingLanguageRepository =
       SpringContextUtil.getApplicationContext().getBean(ProgrammingLanguageRepository.class);
+  private static final UsersRepository userRepository =
+          SpringContextUtil.getApplicationContext().getBean(UsersRepository.class);
+  private static final Logger log = LoggerFactory.getLogger(SaveExerciseSolutionHandler.class);
 
   @Override
   String getChainNodeName() {
@@ -30,6 +35,14 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
 
     this.nodeUpdate(
         request, "Saving solution to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+
+    if(request.getUser().getId()==null) {
+      this.nodeUpdate(
+              request, "Not saving for unatuhenticteed", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
+
+      return request; //not saving for unathenticated
+
+    }
     assert request instanceof IExerciseIdRequest;
     assert request instanceof ISolutionCodesRequest;
     assert request instanceof ICodeResultsRequest;
@@ -37,6 +50,8 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
     IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest) request;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
+    log.info("Saving exercise for user: "+ request.getUser());
+
 
     CODE_RUNNER_TYPE codeRunnerType =
         solutionCodesRequest.getSolutionCodes().keySet().stream().findFirst().get();

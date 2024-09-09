@@ -2,6 +2,7 @@ package com.redocode.backend.ConnectionCotrollers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redocode.backend.Messages.Authentication.Authentication;
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseCreatorValidationMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseTestToRunMesseage;
@@ -13,6 +14,7 @@ import com.redocode.backend.Messages.ExecutionResponses.ExecutionResponseStatusU
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.RedoCodeController;
+import com.redocode.backend.Secuirity.JwtService;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
@@ -64,7 +66,8 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
   @Autowired UsersRepository usersRepository;
   @Autowired RedoCodeController redoCodeController;
   @Autowired CodeRunnersController codeRunnersController;
-
+    @Autowired
+    JwtService jwtService;
   static final String WEBSOCKET_TOPIC_DESTIN = "/public/app" + INrunExerciseCreatorValidationCode;
   static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -78,7 +81,20 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
 
   @Test
   void runExerciseCreatorValidationCode() throws InterruptedException, JsonProcessingException {
-    subscribe("/user/public/topic/ExecutionResponses");
+
+
+      redoCodeController.addConnectedUser(usersRepository.getReferenceById(1l));
+      User user= redoCodeController.getUserByConnectionByID(1l);
+
+      session.send("/public/app//tokenAuth", mapper.writeValueAsBytes(Authentication.builder()
+              .token(jwtService.generateToken(user))
+      ));
+
+
+
+
+
+      subscribe("/user/public/topic/ExecutionResponses");
     Long userId = 1L;
     Variables.VARIABLES_TYPES inputType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;
     Variables.VARIABLES_TYPES ouptutType = Variables.VARIABLES_TYPES.DOUBLE_ARRAY_OF_STRINGS;

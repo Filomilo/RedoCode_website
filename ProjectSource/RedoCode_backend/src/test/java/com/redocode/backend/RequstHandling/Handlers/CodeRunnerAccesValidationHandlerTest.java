@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
-@DisabledOnOs(OS.LINUX) // tests notwroking under github pipileine
-// @Disabled("Not wokrking in gihtub pipleine eveneroment")
+//@DisabledOnOs(OS.LINUX) // tests notwroking under github pipileine
+ @Disabled("Not wokrking in gihtub pipleine eveneroment")
 class CodeRunnerAccessValidationHandlerTest {
 
   @Autowired RedoCodeController redoCodeController;

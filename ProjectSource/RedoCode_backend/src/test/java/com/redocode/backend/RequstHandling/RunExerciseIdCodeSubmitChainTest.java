@@ -65,6 +65,7 @@ class RunExerciseIdCodeSubmitChainTest {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
             .avgExecutionTime(100L)
+                .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
     solutionProgramsRepository.save(
         SolutionPrograms.builder()
@@ -74,7 +75,9 @@ class RunExerciseIdCodeSubmitChainTest {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
                         CODE_RUNNER_TYPE.JS_RUNNER)))
             .excersize(excersize)
-            .avgExecutionTime(100L)
+                .solutionAuthor(usersRepository.getReferenceById(1l))
+
+                .avgExecutionTime(100L)
             .build());
   }
 
@@ -84,7 +87,7 @@ class RunExerciseIdCodeSubmitChainTest {
       mode = EnumSource.Mode.EXCLUDE,
       names = {"UNIDENTIFIED"})
   public void RunExerciseIdCodeCorrect(CODE_RUNNER_TYPE type) {
-    User user = new User();
+    User user = usersRepository.getReferenceById(1l);
     long IdOfeExercise = exerciseRepository.findAll().get(0).getId();
     long amountOfSolutionBefore = this.solutionProgramsRepository.count();
 
