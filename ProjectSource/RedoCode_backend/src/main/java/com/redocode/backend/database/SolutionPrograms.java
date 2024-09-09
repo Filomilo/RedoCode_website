@@ -31,5 +31,10 @@ public class SolutionPrograms {
   @NotNull
   @Column(name = "Avg_execution_time")
   @Min(1)
-  private Long AvgExecutionTime;
+  private Long avgExecutionTime;
+
+  @NotNull
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "solution_author")
+  private User solutionAuthor;
 }

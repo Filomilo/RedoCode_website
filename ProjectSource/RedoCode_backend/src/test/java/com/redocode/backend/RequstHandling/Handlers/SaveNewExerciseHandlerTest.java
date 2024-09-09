@@ -42,6 +42,7 @@ class SaveNewExerciseHandlerTest {
               .nickname("nick")
               .password("passsword")
               .email("email@emial.com")
+                  .ProfilePicture("")
               .build();
 
       usersRepository.save(user);

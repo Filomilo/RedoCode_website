@@ -48,7 +48,7 @@ describe('Phibonachi new exercise', () => {
       },
       {
         correct: true,
-        desc: 'Saved solution',
+        desc: 'Not saving result without authentication',
       },
     ]
 

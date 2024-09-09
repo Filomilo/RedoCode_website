@@ -110,6 +110,7 @@ const router = createRouter({
       },
     },
 
+
     {
       path: '/Solutions',
       name: 'SolutionsNoData',

@@ -63,4 +63,8 @@ public class RedoCodeController {
 
     connectedUsers.clear();
   }
+
+    public User getUserByConnectionByID(long l) {
+    return this.connectedUsers.values().stream().filter(x->x.getId().equals(l)).findFirst().get();
+  }
 }

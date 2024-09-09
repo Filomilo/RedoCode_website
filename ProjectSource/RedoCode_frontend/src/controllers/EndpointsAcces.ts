@@ -101,38 +101,38 @@ namespace EndpointAcces {
       exerciseid: number,
       token: string
     ): Promise<SolutionsData> {
-      console.log('attempitng /public/exercises/solutions ')
+      console.log('attempitng /secure/exercises/solutions ')
       const params = {
         id: exerciseid,
       }
-      const response = await axios.get('/public/exercises/solutions', {
+      const response = await axios.get('/secure/exercises/solutions', {
         headers: getAuthHeader(token),
         params: params,
       })
-      console.log('/public/exercises/solutions Response:', response)
+      console.log('/secure/exercises/solutions Response:', response)
       if (
         response === undefined ||
         response.data === '' ||
         response.headers['Content-Length'] == 0
       )
         throw 'no solutions data retrived '
-
-      return response.data
+      console.log(" /secure/exercises/solutions data: "+ stringify(response.data))
+      return  response.data
     }
 
     export async function getSolutionsCodesData(
       solutionId: number,
       token: string
     ): Promise<string> {
-      console.log('attempitng /public/exercises/solutionsCodes ')
+      console.log('attempitng /secure/exercises/solutionsCodes ')
       const params = {
         id: solutionId,
       }
-      const response = await axios.get('/public/exercises/solutionsCodes', {
+      const response = await axios.get('/secure/exercises/solutionsCodes', {
         headers: getAuthHeader(token),
         params: params,
       })
-      console.log('/public/exercises/solutionsCodes Response:', response)
+      console.log('/secure/exercises/solutionsCodes Response:', response)
       if (
         response === undefined ||
         response.data === '' ||
@@ -153,7 +153,7 @@ namespace EndpointAcces {
           id: exerciseId,
           comment: comment,
         }
-        const response = await axios.post('/public/exercises/comment', data, {
+        const response = await axios.post('/secure/exercises/comment', data, {
           headers: getAuthHeader(token),
         })
 
@@ -168,11 +168,11 @@ namespace EndpointAcces {
       exerciseid: number,
       token: string
     ): Promise<ResultData> {
-      console.log('attempitng /public/exercises/solutions ')
+      console.log('attempitng /secure/exercises/solutions ')
       const params = {
         id: exerciseid,
       }
-      const response = await axios.get('/public/exercises/results', {
+      const response = await axios.get('/secure/exercises/results', {
         headers: getAuthHeader(token),
         params: params,
       })
@@ -183,7 +183,7 @@ namespace EndpointAcces {
         response.headers['Content-Length'] == 0
       )
         throw 'no solutions data retrived '
-
+        console.log('/public/exercises/solutions Response data:', stringify(response.data))
       return response.data
     }
 
@@ -196,7 +196,7 @@ namespace EndpointAcces {
         id: exercsieID,
         rate: selectedRating,
       }
-      const response = await axios.post('/public/exercises/rate', data, {
+      const response = await axios.post('/secure/exercises/rate', data, {
         headers: getAuthHeader(token),
       })
 

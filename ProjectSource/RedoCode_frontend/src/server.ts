@@ -156,7 +156,7 @@ export function makeServer({ environment = 'development' } = {}) {
 
   const solutionData: SolutionsData = {
     maxExecutionTimeMs: 100,
-    SolutionsList: [
+    solutionList: [
       {
         username: 'Username1 ',
         date: new Date(),
@@ -319,19 +319,19 @@ export function makeServer({ environment = 'development' } = {}) {
       )
 
       this.get(
-        'http://localhost:8080/public/exercises/solutions',
+        'http://localhost:8080/secure/exercises/solutions',
         solutionsDataHandler
       )
       this.get(
-        'http://localhost:8080/public/exercises/solutionsCodes',
+        'http://localhost:8080/secure/exercises/solutionsCodes',
         solutionsCodesDataHandler
       )
       this.get(
-        'http://localhost:8080/public/exercises/results',
+        'http://localhost:8080/secure/exercises/results',
         resultDataHandler
       )
       this.post(
-        'http://localhost:8080/public/exercises/comment',
+        'http://localhost:8080/secure/exercises/comment',
         (schema, request) => {
           const attrs = JSON.parse(request.requestBody)
 
@@ -344,7 +344,7 @@ export function makeServer({ environment = 'development' } = {}) {
       )
 
       this.post(
-        'http://localhost:8080/public/exercises/rate',
+        'http://localhost:8080/secure/exercises/rate',
         (schema, request) => {
           const attrs = JSON.parse(request.requestBody)
 

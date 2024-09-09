@@ -2,6 +2,8 @@ package com.redocode.backend.database;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface SolutionProgramsRepository extends JpaRepository<SolutionPrograms, Long> {
 
   SolutionPrograms findFirstByLanguageIdAndExcersizeId(Long languageId, Long exerciseId);
@@ -16,4 +18,10 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
    * @return first SolutionPrograms entry in databse with provided code
    */
   SolutionPrograms findFirstByCode(String code);
+
+
+  List<SolutionPrograms> findAllByExcersizeIdOrderByAvgExecutionTimeDesc(Long exerciseID);
+  SolutionPrograms findFirstByExcersizeIdAndSolutionAuthorId(Long exerciseId, Long solutionAuthorId);
+  int countAllByExcersizeId(Long exerciseId);
+  int countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(Long exerciseId, Long avgExecutionTime);
 }
