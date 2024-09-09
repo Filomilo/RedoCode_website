@@ -45,6 +45,7 @@ class ExerciseInfoValidationTest {
               .password("password")
               .nickname("nick")
               .type(User.USER_TYPE.PREMIUM)
+                  .ProfilePicture("")
               .build();
       usersRepository.save(userCorrect);
     }

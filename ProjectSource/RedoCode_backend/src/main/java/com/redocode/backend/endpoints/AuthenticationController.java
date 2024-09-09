@@ -49,6 +49,7 @@ public class AuthenticationController {
             .nickname(request.getNickname())
             .password(passwordEncoder.encode(request.getPassword()))
             .type(User.USER_TYPE.AUTHENTICATED)
+                .ProfilePicture("")
             .build();
     usersRepository.save(user);
     String token = jwtService.generateToken(user);

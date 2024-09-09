@@ -51,6 +51,7 @@ class AuthenticatedUserValidationHandlerTest {
             .nickname("nick")
             .password("password")
             .type(User.USER_TYPE.UNAUTHENTICATED)
+                .ProfilePicture("")
             .build();
     usersRepository.save(userAdmin);
     usersRepository.save(userPremium);

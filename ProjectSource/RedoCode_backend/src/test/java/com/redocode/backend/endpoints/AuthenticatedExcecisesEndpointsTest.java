@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration
 @Slf4j
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class AuthenticatedExcecisesEndpointsTest {
 
     @LocalServerPort
@@ -85,7 +85,7 @@ class AuthenticatedExcecisesEndpointsTest {
     private List<Comment> commentsList=new ArrayList<>();
     private List<SolutionPrograms> solutionProgramsList=new ArrayList<>();
 
-    @BeforeAll
+    @BeforeEach
            public void saveExerciseTempleate(){
         Excersize excersize= Excersize.builder()
                 .excersizeName(exerciseTiitle)
