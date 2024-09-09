@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -94,7 +95,15 @@ public class ExerciseDataControl {
     }
 
 
-    public void saveNewComment(Long exerciseID, Long userID, String comment) {
+    public void saveNewComment(Long exerciseID, Long userID, String comment) throws Exception {
+        if(!exerciseRepository.findById(exerciseID).isPresent())
+            throw new NotFoundException("exercise does not exist");
+        if(comment.length()<3 || comment.length()>3000)
+            throw new Exception("comment cannot be less tahn 3 chatare and more than 3000");
+        if(getUserSovingState(exerciseID,userID)!=ExerciseSolvingState.RATED)
+            throw new Exception("exercise is not rated");
+
+
         Comment newComment = Comment.builder()
                 .date(new Date())
                 .author(usersRepository.getReferenceById(userID))
@@ -103,7 +112,13 @@ public class ExerciseDataControl {
         commentsRepository.save(newComment);
     }
 
-    public void saveNewRating(Long exercsieID, Long userId, int rate) {
+    public void saveNewRating(Long exercsieID, Long userId, int rate) throws Exception {
+        if(!exerciseRepository.findById(exercsieID).isPresent())
+            throw new NotFoundException("exercise does not exist");
+        if(rate<1 || rate>5)
+            throw new Exception("Rate can onoly be bewtwen 1 and 5");
+        if(getUserSovingState(exercsieID,userId)!=ExerciseSolvingState.SOLVED)
+            throw new Exception("exercise is not solved or already rated");
         ExcersizeDiffucultyRating excersizeDiffucultyRating=
                 new ExcersizeDiffucultyRating(
                         usersRepository.getReferenceById(userId)

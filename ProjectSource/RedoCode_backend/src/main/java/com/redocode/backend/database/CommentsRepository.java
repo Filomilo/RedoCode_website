@@ -7,5 +7,6 @@ import java.util.List;
 public interface CommentsRepository extends JpaRepository<Comment, Long> {
     public List<Comment> findAllByOrderByDateAsc();
     public List<Comment>  findAllByExcersizeIdOrderByDateAsc(Long excersizeId);
+    public List<Comment>   findAllByOrderByDateDesc();
 }
 

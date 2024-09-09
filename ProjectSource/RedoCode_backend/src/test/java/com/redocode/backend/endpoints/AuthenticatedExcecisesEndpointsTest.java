@@ -110,7 +110,7 @@ class AuthenticatedExcecisesEndpointsTest {
             long useId=RANDOM.nextInt(1,usersSOlved.size());
             User user= this.usersRepository.getReferenceById(useId);
             Comment com=Comment.builder().comment("COMMENT_"+UUID.randomUUID().toString()).date(
-                    java.sql.Date.valueOf( LocalDate.now().plusDays(RANDOM.nextInt(1000)))).author(user).excersize(saved).build();
+                    java.sql.Date.valueOf( LocalDate.now().minusDays(RANDOM.nextInt(1000)))).author(user).excersize(saved).build();
             this.commentsList.add(commentsRepository.save(com));
         }
 
@@ -348,6 +348,24 @@ for (SolutionPrograms programs: this.solutionProgramsList){
     }
     @Test
     void postCommentCorrect() {
+
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
+
+        ExcersizeDiffucultyRating excersizeDiffucultyRating=
+                new ExcersizeDiffucultyRating(
+                        this._authenticaredUser
+                        ,exerciseRepository.getReferenceById(this.exerciseID)
+                        ,5
+                );
+        excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+
         CommentPostRequest commentPostRequest = CommentPostRequest.builder()
                 .comment("Comment_"+UUID.randomUUID())
                 .id(this.exerciseID)
@@ -358,14 +376,167 @@ for (SolutionPrograms programs: this.solutionProgramsList){
         log.info("response: "+response);
         log.info("getStatusCode: "+response.getStatusCode());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        Comment newestInDataBase=commentsRepository.findAllByOrderByDateAsc().get(0);
+        Comment newestInDataBase=commentsRepository.findAllByOrderByDateDesc().get(0);
         assertEquals(commentPostRequest.getComment(),newestInDataBase.getComment() );
         assertEquals(this._authenticaredUser,newestInDataBase.getAuthor() );
         assertEquals(commentPostRequest.getId(),newestInDataBase.getExcersize().getId() );
     }
 
     @Test
+    void postCommentUnathenticated() {
+        CommentPostRequest commentPostRequest = CommentPostRequest.builder()
+                .comment("Comment_"+UUID.randomUUID())
+                .id(this.exerciseID)
+                .build();
+        log.info("commentPostRequest: "+commentPostRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postCommentEndPont), HttpMethod.POST, new HttpEntity<>(commentPostRequest, null), Void.class );
+    assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+
+    @Test
+    void postCommentUnattempted() {
+        CommentPostRequest commentPostRequest = CommentPostRequest.builder()
+                .comment("Comment_"+UUID.randomUUID())
+                .id(this.exerciseID)
+                .build();
+        log.info("commentPostRequest: "+commentPostRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postCommentEndPont), HttpMethod.POST, new HttpEntity<>(commentPostRequest, getAuthHeaders()), Void.class );
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+    @Test
+    void postCommentUnRated() {
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
+
+        CommentPostRequest commentPostRequest = CommentPostRequest.builder()
+                .comment("Comment_"+UUID.randomUUID())
+                .id(this.exerciseID)
+                .build();
+        log.info("commentPostRequest: "+commentPostRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postCommentEndPont), HttpMethod.POST, new HttpEntity<>(commentPostRequest, getAuthHeaders()), Void.class );
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+@Test
+    void postCommentIncoorectID() {
+
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
+
+        ExcersizeDiffucultyRating excersizeDiffucultyRating=
+                new ExcersizeDiffucultyRating(
+                        this._authenticaredUser
+                        ,exerciseRepository.getReferenceById(this.exerciseID)
+                        ,5
+
+                );
+        excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+
+        CommentPostRequest commentPostRequest = CommentPostRequest.builder()
+                .comment("Comment_"+UUID.randomUUID())
+                .id(-1)
+                .build();
+        log.info("commentPostRequest: "+commentPostRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postCommentEndPont), HttpMethod.POST, new HttpEntity<CommentPostRequest>(commentPostRequest, getAuthHeaders()), Void.class );
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+
+
+
+    @Test
+    void postCommentEmptyComment() {
+
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
+
+        ExcersizeDiffucultyRating excersizeDiffucultyRating=
+                new ExcersizeDiffucultyRating(
+                        this._authenticaredUser
+                        ,exerciseRepository.getReferenceById(this.exerciseID)
+                        ,5
+
+                );
+        excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+
+        CommentPostRequest commentPostRequest = CommentPostRequest.builder()
+                .comment("")
+                .id(this.exerciseID)
+                .build();
+        log.info("commentPostRequest: "+commentPostRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postCommentEndPont), HttpMethod.POST, new HttpEntity<CommentPostRequest>(commentPostRequest, getAuthHeaders()), Void.class );
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
+    void postCommentTooLongComment() {
+
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
+
+        ExcersizeDiffucultyRating excersizeDiffucultyRating=
+                new ExcersizeDiffucultyRating(
+                        this._authenticaredUser
+                        ,exerciseRepository.getReferenceById(this.exerciseID)
+                        ,5
+
+                );
+        excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+        StringBuilder stringBuilder=new StringBuilder();
+        for (int i = 0; i < 3001; i++) {
+            stringBuilder.append("A");
+        }
+
+        CommentPostRequest commentPostRequest = CommentPostRequest.builder()
+                .comment(stringBuilder.toString())
+                .id(this.exerciseID)
+                .build();
+        log.info("commentPostRequest: "+commentPostRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postCommentEndPont), HttpMethod.POST, new HttpEntity<CommentPostRequest>(commentPostRequest, getAuthHeaders()), Void.class );
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
     void postRate() {
+
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
         RateRequest rateRequest = RateRequest.builder()
                 .rate(RANDOM.nextInt(1,5))
                 .id(this.exerciseID)
@@ -385,6 +556,106 @@ for (SolutionPrograms programs: this.solutionProgramsList){
         assertEquals(this._authenticaredUser.getNickname(),newestInDataBase.getUser().getNickname() );
         assertEquals(rateRequest.getId(),newestInDataBase.getExcersize().getId() );
     }
+
+
+    @Test
+    void postRateAlreadyRated() {
+
+        SolutionPrograms solutionPrograms=SolutionPrograms.builder()
+                .solutionAuthor(this._authenticaredUser)
+                .language(programmingLanguageRepository.getReferenceById(1l))
+                .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+                .avgExecutionTime(100l)
+                .build();
+        solutionProgramsRepository.save(solutionPrograms);
+
+        ExcersizeDiffucultyRating excersizeDiffucultyRating=
+                new ExcersizeDiffucultyRating(
+                        this._authenticaredUser
+                        ,exerciseRepository.getReferenceById(this.exerciseID)
+                        ,5
+
+                );
+        excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
+
+        RateRequest rateRequest = RateRequest.builder()
+                .rate(RANDOM.nextInt(1,5))
+                .id(this.exerciseID)
+                .build();
+
+        log.info("rateRequest: "+rateRequest);
+
+
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postRateEndPont), HttpMethod.POST, new HttpEntity<RateRequest>(rateRequest, getAuthHeaders()), Void.class);
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+
+    @Test
+    void postRateNotSOlved() {
+
+        RateRequest rateRequest = RateRequest.builder()
+                .rate(RANDOM.nextInt(1,5))
+                .id(this.exerciseID)
+                .build();
+
+        log.info("rateRequest: "+rateRequest);
+
+
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postRateEndPont), HttpMethod.POST, new HttpEntity<RateRequest>(rateRequest, getAuthHeaders()), Void.class);
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
+    void postRateNotuthenticated() {
+
+        RateRequest rateRequest = RateRequest.builder()
+                .rate(RANDOM.nextInt(1,5))
+                .id(this.exerciseID)
+                .build();
+
+        log.info("rateRequest: "+rateRequest);
+
+
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postRateEndPont), HttpMethod.POST, new HttpEntity<RateRequest>(rateRequest,null), Void.class);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+
+
+    @Test
+    void postRateWorngid() {
+
+        RateRequest rateRequest = RateRequest.builder()
+                .rate(RANDOM.nextInt(1,5))
+                .id(-1)
+                .build();
+
+        log.info("rateRequest: "+rateRequest);
+
+
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postRateEndPont), HttpMethod.POST, new HttpEntity<RateRequest>(rateRequest,getAuthHeaders()), Void.class);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void postWrongRate() {
+
+        RateRequest rateRequest = RateRequest.builder()
+                .rate(44)
+                .id(this.exerciseID)
+                .build();
+        log.info("rateRequest: "+rateRequest);
+        ResponseEntity<Void> response = restTemplate.exchange(
+                getFullEndpoint(_postRateEndPont), HttpMethod.POST, new HttpEntity<RateRequest>(rateRequest,getAuthHeaders()), Void.class);
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+
+
     @Test
     void getExerciseSolvingState() {
         Map<String, Long> params = new HashMap<>();

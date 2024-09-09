@@ -1,5 +1,6 @@
 package com.redocode.backend.endpoints;
 
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.redocode.backend.Messages.Authentication.Authentication;
 import com.redocode.backend.Messages.Authentication.AuthenticationRequest;
 import com.redocode.backend.Messages.ExercisesInfo.ExerciseSolvingState;
@@ -60,7 +61,6 @@ public class AuthenticatedExcecisesEndpoints {
         String code =exerciseDataControl.getSolutionCode(id);
         if(code == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
         }
         log.info("sending getSolutionsCodesData: "+code );
         return new ResponseEntity<>(code, HttpStatus.OK);
@@ -69,14 +69,36 @@ public class AuthenticatedExcecisesEndpoints {
     @PostMapping("/comment")
     public ResponseEntity postComment(@RequestBody CommentPostRequest request,@AuthenticationPrincipal User userDetails) {
         log.info("postComment request: " + request);
-        exerciseDataControl.saveNewComment(request.getId(),userDetails.getId(),request.getComment());
+        try {
+            exerciseDataControl.saveNewComment(request.getId(),userDetails.getId(),request.getComment());
+        }
+        catch (NotFoundException ex)
+        {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
+        catch (Exception ex)
+        {
+            log.warn("postComment forbidien: " + ex.getMessage());
+            return new ResponseEntity<>( HttpStatus.FORBIDDEN);
+        }
+
         return new ResponseEntity<>("Comment posted", HttpStatus.CREATED);
     }
     @PostMapping("/rate")
     public ResponseEntity postRate(@RequestBody RateRequest request,@AuthenticationPrincipal User userDetails) {
         log.info("postRate request: " + request);
+        try{
         exerciseDataControl.saveNewRating(request.getId(),userDetails.getId(),request.getRate());
-
+    }
+        catch (NotFoundException ex)
+    {
+        return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+    }
+        catch (Exception ex)
+    {
+        log.warn("postRate forbidien: " + ex.getMessage());
+        return new ResponseEntity<>( HttpStatus.FORBIDDEN);
+    }
         return new ResponseEntity<>("Rating posted", HttpStatus.CREATED);
     }
 
