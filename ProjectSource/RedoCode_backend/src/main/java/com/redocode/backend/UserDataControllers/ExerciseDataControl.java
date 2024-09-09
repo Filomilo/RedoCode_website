@@ -1,10 +1,12 @@
 package com.redocode.backend.UserDataControllers;
 
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.redocode.backend.Messages.ExercisesInfo.*;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.database.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,10 @@ public class ExerciseDataControl {
 
     public ResultData getResultDataForExerciseOfUser(long idOfExercise, long idOfUser)
     {
+        if(!exerciseRepository.findById(idOfExercise).isPresent() || !usersRepository.findById(idOfUser).isPresent())
+        {
+            return null;
+        }
         SolutionPrograms thisUserProgram = solutionProgramsRepository.findFirstByExcersizeIdAndSolutionAuthorId(idOfExercise,idOfUser);
         int AllOFSolutions= solutionProgramsRepository.countAllByExcersizeId(idOfExercise);
         int solutionWorseThanUSer=solutionProgramsRepository.countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(idOfExercise,thisUserProgram.getAvgExecutionTime());
@@ -45,6 +51,8 @@ public class ExerciseDataControl {
 
 
     public SolutionsData getSolutionsDataForExerciseOfId(@NotNull Long ExerciseId) {
+        if(!exerciseRepository.findById(ExerciseId).isPresent())
+            return null;
         List<SolutionPrograms> solutionPrograms= solutionProgramsRepository.findAllByExcersizeIdOrderByAvgExecutionTimeDesc(ExerciseId);
 
         List<SolutionItemList> solutionItemLists = solutionPrograms.stream()
@@ -80,6 +88,8 @@ public class ExerciseDataControl {
 
     public String getSolutionCode(long solutionID)
     {
+        if(!solutionProgramsRepository.findById(solutionID).isPresent())
+            return null;
         return solutionProgramsRepository.getReferenceById(solutionID).getCode();
     }
 

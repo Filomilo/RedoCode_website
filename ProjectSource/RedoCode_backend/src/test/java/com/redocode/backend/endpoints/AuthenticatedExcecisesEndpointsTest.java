@@ -222,6 +222,31 @@ i=0;
 
 
     }
+
+
+    @Test
+    void getSolutionsDataNotExisting() {
+        assertNotNull(restTemplate);
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", -1l);
+        ResponseEntity<SolutionsData> response = restTemplate.exchange(
+                getFullEndpoint(_getSolutionsDataEndPont), HttpMethod.GET,new HttpEntity<>(getAuthHeaders()), SolutionsData.class,params);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void getSolutionsDataUnauthenticated() {
+        assertNotNull(restTemplate);
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", exerciseID);
+
+        ResponseEntity<SolutionsData> response = restTemplate.exchange(
+                getFullEndpoint(_getSolutionsDataEndPont), HttpMethod.GET,new HttpEntity<>(null), SolutionsData.class,params);
+        assertEquals(HttpStatus.UNAUTHORIZED,response.getStatusCode());
+    }
+
+
+
     @Test
     void getResultData() {
         assertNotNull(restTemplate);
@@ -250,6 +275,38 @@ i=0;
         assertEquals(0f,responseData.getBetterThanProcent());
         assertEquals(exerciseRepository.getReferenceById(this.exerciseID).getMaxExecutionTimeMS(),responseData.getMaxExecutionTimeMs());
     }
+
+
+
+    @Test
+    void getResultDataNoExercise() {
+        assertNotNull(restTemplate);
+
+
+
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", -1l);
+
+        ResponseEntity<ResultData> response = restTemplate.exchange(
+                getFullEndpoint(_getResultDataEndPont), HttpMethod.GET, new HttpEntity<IdRequest>(getAuthHeaders()), ResultData.class,params);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+    }
+
+    @Test
+    void getResultUnathenticated() {
+        assertNotNull(restTemplate);
+
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", -1l);
+
+        ResponseEntity<ResultData> response = restTemplate.exchange(
+                getFullEndpoint(_getResultDataEndPont), HttpMethod.GET, new HttpEntity<>(null), ResultData.class,params);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+
+    }
+
+
     @Test
     void getSolutionsCodesData() {
         assertNotNull(restTemplate);
@@ -258,8 +315,6 @@ for (SolutionPrograms programs: this.solutionProgramsList){
     params.put("id", programs.getId());
 
     log.info("idRequest: "+programs.getId());
-
-
     ResponseEntity<String> response = restTemplate.exchange(
             getFullEndpoint(_getSolutionsCodesDataEndPont), HttpMethod.GET, new HttpEntity<IdRequest>( getAuthHeaders()), String.class,params);
     log.info("response: "+response);
@@ -267,6 +322,29 @@ for (SolutionPrograms programs: this.solutionProgramsList){
     log.info("response body: "+responseData);
     assertEquals(programs.getCode(), responseData);
 }
+
+    }
+
+    @Test
+    void getSolutionsCodesNoDatea() {
+        assertNotNull(restTemplate);
+            Map<String, Long> params = new HashMap<>();
+            params.put("id", -1l);
+            ResponseEntity<String> response = restTemplate.exchange(
+                    getFullEndpoint(_getSolutionsCodesDataEndPont), HttpMethod.GET, new HttpEntity<IdRequest>( getAuthHeaders()), String.class,params);
+            assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+    }
+
+    @Test
+    void getSolutionsCodesNoAunthenitcaion() {
+        assertNotNull(restTemplate);
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", -1l);
+        ResponseEntity<String> response = restTemplate.exchange(
+                getFullEndpoint(_getSolutionsCodesDataEndPont), HttpMethod.GET, new HttpEntity<>( null), String.class,params);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+
     }
     @Test
     void postCommentCorrect() {
@@ -274,10 +352,7 @@ for (SolutionPrograms programs: this.solutionProgramsList){
                 .comment("Comment_"+UUID.randomUUID())
                 .id(this.exerciseID)
                 .build();
-
         log.info("commentPostRequest: "+commentPostRequest);
-
-
         ResponseEntity<Void> response = restTemplate.exchange(
                 getFullEndpoint(_postCommentEndPont), HttpMethod.POST, new HttpEntity<CommentPostRequest>(commentPostRequest, getAuthHeaders()), Void.class );
         log.info("response: "+response);
@@ -310,7 +385,6 @@ for (SolutionPrograms programs: this.solutionProgramsList){
         assertEquals(this._authenticaredUser.getNickname(),newestInDataBase.getUser().getNickname() );
         assertEquals(rateRequest.getId(),newestInDataBase.getExcersize().getId() );
     }
-    @Ignore
     @Test
     void getExerciseSolvingState() {
         Map<String, Long> params = new HashMap<>();
@@ -352,6 +426,18 @@ for (SolutionPrograms programs: this.solutionProgramsList){
                 getFullEndpoint(_getExerciseSolvingStateEndPont), HttpMethod.GET, new HttpEntity<Void>(getAuthHeaders()), ExerciseSolvingState.class,params);
         assertNotNull(response.getBody());
         assertEquals(ExerciseSolvingState.RATED,response.getBody() );
+
+    }
+
+    @Test
+    void getExerciseSolvingStateUnathenticated() {
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", this.exerciseID);
+
+        ResponseEntity<ExerciseSolvingState> response = restTemplate.exchange(
+                getFullEndpoint(_getExerciseSolvingStateEndPont), HttpMethod.GET, new HttpEntity<>(null), ExerciseSolvingState.class,params);
+
+        assertEquals(HttpStatus.UNAUTHORIZED,response.getStatusCode());
 
     }
 }

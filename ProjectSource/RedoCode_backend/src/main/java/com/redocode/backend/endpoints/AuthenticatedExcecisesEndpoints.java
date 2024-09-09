@@ -13,11 +13,13 @@ import com.redocode.backend.UserDataControllers.ExerciseDataControl;
 import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @Slf4j
@@ -29,26 +31,39 @@ public class AuthenticatedExcecisesEndpoints {
 
 
     @GetMapping("/solutions")
-    public SolutionsData getSolutionsData(Long id,@AuthenticationPrincipal User userDetails) {
-        log.info("getSolutionsData request: " + id+" from: "+userDetails);
+    public ResponseEntity<SolutionsData> getSolutionsData(Long id, @AuthenticationPrincipal User userDetails) {
+        log.info("getSolutionsData request: " + id + " from: " + userDetails);
         SolutionsData resp = exerciseDataControl.getSolutionsDataForExerciseOfId(id);
-        log.info("sending getSolutionsData: "+resp);
-        return resp;
+        if (resp == null) {
+            log.info("SolutionsData not found for id: " + id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        log.info("sending getSolutionsData: " + resp);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
     @GetMapping("/results")
-    public ResultData getResultData(Long id,@AuthenticationPrincipal User userDetails) {
+    public ResponseEntity<ResultData> getResultData(Long id,@AuthenticationPrincipal User userDetails) {
         log.info("getResultData request: " + id+" from: "+userDetails);
         ResultData resp = exerciseDataControl.getResultDataForExerciseOfUser(id,userDetails.getId() );
+        if(resp == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
         log.info("sending getResultData: "+resp);
-        return resp;
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+
     }
 
     @GetMapping("/solutionsCodes")
-    public String getSolutionsCodesData(Long id,@AuthenticationPrincipal User userDetails) {
+    public ResponseEntity<String> getSolutionsCodesData(Long id,@AuthenticationPrincipal User userDetails) {
         log.info("getSolutionsCodesData request: " + id);
         String code =exerciseDataControl.getSolutionCode(id);
+        if(code == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
         log.info("sending getSolutionsCodesData: "+code );
-        return code;
+        return new ResponseEntity<>(code, HttpStatus.OK);
     }
 
     @PostMapping("/comment")
