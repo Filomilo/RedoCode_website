@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNorma
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
 import RouterValidators from '@/controllers/RouterValidators';
 
-type ValidateFunction = ((params: any) =>  string | null);
+type ValidateFunction = ((params: any) =>  Promise< string | null>);
 const validate=async (to:RouteLocationNormalized, from:RouteLocationNormalized, next:NavigationGuardNext, validateFunction: ValidateFunction)=>{
 
   const validationResult=await validateFunction(to.params);
@@ -90,7 +90,7 @@ const router = createRouter({
       name: 'ResultsUnauthenticated',
       component: () => import('@/views/ResultsUnathenticatedView.vue'),
       beforeEnter: async (to, from, next) => {
-        await validate(to, from, next, RouterValidators.ResultsUnauthenticatedAccesValidate)
+        await validate(to, from, next, RouterValidators.ResultsAccesValidate)
         }
     },
     

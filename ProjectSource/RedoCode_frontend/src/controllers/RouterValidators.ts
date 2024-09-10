@@ -1,11 +1,10 @@
 import { useActiveUserStore } from "@/stores/ActiveUserStore"
 import ExerciseSolviingState from "@/types/ExerciseSolviingState";
 import EndpointAcces from "./EndpointsAcces";
-import deasync from "deasync"
 namespace RouterValidators{
 
 
-    export function AccountAccesValidate(params: any): string| null
+    export async function AccountAccesValidate(params: any): Promise< string | null>
     {
         const activeUserStore = useActiveUserStore()
         console.log('AccountAccesValidate authethication')
@@ -18,7 +17,7 @@ namespace RouterValidators{
     }
 
 
-    export async function  ResultsAccesValidate(params: any)
+    export async function  ResultsAccesValidate(params: any): Promise< string | null>
     {
         const activeUserStore = useActiveUserStore()
         console.log('ExerciseSolvingValidation authethication')
@@ -44,7 +43,7 @@ namespace RouterValidators{
 
 
 
-    export function SolutionsAccesValidate(params: any)
+    export async  function SolutionsAccesValidate(params: any): Promise< string | null>
     {
         const activeUserStore = useActiveUserStore()
         console.log('SolutionsdAccesValidate authethication')
@@ -55,7 +54,7 @@ namespace RouterValidators{
           return 'ResultsUnauthenticated';
         }
     }
-    export function RegisterValidation(params: any)
+    export async  function RegisterValidation(params: any): Promise< string | null>
     {
         const activeUserStore = useActiveUserStore()
         console.log('SolutionsdAccesValidate authethication')
@@ -66,7 +65,7 @@ namespace RouterValidators{
           return 'Home';
         }
     }
-    export function CreateValidation(params: any)
+    export async  function CreateValidation(params: any): Promise< string | null>
     {
         const activeUserStore = useActiveUserStore()
         console.log('CreateValidation authethication')
@@ -78,7 +77,7 @@ namespace RouterValidators{
         }
     }
 
-    export async function  ExerciseSolvingValidation(params: any)
+    export async function  ExerciseSolvingValidation(params: any): Promise< string | null>
     {
         const activeUserStore = useActiveUserStore()
        console.log('ExerciseSolvingValidation authethication')
@@ -103,7 +102,7 @@ namespace RouterValidators{
         
     }
 
-    export async function  ExerciseRatingValidation(params: any)
+    export async function  ExerciseRatingValidation(params: any): Promise< string | null>
     {
         const activeUserStore = useActiveUserStore()
        console.log('ExerciseSolvingValidation authethication')
