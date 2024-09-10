@@ -5,6 +5,7 @@ import CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import ExerciseListRequestMessage from '@/types/ExerciseListRequestMessage'
+import ExerciseSolviingState from '@/types/ExerciseSolviingState'
 import axios from 'axios'
 import { isArray } from 'chart.js/helpers'
 import { stringify } from 'flatted'
@@ -172,10 +173,13 @@ namespace EndpointAcces {
       const params = {
         id: exerciseid,
       }
+      try{
       const response = await axios.get('/secure/exercises/results', {
         headers: getAuthHeader(token),
         params: params,
       })
+      if(response.status==404)
+        throw "couldn't get result data";
       console.log('/public/exercises/solutions Response:', response)
       if (
         response === undefined ||
@@ -185,6 +189,11 @@ namespace EndpointAcces {
         throw 'no solutions data retrived '
         console.log('/public/exercises/solutions Response data:', stringify(response.data))
       return response.data
+    }
+    catch(ex)
+    {
+      throw "couldn't get result info"
+    }
     }
 
     export async function postRate(
@@ -204,6 +213,43 @@ namespace EndpointAcces {
 
       return response.status
     }
+
+
+
+
+    export async function getExerciseSolvingState(
+      id: number,
+      token: string
+    ):Promise<ExerciseSolviingState> {
+      const data = {
+        id: id,
+      }
+      console.log(JSON.stringify(data))
+      const response = await axios.get('/secure/exercises/ExerciseSolvingState', {
+        headers: getAuthHeader(token),
+        params: data,
+      })
+
+      console.log("getExerciseSolvingState: response.data "+JSON.stringify(response.data) )
+      return response.data
+    }
+
+
+
+
+
+
+
+
+
+
   }
+
+
+
+
+
+
+  
 }
 export default EndpointAcces

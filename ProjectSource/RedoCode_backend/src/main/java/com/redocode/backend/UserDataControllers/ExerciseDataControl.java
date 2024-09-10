@@ -59,7 +59,7 @@ public class ExerciseDataControl {
                         .codeRunner(
                             RedoCodeObjectMapper.LanguageNameToCodeRunner(
                                 x.getLanguage().getName()))
-                        .username(x.getSolutionAuthor().getUsername())
+                        .username(x.getSolutionAuthor().getNickname())
                         .profilePic(x.getSolutionAuthor().getProfilePicture())
                         .executionTimeMs(x.getAvgExecutionTime())
                         .build())
@@ -128,6 +128,8 @@ public class ExerciseDataControl {
   public ExerciseSolvingState getUserSovingState(Long exerciseId, Long userId) {
     SolutionPrograms solutionPrograms =
         solutionProgramsRepository.findFirstByExcersizeIdAndSolutionAuthorId(exerciseId, userId);
+    if(solutionPrograms.getSolutionAuthor().getId()==userId)
+      return ExerciseSolvingState.RATED;
     if (solutionPrograms == null) return ExerciseSolvingState.UNATTEMPTED;
     ExcersizeDiffucultyRating rating =
         excersizeDiffucultyRatingRepository.findFirstByUserIdAndExcersizeId(userId, exerciseId);
