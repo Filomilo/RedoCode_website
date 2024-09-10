@@ -59,6 +59,7 @@ public class Excersize {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id")
+  @NotNull
   private User author;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
