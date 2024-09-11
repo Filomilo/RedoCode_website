@@ -11,7 +11,6 @@ import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-
 @Value
 @SuperBuilder
 @Jacksonized

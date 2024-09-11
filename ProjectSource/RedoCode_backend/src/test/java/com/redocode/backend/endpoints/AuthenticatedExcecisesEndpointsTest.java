@@ -83,7 +83,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .valueLengthRangeMax(500f)
             .valueLengthRangeMin(500f)
             .timeForTaskMin(500l)
-                .author(_authenticaredUser)
+            .author(_authenticaredUser)
             .build();
     Excersize saved = exerciseRepository.save(excersize);
     log.info("saved: " + saved);
@@ -429,10 +429,7 @@ class AuthenticatedExcecisesEndpointsTest {
   @Test
   void postCommentUnattempted() {
     CommentPostRequest commentPostRequest =
-        CommentPostRequest.builder()
-            .comment("Comment_" + UUID.randomUUID())
-            .id(1)
-            .build();
+        CommentPostRequest.builder().comment("Comment_" + UUID.randomUUID()).id(1).build();
     log.info("commentPostRequest: " + commentPostRequest);
     ResponseEntity<Void> response =
         restTemplate.exchange(
@@ -455,10 +452,7 @@ class AuthenticatedExcecisesEndpointsTest {
     solutionProgramsRepository.save(solutionPrograms);
 
     CommentPostRequest commentPostRequest =
-        CommentPostRequest.builder()
-            .comment("Comment_" + UUID.randomUUID())
-            .id(1l)
-            .build();
+        CommentPostRequest.builder().comment("Comment_" + UUID.randomUUID()).id(1l).build();
     log.info("commentPostRequest: " + commentPostRequest);
     ResponseEntity<Void> response =
         restTemplate.exchange(
@@ -575,8 +569,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
-    RateRequest rateRequest =
-        RateRequest.builder().rate(RANDOM.nextInt(1, 5)).id(1l).build();
+    RateRequest rateRequest = RateRequest.builder().rate(RANDOM.nextInt(1, 5)).id(1l).build();
 
     log.info("rateRequest: " + rateRequest);
 

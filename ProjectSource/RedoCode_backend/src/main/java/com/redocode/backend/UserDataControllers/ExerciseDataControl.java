@@ -98,8 +98,8 @@ public class ExerciseDataControl {
       throw new NotFoundException("exercise does not exist");
     if (comment.length() < 3 || comment.length() > 3000)
       throw new Exception("comment cannot be less tahn 3 chatare and more than 3000");
-    ExerciseSolvingState state=getUserSovingState(exerciseID, userID);
-    if ( state!= ExerciseSolvingState.RATED && state!=ExerciseSolvingState.AUTHOR)
+    ExerciseSolvingState state = getUserSovingState(exerciseID, userID);
+    if (state != ExerciseSolvingState.RATED && state != ExerciseSolvingState.AUTHOR)
       throw new Exception("exercise is not rated");
 
     Comment newComment =
@@ -116,7 +116,7 @@ public class ExerciseDataControl {
     if (!exerciseRepository.findById(exercsieID).isPresent())
       throw new NotFoundException("exercise does not exist");
     if (rate < 1 || rate > 5) throw new Exception("Rate can onoly be bewtwen 1 and 5");
-    log.info("user solvign satte: "+getUserSovingState(exercsieID, userId) );
+    log.info("user solvign satte: " + getUserSovingState(exercsieID, userId));
     if (getUserSovingState(exercsieID, userId) != ExerciseSolvingState.SOLVED)
       throw new Exception("exercise is not solved or already rated");
     ExcersizeDiffucultyRating excersizeDiffucultyRating =
@@ -131,8 +131,7 @@ public class ExerciseDataControl {
     SolutionPrograms solutionPrograms =
         solutionProgramsRepository.findFirstByExcersizeIdAndSolutionAuthorId(exerciseId, userId);
     Excersize excersize = exerciseRepository.findById(exerciseId).get();
-    if(excersize.getAuthor().getId()==userId)
-      return ExerciseSolvingState.AUTHOR;
+    if (excersize.getAuthor().getId() == userId) return ExerciseSolvingState.AUTHOR;
     if (solutionPrograms == null) return ExerciseSolvingState.UNATTEMPTED;
     ExcersizeDiffucultyRating rating =
         excersizeDiffucultyRatingRepository.findFirstByUserIdAndExcersizeId(userId, exerciseId);
