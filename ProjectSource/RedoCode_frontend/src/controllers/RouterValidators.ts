@@ -34,7 +34,7 @@ namespace RouterValidators{
              console.error(ex)
          }
          console.log("state "+ state)
-         if(state===ExerciseSolviingState.RATED)
+         if(state===ExerciseSolviingState.RATED || state===ExerciseSolviingState.AUTHOR)
              return "Solutions"
               if(state==ExerciseSolviingState.UNSOLVED)
              return "Exercise"
@@ -79,7 +79,7 @@ namespace RouterValidators{
 
     export async function  ExerciseSolvingValidation(params: any): Promise< string | null>
     {
-        const activeUserStore = useActiveUserStore()
+      const activeUserStore = useActiveUserStore()
        console.log('ExerciseSolvingValidation authethication')
         if(params["id"]===undefined)
             return "Exercises"
@@ -94,7 +94,7 @@ namespace RouterValidators{
             console.error(ex)
         }
         console.log("state "+ state)
-        if(state===ExerciseSolviingState.RATED)
+        if(state===ExerciseSolviingState.RATED || state===ExerciseSolviingState.AUTHOR)
             return "Solutions"
              if(state==ExerciseSolviingState.SOLVED)
             return "Results"
@@ -119,7 +119,8 @@ namespace RouterValidators{
             console.error(ex)
         }
         console.log("state "+ state)
-        if(state===ExerciseSolviingState.RATED)
+     
+        if(state===ExerciseSolviingState.RATED ||state===ExerciseSolviingState.AUTHOR )
             return "Solutions"
              if(state==ExerciseSolviingState.UNSOLVED)
             return "Exercise"
