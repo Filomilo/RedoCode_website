@@ -83,6 +83,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .valueLengthRangeMax(500f)
             .valueLengthRangeMin(500f)
             .timeForTaskMin(500l)
+                .author(_authenticaredUser)
             .build();
     Excersize saved = exerciseRepository.save(excersize);
     log.info("saved: " + saved);
@@ -210,7 +211,7 @@ class AuthenticatedExcecisesEndpointsTest {
           responseData.getSolutionList().get(i).getCodeRunner());
       assertEquals(sol.getId(), responseData.getSolutionList().get(i).getSolutionId());
       assertEquals(
-          sol.getSolutionAuthor().getUsername(),
+          sol.getSolutionAuthor().getNickname(),
           responseData.getSolutionList().get(i).getUsername());
       assertEquals(
           sol.getSolutionAuthor().getProfilePicture(),
@@ -430,7 +431,7 @@ class AuthenticatedExcecisesEndpointsTest {
     CommentPostRequest commentPostRequest =
         CommentPostRequest.builder()
             .comment("Comment_" + UUID.randomUUID())
-            .id(this.exerciseID)
+            .id(1)
             .build();
     log.info("commentPostRequest: " + commentPostRequest);
     ResponseEntity<Void> response =
@@ -448,7 +449,7 @@ class AuthenticatedExcecisesEndpointsTest {
         SolutionPrograms.builder()
             .solutionAuthor(this._authenticaredUser)
             .language(programmingLanguageRepository.getReferenceById(1l))
-            .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+            .excersize(exerciseRepository.getReferenceById(1l))
             .avgExecutionTime(100l)
             .build();
     solutionProgramsRepository.save(solutionPrograms);
@@ -456,7 +457,7 @@ class AuthenticatedExcecisesEndpointsTest {
     CommentPostRequest commentPostRequest =
         CommentPostRequest.builder()
             .comment("Comment_" + UUID.randomUUID())
-            .id(this.exerciseID)
+            .id(1l)
             .build();
     log.info("commentPostRequest: " + commentPostRequest);
     ResponseEntity<Void> response =
@@ -569,13 +570,13 @@ class AuthenticatedExcecisesEndpointsTest {
         SolutionPrograms.builder()
             .solutionAuthor(this._authenticaredUser)
             .language(programmingLanguageRepository.getReferenceById(1l))
-            .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+            .excersize(exerciseRepository.getReferenceById(1l))
             .avgExecutionTime(100l)
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
     RateRequest rateRequest =
-        RateRequest.builder().rate(RANDOM.nextInt(1, 5)).id(this.exerciseID).build();
+        RateRequest.builder().rate(RANDOM.nextInt(1, 5)).id(1l).build();
 
     log.info("rateRequest: " + rateRequest);
 
@@ -694,7 +695,7 @@ class AuthenticatedExcecisesEndpointsTest {
   @Test
   void getExerciseSolvingState() {
     Map<String, Long> params = new HashMap<>();
-    params.put("id", this.exerciseID);
+    params.put("id", 1l);
 
     ResponseEntity<ExerciseSolvingState> response =
         restTemplate.exchange(
@@ -713,7 +714,7 @@ class AuthenticatedExcecisesEndpointsTest {
         SolutionPrograms.builder()
             .solutionAuthor(this._authenticaredUser)
             .language(programmingLanguageRepository.getReferenceById(1l))
-            .excersize(exerciseRepository.getReferenceById(this.exerciseID))
+            .excersize(exerciseRepository.getReferenceById(1l))
             .avgExecutionTime(100l)
             .build();
     solutionProgramsRepository.save(solutionPrograms);
@@ -730,7 +731,7 @@ class AuthenticatedExcecisesEndpointsTest {
 
     ExcersizeDiffucultyRating excersizeDiffucultyRating =
         new ExcersizeDiffucultyRating(
-            this._authenticaredUser, exerciseRepository.getReferenceById(this.exerciseID), 5);
+            this._authenticaredUser, exerciseRepository.getReferenceById(1l), 5);
 
     excersizeDiffucultyRatingRepository.save(excersizeDiffucultyRating);
 

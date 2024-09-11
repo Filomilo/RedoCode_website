@@ -25,7 +25,7 @@
   // #region imports
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-  import { useRoute } from 'vue-router'
+  import { useRoute,useRouter} from 'vue-router'
   import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
@@ -40,13 +40,14 @@
 
   const text = ref('')
   const route = useRoute()
-
+  const router = useRouter()
   const fetchExerciseData = (id: number) => {
     EndpointAcces.unauthorized.getExerciseData(id).then((x: any) => {
       console.log('fetched exercise data: ' + JSON.stringify(x))
       codeRunnerStore.exerciseSolverController.loadInitialData(id, x)
+    }).catch(x=>{
+      router.replace({ path: '/NotFound' })
     })
-
     // codeRunnerStore.exerciseLoading = true
 
     // const params = {

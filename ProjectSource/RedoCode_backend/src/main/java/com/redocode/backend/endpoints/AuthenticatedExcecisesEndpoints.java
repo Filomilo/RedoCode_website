@@ -40,6 +40,7 @@ public class AuthenticatedExcecisesEndpoints {
     log.info("getResultData request: " + id + " from: " + userDetails);
     ResultData resp = exerciseDataControl.getResultDataForExerciseOfUser(id, userDetails.getId());
     if (resp == null) {
+      log.info("getResultData: ResultData not found for id: " + id);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     log.info("sending getResultData: " + resp);
