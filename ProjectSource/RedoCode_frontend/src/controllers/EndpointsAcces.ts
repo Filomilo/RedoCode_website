@@ -117,8 +117,10 @@ namespace EndpointAcces {
         response.headers['Content-Length'] == 0
       )
         throw 'no solutions data retrived '
-      console.log(" /secure/exercises/solutions data: "+ stringify(response.data))
-      return  response.data
+      console.log(
+        ' /secure/exercises/solutions data: ' + stringify(response.data)
+      )
+      return response.data
     }
 
     export async function getSolutionsCodesData(
@@ -173,27 +175,27 @@ namespace EndpointAcces {
       const params = {
         id: exerciseid,
       }
-      try{
-      const response = await axios.get('/secure/exercises/results', {
-        headers: getAuthHeader(token),
-        params: params,
-      })
-      if(response.status==404)
-        throw "couldn't get result data";
-      console.log('/public/exercises/solutions Response:', response)
-      if (
-        response === undefined ||
-        response.data === '' ||
-        response.headers['Content-Length'] == 0
-      )
-        throw 'no solutions data retrived '
-        console.log('/public/exercises/solutions Response data:', stringify(response.data))
-      return response.data
-    }
-    catch(ex)
-    {
-      throw "couldn't get result info"
-    }
+      try {
+        const response = await axios.get('/secure/exercises/results', {
+          headers: getAuthHeader(token),
+          params: params,
+        })
+        if (response.status == 404) throw "couldn't get result data"
+        console.log('/public/exercises/solutions Response:', response)
+        if (
+          response === undefined ||
+          response.data === '' ||
+          response.headers['Content-Length'] == 0
+        )
+          throw 'no solutions data retrived '
+        console.log(
+          '/public/exercises/solutions Response data:',
+          stringify(response.data)
+        )
+        return response.data
+      } catch (ex) {
+        throw "couldn't get result info"
+      }
     }
 
     export async function postRate(
@@ -214,42 +216,28 @@ namespace EndpointAcces {
       return response.status
     }
 
-
-
-
     export async function getExerciseSolvingState(
       id: number,
       token: string
-    ):Promise<ExerciseSolviingState> {
+    ): Promise<ExerciseSolviingState> {
       const data = {
         id: id,
       }
       console.log(JSON.stringify(data))
-      const response = await axios.get('/secure/exercises/ExerciseSolvingState', {
-        headers: getAuthHeader(token),
-        params: data,
-      })
+      const response = await axios.get(
+        '/secure/exercises/ExerciseSolvingState',
+        {
+          headers: getAuthHeader(token),
+          params: data,
+        }
+      )
 
-      console.log("getExerciseSolvingState: response.data "+JSON.stringify(response.data) )
+      console.log(
+        'getExerciseSolvingState: response.data ' +
+          JSON.stringify(response.data)
+      )
       return response.data
     }
-
-
-
-
-
-
-
-
-
-
   }
-
-
-
-
-
-
-  
 }
 export default EndpointAcces

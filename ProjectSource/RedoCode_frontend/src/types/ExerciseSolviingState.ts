@@ -2,7 +2,7 @@ enum ExerciseSolviingState {
   UNSOLVED = 'UNSOLVED',
   SOLVED = 'SOLVED',
   RATED = 'RATED',
-  AUTHOR= 'AUTHOR'
+  AUTHOR = 'AUTHOR',
 }
 
 export default ExerciseSolviingState

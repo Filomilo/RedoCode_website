@@ -1,7 +1,10 @@
 <template>
   <main>
     <div class="SolutionListContainer">
-      <div v-for="(element, index) in solutionList" v-bind:key="element.solutionId">
+      <div
+        v-for="(element, index) in solutionList"
+        v-bind:key="element.solutionId"
+      >
         <SolutionItemList
           :solutionItem="element"
           :maxExecutionTime="props.maxExecutionTime"

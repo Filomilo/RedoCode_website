@@ -14,7 +14,7 @@ class ExecutionChainController implements ExecutionChainControls {
 
   public _shouldBeVisible: boolean = false
   public _closeReady: boolean = false
-  public onCloseSucces:()=>void=()=>{}
+  public onCloseSucces: () => void = () => {}
 
   public onVisibiltyUpdate: (state: ExecutionChainController) => void = (
     state: ExecutionChainController
@@ -49,7 +49,7 @@ class ExecutionChainController implements ExecutionChainControls {
     this._shouldBeVisible = false
     this._closeReady = false
     this.onVisibiltyUpdate(this)
-    this.onCloseSucces=()=>{};
+    this.onCloseSucces = () => {}
   }
 
   public loadChainScheme = (scheme: ExecutionChainScheme) => {
@@ -153,12 +153,10 @@ class ExecutionChainController implements ExecutionChainControls {
   }
 
   public close() {
-    if(this.isAllSolved ||import.meta.env.MODE === 'development')
-    {
-      this.onCloseSucces();
+    if (this.isAllSolved || import.meta.env.MODE === 'development') {
+      this.onCloseSucces()
     }
     this.reset()
-    
   }
 }
 

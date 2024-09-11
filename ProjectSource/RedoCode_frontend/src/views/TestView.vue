@@ -2,8 +2,8 @@
   <main>
     <div class="MainContainer">
       <div class="MessageContainer">
-      Specifed webiste does nto exist
-        <Button id="GotToLogin" @click="onGoToLogin"> Go to home page  </Button>
+        Specifed webiste does nto exist
+        <Button id="GotToLogin" @click="onGoToLogin"> Go to home page </Button>
       </div>
     </div>
   </main>

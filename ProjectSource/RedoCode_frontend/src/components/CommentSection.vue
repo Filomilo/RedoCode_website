@@ -60,7 +60,7 @@
     id: number
   }>()
 
-  const commentsRef: Ref<CommentType[]>=ref(props.comments);
+  const commentsRef: Ref<CommentType[]> = ref(props.comments)
 
   const ActiveUserStore = useActiveUserStore()
   const ToastStore = useToastStore()
@@ -75,16 +75,15 @@
       .postComment(commentInput.value, props.id, ActiveUserStore.getToken())
       .then(x => {
         console.log('token: ' + JSON.stringify(x))
-        if (x < 200 || x > 201 ) {
+        if (x < 200 || x > 201) {
           ToastStore.showErrorMessage("Couldn't' post comment")
         } else {
           if (validatedComment.value) {
-
             commentsRef.value.unshift({
               username: ActiveUserStore.acoountInfo.nick.value,
               profilePicture: 'https://i.imgur.com/Z6fpYPD.png',
               comment: commentInput.value,
-            });
+            })
             commentInput.value = ''
           }
           ToastStore.showSuccessMessage('Succsefully commented')

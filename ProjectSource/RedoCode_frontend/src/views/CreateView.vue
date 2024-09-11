@@ -80,20 +80,20 @@
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
 
-  import {useRouter} from 'vue-router'
-import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
+  import { useRouter } from 'vue-router'
+  import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
   const ToastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
   const exercutionChainStore = useExecutionChainStore()
-  const router=useRouter();
+  const router = useRouter()
 
-  onMounted(()=>{
-    exercutionChainStore.executionChainController.onCloseSucces=onSuccesCrated;
+  onMounted(() => {
+    exercutionChainStore.executionChainController.onCloseSucces = onSuccesCrated
   })
-  const onSuccesCrated=()=>{
-    router.replace({name: "Excersices"})
+  const onSuccesCrated = () => {
+    router.replace({ name: 'Excersices' })
   }
   const codeUpdate = (code: string) => {
     console.log('codee update: ' + code)
@@ -131,8 +131,6 @@ import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
     )
   })
 
-
-
   const ontablClik = (event: TabViewClickEvent) => {
     console.log('event: ' + JSON.stringify(event))
     if (event.index === 2) onOpenCodeRunner()
@@ -145,9 +143,8 @@ import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
   const infoValidation = computed(() => {
     if (import.meta.env.MODE === 'development') {
       return true
-}
+    }
     return (
-      
       codeRunnerStore.exerciseCreatorController.title.length > 5 &&
       codeRunnerStore.exerciseCreatorController.title.length < 100 &&
       codeRunnerStore.exerciseCreatorController.desc.length > 20 &&
@@ -157,18 +154,15 @@ import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
   const testValidation = computed(() => {
     if (import.meta.env.MODE === 'development') {
       return true
-}
+    }
     return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
   })
   const submitValidation = computed(() => {
     if (import.meta.env.MODE === 'development') {
       return true
-}
+    }
     return codeRunnerStore.exerciseCreatorController.isSolved
   })
-
-
-
 </script>
 
 <style>

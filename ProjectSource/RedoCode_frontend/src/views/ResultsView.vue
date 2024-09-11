@@ -57,7 +57,6 @@
   console.log('exercsieID: ' + exercsieID)
 
   const loadData = async () => {
-    
     console.log('Loading solutions')
     globalStateStore.showLoadingScreen('Loading solutions')
     EndpointAcces.authorized
@@ -66,7 +65,7 @@
         refResultData.value = data
         globalStateStore.hideLoadingScreen()
       })
-      .catch(x=>{
+      .catch(x => {
         toastStore.showErrorMessage(x)
       })
       .finally(() => {

@@ -1,8 +1,7 @@
-export enum ExerciseSolvingState{
-    UNATTEMPTED="UNATTEMPTED",
-    SOLVED="SOLVED",
-    RATED="RATED"
-
+export enum ExerciseSolvingState {
+  UNATTEMPTED = 'UNATTEMPTED',
+  SOLVED = 'SOLVED',
+  RATED = 'RATED',
 }
 
-export default ExerciseSolvingState;
+export default ExerciseSolvingState

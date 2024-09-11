@@ -35,7 +35,7 @@
   import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue'
-import { stringify } from 'flatted'
+  import { stringify } from 'flatted'
   console.log('Test')
   const refSolutionData: Ref<SolutionsData | undefined> = ref()
   const ActiveUserStore = useActiveUserStore()
@@ -50,10 +50,11 @@ import { stringify } from 'flatted'
     globalStateStore.showLoadingScreen('Loading solutions')
     EndpointAcces.authorized
       .getSolutionsData(exercsieID, ActiveUserStore.getToken())
-      .then((data: SolutionsData|undefined) => {
-      
+      .then((data: SolutionsData | undefined) => {
         refSolutionData.value = data
-        console.log("refSolutionData.value: "+ JSON.stringify(refSolutionData.value))
+        console.log(
+          'refSolutionData.value: ' + JSON.stringify(refSolutionData.value)
+        )
         globalStateStore.hideLoadingScreen()
       })
       .finally(() => {
