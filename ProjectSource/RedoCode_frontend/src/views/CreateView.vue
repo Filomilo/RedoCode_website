@@ -80,10 +80,21 @@
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
 
+  import {useRouter} from 'vue-router'
+import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
   const ToastStore = useToastStore()
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
   const activeUserStore = useActiveUserStore()
+  const exercutionChainStore = useExecutionChainStore()
+  const router=useRouter();
+
+  onMounted(()=>{
+    exercutionChainStore.executionChainController.onCloseSucces=onSuccesCrated;
+  })
+  const onSuccesCrated=()=>{
+    router.replace({name: "Excersices"})
+  }
   const codeUpdate = (code: string) => {
     console.log('codee update: ' + code)
     codeRunnerStore.exerciseCreatorController.updateSolutionCode(
@@ -109,7 +120,6 @@
 
   const onSubmit = () => {
     console.log('On sumbit')
-    console.error('Unimplented')
     codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
       codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
     )
@@ -121,9 +131,7 @@
     )
   })
 
-  onMounted(() => {
-    ToastStore.featureNotImplemented()
-  })
+
 
   const ontablClik = (event: TabViewClickEvent) => {
     console.log('event: ' + JSON.stringify(event))
@@ -135,7 +143,11 @@
   }
 
   const infoValidation = computed(() => {
+    if (import.meta.env.MODE === 'development') {
+      return true
+}
     return (
+      
       codeRunnerStore.exerciseCreatorController.title.length > 5 &&
       codeRunnerStore.exerciseCreatorController.title.length < 100 &&
       codeRunnerStore.exerciseCreatorController.desc.length > 20 &&
@@ -143,11 +155,20 @@
     )
   })
   const testValidation = computed(() => {
+    if (import.meta.env.MODE === 'development') {
+      return true
+}
     return codeRunnerStore.exerciseCreatorController.ExerciseSetupError === ''
   })
   const submitValidation = computed(() => {
+    if (import.meta.env.MODE === 'development') {
+      return true
+}
     return codeRunnerStore.exerciseCreatorController.isSolved
   })
+
+
+
 </script>
 
 <style>

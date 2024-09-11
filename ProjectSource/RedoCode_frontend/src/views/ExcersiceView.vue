@@ -15,7 +15,7 @@
       :AutoTests="codeRunnerStore.exerciseSolverController.autoTests"
       :codeContainerUpdate="codeConatienrUpdate"
       :onResults="onCodeResult"
-      :SubmitAccess="codeRunnerStore.exerciseSolverController.isSolved"
+      :SubmitAccess="SubmitAccess"
     />
     {{ JSON.stringify(codeRunnerStore.exerciseSolverController) }}
   </main>
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
   // #region imports
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted,computed } from 'vue'
   import axios from 'axios'
   import { useRoute,useRouter} from 'vue-router'
   import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
@@ -34,6 +34,7 @@
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   import EndpointAcces from '@/controllers/EndpointsAcces'
   import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
+import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
   //#endregion
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
@@ -41,6 +42,7 @@
   const text = ref('')
   const route = useRoute()
   const router = useRouter()
+  const exercutionChainStore = useExecutionChainStore()
   const fetchExerciseData = (id: number) => {
     EndpointAcces.unauthorized.getExerciseData(id).then((x: any) => {
       console.log('fetched exercise data: ' + JSON.stringify(x))
@@ -60,7 +62,14 @@
       typeof route.params.id === 'string' ? route.params.id : route.params.id[0]
     )
     fetchExerciseData(exerciseId)
+    exercutionChainStore.executionChainController.onCloseSucces=onSuccesCrated;
   })
+  onMounted(()=>{
+    
+  })
+  const onSuccesCrated=()=>{
+    router.replace({name: "Results" , params: route.params})
+  }
 
   const codeConatienrUpdate = (code: string) => {
     codeRunnerStore.exerciseSolverController.solution = code
@@ -82,4 +91,11 @@
     console.log('Exercise view results: ' + JSON.stringify(results))
     codeRunnerStore.exerciseSolverController.updateTests(results.results)
   }
+
+  const SubmitAccess=computed(()=>{
+    if (import.meta.env.MODE === 'development') {
+      return true;
+    }
+    return codeRunnerStore.exerciseSolverController.isSolved;
+  })
 </script>
