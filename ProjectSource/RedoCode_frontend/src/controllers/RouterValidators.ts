@@ -24,8 +24,8 @@ namespace RouterValidators {
       return null;
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
-    if (params['id'] === undefined) return 'Exercises'
-    if (!activeUserStore.validateToken()) return 'Exercise'
+    if (params['id'] === undefined) return 'ResultsUnauthenticated'
+    if (!activeUserStore.validateToken()) return 'ResultsUnauthenticated'
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(

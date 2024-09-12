@@ -6,6 +6,7 @@ import {
 } from 'vue-router'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
 import RouterValidators from '@/controllers/RouterValidators'
+import { stringify } from 'flatted'
 
 type ValidateFunction = (params: any) => Promise<string | null>
 const validate = async (
@@ -14,10 +15,13 @@ const validate = async (
   next: NavigationGuardNext,
   validateFunction: ValidateFunction
 ) => {
+  console.log("validation  to "+ JSON.stringify(to.name))
   const validationResult = await validateFunction(to.params)
-  console.log('validationResult: ' + JSON.stringify(to))
-  if (validationResult === null) next()
+  console.log('validation route Result: ' + JSON.stringify(validationResult))
+  if (validationResult === null || to.name == validationResult) 
+    next()
   else {
+    console.log("validation route swiihcing to "+JSON,stringify(validationResult)+" params: "+ JSON.stringify(to.params) )
     next({ name: validationResult, params: to.params })
   }
 }
@@ -100,11 +104,13 @@ const router = createRouter({
     },
     {
       path: '/Results',
+      name: 'ResultsUnauthenticatedNoID',
+      component: () => import('@/views/ResultsUnathenticatedView.vue'),
+    },
+    {
+      path: '/Results/:id',
       name: 'ResultsUnauthenticated',
       component: () => import('@/views/ResultsUnathenticatedView.vue'),
-      beforeEnter: async (to, from, next) => {
-        await validate(to, from, next, RouterValidators.ResultsAccesValidate)
-      },
     },
 
     {

@@ -3,6 +3,7 @@ import ExecutionChain from '../helpers/ExecutionChain'
 import ExercisesPage from '../helpers/ExercisesPage'
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
+import ErrorPage from '../helpers/ErrorPage'
 
 describe('Phibonachi new exercise', () => {
   it('passes', () => {
@@ -77,6 +78,9 @@ describe('Phibonachi new exercise', () => {
     CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()
+    UrlControls.urlShouldBe("Results/1")
+    ErrorPage.UnauthenticatedResultPage.UnathenticatedPanelShouldBeVisible()
+    ErrorPage.UnauthenticatedResultPage.ClickGoToLogin();
   })
 })
 

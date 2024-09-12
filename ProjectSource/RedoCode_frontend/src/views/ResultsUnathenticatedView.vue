@@ -1,9 +1,9 @@
 <template>
   <main>
     <div class="MainContainer">
-      <div class="MessageContainer">
+      <div class="MessageContainer" id="Unathenticated-results-panel">
         Unfortunately in order to view detailed results you need to be logged in
-        <Button id="GotToLogin" @click="onGoToLogin"> Go to login page </Button>
+        <Button id="GotToLogin" @click="onGoToLogin" > Go to login page </Button>
       </div>
     </div>
   </main>
@@ -15,7 +15,8 @@
   const router = useRouter()
   const route = useRoute()
   const onGoToLogin = () => {
-    router.replace('Home')
+    console.log("Go to home")
+    router.push({name: 'Home'})
   }
 </script>
 
