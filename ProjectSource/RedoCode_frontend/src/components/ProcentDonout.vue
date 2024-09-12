@@ -28,9 +28,9 @@
           `
         "
       ></div>
-      <div class="dount-inner">
+      <label class="dount-inner">
         {{ label }}
-      </div>
+      </label>
     </div>
   </main>
 </template>

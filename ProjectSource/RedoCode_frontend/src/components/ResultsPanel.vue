@@ -7,7 +7,7 @@
       :key="index"
       style="background-color: green; margin: 1rem"
     >
-      {{ JSON.stringify(result) }}
+
     </div>
   </div>
 </template>

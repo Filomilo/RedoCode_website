@@ -18,6 +18,7 @@
     "allowJs": true,
     "checkJs": false,
     "verbatimModuleSyntax": false,
+    "types": ["cypress"],
     "typeRoots": ["./src/types", "./node_modules/@types/"],
     "paths": {}
   }

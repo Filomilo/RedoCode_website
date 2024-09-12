@@ -5,6 +5,7 @@
         <div
           v-for="(item, index) in props.rateOptions"
           v-bind:key="item.value"
+          :id="props.id+'-'+index"
           class="ColumnContainer"
           :style="
             'height: ' +
@@ -23,7 +24,9 @@
           />
         </div>
       </div>
-      <p class="labelContaiener" :style="'color: ' + activeLabelColor + ' ;'">
+      <p class="labelContaiener" :style="'color: ' + activeLabelColor + ' ;'"
+      :id="props.id+'-selection'"
+      >
         {{ activeLabel }}
       </p>
     </div>
@@ -37,6 +40,7 @@
   const props = defineProps<{
     rateOptions: RateOption[]
     heightChange?: number
+    id: string
   }>()
 
   const model: ModelRef<number | string | undefined> = defineModel()
