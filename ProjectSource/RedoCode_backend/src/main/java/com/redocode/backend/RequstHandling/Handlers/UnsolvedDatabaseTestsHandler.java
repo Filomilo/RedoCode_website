@@ -94,6 +94,7 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
             .user(request.getUser())
             .timeForExecution(specificationParametersRequest.getTimeForExecution())
             .codeRunnerType(currentlySolvingCodeRunnerr)
+                .programResults(new HashMap<>())
             .build();
 
     CodeTestHandler codeTestHandler = new CodeTestHandler();

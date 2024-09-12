@@ -72,6 +72,7 @@ class ExerciseInfoValidationTest {
             .testsToRun(Arrays.stream(testsCorrect).toList())
             .timeForTaskMin(timeForTaskCorrect)
             .timeForExecution(maxExecutionTimeMSCorrect)
+                .programResults(new HashMap<>())
             .build();
     exerciseInfoValidation = new ExerciseInfoValidation();
   }

@@ -12,6 +12,7 @@ import com.redocode.backend.database.Excersize;
 import com.redocode.backend.database.ExerciseRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * reqyest handler for chain of resposiblity, which job is to retrive manaual tests from databse and
@@ -55,6 +56,7 @@ public class GetExerciseDataFromDataBase extends MessageRequestHandler {
             .solutionCodes(solutionCodesRequest.getSolutionCodes())
             .user(request.getUser())
             .amountOfAutoTests(excersize.getAmountOfAutoTests())
+                .programResults(new HashMap<>())
             .lengthRange(
                 new Range(excersize.getValueLengthRangeMin(), excersize.getValueLengthRangeMax()))
             .xArrayRange(
