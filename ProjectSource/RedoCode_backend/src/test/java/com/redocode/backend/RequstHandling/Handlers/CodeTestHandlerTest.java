@@ -151,6 +151,7 @@ class CodeTestHandlerTest {
     assertTrue(
         porgramReusltsSendRequest
             .getProgramResults()
+                .get(codeTestRequest.getCodeRunnerType())
             .get(0)
             .getConsoleOutput()
             .getErrorOutput()

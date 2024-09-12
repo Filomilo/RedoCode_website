@@ -17,10 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,7 +54,11 @@ class SaveExerciseSolutionHandlerTest {
     ;
     SaveExerciseSolutionRequest request =
         SaveExerciseSolutionRequest.builder()
-            .programResults(results)
+            .programResults(new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>(){
+      {
+        put(type, results);
+      }
+    })
             .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
             .user(user)
             .solutionCodes(solutions)

@@ -30,6 +30,9 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
     return "Saving solution to database";
   }
 
+
+
+
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
 
@@ -63,7 +66,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
     Long avgExecutionTime =
         (long)
             Math.ceil(
-                codeResultsRequest.getProgramResults().stream()
+                codeResultsRequest.getProgramResults().get(codeRunnerType).stream()
                     .mapToLong(x -> x.getExecutionTime().longValue())
                     .average()
                     .orElse(-1.0));

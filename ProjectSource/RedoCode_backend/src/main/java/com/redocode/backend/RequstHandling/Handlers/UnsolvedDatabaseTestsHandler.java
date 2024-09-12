@@ -113,10 +113,10 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
                         + resultsfromCodeTest.getProgramResults().get(i[0]));
                 x.setExpectedOutput(
                     RedoCodeObjectMapper.VarAsString(
-                        resultsfromCodeTest.getProgramResults().get(i[0]).getVariables()));
+                        resultsfromCodeTest.getProgramResults().get(currentlySolvingCodeRunnerr).get(i[0]).getVariables()));
                 x.setInput(
                     RedoCodeObjectMapper.VarAsString(
-                        resultsfromCodeTest.getProgramResults().get(i[0]).getVariablesInput()));
+                        resultsfromCodeTest.getProgramResults().get(currentlySolvingCodeRunnerr).get(i[0]).getVariablesInput()));
                 i[0]++;
               } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);

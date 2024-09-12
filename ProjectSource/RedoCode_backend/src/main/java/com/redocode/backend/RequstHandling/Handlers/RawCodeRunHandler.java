@@ -5,12 +5,14 @@ import com.redocode.backend.RequstHandling.Requests.PorgramReusltsSendRequest;
 import com.redocode.backend.RequstHandling.Requests.RawCodeRunRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.SpringContextUtil;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +39,10 @@ public class RawCodeRunHandler extends BaseRequestHandler {
 
     request =
         PorgramReusltsSendRequest.builder()
-            .programResults(List.of(new ProgramResult[] {results}))
+            .programResults(new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
+              {
+                put(requestRawCodeRunRequest.getCodeRunnerType(), List.of(new ProgramResult[] {results}));
+              }})
             .user(requestRawCodeRunRequest.getUser())
             .build();
 

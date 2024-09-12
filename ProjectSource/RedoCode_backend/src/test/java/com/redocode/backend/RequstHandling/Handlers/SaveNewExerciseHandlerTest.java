@@ -2,6 +2,8 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
+import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
+import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.*;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
@@ -12,9 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
+import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.CPP_RUNNER;
+import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.JS_RUNNER;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -24,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SaveNewExerciseHandlerTest {
   @Autowired ExerciseRepository exerciseRepository;
   @Autowired UsersRepository usersRepository;
+  @Autowired SolutionProgramsRepository solutionProgramsRepository;
   SaveNewExerciseHandler saveNewExerciseHandler;
   User user;
 
@@ -72,7 +76,7 @@ class SaveNewExerciseHandlerTest {
         new HashMap<>() {
           {
             put(
-                CODE_RUNNER_TYPE.CPP_RUNNER,
+                CPP_RUNNER,
                 "#include <iostream>\n"
                     + "#include <vector>\n"
                     + "#include <string>\n"
@@ -103,6 +107,16 @@ class SaveNewExerciseHandlerTest {
               .build(),
         };
 
+
+    Map<CODE_RUNNER_TYPE, List<ProgramResult>> results=new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>(){
+      {
+        put(CPP_RUNNER, Arrays.asList(ProgramResult.builder().executionTime(22l).consoleOutput(ConsoleOutput.builder().output("").build()).build(), ProgramResult.builder().executionTime(22l).consoleOutput(ConsoleOutput.builder().output("").build()).build()));
+        put(JS_RUNNER, Arrays.asList(ProgramResult.builder().executionTime(33l).consoleOutput(ConsoleOutput.builder().output("").build()).build(), ProgramResult.builder().executionTime(33l).consoleOutput(ConsoleOutput.builder().output("").build()).build()));
+      }
+
+    };
+    assertNotNull(results);
+
     ExerciseCreationRequest exerciseCreationRequest =
         ExerciseCreationRequest.builder()
             .user(user)
@@ -125,13 +139,18 @@ class SaveNewExerciseHandlerTest {
             .testsToRun(Arrays.stream(tests).toList())
             .timeForTaskMin(timeForTask)
             .timeForExecution(timeForExecution)
+                .programResults(results)
             .build();
+
+
+    int soluionCodesBefore=solutionProgramsRepository.findAll().size();
 
     assertDoesNotThrow(
         () -> {
           assertTrue(saveNewExerciseHandler.next(exerciseCreationRequest));
         });
-
+    int soluionCodesBAfter=solutionProgramsRepository.findAll().size();
+    assertEquals(soluionCodesBefore+solutionCodes.size(),soluionCodesBAfter);
     Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
     assertEquals(title, lastAdded.getExcersizeName());
     assertEquals(inputType, lastAdded.getInputType());
