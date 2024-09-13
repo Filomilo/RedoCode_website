@@ -48,6 +48,18 @@ namespace ResultPage {
 
         }
 
+        export function SolutionBetterProcetShouldGreater(val:number)
+        {
+            cy.get("#Better-than-donout > div > label")
+            .invoke("text")
+            .then(x=> {
+                const value=parseFloat(x.slice(0,-1))
+                expect(value).to.greaterThan(val);
+            })
+
+        }
+
+
         export function resulrRankShouldBe(val:number)
         {
             cy.get("#result-code-rate")
