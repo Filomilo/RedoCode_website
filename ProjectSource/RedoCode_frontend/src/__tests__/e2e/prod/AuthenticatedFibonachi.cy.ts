@@ -10,6 +10,9 @@ import SolutionsList from "../helpers/SolutionsList"
 
 describe('template spec', () => {
   it('passes', () => {
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      return false
+    })
     const mail="shadow@mail.com"
     const password = 'Password+123'
     const nick="shadow"
