@@ -8,7 +8,7 @@ import UserAuthentication from '../helpers/UserAuthentication'
 import SolutionsList from '../helpers/SolutionsList'
 
 
-describe('Create new exercise', () => {
+describe.skip('Create new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

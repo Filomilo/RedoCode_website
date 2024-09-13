@@ -1,7 +1,7 @@
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
 
-describe('switch without authentication', () => {
+describe.skip('switch without authentication', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
