@@ -35,7 +35,7 @@
             <ProcentDonout
               :value="props.BetterThanProcent"
               :maxValue="100"
-              :label="props.BetterThanProcent + '%'"
+              :label="Math.round(100*props.BetterThanProcent)/100 + '%'"
               fillColor="#a463ac"
               basicColor="#ffffff"
               class="procentText"
