@@ -37,7 +37,7 @@
               style="margin-left: 2rem; margin-top: 1rem"
               :id="'comment-nick-' + index"
             >
-              {{ data.username }}
+              {{ data.nickname }}
             </h3>
             <div class="commentContent" :id="'comment-content-' + index">
               {{ data.comment }}
@@ -79,9 +79,10 @@
           ToastStore.showErrorMessage("Couldn't' post comment")
         } else {
           if (validatedComment.value) {
+            console.log("comment post: "+JSON.stringify(ActiveUserStore.accountInfo)  )
             commentsRef.value.unshift({
-              username: ActiveUserStore.acoountInfo.nick.value,
-              profilePicture: 'https://i.imgur.com/Z6fpYPD.png',
+              nickname: ActiveUserStore.accountInfo.nickname,
+              profilePicture: ActiveUserStore.accountInfo.profilePicture,
               comment: commentInput.value,
             })
             commentInput.value = ''

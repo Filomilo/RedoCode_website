@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref, inject } from 'vue'
+import { ref, computed, type Ref, inject, watch } from 'vue'
 import { useToastStore } from './ToastStore'
 import axios from 'axios'
 import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest'
@@ -8,7 +8,9 @@ import AuthenticationRequest from '@/types/ApiMesseages/Authentication/Authentic
 import { VueCookies } from 'vue-cookies'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { useCodeRunnerStore } from './CodeRunnerStore'
-import AccountInfo from '@/types/AccountInfo'
+import AccountInfo from '@/types/ApiMesseages/AccountInfo'
+import EndpointAcces from '@/controllers/EndpointsAcces'
+import USER_TYPE from '@/types/ApiMesseages/UserType'
 
 export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
@@ -16,7 +18,25 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   const _token: Ref<string> = ref('')
   const isAwaitingAuthentication: Ref<boolean> = ref(false)
   const $cookies = inject<VueCookies>('$cookies')
-  const acoountInfo: Ref<AccountInfo|undefined> = ref();
+  const accountInfo: Ref<AccountInfo> = ref({
+    nickname: "",
+    mail: "",
+    profilePicture: "",
+    type: USER_TYPE.UNAUTHENTICATED
+  });
+
+
+  watch(_token,()=>{
+    console.log("token change: "+ JSON.stringify( _token.value))
+    if(_token.value!=="")
+    {
+
+      EndpointAcces.authorized.getUserInfo(_token.value).then((response: AccountInfo)=>{
+        console.log("Account info: "+ JSON.stringify(response))
+        accountInfo.value=response;
+      })
+    }
+  })
 
   const validateToken = (): boolean => {
     if (import.meta.env.MODE === 'development') {
@@ -56,53 +76,34 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   attemptToLoginThroughCookie()
 
   const login = async (email: string, pass: string, stayLoggedIn: boolean) => {
-    const request: AuthenticationRequest = {
-      password: pass,
-      email: email,
-    }
-    axios
-      .post('/public/auth/login', request)
-      .then(response => {
-        console.log('Response: ' + JSON.stringify(response))
-        if (response.status == 200) {
-          toastStore.showSuccessMessage('Succesfully logged in')
-          _token.value = response.data.token
-          const apiConnectionStore = useApiConnectionStore()
-          isLogged.value = true
-          router.push({ path: '/Home', replace: true })
-          if (stayLoggedIn) {
-            saveCookie()
-          }
-        } else {
-          console.log('test')
-          toastStore.showErrorMessage(
-            "Couldn't Login, please check email nad password"
-          )
-        }
-      })
-      .catch(error => {
-        console.error(error)
-        if (error.response) {
-          console.error('Error response:', error.response)
-          console.error('Status:', error.response.status)
-          console.error('Data:', error.response.data)
-          console.error('Headers:', error.response.headers)
 
-          if (error.response.status != 200) {
+    try{
+
+
+      const token:string= await EndpointAcces.unauthorized.login(email,pass);
+      _token.value = token
+      isLogged.value = true
+      if (stayLoggedIn) {
+        saveCookie()
+      }
+      router.push({ path: '/Home', replace: true })
+      toastStore.showSuccessMessage("Succesfully logged in");
+      }
+      catch(error){
+        console.error(error)
             toastStore.showErrorMessage(
-              "Couldn't Login, please check email nad password"
-            )
+              "Couldn't Login, "+error)
+            }
           }
-        }
-      })
-      .finally(() => {
-        //  console.log("axios finshed")
-      })
-  }
 
   const logout = () => {
     isLogged.value = false
-    acoountInfo.value = undefined
+    accountInfo.value = {
+        nickname: "",
+        mail: "",
+        profilePicture: "",
+        type: USER_TYPE.UNAUTHENTICATED
+    }
     _token.value = ''
     deleteCookie()
   }
@@ -162,7 +163,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     isLogged,
     login,
     logout,
-    acoountInfo,
+    accountInfo,
     register,
     validateToken,
     getToken,

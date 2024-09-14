@@ -1,3 +1,5 @@
+import AccountInfo from '@/types/ApiMesseages/AccountInfo'
+import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
 import ExcerciseDataMessage from '@/types/ApiMesseages/ExcerciseDataMessage'
 import ResultData from '@/types/ApiMesseages/ResultData'
 import SolutionsData from '@/types/ApiMesseages/SolutionsData'
@@ -12,6 +14,27 @@ import { stringify } from 'flatted'
 
 namespace EndpointAcces {
   export namespace unauthorized {
+
+
+    export async function login(email: string, password: string):Promise<string> {
+      try {
+        const request: AuthenticationRequest = {
+          password: password,
+          email: email,
+        }
+        const response= await axios.post('/public/auth/login', request);
+        if(response.status!==200)
+        {
+          throw "Incorrect login details"
+        }
+        return response.data.token;
+
+      } catch (error) {
+        console.error('updateCodeRunner Error:', JSON.stringify(error))
+        throw "Incorrect login details"
+      }
+    }
+
     export async function getCodeRunnerState(
       token: string
     ): Promise<CoderunnerState> {
@@ -91,6 +114,8 @@ namespace EndpointAcces {
   }
 
   export namespace authorized {
+    
+    // eslint-disable-next-line no-inner-declarations
     function getAuthHeader(token: string) {
       return {
         Authorization: `Bearer ${token}`,
@@ -234,6 +259,24 @@ namespace EndpointAcces {
 
       console.log(
         'getExerciseSolvingState: response.data ' +
+          JSON.stringify(response.data)
+      )
+      return response.data
+    }
+
+    export async function getUserInfo(token:string): Promise<AccountInfo>
+    {
+
+      console.log("getUserInfo")
+      const response = await axios.get(
+        '/secure/user/info',
+        {
+          headers: getAuthHeader(token),
+        }
+      )
+
+      console.log(
+        'getUserInfo: response.data ' +
           JSON.stringify(response.data)
       )
       return response.data

@@ -10,7 +10,7 @@
         </Button>
       </div>
       <div class="NickContainer">
-        {{ activeUserStore.acoountInfo.nick.value }}
+        {{ activeUserStore.accountInfo.nickname }}
       </div>
       <div class="DescriptionContainer">Account description</div>
       <div class="LogoutButtonContainer">
