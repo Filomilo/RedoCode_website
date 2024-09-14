@@ -1,5 +1,6 @@
 <template>
   <main class="PlayGroundBase">
+
     <CodeRunnerPanel
       v-if="codeRunnerStore.exerciseSolverController.manualTests !== undefined"
       :exerciseInfo="codeRunnerStore.exerciseSolverController"
@@ -17,7 +18,6 @@
       :onResults="onCodeResult"
       :SubmitAccess="SubmitAccess"
     />
-    {{ JSON.stringify(codeRunnerStore.exerciseSolverController) }}
   </main>
 </template>
 

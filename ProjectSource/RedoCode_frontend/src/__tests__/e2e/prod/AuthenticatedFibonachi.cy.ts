@@ -7,6 +7,7 @@ import UrlControls from "../helpers/UrlControls"
 import UserAuthentication from "../helpers/UserAuthentication"
 import ResultPage from "../helpers/ResultPage"
 import SolutionsList from "../helpers/SolutionsList"
+import ToastHelper from "../helpers/ToastHelper"
 
 // describe('template spec', () => {
 //   it('passes', () => {
@@ -172,7 +173,9 @@ describe('Phibonachi Auhtenticated new exercise', () => {
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
-    CodeRunnerPanel.selectInitialLanguage('cpp')
+    ToastHelper.shouldToastAtLeastOne()
+    ToastHelper.shouldToastNo()
+     CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.stateShouldBe('ACTIVE')
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
       'int solution(int x){'
