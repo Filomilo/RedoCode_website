@@ -95,8 +95,8 @@ export default class StompApiConnection {
     this._stompClient.active
   }
 
-  public isActive=computed(()=>{
-    return   this._stompClient.active;
+  public isActive = computed(() => {
+    return this._stompClient.active
   })
 
   public subscribe(
