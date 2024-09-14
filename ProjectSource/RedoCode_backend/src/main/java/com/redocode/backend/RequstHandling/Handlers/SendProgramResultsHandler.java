@@ -24,7 +24,9 @@ public class SendProgramResultsHandler extends BaseRequestHandler {
     log.info("SendProgramResultsHandler: " + request.toString());
 
     ProgramResultsMessage programResultsMessage =
-        ProgramResultsMessage.builder().results(codeResultsRequest.getProgramResults().values().stream().findFirst().get()).build();
+        ProgramResultsMessage.builder()
+            .results(codeResultsRequest.getProgramResults().values().stream().findFirst().get())
+            .build();
 
     messageSender.sendMessage(
         request.getUser(), "/public/topic/codeRunnerResults", programResultsMessage);

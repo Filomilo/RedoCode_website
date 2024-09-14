@@ -149,8 +149,9 @@ public class CodeTestHandler extends BaseRequestHandler {
         "correct " + codeRunnerRequest.getCodeRunnerType() + " tests",
         ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-
-    codeResultsRequest.getProgramResults().put(codeRunnerRequest.getCodeRunnerType(), programResults);
+    codeResultsRequest
+        .getProgramResults()
+        .put(codeRunnerRequest.getCodeRunnerType(), programResults);
 
     return request;
   }

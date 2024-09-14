@@ -16,5 +16,5 @@ import java.util.Map;
 @Setter
 @ToString
 public class PorgramReusltsSendRequest extends RequestBase implements ICodeResultsRequest {
-  Map<CODE_RUNNER_TYPE,List<ProgramResult>> programResults;
+  Map<CODE_RUNNER_TYPE, List<ProgramResult>> programResults;
 }

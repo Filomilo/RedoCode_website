@@ -30,9 +30,6 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
     return "Saving solution to database";
   }
 
-
-
-
   @Override
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
 

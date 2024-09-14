@@ -54,11 +54,12 @@ class SaveExerciseSolutionHandlerTest {
     ;
     SaveExerciseSolutionRequest request =
         SaveExerciseSolutionRequest.builder()
-            .programResults(new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>(){
-      {
-        put(type, results);
-      }
-    })
+            .programResults(
+                new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
+                  {
+                    put(type, results);
+                  }
+                })
             .outputType(Variables.VARIABLES_TYPES.SINGLE_INTEGER)
             .user(user)
             .solutionCodes(solutions)

@@ -1,7 +1,6 @@
 package com.redocode.backend.RequstHandling;
 
 import com.redocode.backend.Messages.UtilContainers.Range;
-import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
@@ -33,7 +32,6 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
   @Autowired ExerciseRepository exerciseRepository;
   @Autowired SolutionProgramsRepository solutionProgramsRepository;
   User userCorrect;
-
 
   @BeforeEach
   void setupCorrectData() {
@@ -74,7 +72,7 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
             .testsToRun(Arrays.stream(testsCorrect).toList())
             .timeForTaskMin(timeForTaskCorrect)
             .timeForExecution(maxExecutionTimeMSCorrect)
-                .programResults(new HashMap<>())
+            .programResults(new HashMap<>())
             .build();
   }
 
@@ -134,14 +132,14 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
 
   @Test
   void testCoreectExerciseCreation() {
-int amountOfSolutionBefore=solutionProgramsRepository.findAll().size();
+    int amountOfSolutionBefore = solutionProgramsRepository.findAll().size();
     assertDoesNotThrow(
         () -> {
           assertTrue(
               ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequestCorrect));
         });
-    int amountOfSolutionAfter=solutionProgramsRepository.findAll().size();
-    assertEquals(amountOfSolutionBefore+solutionCodesCorrect.size(),amountOfSolutionAfter);
+    int amountOfSolutionAfter = solutionProgramsRepository.findAll().size();
+    assertEquals(amountOfSolutionBefore + solutionCodesCorrect.size(), amountOfSolutionAfter);
     Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
     assertEquals(titleCorrect, lastAdded.getExcersizeName());
     assertEquals(inputTypeCorrect, lastAdded.getInputType());
@@ -165,21 +163,19 @@ int amountOfSolutionBefore=solutionProgramsRepository.findAll().size();
     assertEquals(yArrayRangeCorrect, lastAdded.getYArrayRange());
 
     assertEquals(amountOfAutoTestsCorrect, lastAdded.getAmountOfAutoTests());
-//    assertEquals(timeForTaskCorrect, lastAdded.getTimeForTaskMin());
+    //    assertEquals(timeForTaskCorrect, lastAdded.getTimeForTaskMin());
     assertEquals(maxExecutionTimeMSCorrect, lastAdded.getMaxExecutionTimeMS());
 
-    List<SolutionPrograms> allSolution=solutionProgramsRepository.findAll();
-    List<SolutionPrograms> TwoLastSavedSolutions=allSolution.subList(allSolution.size()-2, allSolution.size());
+    List<SolutionPrograms> allSolution = solutionProgramsRepository.findAll();
+    List<SolutionPrograms> TwoLastSavedSolutions =
+        allSolution.subList(allSolution.size() - 2, allSolution.size());
     for (SolutionPrograms solution : TwoLastSavedSolutions) {
-      String expectedSolution=solutionCodesCorrect.get(RedoCodeObjectMapper.LanguageNameToCodeRunner(solution.getLanguage().getName()));
-      assertEquals(expectedSolution,solution.getCode());
-      assertTrue(solution.getAvgExecutionTime()>0);
+      String expectedSolution =
+          solutionCodesCorrect.get(
+              RedoCodeObjectMapper.LanguageNameToCodeRunner(solution.getLanguage().getName()));
+      assertEquals(expectedSolution, solution.getCode());
+      assertTrue(solution.getAvgExecutionTime() > 0);
     }
-
-
-
-
-
   }
 
   @ParameterizedTest

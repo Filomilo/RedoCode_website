@@ -2,13 +2,11 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
-import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.RequstHandling.Requests.SaveExerciseSolutionRequest;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.database.*;
 
@@ -39,10 +37,11 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
     assert request instanceof ICodeRunSpecificationParametersRequest;
     assert request instanceof ISolutionCodesRequest;
 
-    IExerciseInfoRequest exerciseInfoRequest= (IExerciseInfoRequest) request;
+    IExerciseInfoRequest exerciseInfoRequest = (IExerciseInfoRequest) request;
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
     ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
-    ICodeRunSpecificationParametersRequest codeRunSpecificationParametersRequest = (ICodeRunSpecificationParametersRequest) request;
+    ICodeRunSpecificationParametersRequest codeRunSpecificationParametersRequest =
+        (ICodeRunSpecificationParametersRequest) request;
     ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
     ISolutionCodesRequest codeSolutionsRequest = (ISolutionCodesRequest) request;
 
@@ -68,41 +67,35 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
             .maxExecutionTimeMS(codeRunSpecificationParametersRequest.getTimeForExecution())
             .build();
     if (testsToRunRequest.getXArrayRange() != null) {
-      excersize.setArrayXLengthRangeMax(
-              testsToRunRequest.getXArrayRange().getMax().intValue());
-      excersize.setArrayXLengthRangeMin(
-              testsToRunRequest.getXArrayRange().getMin().intValue());
+      excersize.setArrayXLengthRangeMax(testsToRunRequest.getXArrayRange().getMax().intValue());
+      excersize.setArrayXLengthRangeMin(testsToRunRequest.getXArrayRange().getMin().intValue());
     }
     if (testsToRunRequest.getYArrayRange() != null) {
-      excersize.setArrayYLengthRangeMax(
-              testsToRunRequest.getYArrayRange().getMax().intValue());
-      excersize.setArrayYLengthRangeMin(
-              testsToRunRequest.getYArrayRange().getMin().intValue());
+      excersize.setArrayYLengthRangeMax(testsToRunRequest.getYArrayRange().getMax().intValue());
+      excersize.setArrayYLengthRangeMin(testsToRunRequest.getYArrayRange().getMin().intValue());
     }
 
     for (ExerciseTests test : testsToRunRequest.getTestsToRun()) {
       test.setExcersize(excersize);
-
     }
 
+    Excersize savedExercise = exerciseRepository.save(excersize);
 
-
-
-
-
-    Excersize savedExercise= exerciseRepository.save(excersize);
-
-    this.nodeUpdate(request, "saving Solutions to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+    this.nodeUpdate(
+        request, "saving Solutions to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
     SaveExerciseSolutionHandler saveExerciseSolutionHandler = new SaveExerciseSolutionHandler();
     for (CODE_RUNNER_TYPE codeRunnerType : codeResultsRequest.getProgramResults().keySet()) {
-      Map<CODE_RUNNER_TYPE, List<ProgramResult>> resultOfSepcifCodeRunner=new HashMap<>();
-      resultOfSepcifCodeRunner.put(codeRunnerType,codeResultsRequest.getProgramResults().get(codeRunnerType));
+      Map<CODE_RUNNER_TYPE, List<ProgramResult>> resultOfSepcifCodeRunner = new HashMap<>();
+      resultOfSepcifCodeRunner.put(
+          codeRunnerType, codeResultsRequest.getProgramResults().get(codeRunnerType));
 
-      Map<CODE_RUNNER_TYPE, String> solutionOfSepcifCodeRunner=new HashMap<>();
-      solutionOfSepcifCodeRunner.put(codeRunnerType,codeSolutionsRequest.getSolutionCodes().get(codeRunnerType));
+      Map<CODE_RUNNER_TYPE, String> solutionOfSepcifCodeRunner = new HashMap<>();
+      solutionOfSepcifCodeRunner.put(
+          codeRunnerType, codeSolutionsRequest.getSolutionCodes().get(codeRunnerType));
 
-      SaveExerciseSolutionRequest saveExerciseSolutionRequest= SaveExerciseSolutionRequest.builder()
+      SaveExerciseSolutionRequest saveExerciseSolutionRequest =
+          SaveExerciseSolutionRequest.builder()
               .user(request.getUser())
               .idOfExercise(savedExercise.getId())
               .solutionCodes(solutionOfSepcifCodeRunner)
@@ -110,11 +103,9 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
               .timeForExecution(codeRunSpecificationParametersRequest.getTimeForExecution())
               .inputType(testsToRunRequest.getInputType())
               .outputType(testsToRunRequest.getOutputType())
-
               .build();
       saveExerciseSolutionHandler.handle(saveExerciseSolutionRequest);
     }
-
 
     this.nodeUpdate(request, "saved to database", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 

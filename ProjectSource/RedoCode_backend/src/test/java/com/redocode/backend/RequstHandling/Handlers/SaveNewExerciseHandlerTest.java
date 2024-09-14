@@ -107,14 +107,33 @@ class SaveNewExerciseHandlerTest {
               .build(),
         };
 
-
-    Map<CODE_RUNNER_TYPE, List<ProgramResult>> results=new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>(){
-      {
-        put(CPP_RUNNER, Arrays.asList(ProgramResult.builder().executionTime(22l).consoleOutput(ConsoleOutput.builder().output("").build()).build(), ProgramResult.builder().executionTime(22l).consoleOutput(ConsoleOutput.builder().output("").build()).build()));
-        put(JS_RUNNER, Arrays.asList(ProgramResult.builder().executionTime(33l).consoleOutput(ConsoleOutput.builder().output("").build()).build(), ProgramResult.builder().executionTime(33l).consoleOutput(ConsoleOutput.builder().output("").build()).build()));
-      }
-
-    };
+    Map<CODE_RUNNER_TYPE, List<ProgramResult>> results =
+        new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
+          {
+            put(
+                CPP_RUNNER,
+                Arrays.asList(
+                    ProgramResult.builder()
+                        .executionTime(22l)
+                        .consoleOutput(ConsoleOutput.builder().output("").build())
+                        .build(),
+                    ProgramResult.builder()
+                        .executionTime(22l)
+                        .consoleOutput(ConsoleOutput.builder().output("").build())
+                        .build()));
+            put(
+                JS_RUNNER,
+                Arrays.asList(
+                    ProgramResult.builder()
+                        .executionTime(33l)
+                        .consoleOutput(ConsoleOutput.builder().output("").build())
+                        .build(),
+                    ProgramResult.builder()
+                        .executionTime(33l)
+                        .consoleOutput(ConsoleOutput.builder().output("").build())
+                        .build()));
+          }
+        };
     assertNotNull(results);
 
     ExerciseCreationRequest exerciseCreationRequest =
@@ -139,18 +158,17 @@ class SaveNewExerciseHandlerTest {
             .testsToRun(Arrays.stream(tests).toList())
             .timeForTaskMin(timeForTask)
             .timeForExecution(timeForExecution)
-                .programResults(results)
+            .programResults(results)
             .build();
 
-
-    int soluionCodesBefore=solutionProgramsRepository.findAll().size();
+    int soluionCodesBefore = solutionProgramsRepository.findAll().size();
 
     assertDoesNotThrow(
         () -> {
           assertTrue(saveNewExerciseHandler.next(exerciseCreationRequest));
         });
-    int soluionCodesBAfter=solutionProgramsRepository.findAll().size();
-    assertEquals(soluionCodesBefore+solutionCodes.size(),soluionCodesBAfter);
+    int soluionCodesBAfter = solutionProgramsRepository.findAll().size();
+    assertEquals(soluionCodesBefore + solutionCodes.size(), soluionCodesBAfter);
     Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
     assertEquals(title, lastAdded.getExcersizeName());
     assertEquals(inputType, lastAdded.getInputType());

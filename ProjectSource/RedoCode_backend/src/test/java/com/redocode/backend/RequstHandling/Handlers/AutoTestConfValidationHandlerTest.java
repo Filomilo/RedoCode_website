@@ -41,7 +41,7 @@ class AutoTestConfValidationHandlerTest {
             .timeForExecution(1000L)
             .amountOfAutoTests(6)
             .solutionCodes(new HashMap<>())
-                .programResults(new HashMap<>())
+            .programResults(new HashMap<>())
             .build();
 
     assertDoesNotThrow(
@@ -64,7 +64,7 @@ class AutoTestConfValidationHandlerTest {
             .timeForExecution(1000L)
             .amountOfAutoTests(6)
             .solutionCodes(new HashMap<>())
-                .programResults(new HashMap<>())
+            .programResults(new HashMap<>())
             .build();
     assertThrows(
         RequestHadndlingException.class,
@@ -86,7 +86,7 @@ class AutoTestConfValidationHandlerTest {
             .timeForExecution(1000L)
             .amountOfAutoTests(-6)
             .solutionCodes(new HashMap<>())
-                .programResults(new HashMap<>())
+            .programResults(new HashMap<>())
             .build();
     assertThrows(
         RequestHadndlingException.class,

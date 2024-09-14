@@ -32,7 +32,7 @@ class AutoTestGeneratorHandlerTest {
             .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
             .lengthRange(new Range(4, 22))
             .xArrayRange(new Range(3, 8))
-                .programResults(new HashMap<>())
+            .programResults(new HashMap<>())
             .build();
 
     int currAmtOFTests =

@@ -39,10 +39,14 @@ public class RawCodeRunHandler extends BaseRequestHandler {
 
     request =
         PorgramReusltsSendRequest.builder()
-            .programResults(new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
-              {
-                put(requestRawCodeRunRequest.getCodeRunnerType(), List.of(new ProgramResult[] {results}));
-              }})
+            .programResults(
+                new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
+                  {
+                    put(
+                        requestRawCodeRunRequest.getCodeRunnerType(),
+                        List.of(new ProgramResult[] {results}));
+                  }
+                })
             .user(requestRawCodeRunRequest.getUser())
             .build();
 

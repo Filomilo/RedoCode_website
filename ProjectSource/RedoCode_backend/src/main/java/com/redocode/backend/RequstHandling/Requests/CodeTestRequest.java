@@ -42,5 +42,5 @@ public class CodeTestRequest extends RawCodeRunRequest
   boolean spaceInput;
   Long timeForTaskMin;
   @Getter @NotNull Map<CODE_RUNNER_TYPE, String> solutionCodes;
-  @NotNull protected Map<CODE_RUNNER_TYPE,List<ProgramResult>> programResults;
+  @NotNull protected Map<CODE_RUNNER_TYPE, List<ProgramResult>> programResults;
 }

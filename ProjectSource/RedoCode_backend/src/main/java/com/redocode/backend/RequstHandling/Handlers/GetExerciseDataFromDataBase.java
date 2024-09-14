@@ -56,7 +56,7 @@ public class GetExerciseDataFromDataBase extends MessageRequestHandler {
             .solutionCodes(solutionCodesRequest.getSolutionCodes())
             .user(request.getUser())
             .amountOfAutoTests(excersize.getAmountOfAutoTests())
-                .programResults(new HashMap<>())
+            .programResults(new HashMap<>())
             .lengthRange(
                 new Range(excersize.getValueLengthRangeMin(), excersize.getValueLengthRangeMax()))
             .xArrayRange(

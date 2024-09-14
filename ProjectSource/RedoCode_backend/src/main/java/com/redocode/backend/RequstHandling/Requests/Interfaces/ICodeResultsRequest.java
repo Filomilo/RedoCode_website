@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ICodeResultsRequest {
-  public Map<CODE_RUNNER_TYPE,List<ProgramResult>> getProgramResults();
+  public Map<CODE_RUNNER_TYPE, List<ProgramResult>> getProgramResults();
 
-  public void setProgramResults(Map<CODE_RUNNER_TYPE,List<ProgramResult>> list);
+  public void setProgramResults(Map<CODE_RUNNER_TYPE, List<ProgramResult>> list);
 }

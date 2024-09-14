@@ -41,7 +41,7 @@ public class SpecifiedSingleDatabaseExerciseTestRequest extends SingleDatabaseEx
   boolean breakCharacterInput;
   boolean spaceInput;
 
-  protected Map<CODE_RUNNER_TYPE,List<ProgramResult>> programResults;
+  protected Map<CODE_RUNNER_TYPE, List<ProgramResult>> programResults;
 
   /**
    * {@inheritDoc} . <br>
