@@ -9,124 +9,15 @@ import ResultPage from "../helpers/ResultPage"
 import SolutionsList from "../helpers/SolutionsList"
 import ToastHelper from "../helpers/ToastHelper"
 
-// describe('template spec', () => {
-//   it('passes', () => {
-//     Cypress.on('uncaught:exception', (err, runnable) => {
-//       return false
-//     })
-//     const mail="sparky@mail.com"
-//     const password = 'Password+123'
-//     const nick="sparky"
-//     const comment="COmment_123"
-//     const cppSolution = `int solution(int val)
-//     {
-//         int* arr=new int[val];
-    
-//     if(val>=0)
-//       arr[0]=0;
-//     if (val>=2)
-//        arr[1]=1;
-//     for(int i=2;i<val;i++)
-//         {
-//             arr[i]=arr[i-1]+arr[i-2];
-//     }
-//         return arr[val-1];
-//     }`
-//     const executionChainTemplate: ExecutionChain.ChainNodeType[] = [
-//       {
-//         correct: true,
-//         desc: 'Data loaded',
-//       },
-//       {
-//         correct: true,
-//         desc: 'Validated access to CPP_RUNNER',
-//       },
-//       {
-//         correct: true,
-//         desc: 'generated',
-//       },
-//       {
-//         correct: true,
-//         desc: 'solved',
-//       },
-//       {
-//         correct: true,
-//         desc: 'correct CPP_RUNNER tests',
-//       },
-//       {
-//         correct: true,
-//         desc: 'Saved solution',
-//       },
-//     ]
-//     UrlControls.startPage()
-//     SwitcherControls.switchExercises()
-//     ExercisesPage.openExerciseOfName('fibonachi sequance')
-//     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
-//     CodeRunnerPanel.selectInitialLanguage('cpp')
-//     CodeRunnerPanel.stateShouldBe('ACTIVE')
-//     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
-//       'int solution(int x){'
-//     )
-//     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
-//     CodeRunnerPanel.information.nameShould('fibonachi sequance')
-//     CodeRunnerPanel.information.descriptionShouldBe(
-//       'Create funciton that returns number at point of fibocnahi squnace so 1->0 2->1 3->1 4->2 5->3 and do on'
-//     )
-
-//     // UrlControls.startPage()
-//     // UserAuthentication.login(mail, password)
-//     // SwitcherControls.switchExercises()
-//     // ExercisesPage.openExerciseOfName('fibonachi sequance')
-//     // ExercisesPage.shouldBeOnUrlOfExerciseId(1)
-//     // CodeRunnerPanel.selectInitialLanguage('cpp')
-//     // CodeRunnerPanel.stateShouldBe('ACTIVE')
-//     // CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
-//     // CodeRunnerPanel.information.nameShould('fibonachi sequance')
-//     // CodeRunnerPanel.information.descriptionShouldBe(
-//     //   'Create funciton that returns number at point of fibocnahi squnace so 1->0 2->1 3->1 4->2 5->3 and do on'
-//     // )
-//     // CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
-//     // CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution)
-//     // CodeRunnerPanel.run()
-//     // CodeRunnerPanel.Tests.shouldAllTesCorrect(7)
-//     // CodeRunnerPanel.submit()
-//     // ExecutionChain.checkSuccses(executionChainTemplate)
-//     // ExecutionChain.close()
-//     // UrlControls.urlShouldBe("Results/1")
-//     // SwitcherControls.switchExercises()
-//     // ExercisesPage.openExerciseOfName('fibonachi sequance')
-//     // UrlControls.urlShouldBe("Results/1")
-//     // ResultPage.ResultPanel.ExecutionTimeShouldBeLess(150)
-//     // ResultPage.ResultPanel.SolutionBetterProcetShouldGreater(0)
-//     // ResultPage.ResultPanel.resulrRankShouldBe(1)
-//     // ResultPage.Rating.clickRating(4)
-//     // ResultPage.Rating.selectedRating("Very hard")
-//     // ResultPage.Rating.clickRate()
-//     // UrlControls.urlShouldBe("Solutions/1")
-//     // SwitcherControls.switchExercises()
-//     // ExercisesPage.openExerciseOfName('fibonachi sequance')
-//     // UrlControls.urlShouldBe("Solutions/1")
-//     // SolutionsList.solutionListClick(0)
-//     // SolutionsList.solutionListClick(1)
-//     // SolutionsList.solutionListClick(2)
-//     // SolutionsList.postComment(comment)
-//     // SolutionsList.shouldContentCommentBe(0,comment)
-//     // SwitcherControls.switchExercises()
-//     // ExercisesPage.openExerciseOfName('fibonachi sequance')
-//     // UrlControls.urlShouldBe("Solutions/1")
-//     // SolutionsList.shouldContentCommentBe(0,comment)
-//   })
-// })
-
-
-
-
-describe('Phibonachi Auhtenticated new exercise', () => {
+describe('template spec', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-
+    const mail="sparky@mail.com"
+    const password = 'Password+123'
+    const nick="sparky"
+    const comment="COmment_123"
     const cppSolution = `int solution(int val)
     {
         int* arr=new int[val];
@@ -141,7 +32,6 @@ describe('Phibonachi Auhtenticated new exercise', () => {
     }
         return arr[val-1];
     }`
-
     const executionChainTemplate: ExecutionChain.ChainNodeType[] = [
       {
         correct: true,
@@ -165,17 +55,16 @@ describe('Phibonachi Auhtenticated new exercise', () => {
       },
       {
         correct: true,
-        desc: 'Not saving result without authentication',
+        desc: 'Saved solution',
       },
     ]
-
     UrlControls.startPage()
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
     ToastHelper.shouldToastAtLeastOne()
     ToastHelper.shouldToastNo()
-     CodeRunnerPanel.selectInitialLanguage('cpp')
+    CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.stateShouldBe('ACTIVE')
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
       'int solution(int x){'
@@ -185,10 +74,19 @@ describe('Phibonachi Auhtenticated new exercise', () => {
     CodeRunnerPanel.information.descriptionShouldBe(
       'Create funciton that returns number at point of fibocnahi squnace so 1->0 2->1 3->1 4->2 5->3 and do on'
     )
-    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner('test')
-    CodeRunnerPanel.shouldSubmitAccess(false)
-    CodeRunnerPanel.run()
-    CodeRunnerPanel.Tests.shouldAllTestFail(1)
+
+    UrlControls.startPage()
+    UserAuthentication.login(mail, password)
+    SwitcherControls.switchExercises()
+    ExercisesPage.openExerciseOfName('fibonachi sequance')
+    ExercisesPage.shouldBeOnUrlOfExerciseId(1)
+    CodeRunnerPanel.selectInitialLanguage('cpp')
+    CodeRunnerPanel.stateShouldBe('ACTIVE')
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
+    CodeRunnerPanel.information.nameShould('fibonachi sequance')
+    CodeRunnerPanel.information.descriptionShouldBe(
+      'Create funciton that returns number at point of fibocnahi squnace so 1->0 2->1 3->1 4->2 5->3 and do on'
+    )
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution)
     CodeRunnerPanel.run()
@@ -197,7 +95,27 @@ describe('Phibonachi Auhtenticated new exercise', () => {
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()
     UrlControls.urlShouldBe("Results/1")
-    ErrorPage.UnauthenticatedResultPage.UnathenticatedPanelShouldBeVisible()
-    ErrorPage.UnauthenticatedResultPage.ClickGoToLogin();
+    SwitcherControls.switchExercises()
+    ExercisesPage.openExerciseOfName('fibonachi sequance')
+    UrlControls.urlShouldBe("Results/1")
+    ResultPage.ResultPanel.ExecutionTimeShouldBeLess(150)
+    ResultPage.ResultPanel.SolutionBetterProcetShouldGreater(0)
+    ResultPage.ResultPanel.resulrRankShouldBe(1)
+    ResultPage.Rating.clickRating(4)
+    ResultPage.Rating.selectedRating("Very hard")
+    ResultPage.Rating.clickRate()
+    UrlControls.urlShouldBe("Solutions/1")
+    SwitcherControls.switchExercises()
+    ExercisesPage.openExerciseOfName('fibonachi sequance')
+    UrlControls.urlShouldBe("Solutions/1")
+    SolutionsList.solutionListClick(0)
+    SolutionsList.solutionListClick(1)
+    SolutionsList.solutionListClick(2)
+    SolutionsList.postComment(comment)
+    SolutionsList.shouldContentCommentBe(0,comment)
+    SwitcherControls.switchExercises()
+    ExercisesPage.openExerciseOfName('fibonachi sequance')
+    UrlControls.urlShouldBe("Solutions/1")
+    SolutionsList.shouldContentCommentBe(0,comment)
   })
 })
