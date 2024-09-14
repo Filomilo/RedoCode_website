@@ -7,7 +7,6 @@ import UrlControls from '../helpers/UrlControls'
 import UserAuthentication from '../helpers/UserAuthentication'
 import SolutionsList from '../helpers/SolutionsList'
 
-
 describe('Create new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
@@ -15,7 +14,7 @@ describe('Create new exercise', () => {
     })
     const email = 'sunny@mail.com'
     const password = 'Password+123'
-     const nick = 'sunny'
+    const nick = 'sunny'
 
     const title = 'Cesar cipher'
     const description =
@@ -117,7 +116,7 @@ describe('Create new exercise', () => {
       },
     ]
 
-    const comment="Comment_test"
+    const comment = 'Comment_test'
 
     UrlControls.startPage()
     UserAuthentication.login(email, password)
@@ -176,18 +175,20 @@ describe('Create new exercise', () => {
     CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(chainTests)
     ExecutionChain.close()
-    UrlControls.urlShouldBe("Exercises")
+    UrlControls.urlShouldBe('Exercises')
     ExercisesPage.shouldBeExerciseOfName(title)
     ExercisesPage.openExerciseOfName(title)
-    UrlControls.urlShouldContain("Solutions")
-    SolutionsList.shouldTitleBe("Cesar cipher")
-    SolutionsList.shouldDescBe("move every letter in alphabet by 7 so a -> d and z - g, lower case and upper case letters should be handled")
+    UrlControls.urlShouldContain('Solutions')
+    SolutionsList.shouldTitleBe('Cesar cipher')
+    SolutionsList.shouldDescBe(
+      'move every letter in alphabet by 7 so a -> d and z - g, lower case and upper case letters should be handled'
+    )
     SolutionsList.solutionListClick(0)
     SolutionsList.solutionItemListShouldBeSelected(0)
     SolutionsList.solutionListClick(1)
     SolutionsList.solutionItemListShouldBeSelected(1)
     SolutionsList.postComment(comment)
-    SolutionsList.shouldContentCommentBe(0,comment)
+    SolutionsList.shouldContentCommentBe(0, comment)
     // SolutionsList.shouldUsernameCommentBe(0,nick)
   })
 })

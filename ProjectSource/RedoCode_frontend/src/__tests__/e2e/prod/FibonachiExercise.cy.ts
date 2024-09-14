@@ -57,7 +57,7 @@ describe('Phibonachi new exercise', () => {
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
-    
+
     CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.stateShouldBe('ACTIVE')
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
@@ -79,8 +79,8 @@ describe('Phibonachi new exercise', () => {
     CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()
-    UrlControls.urlShouldBe("Results/1")
+    UrlControls.urlShouldBe('Results/1')
     ErrorPage.UnauthenticatedResultPage.UnathenticatedPanelShouldBeVisible()
-    ErrorPage.UnauthenticatedResultPage.ClickGoToLogin();
+    ErrorPage.UnauthenticatedResultPage.ClickGoToLogin()
   })
 })

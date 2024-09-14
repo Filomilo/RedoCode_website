@@ -1,27 +1,21 @@
-namespace ToastHelper{
-    export function shouldToastNo()
-    {
-        
-    
-              cy.get("body > div.p-toast.p-component.p-toast-top-right.p-ripple-disabled > div")
+namespace ToastHelper {
+  export function shouldToastNo() {
+    cy.get(
+      'body > div.p-toast.p-component.p-toast-top-right.p-ripple-disabled > div'
+    )
 
-              .children()
+      .children()
 
-              .should('have.length', 0);
+      .should('have.length', 0)
+  }
+  export function shouldToastAtLeastOne() {
+    cy.get(
+      'body > div.p-toast.p-component.p-toast-top-right.p-ripple-disabled > div'
+    )
 
-        
-    }
-    export function shouldToastAtLeastOne()
-    {
-        
-    
-              cy.get("body > div.p-toast.p-component.p-toast-top-right.p-ripple-disabled > div")
-   
-              .children()
+      .children()
 
-              .should('have.length.at.least', 1)
-
-        
-    }
+      .should('have.length.at.least', 1)
+  }
 }
-export default  ToastHelper;
+export default ToastHelper

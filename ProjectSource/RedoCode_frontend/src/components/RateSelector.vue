@@ -5,7 +5,7 @@
         <div
           v-for="(item, index) in props.rateOptions"
           v-bind:key="item.value"
-          :id="props.id+'-'+index"
+          :id="props.id + '-' + index"
           class="ColumnContainer"
           :style="
             'height: ' +
@@ -24,8 +24,10 @@
           />
         </div>
       </div>
-      <p class="labelContaiener" :style="'color: ' + activeLabelColor + ' ;'"
-      :id="props.id+'-selection'"
+      <p
+        class="labelContaiener"
+        :style="'color: ' + activeLabelColor + ' ;'"
+        :id="props.id + '-selection'"
       >
         {{ activeLabel }}
       </p>
