@@ -13,9 +13,9 @@ describe('template spec', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-    const mail="shadow@mail.com"
+    const mail="sparky@mail.com"
     const password = 'Password+123'
-    const nick="shadow"
+    const nick="sparky"
     const comment="COmment_123"
     const cppSolution = `int solution(int val)
     {
