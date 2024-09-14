@@ -83,6 +83,3 @@ describe.skip('Phibonachi new exercise', () => {
     ErrorPage.UnauthenticatedResultPage.ClickGoToLogin();
   })
 })
-
-// todo: protabaly better to create cypress tests that only run mock
-// and addtional tests that run on relase version
