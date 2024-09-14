@@ -16,9 +16,8 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class AccountInfoMessage {
-    @NonNull
-    private String mail;
-    @NonNull private String nickname;
-    @NonNull private User.USER_TYPE type;
-    @NonNull private String profilePicture;
+  @NonNull private String mail;
+  @NonNull private String nickname;
+  @NonNull private User.USER_TYPE type;
+  @NonNull private String profilePicture;
 }

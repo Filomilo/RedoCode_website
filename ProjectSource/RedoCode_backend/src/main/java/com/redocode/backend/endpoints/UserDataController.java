@@ -1,7 +1,6 @@
 package com.redocode.backend.endpoints;
 
 import com.redocode.backend.Messages.AccountInfoMessage;
-import com.redocode.backend.Messages.ExercisesInfo.ResultData;
 import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,16 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/secure/user")
 public class UserDataController {
 
-    @GetMapping("/info")
-    public ResponseEntity<AccountInfoMessage> getAccountInfo(@AuthenticationPrincipal User user) {
-        AccountInfoMessage accountInfoMessage = AccountInfoMessage
-                .builder()
-                .mail(user.getEmail())
-                .nickname(user.getNickname())
-                .type(user.getType())
-                .profilePicture(user.getProfilePicture())
-                .build();
-        return new ResponseEntity<>(accountInfoMessage, HttpStatus.OK);
-    }
-
+  @GetMapping("/info")
+  public ResponseEntity<AccountInfoMessage> getAccountInfo(@AuthenticationPrincipal User user) {
+    AccountInfoMessage accountInfoMessage =
+        AccountInfoMessage.builder()
+            .mail(user.getEmail())
+            .nickname(user.getNickname())
+            .type(user.getType())
+            .profilePicture(user.getProfilePicture())
+            .build();
+    return new ResponseEntity<>(accountInfoMessage, HttpStatus.OK);
+  }
 }
