@@ -1,6 +1,5 @@
 <template>
   <main class="PlayGroundBase">
-
     <CodeRunnerPanel
       v-if="codeRunnerStore.exerciseSolverController.manualTests !== undefined"
       :exerciseInfo="codeRunnerStore.exerciseSolverController"

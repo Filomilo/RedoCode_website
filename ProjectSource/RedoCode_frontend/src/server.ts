@@ -186,7 +186,7 @@ export function makeServer({ environment = 'development' } = {}) {
     desc: 'Descritpion of exercise',
     comments: [
       {
-        username: 'example user',
+        nickname: 'example user',
         profilePicture: '',
         comment: 'Greate exercise',
       },

@@ -18,9 +18,9 @@
         v-model="selectedRating"
       />
       <div class="" style="margin-top: 2rem">
-        <Button class="saveButton" @click="onSaveRate"
-        id="save-rate-click"
-        > save Rate </Button>
+        <Button class="saveButton" @click="onSaveRate" id="save-rate-click">
+          save Rate
+        </Button>
       </div>
     </div>
     <NoDataFoundPanel v-else />

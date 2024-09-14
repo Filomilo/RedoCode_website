@@ -15,13 +15,15 @@ const validate = async (
   next: NavigationGuardNext,
   validateFunction: ValidateFunction
 ) => {
-  console.log("validation  to "+ JSON.stringify(to.name))
+  console.log('validation  to ' + JSON.stringify(to.name))
   const validationResult = await validateFunction(to.params)
   console.log('validation route Result: ' + JSON.stringify(validationResult))
-  if (validationResult === null || to.name == validationResult) 
-    next()
+  if (validationResult === null || to.name == validationResult) next()
   else {
-    console.log("validation route swiihcing to "+JSON,stringify(validationResult)+" params: "+ JSON.stringify(to.params) )
+    console.log(
+      'validation route swiihcing to ' + JSON,
+      stringify(validationResult) + ' params: ' + JSON.stringify(to.params)
+    )
     next({ name: validationResult, params: to.params })
   }
 }

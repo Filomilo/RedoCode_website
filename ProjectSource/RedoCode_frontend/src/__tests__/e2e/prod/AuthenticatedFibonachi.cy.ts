@@ -1,23 +1,23 @@
-import CodeRunnerPanel from "../helpers/CodeRunnerPanel"
-import ErrorPage from "../helpers/ErrorPage"
-import ExecutionChain from "../helpers/ExecutionChain"
-import ExercisesPage from "../helpers/ExercisesPage"
-import SwitcherControls from "../helpers/SwitcherControls"
-import UrlControls from "../helpers/UrlControls"
-import UserAuthentication from "../helpers/UserAuthentication"
-import ResultPage from "../helpers/ResultPage"
-import SolutionsList from "../helpers/SolutionsList"
-import ToastHelper from "../helpers/ToastHelper"
+import CodeRunnerPanel from '../helpers/CodeRunnerPanel'
+import ErrorPage from '../helpers/ErrorPage'
+import ExecutionChain from '../helpers/ExecutionChain'
+import ExercisesPage from '../helpers/ExercisesPage'
+import SwitcherControls from '../helpers/SwitcherControls'
+import UrlControls from '../helpers/UrlControls'
+import UserAuthentication from '../helpers/UserAuthentication'
+import ResultPage from '../helpers/ResultPage'
+import SolutionsList from '../helpers/SolutionsList'
+import ToastHelper from '../helpers/ToastHelper'
 
 describe('template spec', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-    const mail="sparky@mail.com"
+    const mail = 'sparky@mail.com'
     const password = 'Password+123'
-    const nick="sparky"
-    const comment="COmment_123"
+    const nick = 'sparky'
+    const comment = 'COmment_123'
     const cppSolution = `int solution(int val)
     {
         int* arr=new int[val];
@@ -94,28 +94,30 @@ describe('template spec', () => {
     CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()
-    UrlControls.urlShouldBe("Results/1")
+    UrlControls.urlShouldBe('Results/1')
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe("Results/1")
+    UrlControls.urlShouldBe('Results/1')
     ResultPage.ResultPanel.ExecutionTimeShouldBeLess(150)
     ResultPage.ResultPanel.SolutionBetterProcetShouldGreater(0)
     ResultPage.ResultPanel.resulrRankShouldBe(1)
     ResultPage.Rating.clickRating(4)
-    ResultPage.Rating.selectedRating("Very hard")
+    ResultPage.Rating.selectedRating('Very hard')
     ResultPage.Rating.clickRate()
-    UrlControls.urlShouldBe("Solutions/1")
+    UrlControls.urlShouldBe('Solutions/1')
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe("Solutions/1")
+    UrlControls.urlShouldBe('Solutions/1')
     SolutionsList.solutionListClick(0)
     SolutionsList.solutionListClick(1)
     SolutionsList.solutionListClick(2)
     SolutionsList.postComment(comment)
-    SolutionsList.shouldContentCommentBe(0,comment)
+    SolutionsList.shouldUsernameCommentBe(0,nick)
+    SolutionsList.shouldContentCommentBe(0, comment)
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe("Solutions/1")
-    SolutionsList.shouldContentCommentBe(0,comment)
+    UrlControls.urlShouldBe('Solutions/1')
+    SolutionsList.shouldUsernameCommentBe(0,nick)
+    SolutionsList.shouldContentCommentBe(0, comment)
   })
 })

@@ -6,9 +6,7 @@
       v-for="(result, index) in resultData"
       :key="index"
       style="background-color: green; margin: 1rem"
-    >
-
-    </div>
+    ></div>
   </div>
 </template>
 

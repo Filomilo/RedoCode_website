@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  formatting-java:
+  formatting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,14 +20,6 @@ jobs:
       - uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--skip-sorting-imports --replace"
-
-  prettier:
-    needs:
-      - formatting-java
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:

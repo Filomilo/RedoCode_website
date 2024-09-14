@@ -3,8 +3,10 @@
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
-  
-    <div class="LoginPanelConatiner" v-if="!ApiConnectionStore.stompApiConnection.isActive">
+    <div
+      class="LoginPanelConatiner"
+      v-if="!ApiConnectionStore.stompApiConnection.isActive"
+    >
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
         changed latert
@@ -18,8 +20,6 @@
         id="coderunner-dropdown"
         optionLabel="label"
         optionValue="value"
-          
-        
       />
       <Button
         class="BasicButton"
@@ -29,9 +29,7 @@
         :disabled="!allowConnection"
       />
     </div>
-    <div v-else>
-      trying to establish connection to api
-    </div>
+    <div v-else>trying to establish connection to api</div>
   </div>
 </template>
 
@@ -45,7 +43,7 @@
   import { languageChoices } from '@/config/Data'
   import LangaugeSelection from '@/tools/LangaugeSelection'
 
-  const ApiConnectionStore = useApiConnectionStore();
+  const ApiConnectionStore = useApiConnectionStore()
   const props = defineProps({
     languageChoicesSelection: {
       type: Array as () => codeRunnerType[],
