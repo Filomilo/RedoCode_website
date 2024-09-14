@@ -8,17 +8,15 @@ import AuthenticationRequest from '@/types/ApiMesseages/Authentication/Authentic
 import { VueCookies } from 'vue-cookies'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { useCodeRunnerStore } from './CodeRunnerStore'
+import AccountInfo from '@/types/AccountInfo'
 
 export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
   const isLogged = ref(false)
-  const nick = ref('')
   const _token: Ref<string> = ref('')
   const isAwaitingAuthentication: Ref<boolean> = ref(false)
   const $cookies = inject<VueCookies>('$cookies')
-  const acoountInfo = computed(() => {
-    return { nick: nick }
-  })
+  const acoountInfo: Ref<AccountInfo|undefined> = ref();
 
   const validateToken = (): boolean => {
     if (import.meta.env.MODE === 'development') {
@@ -104,7 +102,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const logout = () => {
     isLogged.value = false
-    nick.value = ''
+    acoountInfo.value = undefined
     _token.value = ''
     deleteCookie()
   }
