@@ -120,7 +120,7 @@ import SolutionsList from "../helpers/SolutionsList"
 
 
 
-describe.skip('Phibonachi Auhtenticated new exercise', () => {
+describe('Phibonachi Auhtenticated new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
@@ -174,6 +174,18 @@ describe.skip('Phibonachi Auhtenticated new exercise', () => {
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
     CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.stateShouldBe('ACTIVE')
+    CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
+      'int solution(int x){'
+    )
+    CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
+    CodeRunnerPanel.information.nameShould('fibonachi sequance')
+    CodeRunnerPanel.information.descriptionShouldBe(
+      'Create funciton that returns number at point of fibocnahi squnace so 1->0 2->1 3->1 4->2 5->3 and do on'
+    )
+    CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner('test')
+    CodeRunnerPanel.shouldSubmitAccess(false)
+    CodeRunnerPanel.run()
+    CodeRunnerPanel.Tests.shouldAllTestFail(1)
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution)
     CodeRunnerPanel.run()
@@ -182,29 +194,7 @@ describe.skip('Phibonachi Auhtenticated new exercise', () => {
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()
     UrlControls.urlShouldBe("Results/1")
-    SwitcherControls.switchExercises()
-    ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe("Results/1")
-    ResultPage.ResultPanel.ExecutionTimeShouldBeLess(150)
-    ResultPage.ResultPanel.SolutionBetterProcetShouldGreater(0)
-    ResultPage.ResultPanel.resulrRankShouldBe(1)
-    ResultPage.Rating.clickRating(4)
-    ResultPage.Rating.selectedRating("Very hard")
-    ResultPage.Rating.clickRate()
-    UrlControls.urlShouldBe("Solutions/1")
-    SwitcherControls.switchExercises()
-    ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe("Solutions/1")
-    SolutionsList.solutionListClick(0)
-    SolutionsList.solutionListClick(1)
-    SolutionsList.solutionListClick(2)
-    SolutionsList.postComment(comment)
-    SolutionsList.shouldContentCommentBe(0,comment)
-    SwitcherControls.switchExercises()
-    ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe("Solutions/1")
-    SolutionsList.shouldContentCommentBe(0,comment)
-    
-
+    ErrorPage.UnauthenticatedResultPage.UnathenticatedPanelShouldBeVisible()
+    ErrorPage.UnauthenticatedResultPage.ClickGoToLogin();
   })
 })
