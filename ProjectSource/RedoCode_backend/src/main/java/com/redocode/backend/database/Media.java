@@ -19,13 +19,13 @@ import java.util.UUID;
 @Slf4j
 public class Media {
 
-@Id
-@NotNull
-@GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="uuid", insertable = false, updatable = false, nullable = false)
 UUID uuid;
 @NotBlank
         @NotNull
-    byte[] image;
+    byte[] data;
 @NotBlank
         @NotNull
     String extension;

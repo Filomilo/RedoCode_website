@@ -111,8 +111,17 @@ for (let i = 2; i < val; i++) {
 }',
  1000
     ,1
-)
+);
 
-;
+-- INSERT INTO Media (data)
+-- VALUES (LOAD_FILE('/DefaultMedia/sunny.png'));
 
 
+
+INSERT INTO Media (uuid,data,extension)
+VALUES (gen_random_uuid(),pg_read_binary_file('F:\projects\RedoCode_website\ProjectSource\RedoCode_backend\src\main\resources\DefaultMedia/sunny.png'),'png');
+
+
+UPDATE USERS SET
+    profile_pic= (SELECT uuid FROM Media  LIMIT 1)
+WHERE  users.nick_name='sunny';
