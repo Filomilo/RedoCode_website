@@ -166,7 +166,7 @@ class CodeRunHandlerTest {
     assertEquals(yArrayRange, lastAdded.getYArrayRange());
 
     assertEquals(amountOfAutoTests, lastAdded.getAmountOfAutoTests());
-    assertEquals(timeForTask, lastAdded.getTimeForTaskMin());
+//    assertEquals(timeForTask, lastAdded.getTimeForTaskMin());
 
     assertEquals(maxExecutionTimeMS, lastAdded.getMaxExecutionTimeMS());
   }

@@ -48,6 +48,7 @@ public class RedoCodeObjectMapper {
         .inputType(exerciseCreatorValidationMessage.getInputType())
         .outputType(exerciseCreatorValidationMessage.getOutputType())
         .ram(exerciseCreatorValidationMessage.getRam())
+            .programResults(new HashMap<>())
         .build();
   }
 
@@ -84,6 +85,7 @@ public class RedoCodeObjectMapper {
         .breakCharacterInput(request.isBreakCharacterInupt())
         .spaceInput(request.isSpaceInupt())
         .lengthRange(request.getLengthRange())
+            .programResults(new HashMap<>())
         .build();
   }
 

@@ -14,10 +14,13 @@
       <RateSelector
         class="RateSelectorContainer"
         :rateOptions="rateOptions"
+        id="Result-rate"
         v-model="selectedRating"
       />
       <div class="" style="margin-top: 2rem">
-        <Button class="saveButton" @click="onSaveRate"> save Rate </Button>
+        <Button class="saveButton" @click="onSaveRate"
+        id="save-rate-click"
+        > save Rate </Button>
       </div>
     </div>
     <NoDataFoundPanel v-else />

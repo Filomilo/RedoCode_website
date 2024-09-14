@@ -7,3 +7,4 @@ PiplineLogs/inputfile.txt
 ProjectSource/RedoCode_frontend/.yarn/install-state.gz
 *.gz
 *.mjs
+/ProjectSource/RedoCode_frontend/cypress/fixtures

@@ -71,6 +71,7 @@ class MultipleCodeTestHandlerTest {
             .outputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
             .timeForTaskMin(60L)
             .timeForExecution(1000L)
+                .programResults(new HashMap<>())
             .solutionCodes(
                 new HashMap<CODE_RUNNER_TYPE, String>() {
                   {

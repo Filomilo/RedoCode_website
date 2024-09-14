@@ -1,5 +1,6 @@
 import { ActivationState, Client, IFrame, StompHeaders } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
+import { computed } from 'vue'
 
 export default class StompApiConnection {
   userName: String | null = null
@@ -93,6 +94,10 @@ export default class StompApiConnection {
   public getIsActive() {
     this._stompClient.active
   }
+
+  public isActive=computed(()=>{
+    return   this._stompClient.active;
+  })
 
   public subscribe(
     location: string,

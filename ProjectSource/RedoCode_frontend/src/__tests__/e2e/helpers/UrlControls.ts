@@ -3,6 +3,13 @@ namespace UrlControls {
     cy.visit('/')
   }
 
+  export function urlShouldBe(url: string){
+    cy.url({timeout: 15000}).should('eq', Cypress.config().baseUrl+'/' + url)
+  }
+  export function urlShouldContain(url: string){
+    cy.url({timeout: 15000}).should('contain',url)
+  }
+
   export function visitUserPanel(auth: boolean = true) {
     cy.visit('/Account')
     if (auth) cy.url().should('eq', Cypress.config().baseUrl + '/Account')

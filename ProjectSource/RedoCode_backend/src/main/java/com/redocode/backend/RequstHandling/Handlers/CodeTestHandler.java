@@ -19,9 +19,7 @@ import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.ExerciseTests;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Code test hadnler used hadnle running test on code on only one code runner, <br>
@@ -151,7 +149,8 @@ public class CodeTestHandler extends BaseRequestHandler {
         "correct " + codeRunnerRequest.getCodeRunnerType() + " tests",
         ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
-    codeResultsRequest.setProgramResults(programResults);
+
+    codeResultsRequest.getProgramResults().put(codeRunnerRequest.getCodeRunnerType(), programResults);
 
     return request;
   }

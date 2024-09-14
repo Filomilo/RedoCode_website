@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+  id="code_rating_panel"
+  >
     {{ stringify(props) }}
     <div class="CodeRatingContainer">
       <div class="RatingPanelContaier">
@@ -16,6 +18,8 @@
               basicColor="#ffffff"
               class="MsText"
               :radius="65"
+              id="execution-time-donout"
+
             />
           </div>
         </div>
@@ -31,11 +35,12 @@
             <ProcentDonout
               :value="props.BetterThanProcent"
               :maxValue="100"
-              :label="props.BetterThanProcent + '%'"
+              :label="Math.round(100*props.BetterThanProcent)/100 + '%'"
               fillColor="#a463ac"
               basicColor="#ffffff"
               class="procentText"
               :radius="65"
+              id="Better-than-donout"
             />
           </div>
         </div>
@@ -46,7 +51,7 @@
         <div class="RatingPanel">
           <div class="RankingNumberContainer">
             #
-            <h1>
+            <h1 id="result-code-rate">
               {{ props.RankingPlacement }}
             </h1>
           </div>

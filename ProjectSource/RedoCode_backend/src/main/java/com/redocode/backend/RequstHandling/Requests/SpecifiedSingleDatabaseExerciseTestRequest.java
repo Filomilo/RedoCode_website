@@ -14,6 +14,7 @@ import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 @SuperBuilder
 @Data
@@ -40,7 +41,7 @@ public class SpecifiedSingleDatabaseExerciseTestRequest extends SingleDatabaseEx
   boolean breakCharacterInput;
   boolean spaceInput;
 
-  protected List<ProgramResult> programResults;
+  protected Map<CODE_RUNNER_TYPE,List<ProgramResult>> programResults;
 
   /**
    * {@inheritDoc} . <br>

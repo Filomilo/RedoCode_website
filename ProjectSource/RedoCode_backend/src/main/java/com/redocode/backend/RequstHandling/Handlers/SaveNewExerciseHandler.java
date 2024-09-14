@@ -3,9 +3,18 @@ package com.redocode.backend.RequstHandling.Handlers;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
+import com.redocode.backend.RequstHandling.Requests.SaveExerciseSolutionRequest;
 import com.redocode.backend.SpringContextUtil;
+import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
+import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
+import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.database.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SaveNewExerciseHandler extends MessageRequestHandler {
 
@@ -23,59 +32,90 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
     this.nodeUpdate(request, "saving to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
 
-    ExerciseCreationRequest exerciseCreationRequest = (ExerciseCreationRequest) request;
+    assert request instanceof IExerciseInfoRequest;
+    assert request instanceof ITestsToRunRequest;
+    assert request instanceof ICodeRunnerRequest;
+    assert request instanceof ICodeResultsRequest;
+    assert request instanceof ICodeRunSpecificationParametersRequest;
+    assert request instanceof ISolutionCodesRequest;
+
+    IExerciseInfoRequest exerciseInfoRequest= (IExerciseInfoRequest) request;
+    ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
+    ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
+    ICodeRunSpecificationParametersRequest codeRunSpecificationParametersRequest = (ICodeRunSpecificationParametersRequest) request;
+    ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
+    ISolutionCodesRequest codeSolutionsRequest = (ISolutionCodesRequest) request;
 
     Excersize excersize =
         Excersize.builder()
-            .excersizeName(exerciseCreationRequest.getTitle())
-            .ram_mb(exerciseCreationRequest.getRam())
-            .outputType(exerciseCreationRequest.getOutputType())
-            .inputType(exerciseCreationRequest.getInputType())
-            .amountOfAutoTests(exerciseCreationRequest.getAmountOfAutoTests())
-            .author(exerciseCreationRequest.getUser())
-            .description(exerciseCreationRequest.getDescription())
-            .exerciseTests(exerciseCreationRequest.getTestsToRun())
-            .breakCharacterInput(exerciseCreationRequest.isBreakCharacterInput())
-            .lowerCaseInput(exerciseCreationRequest.isBreakCharacterInput())
-            .numberInput(exerciseCreationRequest.isNumberInput())
-            .spaceInput(exerciseCreationRequest.isSpaceInput())
-            .specialCharacterInput(exerciseCreationRequest.isSpecialCharacterInput())
-            .upperCaseInput(exerciseCreationRequest.isUpperCaseInput())
-            .valueLengthRangeMin(exerciseCreationRequest.getLengthRange().getMin())
-            .valueLengthRangeMax(exerciseCreationRequest.getLengthRange().getMax())
-            .timeForTaskMin(exerciseCreationRequest.getTimeForTaskMin())
-            .maxExecutionTimeMS(exerciseCreationRequest.getTimeForExecution())
+            .excersizeName(exerciseInfoRequest.getTitle())
+            .ram_mb(codeRunnerRequest.getRam())
+            .outputType(testsToRunRequest.getOutputType())
+            .inputType(testsToRunRequest.getInputType())
+            .amountOfAutoTests(testsToRunRequest.getAmountOfAutoTests())
+            .author(request.getUser())
+            .description(exerciseInfoRequest.getDescription())
+            .exerciseTests(testsToRunRequest.getTestsToRun())
+            .breakCharacterInput(testsToRunRequest.isBreakCharacterInput())
+            .lowerCaseInput(testsToRunRequest.isBreakCharacterInput())
+            .numberInput(testsToRunRequest.isNumberInput())
+            .spaceInput(testsToRunRequest.isSpaceInput())
+            .specialCharacterInput(testsToRunRequest.isSpecialCharacterInput())
+            .upperCaseInput(testsToRunRequest.isUpperCaseInput())
+            .valueLengthRangeMin(testsToRunRequest.getLengthRange().getMin())
+            .valueLengthRangeMax(testsToRunRequest.getLengthRange().getMax())
+            .timeForTaskMin(0L) // todo: propably for deletaion
+            .maxExecutionTimeMS(codeRunSpecificationParametersRequest.getTimeForExecution())
             .build();
-    if (exerciseCreationRequest.getXArrayRange() != null) {
+    if (testsToRunRequest.getXArrayRange() != null) {
       excersize.setArrayXLengthRangeMax(
-          exerciseCreationRequest.getXArrayRange().getMax().intValue());
+              testsToRunRequest.getXArrayRange().getMax().intValue());
       excersize.setArrayXLengthRangeMin(
-          exerciseCreationRequest.getXArrayRange().getMin().intValue());
+              testsToRunRequest.getXArrayRange().getMin().intValue());
     }
-    if (exerciseCreationRequest.getYArrayRange() != null) {
+    if (testsToRunRequest.getYArrayRange() != null) {
       excersize.setArrayYLengthRangeMax(
-          exerciseCreationRequest.getYArrayRange().getMax().intValue());
+              testsToRunRequest.getYArrayRange().getMax().intValue());
       excersize.setArrayYLengthRangeMin(
-          exerciseCreationRequest.getYArrayRange().getMin().intValue());
+              testsToRunRequest.getYArrayRange().getMin().intValue());
     }
 
-    for (ExerciseTests test : exerciseCreationRequest.getTestsToRun()) {
+    for (ExerciseTests test : testsToRunRequest.getTestsToRun()) {
       test.setExcersize(excersize);
+
     }
 
-    // todo: tempoery adding new user to save
-    // exercise this shoudln be happenign and
-    // should be checkd in user autheinteacted handler
-    // it is tepory soultuion to test chain
 
-    User user = exerciseCreationRequest.getUser();
-    if (user.getNickname() == null) {
-      user.setNickname("tmp");
-      user.setEmail("email@emial.com");
-      user.setPassword("passs");
-      usersRepository.save(user);
+
+
+
+
+    Excersize savedExercise= exerciseRepository.save(excersize);
+
+    this.nodeUpdate(request, "saving Solutions to database", ChainNodeInfo.CHAIN_NODE_STATUS.RUNNING);
+
+    SaveExerciseSolutionHandler saveExerciseSolutionHandler = new SaveExerciseSolutionHandler();
+    for (CODE_RUNNER_TYPE codeRunnerType : codeResultsRequest.getProgramResults().keySet()) {
+      Map<CODE_RUNNER_TYPE, List<ProgramResult>> resultOfSepcifCodeRunner=new HashMap<>();
+      resultOfSepcifCodeRunner.put(codeRunnerType,codeResultsRequest.getProgramResults().get(codeRunnerType));
+
+      Map<CODE_RUNNER_TYPE, String> solutionOfSepcifCodeRunner=new HashMap<>();
+      solutionOfSepcifCodeRunner.put(codeRunnerType,codeSolutionsRequest.getSolutionCodes().get(codeRunnerType));
+
+      SaveExerciseSolutionRequest saveExerciseSolutionRequest= SaveExerciseSolutionRequest.builder()
+              .user(request.getUser())
+              .idOfExercise(savedExercise.getId())
+              .solutionCodes(solutionOfSepcifCodeRunner)
+              .programResults(resultOfSepcifCodeRunner)
+              .timeForExecution(codeRunSpecificationParametersRequest.getTimeForExecution())
+              .inputType(testsToRunRequest.getInputType())
+              .outputType(testsToRunRequest.getOutputType())
+
+              .build();
+      saveExerciseSolutionHandler.handle(saveExerciseSolutionRequest);
     }
-    exerciseRepository.save(excersize);
+
+
     this.nodeUpdate(request, "saved to database", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);
 
     return request;

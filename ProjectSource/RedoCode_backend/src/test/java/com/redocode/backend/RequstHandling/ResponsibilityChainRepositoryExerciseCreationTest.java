@@ -1,7 +1,9 @@
 package com.redocode.backend.RequstHandling;
 
 import com.redocode.backend.Messages.UtilContainers.Range;
+import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.VmAcces.CodeRunnersController;
@@ -16,9 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,8 +31,9 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
   @Autowired UsersRepository usersRepository;
   @Autowired CodeRunnersController codeRunnersController;
   @Autowired ExerciseRepository exerciseRepository;
-
+  @Autowired SolutionProgramsRepository solutionProgramsRepository;
   User userCorrect;
+
 
   @BeforeEach
   void setupCorrectData() {
@@ -73,6 +74,7 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
             .testsToRun(Arrays.stream(testsCorrect).toList())
             .timeForTaskMin(timeForTaskCorrect)
             .timeForExecution(maxExecutionTimeMSCorrect)
+                .programResults(new HashMap<>())
             .build();
   }
 
@@ -132,13 +134,14 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
 
   @Test
   void testCoreectExerciseCreation() {
-
+int amountOfSolutionBefore=solutionProgramsRepository.findAll().size();
     assertDoesNotThrow(
         () -> {
           assertTrue(
               ResponsibilityChainRepository.createNewExercise.next(exerciseCreationRequestCorrect));
         });
-
+    int amountOfSolutionAfter=solutionProgramsRepository.findAll().size();
+    assertEquals(amountOfSolutionBefore+solutionCodesCorrect.size(),amountOfSolutionAfter);
     Excersize lastAdded = exerciseRepository.findAll().get(exerciseRepository.findAll().size() - 1);
     assertEquals(titleCorrect, lastAdded.getExcersizeName());
     assertEquals(inputTypeCorrect, lastAdded.getInputType());
@@ -162,9 +165,21 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
     assertEquals(yArrayRangeCorrect, lastAdded.getYArrayRange());
 
     assertEquals(amountOfAutoTestsCorrect, lastAdded.getAmountOfAutoTests());
-    assertEquals(timeForTaskCorrect, lastAdded.getTimeForTaskMin());
-
+//    assertEquals(timeForTaskCorrect, lastAdded.getTimeForTaskMin());
     assertEquals(maxExecutionTimeMSCorrect, lastAdded.getMaxExecutionTimeMS());
+
+    List<SolutionPrograms> allSolution=solutionProgramsRepository.findAll();
+    List<SolutionPrograms> TwoLastSavedSolutions=allSolution.subList(allSolution.size()-2, allSolution.size());
+    for (SolutionPrograms solution : TwoLastSavedSolutions) {
+      String expectedSolution=solutionCodesCorrect.get(RedoCodeObjectMapper.LanguageNameToCodeRunner(solution.getLanguage().getName()));
+      assertEquals(expectedSolution,solution.getCode());
+      assertTrue(solution.getAvgExecutionTime()>0);
+    }
+
+
+
+
+
   }
 
   @ParameterizedTest

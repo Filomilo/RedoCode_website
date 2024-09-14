@@ -3,6 +3,7 @@ import ExecutionChain from '../helpers/ExecutionChain'
 import ExercisesPage from '../helpers/ExercisesPage'
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
+import ErrorPage from '../helpers/ErrorPage'
 
 describe('Phibonachi new exercise', () => {
   it('passes', () => {
@@ -56,6 +57,7 @@ describe('Phibonachi new exercise', () => {
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
+    
     CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.stateShouldBe('ACTIVE')
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
@@ -77,8 +79,8 @@ describe('Phibonachi new exercise', () => {
     CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()
+    UrlControls.urlShouldBe("Results/1")
+    ErrorPage.UnauthenticatedResultPage.UnathenticatedPanelShouldBeVisible()
+    ErrorPage.UnauthenticatedResultPage.ClickGoToLogin();
   })
 })
-
-// todo: protabaly better to create cypress tests that only run mock
-// and addtional tests that run on relase version

@@ -5,6 +5,8 @@ namespace RouterValidators {
   export async function AccountAccesValidate(
     params: any
   ): Promise<string | null> {
+    if (import.meta.env.MODE === 'development') 
+      return null;
     const activeUserStore = useActiveUserStore()
     console.log('AccountAccesValidate authethication')
     if (activeUserStore.validateToken()) {
@@ -18,10 +20,12 @@ namespace RouterValidators {
   export async function ResultsAccesValidate(
     params: any
   ): Promise<string | null> {
+    if (import.meta.env.MODE === 'development') 
+      return null;
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
-    if (params['id'] === undefined) return 'Exercises'
-    if (!activeUserStore.validateToken()) return 'Exercise'
+    if (params['id'] === undefined) return 'ResultsUnauthenticated'
+    if (!activeUserStore.validateToken()) return 'ResultsUnauthenticated'
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(
@@ -44,6 +48,8 @@ namespace RouterValidators {
   export async function SolutionsAccesValidate(
     params: any
   ): Promise<string | null> {
+    if (import.meta.env.MODE === 'development') 
+      return null;
     const activeUserStore = useActiveUserStore()
     console.log('SolutionsdAccesValidate authethication')
     if (activeUserStore.validateToken()) {
@@ -56,6 +62,8 @@ namespace RouterValidators {
   export async function RegisterValidation(
     params: any
   ): Promise<string | null> {
+    if (import.meta.env.MODE === 'development') 
+      return null;
     const activeUserStore = useActiveUserStore()
     console.log('SolutionsdAccesValidate authethication')
     if (!activeUserStore.validateToken()) {
@@ -66,6 +74,8 @@ namespace RouterValidators {
     }
   }
   export async function CreateValidation(params: any): Promise<string | null> {
+    if (import.meta.env.MODE === 'development') 
+      return null;
     const activeUserStore = useActiveUserStore()
     console.log('CreateValidation authethication')
     if (activeUserStore.validateToken()) {
@@ -79,6 +89,8 @@ namespace RouterValidators {
   export async function ExerciseSolvingValidation(
     params: any
   ): Promise<string | null> {
+    if (import.meta.env.MODE === 'development') 
+      return null;
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
@@ -105,6 +117,8 @@ namespace RouterValidators {
   export async function ExerciseRatingValidation(
     params: any
   ): Promise<string | null> {
+    if (import.meta.env.MODE === 'development') 
+      return null;
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
