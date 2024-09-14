@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  formatting-java:
+  formatting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
