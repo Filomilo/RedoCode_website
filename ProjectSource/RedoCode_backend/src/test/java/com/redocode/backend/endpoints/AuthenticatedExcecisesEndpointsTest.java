@@ -140,7 +140,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .nickname(UUID.randomUUID().toString())
             .password(passwordEncoder.encode(UUID.randomUUID().toString()))
             .type(User.USER_TYPE.AUTHENTICATED)
-            .ProfilePicture("")
+            .ProfilePicture(null)
             .build();
     usersRepository.save(user);
     String token = jwtService.generateToken(user);

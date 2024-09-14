@@ -27,7 +27,7 @@ public class UserRepositoryTest {
             .email("email" + UUID.randomUUID() + "@email.com")
             .password("password")
             .nickname(userNameTest)
-            .ProfilePicture("")
+            .ProfilePicture(null)
             .build();
 
     log.info("user: " + user);
