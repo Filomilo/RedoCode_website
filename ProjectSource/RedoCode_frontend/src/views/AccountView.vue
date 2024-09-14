@@ -87,14 +87,17 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, type Ref } from 'vue'
+  import { ref, type Ref, computed } from 'vue'
   import IconEdit from '../assets/icons/IconEdit.vue'
   import { useActiveUserStore } from '../stores/ActiveUserStore'
   import router from '@/router'
   import { useToastStore } from '@/stores/ToastStore'
+import profilePicImageResolve from '@/tools/ImageResolve'
   const activeUserStore = useActiveUserStore()
   const ToastStore = useToastStore()
-  const imgURL = ref('https://i.imgur.com/Z6fpYPD.png')
+  const imgURL = computed(()=>{
+    return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
+  })
 
   const data = {
     labels: ['c++', 'JavaScrip', 'Python', 'Java'],
