@@ -1,5 +1,6 @@
 <template>
   <main>
+
     <div class="commentSectionContainer">
       <div class="VerticalLine" style="margin-top: 5rem">
         <Textarea
@@ -10,6 +11,7 @@
           id="comment-input"
         />
       </div>
+
       <div style="margin-left: 3rem">
         {{ commentInput.length + '/3000' }}
       </div>
@@ -22,6 +24,7 @@
         >
           comment
         </Button>
+  
       </div>
       <div v-for="(data, index) in commentsRef" v-bind:key="index">
         <div
@@ -30,7 +33,7 @@
           style="margin-top: 0.5rem"
         >
           <div class="ProfilePicContainer">
-            <img :src="data.profilePicture" class="profilePic" />
+            <img :src="profilePicImageResolve( data.profilePicture)" class="profilePic" />
           </div>
           <div class="CommentContainer">
             <h3
@@ -55,6 +58,7 @@
   import CommentType from '@/types/ApiMesseages/CommentType'
   import EndpointAcces from '@/controllers/EndpointsAcces'
   import { useToastStore } from '@/stores/ToastStore'
+  import profilePicImageResolve from '@/tools/ImageResolve'
   const props = defineProps<{
     comments: CommentType[]
     id: number

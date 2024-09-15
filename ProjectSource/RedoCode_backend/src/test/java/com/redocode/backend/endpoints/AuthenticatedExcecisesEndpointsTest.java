@@ -140,7 +140,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .nickname(UUID.randomUUID().toString())
             .password(passwordEncoder.encode(UUID.randomUUID().toString()))
             .type(User.USER_TYPE.AUTHENTICATED)
-            .ProfilePicture("")
+            .ProfilePicture(null)
             .build();
     usersRepository.save(user);
     String token = jwtService.generateToken(user);
@@ -192,7 +192,7 @@ class AuthenticatedExcecisesEndpointsTest {
       assertEquals(com.getAuthor().getNickname(), responseData.getComments().get(i).getNickname());
       assertEquals(com.getComment(), responseData.getComments().get(i).getComment());
       assertEquals(
-          com.getAuthor().getProfilePicture(),
+          com.getAuthor().getProfilePicture()==null?"":com.getAuthor().getProfilePicture().getUrl(),
           responseData.getComments().get(i).getProfilePicture());
       log.info(comment.toString());
       i++;
@@ -214,7 +214,7 @@ class AuthenticatedExcecisesEndpointsTest {
           sol.getSolutionAuthor().getNickname(),
           responseData.getSolutionList().get(i).getUsername());
       assertEquals(
-          sol.getSolutionAuthor().getProfilePicture(),
+          sol.getSolutionAuthor().getProfilePicture()==null?"":sol.getSolutionAuthor().getProfilePicture().getUrl(),
           responseData.getSolutionList().get(i).getProfilePic());
 
       i++;

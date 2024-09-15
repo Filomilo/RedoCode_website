@@ -1,10 +1,7 @@
 package com.redocode.backend.database;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -54,9 +52,10 @@ public class User implements Comparable, UserDetails {
   @NotEmpty
   private String password;
 
-  @Column(name = "profile_pic")
-  @NotNull
-  private String ProfilePicture = "";
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "profile_pic")
+  private Media ProfilePicture = null;
 
   public User(String session, String nick, USER_TYPE userType) {
     this.sessionID = session;
