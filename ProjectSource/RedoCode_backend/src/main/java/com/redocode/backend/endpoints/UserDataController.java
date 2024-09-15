@@ -22,7 +22,8 @@ public class UserDataController {
             .mail(user.getEmail())
             .nickname(user.getNickname())
             .type(user.getType())
-            .profilePicture(user.getProfilePicture()==null?"":user.getProfilePicture().getUrl())
+            .profilePicture(
+                user.getProfilePicture() == null ? "" : user.getProfilePicture().getUrl())
             .build();
     return new ResponseEntity<>(accountInfoMessage, HttpStatus.OK);
   }

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -19,21 +18,15 @@ import java.util.UUID;
 @Slf4j
 public class Media {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="uuid", insertable = false, updatable = false, nullable = false)
-UUID uuid;
-@NotBlank
-        @NotNull
-    byte[] data;
-@NotBlank
-        @NotNull
-    String extension;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "uuid", insertable = false, updatable = false, nullable = false)
+  UUID uuid;
 
+  @NotBlank @NotNull byte[] data;
+  @NotBlank @NotNull String extension;
 
-public String getUrl()
-{
-    return this.uuid.toString()+"."+this.extension;
-}
-
+  public String getUrl() {
+    return this.uuid.toString() + "." + this.extension;
+  }
 }

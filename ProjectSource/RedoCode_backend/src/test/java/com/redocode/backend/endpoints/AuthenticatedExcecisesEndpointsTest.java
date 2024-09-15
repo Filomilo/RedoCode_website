@@ -192,7 +192,9 @@ class AuthenticatedExcecisesEndpointsTest {
       assertEquals(com.getAuthor().getNickname(), responseData.getComments().get(i).getNickname());
       assertEquals(com.getComment(), responseData.getComments().get(i).getComment());
       assertEquals(
-          com.getAuthor().getProfilePicture()==null?"":com.getAuthor().getProfilePicture().getUrl(),
+          com.getAuthor().getProfilePicture() == null
+              ? ""
+              : com.getAuthor().getProfilePicture().getUrl(),
           responseData.getComments().get(i).getProfilePicture());
       log.info(comment.toString());
       i++;
@@ -214,7 +216,9 @@ class AuthenticatedExcecisesEndpointsTest {
           sol.getSolutionAuthor().getNickname(),
           responseData.getSolutionList().get(i).getUsername());
       assertEquals(
-          sol.getSolutionAuthor().getProfilePicture()==null?"":sol.getSolutionAuthor().getProfilePicture().getUrl(),
+          sol.getSolutionAuthor().getProfilePicture() == null
+              ? ""
+              : sol.getSolutionAuthor().getProfilePicture().getUrl(),
           responseData.getSolutionList().get(i).getProfilePic());
 
       i++;

@@ -21,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -79,6 +78,8 @@ class UserDataControllerTest {
     assertEquals(exisitingUser.getNickname(), info.getNickname());
     assertEquals(exisitingUser.getUserType(), info.getType());
     assertEquals(exisitingUser.getEmail(), info.getMail());
-    assertEquals(exisitingUser.getProfilePicture()==null?"":exisitingUser.getProfilePicture().getUrl(), info.getProfilePicture());
+    assertEquals(
+        exisitingUser.getProfilePicture() == null ? "" : exisitingUser.getProfilePicture().getUrl(),
+        info.getProfilePicture());
   }
 }

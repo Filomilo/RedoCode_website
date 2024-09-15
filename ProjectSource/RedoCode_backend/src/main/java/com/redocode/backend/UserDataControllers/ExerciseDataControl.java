@@ -60,7 +60,10 @@ public class ExerciseDataControl {
                             RedoCodeObjectMapper.LanguageNameToCodeRunner(
                                 x.getLanguage().getName()))
                         .username(x.getSolutionAuthor().getNickname())
-                        .profilePic(x.getSolutionAuthor().getProfilePicture()==null?"":x.getSolutionAuthor().getProfilePicture().getUrl())
+                        .profilePic(
+                            x.getSolutionAuthor().getProfilePicture() == null
+                                ? ""
+                                : x.getSolutionAuthor().getProfilePicture().getUrl())
                         .executionTimeMs(x.getAvgExecutionTime())
                         .build())
             .collect(Collectors.toList());
@@ -72,7 +75,10 @@ public class ExerciseDataControl {
                 x ->
                     CommentType.builder()
                         .comment(x.getComment())
-                        .profilePicture(x.getAuthor().getProfilePicture()==null?"":x.getAuthor().getProfilePicture().getUrl())
+                        .profilePicture(
+                            x.getAuthor().getProfilePicture() == null
+                                ? ""
+                                : x.getAuthor().getProfilePicture().getUrl())
                         .nickname(x.getAuthor().getNickname())
                         .build())
             .collect(Collectors.toList());

@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -51,7 +50,6 @@ public class User implements Comparable, UserDetails {
   @NotNull
   @NotEmpty
   private String password;
-
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_pic")
