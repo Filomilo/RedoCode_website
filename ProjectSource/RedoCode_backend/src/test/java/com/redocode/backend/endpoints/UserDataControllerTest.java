@@ -79,6 +79,6 @@ class UserDataControllerTest {
     assertEquals(exisitingUser.getNickname(), info.getNickname());
     assertEquals(exisitingUser.getUserType(), info.getType());
     assertEquals(exisitingUser.getEmail(), info.getMail());
-    assertEquals(exisitingUser.getProfilePicture(), info.getProfilePicture());
+    assertEquals(exisitingUser.getProfilePicture()==null?"":exisitingUser.getProfilePicture().getUrl(), info.getProfilePicture());
   }
 }
