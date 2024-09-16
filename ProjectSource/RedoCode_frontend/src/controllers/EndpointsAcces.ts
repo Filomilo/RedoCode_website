@@ -1,5 +1,6 @@
 import AccountInfo from '@/types/ApiMesseages/AccountInfo'
 import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
+import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest'
 import ExcerciseDataMessage from '@/types/ApiMesseages/ExcerciseDataMessage'
 import ResultData from '@/types/ApiMesseages/ResultData'
 import SolutionsData from '@/types/ApiMesseages/SolutionsData'
@@ -14,6 +15,37 @@ import { stringify } from 'flatted'
 
 namespace EndpointAcces {
   export namespace unauthorized {
+    
+  export async function register (email: string, nickname: string, pass: string){
+    // const request: RegisterRequest = {
+    //   nickname: nickname,
+    //   password: pass,
+    //   email: email,
+    // }
+    // axios
+    //   .post('/public/auth/register', request)
+    //   .then(response => {
+    //     console.log('Response: ' + JSON.stringify(response))
+    //     if (response.status == 200) {
+    //       toastStore.showSuccessMessage('Succesfully registered user')
+    //       _token.value = response.data.token
+    //       isLogged.value = true
+    //       router.push({ path: '/Home', replace: true })
+    //     } else {
+    //       toastStore.showErrorMessage("Couldn't register user")
+    //     }
+    //   })
+    //   .catch(error => {
+    //     if (error.response) {
+    //       if (error.response.status != 200) {
+    //         toastStore.showErrorMessage("Couldn't register user")
+    //       }
+    //     }
+    //   })
+    //   .finally(() => {
+    //     //  console.log("axios finshed")
+    //   })
+  }
 
 
     export async function login(email: string, password: string):Promise<string> {
@@ -125,7 +157,6 @@ namespace EndpointAcces {
 
     export async function getSolutionsData(
       exerciseid: number,
-      token: string
     ): Promise<SolutionsData> {
       console.log('attempitng /secure/exercises/solutions ')
       const params = {
@@ -281,6 +312,10 @@ namespace EndpointAcces {
       )
       return response.data
     }
+
+
+
+
   }
 }
 export default EndpointAcces

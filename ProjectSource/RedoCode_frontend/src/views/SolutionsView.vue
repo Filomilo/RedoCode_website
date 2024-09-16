@@ -49,7 +49,7 @@
     console.log('Loading solutions')
     globalStateStore.showLoadingScreen('Loading solutions')
     EndpointAcces.authorized
-      .getSolutionsData(exercsieID, ActiveUserStore.getToken())
+      .getSolutionsData(exercsieID)
       .then((data: SolutionsData | undefined) => {
         refSolutionData.value = data
         console.log(
