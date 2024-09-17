@@ -113,7 +113,7 @@
       .$validate()
       .then((state: Boolean) => {
         if (state)
-          activeUserStore.authController.register(
+          activeUserStore.register(
             dataState.email,
             dataState.nickname,
             dataState.password

@@ -1,7 +1,11 @@
 <template>
   <main>
-    <div class="AuthLoginScreenConatiner" v-if="!activeUserStore.authController.isLogged">
+    {{JSON.stringify( activeUserStore.accountInfo)}}
+
+    {{ activeUserStore.isLogged}}
+    <div class="AuthLoginScreenConatiner" v-if="!activeUserStore.isLogged">
       <div class="CommunicatPanel">
+
         <div class="CommunicatContainer">
           <label class="CommunicatTitle">Join us</label>
           <label class="CommunicatDesc">
@@ -10,6 +14,7 @@
           </label>
         </div>
       </div>
+
       <div class="LoginPanelConatiner">
         <InputText
           type="text"
@@ -121,7 +126,7 @@
   const stayLoggedIn = ref(false)
 
   const onSginInButton = () => {
-    activeUserStore.authController.login(inputLogin.value, inputPass.value, stayLoggedIn.value)
+    activeUserStore.login(inputLogin.value, inputPass.value, stayLoggedIn.value)
   }
 </script>
 

@@ -8,7 +8,7 @@ namespace RouterValidators {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
     console.log('AccountAccesValidate authethication')
-    if (activeUserStore.authController.validateAuthentication()) {
+    if (await activeUserStore.validateAuthentication()) {
       return null
     } else {
       console.log('Unauhenticated')
@@ -23,7 +23,7 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'ResultsUnauthenticated'
-    if (!activeUserStore.authController.validateAuthentication()) return 'ResultsUnauthenticated'
+    if (!activeUserStore.validateAuthentication()) return 'ResultsUnauthenticated'
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(
@@ -48,7 +48,7 @@ namespace RouterValidators {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
     console.log('SolutionsdAccesValidate authethication')
-    if (activeUserStore.authController.validateAuthentication()) {
+    if (await activeUserStore.validateAuthentication()) {
       return null
     } else {
       console.log('ResultsUnauthenticated')
@@ -61,7 +61,7 @@ namespace RouterValidators {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
     console.log('SolutionsdAccesValidate authethication')
-    if (!activeUserStore.authController.validateAuthentication()) {
+    if (!activeUserStore.validateAuthentication()) {
       return null
     } else {
       console.log('ResultsUnauthenticated')
@@ -72,7 +72,7 @@ namespace RouterValidators {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
     console.log('CreateValidation authethication')
-    if (activeUserStore.authController.validateAuthentication()) {
+    if (await activeUserStore.validateAuthentication()) {
       return null
     } else {
       console.log('ResultsUnauthenticated')
@@ -87,7 +87,7 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
-    if (!activeUserStore.authController.validateAuthentication()) return null
+    if (!activeUserStore.validateAuthentication()) return null
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(
@@ -113,7 +113,7 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
-    if (!activeUserStore.authController.validateAuthentication()) return 'Exercise'
+    if (!activeUserStore.validateAuthentication()) return 'Exercise'
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(

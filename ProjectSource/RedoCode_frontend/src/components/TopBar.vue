@@ -29,7 +29,7 @@
           to="/Account"
           class="TopBarItemContainer"
           id="switch-account"
-          v-if="activeUserStore.authController.isLogged"
+          v-if="activeUserStore.isLogged"
         >
           <IconAccount class="TopBarItemIcon" />
           <label class="TopBarItemTitle">My account</label>

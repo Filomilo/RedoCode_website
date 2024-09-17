@@ -10,7 +10,7 @@
         </Button>
       </div>
       <div class="NickContainer">
-        {{ activeUserStore.authController.accountInfo.nickname }}
+        {{ activeUserStore.accountInfo.nickname }}
       </div>
       <div class="DescriptionContainer">Account description</div>
       <div class="LogoutButtonContainer">
@@ -96,7 +96,7 @@ import profilePicImageResolve from '@/tools/ImageResolve'
   const activeUserStore = useActiveUserStore()
   const ToastStore = useToastStore()
   const imgURL = computed(()=>{
-    return profilePicImageResolve(activeUserStore.authController.accountInfo.profilePicture)
+    return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
   })
 
   const data = {
@@ -137,7 +137,7 @@ import profilePicImageResolve from '@/tools/ImageResolve'
   }
 
   const onLogOutButton = () => {
-    activeUserStore.authController.logout()
+    activeUserStore.logout()
     router.push('/home')
   }
 
