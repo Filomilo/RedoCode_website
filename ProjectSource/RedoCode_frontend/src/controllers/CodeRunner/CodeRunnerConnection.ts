@@ -45,7 +45,7 @@ export default class CodeRunnerConnection {
 
   public updateCodeRunner = () => {
     EnpointAcces.unauthorized
-      .getCodeRunnerState(this.activeUserStore.getToken() as string)
+      .getCodeRunnerState()
       .then((data: CoderunnerState) => {
         console.log('updateCodeRunner: ' + JSON.stringify(data))
         this.codeRunnerState.value = data

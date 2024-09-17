@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="AuthLoginScreenConatiner" v-if="!activeUserStore.isLogged">
+    <div class="AuthLoginScreenConatiner" v-if="!activeUserStore.authController.isLogged">
       <div class="CommunicatPanel">
         <div class="CommunicatContainer">
           <label class="CommunicatTitle">Join us</label>
@@ -121,7 +121,7 @@
   const stayLoggedIn = ref(false)
 
   const onSginInButton = () => {
-    activeUserStore.login(inputLogin.value, inputPass.value, stayLoggedIn.value)
+    activeUserStore.authController.login(inputLogin.value, inputPass.value, stayLoggedIn.value)
   }
 </script>
 

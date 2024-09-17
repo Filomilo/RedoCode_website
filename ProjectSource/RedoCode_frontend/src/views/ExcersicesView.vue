@@ -49,9 +49,9 @@
             to="/Create"
             class="createButton"
             id="Home_Button"
-            :class="ActiveUserStore.isLogged ? '' : 'diabled'"
+            :class="ActiveUserStore.authController.isLogged ? '' : 'diabled'"
           >
-            <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
+            <Button :disabled="!ActiveUserStore.authController.isLogged" id="Create-button">
               Create
             </Button>
           </router-link>

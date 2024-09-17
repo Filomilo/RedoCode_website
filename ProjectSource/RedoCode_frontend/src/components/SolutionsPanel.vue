@@ -39,8 +39,7 @@
     code.value = ''
     try {
       const codeIn = await EndpointsAcces.authorized.getSolutionsCodesData(
-        solutionId,
-        ActiveUserStore.getToken()
+        solutionId
       )
       console.log('results: ' + JSON.stringify(codeIn))
       code.value = JSON.stringify(codeIn, null, '\t')

@@ -5,7 +5,7 @@
       <div class="VerticalLine" style="margin-top: 5rem">
         <Textarea
           class="CommentArea"
-          :disabled="!ActiveUserStore.isLogged"
+          :disabled="!ActiveUserStore.authController.isLogged"
           v-model="commentInput"
           :invalid="!validatedComment"
           id="comment-input"
@@ -18,7 +18,7 @@
       <div class="VerticalLine" style="margin-top: 0.5rem; display: flex">
         <Button
           class="commentButton"
-          :disabled="!ActiveUserStore.isLogged"
+          :disabled="!ActiveUserStore.authController.isLogged"
           @click="onCommentButton"
           id="comment-post"
         >
@@ -76,17 +76,17 @@
 
   const onCommentButton = () => {
     EndpointAcces.authorized
-      .postComment(commentInput.value, props.id, ActiveUserStore.getToken())
+      .postComment(commentInput.value, props.id)
       .then(x => {
         console.log('token: ' + JSON.stringify(x))
         if (x < 200 || x > 201) {
           ToastStore.showErrorMessage("Couldn't' post comment")
         } else {
           if (validatedComment.value) {
-            console.log("comment post: "+JSON.stringify(ActiveUserStore.accountInfo)  )
+            console.log("comment post: "+JSON.stringify(ActiveUserStore.authController.accountInfo)  )
             commentsRef.value.unshift({
-              nickname: ActiveUserStore.accountInfo.nickname,
-              profilePicture: ActiveUserStore.accountInfo.profilePicture,
+              nickname: ActiveUserStore.authController.accountInfo.nickname,
+              profilePicture: ActiveUserStore.authController.accountInfo.profilePicture,
               comment: commentInput.value,
             })
             commentInput.value = ''

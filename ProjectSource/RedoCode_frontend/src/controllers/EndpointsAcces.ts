@@ -16,35 +16,20 @@ import { stringify } from 'flatted'
 namespace EndpointAcces {
   export namespace unauthorized {
     
-  export async function register (email: string, nickname: string, pass: string){
-    // const request: RegisterRequest = {
-    //   nickname: nickname,
-    //   password: pass,
-    //   email: email,
-    // }
-    // axios
-    //   .post('/public/auth/register', request)
-    //   .then(response => {
-    //     console.log('Response: ' + JSON.stringify(response))
-    //     if (response.status == 200) {
-    //       toastStore.showSuccessMessage('Succesfully registered user')
-    //       _token.value = response.data.token
-    //       isLogged.value = true
-    //       router.push({ path: '/Home', replace: true })
-    //     } else {
-    //       toastStore.showErrorMessage("Couldn't register user")
-    //     }
-    //   })
-    //   .catch(error => {
-    //     if (error.response) {
-    //       if (error.response.status != 200) {
-    //         toastStore.showErrorMessage("Couldn't register user")
-    //       }
-    //     }
-    //   })
-    //   .finally(() => {
-    //     //  console.log("axios finshed")
-    //   })
+  export async function register (email: string, nickname: string, pass: string):Promise<string>{
+    const request: RegisterRequest = {
+      nickname: nickname,
+      password: pass,
+      email: email,
+    }
+   const response= await axios.post('/public/auth/register', request);
+        console.log('Response: ' + JSON.stringify(response))
+        if (response.status == 200) {
+          console.log("/public/auth/register succes" )
+          return response.data.token;
+        } else {
+          throw "Couldn't register user"
+        }
   }
 
 
@@ -67,29 +52,7 @@ namespace EndpointAcces {
       }
     }
 
-    export async function getCodeRunnerState(
-      token: string
-    ): Promise<CoderunnerState> {
-      try {
-        if (token === '') throw 'token empty'
-        console.log('token: ' + token)
-        const response = await axios.post('/public/coderunner/state', token)
-        console.log('updateCodeRunner Response:', response)
-        if (
-          response === undefined ||
-          response.data === '' ||
-          response.headers['Content-Length'] == 0
-        )
-          throw 'no status codeRunenr'
-        return response.data
-      } catch (error) {
-        console.log('updateCodeRunner Error:', error)
-        return {
-          codeRunnerType: CodeRunnerType.UNIDENTIFIED,
-          state: CodeRunnerStatus.NONE,
-        }
-      }
-    }
+   
 
     export async function getExerciseData(
       exercsieId: number
@@ -143,17 +106,34 @@ namespace EndpointAcces {
       // exerciseData.value = response.data
       // console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
     }
+    export async function getCodeRunnerState(
+    ): Promise<CoderunnerState> {
+      try {
+        // if (token === '') throw 'token empty'
+        // console.log('token: ' + token)
+        const response = await axios.post('/public/coderunner/state')
+        console.log('updateCodeRunner Response:', response)
+        if (
+          response === undefined ||
+          response.data === '' ||
+          response.headers['Content-Length'] == 0
+        )
+          throw 'no status codeRunenr'
+        return response.data
+      } catch (error) {
+        console.log('updateCodeRunner Error:', error)
+        return {
+          codeRunnerType: CodeRunnerType.UNIDENTIFIED,
+          state: CodeRunnerStatus.NONE,
+        }
+      }
+    }
   }
 
   export namespace authorized {
     
-    // eslint-disable-next-line no-inner-declarations
-    function getAuthHeader(token: string) {
-      return {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    }
+
+
 
     export async function getSolutionsData(
       exerciseid: number,
@@ -163,7 +143,6 @@ namespace EndpointAcces {
         id: exerciseid,
       }
       const response = await axios.get('/secure/exercises/solutions', {
-        headers: getAuthHeader(token),
         params: params,
       })
       console.log('/secure/exercises/solutions Response:', response)
@@ -180,15 +159,13 @@ namespace EndpointAcces {
     }
 
     export async function getSolutionsCodesData(
-      solutionId: number,
-      token: string
+      solutionId: number
     ): Promise<string> {
       console.log('attempitng /secure/exercises/solutionsCodes ')
       const params = {
         id: solutionId,
       }
       const response = await axios.get('/secure/exercises/solutionsCodes', {
-        headers: getAuthHeader(token),
         params: params,
       })
       console.log('/secure/exercises/solutionsCodes Response:', response)
@@ -204,17 +181,14 @@ namespace EndpointAcces {
 
     export async function postComment(
       comment: string,
-      exerciseId: number,
-      token: string
+      exerciseId: number
     ): Promise<number> {
       try {
         const data = {
           id: exerciseId,
           comment: comment,
         }
-        const response = await axios.post('/secure/exercises/comment', data, {
-          headers: getAuthHeader(token),
-        })
+        const response = await axios.post('/secure/exercises/comment', data)
 
         console.log('response postComment: ' + JSON.stringify(response))
         return response.status
@@ -224,8 +198,7 @@ namespace EndpointAcces {
     }
 
     export async function getResultData(
-      exerciseid: number,
-      token: string
+      exerciseid: number
     ): Promise<ResultData> {
       console.log('attempitng /secure/exercises/solutions ')
       const params = {
@@ -233,7 +206,6 @@ namespace EndpointAcces {
       }
       try {
         const response = await axios.get('/secure/exercises/results', {
-          headers: getAuthHeader(token),
           params: params,
         })
         if (response.status == 404) throw "couldn't get result data"
@@ -257,15 +229,12 @@ namespace EndpointAcces {
     export async function postRate(
       selectedRating: number,
       exercsieID: number,
-      token: string
     ) {
       const data = {
         id: exercsieID,
         rate: selectedRating,
       }
-      const response = await axios.post('/secure/exercises/rate', data, {
-        headers: getAuthHeader(token),
-      })
+      const response = await axios.post('/secure/exercises/rate', data)
 
       console.log('response postComment: ' + JSON.stringify(response))
 
@@ -273,8 +242,7 @@ namespace EndpointAcces {
     }
 
     export async function getExerciseSolvingState(
-      id: number,
-      token: string
+      id: number
     ): Promise<ExerciseSolviingState> {
       const data = {
         id: id,
@@ -283,7 +251,6 @@ namespace EndpointAcces {
       const response = await axios.get(
         '/secure/exercises/ExerciseSolvingState',
         {
-          headers: getAuthHeader(token),
           params: data,
         }
       )
@@ -295,15 +262,12 @@ namespace EndpointAcces {
       return response.data
     }
 
-    export async function getUserInfo(token:string): Promise<AccountInfo>
+    export async function getUserInfo(): Promise<AccountInfo>
     {
 
       console.log("getUserInfo")
       const response = await axios.get(
-        '/secure/user/info',
-        {
-          headers: getAuthHeader(token),
-        }
+        '/secure/user/info'
       )
 
       console.log(

@@ -5,7 +5,8 @@ import USER_TYPE from '@/types/ApiMesseages/UserType';
 import { useApiConnectionStore } from '@/stores/ApiConnectionStore';
 import { useCodeRunnerStore } from '@/stores/CodeRunnerStore';
 import { VueCookies } from 'vue-cookies';
-
+import { useToastStore } from '@/stores/ToastStore';
+import axios from 'axios';
 export default  class AuthController{
 
 
@@ -71,26 +72,58 @@ public accountInfo: Ref<AccountInfo> = ref({
     && this.accountInfo.value.type!=USER_TYPE.UNAUTHENTICATED
 })
 
+  public async login(email: string, pass: string, stayLoggedIn: boolean):Promise<boolean> {
+return false;
+    try{
+        console.log("email: "+ email)
+
+    //   const token:string= await EndpointAcces.unauthorized.login(email,pass);
+    //   _token.value = token
+    //   isLogged.value = true
+    //   if (stayLoggedIn) {
+    //     saveCookie()
+    //   }
+    //   router.push({ path: '/Home', replace: true })
+    //   toastStore.showSuccessMessage("Succesfully logged in");
+    //   }
+    //   catch(error){
+    //     console.error(error)
+    //         toastStore.showErrorMessage(
+    //           "Couldn't Login, "+error)
+    //         }
+          }
+          catch(ex){
+            console.error(ex)
+            return false
+          }
+        }
+
+
+public validateAuthentication(): boolean
+{
+return false;
+}
 
 private updateAccountData()
 {
-//     const token:string|null=this.getToken();
-
-//     if(token!==null)
-//     {
-//         EndpointAcces.authorized.getUserInfo(token).then((response: AccountInfo)=>{
-//             console.log("Account info: "+ JSON.stringify(response))
-//             this.accountInfo.value=response;
-//     });
-// }
-// else{
-//         this.accountInfo.value={
-//             nickname: "",
-//             mail: "",
-//             profilePicture: "",
-//             type: USER_TYPE.UNAUTHENTICATED
-//           }
-    // }
+  
+    const token:string|null=this.getToken();
+    console.log("AuthControlelr loading data for token: "+token)
+    if(token!==null)
+    {
+        EndpointAcces.authorized.getUserInfo(token).then((response: AccountInfo)=>{
+            console.log("Account info: "+ JSON.stringify(response))
+            this.accountInfo.value=response;
+    });
+}
+else{
+        this.accountInfo.value={
+            nickname: "",
+            mail: "",
+            profilePicture: "",
+            type: USER_TYPE.UNAUTHENTICATED
+          }
+    }
 
 }
 
@@ -107,22 +140,55 @@ private getToken():string|null {
   }
 
   private setToken(token: string){
-    // sessionStorage.setItem('jwtToken', token);
-
-}
+    console.log("AuthControlelr setToken: "+token)
+    sessionStorage.setItem('jwtToken', token);
+    console.log("sesssino token: "+  sessionStorage.getItem('jwtToken') )
   
+    this.setupAxios();
+    this.updateAccountData();
 
+  }
+  
+private setupAxios()
+{
+  console.log("AuthController setupAxios")
+  const token: string| null=this.getToken();
+  console.log("AuthController setupAxios token: "+ token)
+if(token!=null && token.length>0)
+{
+
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+}
 
 //#endregion
 
 
 //#region Login process
 
-public register(email: string, nickname: string, pass: string){
-    // const token=EndpointAcces.unauthorized.register(email, nickname, pass)
+public async register(email: string, nickname: string, pass: string){
+  const toastStore=useToastStore();
+
+  try{
+    console.log("AuthController register: "+email)
+    const token=await EndpointAcces.unauthorized.register(email, nickname, pass)
+    console.log("AuthController token: "+token)
+    if(token===""){
+      toastStore.showErrorMessage("Couldn't register")
+    }
+    else{
+      toastStore.showSuccessMessage("succesfully registered")
+      this.setToken(token)
+    }
+  }
+catch(ex:any){
+  toastStore.showErrorMessage(ex)
+}
 }
 
 public logout() {
+  console.log("Logout: ")
+  
 //     this._token.value = ''
 //     this.deleteCookie()
 //   }

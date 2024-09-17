@@ -63,7 +63,7 @@
     console.log('Loading solutions')
     globalStateStore.showLoadingScreen('Loading solutions')
     EndpointAcces.authorized
-      .getResultData(exercsieID, ActiveUserStore.getToken())
+      .getResultData(exercsieID)
       .then((data: ResultData) => {
         refResultData.value = data
         globalStateStore.hideLoadingScreen()
@@ -107,7 +107,7 @@
 
   const onSaveRate = () => {
     EndpointAcces.authorized
-      .postRate(selectedRating.value, exercsieID, ActiveUserStore.getToken())
+      .postRate(selectedRating.value, exercsieID)
       .then(() => {
         toastStore.showSuccessMessage('saved rating')
         router.push({ name: 'Solutions', params: { id: exercsieID } })

@@ -37,26 +37,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   // }
   // attemptToLoginThroughCookie()
 
-  // const login = async (email: string, pass: string, stayLoggedIn: boolean) => {
 
-  //   try{
-
-
-  //     const token:string= await EndpointAcces.unauthorized.login(email,pass);
-  //     _token.value = token
-  //     isLogged.value = true
-  //     if (stayLoggedIn) {
-  //       saveCookie()
-  //     }
-  //     router.push({ path: '/Home', replace: true })
-  //     toastStore.showSuccessMessage("Succesfully logged in");
-  //     }
-  //     catch(error){
-  //       console.error(error)
-  //           toastStore.showErrorMessage(
-  //             "Couldn't Login, "+error)
-  //           }
-  //         }
 
 
 
