@@ -1,8 +1,5 @@
 <template>
   <main>
-    {{JSON.stringify( activeUserStore.accountInfo)}}
-
-    {{ activeUserStore.isLogged}}
     <div class="AuthLoginScreenConatiner" v-if="!activeUserStore.isLogged">
       <div class="CommunicatPanel">
 

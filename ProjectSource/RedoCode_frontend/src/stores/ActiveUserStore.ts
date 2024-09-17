@@ -33,6 +33,11 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
         $cookies?.remove('token')
       }
     }
+
+
+    function getCookie  () {
+     return  $cookies?.get('token');
+    }
     function saveCookieToken () {
       console.log('Save cookie')
       $cookies?.set('token', getToken())
@@ -66,7 +71,10 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       
       const token: string = await EndpointAcces.unauthorized.login(email, pass);
       setToken(token);
-      
+      if(stayLoggedIn)
+      [
+    saveCookieToken()
+  ]
       // _token.value = token
       // isLogged.value = true
       // if (stayLoggedIn) {
@@ -179,6 +187,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     localStorage.clear();
     console.log("token: "+getToken())
     updateAccountData()
+    deleteCookie();
   
   //     this._token.value = ''
   //     this.deleteCookie()
@@ -188,28 +197,19 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   
   }
   
-  
-  function validateToken () {
-      return false;
-  //     if (import.meta.env.MODE === 'development') {
-  //       return true
-  //     }
-  //     if (this._token.value === '') return false
-  //     return true
-  //   }
-  
-  // private initLogin()
-  // {
-  //     if(this.doesCookieExist())
-  //     {
-  
-  //     }
-  //     else if()
-  }
-  
+
   
   function loadFromSession(){
     const token= getToken()
+    if(token!==null)
+    {
+      setToken(token)
+    }
+  }
+
+
+  function loadFromCookies(){
+    const token= getCookie()
     if(token!==null)
     {
       setToken(token)
@@ -222,8 +222,14 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
 
 //#region init
+if(doesCookieExist())
+{
+  loadFromCookies();
+}
+else{
+  loadFromSession();
+}
 
-loadFromSession();
 
   
 
