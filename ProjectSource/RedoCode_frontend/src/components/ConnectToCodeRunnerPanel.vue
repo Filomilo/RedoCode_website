@@ -7,7 +7,7 @@
 
     <div
       class="LoginPanelConatiner"
-      v-if="!isCOnnectedToApi"
+      v-if="!ApiConnectionStore.stompApiConnection.isActive"
     >
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
@@ -52,7 +52,7 @@ import { stringify } from 'flatted'
 
 
   const ApiConnectionStore = useApiConnectionStore()
-  const isCOnnectedToApi=ref(ApiConnectionStore.stompApiConnection.isActive)
+  const isCOnnectedToApi = computed(() => ApiConnectionStore.stompApiConnection.isActive)
 
   watch(
       () => ApiConnectionStore.stompApiConnection.isActive, // Watch the reactive value
