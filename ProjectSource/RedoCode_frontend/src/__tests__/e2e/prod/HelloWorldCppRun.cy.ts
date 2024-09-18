@@ -2,7 +2,7 @@ import CodeRunnerPanel from '../helpers/CodeRunnerPanel'
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
 
-describe('hello world cpp run ', () => {
+describe('hello world js run ', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
