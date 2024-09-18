@@ -238,17 +238,17 @@ else{
 
 const apiConnectionStore = useApiConnectionStore()
 const codeRunnerStore = useCodeRunnerStore()
-apiConnectionStore.stompApiConnection.addOnConnectEvent(() => {
+apiConnectionStore.stompApiConnection.addOnConnectEvent(async () => {
   const token=getToken();
   if(token!=null){
     const strToken: string= token as string;
-  console.log('on connected userAuhtenticaton: ' + JSON.stringify(getToken()))
+ await console.log('on connected userAuhtenticaton: ' + JSON.stringify(getToken()))
   if (strToken.length > 0) {
-    apiConnectionStore.stompApiSender.authenticationStomp({
+    await apiConnectionStore.stompApiSender.authenticationStomp({
       token: strToken,
     })
   }
-  codeRunnerStore.codeRunnerConnection.updateCodeRunner()}
+  await codeRunnerStore.codeRunnerConnection.updateCodeRunner()}
 })
   
 
