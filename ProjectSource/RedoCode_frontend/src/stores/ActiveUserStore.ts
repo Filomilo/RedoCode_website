@@ -11,6 +11,7 @@ import { useCodeRunnerStore } from './CodeRunnerStore'
 import AccountInfo from '@/types/ApiMesseages/AccountInfo'
 import EndpointAcces from '@/controllers/EndpointsAcces'
 import USER_TYPE from '@/types/ApiMesseages/UserType'
+import { stringify } from 'flatted'
 
 export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
@@ -109,16 +110,16 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       {
         console.log("token loading for: "+ token)
          const response=await EndpointAcces.authorized.getUserInfo();
-        console.log("Account info: "+ JSON.stringify(response))
-        console.log(JSON.stringify(accountInfo))
+        console.log("Account info: "+ stringify(response))
+        console.log(stringify(accountInfo))
          accountInfo.value=response;
         // Object.assign(accountInfo, response);
-         console.log(JSON.stringify(accountInfo))
+         console.log(stringify(accountInfo))
       }
   else{
-    console.log(JSON.stringify(accountInfo))
+    console.log(stringify(accountInfo))
     accountInfo.value=unAuthUser;
-          console.log(JSON.stringify(accountInfo))
+          console.log(stringify(accountInfo))
       }
   
   }
