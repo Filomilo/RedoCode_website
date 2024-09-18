@@ -60,8 +60,10 @@ namespace RouterValidators {
   ): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
-    console.log('SolutionsdAccesValidate authethication')
-    if (!activeUserStore.validateAuthentication()) {
+
+    const authState=await activeUserStore.validateAuthentication();
+    console.log('SolutionsdAccesValidate authethication, authState: '+ authState)
+    if ( ! authState) {
       return null
     } else {
       console.log('ResultsUnauthenticated')
@@ -87,7 +89,9 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
-    if (!activeUserStore.validateAuthentication()) return null
+    const authState=await activeUserStore.validateAuthentication();
+
+    if (!authState) return null
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(
@@ -113,7 +117,7 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
-    if (!activeUserStore.validateAuthentication()) return 'Exercise'
+    if (await !activeUserStore.validateAuthentication()) return 'Exercise'
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(

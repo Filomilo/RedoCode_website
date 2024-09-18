@@ -98,6 +98,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   async function  validateAuthentication(): Promise <boolean>
   {
     await updateAccountData();
+    console.log("USESR VALIDATED: "+ isLogged.value)
   return isLogged.value;
   }
   
