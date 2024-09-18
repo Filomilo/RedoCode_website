@@ -54,13 +54,6 @@ import { stringify } from 'flatted'
   const ApiConnectionStore = useApiConnectionStore()
   const isNotCOnnectedToApi = computed(() => !ApiConnectionStore.stompApiConnection.isActive)
 
-  watch(
-      () => ApiConnectionStore.stompApiConnection.isActive, // Watch the reactive value
-      (newValue) => {
-        // Update the local reactive value based on the change
-        isCOnnectedToApi.value = newValue;
-      }
-    );
   const props = defineProps({
     languageChoicesSelection: {
       type: Array as () => codeRunnerType[],
