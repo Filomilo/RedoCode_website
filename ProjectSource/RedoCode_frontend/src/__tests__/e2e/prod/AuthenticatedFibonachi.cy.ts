@@ -62,8 +62,7 @@ describe('template spec', () => {
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
-    ToastHelper.shouldToastAtLeastOne()
-    ToastHelper.shouldToastNo()
+    ToastHelper.WaitForShowingAndClosingToast();
     CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.stateShouldBe('ACTIVE')
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(

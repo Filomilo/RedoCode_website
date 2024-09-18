@@ -13,6 +13,7 @@ import EndpointAcces from '@/controllers/EndpointsAcces'
 import USER_TYPE from '@/types/ApiMesseages/UserType'
 import { stringify } from 'flatted'
 
+
 export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
   const unAuthUser={
@@ -72,6 +73,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       
       const token: string = await EndpointAcces.unauthorized.login(email, pass);
       setToken(token);
+
       if(stayLoggedIn)
       [
     saveCookieToken()
@@ -82,12 +84,12 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       //   saveCookie();
       // }
       // router.push({ path: '/Home', replace: true });
-      // toastStore.showSuccessMessage("Successfully logged in");
+      toastStore.showSuccessMessage("Succesfully logged in");
   
       return true;
     } catch (error) {
       console.error(error);
-      // toastStore.showErrorMessage("Couldn't Login, " + error);
+      toastStore.showErrorMessage("Couldn't Login, " + error);
   
       return false;
     }
@@ -180,6 +182,8 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     }
   catch(ex:any){
     toastStore.showErrorMessage(ex)
+    toastStore.showErrorMessage("Couldn't register")
+
   }
   }
   
