@@ -81,7 +81,9 @@
   } from '@vuelidate/validators'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import { useToastStore } from '@/stores/ToastStore'
+import { useRouter } from 'vue-router'
 
+  const router = useRouter();
   const activeUserStore = useActiveUserStore()
   const toastStore = useToastStore()
   const dataState = reactive({
@@ -117,7 +119,7 @@
             dataState.email,
             dataState.nickname,
             dataState.password
-          )
+          ).then(()=>{router.push("Home")})
         else toastStore.showErrorMessage('Incorrect registration data provided')
       })
       .catch(() => {
