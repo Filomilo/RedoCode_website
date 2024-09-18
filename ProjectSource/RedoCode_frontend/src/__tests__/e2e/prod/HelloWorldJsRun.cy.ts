@@ -13,6 +13,9 @@ describe('hello world js run ', () => {
     UrlControls.startPage()
 
     SwitcherControls.switchPlayground()
+    SwitcherControls.switchPlayground()
+    cy.reload()
+    SwitcherControls.switchPlayground()
     CodeRunnerPanel.selectInitialLanguage('js')
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(helloWorldProgram)
