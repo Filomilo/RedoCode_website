@@ -34,6 +34,7 @@ public class CodeRunHandler {
   // global config
   public void runExerciseIdCode(
       Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) {
+
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
     log.info(user + " runExerciseIdCode " + exerciseIdToRunMessage);

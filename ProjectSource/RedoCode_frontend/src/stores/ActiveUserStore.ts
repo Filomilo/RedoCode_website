@@ -236,7 +236,20 @@ else{
   loadFromSession();
 }
 
-
+const apiConnectionStore = useApiConnectionStore()
+const codeRunnerStore = useCodeRunnerStore()
+apiConnectionStore.stompApiConnection.addOnConnectEvent(() => {
+  const token=getToken();
+  if(token!=null){
+    const strToken: string= token as string;
+  console.log('on connected userAuhtenticaton: ' + JSON.stringify(getToken()))
+  if (strToken.length > 0) {
+    apiConnectionStore.stompApiSender.authenticationStomp({
+      token: strToken,
+    })
+  }
+  codeRunnerStore.codeRunnerConnection.updateCodeRunner()}
+})
   
 
 //#endregion
