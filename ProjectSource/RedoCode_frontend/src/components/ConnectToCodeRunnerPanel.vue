@@ -8,7 +8,7 @@
   <div    v-if="ApiConnectionStore.stompApiConnection.isActive">trying to establish connection to api</div>
     <div
       class="LoginPanelConatiner"
-    v-if="!ApiConnectionStore.stompApiConnection.isActive"
+    v-else
     >
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
@@ -56,7 +56,12 @@ import { stringify } from 'flatted'
   const refreshKey=computed(()=>{
     return ApiConnectionStore.stompApiConnection.isActive?"Activated coonn":"not activated";
   })
-
+  watch(
+      () => ApiConnectionStore.stompApiConnection.isActive, 
+      (newValue, oldValue) => {
+        if (!newValue) {
+          window.location.reload();
+        }})
   const props = defineProps({
     languageChoicesSelection: {
       type: Array as () => codeRunnerType[],
