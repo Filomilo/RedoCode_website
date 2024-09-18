@@ -8,7 +8,7 @@
   <div    v-if="ApiConnectionStore.stompApiConnection.isActive">trying to establish connection to api</div>
     <div
       class="LoginPanelConatiner"
-     v-else
+    v-if="!ApiConnectionStore.stompApiConnection.isActive"
     >
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
