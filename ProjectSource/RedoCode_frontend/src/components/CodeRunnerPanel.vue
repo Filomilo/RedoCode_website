@@ -2,12 +2,14 @@
 
 <template>
   <div class="PlayGroundBase">
+    
     <Dialog
       :visible="false"
       modal
       header="Edit Profile"
       :style="{ width: '25rem' }"
     >
+    
       <template #container>
         <div class="CodeRunnerLoadingPanel" id="data-loading-dialog">
           <LoadingIndicator />

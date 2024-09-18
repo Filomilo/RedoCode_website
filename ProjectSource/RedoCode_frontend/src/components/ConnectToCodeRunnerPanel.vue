@@ -3,6 +3,8 @@
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
+  {{  stringify(ApiConnectionStore.stompApiConnection.isActive) }}
+
     <div
       class="LoginPanelConatiner"
       v-if="!ApiConnectionStore.stompApiConnection.isActive"
@@ -11,6 +13,9 @@
         your start coding you need to connect to a code runner, this can be
         changed latert
       </div>
+      test
+      {{  stringify(ApiConnectionStore.stompApiConnection.isActive) }}
+
       <Dropdown
         v-model="chosenLangague"
         :options="laguageDropDown"
@@ -21,6 +26,7 @@
         optionLabel="label"
         optionValue="value"
       />
+      
       <Button
         class="BasicButton"
         label="Connect"
@@ -42,6 +48,8 @@
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import { languageChoices } from '@/config/Data'
   import LangaugeSelection from '@/tools/LangaugeSelection'
+import { stringify } from 'flatted'
+
 
   const ApiConnectionStore = useApiConnectionStore()
   const props = defineProps({
