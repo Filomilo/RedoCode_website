@@ -153,7 +153,9 @@ class ExecutionChainController implements ExecutionChainControls {
   }
 
   public close() {
+    console.log("Execution Chain close")
     if (this.isAllSolved || import.meta.env.MODE === 'development') {
+      console.log("Execution Chain close sUCCES")
       this.onCloseSucces()
     }
     this.reset()
