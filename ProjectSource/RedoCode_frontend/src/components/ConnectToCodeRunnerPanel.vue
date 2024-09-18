@@ -7,7 +7,7 @@
 
     <div
       class="LoginPanelConatiner"
-      v-if="!ApiConnectionStore.stompApiConnection.isActive"
+      v-if="!isCOnnectedToApi"
     >
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
   import LanguageDropdown from './LanguageDropdown.vue'
-  import { computed, Ref, ref, ComputedRef } from 'vue'
+  import { computed, Ref, ref, ComputedRef,watch } from 'vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import { languageDropDownType } from '@/types/CodeRunnerTypes'
@@ -52,6 +52,15 @@ import { stringify } from 'flatted'
 
 
   const ApiConnectionStore = useApiConnectionStore()
+  const isCOnnectedToApi=ref(ApiConnectionStore.stompApiConnection.isActive)
+
+  watch(
+      () => ApiConnectionStore.stompApiConnection.isActive, // Watch the reactive value
+      (newValue) => {
+        // Update the local reactive value based on the change
+        isCOnnectedToApi.value = newValue;
+      }
+    );
   const props = defineProps({
     languageChoicesSelection: {
       type: Array as () => codeRunnerType[],
