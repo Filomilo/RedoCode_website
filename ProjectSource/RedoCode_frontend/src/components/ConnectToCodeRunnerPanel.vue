@@ -1,5 +1,6 @@
 <template>
   <div
+  :key="refreshKey"
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
@@ -53,6 +54,9 @@ import { stringify } from 'flatted'
 
   const ApiConnectionStore = useApiConnectionStore()
   const isNotCOnnectedToApi = computed(() => !ApiConnectionStore.stompApiConnection.isActive)
+  const refreshKey=computed(()=>{
+    return ApiConnectionStore.stompApiConnection.isActive?"Activated coonn":"not activated";
+  })
 
   const props = defineProps({
     languageChoicesSelection: {
