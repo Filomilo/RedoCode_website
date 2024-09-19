@@ -6,6 +6,7 @@ import CodeRunnerType from './types/CodeRunnerTypes'
 import VarType from './types/VarType'
 import SolutionsData from './types/ApiMesseages/SolutionsData'
 import ResultData from './types/ApiMesseages/ResultData'
+import StatisticMessage from './types/ApiMesseages/StatisticMessage'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -268,6 +269,50 @@ export function makeServer({ environment = 'development' } = {}) {
     SolutionRanking: 5,
   }
 
+
+  const statsData: StatisticMessage={
+    LanguageUse: [
+      {
+        name: 'java',
+        amount: 4
+      },
+      {
+        name: 'cpp',
+        amount: 9
+      }
+    ],
+    amountOfLatelyDone: [
+      {
+        date: new Date(2024,4,13),
+        amount: 1
+      },
+      {
+        date: new Date(2024,4,14),
+        amount: 2
+      },
+      {
+        date: new Date(2024,4,15),
+        amount: 3
+      },
+      {
+        date: new Date(2024,4,16),
+        amount: 4
+      },
+      {
+        date: new Date(2024,4,17),
+        amount: 5
+      },
+      {
+        date: new Date(2024,4,18),
+        amount: 6
+      },
+      {
+        date: new Date(2024,4,19),
+        amount: 7
+      }
+    ]
+  }
+
   const exerciseListHandler = (schema: any, request: any) => {
     const req: ExerciseListRequestMessage = request.queryParams
     const start: number = (req.page - 1) * req.rowsPerPage
@@ -286,6 +331,14 @@ export function makeServer({ environment = 'development' } = {}) {
 
     return solutionData
   }
+
+
+  const userStatsDataHandler = (schema: any, request: any) => {
+    console.log('solutionsDataHandler ' + JSON.stringify(request))
+
+    return statsData
+  }
+
   const resultDataHandler = (schema: any, request: any) => {
     console.log('resultDataHandler ' + JSON.stringify(request))
 
@@ -322,6 +375,12 @@ export function makeServer({ environment = 'development' } = {}) {
         'http://localhost:8080/secure/exercises/solutions',
         solutionsDataHandler
       )
+
+      this.get(
+        'http://localhost:8080/secure/user/stats',
+        userStatsDataHandler
+      )
+
       this.get(
         'http://localhost:8080/secure/exercises/solutionsCodes',
         solutionsCodesDataHandler

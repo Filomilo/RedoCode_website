@@ -4,6 +4,7 @@ import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest
 import ExcerciseDataMessage from '@/types/ApiMesseages/ExcerciseDataMessage'
 import ResultData from '@/types/ApiMesseages/ResultData'
 import SolutionsData from '@/types/ApiMesseages/SolutionsData'
+import StatisticMessage from '@/types/ApiMesseages/StatisticMessage'
 import CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
@@ -278,7 +279,18 @@ namespace EndpointAcces {
     }
 
 
+    export async function getUserStatisticData(): Promise<StatisticMessage>{
+      console.log("getUserStatisticData")
+      const response = await axios.get(
+        '/secure/user/stats'
+      )
 
+      console.log(
+        'getUserStatisticData: response.data ' +
+          JSON.stringify(response.data)
+      )
+      return response.data
+    }
 
   }
 }

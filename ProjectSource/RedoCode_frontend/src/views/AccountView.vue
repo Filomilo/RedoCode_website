@@ -56,17 +56,8 @@
       </div>
       <div class="SettingContentPanel">
         <div v-if="screenSelected === Panels.STATISTIC">
-          <div>
-            <div class="chartTitle">Usage of langauges</div>
-
-            <Chart type="doughnut" :data="data" class="chartStyle" />
+        <StatisitcPanel/>
           </div>
-          <div>
-            <div class="chartTitle">Execises done last week</div>
-            <Chart type="bar" :data="barData" class="chartStyle" />
-          </div>
-        </div>
-
         <div v-if="screenSelected === Panels.SETTINGS">
           <div class="SettingContentRow">E-mail: e****@gmail.com</div>
           <div class="SettingContentRow">
@@ -91,6 +82,7 @@
   import IconEdit from '../assets/icons/IconEdit.vue'
   import { useActiveUserStore } from '../stores/ActiveUserStore'
   import router from '@/router'
+  import StatisitcPanel from '@/components/StatisitcPanel.vue'
   import { useToastStore } from '@/stores/ToastStore'
 import profilePicImageResolve from '@/tools/ImageResolve'
   const activeUserStore = useActiveUserStore()
@@ -130,7 +122,7 @@ import profilePicImageResolve from '@/tools/ImageResolve'
     SETTINGS,
   }
 
-  const screenSelected: Ref<Panels> = ref(Panels.SETTINGS)
+  const screenSelected: Ref<Panels> = ref(Panels.STATISTIC)
   const setPanel = (type: Panels) => {
     console.log('select')
     screenSelected.value = type
