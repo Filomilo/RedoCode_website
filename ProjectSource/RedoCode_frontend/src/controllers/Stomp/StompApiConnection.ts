@@ -41,10 +41,10 @@ export default class StompApiConnection {
         console.log(connectionUrl + ' beforeConnect')
         this._onBeforeConnection()
       },
-      onConnect: (frame: IFrame) => {
+      onConnect: async (frame: IFrame) => {
         console.log(connectionUrl + ' on connect')
-        this._subscriptions.forEach((sub: StompApiSubscription) => {
-          sub.activateSubscription()
+        this._subscriptions.forEach(async (sub: StompApiSubscription) => {
+         await sub.activateSubscription()
         })
 
         this._onConnected()

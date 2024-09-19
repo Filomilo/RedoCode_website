@@ -1,16 +1,22 @@
 <template>
   <div
+  :key="refreshKey"
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
+  {{  stringify(ApiConnectionStore.stompApiConnection.isActive) }}
+  <div    v-if="ApiConnectionStore.stompApiConnection.isActive">trying to establish connection to api</div>
     <div
       class="LoginPanelConatiner"
-      v-if="!ApiConnectionStore.stompApiConnection.isActive"
+    v-if="!ApiConnectionStore.stompApiConnection.isActive"
     >
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
         changed latert
       </div>
+      test
+      {{  stringify(ApiConnectionStore.stompApiConnection.isActive) }}
+
       <Dropdown
         v-model="chosenLangague"
         :options="laguageDropDown"
@@ -21,6 +27,7 @@
         optionLabel="label"
         optionValue="value"
       />
+      
       <Button
         class="BasicButton"
         label="Connect"
@@ -29,21 +36,27 @@
         :disabled="!allowConnection"
       />
     </div>
-    <div v-else>trying to establish connection to api</div>
+
   </div>
 </template>
 
 <script setup lang="ts">
   import LanguageDropdown from './LanguageDropdown.vue'
-  import { computed, Ref, ref, ComputedRef } from 'vue'
+  import { computed, Ref, ref, ComputedRef,watch } from 'vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import { languageDropDownType } from '@/types/CodeRunnerTypes'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import { languageChoices } from '@/config/Data'
   import LangaugeSelection from '@/tools/LangaugeSelection'
+import { stringify } from 'flatted'
+
 
   const ApiConnectionStore = useApiConnectionStore()
+  const refreshKey=computed(()=>{
+    return ApiConnectionStore.stompApiConnection.isActive?"Activated coonn":"not activated";
+  })
+
   const props = defineProps({
     languageChoicesSelection: {
       type: Array as () => codeRunnerType[],

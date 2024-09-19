@@ -68,6 +68,7 @@
   })
   onMounted(() => {})
   const onSuccesCrated = () => {
+    console.log("Exercise VIew onSuccesCrated")
     router.replace({ name: 'Results', params: route.params })
   }
 

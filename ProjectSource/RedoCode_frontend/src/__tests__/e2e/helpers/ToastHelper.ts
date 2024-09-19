@@ -17,5 +17,15 @@ namespace ToastHelper {
 
       .should('have.length.at.least', 1)
   }
+
+  export function WaitForShowingAndClosingToast() {
+    try{
+    ToastHelper.shouldToastAtLeastOne()}
+    catch(ex)
+    {
+      cy.log("continue")
+    }
+    ToastHelper.shouldToastNo()
+    }
 }
 export default ToastHelper

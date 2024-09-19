@@ -22,21 +22,21 @@ export default class StompApiSubscription {
     this.subscriptionLocation = subscriptionLocation
   }
 
-  private setupSubscription() {
+  private async setupSubscription() {
     this.stompSubscription = this.stompClient.subscribe(
       this.subscriptionLocation,
-      (message: IMessage) => {
+     async (message: IMessage) => {
         console.log(
           'received message from subscription: ' + this.subscriptionLocation
         )
         const messageObject: Object = JSON.parse(message.body)
-        this.onSubscriptionMethod(messageObject)
+      await this.onSubscriptionMethod(messageObject)
       }
     )
   }
 
-  activateSubscription() {
-    this.setupSubscription()
+  async activateSubscription() {
+   await this.setupSubscription()
   }
 
   deactivateSubscription() {

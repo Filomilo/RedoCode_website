@@ -76,7 +76,7 @@
 
   const onCommentButton = () => {
     EndpointAcces.authorized
-      .postComment(commentInput.value, props.id, ActiveUserStore.getToken())
+      .postComment(commentInput.value, props.id)
       .then(x => {
         console.log('token: ' + JSON.stringify(x))
         if (x < 200 || x > 201) {
