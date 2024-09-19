@@ -17,19 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/secure/user")
 public class UserDataController {
 
-  @Autowired
-  UsersRepository usersRepository;
+  @Autowired UsersRepository usersRepository;
 
   @GetMapping("/info")
   public ResponseEntity<AccountInfoMessage> getAccountInfo(@AuthenticationPrincipal User user) {
-    User userFromDb=usersRepository.findById(user.getId()).orElse(null);
+    User userFromDb = usersRepository.findById(user.getId()).orElse(null);
     AccountInfoMessage accountInfoMessage =
         AccountInfoMessage.builder()
             .mail(userFromDb.getEmail())
             .nickname(userFromDb.getNickname())
             .type(userFromDb.getType())
             .profilePicture(
-                    userFromDb.getProfilePicture() == null ? "" : userFromDb.getProfilePicture().getUrl())
+                userFromDb.getProfilePicture() == null
+                    ? ""
+                    : userFromDb.getProfilePicture().getUrl())
             .build();
     return new ResponseEntity<>(accountInfoMessage, HttpStatus.OK);
   }
