@@ -1,6 +1,9 @@
 package com.redocode.backend.database;
 
+import com.redocode.backend.Messages.LanguageUsePart;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -27,4 +30,19 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
   int countAllByExcersizeId(Long exerciseId);
 
   int countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(Long exerciseId, Long avgExecutionTime);
+
+
+
+  @Query("""
+  SELECT new com.redocode.backend.Messages.LanguageUsePart(pl.name, COUNT(e))
+    FROM SolutionPrograms sp
+    JOIN Excersize e ON sp.solutionAuthor != e.author
+    JOIN ProgrammingLanguage pl ON sp.language.id = pl.id
+    WHERE sp.solutionAuthor.id = :authorId
+    GROUP BY pl.name
+    """)
+  List<LanguageUsePart> findLanguageAmountForExercsieNotMadeThisUser(@Param("authorId") Long authorId);
+
+  List<SolutionPrograms> findAllBySolutionAuthorId(Long author);
+
 }

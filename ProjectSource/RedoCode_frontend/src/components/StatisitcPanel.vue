@@ -1,7 +1,7 @@
 <template>
 
 <main>
-
+{{ piehartData }}
 <div class="titleContainer">
   <label class="title">
     Amount of language used
@@ -17,7 +17,7 @@
     </label>
   
   </div>
-  <div class="statContainer barContainer" v-if="piehartData!==undefined">
+  <div class="statContainer barContainer" v-if="latelyDoneData!==undefined">
     <Bar  :data="latelyDoneData" :options="barOptions" />
 </div>
      
@@ -37,25 +37,27 @@ import {
   Title,
   BarElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
+  
 } from 'chart.js'
 import { color } from 'chart.js/helpers';
+import { scale } from 'chroma-js';
 const StatData: Ref<StatisticMessage| undefined>=ref();
 
 
 const piehartData = computed(() => {
 
-  if(StatData.value===undefined)
+  if(StatData.value===undefined || StatData.value.languageUse.length===0 )
   return undefined;
 
   return {
-    labels: StatData.value?.LanguageUse.map(x=> x.name),
+    labels: StatData.value?.languageUse.map(x=> x.name),
     datasets:[
       {
         label: 'Amount of exercises done',
 
         backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-        data: StatData.value?.LanguageUse.map(x=> x.amount)
+        data: StatData.value?.languageUse.map(x=> x.amount)
       }
     ]
   }
@@ -85,7 +87,7 @@ const latelyDoneData = computed(() => {
 
 
 
-ChartJS.register(ArcElement, Tooltip, Legend,BarElement)
+ChartJS.register(ArcElement, Tooltip, Legend,BarElement,CategoryScale,LinearScale  )
 // ChartJS.register( BarElement, Title, Tooltip, Legend)
 
 

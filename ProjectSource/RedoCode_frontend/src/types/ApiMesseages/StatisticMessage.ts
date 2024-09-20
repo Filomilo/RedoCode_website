@@ -6,13 +6,6 @@ export interface langaugeUsePart{
 
 export type LanguageUse= langaugeUsePart[]
 
-
-
-
-
-
-
-
 export interface amountOfLatlyDonePart{
     date: Date,
     amount: number
@@ -23,6 +16,6 @@ export type amountOfLatlyDone= amountOfLatlyDonePart[]
 
 
 export default interface StatisticMessage{
-    LanguageUse: LanguageUse,
+    languageUse: LanguageUse,
     amountOfLatelyDone: amountOfLatlyDone
 }

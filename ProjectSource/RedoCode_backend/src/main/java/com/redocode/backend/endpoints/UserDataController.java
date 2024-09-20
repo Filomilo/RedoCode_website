@@ -1,6 +1,8 @@
 package com.redocode.backend.endpoints;
 
 import com.redocode.backend.Messages.AccountInfoMessage;
+import com.redocode.backend.Messages.StatisticMessage;
+import com.redocode.backend.UserDataControllers.UserDataControl;
 import com.redocode.backend.database.User;
 import com.redocode.backend.database.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserDataController {
 
   @Autowired UsersRepository usersRepository;
-
+  @Autowired
+  UserDataControl userDataControl;
   @GetMapping("/info")
   public ResponseEntity<AccountInfoMessage> getAccountInfo(@AuthenticationPrincipal User user) {
     User userFromDb = usersRepository.findById(user.getId()).orElse(null);
@@ -33,5 +36,12 @@ public class UserDataController {
                     : userFromDb.getProfilePicture().getUrl())
             .build();
     return new ResponseEntity<>(accountInfoMessage, HttpStatus.OK);
+  }
+
+  @GetMapping("/stats")
+  public ResponseEntity<StatisticMessage> getUserStats(@AuthenticationPrincipal User user) {
+    User userFromDb = usersRepository.findById(user.getId()).orElse(null);
+    StatisticMessage statisticMessage = userDataControl.getUserStats(userFromDb.getId());
+    return new ResponseEntity<>(statisticMessage, HttpStatus.OK);
   }
 }
