@@ -93,16 +93,16 @@ class UserDataControlTest {
             int amountOFDoneWithThisLangauege= (int) solutionPrograms.stream().filter(x->x.getLanguage().getId()==programmingLanguage.getId()).count();
             assertEquals(amountOFDoneWithThisLangauege,languageUsePart.getAmount());
         }
-
-        for (int i = 0; i < 7; i++) {
+int index=0;
+        for (int i = 6; i >=0; i--) {
             int amountThatShouldBe=amounntOFExercsiesDoneTodayAndPreviousDay.get(i);
             LocalDate localDate = LocalDate.now();
             localDate = localDate.minusDays(i);
             LocalDateTime dateTimeAtZero = LocalDateTime.of(localDate, LocalTime.MIDNIGHT);
             Date dateShouldBe = Date.from(dateTimeAtZero.atZone(ZoneId.systemDefault()).toInstant());
-            assertEquals(amountThatShouldBe,statisticMessage.getAmountOfLatelyDone().get(i).getAmount());
-            assertEquals(0,dateShouldBe.toInstant().compareTo(statisticMessage.getAmountOfLatelyDone().get(i).getDate().toInstant()));
-
+            assertEquals(amountThatShouldBe,statisticMessage.getAmountOfLatelyDone().get(index).getAmount());
+            assertEquals(0,dateShouldBe.toInstant().compareTo(statisticMessage.getAmountOfLatelyDone().get(index).getDate().toInstant()));
+index++;
 
         }
 

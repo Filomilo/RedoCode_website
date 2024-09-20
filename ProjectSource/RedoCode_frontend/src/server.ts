@@ -271,7 +271,7 @@ export function makeServer({ environment = 'development' } = {}) {
 
 
   const statsData: StatisticMessage={
-    LanguageUse: [
+    languageUse: [
       {
         name: 'java',
         amount: 4

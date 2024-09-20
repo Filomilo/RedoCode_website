@@ -34,7 +34,7 @@ public class UserDataControl {
         List<AmountOfLatlyDonePart> AmountOfLatlyDoneParts=new ArrayList<AmountOfLatlyDonePart>();
         List<SolutionPrograms> solutionProgramsList=solutionProgramsRepository.findAllBySolutionAuthorId(userId);
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 6; i >=0 ; i--) {
             LocalDate localDateCurr = LocalDate.now();
             LocalDate localDateLowBound = localDateCurr.minusDays(i);
             LocalDate localDateUpperBound = localDateCurr.minusDays(i-1);
@@ -43,14 +43,9 @@ public class UserDataControl {
 
             Date dateLowBound = Date.from(dateTimeAtZeroLowBOund.atZone(ZoneId.systemDefault()).toInstant());
             Date dateUppBound = Date.from(dateTimeAtZeroUpBOund.atZone(ZoneId.systemDefault()).toInstant());
-            int count=0;
-            for (int j = 0; j < solutionProgramsList.size(); j++) {
-                SolutionPrograms solutionPrograms = solutionProgramsList.get(j);
-                if (solutionPrograms.getDate().before(dateUppBound) && !solutionPrograms.getDate().before(dateLowBound)) {
-                    count++;
-                }
-            }
-
+            long count=solutionProgramsList.stream()
+                    .filter(x-> x.getDate().before(dateUppBound) && !x.getDate().before(dateLowBound)&& x.getSolutionAuthor().getId()!=userId)
+                    .count();
             AmountOfLatlyDoneParts.add(
                     AmountOfLatlyDonePart.builder()
                             .amount(count)
@@ -58,12 +53,6 @@ public class UserDataControl {
                             .build()
             );
         }
-
-
-
-
-
-
         return StatisticMessage.builder()
                 .amountOfLatelyDone(AmountOfLatlyDoneParts)
                 .LanguageUse(

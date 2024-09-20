@@ -8,8 +8,11 @@
   </label>
 
 </div>
-  <div class="statContainer" v-if="piehartData!==undefined">
-          <Doughnut :data="piehartData" :options="pieCharOption" />
+  <div class="statContainer" >
+          <Doughnut :data="piehartData" :options="pieCharOption" v-if="piehartData!==undefined"/>
+          <div v-else class="noDataContainer" id="NoLanugageData">
+            No data, you need to first solve some exercises
+          </div>
   </div>
   <div class="titleContainer">
     <label class="title">
@@ -153,7 +156,14 @@ onMounted(() => {
   color: white;
 }
 
-
+.noDataContainer{
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  height: 100%;
+}
 
 
 .titleContainer{
