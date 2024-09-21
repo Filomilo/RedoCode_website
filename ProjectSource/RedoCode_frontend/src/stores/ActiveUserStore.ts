@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref, inject, watch } from 'vue'
+import { ref, computed, type Ref, inject, watch, toHandlerKey } from 'vue'
 import { useToastStore } from './ToastStore'
 import axios from 'axios'
 import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest'
@@ -56,7 +56,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   
   //#region account Data managing
   const accountInfo = ref(unAuthUser);
-  
+  const _token: Ref<string|null> = ref(null)
     const isLogged = computed(()=>{
       if (import.meta.env.MODE === 'development') {
           return true;
@@ -142,7 +142,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       console.log("AuthControlelr setToken: "+token)
       localStorage.setItem('jwtToken', token);
       console.log("sesssino token: "+  localStorage.getItem('jwtToken') )
-    
+      _token.value=token
       setupAxios();
       updateAccountData();
   
@@ -166,7 +166,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   //#region Login process
   
   const IsToken = computed(()=>{
-    return getToken()!==null &&  getToken()!==undefined &&  getToken()!==''
+    return _token.value!==null &&  _token.value!==undefined &&  _token.value!==''
   })
 
  async function  register(email: string, nickname: string, pass: string){

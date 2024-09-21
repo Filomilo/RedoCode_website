@@ -155,7 +155,7 @@
   const code: Ref<string> = ref('Write Code')
   const resultData = ref(basicResultTemplate)
 
-  const connectStomp = () => {
+  const connectStomp = async () => {
     ApiConnectionStore.stompApiConnection.activate()
   }
   const disconnectStomp = () => {
@@ -183,9 +183,11 @@
 
   onMounted(() => {
     console.log('props: ' + JSON.stringify(props))
+    console.log("Code runner init")
+    connectStomp()
     codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     // if (props.connectAtStart) {
-    connectStomp()
+
 
     ApiConnectionStore.stompApiSubsciptionContorller.addCodeResultsSubscription(
       props.onResults

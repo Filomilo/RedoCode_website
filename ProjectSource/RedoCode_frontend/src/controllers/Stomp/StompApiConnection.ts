@@ -1,6 +1,7 @@
 import { ActivationState, Client, IFrame, StompHeaders } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
 import { computed } from 'vue'
+import { log } from 'console'
 
 export default class StompApiConnection {
   userName: String | null = null
@@ -26,12 +27,13 @@ export default class StompApiConnection {
     connectionUrl: string,
     onBeforeConnection: () => void,
     onConnected: () => void,
-    onError: (mes: string) => void
+    onError: (mes: string) => void,
+    onDisconnected: () => void,
   ) {
     this._onBeforeConnection = onBeforeConnection
     this._onError = onError
     this.addOnConnectEvent(onConnected)
-
+    this,this.addOnDisconnectEvent(onDisconnected)
     this._stompClient = new Client({
       brokerURL: connectionUrl,
       connectHeaders: {
@@ -42,7 +44,7 @@ export default class StompApiConnection {
         this._onBeforeConnection()
       },
       onConnect: async (frame: IFrame) => {
-        console.log(connectionUrl + ' on connect')
+        console.log(connectionUrl + ' on connect: '+ this._stompClient.active)
         this._subscriptions.forEach(async (sub: StompApiSubscription) => {
          await sub.activateSubscription()
         })
@@ -79,6 +81,7 @@ export default class StompApiConnection {
   }
 
   public activate() {
+    console.log("Activaitng stomp client")
     this._stompClient.activate()
   }
 
@@ -91,13 +94,6 @@ export default class StompApiConnection {
     this._stompClient.deactivate()
   }
 
-  public getIsActive() {
-    this._stompClient.active
-  }
-
-  public isActive = computed(() => {
-    return this._stompClient.active
-  })
 
   public subscribe(
     location: string,

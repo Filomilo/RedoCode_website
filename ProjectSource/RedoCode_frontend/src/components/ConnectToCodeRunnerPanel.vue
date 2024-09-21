@@ -4,18 +4,18 @@
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
-  {{  stringify(ApiConnectionStore.stompApiConnection.isActive) }}
-  <div    v-if="ApiConnectionStore.stompApiConnection.isActive">trying to establish connection to api</div>
+  {{  stringify(ApiConnectionStore.isConnected) }}
+  <div    v-if="!ApiConnectionStore.isConnected">trying to establish connection to api</div>
     <div
       class="LoginPanelConatiner"
-    v-if="!ApiConnectionStore.stompApiConnection.isActive"
+    v-else
     >
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
         changed latert
       </div>
       test
-      {{  stringify(ApiConnectionStore.stompApiConnection.isActive) }}
+      {{  stringify(ApiConnectionStore.isConnected) }}
 
       <Dropdown
         v-model="chosenLangague"
@@ -36,7 +36,7 @@
         :disabled="!allowConnection"
       />
     </div>
-
+{{ ApiConnectionStore.isConnected }}
   </div>
 </template>
 
@@ -50,11 +50,13 @@
   import { languageChoices } from '@/config/Data'
   import LangaugeSelection from '@/tools/LangaugeSelection'
 import { stringify } from 'flatted'
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
 
   const ApiConnectionStore = useApiConnectionStore()
+  const ActiveUserStore= useActiveUserStore();
   const refreshKey=computed(()=>{
-    return ApiConnectionStore.stompApiConnection.isActive?"Activated coonn":"not activated";
+    return ApiConnectionStore.isConnected?"Activated coonn":"not activated";
   })
 
   const props = defineProps({
@@ -67,7 +69,7 @@ import { stringify } from 'flatted'
   const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
 
   const allowConnection = computed(() => {
-    return chosenLangague.value != codeRunnerType.UNIDENTIFIED
+    return chosenLangague.value != codeRunnerType.UNIDENTIFIED  && ApiConnectionStore.isConnected
   })
 
   const codeRunnerStore = useCodeRunnerStore()
