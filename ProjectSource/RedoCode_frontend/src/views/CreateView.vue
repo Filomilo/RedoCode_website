@@ -79,7 +79,7 @@
   import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
-
+  import StatisitcPanel from '@/components/StatisitcPanel.vue'
   import { useRouter } from 'vue-router'
   import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
   const ToastStore = useToastStore()

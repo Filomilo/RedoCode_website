@@ -9,6 +9,11 @@ import StompApiSender from '@/controllers/Stomp/StompApiSender'
 import StompApiSubsriptionsController from '@/controllers/Stomp/StompApiSubsriptionsController'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
+
+  const isConnected=ref(false);
+  if (import.meta.env.MODE === 'development') {
+    isConnected.value=true;
+  }
   const toastStore = useToastStore()
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
@@ -17,9 +22,16 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     },
     () => {
       toastStore.showSuccessMessage('successfully connected')
+
+      isConnected.value=true;
+      console.log("on connected settign value: "+isConnected.value)
     },
     (message: string) => {
       toastStore.showErrorMessage(message)
+    }   , () => {
+      
+      isConnected.value=false;
+      console.log("on disconcneted settign value: "+isConnected.value)
     }
   )
 
@@ -28,34 +40,16 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const stompApiSubsciptionContorller: StompApiSubsriptionsController =
     new StompApiSubsriptionsController(stompApiConnection)
 
-  // let onCodeResult = (result: ProgramResultsMessage): void => {}
 
-  // const setOnCodeResult = (
-  //   func: (result: ProgramResultsMessage) => void
-  // ): void => {
-  //   onCodeResult = func
-  // }
-  // const clearOnCodeResult = () => {
-  //   onCodeResult = (result: ProgramResultsMessage) => {}
-  // }
+  
 
-  // connectionDestinnation
 
-  // const sendHealthCheck = () => {
-  //   stompApiConnection.sendMessage('/public/app/Health', 'messaaage')
-  // }
-
-  // const codeRunnerConnectionControler= ref(new CodeRunnerConnectionControler());
-  // const doesHaveACtiveToCodeRunner = computed(() => {
-  //     // return true;
-  //     return codeRunnerConnectionControler.value.codeRunnerActive.state === 'ACTIVE'
-  //   })
-  //   const isAwaitngCodeRunner = computed(() => codeRunnerConnectionControler.value.codeRunnerActive.state == 'AWAITING')
 
   return {
     stompApiSender,
     stompApiSubsciptionContorller,
     stompApiConnection,
+    isConnected
     // codeRunnerConnection,
     // setOnCodeResult,
     // clearOnCodeResult,

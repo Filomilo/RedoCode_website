@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "Solution_programs")
 @ToString
@@ -37,4 +39,6 @@ public class SolutionPrograms {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "solution_author")
   private User solutionAuthor;
+
+  @NotNull private Date date=new Date();
 }

@@ -114,6 +114,7 @@ class AuthenticatedExcecisesEndpointsTest {
               .code("Code_" + UUID.randomUUID().toString())
               .excersize(saved)
               .solutionAuthor(user)
+                  .date(new Date())
               .language(
                   programmingLanguageRepository.findByName(
                       RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(
@@ -267,6 +268,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .avgExecutionTime(999999999l)
             .excersize(exerciseRepository.getReferenceById(this.exerciseID))
             .code("Code_" + UUID.randomUUID().toString())
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
     Map<String, Long> params = new HashMap<>();
@@ -384,6 +386,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(this.exerciseID))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
@@ -452,6 +455,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(1l))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
@@ -476,6 +480,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(this.exerciseID))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
@@ -506,6 +511,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(this.exerciseID))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
@@ -536,6 +542,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(this.exerciseID))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
@@ -570,6 +577,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(1l))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
@@ -602,6 +610,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(this.exerciseID))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 
@@ -713,6 +722,7 @@ class AuthenticatedExcecisesEndpointsTest {
             .language(programmingLanguageRepository.getReferenceById(1l))
             .excersize(exerciseRepository.getReferenceById(1l))
             .avgExecutionTime(100l)
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionPrograms);
 

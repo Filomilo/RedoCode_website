@@ -15,10 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,6 +58,7 @@ class UnsolvedDatabaseTestsHandlerTest {
             .language(programmingLanguageRepository.findByName("cpp"))
             .excersize(excersize)
             .avgExecutionTime(100L)
+                .date(new Date())
             .solutionAuthor(usersRepository.getReferenceById(1l))
             .build();
     solutionProgramsRepository.save(solutionPrograms);

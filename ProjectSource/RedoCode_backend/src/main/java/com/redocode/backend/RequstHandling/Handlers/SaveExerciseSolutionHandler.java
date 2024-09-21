@@ -13,6 +13,8 @@ import com.redocode.backend.database.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+
 public class SaveExerciseSolutionHandler extends MessageRequestHandler {
 
   private static final SolutionProgramsRepository solutionProgramsRepository =
@@ -75,6 +77,7 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
             .excersize(exerciseRepository.getReferenceById(exerciseIdRequest.getIdOfExercise()))
             .avgExecutionTime(avgExecutionTime)
             .solutionAuthor(request.getUser())
+                .date(new Date())
             .build();
     solutionProgramsRepository.save(solutionProgram);
     this.nodeUpdate(request, "Saved solution", ChainNodeInfo.CHAIN_NODE_STATUS.SUCCESS);

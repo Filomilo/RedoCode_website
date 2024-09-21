@@ -15,10 +15,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE.CPP_RUNNER;
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,6 +65,7 @@ class RunExerciseIdCode {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
             .avgExecutionTime(100L)
+                .date(new Date())
             .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
     solutionProgramsRepository.save(
@@ -79,6 +77,7 @@ class RunExerciseIdCode {
                         CODE_RUNNER_TYPE.JS_RUNNER)))
             .avgExecutionTime(100L)
             .excersize(excersize)
+                .date(new Date())
             .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
   }
