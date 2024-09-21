@@ -36,9 +36,10 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
   @Query("""
   SELECT new com.redocode.backend.Messages.LanguageUsePart(pl.name, COUNT(e))
     FROM SolutionPrograms sp
-    JOIN Excersize e ON sp.solutionAuthor != e.author
+    JOIN Excersize e ON sp.solutionAuthor = e.author
     JOIN ProgrammingLanguage pl ON sp.language.id = pl.id
     WHERE sp.solutionAuthor.id = :authorId
+    AND e.author.id != :authorId
     GROUP BY pl.name
     """)
   List<LanguageUsePart> findLanguageAmountForExercsieNotMadeThisUser(@Param("authorId") Long authorId);
