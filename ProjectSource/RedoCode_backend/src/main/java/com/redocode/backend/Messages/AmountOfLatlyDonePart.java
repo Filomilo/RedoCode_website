@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
-public class AmountOfLatlyDonePart{
-    private Date date;
-    private long amount;
+public class AmountOfLatlyDonePart {
+  private Date date;
+  private long amount;
 }

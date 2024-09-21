@@ -31,6 +31,6 @@ public class Comment {
 
   @NonNull @NotBlank private String comment;
 
-  @NonNull
-  private Date date= new Date();;
+  @NonNull private Date date = new Date();
+  ;
 }

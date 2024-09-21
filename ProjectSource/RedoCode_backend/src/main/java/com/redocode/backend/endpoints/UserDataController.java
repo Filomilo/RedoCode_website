@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserDataController {
 
   @Autowired UsersRepository usersRepository;
-  @Autowired
-  UserDataControl userDataControl;
+  @Autowired UserDataControl userDataControl;
+
   @GetMapping("/info")
   public ResponseEntity<AccountInfoMessage> getAccountInfo(@AuthenticationPrincipal User user) {
     User userFromDb = usersRepository.findById(user.getId()).orElse(null);

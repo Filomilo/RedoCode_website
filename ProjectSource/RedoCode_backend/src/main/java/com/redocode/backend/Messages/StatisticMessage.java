@@ -1,15 +1,12 @@
 package com.redocode.backend.Messages;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.Date;
 import java.util.List;
 
 @Value
@@ -20,8 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class StatisticMessage {
 
-
-    private List<LanguageUsePart> LanguageUse;
-    private List<AmountOfLatlyDonePart> amountOfLatelyDone;
-
+  private List<LanguageUsePart> LanguageUse;
+  private List<AmountOfLatlyDonePart> amountOfLatelyDone;
 }

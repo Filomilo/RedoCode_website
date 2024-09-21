@@ -65,7 +65,7 @@ class RunExerciseIdCode {
                     RedoCodeObjectMapper.CodeRunnerToDataBaseLanguageName(CPP_RUNNER)))
             .excersize(excersize)
             .avgExecutionTime(100L)
-                .date(new Date())
+            .date(new Date())
             .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
     solutionProgramsRepository.save(
@@ -77,7 +77,7 @@ class RunExerciseIdCode {
                         CODE_RUNNER_TYPE.JS_RUNNER)))
             .avgExecutionTime(100L)
             .excersize(excersize)
-                .date(new Date())
+            .date(new Date())
             .solutionAuthor(usersRepository.getReferenceById(1l))
             .build());
   }

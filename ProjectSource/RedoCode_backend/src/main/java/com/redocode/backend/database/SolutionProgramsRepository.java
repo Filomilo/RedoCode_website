@@ -31,19 +31,18 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
 
   int countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(Long exerciseId, Long avgExecutionTime);
 
-
-
-  @Query("""
-  SELECT new com.redocode.backend.Messages.LanguageUsePart(pl.name, COUNT(e))
-    FROM SolutionPrograms sp
-    LEFT JOIN Excersize e ON sp.excersize.id = e.id
-    LEFT JOIN ProgrammingLanguage pl ON sp.language.id = pl.id
-    WHERE sp.solutionAuthor.id = :authorId
-    AND e.author.id != :authorId
-    GROUP BY pl.name
-    """)
-  List<LanguageUsePart> findLanguageAmountForExercsieNotMadeThisUser(@Param("authorId") Long authorId);
+  @Query(
+      """
+      SELECT new com.redocode.backend.Messages.LanguageUsePart(pl.name, COUNT(e))
+        FROM SolutionPrograms sp
+        LEFT JOIN Excersize e ON sp.excersize.id = e.id
+        LEFT JOIN ProgrammingLanguage pl ON sp.language.id = pl.id
+        WHERE sp.solutionAuthor.id = :authorId
+        AND e.author.id != :authorId
+        GROUP BY pl.name
+      """)
+  List<LanguageUsePart> findLanguageAmountForExercsieNotMadeThisUser(
+      @Param("authorId") Long authorId);
 
   List<SolutionPrograms> findAllBySolutionAuthorId(Long author);
-
 }

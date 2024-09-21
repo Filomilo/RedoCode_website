@@ -13,7 +13,7 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
-public class LanguageUsePart{
-    private String name;
-    private long amount;
+public class LanguageUsePart {
+  private String name;
+  private long amount;
 }

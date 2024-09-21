@@ -21,45 +21,44 @@ import java.util.List;
 @Service
 public class UserDataControl {
 
-    @Autowired
-    ExerciseRepository exerciseRepository;
+  @Autowired ExerciseRepository exerciseRepository;
 
+  @Autowired private SolutionProgramsRepository solutionProgramsRepository;
 
-    @Autowired
-    private SolutionProgramsRepository solutionProgramsRepository;
+  public StatisticMessage getUserStats(long userId) {
 
-    public StatisticMessage getUserStats(long userId)
-    {
+    List<AmountOfLatlyDonePart> AmountOfLatlyDoneParts = new ArrayList<AmountOfLatlyDonePart>();
+    List<SolutionPrograms> solutionProgramsList =
+        solutionProgramsRepository.findAllBySolutionAuthorId(userId);
 
-        List<AmountOfLatlyDonePart> AmountOfLatlyDoneParts=new ArrayList<AmountOfLatlyDonePart>();
-        List<SolutionPrograms> solutionProgramsList=solutionProgramsRepository.findAllBySolutionAuthorId(userId);
+    for (int i = 6; i >= 0; i--) {
+      LocalDate localDateCurr = LocalDate.now();
+      LocalDate localDateLowBound = localDateCurr.minusDays(i);
+      LocalDate localDateUpperBound = localDateCurr.minusDays(i - 1);
+      LocalDateTime dateTimeAtZeroLowBOund =
+          LocalDateTime.of(localDateLowBound, LocalTime.MIDNIGHT);
+      LocalDateTime dateTimeAtZeroUpBOund =
+          LocalDateTime.of(localDateUpperBound, LocalTime.MIDNIGHT);
 
-        for (int i = 6; i >=0 ; i--) {
-            LocalDate localDateCurr = LocalDate.now();
-            LocalDate localDateLowBound = localDateCurr.minusDays(i);
-            LocalDate localDateUpperBound = localDateCurr.minusDays(i-1);
-            LocalDateTime dateTimeAtZeroLowBOund = LocalDateTime.of(localDateLowBound, LocalTime.MIDNIGHT);
-            LocalDateTime dateTimeAtZeroUpBOund = LocalDateTime.of(localDateUpperBound, LocalTime.MIDNIGHT);
-
-            Date dateLowBound = Date.from(dateTimeAtZeroLowBOund.atZone(ZoneId.systemDefault()).toInstant());
-            Date dateUppBound = Date.from(dateTimeAtZeroUpBOund.atZone(ZoneId.systemDefault()).toInstant());
-            long count=solutionProgramsList.stream()
-                    .filter(x-> x.getDate().before(dateUppBound) && !x.getDate().before(dateLowBound)&& x.getExcersize().getAuthor().getId()!=userId)
-                    .count();
-            AmountOfLatlyDoneParts.add(
-                    AmountOfLatlyDonePart.builder()
-                            .amount(count)
-                            .date(dateLowBound)
-                            .build()
-            );
-        }
-        return StatisticMessage.builder()
-                .amountOfLatelyDone(AmountOfLatlyDoneParts)
-                .LanguageUse(
-                        solutionProgramsRepository.findLanguageAmountForExercsieNotMadeThisUser(userId)
-                )
-                .build();
+      Date dateLowBound =
+          Date.from(dateTimeAtZeroLowBOund.atZone(ZoneId.systemDefault()).toInstant());
+      Date dateUppBound =
+          Date.from(dateTimeAtZeroUpBOund.atZone(ZoneId.systemDefault()).toInstant());
+      long count =
+          solutionProgramsList.stream()
+              .filter(
+                  x ->
+                      x.getDate().before(dateUppBound)
+                          && !x.getDate().before(dateLowBound)
+                          && x.getExcersize().getAuthor().getId() != userId)
+              .count();
+      AmountOfLatlyDoneParts.add(
+          AmountOfLatlyDonePart.builder().amount(count).date(dateLowBound).build());
     }
-
-
+    return StatisticMessage.builder()
+        .amountOfLatelyDone(AmountOfLatlyDoneParts)
+        .LanguageUse(
+            solutionProgramsRepository.findLanguageAmountForExercsieNotMadeThisUser(userId))
+        .build();
+  }
 }

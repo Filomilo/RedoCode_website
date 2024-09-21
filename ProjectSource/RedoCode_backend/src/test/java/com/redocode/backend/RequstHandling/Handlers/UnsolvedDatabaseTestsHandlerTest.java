@@ -58,7 +58,7 @@ class UnsolvedDatabaseTestsHandlerTest {
             .language(programmingLanguageRepository.findByName("cpp"))
             .excersize(excersize)
             .avgExecutionTime(100L)
-                .date(new Date())
+            .date(new Date())
             .solutionAuthor(usersRepository.getReferenceById(1l))
             .build();
     solutionProgramsRepository.save(solutionPrograms);

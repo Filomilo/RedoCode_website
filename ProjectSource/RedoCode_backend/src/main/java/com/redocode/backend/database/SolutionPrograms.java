@@ -40,5 +40,5 @@ public class SolutionPrograms {
   @JoinColumn(name = "solution_author")
   private User solutionAuthor;
 
-  @NotNull private Date date=new Date();
+  @NotNull private Date date = new Date();
 }

@@ -1,10 +1,7 @@
 package com.redocode.backend.database;
 
-import com.redocode.backend.Messages.LanguageUsePart;
-import com.redocode.backend.Messages.StatisticMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,6 +16,4 @@ public interface ExerciseRepository extends JpaRepository<Excersize, Long> {
       "SELECT distinct   new com.redocode.backend.database.ExcersizeListEntry (e )  FROM Excersize"
           + " e   left JOIN  e.solutions left join e.ratings left join e.attempts")
   List<ExcersizeListEntry> getSimpleExcersizeList();
-
 }
-
