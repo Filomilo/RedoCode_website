@@ -179,6 +179,17 @@ jobs:
           ls
           ls -r
           pwd
+      - name: copy backed logs
+        working-directory: ./
+        if: failure()
+        run: |
+          docker cp projectsource-api-1:/logs /logs 
+      - name: upload backed logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: api-logs
+          path: ./logs 
       - name: upload arifacts
         uses: actions/upload-artifact@v4
         if: failure()
