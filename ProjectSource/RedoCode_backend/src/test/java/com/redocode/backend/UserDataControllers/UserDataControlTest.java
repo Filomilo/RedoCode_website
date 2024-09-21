@@ -79,7 +79,9 @@ class UserDataControlTest {
     @Test
     void getUserStats() {
         StatisticMessage statisticMessage=userDataControl.getUserStats(user.getId());
-
+        log.info("statisticMessage: getLanguageUse  "+ Arrays.toString(statisticMessage.getLanguageUse().toArray()));
+        log.info("statisticMessage getAmountOfLatelyDone:  "+  Arrays.toString(statisticMessage.getAmountOfLatelyDone().toArray()));
+        log.info("solutionPrograms :  "+  Arrays.toString(solutionPrograms.toArray()));
         final int amountOFElementsInLatelyDone=7;
         final Set<ProgrammingLanguage> languageThatShouldBeInStats=solutionPrograms.stream().map(x-> x.getLanguage()).collect(Collectors.toSet());
         final int amountOfElemtnsInLangaugeStatsic=(int)languageThatShouldBeInStats.size();
@@ -91,6 +93,7 @@ class UserDataControlTest {
             String lanugaeName= languageUsePart.getName();
             ProgrammingLanguage programmingLanguage=programmingLanguageRepository.findByName(lanugaeName);
             int amountOFDoneWithThisLangauege= (int) solutionPrograms.stream().filter(x->x.getLanguage().getId()==programmingLanguage.getId()).count();
+            log.info("chekcing: "+languageUsePart+" with "+amountOFDoneWithThisLangauege);
             assertEquals(amountOFDoneWithThisLangauege,languageUsePart.getAmount());
         }
 int index=0;
@@ -100,6 +103,7 @@ int index=0;
             localDate = localDate.minusDays(i);
             LocalDateTime dateTimeAtZero = LocalDateTime.of(localDate, LocalTime.MIDNIGHT);
             Date dateShouldBe = Date.from(dateTimeAtZero.atZone(ZoneId.systemDefault()).toInstant());
+            log.info("echecking: "+statisticMessage.getAmountOfLatelyDone().get(index)+" with "+amountThatShouldBe );
             assertEquals(amountThatShouldBe,statisticMessage.getAmountOfLatelyDone().get(index).getAmount());
             assertEquals(0,dateShouldBe.toInstant().compareTo(statisticMessage.getAmountOfLatelyDone().get(index).getDate().toInstant()));
 index++;
