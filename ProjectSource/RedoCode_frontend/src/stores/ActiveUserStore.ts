@@ -114,15 +114,15 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
         console.log("token loading for: "+ token)
          const response=await EndpointAcces.authorized.getUserInfo();
         console.log("Account info: "+ stringify(response))
-        console.log(stringify(accountInfo))
+      
          accountInfo.value=response;
         // Object.assign(accountInfo, response);
-         console.log(stringify(accountInfo))
+  
       }
   else{
-    console.log(stringify(accountInfo))
+  
     accountInfo.value=unAuthUser;
-          console.log(stringify(accountInfo))
+    
       }
   
   }
@@ -165,6 +165,10 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   
   //#region Login process
   
+  const IsToken = computed(()=>{
+    return getToken()!==null &&  getToken()!==undefined &&  getToken()!==''
+  })
+
  async function  register(email: string, nickname: string, pass: string){
     const toastStore=useToastStore();
   
@@ -265,6 +269,7 @@ apiConnectionStore.stompApiConnection.addOnConnectEvent(async () => {
     accountInfo,
     register,
     validateAuthentication,
+    IsToken
     // getToken,
   }
 })

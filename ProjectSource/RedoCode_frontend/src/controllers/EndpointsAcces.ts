@@ -1,3 +1,4 @@
+import { useActiveUserStore } from '@/stores/ActiveUserStore'
 import AccountInfo from '@/types/ApiMesseages/AccountInfo'
 import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
 import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest'
@@ -110,7 +111,9 @@ namespace EndpointAcces {
     export async function getCodeRunnerState(
     ): Promise<CoderunnerState> {
       try {
-        // if (token === '') throw 'token empty'
+        const activeUserStore = useActiveUserStore();
+     
+        if (   !activeUserStore.IsToken) throw 'token empty'
         // console.log('token: ' + token)
         const response = await axios.post('/public/coderunner/state')
         console.log('updateCodeRunner Response:', response)
