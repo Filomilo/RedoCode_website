@@ -11,7 +11,9 @@ import StompApiSubsriptionsController from '@/controllers/Stomp/StompApiSubsript
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
 
   const isConnected=ref(false);
-
+  if (import.meta.env.MODE === 'development') {
+    isConnected.value=true;
+  }
   const toastStore = useToastStore()
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
