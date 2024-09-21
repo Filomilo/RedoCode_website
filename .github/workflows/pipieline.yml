@@ -171,6 +171,11 @@ jobs:
         working-directory: ./ProjectSource/RedoCode_frontend
         run: |
           docker run --network="host" -v $PWD:/e2e -w /e2e --entrypoint cypress cypress/included:13.14.1 run --e2e -C config/cypress-prod.config.ts
+      - name: copy backed logs
+        working-directory: ./
+        if: failure()
+        run: |
+          sudo docker cp projectsource-api-1:/logs /logs 
       - name: file testing
         working-directory: ./ProjectSource/RedoCode_frontend
         if: always()
@@ -179,11 +184,6 @@ jobs:
           ls
           ls -r
           pwd
-      - name: copy backed logs
-        working-directory: ./
-        if: failure()
-        run: |
-          docker cp projectsource-api-1:/logs /logs 
       - name: upload backed logs
         uses: actions/upload-artifact@v4
         if: failure()
