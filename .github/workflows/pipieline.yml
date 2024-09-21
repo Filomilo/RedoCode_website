@@ -175,7 +175,7 @@ jobs:
         working-directory: ./
         if: failure()
         run: |
-          sudo docker cp projectsource-api-1:/logs /logs 
+          sudo docker cp projectsource-api-1:/logs ./ProjectSource/RedoCode_frontend/backend_logs
       - name: file testing
         working-directory: ./ProjectSource/RedoCode_frontend
         if: always()
@@ -189,7 +189,7 @@ jobs:
         if: failure()
         with:
           name: api-logs
-          path: ./logs 
+          path: ./ProjectSource/RedoCode_frontend/backend_logs
       - name: upload arifacts
         uses: actions/upload-artifact@v4
         if: failure()
