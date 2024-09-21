@@ -44,7 +44,7 @@ public class UserDataControl {
             Date dateLowBound = Date.from(dateTimeAtZeroLowBOund.atZone(ZoneId.systemDefault()).toInstant());
             Date dateUppBound = Date.from(dateTimeAtZeroUpBOund.atZone(ZoneId.systemDefault()).toInstant());
             long count=solutionProgramsList.stream()
-                    .filter(x-> x.getDate().before(dateUppBound) && !x.getDate().before(dateLowBound)&& x.getSolutionAuthor().getId()!=userId)
+                    .filter(x-> x.getDate().before(dateUppBound) && !x.getDate().before(dateLowBound)&& x.getExcersize().getAuthor().getId()!=userId)
                     .count();
             AmountOfLatlyDoneParts.add(
                     AmountOfLatlyDonePart.builder()
