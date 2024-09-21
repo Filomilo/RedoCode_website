@@ -8,3 +8,4 @@ ProjectSource/RedoCode_frontend/.yarn/install-state.gz
 *.gz
 *.mjs
 /ProjectSource/RedoCode_frontend/cypress/fixtures
+/ProjectSource/RedoCode_backend/logs
