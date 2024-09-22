@@ -1,9 +1,14 @@
 namespace CodeRunnerPanel {
+
+  
+
   export namespace CodeRunnerInput {
     const codeEditorSequance = '#coderunner-editor-panel textarea'
 
     const backspaces = '{selectAll}{backspace}'
 
+
+    
     export function codeRunnerShouldContain(code: string) {
       cy.get('#code-preview').invoke('text').should('contain', code)
     }
@@ -48,18 +53,21 @@ namespace CodeRunnerPanel {
 
   export namespace Tests {
     export function shouldAllTestFail(amountOfTest: number) {
+      shouldNotBeLoading();
       cy.get('#testResultStatus_' + '0').should('have.text', 'Failed')
       for (let index = 1; index < amountOfTest; index++) {
         cy.get('#testResultStatus_' + index).should('be.empty')
       }
     }
     export function shouldAllTesCorrect(amountOfTest: number) {
+      shouldNotBeLoading();
       for (let index = 0; index < amountOfTest; index++) {
         cy.get('#testResultStatus_' + index).should('have.text', 'Correct')
       }
     }
 
     export function checkTest(checks: any[]) {
+      shouldNotBeLoading();
       for (let index = 0; index < checks.length; index++) {
         cy.get('#TestResultCard' + index)
           .contains('span', 'Result')
@@ -82,10 +90,25 @@ namespace CodeRunnerPanel {
   }
 
   export function run() {
+    shouldNotBeLoading();
     cy.get('#coderunner-run-button').should('be.enabled')
     cy.get('#coderunner-run-button').should('be.visible')
 
     cy.get('#coderunner-run-button').click()
+    shouldBeLoading();
+  }
+
+
+  export function shouldBeLoading()
+  {
+    cy.get("#coderunner-wait-button").should('be.visible');
+    // cy.get("#coderunner-run-button").should('be.not.visible');
+  }
+  export function shouldNotBeLoading()
+  {
+    cy.get("#coderunner-run-button").should('be.visible');
+    // cy.get("#coderunner-wait-button").should('be.not.visible');
+
   }
 
   export function submit() {

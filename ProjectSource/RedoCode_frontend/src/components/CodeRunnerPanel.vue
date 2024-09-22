@@ -60,7 +60,7 @@
             class="CodeEditorContainer"
             :starting="props.starting"
             :codeUpdateMethod="props.codeContainerUpdate"
-            :onRunCode="props.onRunCode"
+            :onRunCode="onRunCode"
             :languageChoices="props.languageChoices"
           />
         </SplitterPanel>
@@ -160,7 +160,7 @@
   }
   const disconnectStomp = () => {
     ApiConnectionStore.stompApiSubsciptionContorller.removeCodeResultsSubscription(
-      props.onResults
+      onResult
     )
     ApiConnectionStore.stompApiConnection.deactivate()
   }
@@ -181,6 +181,14 @@
     resultData.value = results
   }
 
+
+  const onResult=(mes: ProgramResultsMessage )=>
+  {
+    console.log("onResult: "+ JSON.stringify(mes));
+    codeRunnerStore.isprocessing=false;
+    props.onResults(mes);
+  }
+
   onMounted(() => {
     console.log('props: ' + JSON.stringify(props))
     console.log("Code runner init")
@@ -190,7 +198,7 @@
 
 
     ApiConnectionStore.stompApiSubsciptionContorller.addCodeResultsSubscription(
-      props.onResults
+      onResult
     )
     //connectToCodeRunner()
     // }
@@ -207,14 +215,13 @@
     // if (establishedConnection.value) requstDefaultVmMachine(lang)
   }
 
-  // const onRunCode = () => {
-  //   console.log('on run code: ' + code.value)
-  //   const toCompielMes: CodeToRunMessage = {
-  //     code: code.value,
-  //     exercise_id: null
-  //   }
-  //   sendToCompile(toCompielMes)
-  // }
+  const onRunCode = () => {
+    codeRunnerStore.isprocessing=true;
+    props.onRunCode();
+    
+  }
+
+
 
   onBeforeRouteLeave(async (to, from) => {
     // console.log("leave************************************************")
