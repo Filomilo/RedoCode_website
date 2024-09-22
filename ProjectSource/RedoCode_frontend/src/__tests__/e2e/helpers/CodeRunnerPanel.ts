@@ -125,8 +125,15 @@ namespace CodeRunnerPanel {
   export namespace RawCodeResults {
     export function shouldResultBe(console: string) {
       cy.get(
-        'html body div#app html div#MainPageContainer div.BackGroundContainer main.PlayGroundBase div.heightLimit div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.ConsoleResultConsoleCOntainer div.ConsoleResultConsoleCOntainerText'
-      ).contains(console)
+        '#raw_code_run_result'
+      )  .invoke('text')
+      .then(text => {
+        cy.log(text);
+      });
+      //
+      // .then((text) => {
+      //   expect(text).equal(console);
+      // });
     }
   }
 

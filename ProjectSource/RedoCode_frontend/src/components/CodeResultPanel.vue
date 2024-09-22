@@ -38,6 +38,7 @@
       <div
         class="ConsoleResultConsoleCOntainerText"
         style="height: fit-content; max-height: fit-content"
+        id="raw_code_run_result"
         v-html="formattedConsole"
       ></div>
     </div>
