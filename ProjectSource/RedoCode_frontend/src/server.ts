@@ -197,15 +197,15 @@ export function makeServer({ environment = 'development' } = {}) {
   const solutionsCodes = [
     {
       id: 1,
-      code: `11111111111111`,
+      code: `111111111\n11111\n`,
     },
     {
       id: 2,
-      code: `22222222222222`,
+      code: `2222\n222222\n2222`,
     },
     {
       id: 3,
-      code: `3333333333`,
+      code: `33333\n333\n33`,
     },
   ]
 
