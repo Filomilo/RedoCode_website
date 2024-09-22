@@ -21,6 +21,7 @@ describe('hello world js run ', () => {
     CodeRunnerPanel.selectInitialLanguage('js')
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(helloWorldProgram)
+    CodeRunnerPanel.RawCodeResults.shouldResultBe('')
     CodeRunnerPanel.run()
     CodeRunnerPanel.RawCodeResults.shouldResultBe('Hello World!')
   })

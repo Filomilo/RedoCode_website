@@ -1,6 +1,7 @@
 namespace StringParser {
   export function parseStringToHtml(txt: string): string {
-    return (txt += 'parsing unimplented')
+    txt = txt.replace(/\n/g, '<br>');
+   return txt
   }
 }
 
