@@ -42,7 +42,7 @@
         solutionId
       )
       console.log('results: ' + JSON.stringify(codeIn))
-      code.value = JSON.stringify(codeIn, null, '\t')
+      code.value = codeIn
     } catch (error) {
       console.error('Error loading solution code:', error)
     }
