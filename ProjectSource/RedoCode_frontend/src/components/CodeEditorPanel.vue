@@ -17,7 +17,7 @@
       />
       <div class="CodeEditorDropDownContainer"></div>
       <div class="CodeEditorPlayButton">
-        <Button @click="codeRunButton" v-if="true" id="coderunner-run-button">
+        <Button @click="codeRunButton" v-if="shouldButtonBeRun" id="coderunner-run-button">
           <IconPlay style="z-index: 9" />
         </Button>
         <div v-else>
@@ -87,8 +87,12 @@
   const codeRef = ref(props.starting)
 
   const codeRunButton = () => {
+    
     props.onRunCode()
   }
+
+
+  const shouldButtonBeRun: ComputedRef<boolean>=computed(()=>!codeRunnerStore.isprocessing)
 
   const onCodeChnaage = (text: string) => {
     props.codeUpdateMethod(text)
@@ -109,18 +113,6 @@
     }
   )
 
-  const lnagaugeDropdownVaule = computed(
-    () =>
-      EditorLanguagesMap[
-        codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-      ]
-  )
-
-  const editorLang = computed(() => {
-    return EditorLanguagesMap[
-      codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
-    ]
-  })
 
   const editorRef = shallowRef()
   const handleMount = (editor: any) => (editorRef.value = editor)

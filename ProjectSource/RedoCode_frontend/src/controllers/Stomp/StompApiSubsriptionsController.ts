@@ -5,6 +5,7 @@ import ExecutionResponseBase from '@/types/ApiMesseages/ExecutionResponses/Execu
 import ExecutionChainScheme from '@/types/ApiMesseages/ExecutionResponses/ExecutionChainScheme'
 import ExecutionResponseStatusUpdate from '@/types/ApiMesseages/ExecutionResponses/ExecutionResponseStatusUpdate'
 import StompApiSubscription from './StompApiSubscription'
+import { stringify } from 'flatted'
 
 class StompApiSubsciptionContorller {
   private _stompApiConnection: StompApiConnection
@@ -125,6 +126,7 @@ class StompApiSubsciptionContorller {
   public addCodeResultsSubscription(method: {
     (arg: ProgramResultsMessage): void
   }): void {
+    console.log("addCodeResultsSubscription: "+ method)
     this._CodeResultsSubscriptions.push(method)
   }
   public removeCodeResultsSubscription(method: {

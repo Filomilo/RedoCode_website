@@ -4,7 +4,6 @@
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
-  {{  stringify(ApiConnectionStore.isConnected) }}
   <div    v-if="!ApiConnectionStore.isConnected">trying to establish connection to api</div>
     <div
       class="LoginPanelConatiner"
@@ -14,9 +13,6 @@
         your start coding you need to connect to a code runner, this can be
         changed latert
       </div>
-      test
-      {{  stringify(ApiConnectionStore.isConnected) }}
-
       <Dropdown
         v-model="chosenLangague"
         :options="laguageDropDown"
@@ -36,7 +32,7 @@
         :disabled="!allowConnection"
       />
     </div>
-{{ ApiConnectionStore.isConnected }}
+
   </div>
 </template>
 
