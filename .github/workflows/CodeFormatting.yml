@@ -1,9 +1,11 @@
 name: code-formatting
 
 on:
-  push:
-    branches:
-      - main
+  - push
+  # push:
+  #   branches:
+  #     - main
+
 jobs:
   formatting:
     runs-on: ubuntu-latest
@@ -13,19 +15,36 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
-      - uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: axel-op/googlejavaformat-action@v3
+      - name: Google Java Format
+        uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--skip-sorting-imports --replace"
-      # - name: Checkout
-      #   uses: actions/checkout@v3
-      #   with:
-      #     ref: ${{ github.head_ref }}
-      #     fetch-depth: 0
-      # - name: Prettify code
-      #   uses: creyD/prettier_action@v4.3
-      #   with:
-      #     prettier_options: --write "**/*.{js,ts,vue,json,md,css,scss,html}"
+      - name: Checkout again
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write "**/*.{js,ts,vue,json,md,css,scss,html}"
+      - name: Configure Git user
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Auto-format code" || echo "No changes to commit"
+      - name: Fetch latest changes from main branch
+        run: git fetch origin main
+      - name: Rebase changes to avoid conflicts
+        run: git rebase origin/main
+      - name: Push changes
+        run: |
+          git push origin main || (git pull --rebase && git push origin main --force)
