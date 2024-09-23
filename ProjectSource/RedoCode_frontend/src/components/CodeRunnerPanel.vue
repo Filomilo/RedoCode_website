@@ -133,7 +133,7 @@
       required: true,
     },
     ManualTests: {
-      type: Array as () => ExerciseTest[] | ConsoleOutput,
+      type: Array as () => ExerciseTest[] | object as ()=>ConsoleOutput,
       required: true,
     },
     AutoTests: { type: Array as () => ExerciseTest[], required: false },
