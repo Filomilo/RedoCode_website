@@ -20,10 +20,10 @@ namespace MessageCreator {
     tests.forEach((x: ExerciseTest) => {
       newTest.push({
         input:
-          inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
-        output: null,
-        expectedOutput:
-          outputType === 'SINGLE_STRING'
+                                        inputType === 'SINGLE_STRING' ? JSON.stringify(x.input) : x.input,
+                                      output: null,
+                                      expectedOutput:
+                                        outputType === 'SINGLE_STRING'
             ? JSON.stringify(x.expectedOutput)
             : x.expectedOutput,
         errorOutput: '',
