@@ -32,12 +32,12 @@ jobs:
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:
-          prettier_options: --write "**/*.{js,ts,vue,json,md,css,scss,html}"
+          prettier_options: --write "**/*.{js,ts,vue,json,md,css,scss,html}
+        continue-on-error: true 
       - name: Configure Git user
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-        continue-on-error: true 
       - name: Commit changes
         run: |
           git add .
