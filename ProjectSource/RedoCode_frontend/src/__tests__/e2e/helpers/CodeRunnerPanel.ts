@@ -68,10 +68,10 @@ namespace CodeRunnerPanel {
           .contains('span', 'Result')
           .click()
         cy.get('#tab-result-expected-container-' + index).contains(
-          'expeteced: "' + checks[index].output + '"'
+          'expected: "' + checks[index].output + '"'
         )
         cy.get('#tab-result-achived-container-' + index).contains(
-          'achived: "' + checks[index].output + '"'
+          'achieved: "' + checks[index].output + '"'
         )
       }
     }
