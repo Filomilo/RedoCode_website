@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-  import SolutionItemList from '@/types/ApiMesseages/SolutionItemList'
+  import SolutionItemList from '@/types/ApiMessages/SolutionItemList'
   import { computed, ref, type Ref } from 'vue'
   import ProcentDonout from '@/components/ProcentDonout.vue'
   import chroma from 'chroma-js'

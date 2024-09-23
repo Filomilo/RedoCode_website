@@ -45,17 +45,14 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { computed, reactive, Ref, ref } from 'vue'
+  import { computed, Ref, ref } from 'vue'
   import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
-  import ChainNodeInfo from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
   import IconStatusSuccess from '@/assets/icons/IconStatusSuccess.vue'
   import IconStatusFail from '@/assets/icons/IconStatusFail.vue'
   import IconStatusPending from '@/assets/icons/IconStatusPending.vue'
-  import ExecutionChainController, {
-    type ExecutionChainControls,
-  } from '@/controllers/ExecutionChainController'
-  import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
+  import ExecutionChainController from '@/controllers/ExecutionChainController'
+  import ChainNodeStatus from '@/types/ApiMessages/ExecutionResponses/ChainNodeStatus'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   const executionChainStore = useExecutionChainStore()
   const GlobalStateStore = useGlobalStateStore()
@@ -67,7 +64,7 @@
     canBeclosed.value = state.closeReady
     GlobalStateStore.isLocked = state.shouldBeVisible
   }
-  executionChainStore.executionChainController.onVisibiltyUpdate =
+  executionChainStore.executionChainController.onVisibilityUpdate =
     onVisibiltyUpdate
   console.log('seted')
 

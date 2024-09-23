@@ -1,4 +1,4 @@
-import ExerciseTest from '@/types/ExcericseTest'
+import ExerciseTest from '@/types/ExerciseTest'
 
 export default class SingleTestController implements ExerciseTest {
   input: string | number | string[] | number[] = []
@@ -7,6 +7,6 @@ export default class SingleTestController implements ExerciseTest {
   errorOutput: string = ''
   consoleOutput: string = ''
   isSolved: boolean | null = false
-  uuid: string = '' //compatilbty with guii
+  uuid: string = '' //compatibility with gui
   executionTime: number = -1
 }

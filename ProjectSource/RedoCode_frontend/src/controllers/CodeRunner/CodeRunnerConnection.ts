@@ -1,13 +1,12 @@
-import type CodeRunnerRequestMessage from '@/types/CodeRunnerRequestMessage'
 import type CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 
 import { computed, ComputedRef, Ref, ref } from 'vue'
-import { stringify, parse } from 'flatted'
+import { stringify } from 'flatted'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import StompApiSender from '../Stomp/StompApiSender'
-import StompApiSubsciptionContorller from '../Stomp/StompApiSubsriptionsController'
-import EnpointAcces from '../EndpointsAcces'
+import StompApiSubscriptionController from '../Stomp/StompApiSubscriptionController'
+import EndpointAccess from '../EndpointsAccess'
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
 export default class CodeRunnerConnection {
   private _stompApiSender: StompApiSender
@@ -23,7 +22,7 @@ export default class CodeRunnerConnection {
       return this.codeRunnerState.value.state === 'ACTIVE'
     }
   )
-  public readonly isAwaitngCodeRunner = computed(
+  public readonly isAwaitingCodeRunner = computed(
     () => this.codeRunnerState.value.state == 'AWAITING'
   )
 
@@ -34,7 +33,7 @@ export default class CodeRunnerConnection {
 
   constructor(
     stompApiSender: StompApiSender,
-    stompApiSubscriptions: StompApiSubsciptionContorller
+    stompApiSubscriptions: StompApiSubscriptionController
   ) {
     this._stompApiSender = stompApiSender
     stompApiSubscriptions.addVmStatusSubscription(
@@ -44,7 +43,7 @@ export default class CodeRunnerConnection {
   }
 
   public updateCodeRunner = () => {
-    EnpointAcces.unauthorized
+    EndpointAccess.unauthorized
       .getCodeRunnerState()
       .then((data: CoderunnerState) => {
         console.log('updateCodeRunner: ' + JSON.stringify(data))
@@ -53,10 +52,10 @@ export default class CodeRunnerConnection {
   }
 
   public setAwaiting() {
-    console.log('set awaitng')
-    console.log('set awaitng: ' + stringify(this.codeRunnerState))
+    console.log('set awaiting')
+    console.log('set awaiting: ' + stringify(this.codeRunnerState))
     this.codeRunnerState.value.state = CodeRunnerStatus.AWAITING
-    console.log('set awaitng after : ' + stringify(this.codeRunnerState.value))
+    console.log('set awaiting after : ' + stringify(this.codeRunnerState.value))
   }
   public setNoneStatus() {
     this.codeRunnerState.value.state = CodeRunnerStatus.NONE

@@ -1,28 +1,16 @@
-import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
-import ExerciseTest from '@/types/ExcericseTest'
-import ExerciseData from '@/types/ApiMesseages/ExcerciseDataMessage'
-import ExerciseParametersType from '@/types/ExerciseParametersType'
+import ExerciseTest from '@/types/ExerciseTest'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
-import ITestParameters from '@/types/ITestParameters'
 import RangeType from '@/types/RangeType'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import TestsController from '@/controllers/CodeRunner/GroupOfTestsController'
-import { computed, ComputedRef, reactive, toHandlerKey } from 'vue'
 import VarType, {
   setTypeToArray,
-  isTypeDoubleArray,
-  isTypeString,
-  isTypeArray,
-  isTypeInt,
-  isTypeFloat,
   setTypeToDoubleArray,
   setTypeToSingle,
   setTypeToString,
   setTypeToInt,
   setTypeToFloat,
-  isTypeSingle,
 } from '@/types/VarType'
-import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
 import ProgramResult from '@/types/ProgramResults'
 import CodeRunnerControllerBase from './CodeRunnerControllerBase'
 
@@ -52,7 +40,7 @@ export default class ExerciseCreatorController
   inputType!: VarType
   outputType!: VarType
   amountOfAutoTests!: number
-  autoTestminValue!: number
+  autoTestMinValue!: number
   autoTestMaxValue!: number
   lengthRange!: RangeType
   xArrayRange!: RangeType
@@ -61,8 +49,8 @@ export default class ExerciseCreatorController
   lowerCaseInput!: boolean
   numberInput!: boolean
   specialCharacterInput!: boolean
-  breakCharacterInupt!: boolean
-  spaceInupt!: boolean
+  breakCharacterInput!: boolean
+  spaceInput!: boolean
   solutionCodes!: StringIndexed
   manualTestsSolutions!: TestsIndexed
   isSolved!: boolean
@@ -79,20 +67,20 @@ export default class ExerciseCreatorController
       (this.inputType = 'SINGLE_INTEGER' as VarType),
       (this.outputType = 'SINGLE_INTEGER' as VarType),
       (this.amountOfAutoTests = 1),
-      (this.autoTestminValue = -1),
+      (this.autoTestMinValue = -1),
       (this.autoTestMaxValue = 1),
       (this.upperCaseInput = true),
       (this.lowerCaseInput = true),
       (this.numberInput = true),
       (this.specialCharacterInput = true),
-      (this.breakCharacterInupt = true),
+      (this.breakCharacterInput = true),
       (this._languages = []),
       (this.xArrayRange = { min: 1, max: 10 }),
       (this.yArrayRange = { min: 1, max: 10 }),
       (this.title = ''),
       (this.desc = ''),
       (this.lengthRange = { min: 1, max: 10 }),
-      (this.spaceInupt = false)
+      (this.spaceInput = false)
     ;(this.solutionCodes = {}),
       (this.manualTestsSolutions = {} as TestsIndexed),
       (this.executionTime = 100)
@@ -104,7 +92,7 @@ export default class ExerciseCreatorController
     this.reset()
   }
 
-  public updateSubmitAcces() {
+  public updateSubmitAccess() {
     this.isSolved = this.validateAllTests()
   }
 
@@ -114,7 +102,7 @@ export default class ExerciseCreatorController
       '---isSolved values: ' + JSON.stringify(this.manualTestsSolutions)
     )
     console.log(
-      '---isSolved values amont: : ' +
+      '---isSolved values amount: : ' +
         Object.values(this.manualTestsSolutions).length +
         ' : ' +
         JSON.stringify(Object.values(this.manualTestsSolutions))
@@ -153,7 +141,7 @@ export default class ExerciseCreatorController
 
   //#endregion
 
-  //#region code mangament
+  //#region code management
 
   public updateSolutionCode(code: string, type: CodeRunnerType) {
     this.solutionCodes[type] = code
@@ -161,7 +149,7 @@ export default class ExerciseCreatorController
 
   //#endregion
 
-  //#region Test managment
+  //#region Test management
 
   private updateTestsFields() {
     this.manualTestsSolutions = {}
@@ -188,7 +176,7 @@ export default class ExerciseCreatorController
     console.log('output type: ' + this.outputType)
     Object.keys(this.manualTestsSolutions).forEach((x: string) => {
       const type: CodeRunnerType = x as CodeRunnerType
-      this.manualTestsSolutions[type]?.addblankTest(
+      this.manualTestsSolutions[type]?.addBlankTest(
         this.inputType,
         this.outputType
       )
@@ -206,7 +194,7 @@ export default class ExerciseCreatorController
       this.getAmountOfLanguages() === 0 ||
       !this.manualTestsSolutions[this.getSingleCodeRunnerKey()]
     ) {
-      throw 'Cannot set varailbes input'
+      throw 'Cannot set variables input'
     }
 
     this._languages.forEach((x: CodeRunnerType) => {
@@ -225,33 +213,33 @@ export default class ExerciseCreatorController
     })
   }
 
-  public updateTests(results: ProgramResult[], langauge: CodeRunnerType) {
+  public updateTests(results: ProgramResult[], language: CodeRunnerType) {
     console.log('---------------------------------------------------\n')
-    console.log('create test langauge update: ' + JSON.stringify(langauge))
-    console.log('create test rtesult update: ' + JSON.stringify(results))
+    console.log('create test language update: ' + JSON.stringify(language))
+    console.log('create test result update: ' + JSON.stringify(results))
     console.log('---------------------------------------------------\n')
     const processedResults = this.processCodeResultLoad(results, {
-      tests: this.manualTestsSolutions[langauge]!.tests,
-      autoTests: this.manualTestsSolutions[langauge]!.autoTests,
+      tests: this.manualTestsSolutions[language]!.tests,
+      autoTests: this.manualTestsSolutions[language]!.autoTests,
     })
 
-    this.manualTestsSolutions[langauge]!.tests = processedResults.tests
-    this.manualTestsSolutions[langauge]!.autoTests = processedResults.autoTests
+    this.manualTestsSolutions[language]!.tests = processedResults.tests
+    this.manualTestsSolutions[language]!.autoTests = processedResults.autoTests
 
     // this.updateCreationTestData(results.results)
-    this.updateSubmitAcces()
+    this.updateSubmitAccess()
   }
 
   get ExerciseSetupError() {
     if (this.languages !== undefined && this.languages.length == 0) {
-      return 'at least one programing lnaguage should be available'
+      return 'at least one programming language should be available'
     }
 
     if (this.getSingleRowOfManualTests.length < 3) {
-      return 'tthere should be at least 3 manuall tests'
+      return 'there should be at least 3 manual tests'
     }
     if (this.getSingleRowOfManualTests.length > 10) {
-      return 'amount of manula test cannot exceed 10'
+      return 'amount of manual test cannot exceed 10'
     }
 
     return ''
@@ -307,7 +295,7 @@ export default class ExerciseCreatorController
 
   //#endregion
 
-  //#region ouptut
+  //#region output
 
   public setOutputTypeInt(): void {
     this.clearTests()

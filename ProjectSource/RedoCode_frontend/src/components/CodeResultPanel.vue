@@ -2,7 +2,7 @@
   <!-- type: -->
 
   <div class="CodeResultContainer">
-    <div class="EngineStatusContianer">
+    <div class="EngineStatusContainer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
         <div class="EngineStatusStatus" id="coderunner-type">
@@ -50,7 +50,7 @@
     />
 
     <div
-      class="ExerciseControlPanle"
+      class="ExerciseControlPanel"
       v-if="props.onSubmit !== undefined"
       :style="true ? '' : 'pointer-events: none'"
     >
@@ -73,15 +73,11 @@
 <script setup lang="ts">
   import { computed, ComputedRef } from 'vue'
   import DataResultPanel from './DataResultPanel.vue'
-  import type CodeResultType from '@/types/CodeResultsType'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
-  import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
-  import ExerciseTest from '@/types/ExcericseTest'
-  import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
+  import ExerciseTest from '@/types/ExerciseTest'
+  import { ConsoleOutput } from '@/types/ProgramResults'
   import StringParser from '@/tools/StringParser'
-  import { stringify } from 'flatted'
   const codeRunnerStore = useCodeRunnerStore()
-  const ApiConnectionStore = useApiConnectionStore()
   const props = defineProps({
     isDataResult: { type: Boolean, required: false },
     onSubmit: { type: Function, required: false },
@@ -93,7 +89,7 @@
     SubmitAccess: { type: Boolean, required: true },
     ExecutionTime: { type: Number, required: false },
   })
-  console.log('CodeReults props: ' + JSON.stringify(props))
+  console.log('CodeResults props: ' + JSON.stringify(props))
 
   const manualTestArray: ComputedRef<ExerciseTest[] | undefined> = computed(
     () => {
@@ -128,9 +124,6 @@
       : props.ExecutionTime + ' ms'
   })
 
-  const isCorrect = computed<boolean>(() => {
-    return false
-  })
 </script>
 
 <style>

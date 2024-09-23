@@ -702,7 +702,7 @@
                 <Checkbox
                   v-model="
                     codeRunnerStore.exerciseCreatorController
-                      .breakCharacterInupt
+                      .breakCharacterInput
                   "
                   invalid
                   binary
@@ -712,7 +712,7 @@
               </div>
               <div class="checkBoxContainer">
                 <Checkbox
-                  v-model="codeRunnerStore.exerciseCreatorController.spaceInupt"
+                  v-model="codeRunnerStore.exerciseCreatorController.spaceInput"
                   invalid
                   binary
                   id="space-char-checkbox"

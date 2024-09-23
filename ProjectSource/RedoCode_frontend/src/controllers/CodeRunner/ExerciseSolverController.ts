@@ -1,6 +1,6 @@
-import ExcerciseDataMessage from '@/types/ApiMesseages/ExcerciseDataMessage'
+import ExerciseDataMessage from '@/types/ApiMessages/ExerciseDataMessage'
 import CodeRunnerControllerBase from './CodeRunnerControllerBase'
-import ExerciseTest from '@/types/ExcericseTest'
+import ExerciseTest from '@/types/ExerciseTest'
 import VarType from '@/types/VarType'
 import generateStartingFunction from '@/tools/StartingFunctionGenerator'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
@@ -25,15 +25,15 @@ export default class ExerciseSolverController
     super()
   }
 
-  public loadInitialData(id: number, data: ExcerciseDataMessage) {
+  public loadInitialData(id: number, data: ExerciseDataMessage) {
     this.reset()
     console.log(
-      'Loadingi inital ExerciseSolverController ' + JSON.stringify(data)
+      'Loading initial ExerciseSolverController ' + JSON.stringify(data)
     )
     this.title = data.title
     this.desc = data.desc
     this.manualTests = data.tests
-    this._languages = data.availbleCodeRunners
+    this._languages = data.availableCodeRunners
     this.inputType = data.inputType as VarType
     this.outputType = data.outputType as VarType
     this.id = id
@@ -63,15 +63,15 @@ export default class ExerciseSolverController
     console.log(
       'ExerciseSolverController update ts: ' + JSON.stringify(results)
     )
-    const procesedResults = this.processCodeResultLoad(results, {
+    const processedResults = this.processCodeResultLoad(results, {
       tests: this.manualTests,
       autoTests: this.autoTests,
     })
-    this.manualTests = procesedResults.tests
-    this.autoTests = procesedResults.autoTests
-    this.updateSubmitAcces()
+    this.manualTests = processedResults.tests
+    this.autoTests = processedResults.autoTests
+    this.updateSubmitAccess()
   }
-  public updateSubmitAcces() {
+  public updateSubmitAccess() {
     this.isSolved = this.validateAllTests()
   }
 

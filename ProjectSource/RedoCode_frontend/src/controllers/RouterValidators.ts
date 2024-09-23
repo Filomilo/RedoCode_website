@@ -1,33 +1,32 @@
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
-import ExerciseSolviingState from '@/types/ExerciseSolviingState'
-import EndpointAcces from './EndpointsAcces'
+import ExerciseSolvingState from '@/types/ExerciseSolvingState'
+import EndpointAccess from './EndpointsAccess'
 namespace RouterValidators {
-  export async function AccountAccesValidate(
-    params: any
+  export async function AccountAccessValidate(
   ): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
-    console.log('AccountAccesValidate authethication')
+    console.log('AccountAccessValidate authentication')
     if (await activeUserStore.validateAuthentication()) {
       return null
     } else {
-      console.log('Unauhenticated')
+      console.log('Unauthenticated')
       return 'Home'
     }
   }
 
-  export async function ResultsAccesValidate(
+  export async function ResultsAccessValidate(
     params: any
   ): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
-    console.log('ExerciseSolvingValidation authethication')
+    console.log('ExerciseSolvingValidation authentication')
     if (params['id'] === undefined) return 'ResultsUnauthenticated'
     if (!(await activeUserStore.validateAuthentication()))
       return 'ResultsUnauthenticated'
-    let state = ExerciseSolviingState.UNSOLVED
+    let state = ExerciseSolvingState.UNSOLVED
     try {
-      state = await EndpointAcces.authorized.getExerciseSolvingState(
+      state = await EndpointAccess.authorized.getExerciseSolvingState(
         params['id']
       )
     } catch (ex) {
@@ -35,20 +34,19 @@ namespace RouterValidators {
     }
     console.log('state ' + state)
     if (
-      state === ExerciseSolviingState.RATED ||
-      state === ExerciseSolviingState.AUTHOR
+      state === ExerciseSolvingState.RATED ||
+      state === ExerciseSolvingState.AUTHOR
     )
       return 'Solutions'
-    if (state == ExerciseSolviingState.UNSOLVED) return 'Exercise'
+    if (state == ExerciseSolvingState.UNSOLVED) return 'Exercise'
     return 'Results'
   }
 
-  export async function SolutionsAccesValidate(
-    params: any
+  export async function SolutionsAccessValidate(
   ): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
-    console.log('SolutionsdAccesValidate authethication')
+    console.log('SolutionsAccessValidate authentication')
     if (await activeUserStore.validateAuthentication()) {
       return null
     } else {
@@ -57,14 +55,13 @@ namespace RouterValidators {
     }
   }
   export async function RegisterValidation(
-    params: any
   ): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
 
     const authState = await activeUserStore.validateAuthentication()
     console.log(
-      'SolutionsdAccesValidate authethication, authState: ' + authState
+      'SolutionsAccessValidate authentication, authState: ' + authState
     )
     if (!authState) {
       return null
@@ -73,10 +70,10 @@ namespace RouterValidators {
       return 'Home'
     }
   }
-  export async function CreateValidation(params: any): Promise<string | null> {
+  export async function CreateValidation(): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
-    console.log('CreateValidation authethication')
+    console.log('CreateValidation authentication')
     if (await activeUserStore.validateAuthentication()) {
       return null
     } else {
@@ -90,14 +87,14 @@ namespace RouterValidators {
   ): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
-    console.log('ExerciseSolvingValidation authethication')
+    console.log('ExerciseSolvingValidation authentication')
     if (params['id'] === undefined) return 'Exercises'
     const authState = await activeUserStore.validateAuthentication()
 
     if (!authState) return null
-    let state = ExerciseSolviingState.UNSOLVED
+    let state = ExerciseSolvingState.UNSOLVED
     try {
-      state = await EndpointAcces.authorized.getExerciseSolvingState(
+      state = await EndpointAccess.authorized.getExerciseSolvingState(
         params['id']
       )
     } catch (ex) {
@@ -105,11 +102,11 @@ namespace RouterValidators {
     }
     console.log('state ' + state)
     if (
-      state === ExerciseSolviingState.RATED ||
-      state === ExerciseSolviingState.AUTHOR
+      state === ExerciseSolvingState.RATED ||
+      state === ExerciseSolvingState.AUTHOR
     )
       return 'Solutions'
-    if (state == ExerciseSolviingState.SOLVED) return 'Results'
+    if (state == ExerciseSolvingState.SOLVED) return 'Results'
     return null
   }
 
@@ -118,13 +115,13 @@ namespace RouterValidators {
   ): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
-    console.log('ExerciseSolvingValidation authethication')
+    console.log('ExerciseSolvingValidation authentication')
     if (params['id'] === undefined) return 'Exercises'
     if (await !(await activeUserStore.validateAuthentication()))
       return 'Exercise'
-    let state = ExerciseSolviingState.UNSOLVED
+    let state = ExerciseSolvingState.UNSOLVED
     try {
-      state = await EndpointAcces.authorized.getExerciseSolvingState(
+      state = await EndpointAccess.authorized.getExerciseSolvingState(
         params['id']
       )
     } catch (ex) {
@@ -133,11 +130,11 @@ namespace RouterValidators {
     console.log('state ' + state)
 
     if (
-      state === ExerciseSolviingState.RATED ||
-      state === ExerciseSolviingState.AUTHOR
+      state === ExerciseSolvingState.RATED ||
+      state === ExerciseSolvingState.AUTHOR
     )
       return 'Solutions'
-    if (state == ExerciseSolviingState.UNSOLVED) return 'Exercise'
+    if (state == ExerciseSolvingState.UNSOLVED) return 'Exercise'
     return null
   }
 }

@@ -56,8 +56,8 @@
 <script setup lang="ts">
   import { computed, Ref, ref } from 'vue'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
-  import CommentType from '@/types/ApiMesseages/CommentType'
-  import EndpointAcces from '@/controllers/EndpointsAcces'
+  import CommentType from '@/types/ApiMessages/CommentType'
+  import EndpointAccess from '@/controllers/EndpointsAccess'
   import { useToastStore } from '@/stores/ToastStore'
   import profilePicImageResolve from '@/tools/ImageResolve'
   const props = defineProps<{
@@ -76,7 +76,7 @@
   })
 
   const onCommentButton = () => {
-    EndpointAcces.authorized
+    EndpointAccess.authorized
       .postComment(commentInput.value, props.id)
       .then(x => {
         console.log('token: ' + JSON.stringify(x))
@@ -94,7 +94,7 @@
             })
             commentInput.value = ''
           }
-          ToastStore.showSuccessMessage('Succsefully commented')
+          ToastStore.showSuccessMessage('Successfully commented')
         }
       })
   }

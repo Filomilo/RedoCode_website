@@ -1,7 +1,7 @@
-import ChainNodeStatus from '@/types/ApiMesseages/ExecutionResponses/ChainNodeStatus'
-import ExecutionChainScheme from '@/types/ApiMesseages/ExecutionResponses/ExecutionChainScheme'
-import StompApiSubsciptionContorller from './Stomp/StompApiSubsriptionsController'
-import ExecutionResponseStatusUpdate from '@/types/ApiMesseages/ExecutionResponses/ExecutionResponseStatusUpdate'
+import ChainNodeStatus from '@/types/ApiMessages/ExecutionResponses/ChainNodeStatus'
+import ExecutionChainScheme from '@/types/ApiMessages/ExecutionResponses/ExecutionChainScheme'
+import StompApiSubscriptionController from './Stomp/StompApiSubscriptionController'
+import ExecutionResponseStatusUpdate from '@/types/ApiMessages/ExecutionResponses/ExecutionResponseStatusUpdate'
 
 export interface ExecutionChainControls {
   _executionChain: ChainNodeStatus[]
@@ -14,10 +14,9 @@ class ExecutionChainController implements ExecutionChainControls {
 
   public _shouldBeVisible: boolean = false
   public _closeReady: boolean = false
-  public onCloseSucces: () => void = () => {}
+  public onCloseSuccess: () => void = () => {}
 
-  public onVisibiltyUpdate: (state: ExecutionChainController) => void = (
-    state: ExecutionChainController
+  public onVisibilityUpdate: (state: ExecutionChainController) => void = (
   ) => {}
 
   get executionChain(): ChainNodeStatus[] {
@@ -34,12 +33,12 @@ class ExecutionChainController implements ExecutionChainControls {
   get resolvedLength(): number {
     return this.executionChain.filter(x => x.status === 'SUCCESS').length
   }
-  constructor(stompApiSubsciptionContorller: StompApiSubsciptionContorller) {
+  constructor(stompApiSubscriptionController: StompApiSubscriptionController) {
     this.reset()
-    stompApiSubsciptionContorller.addExecutionChainSchemeSubscription(
+    stompApiSubscriptionController.addExecutionChainSchemeSubscription(
       this.loadChainScheme.bind(this)
     )
-    stompApiSubsciptionContorller.addEExecutionResponseStatusUpdateSubscription(
+    stompApiSubscriptionController.addEExecutionResponseStatusUpdateSubscription(
       this.updateStatus.bind(this)
     )
   }
@@ -48,8 +47,8 @@ class ExecutionChainController implements ExecutionChainControls {
     this._executionChain = []
     this._shouldBeVisible = false
     this._closeReady = false
-    this.onVisibiltyUpdate(this)
-    this.onCloseSucces = () => {}
+    this.onVisibilityUpdate(this)
+    this.onCloseSuccess = () => {}
   }
 
   public loadChainScheme = (scheme: ExecutionChainScheme) => {
@@ -57,7 +56,7 @@ class ExecutionChainController implements ExecutionChainControls {
     this._executionChain = scheme.levels
     this._shouldBeVisible = true
 
-    this.onVisibiltyUpdate(this)
+    this.onVisibilityUpdate(this)
   }
 
   private waitForScheme = (
@@ -118,7 +117,7 @@ class ExecutionChainController implements ExecutionChainControls {
   }
 
   public updateStatus = async (update: ExecutionResponseStatusUpdate) => {
-    console.log('CHAIN  udpate:' + JSON.stringify(update))
+    console.log('CHAIN  update:' + JSON.stringify(update))
     this.waitForScheme(update, 5000)
       .then(() => {
         console.log('_______________UPDATE: ' + JSON.stringify(update))
@@ -130,33 +129,33 @@ class ExecutionChainController implements ExecutionChainControls {
           console.log(
             'UPdate check if can close: ' +
               JSON.stringify(update) +
-              'rESULRED IN TRUE'
+              'RESULTED IN TRUE'
           )
           this._closeReady = true
         }
         console.log(
           'UPdate check if can close: ' +
             JSON.stringify(update) +
-            'rESULRED IN fasle'
+            'RESULTED IN false'
         )
-        this.onVisibiltyUpdate(this)
+        this.onVisibilityUpdate(this)
       })
       .catch(() => {
         console.log(
           'UPdate check if can close: ' +
             JSON.stringify(update) +
-            'rESULRED IN TRUE'
+            'RESULTED IN TRUE'
         )
         this._closeReady = true
-        this.onVisibiltyUpdate(this)
+        this.onVisibilityUpdate(this)
       })
   }
 
   public close() {
     console.log('Execution Chain close')
     if (this.isAllSolved || import.meta.env.MODE === 'development') {
-      console.log('Execution Chain close sUCCES')
-      this.onCloseSucces()
+      console.log('Execution Chain close SUCCESS')
+      this.onCloseSuccess()
     }
     this.reset()
   }
