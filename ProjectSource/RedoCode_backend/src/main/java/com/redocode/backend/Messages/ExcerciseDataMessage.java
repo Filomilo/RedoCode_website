@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class ExcerciseDataMessage {
-  @JsonProperty List<CODE_RUNNER_TYPE> availbleCodeRunners;
+  @JsonProperty List<CODE_RUNNER_TYPE> availableCodeRunners;
   @JsonProperty String title;
   @JsonProperty String desc;
   @JsonProperty String outputType;
@@ -40,7 +40,7 @@ public class ExcerciseDataMessage {
     this.inputType = String.valueOf(excersize.getInputType());
     this.id = excersize.getId();
     this.automaticTests = new ArrayList<>();
-    availbleCodeRunners = new ArrayList<>();
+    availableCodeRunners = new ArrayList<>();
     tests = new ArrayList<>();
     for (ExerciseTests tst : excersize.getExerciseTests()) {
       tests.add(
@@ -52,7 +52,7 @@ public class ExcerciseDataMessage {
               .build());
     }
     for (ProgrammingLanguage programmingLanguage : excersize.getLanguages()) {
-      availbleCodeRunners.add(
+      availableCodeRunners.add(
           RedoCodeObjectMapper.LanguageNameToCodeRunner(programmingLanguage.getName()));
     }
   }

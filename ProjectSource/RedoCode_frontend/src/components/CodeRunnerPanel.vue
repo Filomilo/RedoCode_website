@@ -74,6 +74,7 @@
       </Splitter>
     </div>
     <div v-else style="height: 100%">
+      {{ JSON.stringify(props.languageChoices) }}
       <ConnectToCodeRunnerPanel
         :languageChoicesSelection="props.languageChoices"
       />

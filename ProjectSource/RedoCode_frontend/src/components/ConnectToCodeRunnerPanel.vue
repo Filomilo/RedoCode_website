@@ -12,6 +12,7 @@
         your start coding you need to connect to a code runner, this can be
         changed latert
       </div>
+      {{ JSON.stringify(props) }}
       <Dropdown
         v-model="chosenLangague"
         :options="laguageDropDown"

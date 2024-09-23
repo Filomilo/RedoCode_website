@@ -17,7 +17,6 @@ export default class ExerciseSolverController
   public solution!: string
   public manualTests!: ExerciseTest[]
   public autoTests!: ExerciseTest[]
-
   public inputType!: VarType
   public outputType!: VarType
   public isSolved: boolean = false
@@ -37,7 +36,9 @@ export default class ExerciseSolverController
     this.inputType = data.inputType as VarType
     this.outputType = data.outputType as VarType
     this.id = id
-    2
+    console.log(
+      'this._languages ' + JSON.stringify(data.availbleCodeRunners)
+    )
   }
 
   public startFunction(type: CodeRunnerType): string {

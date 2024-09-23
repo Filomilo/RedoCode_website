@@ -1,5 +1,6 @@
 <template>
   <main class="PlayGroundBase">
+    {{ JSON.stringify(codeRunnerStore.exerciseSolverController.languages) }}
     <CodeRunnerPanel
       v-if="codeRunnerStore.exerciseSolverController.manualTests !== undefined"
       :exerciseInfo="codeRunnerStore.exerciseSolverController"
