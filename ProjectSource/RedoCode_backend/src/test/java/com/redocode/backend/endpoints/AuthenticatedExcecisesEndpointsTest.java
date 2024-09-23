@@ -82,7 +82,6 @@ class AuthenticatedExcecisesEndpointsTest {
             .ram_mb(512)
             .valueLengthRangeMax(500f)
             .valueLengthRangeMin(500f)
-            .timeForTaskMin(500l)
             .author(_authenticaredUser)
             .build();
     Excersize saved = exerciseRepository.save(excersize);

@@ -40,7 +40,6 @@ class UnsolvedDatabaseTestsHandlerTest {
     Excersize excersize =
         Excersize.builder()
             .ram_mb(128)
-            .timeForTaskMin(5L)
             .author(user)
             .description("test")
             .valueLengthRangeMin(-50.0f)

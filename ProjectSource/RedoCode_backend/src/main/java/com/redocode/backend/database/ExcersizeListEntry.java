@@ -29,7 +29,7 @@ public class ExcersizeListEntry {
             ? e.getRatings().stream().mapToInt(element -> element.getRating()).sum()
                 / e.getRatings().size()
             : 0;
-    this.popularity = (long) e.getAttempts().size();
+    this.popularity = (long) e.getSolutions().size();
     this.description = e.getDescription();
   }
 }
