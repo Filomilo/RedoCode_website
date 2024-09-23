@@ -12,11 +12,9 @@
 </template>
 
 <script setup lang="ts">
-  import type CodeResultsType from '@/types/CodeResultsType'
-  import TestResultCard from './TestResultCard.vue'
-  import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
+    import TestResultCard from './TestResultCard.vue'
   import { computed } from 'vue'
-  import ExerciseTest from '@/types/ExcericseTest'
+  import ExerciseTest from '@/types/ExerciseTest'
   const props = defineProps({
     ManualTests: {
       type: Array as () => ExerciseTest[] | undefined,

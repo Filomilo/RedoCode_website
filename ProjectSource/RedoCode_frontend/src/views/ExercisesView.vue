@@ -1,6 +1,6 @@
 <template>
   <main class="PlayGroundBase locked">
-    <div class="datatable-container">
+    <div class="dataTable-container">
       <EasyDataTable
         :headers="fields"
         :items="exerciseData"
@@ -19,12 +19,12 @@
           <LoadingIndicator />
         </template>
         <template #item-lang="item">
-          {{ item.languages.map((elemnt: any) => elemnt.name) }}
+          {{ item.languages.map((element: any) => element.name) }}
         </template>
         <template #item-actions="item">
           <Button
             :id="'try_exercise-button-' + item.id"
-            v-on:click="onExcersiceButton(item.id)"
+            v-on:click="onExerciseButton(item.id)"
             style="
               background-color: transparent;
               border-color: transparent;
@@ -49,7 +49,7 @@
             to="/Create"
             class="createButton"
             id="Home_Button"
-            :class="ActiveUserStore.isLogged ? '' : 'diabled'"
+            :class="ActiveUserStore.isLogged ? '' : 'disabled'"
           >
             <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
               Create
@@ -63,24 +63,19 @@
 
 <script setup lang="ts">
   import { useRouter } from 'vue-router'
-  import { onMounted, ref, watch } from 'vue'
-  import axios from 'axios'
+  import { ref, watch } from 'vue'
   import type ExerciseType from '@/types/ExerciseType'
-  import type OnTableClickType from '@/types/OnTableClickType'
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
-  import type { Header, Item, ServerOptions } from 'vue3-easy-data-table'
+  import type { ServerOptions } from 'vue3-easy-data-table'
   import Button from 'primevue/button'
   import IconNextRight from '../assets/icons/IconNextRight.vue'
   import IconNextLeft from '../assets/icons/IconNextLeft.vue'
   import IconPlay from '@/assets/icons/IconPlay.vue'
-  import ExerciseListRequestMessage from '@/types/ExerciseListRequestMessage'
   import { isArray } from 'chart.js/helpers'
-  import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
-  import EndpointAcces from '@/controllers/EndpointsAcces'
+  import EndpointAccess from '@/controllers/EndpointsAccess'
 
   const ActiveUserStore = useActiveUserStore()
-  const CodeRunnerStore = useCodeRunnerStore()
   const router = useRouter()
 
   const fields: any[] = [
@@ -90,7 +85,7 @@
     { text: '', value: 'actions', width: 30 },
   ]
 
-  const onExcersiceButton = (id: number) => {
+  const onExerciseButton = (id: number) => {
     router.push({ name: 'Exercise', params: { id: id } })
   }
   const exerciseData = ref<ExerciseType[]>([])
@@ -110,24 +105,7 @@
           ? serverOptions.value.sortBy[0]
           : serverOptions.value.sortBy
 
-    // const request: ExerciseListRequestMessage = {
-    //   sortBy: sortby,
-    //   rowsPerPage: serverOptions.value.rowsPerPage,
-    //   page: serverOptions.value.page,
-    //   sortDirection: serverOptions.value.sortType === 'desc',
-    // }
-    // console.log('Getting exercises')
-    // axios.get('/public/exercises/list', { params: request }).then(response => {
-    //   if (response === undefined) {
-    //     console.error("couldn't retrieve excercise list from server")
-    //     throw "couldn't retrieve excercise list from server"
-    //   }
-    //   console.log('Exercises respones: ' + JSON.stringify(response))
-    //   exerciseData.value = response.data
-    //   console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
-    // })
-
-    EndpointAcces.unauthorized
+    EndpointAccess.unauthorized
       .getListOfExercises(
         sortby,
         sortby,
@@ -155,7 +133,6 @@ onBeforeRouteUpdate(()=>{
   console.log("On mounted")
 });
 */
-  const HeadType: string = 'Dark'
 </script>
 <style>
   .dataTableStyle {
@@ -171,7 +148,7 @@ onBeforeRouteUpdate(()=>{
     height: calc(100% - 2.1rem);
   }
 
-  .diabled {
+  .disabled {
     pointer-events: none;
   }
 </style>

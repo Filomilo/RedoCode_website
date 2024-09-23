@@ -1,19 +1,18 @@
 //#region imports
-import ExerciseTest from '@/types/ExcericseTest'
+import ExerciseTest from '@/types/ExerciseTest'
 import VarType, {
   isTypeArray,
   isTypeDoubleArray,
   isTypeSingle,
   isTypeString,
 } from '@/types/VarType'
-import { randomUUID } from 'crypto'
 //#endregion
 
 export default class GroupOfTestsController {
   tests: ExerciseTest[] = []
   autoTests: ExerciseTest[] = []
 
-  private getVarAcording(type: VarType): any {
+  private getVarAccording(type: VarType): any {
     if (isTypeString(type)) {
       if (isTypeSingle(type)) return ''
       if (isTypeArray(type)) return ['']
@@ -26,14 +25,14 @@ export default class GroupOfTestsController {
     }
   }
 
-  public addblankTest(inputType: VarType, outputype: VarType): void {
+  public addBlankTest(inputType: VarType, outputType: VarType): void {
     console.log(
-      'outpout type ' + outputype + ' _ ' + ' :: ' + JSON.stringify(outputype)
+      'output type ' + outputType + ' _ ' + ' :: ' + JSON.stringify(outputType)
     )
 
-    const input = this.getVarAcording(inputType)
-    const output = this.getVarAcording(outputype)
-    console.log('ading ' + outputype + ' _ ' + ' :: ' + JSON.stringify(output))
+    const input = this.getVarAccording(inputType)
+    const output = this.getVarAccording(outputType)
+    console.log('adding ' + outputType + ' _ ' + ' :: ' + JSON.stringify(output))
     this.tests.push({
       input: input,
       expectedOutput: output,

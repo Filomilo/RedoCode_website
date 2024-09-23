@@ -4,7 +4,6 @@ import {
   NavigationGuardNext,
   RouteLocationNormalized,
 } from 'vue-router'
-import { useActiveUserStore } from '@/stores/ActiveUserStore'
 import RouterValidators from '@/controllers/RouterValidators'
 import { stringify } from 'flatted'
 
@@ -21,7 +20,7 @@ const validate = async (
   if (validationResult === null || to.name == validationResult) next()
   else {
     console.log(
-      'validation route swiihcing to ' + JSON,
+      'validation route switching to ' + JSON,
       stringify(validationResult) + ' params: ' + JSON.stringify(to.params)
     )
     next({ name: validationResult, params: to.params })
@@ -43,13 +42,13 @@ const router = createRouter({
     },
     {
       path: '/Exercises',
-      name: 'Excersices',
-      component: () => import('@/views/ExcersicesView.vue'),
+      name: 'Exercises',
+      component: () => import('@/views/ExercisesView.vue'),
     },
     {
       path: '/Exercises/:id',
       name: 'Exercise',
-      component: () => import('@/views/ExcersiceView.vue'),
+      component: () => import('@/views/ExerciseView.vue'),
       beforeEnter: async (to, from, next) => {
         await validate(
           to,
@@ -85,7 +84,7 @@ const router = createRouter({
       name: 'Account',
       component: () => import('@/views/AccountView.vue'),
       beforeEnter: async (to, from, next) => {
-        await validate(to, from, next, RouterValidators.AccountAccesValidate)
+        await validate(to, from, next, RouterValidators.AccountAccessValidate)
       },
     },
     {
@@ -93,7 +92,7 @@ const router = createRouter({
       name: 'Results',
       component: () => import('@/views/ResultsView.vue'),
       beforeEnter: async (to, from, next) => {
-        await validate(to, from, next, RouterValidators.ResultsAccesValidate)
+        await validate(to, from, next, RouterValidators.ResultsAccessValidate)
       },
     },
     {
@@ -101,18 +100,18 @@ const router = createRouter({
       name: 'ResultsNotFound',
       component: () => import('@/views/ResultsView.vue'),
       beforeEnter: async (to, from, next) => {
-        await validate(to, from, next, RouterValidators.ResultsAccesValidate)
+        await validate(to, from, next, RouterValidators.ResultsAccessValidate)
       },
     },
     {
       path: '/Results',
       name: 'ResultsUnauthenticatedNoID',
-      component: () => import('@/views/ResultsUnathenticatedView.vue'),
+      component: () => import('@/views/ResultsUnauthenticatedView.vue'),
     },
     {
       path: '/Results/:id',
       name: 'ResultsUnauthenticated',
-      component: () => import('@/views/ResultsUnathenticatedView.vue'),
+      component: () => import('@/views/ResultsUnauthenticatedView.vue'),
     },
 
     {
@@ -120,7 +119,7 @@ const router = createRouter({
       name: 'SolutionsNoData',
       component: () => import('@/views/SolutionsView.vue'),
       beforeEnter: async (to, from, next) => {
-        await validate(to, from, next, RouterValidators.SolutionsAccesValidate)
+        await validate(to, from, next, RouterValidators.SolutionsAccessValidate)
       },
     },
     {
@@ -128,13 +127,13 @@ const router = createRouter({
       name: 'Solutions',
       component: () => import('@/views/SolutionsView.vue'),
       beforeEnter: async (to, from, next) => {
-        await validate(to, from, next, RouterValidators.SolutionsAccesValidate)
+        await validate(to, from, next, RouterValidators.SolutionsAccessValidate)
       },
     },
     {
       path: '/notFound',
       name: 'NotFound',
-      component: () => import('@/views/WebisteNotExist.vue'),
+      component: () => import('@/views/WebsiteNotExist.vue'),
     },
     {
       path: '/test',

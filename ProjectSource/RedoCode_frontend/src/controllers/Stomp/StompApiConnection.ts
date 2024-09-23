@@ -96,7 +96,7 @@ export default class StompApiConnection {
 
   public subscribe(
     location: string,
-    callback: (mesage: Object) => void
+    callback: (message: Object) => void
   ): StompApiSubscription {
     console.log('new subsciption on ' + location)
     const newSubsricption: StompApiSubscription = new StompApiSubscription(

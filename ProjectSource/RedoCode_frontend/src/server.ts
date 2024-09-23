@@ -1,12 +1,11 @@
-import { createServer, Model } from 'miragejs'
+import { createServer } from 'miragejs'
 import type ExerciseType from './types/ExerciseType'
 import type ExerciseListRequestMessage from './types/ExerciseListRequestMessage'
-import ExerciseData from './types/ApiMesseages/ExcerciseDataMessage'
+import ExerciseData from './types/ApiMessages/ExerciseDataMessage'
 import CodeRunnerType from './types/CodeRunnerTypes'
-import VarType from './types/VarType'
-import SolutionsData from './types/ApiMesseages/SolutionsData'
-import ResultData from './types/ApiMesseages/ResultData'
-import StatisticMessage from './types/ApiMesseages/StatisticMessage'
+import SolutionsData from './types/ApiMessages/SolutionsData'
+import ResultData from './types/ApiMessages/ResultData'
+import StatisticMessage from './types/ApiMessages/StatisticMessage'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -184,12 +183,12 @@ export function makeServer({ environment = 'development' } = {}) {
       },
     ],
     title: 'Exercise Title',
-    desc: 'Descritpion of exercise',
+    desc: 'Description of exercise',
     comments: [
       {
         nickname: 'example user',
         profilePicture: '',
-        comment: 'Greate exercise',
+        comment: 'Great exercise',
       },
     ],
   }
@@ -213,9 +212,9 @@ export function makeServer({ environment = 'development' } = {}) {
     inputType: 'SINGLE_INTEGER',
     id: 1,
     title: 'Fibonacci',
-    desc: 'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
+    desc: 'Create a fibonacci sequence with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
     outputType: 'ARRAY_OF_INTEGERS',
-    availbleCodeRunners: [CodeRunnerType.JS_RUNNER, CodeRunnerType.CPP_RUNNER],
+    availableCodeRunners: [CodeRunnerType.JS_RUNNER, CodeRunnerType.CPP_RUNNER],
     tests: [
       {
         input: 1,
@@ -265,7 +264,7 @@ export function makeServer({ environment = 'development' } = {}) {
   const resultData: ResultData = {
     executionTimeMs: 250,
     maxExecutionTimeMs: 1000,
-    betterThanProcent: 66,
+    betterThanPercent: 66,
     SolutionRanking: 5,
   }
 
@@ -321,7 +320,7 @@ export function makeServer({ environment = 'development' } = {}) {
     return exerciseData.slice(start, end)
   }
 
-  const exerciseDataHandler = (schema: any, request: any) => {
+  const exerciseDataHandler = () => {
     return activeExerciseData
   }
 
@@ -391,7 +390,7 @@ export function makeServer({ environment = 'development' } = {}) {
 
           return {
             status: 'success',
-            message: 'comment posted succesfully!',
+            message: 'comment posted successfully!',
             submittedData: attrs,
           }
         }

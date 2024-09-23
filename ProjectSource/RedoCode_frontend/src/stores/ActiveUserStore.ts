@@ -1,16 +1,12 @@
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref, inject, watch, toHandlerKey } from 'vue'
+import { ref, computed, type Ref, inject } from 'vue'
 import { useToastStore } from './ToastStore'
 import axios from 'axios'
-import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest'
-import router from '@/router'
-import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
 import { VueCookies } from 'vue-cookies'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { useCodeRunnerStore } from './CodeRunnerStore'
-import AccountInfo from '@/types/ApiMesseages/AccountInfo'
-import EndpointAcces from '@/controllers/EndpointsAcces'
-import USER_TYPE from '@/types/ApiMesseages/UserType'
+import EndpointAccess from '@/controllers/EndpointsAccess'
+import USER_TYPE from '@/types/ApiMessages/UserType'
 import { stringify } from 'flatted'
 
 export const useActiveUserStore = defineStore('activeUserStore', () => {
@@ -70,7 +66,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     try {
       console.log('email: ' + email)
 
-      const token: string = await EndpointAcces.unauthorized.login(email, pass)
+      const token: string = await EndpointAccess.unauthorized.login(email, pass)
       setToken(token)
 
       if (stayLoggedIn) [saveCookieToken()]
@@ -80,7 +76,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       //   saveCookie();
       // }
       // router.push({ path: '/Home', replace: true });
-      toastStore.showSuccessMessage('Succesfully logged in')
+      toastStore.showSuccessMessage('Successfully logged in')
 
       return true
     } catch (error) {
@@ -93,16 +89,16 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   async function validateAuthentication(): Promise<boolean> {
     await updateAccountData()
-    console.log('USESR VALIDATED: ' + isLogged.value)
+    console.log('USERS VALIDATED: ' + isLogged.value)
     return isLogged.value
   }
 
   async function updateAccountData() {
     const token: string | null = getToken()
-    console.log('AuthControlelr loading data for token: ' + token)
+    console.log('AuthController loading data for token: ' + token)
     if (token !== null && token !== '') {
       console.log('token loading for: ' + token)
-      const response = await EndpointAcces.authorized.getUserInfo()
+      const response = await EndpointAccess.authorized.getUserInfo()
       console.log('Account info: ' + stringify(response))
 
       accountInfo.value = response
@@ -120,9 +116,9 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   function setToken(token: string) {
-    console.log('AuthControlelr setToken: ' + token)
+    console.log('AuthController setToken: ' + token)
     localStorage.setItem('jwtToken', token)
-    console.log('sesssino token: ' + localStorage.getItem('jwtToken'))
+    console.log('session token: ' + localStorage.getItem('jwtToken'))
     _token.value = token
     setupAxios()
     updateAccountData()
@@ -152,7 +148,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
     try {
       console.log('AuthController register: ' + email)
-      const token = await EndpointAcces.unauthorized.register(
+      const token = await EndpointAccess.unauthorized.register(
         email,
         nickname,
         pass
@@ -161,7 +157,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       if (token === '') {
         toastStore.showErrorMessage("Couldn't register")
       } else {
-        toastStore.showSuccessMessage('succesfully registered')
+        toastStore.showSuccessMessage('successfully registered')
         setToken(token)
       }
     } catch (ex: any) {
@@ -215,7 +211,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     if (token != null) {
       const strToken: string = token as string
       await console.log(
-        'on connected userAuhtenticaton: ' + JSON.stringify(getToken())
+        'on connected userAuthentication: ' + JSON.stringify(getToken())
       )
       if (strToken.length > 0) {
         await apiConnectionStore.stompApiSender.authenticationStomp({

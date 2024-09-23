@@ -129,7 +129,7 @@ namespace CodeRunnerPanel {
 
   export function stateShouldBe(state: string) {
     cy.get(
-      'html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div.heightLimit div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContianer div.EngineStatusPanel div.EngineStatusStatus'
+      'html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div.heightLimit div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContainer div.EngineStatusPanel div.EngineStatusStatus'
     ).contains(state)
   }
 

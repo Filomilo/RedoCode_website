@@ -1,16 +1,16 @@
 <template>
   <main>
-    {{ piehartData }}
+    {{ pieChartData }}
     <div class="titleContainer">
       <label class="title"> Amount of language used </label>
     </div>
     <div class="statContainer">
       <Doughnut
-        :data="piehartData"
+        :data="pieChartData"
         :options="pieCharOption"
-        v-if="piehartData !== undefined"
+        v-if="pieChartData !== undefined"
       />
-      <div v-else class="noDataContainer" id="NoLanugageData">
+      <div v-else class="noDataContainer" id="NoLanguageData">
         No data, you need to first solve some exercises
       </div>
     </div>
@@ -26,16 +26,13 @@
 <script lang="ts" setup>
   import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
   import { Doughnut, Bar } from 'vue-chartjs'
-  import * as chartConfig from 'chart.js'
-  import StatisticMessage from '@/types/ApiMesseages/StatisticMessage'
+  import StatisticMessage from '@/types/ApiMessages/StatisticMessage'
   import { computed, ref, Ref, onMounted } from 'vue'
-  import EndpointAcces from '@/controllers/EndpointsAcces'
-  import { Title, BarElement, CategoryScale, LinearScale } from 'chart.js'
-  import { color } from 'chart.js/helpers'
-  import { scale } from 'chroma-js'
+  import EndpointAccess from '@/controllers/EndpointsAccess'
+  import { BarElement, CategoryScale, LinearScale } from 'chart.js'
   const StatData: Ref<StatisticMessage | undefined> = ref()
 
-  const piehartData = computed(() => {
+  const pieChartData = computed(() => {
     if (StatData.value === undefined || StatData.value.languageUse.length === 0)
       return undefined
 
@@ -120,7 +117,7 @@
   }
 
   onMounted(() => {
-    EndpointAcces.authorized.getUserStatisticData().then(result => {
+    EndpointAccess.authorized.getUserStatisticData().then(result => {
       StatData.value = result
     })
   })

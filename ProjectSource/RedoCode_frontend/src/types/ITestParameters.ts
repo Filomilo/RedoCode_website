@@ -1,4 +1,4 @@
-import ExerciseTest from './ExcericseTest'
+import ExerciseTest from './ExerciseTest'
 import RangeType from './RangeType'
 import VarType from './VarType'
 
@@ -7,7 +7,7 @@ export default interface ITestParameters {
   inputType: VarType
   outputType: VarType
   amountOfAutoTests: number
-  autoTestminValue: number
+  autoTestMinValue: number
   autoTestMaxValue: number
   lengthRange: RangeType
   xArrayRange: RangeType | null
@@ -16,7 +16,7 @@ export default interface ITestParameters {
   lowerCaseInput: boolean | null
   numberInput: boolean | null
   specialCharacterInput: boolean | null
-  breakCharacterInupt: boolean | null
-  spaceInupt: boolean | null
+  breakCharacterInput: boolean | null
+  spaceInput: boolean | null
   executionTime: number
 }

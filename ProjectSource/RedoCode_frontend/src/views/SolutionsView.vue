@@ -8,12 +8,12 @@
       <SolutionsPanel
         class="SolutionsPanel"
         :solutionList="refSolutionData.solutionList"
-        :maxExectuionTime="refSolutionData.maxExecutionTimeMs"
+        :maxExecutionTime="refSolutionData.maxExecutionTimeMs"
       />
       <CommentSection
         class="commentPanel"
         :comments="refSolutionData.comments"
-        :id="exercsieID"
+        :id="exerciseID"
       />
     </main>
 
@@ -23,33 +23,28 @@
 
 <script setup lang="ts">
   import SolutionsPanel from '@/components/SolutionsPanel.vue'
-  import SolutionsData from '@/types/ApiMesseages/SolutionsData'
-  import CodeRunnerType from '@/types/CodeRunnerTypes'
+  import SolutionsData from '@/types/ApiMessages/SolutionsData'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
-  import LoadingIndicator from '@/components/LoadingIndicator.vue'
-  import { ComputedRef, Ref, ref } from 'vue'
-  import EndpointAcces from '@/controllers/EndpointsAcces'
+  import { Ref, ref } from 'vue'
+  import EndpointAccess from '@/controllers/EndpointsAccess'
   import { useRoute } from 'vue-router'
-  import { onBeforeMount, onMounted } from 'vue'
+  import { onMounted } from 'vue'
   import CommentSection from '@/components/CommentSection.vue'
   import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
-  import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue'
-  import { stringify } from 'flatted'
   console.log('Test')
   const refSolutionData: Ref<SolutionsData | undefined> = ref()
-  const ActiveUserStore = useActiveUserStore()
   const globalStateStore = useGlobalStateStore()
   const route = useRoute()
   console.log('route.params: ' + JSON.stringify(route.params))
-  const exercsieID: number = Number(route.params.id)
-  console.log('exercsieID: ' + exercsieID)
+  const exerciseID: number = Number(route.params.id)
+  console.log('exerciseID: ' + exerciseID)
 
   const loadData = async () => {
     console.log('Loading solutions')
     globalStateStore.showLoadingScreen('Loading solutions')
-    EndpointAcces.authorized
-      .getSolutionsData(exercsieID)
+    EndpointAccess.authorized
+      .getSolutionsData(exerciseID)
       .then((data: SolutionsData | undefined) => {
         refSolutionData.value = data
         console.log(
@@ -62,7 +57,7 @@
       })
   }
   onMounted(() => {
-    if (exercsieID !== undefined && exercsieID > 0) loadData()
+    if (exerciseID !== undefined && exerciseID > 0) loadData()
   })
 </script>
 
@@ -119,7 +114,7 @@
     align-self: flex-end;
   }
 
-  .algainBottom {
+  .alignBottom {
     display: flex;
     flex-direction: row;
   }

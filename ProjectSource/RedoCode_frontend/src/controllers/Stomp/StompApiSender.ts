@@ -1,10 +1,10 @@
-import RawCodeToRunMessage from '@/types/ApiMesseages/RawCodeToRunMessage'
+import RawCodeToRunMessage from '@/types/ApiMessages/RawCodeToRunMessage'
 import StompApiConnection from './StompApiConnection'
 import CodeRunnerRequestMessage from '@/types/CodeRunnerRequestMessage'
-import AuthenticationResponse from '@/types/ApiMesseages/Authentication/AuthenticationResponse'
-import ExerciseIdToRunMessage from '@/types/ApiMesseages/ExerciseIdToRunMessage'
-import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
-import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
+import AuthenticationResponse from '@/types/ApiMessages/Authentication/AuthenticationResponse'
+import ExerciseIdToRunMessage from '@/types/ApiMessages/ExerciseIdToRunMessage'
+import ExerciseTestToRunMessage from '@/types/ApiMessages/ExerciseTestToRunMessage'
+import ExerciseCreatorValidationMessage from '@/types/ApiMessages/ExerciseCreatorValidationMessage'
 
 class StompApiSender {
   private _stompApiConnection: StompApiConnection
@@ -15,52 +15,52 @@ class StompApiSender {
 
   //#region ApiAuthentication
 
-  public readonly authenticationStomp = (mesage: AuthenticationResponse) => {
-    this._stompApiConnection.sendMessage('/public/app/tokenAuth', mesage)
+  public readonly authenticationStomp = (message: AuthenticationResponse) => {
+    this._stompApiConnection.sendMessage('/public/app/tokenAuth', message)
   }
 
   //#endregion
 
   //#region  CodeRunHandler
 
-  public readonly runExerciseIdCode = (mesage: ExerciseIdToRunMessage) => {
+  public readonly runExerciseIdCode = (message: ExerciseIdToRunMessage) => {
     this._stompApiConnection.sendMessage(
       '/public/app/CodeRun/ExerciseIdRun',
-      mesage
+      message
     )
   }
 
-  public readonly runRawCode = (mesage: RawCodeToRunMessage) => {
+  public readonly runRawCode = (message: RawCodeToRunMessage) => {
     this._stompApiConnection.sendMessage(
       '/public/app/CodeRun/RawCodeRun',
-      mesage
+      message
     )
   }
 
-  public readonly runExercsieIdValidationCode = (
-    mesage: ExerciseIdToRunMessage
+  public readonly runExerciseIdValidationCode = (
+    message: ExerciseIdToRunMessage
   ) => {
     this._stompApiConnection.sendMessage(
       '/public/app/CodeRun/ExerciseIdValidation',
-      mesage
+      message
     )
   }
 
   public readonly runExerciseTestsCode = (
-    mesage: ExerciseTestToRunMesseage
+    message: ExerciseTestToRunMessage
   ) => {
     this._stompApiConnection.sendMessage(
       '/public/app/CodeRun/ExerciseCodeTests',
-      mesage
+      message
     )
   }
 
   public readonly runExerciseCreatorValidationCode = (
-    mesage: ExercsieCreatorValidationMesage
+    message: ExerciseCreatorValidationMessage
   ) => {
     this._stompApiConnection.sendMessage(
       '/public/app/CodeRun/ExerciseCreationValidation',
-      mesage
+      message
     )
   }
 
@@ -68,19 +68,19 @@ class StompApiSender {
 
   //#region CodeRunner Connection controller
 
-  public readonly codeRunnerRequest = (mesage: CodeRunnerRequestMessage) => {
-    console.log('codeRunnerRequest: ' + JSON.stringify(mesage))
+  public readonly codeRunnerRequest = (message: CodeRunnerRequestMessage) => {
+    console.log('codeRunnerRequest: ' + JSON.stringify(message))
     this._stompApiConnection.sendMessage(
       '/public/app/codeRunnerRequest',
-      mesage
+      message
     )
   }
 
   //#endregion
 
   //#region
-  public readonly healthCheck = (mesage: string) => {
-    this._stompApiConnection.sendMessage('/public/app/public/Health', mesage)
+  public readonly healthCheck = (message: string) => {
+    this._stompApiConnection.sendMessage('/public/app/public/Health', message)
   }
 
   //#endregion

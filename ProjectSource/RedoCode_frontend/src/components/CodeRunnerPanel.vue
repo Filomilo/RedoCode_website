@@ -26,7 +26,7 @@
         <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
           <LoadingIndicator />
           <div>
-            Awiating acces to code runner, plase be patient. Consider Creating
+            Awaiting access to code runner, please be patient. Consider Creating
             and account to have priority in queue
           </div>
         </div>
@@ -36,7 +36,7 @@
     <div
       v-if="
         codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
-        codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
+        codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
       "
       class="heightLimit widthLimit"
     >
@@ -84,38 +84,22 @@
 <script lang="ts" setup>
   //#region imports
   import CodeEditor from '@/components/CodeEditorPanel.vue'
-  import BasicButton from '@/components/BasicButton.vue'
-  import type { Button } from 'bootstrap'
-  import { ref, onMounted, type Ref, PropType, computed } from 'vue'
-  import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
-  import axios from 'axios'
+  import { onMounted, PropType, computed } from 'vue'
+  import { onBeforeRouteLeave } from 'vue-router'
   import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
 
-  import type { IFrame } from '@stomp/stompjs'
-  import LanguageDropdown from './LanguageDropdown.vue'
-  // import {
-  //   requstDefaultVmMachine,
-  //   subcribeToVmStatus,
-  //   subscribeToCodeResults
-  // } from '../config/CodeRunnerConnection'
-  import type CodeRunnerState from '@/types/CodeRunnerState'
-  import type CodeToRunMessage from '@/types/CodeToRunMessage'
-  import ResultsPanel from './ResultsPanel.vue'
-  import { basicResultTemplate } from '../config/Data'
-  import type CodeResultsType from '@/types/CodeResultsType'
+
   import CodeResultPanel from './CodeResultPanel.vue'
   import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
-  import ExerciseSetupPanel from './ExerciseSetupPanel.vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import LoadingIndicator from './LoadingIndicator.vue'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
-  import ExerciseTest from '@/types/ExcericseTest'
+  import ExerciseTest from '@/types/ExerciseTest'
   import codeRunnerType from '@/types/CodeRunnerTypes'
-  import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   import { ComputedRef } from 'vue'
-  import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-  import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
+  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import { ConsoleOutput } from '@/types/ProgramResults'
   //#endregion
   //#region props
   const props = defineProps<{
@@ -135,44 +119,22 @@
 
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
-  const subscribeStatus = ref(false)
-  const meaages = ref('')
-  const tryingToEstablishConnection: Ref<boolean> = ref(false)
-  const establishedConnection: Ref<boolean> = ref(false)
-  const VmAcces: Ref<boolean> = ref(false)
-  const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
-  const code: Ref<string> = ref('Write Code')
-  const resultData = ref(basicResultTemplate)
 
   const connectStomp = async () => {
     ApiConnectionStore.stompApiConnection.activate()
   }
   const disconnectStomp = () => {
-    ApiConnectionStore.stompApiSubsciptionContorller.removeCodeResultsSubscription(
+    ApiConnectionStore.stompApiSubscriptionController.removeCodeResultsSubscription(
       onResult
     )
     ApiConnectionStore.stompApiConnection.deactivate()
   }
 
-  const updateVmStatus = (state: CodeRunnerState) => {
-    console.log('status: ' + state)
-    if (
-      state.state == CodeRunnerStatus.STOPPED ||
-      state.state == CodeRunnerStatus.RUNNING_MACHINE
-    ) {
-      console.log('vmacces')
-      VmAcces.value = true
-    } else VmAcces.value = false
-  }
 
-  const updateResults = (results: CodeResultsType[]) => {
-    console.log('results recived: ' + JSON.stringify(results))
-    resultData.value = results
-  }
 
   const onResult = (mes: ProgramResultsMessage) => {
     console.log('onResult: ' + JSON.stringify(mes))
-    codeRunnerStore.isprocessing = false
+    codeRunnerStore.isProcessing = false
     props.onResults(mes)
   }
 
@@ -183,7 +145,7 @@
     codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     // if (props.connectAtStart) {
 
-    ApiConnectionStore.stompApiSubsciptionContorller.addCodeResultsSubscription(
+    ApiConnectionStore.stompApiSubscriptionController.addCodeResultsSubscription(
       onResult
     )
     //connectToCodeRunner()
@@ -195,26 +157,19 @@
     next()
   })
 
-  const onSelectLanguage = (lang: codeRunnerType) => {
-    console.log('info selcted:' + lang)
-    chosenLangague.value = lang
-    // if (establishedConnection.value) requstDefaultVmMachine(lang)
-  }
 
   const onRunCode = () => {
-    codeRunnerStore.isprocessing = true
+    codeRunnerStore.isProcessing = true
     props.onRunCode()
   }
 
-  onBeforeRouteLeave(async (to, from) => {
-    // console.log("leave************************************************")
-    // codeRunnerStore.disconnetWithCodeRunner();
+  onBeforeRouteLeave(async () => {
     disconnectStomp()
   })
 
   const awaiting: ComputedRef<boolean> = computed(() => {
     if (import.meta.env.MODE === 'development') return false
-    return codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
+    return codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
   })
 </script>
 

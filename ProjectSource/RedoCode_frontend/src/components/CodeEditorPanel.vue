@@ -95,7 +95,7 @@
   }
 
   const shouldButtonBeRun: ComputedRef<boolean> = computed(
-    () => !codeRunnerStore.isprocessing
+    () => !codeRunnerStore.isProcessing
   )
 
   const onCodeChnaage = (text: string) => {

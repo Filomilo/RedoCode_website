@@ -57,9 +57,7 @@
   import IconTrash from '../assets/icons/IconTrash.vue'
   import VariablesInput from './VariablesInput.vue'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-  import VarType from '@/types/VarType'
-  import { onMounted, PropType } from 'vue'
-  import ExerciseTest from '@/types/ExcericseTest'
+  import { onMounted } from 'vue'
   import { useToastStore } from '@/stores/ToastStore'
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()

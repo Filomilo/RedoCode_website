@@ -2,7 +2,7 @@
   <main>
     <div class="MainContainer">
       <div class="MessageContainer">
-        Specifed webiste does nto exist
+        Specified website does nto exist
         <Button id="GotToLogin" @click="onGoToLogin"> Go to home page </Button>
       </div>
     </div>
@@ -10,10 +10,9 @@
 </template>
 
 <script setup lang="ts">
-  import { useRouter, useRoute } from 'vue-router'
+  import { useRouter } from 'vue-router'
 
   const router = useRouter()
-  const route = useRoute()
   const onGoToLogin = () => {
     router.replace('Home')
   }
