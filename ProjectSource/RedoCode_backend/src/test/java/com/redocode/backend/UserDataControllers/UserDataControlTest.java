@@ -86,13 +86,13 @@ class UserDataControlTest {
 
     assertEquals(amountOfElemtnsInLangaugeStatsic, statisticMessage.getLanguageUse().size());
     assertEquals(amountOFElementsInLatelyDone, statisticMessage.getAmountOfLatelyDone().size());
-
-    for (LanguageUsePart languageUsePart : statisticMessage.getLanguageUse()) {
-      String lanugaeName = languageUsePart.getName();
-      ProgrammingLanguage programmingLanguage =
-          programmingLanguageRepository.findByName(lanugaeName);
-      int amountOFDoneWithThisLangauege =
-          (int)
+                              
+                                  for (LanguageUsePart languageUsePart : statisticMessage.getLanguageUse()) {
+                                    String lanugaeName = languageUsePart.getName();
+                                    ProgrammingLanguage programmingLanguage =
+                                        programmingLanguageRepository.findByName(lanugaeName);
+                                    int amountOFDoneWithThisLangauege =
+                                        (int)
               solutionPrograms.stream()
                   .filter(x -> x.getLanguage().getId() == programmingLanguage.getId())
                   .count();
