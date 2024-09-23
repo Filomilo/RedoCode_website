@@ -43,7 +43,7 @@ const router = createRouter({
     {
       path: '/Exercises',
       name: 'Exercises',
-      component: () => import('@/views/ExerciseView.vue'),
+      component: () => import('@/views/ExercisesView.vue'),
     },
     {
       path: '/Exercises/:id',

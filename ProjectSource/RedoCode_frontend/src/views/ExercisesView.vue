@@ -135,6 +135,10 @@ onBeforeRouteUpdate(()=>{
 */
 </script>
 <style>
+
+.dataTable-container{
+  height: 100%;
+}
   .dataTableStyle {
     height: 100%;
     overflow: hidden;
