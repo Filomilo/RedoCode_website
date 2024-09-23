@@ -81,9 +81,9 @@
   } from '@vuelidate/validators'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import { useToastStore } from '@/stores/ToastStore'
-import { useRouter } from 'vue-router'
+  import { useRouter } from 'vue-router'
 
-  const router = useRouter();
+  const router = useRouter()
   const activeUserStore = useActiveUserStore()
   const toastStore = useToastStore()
   const dataState = reactive({
@@ -115,11 +115,11 @@ import { useRouter } from 'vue-router'
       .$validate()
       .then((state: Boolean) => {
         if (state)
-          activeUserStore.register(
-            dataState.email,
-            dataState.nickname,
-            dataState.password
-          ).then(()=>{router.push("Home")})
+          activeUserStore
+            .register(dataState.email, dataState.nickname, dataState.password)
+            .then(() => {
+              router.push('Home')
+            })
         else toastStore.showErrorMessage('Incorrect registration data provided')
       })
       .catch(() => {

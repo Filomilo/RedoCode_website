@@ -17,44 +17,45 @@ import { stringify } from 'flatted'
 
 namespace EndpointAcces {
   export namespace unauthorized {
-    
-  export async function register (email: string, nickname: string, pass: string):Promise<string>{
-    const request: RegisterRequest = {
-      nickname: nickname,
-      password: pass,
-      email: email,
+    export async function register(
+      email: string,
+      nickname: string,
+      pass: string
+    ): Promise<string> {
+      const request: RegisterRequest = {
+        nickname: nickname,
+        password: pass,
+        email: email,
+      }
+      const response = await axios.post('/public/auth/register', request)
+      console.log('Response: ' + JSON.stringify(response))
+      if (response.status == 200) {
+        console.log('/public/auth/register succes')
+        return response.data.token
+      } else {
+        throw "Couldn't register user"
+      }
     }
-   const response= await axios.post('/public/auth/register', request);
-        console.log('Response: ' + JSON.stringify(response))
-        if (response.status == 200) {
-          console.log("/public/auth/register succes" )
-          return response.data.token;
-        } else {
-          throw "Couldn't register user"
-        }
-  }
 
-
-    export async function login(email: string, password: string):Promise<string> {
+    export async function login(
+      email: string,
+      password: string
+    ): Promise<string> {
       try {
         const request: AuthenticationRequest = {
           password: password,
           email: email,
         }
-        const response= await axios.post('/public/auth/login', request);
-        if(response.status!==200)
-        {
-          throw "Incorrect login details"
+        const response = await axios.post('/public/auth/login', request)
+        if (response.status !== 200) {
+          throw 'Incorrect login details'
         }
-        return response.data.token;
-
+        return response.data.token
       } catch (error) {
         console.error('updateCodeRunner Error:', JSON.stringify(error))
-        throw "Incorrect login details"
+        throw 'Incorrect login details'
       }
     }
-
-   
 
     export async function getExerciseData(
       exercsieId: number
@@ -108,12 +109,11 @@ namespace EndpointAcces {
       // exerciseData.value = response.data
       // console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
     }
-    export async function getCodeRunnerState(
-    ): Promise<CoderunnerState> {
+    export async function getCodeRunnerState(): Promise<CoderunnerState> {
       try {
-        const activeUserStore = useActiveUserStore();
-     
-        if (   !activeUserStore.IsToken) throw 'token empty'
+        const activeUserStore = useActiveUserStore()
+
+        if (!activeUserStore.IsToken) throw 'token empty'
         // console.log('token: ' + token)
         const response = await axios.post('/public/coderunner/state')
         console.log('updateCodeRunner Response:', response)
@@ -135,12 +135,8 @@ namespace EndpointAcces {
   }
 
   export namespace authorized {
-    
-
-
-
     export async function getSolutionsData(
-      exerciseid: number,
+      exerciseid: number
     ): Promise<SolutionsData> {
       console.log('attempitng /secure/exercises/solutions ')
       const params = {
@@ -230,10 +226,7 @@ namespace EndpointAcces {
       }
     }
 
-    export async function postRate(
-      selectedRating: number,
-      exercsieID: number,
-    ) {
+    export async function postRate(selectedRating: number, exercsieID: number) {
       const data = {
         id: exercsieID,
         rate: selectedRating,
@@ -266,35 +259,23 @@ namespace EndpointAcces {
       return response.data
     }
 
-    export async function getUserInfo(): Promise<AccountInfo>
-    {
+    export async function getUserInfo(): Promise<AccountInfo> {
+      console.log('getUserInfo')
+      const response = await axios.get('/secure/user/info')
 
-      console.log("getUserInfo")
-      const response = await axios.get(
-        '/secure/user/info'
-      )
-
-      console.log(
-        'getUserInfo: response.data ' +
-          JSON.stringify(response.data)
-      )
+      console.log('getUserInfo: response.data ' + JSON.stringify(response.data))
       return response.data
     }
 
-
-    export async function getUserStatisticData(): Promise<StatisticMessage>{
-      console.log("getUserStatisticData")
-      const response = await axios.get(
-        '/secure/user/stats'
-      )
+    export async function getUserStatisticData(): Promise<StatisticMessage> {
+      console.log('getUserStatisticData')
+      const response = await axios.get('/secure/user/stats')
 
       console.log(
-        'getUserStatisticData: response.data ' +
-          JSON.stringify(response.data)
+        'getUserStatisticData: response.data ' + JSON.stringify(response.data)
       )
       return response.data
     }
-
   }
 }
 export default EndpointAcces

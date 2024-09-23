@@ -88,8 +88,7 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
 
   const manualTestBuffer: Ref<ExerciseTest[]> = ref([])
 
-
-  const isprocessing:Ref<boolean>=ref(false);
+  const isprocessing: Ref<boolean> = ref(false)
 
   return {
     codeRunnerConnection,

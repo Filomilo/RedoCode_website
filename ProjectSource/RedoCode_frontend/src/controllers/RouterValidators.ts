@@ -23,7 +23,8 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'ResultsUnauthenticated'
-    if (!(await activeUserStore.validateAuthentication())) return 'ResultsUnauthenticated'
+    if (!(await activeUserStore.validateAuthentication()))
+      return 'ResultsUnauthenticated'
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(
@@ -61,9 +62,11 @@ namespace RouterValidators {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
 
-    const authState=await activeUserStore.validateAuthentication();
-    console.log('SolutionsdAccesValidate authethication, authState: '+ authState)
-    if ( ! authState) {
+    const authState = await activeUserStore.validateAuthentication()
+    console.log(
+      'SolutionsdAccesValidate authethication, authState: ' + authState
+    )
+    if (!authState) {
       return null
     } else {
       console.log('ResultsUnauthenticated')
@@ -89,7 +92,7 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
-    const authState=await activeUserStore.validateAuthentication();
+    const authState = await activeUserStore.validateAuthentication()
 
     if (!authState) return null
     let state = ExerciseSolviingState.UNSOLVED
@@ -117,7 +120,8 @@ namespace RouterValidators {
     const activeUserStore = useActiveUserStore()
     console.log('ExerciseSolvingValidation authethication')
     if (params['id'] === undefined) return 'Exercises'
-    if (await !(await activeUserStore.validateAuthentication())) return 'Exercise'
+    if (await !(await activeUserStore.validateAuthentication()))
+      return 'Exercise'
     let state = ExerciseSolviingState.UNSOLVED
     try {
       state = await EndpointAcces.authorized.getExerciseSolvingState(

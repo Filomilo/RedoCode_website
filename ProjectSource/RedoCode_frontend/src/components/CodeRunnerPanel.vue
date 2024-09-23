@@ -2,14 +2,12 @@
 
 <template>
   <div class="PlayGroundBase">
-    
     <Dialog
       :visible="false"
       modal
       header="Edit Profile"
       :style="{ width: '25rem' }"
     >
-    
       <template #container>
         <div class="CodeRunnerLoadingPanel" id="data-loading-dialog">
           <LoadingIndicator />
@@ -181,21 +179,18 @@
     resultData.value = results
   }
 
-
-  const onResult=(mes: ProgramResultsMessage )=>
-  {
-    console.log("onResult: "+ JSON.stringify(mes));
-    codeRunnerStore.isprocessing=false;
-    props.onResults(mes);
+  const onResult = (mes: ProgramResultsMessage) => {
+    console.log('onResult: ' + JSON.stringify(mes))
+    codeRunnerStore.isprocessing = false
+    props.onResults(mes)
   }
 
   onMounted(() => {
     console.log('props: ' + JSON.stringify(props))
-    console.log("Code runner init")
+    console.log('Code runner init')
     connectStomp()
     codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     // if (props.connectAtStart) {
-
 
     ApiConnectionStore.stompApiSubsciptionContorller.addCodeResultsSubscription(
       onResult
@@ -216,12 +211,9 @@
   }
 
   const onRunCode = () => {
-    codeRunnerStore.isprocessing=true;
-    props.onRunCode();
-    
+    codeRunnerStore.isprocessing = true
+    props.onRunCode()
   }
-
-
 
   onBeforeRouteLeave(async (to, from) => {
     // console.log("leave************************************************")

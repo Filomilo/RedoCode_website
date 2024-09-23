@@ -56,8 +56,8 @@
       </div>
       <div class="SettingContentPanel">
         <div v-if="screenSelected === Panels.STATISTIC">
-        <StatisitcPanel/>
-          </div>
+          <StatisitcPanel />
+        </div>
         <div v-if="screenSelected === Panels.SETTINGS">
           <div class="SettingContentRow">E-mail: e****@gmail.com</div>
           <div class="SettingContentRow">
@@ -84,10 +84,10 @@
   import router from '@/router'
   import StatisitcPanel from '@/components/StatisitcPanel.vue'
   import { useToastStore } from '@/stores/ToastStore'
-import profilePicImageResolve from '@/tools/ImageResolve'
+  import profilePicImageResolve from '@/tools/ImageResolve'
   const activeUserStore = useActiveUserStore()
   const ToastStore = useToastStore()
-  const imgURL = computed(()=>{
+  const imgURL = computed(() => {
     return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
   })
 

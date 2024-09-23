@@ -1,6 +1,5 @@
 <template>
   <main>
-
     <div class="commentSectionContainer">
       <div class="VerticalLine" style="margin-top: 5rem">
         <Textarea
@@ -24,7 +23,6 @@
         >
           comment
         </Button>
-  
       </div>
       <div v-for="(data, index) in commentsRef" v-bind:key="index">
         <div
@@ -33,7 +31,10 @@
           style="margin-top: 0.5rem"
         >
           <div class="ProfilePicContainer">
-            <img :src="profilePicImageResolve( data.profilePicture)" class="profilePic" />
+            <img
+              :src="profilePicImageResolve(data.profilePicture)"
+              class="profilePic"
+            />
           </div>
           <div class="CommentContainer">
             <h3
@@ -83,7 +84,9 @@
           ToastStore.showErrorMessage("Couldn't' post comment")
         } else {
           if (validatedComment.value) {
-            console.log("comment post: "+JSON.stringify(ActiveUserStore.accountInfo)  )
+            console.log(
+              'comment post: ' + JSON.stringify(ActiveUserStore.accountInfo)
+            )
             commentsRef.value.unshift({
               nickname: ActiveUserStore.accountInfo.nickname,
               profilePicture: ActiveUserStore.accountInfo.profilePicture,

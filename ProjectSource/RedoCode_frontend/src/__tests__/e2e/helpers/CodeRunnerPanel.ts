@@ -1,14 +1,9 @@
 namespace CodeRunnerPanel {
-
-  
-
   export namespace CodeRunnerInput {
     const codeEditorSequance = '#coderunner-editor-panel textarea'
 
     const backspaces = '{selectAll}{backspace}'
 
-
-    
     export function codeRunnerShouldContain(code: string) {
       cy.get('#code-preview').invoke('text').should('contain', code)
     }
@@ -53,21 +48,21 @@ namespace CodeRunnerPanel {
 
   export namespace Tests {
     export function shouldAllTestFail(amountOfTest: number) {
-      shouldNotBeLoading();
+      shouldNotBeLoading()
       cy.get('#testResultStatus_' + '0').should('have.text', 'Failed')
       for (let index = 1; index < amountOfTest; index++) {
         cy.get('#testResultStatus_' + index).should('be.empty')
       }
     }
     export function shouldAllTesCorrect(amountOfTest: number) {
-      shouldNotBeLoading();
+      shouldNotBeLoading()
       for (let index = 0; index < amountOfTest; index++) {
         cy.get('#testResultStatus_' + index).should('have.text', 'Correct')
       }
     }
 
     export function checkTest(checks: any[]) {
-      shouldNotBeLoading();
+      shouldNotBeLoading()
       for (let index = 0; index < checks.length; index++) {
         cy.get('#TestResultCard' + index)
           .contains('span', 'Result')
@@ -90,25 +85,21 @@ namespace CodeRunnerPanel {
   }
 
   export function run() {
-    shouldNotBeLoading();
+    shouldNotBeLoading()
     cy.get('#coderunner-run-button').should('be.enabled')
     cy.get('#coderunner-run-button').should('be.visible')
 
     cy.get('#coderunner-run-button').click()
-    shouldBeLoading();
+    shouldBeLoading()
   }
 
-
-  export function shouldBeLoading()
-  {
-    cy.get("#coderunner-wait-button").should('be.visible');
+  export function shouldBeLoading() {
+    cy.get('#coderunner-wait-button').should('be.visible')
     // cy.get("#coderunner-run-button").should('be.not.visible');
   }
-  export function shouldNotBeLoading()
-  {
-    cy.get("#coderunner-run-button").should('be.visible');
+  export function shouldNotBeLoading() {
+    cy.get('#coderunner-run-button').should('be.visible')
     // cy.get("#coderunner-wait-button").should('be.not.visible');
-
   }
 
   export function submit() {
@@ -124,12 +115,11 @@ namespace CodeRunnerPanel {
 
   export namespace RawCodeResults {
     export function shouldResultBe(console: string) {
-      cy.get(
-        '#raw_code_run_result'
-      )  .invoke('text')
-      .then(text => {
-        cy.log(text);
-      });
+      cy.get('#raw_code_run_result')
+        .invoke('text')
+        .then(text => {
+          cy.log(text)
+        })
       //
       // .then((text) => {
       //   expect(text).equal(console);
