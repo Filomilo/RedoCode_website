@@ -118,28 +118,19 @@
   import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
   //#endregion
   //#region props
-  const props = defineProps({
-    exerciseInfo: {
-      type: Object as () => IExerciseDescriptionI,
-      required: false,
-    },
-    languageChoices: { type: Array as () => codeRunnerType[], required: true },
-    codeContainerUpdate: { type: Function, required: true },
-    starting: { type: String, required: true },
-    onRunCode: { type: Function, required: true },
-    onSubmit: { type: Function, required: false },
-    onResults: {
-      type: Function as PropType<(result: ProgramResultsMessage) => void>,
-      required: true,
-    },
-    ManualTests: {
-      type: Array as () => ExerciseTest[] | object as ()=>ConsoleOutput,
-      required: true,
-    },
-    AutoTests: { type: Array as () => ExerciseTest[], required: false },
-    SubmitAccess: { type: Boolean, required: false },
-    ExecutionTime: { type: Number, required: false },
-  })
+  const props = defineProps<{
+  exerciseInfo?: IExerciseDescriptionI;
+  languageChoices: codeRunnerType[];
+  codeContainerUpdate: (cose: string) => void;
+  starting: string;
+  onRunCode: () => void;
+  onSubmit?: () => void;
+  onResults: (result: ProgramResultsMessage) => void;
+  ManualTests: ExerciseTest[] | ConsoleOutput;
+  AutoTests?: ExerciseTest[];
+  SubmitAccess?: boolean;
+  ExecutionTime?: number;
+}>();
   //#endregion
 
   const codeRunnerStore = useCodeRunnerStore()
