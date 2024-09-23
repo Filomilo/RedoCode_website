@@ -47,4 +47,5 @@ jobs:
         run: git rebase origin/main
       - name: Push changes
         run: |
-          git push origin main || (git pull --rebase && git push origin main --force)
+          git push origin ${{ github.ref_name }} || (git pull --rebase && git push origin ${{ github.ref_name }} --force)
+
