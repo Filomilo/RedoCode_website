@@ -70,12 +70,6 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       setToken(token)
 
       if (stayLoggedIn) [saveCookieToken()]
-      // _token.value = token
-      // isLogged.value = true
-      // if (stayLoggedIn) {
-      //   saveCookie();
-      // }
-      // router.push({ path: '/Home', replace: true });
       toastStore.showSuccessMessage('Successfully logged in')
 
       return true
