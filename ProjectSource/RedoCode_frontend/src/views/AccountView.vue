@@ -128,10 +128,10 @@
     screenSelected.value = type
   }
 
-                const onLogOutButton = () => {
-                  activeUserStore.logout()
-                  router.push('/home')
-                }
+  const onLogOutButton = () => {
+    activeUserStore.logout()
+    router.push('/home')
+  }
 
   const onChangePassword = () => {
     ToastStore.featureNotImplemented()
