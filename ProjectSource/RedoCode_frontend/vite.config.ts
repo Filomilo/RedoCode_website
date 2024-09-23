@@ -10,6 +10,9 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
+        sassOptions: {
+          quietDeps: true,  
+        },
         quietDeps: true,
         warnRuleAsError: false,
       },
@@ -39,6 +42,7 @@ export default defineConfig({
           if (id.includes('src/types')) {
             return 'types'
           }
+       
         },
       },
     },

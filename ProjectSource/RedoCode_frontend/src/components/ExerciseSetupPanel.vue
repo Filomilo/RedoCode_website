@@ -36,47 +36,6 @@
           />
         </div>
         <div class="panelVerticalSection">
-          Time for task
-          <div style="display: flex; flex-direction: row">
-            <InputNumber
-              @update:model-value="
-                (newNum: number) => {
-                  codeRunnerStore.exerciseCreatorController.updateAmountOfMInutes(
-                    newNum
-                  )
-                }
-              "
-              :model-value="
-                codeRunnerStore.exerciseCreatorController.getMinutesBound()
-              "
-              inputId="integeronly"
-              suffix=" H"
-              :min="0"
-              :max="12"
-              class="numberInput"
-              id="hour-number-input"
-            />
-            <InputNumber
-              @update:model-value="
-                (newNum: number) => {
-                  codeRunnerStore.exerciseCreatorController.updateAmountOfHours(
-                    newNum
-                  )
-                }
-              "
-              :model-value="
-                codeRunnerStore.exerciseCreatorController.getHoursBound()
-              "
-              inputId="integeronly"
-              suffix=" M"
-              :min="0"
-              :max="59"
-              class="numberInput"
-              id="minute-number-input"
-            />
-          </div>
-        </div>
-        <div class="panelVerticalSection">
           Maximum execution time
           <div style="display: flex; flex-direction: row">
             <InputNumber

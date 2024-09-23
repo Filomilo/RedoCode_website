@@ -18,10 +18,6 @@ class PlayGroundRunnerCotroller {
 
     this.consoleOutput = results.consoleOutput
     this.executionTime = results.executionTime
-    // console.log('  this._consoleOutput.value:  ' + JSON.stringify(  this.consoleOutput.value))
-
-    // this.updateCreationTestData(results.results)
-    // this.updateSubmitAcces()
   }
 }
 

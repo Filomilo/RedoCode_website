@@ -90,13 +90,3 @@ class CodeRunnerSender {
 
 export default CodeRunnerSender
 
-// code: exerciseCreatorController.solutionCodes[type]!,
-// manualTests: exerciseCreatorController.getSingleRowOfManualTests,
-// inputType: exerciseCreatorController.inputType,
-// outputType: exerciseCreatorController.outputType,
-// amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-// autoTestminValue: exerciseCreatorController.autoTestminValue,
-// autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
-// lengthRange: exerciseCreatorController.lengthRange,
-// xArrayRange: exerciseCreatorController.xArrayRange,
-// yArrayRange: exerciseCreatorController.yArrayRange,

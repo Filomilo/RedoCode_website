@@ -48,7 +48,6 @@ export default class ExerciseCreatorController
   desc!: string
 
   ram!: number
-  timeForTaskMin!: number
   timeForExecutionMs!: number
   inputType!: VarType
   outputType!: VarType
@@ -247,9 +246,7 @@ export default class ExerciseCreatorController
     if (this.languages !== undefined && this.languages.length == 0) {
       return 'at least one programing lnaguage should be available'
     }
-    if (this.timeForTaskMin < 15) {
-      return 'at least 15 minute should be for task'
-    }
+
     if (this.getSingleRowOfManualTests.length < 3) {
       return 'tthere should be at least 3 manuall tests'
     }
@@ -274,26 +271,7 @@ export default class ExerciseCreatorController
 
   //#endregion
 
-  //#region Time management
-  public updateAmountOfMInutes(newNum: number): void {
-    this.timeForTaskMin =
-      newNum * 60 +
-      (this.timeForTaskMin - Math.floor(this.timeForTaskMin / 60) * 60)
-  }
 
-  public getMinutesBound(): number {
-    return Math.floor(this.timeForTaskMin / 60)
-  }
-
-  public updateAmountOfHours(newNum: number): void {
-    this.timeForTaskMin = Math.floor(this.timeForTaskMin / 60) * 60 + +newNum
-  }
-
-  public getHoursBound(): number {
-    return this.timeForTaskMin - Math.floor(this.timeForTaskMin / 60) * 60
-  }
-
-  //#endregion
 
   //#region input output type management
 

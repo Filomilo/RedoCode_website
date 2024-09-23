@@ -29,6 +29,5 @@ export default interface ExercsieCreatorValidationMesage
   breakCharacterInupt: boolean | null
   spaceInupt: boolean | null
   solutionCodes: StringIndexed
-  timeForTaskMin: number
   timeForExecutionMs: number
 }

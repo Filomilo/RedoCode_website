@@ -95,7 +95,6 @@ namespace MessageCreator {
       xArrayRange: exerciseCreatorController.xArrayRange,
       yArrayRange: exerciseCreatorController.yArrayRange,
       solutionCodes: exerciseCreatorController.solutionCodes,
-      timeForTaskMin: exerciseCreatorController.timeForTaskMin,
       timeForExecutionMs: exerciseCreatorController.timeForExecutionMs,
       manualTests: parsedTests,
       upperCaseInput: exerciseCreatorController.upperCaseInput,
