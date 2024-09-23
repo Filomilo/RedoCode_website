@@ -25,7 +25,7 @@
   import { computed, ref, type Ref } from 'vue'
   import ProcentDonout from '@/components/ProcentDonout.vue'
   import chroma from 'chroma-js'
-import profilePicImageResolve from '@/tools/ImageResolve';
+  import profilePicImageResolve from '@/tools/ImageResolve'
 
   const props = defineProps<{
     solutionItem: SolutionItemList
@@ -37,8 +37,8 @@ import profilePicImageResolve from '@/tools/ImageResolve';
     return 'SolutionContainer ' + (props.selected ? ' Selected' : '')
   })
 
-  const imgURL = computed(()=>{
-    return profilePicImageResolve(props.solutionItem.profilePic);
+  const imgURL = computed(() => {
+    return profilePicImageResolve(props.solutionItem.profilePic)
   })
 
   const gradient = chroma.scale(['#00ff00', '#ff0000']).mode('lab').colors(10)

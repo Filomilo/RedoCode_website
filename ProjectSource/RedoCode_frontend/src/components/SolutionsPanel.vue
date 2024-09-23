@@ -38,9 +38,8 @@
   const loadSolutionCode = async (solutionId: number) => {
     code.value = ''
     try {
-      const codeIn = await EndpointsAcces.authorized.getSolutionsCodesData(
-        solutionId
-      )
+      const codeIn =
+        await EndpointsAcces.authorized.getSolutionsCodesData(solutionId)
       console.log('results: ' + JSON.stringify(codeIn))
       code.value = codeIn
     } catch (error) {

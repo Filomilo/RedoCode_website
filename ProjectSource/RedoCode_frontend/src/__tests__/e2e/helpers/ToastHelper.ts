@@ -19,13 +19,12 @@ namespace ToastHelper {
   }
 
   export function WaitForShowingAndClosingToast() {
-    try{
-    ToastHelper.shouldToastAtLeastOne()}
-    catch(ex)
-    {
-      cy.log("continue")
+    try {
+      ToastHelper.shouldToastAtLeastOne()
+    } catch (ex) {
+      cy.log('continue')
     }
     ToastHelper.shouldToastNo()
-    }
+  }
 }
 export default ToastHelper

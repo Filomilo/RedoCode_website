@@ -28,12 +28,12 @@ export default class StompApiConnection {
     onBeforeConnection: () => void,
     onConnected: () => void,
     onError: (mes: string) => void,
-    onDisconnected: () => void,
+    onDisconnected: () => void
   ) {
     this._onBeforeConnection = onBeforeConnection
     this._onError = onError
     this.addOnConnectEvent(onConnected)
-    this,this.addOnDisconnectEvent(onDisconnected)
+    this, this.addOnDisconnectEvent(onDisconnected)
     this._stompClient = new Client({
       brokerURL: connectionUrl,
       connectHeaders: {
@@ -44,9 +44,9 @@ export default class StompApiConnection {
         this._onBeforeConnection()
       },
       onConnect: async (frame: IFrame) => {
-        console.log(connectionUrl + ' on connect: '+ this._stompClient.active)
+        console.log(connectionUrl + ' on connect: ' + this._stompClient.active)
         this._subscriptions.forEach(async (sub: StompApiSubscription) => {
-         await sub.activateSubscription()
+          await sub.activateSubscription()
         })
 
         this._onConnected()
@@ -81,7 +81,7 @@ export default class StompApiConnection {
   }
 
   public activate() {
-    console.log("Activaitng stomp client")
+    console.log('Activaitng stomp client')
     this._stompClient.activate()
   }
 
@@ -93,7 +93,6 @@ export default class StompApiConnection {
     }
     this._stompClient.deactivate()
   }
-
 
   public subscribe(
     location: string,

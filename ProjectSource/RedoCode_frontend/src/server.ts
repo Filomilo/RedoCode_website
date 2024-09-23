@@ -269,48 +269,47 @@ export function makeServer({ environment = 'development' } = {}) {
     SolutionRanking: 5,
   }
 
-
-  const statsData: StatisticMessage={
+  const statsData: StatisticMessage = {
     languageUse: [
       {
         name: 'java',
-        amount: 4
+        amount: 4,
       },
       {
         name: 'cpp',
-        amount: 9
-      }
+        amount: 9,
+      },
     ],
     amountOfLatelyDone: [
       {
-        date: new Date(2024,4,13),
-        amount: 1
+        date: new Date(2024, 4, 13),
+        amount: 1,
       },
       {
-        date: new Date(2024,4,14),
-        amount: 2
+        date: new Date(2024, 4, 14),
+        amount: 2,
       },
       {
-        date: new Date(2024,4,15),
-        amount: 3
+        date: new Date(2024, 4, 15),
+        amount: 3,
       },
       {
-        date: new Date(2024,4,16),
-        amount: 4
+        date: new Date(2024, 4, 16),
+        amount: 4,
       },
       {
-        date: new Date(2024,4,17),
-        amount: 5
+        date: new Date(2024, 4, 17),
+        amount: 5,
       },
       {
-        date: new Date(2024,4,18),
-        amount: 6
+        date: new Date(2024, 4, 18),
+        amount: 6,
       },
       {
-        date: new Date(2024,4,19),
-        amount: 7
-      }
-    ]
+        date: new Date(2024, 4, 19),
+        amount: 7,
+      },
+    ],
   }
 
   const exerciseListHandler = (schema: any, request: any) => {
@@ -331,7 +330,6 @@ export function makeServer({ environment = 'development' } = {}) {
 
     return solutionData
   }
-
 
   const userStatsDataHandler = (schema: any, request: any) => {
     console.log('solutionsDataHandler ' + JSON.stringify(request))
@@ -376,10 +374,7 @@ export function makeServer({ environment = 'development' } = {}) {
         solutionsDataHandler
       )
 
-      this.get(
-        'http://localhost:8080/secure/user/stats',
-        userStatsDataHandler
-      )
+      this.get('http://localhost:8080/secure/user/stats', userStatsDataHandler)
 
       this.get(
         'http://localhost:8080/secure/exercises/solutionsCodes',

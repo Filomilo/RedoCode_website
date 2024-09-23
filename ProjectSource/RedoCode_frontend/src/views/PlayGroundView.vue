@@ -1,6 +1,5 @@
 <template>
   <main class="PlayGroundBase">
-
     <CodeRunnerPanel
       :languageChoices="languageChoices.map(element => element.value)"
       :codeContainerUpdate="codeConatienrUpdate"

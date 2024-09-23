@@ -126,7 +126,7 @@ class StompApiSubsciptionContorller {
   public addCodeResultsSubscription(method: {
     (arg: ProgramResultsMessage): void
   }): void {
-    console.log("addCodeResultsSubscription: "+ method)
+    console.log('addCodeResultsSubscription: ' + method)
     this._CodeResultsSubscriptions.push(method)
   }
   public removeCodeResultsSubscription(method: {

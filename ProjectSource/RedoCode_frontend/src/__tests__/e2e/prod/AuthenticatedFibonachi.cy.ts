@@ -62,7 +62,7 @@ describe('template spec', () => {
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     ExercisesPage.shouldBeOnUrlOfExerciseId(1)
-    ToastHelper.WaitForShowingAndClosingToast();
+    ToastHelper.WaitForShowingAndClosingToast()
     CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.stateShouldBe('ACTIVE')
     CodeRunnerPanel.CodeRunnerInput.codeRunnerShouldContain(
@@ -111,12 +111,12 @@ describe('template spec', () => {
     SolutionsList.solutionListClick(1)
     SolutionsList.solutionListClick(2)
     SolutionsList.postComment(comment)
-    SolutionsList.shouldUsernameCommentBe(0,nick)
+    SolutionsList.shouldUsernameCommentBe(0, nick)
     SolutionsList.shouldContentCommentBe(0, comment)
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     UrlControls.urlShouldBe('Solutions/1')
-    SolutionsList.shouldUsernameCommentBe(0,nick)
+    SolutionsList.shouldUsernameCommentBe(0, nick)
     SolutionsList.shouldContentCommentBe(0, comment)
   })
 })

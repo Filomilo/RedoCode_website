@@ -9,10 +9,9 @@ import StompApiSender from '@/controllers/Stomp/StompApiSender'
 import StompApiSubsriptionsController from '@/controllers/Stomp/StompApiSubsriptionsController'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
-
-  const isConnected=ref(false);
+  const isConnected = ref(false)
   if (import.meta.env.MODE === 'development') {
-    isConnected.value=true;
+    isConnected.value = true
   }
   const toastStore = useToastStore()
   const stompApiConnection: StompApiConnection = new StompApiConnection(
@@ -23,15 +22,15 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     () => {
       toastStore.showSuccessMessage('successfully connected')
 
-      isConnected.value=true;
-      console.log("on connected settign value: "+isConnected.value)
+      isConnected.value = true
+      console.log('on connected settign value: ' + isConnected.value)
     },
     (message: string) => {
       toastStore.showErrorMessage(message)
-    }   , () => {
-      
-      isConnected.value=false;
-      console.log("on disconcneted settign value: "+isConnected.value)
+    },
+    () => {
+      isConnected.value = false
+      console.log('on disconcneted settign value: ' + isConnected.value)
     }
   )
 
@@ -40,16 +39,11 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const stompApiSubsciptionContorller: StompApiSubsriptionsController =
     new StompApiSubsriptionsController(stompApiConnection)
 
-
-  
-
-
-
   return {
     stompApiSender,
     stompApiSubsciptionContorller,
     stompApiConnection,
-    isConnected
+    isConnected,
     // codeRunnerConnection,
     // setOnCodeResult,
     // clearOnCodeResult,
