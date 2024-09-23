@@ -70,7 +70,6 @@ class ExerciseInfoValidationTest {
             .xArrayRange(xArrayRangeCorrect)
             .yArrayRange(yArrayRangeCorrect)
             .testsToRun(Arrays.stream(testsCorrect).toList())
-            .timeForTaskMin(timeForTaskCorrect)
             .timeForExecution(maxExecutionTimeMSCorrect)
             .programResults(new HashMap<>())
             .build();
@@ -275,7 +274,6 @@ class ExerciseInfoValidationTest {
       "com.redocode.backend.DataProviders.IncorrectExerciseParamatersProviders#incorrectTime")
   void testIncorrecTimeForCreationExerciseCreation(Long time) {
     ExerciseCreationRequest exerciseCreationRequest = this.exerciseCreationRequestCorrect;
-    exerciseCreationRequest.setTimeForTaskMin(time);
     AtomicBoolean res = new AtomicBoolean(false);
     assertThrows(
         RequestHadndlingException.class,

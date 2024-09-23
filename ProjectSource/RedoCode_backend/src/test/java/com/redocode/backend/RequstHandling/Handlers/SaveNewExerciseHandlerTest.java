@@ -156,7 +156,6 @@ class SaveNewExerciseHandlerTest {
             .xArrayRange(xArrayRange)
             .yArrayRange(yArrayRange)
             .testsToRun(Arrays.stream(tests).toList())
-            .timeForTaskMin(timeForTask)
             .timeForExecution(timeForExecution)
             .programResults(results)
             .build();

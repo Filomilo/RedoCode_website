@@ -24,7 +24,7 @@
     >
       <template #container>
         <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
-          <LoadingIndicator />
+          <LoadingIndicator class="loadingIndicator" />
           <div>
             Awaiting access to code runner, please be patient. Consider Creating
             and account to have priority in queue
@@ -181,5 +181,13 @@
   .widthLimit {
     max-width: 100%;
     width: 100%;
+  }
+
+  .loadingIndicator{
+    aspect-ratio: 1/1;
+    width: 5rem;
+    max-width: 5rem;
+    max-height: 5rem;
+
   }
 </style>

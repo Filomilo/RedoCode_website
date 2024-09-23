@@ -70,7 +70,7 @@ namespace CodeRunnerPanel {
         cy.get('#tab-result-expected-container-' + index).contains(
           'expected: "' + checks[index].output + '"'
         )
-        cy.get('#tab-result-achived-container-' + index).contains(
+        cy.get('#tab-result-achieved-container-' + index).contains(
           'achieved: "' + checks[index].output + '"'
         )
       }
