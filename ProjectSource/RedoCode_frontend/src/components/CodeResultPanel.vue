@@ -123,7 +123,6 @@
       ? ''
       : props.ExecutionTime + ' ms'
   })
-
 </script>
 
 <style>

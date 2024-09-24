@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-    import TestResultCard from './TestResultCard.vue'
+  import TestResultCard from './TestResultCard.vue'
   import { computed } from 'vue'
   import ExerciseTest from '@/types/ExerciseTest'
   const props = defineProps({

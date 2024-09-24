@@ -36,9 +36,7 @@ export default class ExerciseSolverController
     this.inputType = data.inputType as VarType
     this.outputType = data.outputType as VarType
     this.id = id
-    console.log(
-      'this._languages ' + JSON.stringify(data.availableCodeRunners)
-    )
+    console.log('this._languages ' + JSON.stringify(data.availableCodeRunners))
   }
 
   public startFunction(type: CodeRunnerType): string {

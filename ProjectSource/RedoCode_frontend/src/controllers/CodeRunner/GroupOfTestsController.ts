@@ -32,7 +32,9 @@ export default class GroupOfTestsController {
 
     const input = this.getVarAccording(inputType)
     const output = this.getVarAccording(outputType)
-    console.log('adding ' + outputType + ' _ ' + ' :: ' + JSON.stringify(output))
+    console.log(
+      'adding ' + outputType + ' _ ' + ' :: ' + JSON.stringify(output)
+    )
     this.tests.push({
       input: input,
       expectedOutput: output,

@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-    import SolutionItemList from '@/components/SolutionItemList.vue'
+  import SolutionItemList from '@/components/SolutionItemList.vue'
   import type SolutionItemListType from '@/types/ApiMessages/SolutionItemList'
   const props = defineProps<{
     solutionList: SolutionItemListType[]

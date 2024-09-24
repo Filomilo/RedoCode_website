@@ -259,8 +259,6 @@ export default class ExerciseCreatorController
 
   //#endregion
 
-
-
   //#region input output type management
 
   //#region input

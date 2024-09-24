@@ -43,7 +43,7 @@ namespace MessageCreator {
       'exerciseCreatorController: ' + JSON.stringify(exerciseCreatorController)
     )
     const exerciseCreatorControllerCopy: ExerciseCreatorController =
-      exerciseCreatorController 
+      exerciseCreatorController
     return {
       code: exerciseCreatorControllerCopy.solutionCodes[type]!,
       manualTests: testStringParser(

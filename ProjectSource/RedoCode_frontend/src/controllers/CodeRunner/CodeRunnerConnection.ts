@@ -61,4 +61,3 @@ export default class CodeRunnerConnection {
     this.codeRunnerState.value.state = CodeRunnerStatus.NONE
   }
 }
-

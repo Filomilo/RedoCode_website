@@ -31,7 +31,6 @@ export default defineConfig({
           if (id.includes('src/types')) {
             return 'types'
           }
-       
         },
       },
     },

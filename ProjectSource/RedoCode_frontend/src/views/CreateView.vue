@@ -72,12 +72,13 @@
   import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorController'
   import { useRouter } from 'vue-router'
   import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
-    const codeRunnerStore = useCodeRunnerStore()
+  const codeRunnerStore = useCodeRunnerStore()
   const executionChainStore = useExecutionChainStore()
   const router = useRouter()
 
   onMounted(() => {
-    executionChainStore.executionChainController.onCloseSuccess = onSuccessCrated
+    executionChainStore.executionChainController.onCloseSuccess =
+      onSuccessCrated
   })
   const onSuccessCrated = () => {
     router.replace({ name: 'Exercises' })
@@ -108,8 +109,6 @@
       codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
     )
   }
-
-
 
   const onTabClick = (event: TabViewClickEvent) => {
     console.log('event: ' + JSON.stringify(event))

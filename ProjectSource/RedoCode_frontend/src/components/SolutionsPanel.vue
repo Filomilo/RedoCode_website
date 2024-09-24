@@ -29,7 +29,7 @@
   import CodeRunnerType from '@/types/CodeRunnerTypes'
   import EndpointsAccess from '@/controllers/EndpointsAccess'
 
-    const selectedSolutionId = ref(-1)
+  const selectedSolutionId = ref(-1)
   const code = ref('')
   const loadSolutionCode = async (solutionId: number) => {
     code.value = ''
@@ -43,7 +43,7 @@
     }
   }
 
-  watch(selectedSolutionId, (newValue) => {
+  watch(selectedSolutionId, newValue => {
     loadSolutionCode(newValue)
   })
 
@@ -75,11 +75,9 @@
     editorRef.value = editor
     editorRef.value.updateOptions({ readOnly: true })
   }
-
 </script>
 
 <style lang="css">
-
   .SolutionsContainer {
     border-radius: 1.5rem;
     border: 0.2rem solid var(--primary-color);

@@ -7,7 +7,10 @@
     </div>
     <div class="testOutputSection">
       <TabView>
-        <TabPanel header="Console" :pt="{ id: 'tab-result-console-' + props.index }">
+        <TabPanel
+          header="Console"
+          :pt="{ id: 'tab-result-console-' + props.index }"
+        >
           <div style="overflow: scroll">
             <div
               class="ConsoleResultConsoleCOntainerText"
@@ -44,10 +47,18 @@
     </div>
     <div
       class="testValidationSection"
-      :class="data.isSolved !== null ? (data.isSolved ? 'correct' : 'wrong') : 'unknown'"
+      :class="
+        data.isSolved !== null
+          ? data.isSolved
+            ? 'correct'
+            : 'wrong'
+          : 'unknown'
+      "
     >
       <div class="statusSector" :id="'testResultStatus_' + props.index">
-        {{ data.isSolved !== null ? (data.isSolved ? "Correct" : "Failed") : "" }}
+        {{
+          data.isSolved !== null ? (data.isSolved ? 'Correct' : 'Failed') : ''
+        }}
       </div>
       <div class="executionTimeSector">
         {{ executionTimeLabel }}
@@ -57,60 +68,64 @@
 </template>
 
 <script setup lang="ts">
-import type ExerciseTest from "@/types/ExerciseTest";
-import { formatToHtml } from "@/config/Tools";
-import { computed } from "vue";
-const props = defineProps<{
-  data: ExerciseTest;
-  index: number;
-}>();
+  import type ExerciseTest from '@/types/ExerciseTest'
+  import { formatToHtml } from '@/config/Tools'
+  import { computed } from 'vue'
+  const props = defineProps<{
+    data: ExerciseTest
+    index: number
+  }>()
 
-const executionTimeLabel = computed<string>(() => {
-  if (
-    props.data.executionTime === undefined ||
-    props.data.executionTime === null ||
-    props.data.executionTime < 0
+  const executionTimeLabel = computed<string>(() => {
+    if (
+      props.data.executionTime === undefined ||
+      props.data.executionTime === null ||
+      props.data.executionTime < 0
+    )
+      return ''
+    return props.data.executionTime + ' ms'
+  })
+
+  const formattedConsole = computed<string>(() =>
+    formatToHtml(props.data.consoleOutput)
   )
-    return "";
-  return props.data.executionTime + " ms";
-});
-
-const formattedConsole = computed<string>(() => formatToHtml(props.data.consoleOutput));
-const formattedError = computed<string>(() => formatToHtml(props.data.errorOutput));
+  const formattedError = computed<string>(() =>
+    formatToHtml(props.data.errorOutput)
+  )
 </script>
 
 <style>
-.correct {
-  border-color: lime;
-  color: lime;
-}
+  .correct {
+    border-color: lime;
+    color: lime;
+  }
 
-.wrong {
-  border-color: red;
-  color: red;
-}
+  .wrong {
+    border-color: red;
+    color: red;
+  }
 
-.unknown {
-  border-color: transparent;
-}
+  .unknown {
+    border-color: transparent;
+  }
 
-.statusSector {
-  text-align: left;
-}
-.executionTimeSector {
-  text-align: right;
-}
+  .statusSector {
+    text-align: left;
+  }
+  .executionTimeSector {
+    text-align: right;
+  }
 
-.testValidationSection {
-  width: 100%;
-  background-color: rgb(99, 99, 99);
-  height: 3rem;
-  border-top: solid;
-  display: flex;
-  justify-content: center;
-}
-.testValidationSection * {
-  width: 100%;
-  margin: 0.5rem;
-}
+  .testValidationSection {
+    width: 100%;
+    background-color: rgb(99, 99, 99);
+    height: 3rem;
+    border-top: solid;
+    display: flex;
+    justify-content: center;
+  }
+  .testValidationSection * {
+    width: 100%;
+    margin: 0.5rem;
+  }
 </style>

@@ -16,8 +16,8 @@ class ExecutionChainController implements ExecutionChainControls {
   public _closeReady: boolean = false
   public onCloseSuccess: () => void = () => {}
 
-  public onVisibilityUpdate: (state: ExecutionChainController) => void = (
-  ) => {}
+  public onVisibilityUpdate: (state: ExecutionChainController) => void =
+    () => {}
 
   get executionChain(): ChainNodeStatus[] {
     return this._executionChain

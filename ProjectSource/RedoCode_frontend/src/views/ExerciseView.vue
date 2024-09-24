@@ -54,7 +54,8 @@
       typeof route.params.id === 'string' ? route.params.id : route.params.id[0]
     )
     fetchExerciseData(exerciseId)
-    executionsChainStore.executionChainController.onCloseSuccess = onSuccessCrated
+    executionsChainStore.executionChainController.onCloseSuccess =
+      onSuccessCrated
   })
   onMounted(() => {})
   const onSuccessCrated = () => {

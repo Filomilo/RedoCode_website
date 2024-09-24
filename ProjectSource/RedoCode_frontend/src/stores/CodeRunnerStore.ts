@@ -27,11 +27,6 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     new ExerciseSolverController()
   ) as Ref<ExerciseSolverController>
 
-
-
-
-
-
   const isProcessing: Ref<boolean> = ref(false)
 
   return {
@@ -41,6 +36,5 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     playGroundRunnerController: playGroundRunnerController,
     exerciseSolverController,
     isProcessing,
- 
   }
 })

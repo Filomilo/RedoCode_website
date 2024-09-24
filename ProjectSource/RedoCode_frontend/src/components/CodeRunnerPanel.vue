@@ -89,7 +89,6 @@
   import { onBeforeRouteLeave } from 'vue-router'
   import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
 
-
   import CodeResultPanel from './CodeResultPanel.vue'
   import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
@@ -104,18 +103,18 @@
   //#endregion
   //#region props
   const props = defineProps<{
-  exerciseInfo?: IExerciseDescriptionI;
-  languageChoices: codeRunnerType[];
-  codeContainerUpdate: (cose: string) => void;
-  starting: string;
-  onRunCode: () => void;
-  onSubmit?: () => void;
-  onResults: (result: ProgramResultsMessage) => void;
-  ManualTests: ExerciseTest[] | ConsoleOutput;
-  AutoTests?: ExerciseTest[];
-  SubmitAccess?: boolean;
-  ExecutionTime?: number;
-}>();
+    exerciseInfo?: IExerciseDescriptionI
+    languageChoices: codeRunnerType[]
+    codeContainerUpdate: (cose: string) => void
+    starting: string
+    onRunCode: () => void
+    onSubmit?: () => void
+    onResults: (result: ProgramResultsMessage) => void
+    ManualTests: ExerciseTest[] | ConsoleOutput
+    AutoTests?: ExerciseTest[]
+    SubmitAccess?: boolean
+    ExecutionTime?: number
+  }>()
   //#endregion
 
   const codeRunnerStore = useCodeRunnerStore()
@@ -130,8 +129,6 @@
     )
     ApiConnectionStore.stompApiConnection.deactivate()
   }
-
-
 
   const onResult = (mes: ProgramResultsMessage) => {
     console.log('onResult: ' + JSON.stringify(mes))
@@ -158,7 +155,6 @@
     next()
   })
 
-
   const onRunCode = () => {
     codeRunnerStore.isProcessing = true
     props.onRunCode()
@@ -184,11 +180,10 @@
     width: 100%;
   }
 
-  .loadingIndicator{
+  .loadingIndicator {
     aspect-ratio: 1/1;
     width: 5rem;
     max-width: 5rem;
     max-height: 5rem;
-
   }
 </style>

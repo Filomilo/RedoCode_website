@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-    import RateSelector, { RateOption } from '@/components/RateSelector.vue'
+  import RateSelector, { RateOption } from '@/components/RateSelector.vue'
   import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   import { Ref, ref } from 'vue'
@@ -41,7 +41,7 @@
   import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue'
   import { useToastStore } from '@/stores/ToastStore'
 
-    const globalStateStore = useGlobalStateStore()
+  const globalStateStore = useGlobalStateStore()
   const route = useRoute()
   const router = useRouter()
   const toastStore = useToastStore()

@@ -2,8 +2,7 @@ import { useActiveUserStore } from '@/stores/ActiveUserStore'
 import ExerciseSolvingState from '@/types/ExerciseSolvingState'
 import EndpointAccess from './EndpointsAccess'
 namespace RouterValidators {
-  export async function AccountAccessValidate(
-  ): Promise<string | null> {
+  export async function AccountAccessValidate(): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
     console.log('AccountAccessValidate authentication')
@@ -42,8 +41,7 @@ namespace RouterValidators {
     return 'Results'
   }
 
-  export async function SolutionsAccessValidate(
-  ): Promise<string | null> {
+  export async function SolutionsAccessValidate(): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
     console.log('SolutionsAccessValidate authentication')
@@ -54,8 +52,7 @@ namespace RouterValidators {
       return 'ResultsUnauthenticated'
     }
   }
-  export async function RegisterValidation(
-  ): Promise<string | null> {
+  export async function RegisterValidation(): Promise<string | null> {
     if (import.meta.env.MODE === 'development') return null
     const activeUserStore = useActiveUserStore()
 
