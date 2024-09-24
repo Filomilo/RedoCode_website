@@ -94,7 +94,6 @@ public class ExerciseInfoValidation extends MessageRequestHandler {
       throw new RequestHadndlingException("inoccret max execution limit");
     }
 
-
     if (exerciseCretionRequest.getSolutionCodes().size() == 0) {
       throw new RequestHadndlingException("there should be at least one solution to chekc");
     }

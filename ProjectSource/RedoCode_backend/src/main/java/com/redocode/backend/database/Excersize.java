@@ -60,7 +60,7 @@ public class Excersize {
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
   private Set<ExcersizeDiffucultyRating> ratings = new HashSet<>();
-  
+
   @Column(name = "description")
   @NotNull
   private String description;

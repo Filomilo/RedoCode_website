@@ -269,7 +269,6 @@ class ExerciseInfoValidationTest {
     assertFalse(res.get());
   }
 
-
   @ParameterizedTest
   @MethodSource(
       "com.redocode.backend.DataProviders.IncorrectExerciseParamatersProviders#executionTime")
