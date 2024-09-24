@@ -4,7 +4,7 @@
       <SolutionList
         v-model="selectedSolutionId"
         :solutionList="props.solutionList"
-        :maxExecutionTime="props.maxExectuionTime"
+        :maxExecutionTime="props.maxExecutionTime"
       />
     </div>
     <div class="codeContainer">
@@ -22,25 +22,20 @@
 </template>
 
 <script setup lang="ts">
-  import SolutionItemList from '@/types/ApiMesseages/SolutionItemList'
+  import SolutionItemList from '@/types/ApiMessages/SolutionItemList'
   import SolutionList from '@/components/SolutionList.vue'
-  import { computed, ComputedRef, ref, shallowRef, watch } from 'vue'
+  import { computed, ref, shallowRef, watch } from 'vue'
   import { EditorLanguagesMap } from '@/config/Data'
   import CodeRunnerType from '@/types/CodeRunnerTypes'
-  import EndpointsAcces from '@/controllers/EndpointsAcces'
-  import { useActiveUserStore } from '@/stores/ActiveUserStore'
-  import { stringify } from 'flatted'
+  import EndpointsAccess from '@/controllers/EndpointsAccess'
 
-  const ActiveUserStore = useActiveUserStore()
-  const selectedSolutionId = ref(-1)
-  const dummy = ref('')
+    const selectedSolutionId = ref(-1)
   const code = ref('')
   const loadSolutionCode = async (solutionId: number) => {
     code.value = ''
     try {
-      const codeIn = await EndpointsAcces.authorized.getSolutionsCodesData(
-        solutionId
-      )
+      const codeIn =
+        await EndpointsAccess.authorized.getSolutionsCodesData(solutionId)
       console.log('results: ' + JSON.stringify(codeIn))
       code.value = codeIn
     } catch (error) {
@@ -48,13 +43,13 @@
     }
   }
 
-  watch(selectedSolutionId, (newValue, oldValue) => {
+  watch(selectedSolutionId, (newValue) => {
     loadSolutionCode(newValue)
   })
 
   const props = defineProps<{
     solutionList: SolutionItemList[]
-    maxExectuionTime: number
+    maxExecutionTime: number
   }>()
 
   const lang = computed(() => {
@@ -80,18 +75,10 @@
     editorRef.value = editor
     editorRef.value.updateOptions({ readOnly: true })
   }
-  watch(code, (newValue, oldValue) => {
-    //   const editor = editorRef.value;
-    // const model = editor.getModel();
-    // if (model) {
-    //   model.setValue(newValue);
-    // }
-  })
+
 </script>
 
 <style lang="css">
-  .lock {
-  }
 
   .SolutionsContainer {
     border-radius: 1.5rem;

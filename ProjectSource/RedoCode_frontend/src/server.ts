@@ -1,12 +1,11 @@
-import { createServer, Model } from 'miragejs'
+import { createServer } from 'miragejs'
 import type ExerciseType from './types/ExerciseType'
 import type ExerciseListRequestMessage from './types/ExerciseListRequestMessage'
-import ExerciseData from './types/ApiMesseages/ExcerciseDataMessage'
+import ExerciseData from './types/ApiMessages/ExerciseDataMessage'
 import CodeRunnerType from './types/CodeRunnerTypes'
-import VarType from './types/VarType'
-import SolutionsData from './types/ApiMesseages/SolutionsData'
-import ResultData from './types/ApiMesseages/ResultData'
-import StatisticMessage from './types/ApiMesseages/StatisticMessage'
+import SolutionsData from './types/ApiMessages/SolutionsData'
+import ResultData from './types/ApiMessages/ResultData'
+import StatisticMessage from './types/ApiMessages/StatisticMessage'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -184,12 +183,12 @@ export function makeServer({ environment = 'development' } = {}) {
       },
     ],
     title: 'Exercise Title',
-    desc: 'Descritpion of exercise',
+    desc: 'Description of exercise',
     comments: [
       {
         nickname: 'example user',
         profilePicture: '',
-        comment: 'Greate exercise',
+        comment: 'Great exercise',
       },
     ],
   }
@@ -213,9 +212,9 @@ export function makeServer({ environment = 'development' } = {}) {
     inputType: 'SINGLE_INTEGER',
     id: 1,
     title: 'Fibonacci',
-    desc: 'Create a fibonacci sequance with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
+    desc: 'Create a fibonacci sequence with amount of numbers provide to function \n \n \n for example for \n 4 \n the result should be \n [0,1,1,2]  ',
     outputType: 'ARRAY_OF_INTEGERS',
-    availbleCodeRunners: [CodeRunnerType.JS_RUNNER, CodeRunnerType.CPP_RUNNER],
+    availableCodeRunners: [CodeRunnerType.JS_RUNNER, CodeRunnerType.CPP_RUNNER],
     tests: [
       {
         input: 1,
@@ -265,52 +264,51 @@ export function makeServer({ environment = 'development' } = {}) {
   const resultData: ResultData = {
     executionTimeMs: 250,
     maxExecutionTimeMs: 1000,
-    betterThanProcent: 66,
+    betterThanPercent: 66,
     SolutionRanking: 5,
   }
 
-
-  const statsData: StatisticMessage={
+  const statsData: StatisticMessage = {
     languageUse: [
       {
         name: 'java',
-        amount: 4
+        amount: 4,
       },
       {
         name: 'cpp',
-        amount: 9
-      }
+        amount: 9,
+      },
     ],
     amountOfLatelyDone: [
       {
-        date: new Date(2024,4,13),
-        amount: 1
+        date: new Date(2024, 4, 13),
+        amount: 1,
       },
       {
-        date: new Date(2024,4,14),
-        amount: 2
+        date: new Date(2024, 4, 14),
+        amount: 2,
       },
       {
-        date: new Date(2024,4,15),
-        amount: 3
+        date: new Date(2024, 4, 15),
+        amount: 3,
       },
       {
-        date: new Date(2024,4,16),
-        amount: 4
+        date: new Date(2024, 4, 16),
+        amount: 4,
       },
       {
-        date: new Date(2024,4,17),
-        amount: 5
+        date: new Date(2024, 4, 17),
+        amount: 5,
       },
       {
-        date: new Date(2024,4,18),
-        amount: 6
+        date: new Date(2024, 4, 18),
+        amount: 6,
       },
       {
-        date: new Date(2024,4,19),
-        amount: 7
-      }
-    ]
+        date: new Date(2024, 4, 19),
+        amount: 7,
+      },
+    ],
   }
 
   const exerciseListHandler = (schema: any, request: any) => {
@@ -322,7 +320,7 @@ export function makeServer({ environment = 'development' } = {}) {
     return exerciseData.slice(start, end)
   }
 
-  const exerciseDataHandler = (schema: any, request: any) => {
+  const exerciseDataHandler = () => {
     return activeExerciseData
   }
 
@@ -331,7 +329,6 @@ export function makeServer({ environment = 'development' } = {}) {
 
     return solutionData
   }
-
 
   const userStatsDataHandler = (schema: any, request: any) => {
     console.log('solutionsDataHandler ' + JSON.stringify(request))
@@ -376,10 +373,7 @@ export function makeServer({ environment = 'development' } = {}) {
         solutionsDataHandler
       )
 
-      this.get(
-        'http://localhost:8080/secure/user/stats',
-        userStatsDataHandler
-      )
+      this.get('http://localhost:8080/secure/user/stats', userStatsDataHandler)
 
       this.get(
         'http://localhost:8080/secure/exercises/solutionsCodes',
@@ -396,7 +390,7 @@ export function makeServer({ environment = 'development' } = {}) {
 
           return {
             status: 'success',
-            message: 'comment posted succesfully!',
+            message: 'comment posted successfully!',
             submittedData: attrs,
           }
         }

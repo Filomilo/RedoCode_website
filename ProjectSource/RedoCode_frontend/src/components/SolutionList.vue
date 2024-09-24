@@ -18,11 +18,8 @@
 </template>
 
 <script setup lang="ts">
-  import type ExerciseTest from '@/types/ExcericseTest'
-  import { formatToHtml } from '@/config/Tools'
-  import { computed, ref } from 'vue'
-  import SolutionItemList from '@/components/SolutionItemList.vue'
-  import type SolutionItemListType from '@/types/ApiMesseages/SolutionItemList'
+    import SolutionItemList from '@/components/SolutionItemList.vue'
+  import type SolutionItemListType from '@/types/ApiMessages/SolutionItemList'
   const props = defineProps<{
     solutionList: SolutionItemListType[]
     maxExecutionTime: number

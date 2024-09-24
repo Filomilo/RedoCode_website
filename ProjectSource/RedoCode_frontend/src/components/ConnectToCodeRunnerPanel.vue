@@ -1,18 +1,18 @@
 <template>
   <div
-  :key="refreshKey"
+    :key="refreshKey"
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
-  <div    v-if="!ApiConnectionStore.isConnected">trying to establish connection to api</div>
-    <div
-      class="LoginPanelConatiner"
-    v-else
-    >
+    <div v-if="!ApiConnectionStore.isConnected">
+      trying to establish connection to api
+    </div>
+    <div class="LoginPanelConatiner" v-else>
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
         changed latert
       </div>
+      {{ JSON.stringify(props) }}
       <Dropdown
         v-model="chosenLangague"
         :options="laguageDropDown"
@@ -23,7 +23,7 @@
         optionLabel="label"
         optionValue="value"
       />
-      
+
       <Button
         class="BasicButton"
         label="Connect"
@@ -32,27 +32,25 @@
         :disabled="!allowConnection"
       />
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
   import LanguageDropdown from './LanguageDropdown.vue'
-  import { computed, Ref, ref, ComputedRef,watch } from 'vue'
+  import { computed, Ref, ref, ComputedRef, watch } from 'vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import { languageDropDownType } from '@/types/CodeRunnerTypes'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import { languageChoices } from '@/config/Data'
   import LangaugeSelection from '@/tools/LangaugeSelection'
-import { stringify } from 'flatted'
-import { useActiveUserStore } from '@/stores/ActiveUserStore'
-
+  import { stringify } from 'flatted'
+  import { useActiveUserStore } from '@/stores/ActiveUserStore'
 
   const ApiConnectionStore = useApiConnectionStore()
-  const ActiveUserStore= useActiveUserStore();
-  const refreshKey=computed(()=>{
-    return ApiConnectionStore.isConnected?"Activated coonn":"not activated";
+  const ActiveUserStore = useActiveUserStore()
+  const refreshKey = computed(() => {
+    return ApiConnectionStore.isConnected ? 'Activated coonn' : 'not activated'
   })
 
   const props = defineProps({
@@ -65,7 +63,10 @@ import { useActiveUserStore } from '@/stores/ActiveUserStore'
   const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
 
   const allowConnection = computed(() => {
-    return chosenLangague.value != codeRunnerType.UNIDENTIFIED  && ApiConnectionStore.isConnected
+    return (
+      chosenLangague.value != codeRunnerType.UNIDENTIFIED &&
+      ApiConnectionStore.isConnected
+    )
   })
 
   const codeRunnerStore = useCodeRunnerStore()

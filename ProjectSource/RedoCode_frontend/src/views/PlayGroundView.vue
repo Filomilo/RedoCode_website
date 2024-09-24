@@ -1,14 +1,13 @@
 <template>
   <main class="PlayGroundBase">
-
     <CodeRunnerPanel
       :languageChoices="languageChoices.map(element => element.value)"
       :codeContainerUpdate="codeConatienrUpdate"
       starting=""
       :onRunCode="onRunCode"
       :onResults="onCodeResult"
-      :ManualTests="codeRunnerStore.playGroundRunnerCotroller.consoleOutput"
-      :ExecutionTime="codeRunnerStore.playGroundRunnerCotroller.executionTime"
+      :ManualTests="codeRunnerStore.playGroundRunnerController.consoleOutput"
+      :ExecutionTime="codeRunnerStore.playGroundRunnerController.executionTime"
     />
   </main>
 </template>
@@ -23,14 +22,10 @@
   import { languageChoices } from '@/config/Data'
   import { useToastStore } from '@/stores/ToastStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
-  import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
+  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   const ApiConnectionStore = useApiConnectionStore()
   const setupPlayground = () => {
     toastStore.featureNotImplemented('setupPlayground')
-    // console.log("-----------------")
-    // codeRunnerStore.setExerciseLoading(true)
-    // codeRunnerStore.setExceriseDataToPlayground()
-    // codeRunnerStore.setExerciseLoading(false)
   }
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
@@ -58,7 +53,7 @@
     console.log('playgronud view results: ' + JSON.stringify(results))
     // console.error("unimplmented")
     // toastStore.featureNotImplemented('onRunCode')
-    codeRunnerStore.playGroundRunnerCotroller.updateResult(results.results[0])
+    codeRunnerStore.playGroundRunnerController.updateResult(results.results[0])
   }
 </script>
 

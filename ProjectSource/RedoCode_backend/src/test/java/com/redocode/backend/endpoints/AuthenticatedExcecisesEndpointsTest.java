@@ -82,7 +82,6 @@ class AuthenticatedExcecisesEndpointsTest {
             .ram_mb(512)
             .valueLengthRangeMax(500f)
             .valueLengthRangeMin(500f)
-            .timeForTaskMin(500l)
             .author(_authenticaredUser)
             .build();
     Excersize saved = exerciseRepository.save(excersize);
@@ -285,7 +284,7 @@ class AuthenticatedExcecisesEndpointsTest {
     ResultData responseData = response.getBody();
     assertEquals(solutionPrograms.getAvgExecutionTime(), responseData.getExecutionTimeMs());
     assertEquals(this.solutionProgramsList.size() + 1, responseData.getSolutionRanking());
-    assertEquals(0f, responseData.getBetterThanProcent());
+    assertEquals(0f, responseData.getBetterThanPercent());
     assertEquals(
         exerciseRepository.getReferenceById(this.exerciseID).getMaxExecutionTimeMS(),
         responseData.getMaxExecutionTimeMs());

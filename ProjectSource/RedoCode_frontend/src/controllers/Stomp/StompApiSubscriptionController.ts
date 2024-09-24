@@ -85,7 +85,6 @@ class StompApiSubscriptionController {
   }
   //#endregion
 
-  //#region Subscription Events
 
   //#region vmStatus
   private _VmStatusSubscriptions: { (arg: CoderunnerState): void }[] = []

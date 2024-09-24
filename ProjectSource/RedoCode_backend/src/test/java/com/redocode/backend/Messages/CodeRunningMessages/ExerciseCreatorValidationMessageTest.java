@@ -50,7 +50,6 @@ class ExerciseCreatorValidationMessageTest {
             + "\"spaceInupt\": false,\n"
             + "\"specialCharacterInput\": true,\n"
             + "\"timeForExecutionMs\": 100,\n"
-            + "\"timeForTaskMin\": 70,\n"
             + "\"title\": \"11111111111\",\n"
             + "\"upperCaseInput\": true,\n"
             + "\"xArrayRange\":\n"

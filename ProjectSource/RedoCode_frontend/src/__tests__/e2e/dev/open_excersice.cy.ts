@@ -17,6 +17,6 @@ describe('open first exercise', () => {
     cy.get('#coderunner-dropdown_0').click()
     cy.get('#connect-button').click()
     // cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div div.AuthLoginScreenConatiner div.LoginPanelConatiner button.p-button.p-component.BasicButton').click()
-    // cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContianer div.EngineStatusPanel div.EngineStatusStatus').contains('AWAITING')
+    // cy.get('html body div#app html div#MainPageContainer div.BackGroundContainer main#ContentConatiner.PlayGroundBase div div.p-splitter.p-component.p-splitter-horizontal div.p-splitter-panel div.CodeResultContainer div.EngineStatusContainer div.EngineStatusPanel div.EngineStatusStatus').contains('AWAITING')
   })
 })

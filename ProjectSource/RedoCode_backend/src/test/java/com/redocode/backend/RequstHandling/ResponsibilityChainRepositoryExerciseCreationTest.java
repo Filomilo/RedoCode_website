@@ -70,7 +70,6 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
             .xArrayRange(xArrayRangeCorrect)
             .yArrayRange(yArrayRangeCorrect)
             .testsToRun(Arrays.stream(testsCorrect).toList())
-            .timeForTaskMin(timeForTaskCorrect)
             .timeForExecution(maxExecutionTimeMSCorrect)
             .programResults(new HashMap<>())
             .build();

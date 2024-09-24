@@ -4,15 +4,15 @@ import { mount } from '@vue/test-utils'
 import HelloWorld from '@/components/HelloWorld.vue'
 import ExerciseCreatorController, {
   TestsIndexed,
-} from '@/controllers/CodeRunner/ExerciseCreatorControlller'
+} from '@/controllers/CodeRunner/ExerciseCreatorController'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import TestsController from '@/controllers/CodeRunner/GroupOfTestsController'
 import ExerciseTest from '@/types/ExcericseTest'
-import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
+import ExercsieCreatorValidationmessage from '@/types/ApiMesseages/ExercsieCreatorValidationmessage'
 import MessageCreator from '@/tools/MessageCreator'
 
 describe('MessageCreaator', () => {
-  it('generate ExercsieCreatorValidationMesage', () => {
+  it('generate ExercsieCreatorValidationmessage', () => {
     const testTemplate: ExerciseTest = {
       input: 'Test',
       output: 'null',
@@ -41,8 +41,8 @@ describe('MessageCreaator', () => {
     exerciseCreatorController.outputType = 'SINGLE_STRING'
     exerciseCreatorController.manualTestsSolutions = tests
 
-    const messge: ExercsieCreatorValidationMesage =
-      MessageCreator.createExercsieCreatorValidationMesage(
+    const messge: ExercsieCreatorValidationmessage =
+      MessageCreator.createExerciseCreatorValidationMessage(
         exerciseCreatorController
       )
 

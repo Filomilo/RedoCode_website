@@ -30,10 +30,6 @@ public class Excersize {
   @Column(name = "ram_Mb")
   Integer ram_mb;
 
-  @Column(name = "time_for_task_min")
-  @NotNull
-  Long timeForTaskMin;
-
   @Column(name = "amount_of_auto_tests")
   @NotNull
   int amountOfAutoTests;
@@ -64,10 +60,7 @@ public class Excersize {
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
   private Set<ExcersizeDiffucultyRating> ratings = new HashSet<>();
-
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "excersize", cascade = CascadeType.ALL)
-  private Set<ExerciseAttempts> attempts = new HashSet<>();
-
+  
   @Column(name = "description")
   @NotNull
   private String description;

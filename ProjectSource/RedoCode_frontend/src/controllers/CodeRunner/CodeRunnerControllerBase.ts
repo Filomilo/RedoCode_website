@@ -1,5 +1,5 @@
 import CodeRunnerType from '@/types/CodeRunnerTypes'
-import ExerciseTest from '@/types/ExcericseTest'
+import ExerciseTest from '@/types/ExerciseTest'
 import ProgramResult from '@/types/ProgramResults'
 
 export default abstract class CodeRunnerControllerBase {

@@ -5,7 +5,7 @@
         class="CodeRatingPanel"
         :ExecutionTime="refResultData.executionTimeMs"
         :MaxExecutionTime="refResultData.maxExecutionTimeMs"
-        :BetterThanProcent="refResultData.betterThanProcent"
+        :BetterThanPercent="refResultData.betterThanPercent"
         :RankingPlacement="refResultData.SolutionRanking"
       />
       <div class="" style="margin-top: 5rem">
@@ -30,26 +30,18 @@
 </template>
 
 <script setup lang="ts">
-  import { useActiveUserStore } from '@/stores/ActiveUserStore'
-  import RateSelector, { RateOption } from '@/components/RateSelector.vue'
+    import RateSelector, { RateOption } from '@/components/RateSelector.vue'
   import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
-  import SolutionsPanel from '@/components/SolutionsPanel.vue'
-  import SolutionsData from '@/types/ApiMesseages/SolutionsData'
-  import CodeRunnerType from '@/types/CodeRunnerTypes'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
-  import LoadingIndicator from '@/components/LoadingIndicator.vue'
-  import { ComputedRef, Ref, ref } from 'vue'
-  import EndpointAcces from '@/controllers/EndpointsAcces'
+  import { Ref, ref } from 'vue'
+  import EndpointAcces from '@/controllers/EndpointsAccess'
   import { useRoute, useRouter } from 'vue-router'
-  import { onBeforeMount, onMounted } from 'vue'
-  import CommentSection from '@/components/CommentSection.vue'
-  import ExerciseInfoTopPanel from '@/components/ExerciseInfoTopPanel.vue'
-  import ResultData from '@/types/ApiMesseages/ResultData'
+  import { onMounted } from 'vue'
+  import ResultData from '@/types/ApiMessages/ResultData'
   import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue'
   import { useToastStore } from '@/stores/ToastStore'
 
-  const ActiveUserStore = useActiveUserStore()
-  const globalStateStore = useGlobalStateStore()
+    const globalStateStore = useGlobalStateStore()
   const route = useRoute()
   const router = useRouter()
   const toastStore = useToastStore()
@@ -150,7 +142,7 @@
     align-self: flex-end;
   }
 
-  .algainBottom {
+  .alignBottom {
     display: flex;
     flex-direction: row;
   }

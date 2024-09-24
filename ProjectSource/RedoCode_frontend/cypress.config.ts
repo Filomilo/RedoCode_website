@@ -6,5 +6,6 @@ export default defineConfig({
     baseUrl: 'http://localhost',
     defaultCommandTimeout: 100000,
     supportFile: false,
+    experimentalMemoryManagement: true
   },
 })

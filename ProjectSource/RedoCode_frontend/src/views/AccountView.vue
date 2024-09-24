@@ -4,7 +4,7 @@
       <div class="ImageContainer">
         <img :src="imgURL" class="ProfileImgStyle" />
       </div>
-      <div class="editButtonContinaer">
+      <div class="editButtonContainer">
         <Button class="IconEditImg" @click="onChangeProfilePic">
           <IconEdit />
         </Button>
@@ -30,9 +30,7 @@
           Statistics
           <div
             :class="
-              screenSelected === Panels.STATISTIC
-                ? 'bottomLine selected'
-                : 'bottomLine'
+              screenSelected === Panels.STATISTIC ? 'bottomLine selected' : 'bottomLine'
             "
           />
         </Button>
@@ -47,24 +45,20 @@
           Settings
           <div
             :class="
-              screenSelected === Panels.SETTINGS
-                ? 'bottomLine selected'
-                : 'bottomLine'
+              screenSelected === Panels.SETTINGS ? 'bottomLine selected' : 'bottomLine'
             "
           />
         </Button>
       </div>
       <div class="SettingContentPanel">
         <div v-if="screenSelected === Panels.STATISTIC">
-        <StatisitcPanel/>
-          </div>
+          <StatisticPanel />
+        </div>
         <div v-if="screenSelected === Panels.SETTINGS">
           <div class="SettingContentRow">E-mail: e****@gmail.com</div>
           <div class="SettingContentRow">
             Password: *******
-            <Button class="changeButton" @click="onChangePassword">
-              change
-            </Button>
+            <Button class="changeButton" @click="onChangePassword"> change </Button>
           </div>
           <div class="SettingContentRow center">
             <Button class="removeAccountButton" @click="onRemoveAccount">
@@ -78,72 +72,49 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, type Ref, computed } from 'vue'
-  import IconEdit from '../assets/icons/IconEdit.vue'
-  import { useActiveUserStore } from '../stores/ActiveUserStore'
-  import router from '@/router'
-  import StatisitcPanel from '@/components/StatisitcPanel.vue'
-  import { useToastStore } from '@/stores/ToastStore'
+import { ref, type Ref, computed } from 'vue'
+import IconEdit from '../assets/icons/IconEdit.vue'
+import { useActiveUserStore } from '../stores/ActiveUserStore'
+import router from '@/router'
+import StatisticPanel from '@/components/StatisticPanel.vue'
+import { useToastStore } from '@/stores/ToastStore'
 import profilePicImageResolve from '@/tools/ImageResolve'
-  const activeUserStore = useActiveUserStore()
-  const ToastStore = useToastStore()
-  const imgURL = computed(()=>{
-    return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
-  })
+const activeUserStore = useActiveUserStore()
+const ToastStore = useToastStore()
+const imgURL = computed(() => {
+  return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
+})
 
-  const data = {
-    labels: ['c++', 'JavaScrip', 'Python', 'Java'],
-    datasets: [
-      {
-        label: 'excercises',
-        data: [540, 325, 702, 620],
-        // backgroundColor: ['rgba(249, 115, 22, 0.2)', 'rgba(6, 182, 212, 0.2)', 'rgb(107, 114, 128, 0.2)', 'rgba(139, 92, 246 0.2)'],
-        // borderColor: ['rgb(249, 115, 22)', 'rgb(6, 182, 212)', 'rgb(107, 114, 128)', 'rgb(139, 92, 246)'],
-        borderWidth: 1,
-      },
-    ],
-  }
-  const curDate = new Date()
-  let dateOffset = 24 * 60 * 60 * 1000 * 5
-  const barData = {
-    labels: ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06'],
-    datasets: [
-      {
-        label: 'exercises done',
-        data: [1, 5, 8, 3, 7, 4],
-        //   borderColor: ['rgb(249, 115, 22)', 'rgb(6, 182, 212)', 'rgb(107, 114, 128)', 'rgb(139, 92, 246)'],
-        borderWidth: 1,
-      },
-    ],
-  }
 
-  enum Panels {
-    STATISTIC,
-    SETTINGS,
-  }
 
-  const screenSelected: Ref<Panels> = ref(Panels.STATISTIC)
-  const setPanel = (type: Panels) => {
-    console.log('select')
-    screenSelected.value = type
-  }
 
-  const onLogOutButton = () => {
-    activeUserStore.logout()
-    router.push('/home')
-  }
+enum Panels {
+  STATISTIC,
+  SETTINGS,
+}
 
-  const onChangePassword = () => {
-    ToastStore.featureNotImplemented()
-  }
+const screenSelected: Ref<Panels> = ref(Panels.STATISTIC)
+const setPanel = (type: Panels) => {
+  console.log('select')
+  screenSelected.value = type
+}
 
-  const onRemoveAccount = () => {
-    ToastStore.featureNotImplemented()
-  }
+const onLogOutButton = () => {
+  activeUserStore.logout()
+  router.push('/home')
+}
 
-  const onChangeProfilePic = () => {
-    ToastStore.featureNotImplemented()
-  }
+const onChangePassword = () => {
+  ToastStore.featureNotImplemented()
+}
+
+const onRemoveAccount = () => {
+  ToastStore.featureNotImplemented()
+}
+
+const onChangeProfilePic = () => {
+  ToastStore.featureNotImplemented()
+}
 </script>
 
 <style></style>

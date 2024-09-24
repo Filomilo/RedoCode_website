@@ -38,7 +38,7 @@ public class ExerciseDataControl {
             idOfExercise, thisUserProgram.getAvgExecutionTime());
 
     return ResultData.builder()
-        .betterThanProcent((float) solutionWorseThanUSer / AllOFSolutions * 100)
+        .betterThanPercent((float) solutionWorseThanUSer / AllOFSolutions * 100)
         .executionTimeMs(thisUserProgram.getAvgExecutionTime())
         .maxExecutionTimeMs(thisUserProgram.getExcersize().getMaxExecutionTimeMS())
         .SolutionRanking(AllOFSolutions - solutionWorseThanUSer)

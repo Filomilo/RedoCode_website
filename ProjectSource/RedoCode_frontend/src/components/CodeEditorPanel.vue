@@ -17,7 +17,11 @@
       />
       <div class="CodeEditorDropDownContainer"></div>
       <div class="CodeEditorPlayButton">
-        <Button @click="codeRunButton" v-if="shouldButtonBeRun" id="coderunner-run-button">
+        <Button
+          @click="codeRunButton"
+          v-if="shouldButtonBeRun"
+          id="coderunner-run-button"
+        >
           <IconPlay style="z-index: 9" />
         </Button>
         <div v-else>
@@ -87,12 +91,12 @@
   const codeRef = ref(props.starting)
 
   const codeRunButton = () => {
-    
     props.onRunCode()
   }
 
-
-  const shouldButtonBeRun: ComputedRef<boolean>=computed(()=>!codeRunnerStore.isprocessing)
+  const shouldButtonBeRun: ComputedRef<boolean> = computed(
+    () => !codeRunnerStore.isProcessing
+  )
 
   const onCodeChnaage = (text: string) => {
     props.codeUpdateMethod(text)
@@ -112,7 +116,6 @@
       codeRef.value = first
     }
   )
-
 
   const editorRef = shallowRef()
   const handleMount = (editor: any) => (editorRef.value = editor)

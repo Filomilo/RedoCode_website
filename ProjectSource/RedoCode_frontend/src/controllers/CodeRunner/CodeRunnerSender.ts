@@ -1,29 +1,28 @@
 import CodeRunnerRequestMessage from '@/types/CodeRunnerRequestMessage'
 import StompApiSender from '../Stomp/StompApiSender'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
-import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 import CodeRunnerConnection from './CodeRunnerConnection'
-import RawCodeToRunMessage from '@/types/ApiMesseages/RawCodeToRunMessage'
-import ExerciseCreatorController from './ExerciseCreatorControlller'
-import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
-import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
+import RawCodeToRunMessage from '@/types/ApiMessages/RawCodeToRunMessage'
+import ExerciseCreatorController from './ExerciseCreatorController'
+import ExerciseTestToRunMessage from '@/types/ApiMessages/ExerciseTestToRunMessage'
+import ExerciseCreatorValidationMessage from '@/types/ApiMessages/ExerciseCreatorValidationMessage'
 import MessageCreator from '@/tools/MessageCreator'
 import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
-import ExerciseIdToRunMessage from '@/types/ApiMesseages/ExerciseIdToRunMessage'
+import ExerciseIdToRunMessage from '@/types/ApiMessages/ExerciseIdToRunMessage'
 
 class CodeRunnerSender {
   private _stompApiSender: StompApiSender
-  private _CodeRnnerCOnnection: CodeRunnerConnection
+  private _CodeRunnerCOnnection: CodeRunnerConnection
   constructor(
     stompApiSender: StompApiSender,
     codeRunnerConnection: CodeRunnerConnection
   ) {
     this._stompApiSender = stompApiSender
-    this._CodeRnnerCOnnection = codeRunnerConnection
+    this._CodeRunnerCOnnection = codeRunnerConnection
   }
 
   public readonly requestCodeRunner = (codeRunnerName: CodeRunnerType) => {
-    this._CodeRnnerCOnnection.setAwaiting()
+    this._CodeRunnerCOnnection.setAwaiting()
     console.log('codeRunnerName: ' + JSON.stringify(codeRunnerName))
     const request: CodeRunnerRequestMessage = {
       CodeRunnerType: codeRunnerName,
@@ -43,60 +42,50 @@ class CodeRunnerSender {
     exerciseCreatorController: ExerciseCreatorController,
     type: CodeRunnerType
   ) => {
-    const exerciseTestToRunMesseage: ExerciseTestToRunMesseage =
-      MessageCreator.createExerciseTestToRunMesseage(
+    const exerciseTestToRunMessage: ExerciseTestToRunMessage =
+      MessageCreator.createExerciseTestToRunMessage(
         exerciseCreatorController,
         type
       )
     console.log(
-      'runSignleExerciseCreationTest: ' +
-        JSON.stringify(exerciseTestToRunMesseage)
+      'runSingleExerciseCreationTest: ' +
+        JSON.stringify(exerciseTestToRunMessage)
     )
-    this._stompApiSender.runExerciseTestsCode(exerciseTestToRunMesseage)
+    this._stompApiSender.runExerciseTestsCode(exerciseTestToRunMessage)
   }
 
-  runExerciseCreationValistaion = (
+  runExerciseCreationValidation = (
     exerciseCreatorController: ExerciseCreatorController
   ) => {
     console.log(
-      'runSignleExerciseCreationTest: ' +
+      'runSingleExerciseCreationTest: ' +
         JSON.stringify(exerciseCreatorController)
     )
 
-    const exercsieCreatorValidationMesage: ExercsieCreatorValidationMesage =
-      MessageCreator.createExercsieCreatorValidationMesage(
+    const exerciseCreatorValidationMessage: ExerciseCreatorValidationMessage =
+      MessageCreator.createExerciseCreatorValidationMessage(
         exerciseCreatorController
       )
 
     this._stompApiSender.runExerciseCreatorValidationCode(
-      exercsieCreatorValidationMesage
+      exerciseCreatorValidationMessage
     )
   }
 
   runExerciseIdCode(exerciseSolverController: ExerciseSolverController) {
     const exerciseIdToRunMessage: ExerciseIdToRunMessage =
-      MessageCreator.createExercsieIdToRunMessage(exerciseSolverController)
+      MessageCreator.createExerciseIdToRunMessage(exerciseSolverController)
     this._stompApiSender.runExerciseIdCode(exerciseIdToRunMessage)
   }
 
-  runExercsieIdValidationCode(
+  runExorciseIdValidationCode(
     exerciseSolverController: ExerciseSolverController
   ) {
     const exerciseIdToRunMessage: ExerciseIdToRunMessage =
-      MessageCreator.createExercsieIdToRunMessage(exerciseSolverController)
-    this._stompApiSender.runExercsieIdValidationCode(exerciseIdToRunMessage)
+      MessageCreator.createExerciseIdToRunMessage(exerciseSolverController)
+    this._stompApiSender.runExerciseIdValidationCode(exerciseIdToRunMessage)
   }
 }
 
 export default CodeRunnerSender
 
-// code: exerciseCreatorController.solutionCodes[type]!,
-// manualTests: exerciseCreatorController.getSingleRowOfManualTests,
-// inputType: exerciseCreatorController.inputType,
-// outputType: exerciseCreatorController.outputType,
-// amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-// autoTestminValue: exerciseCreatorController.autoTestminValue,
-// autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
-// lengthRange: exerciseCreatorController.lengthRange,
-// xArrayRange: exerciseCreatorController.xArrayRange,
-// yArrayRange: exerciseCreatorController.yArrayRange,

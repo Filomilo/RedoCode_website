@@ -72,14 +72,6 @@ namespace CreatePanel {
       cy.get('#ms-number-input > input').click()
       cy.get('#ms-number-input > input').clear().type(amount.toString())
     }
-    export function setMinutesTime(amount: number) {
-      cy.get('#minute-number-input > input').click()
-      cy.get('#minute-number-input > input').clear().type(amount.toString())
-    }
-    export function setHoursTime(amount: number) {
-      cy.get('#hour-number-input > input').click()
-      cy.get('#hour-number-input > input').clear().type(amount.toString())
-    }
     export function setRam(amount: number) {
       cy.get('#ram-number-input > input').click()
       cy.get('#ram-number-input > input').clear().type(amount.toString())

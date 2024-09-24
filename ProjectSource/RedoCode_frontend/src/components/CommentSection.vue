@@ -1,6 +1,5 @@
 <template>
   <main>
-
     <div class="commentSectionContainer">
       <div class="VerticalLine" style="margin-top: 5rem">
         <Textarea
@@ -24,7 +23,6 @@
         >
           comment
         </Button>
-  
       </div>
       <div v-for="(data, index) in commentsRef" v-bind:key="index">
         <div
@@ -33,7 +31,10 @@
           style="margin-top: 0.5rem"
         >
           <div class="ProfilePicContainer">
-            <img :src="profilePicImageResolve( data.profilePicture)" class="profilePic" />
+            <img
+              :src="profilePicImageResolve(data.profilePicture)"
+              class="profilePic"
+            />
           </div>
           <div class="CommentContainer">
             <h3
@@ -55,8 +56,8 @@
 <script setup lang="ts">
   import { computed, Ref, ref } from 'vue'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
-  import CommentType from '@/types/ApiMesseages/CommentType'
-  import EndpointAcces from '@/controllers/EndpointsAcces'
+  import CommentType from '@/types/ApiMessages/CommentType'
+  import EndpointAccess from '@/controllers/EndpointsAccess'
   import { useToastStore } from '@/stores/ToastStore'
   import profilePicImageResolve from '@/tools/ImageResolve'
   const props = defineProps<{
@@ -75,7 +76,7 @@
   })
 
   const onCommentButton = () => {
-    EndpointAcces.authorized
+    EndpointAccess.authorized
       .postComment(commentInput.value, props.id)
       .then(x => {
         console.log('token: ' + JSON.stringify(x))
@@ -83,7 +84,9 @@
           ToastStore.showErrorMessage("Couldn't' post comment")
         } else {
           if (validatedComment.value) {
-            console.log("comment post: "+JSON.stringify(ActiveUserStore.accountInfo)  )
+            console.log(
+              'comment post: ' + JSON.stringify(ActiveUserStore.accountInfo)
+            )
             commentsRef.value.unshift({
               nickname: ActiveUserStore.accountInfo.nickname,
               profilePicture: ActiveUserStore.accountInfo.profilePicture,
@@ -91,7 +94,7 @@
             })
             commentInput.value = ''
           }
-          ToastStore.showSuccessMessage('Succsefully commented')
+          ToastStore.showSuccessMessage('Successfully commented')
         }
       })
   }

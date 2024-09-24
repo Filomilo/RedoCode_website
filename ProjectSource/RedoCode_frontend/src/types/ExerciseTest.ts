@@ -6,5 +6,5 @@ export default interface ExerciseTest {
   consoleOutput: string
   isSolved: boolean | null
   executionTime: number
-  uuid: string // Required for correct list showacaseing in vue, it doesnt take part in any other proces and should not be used
+  uuid: string // Required for correct list showcasing in vue, it doesn't take part in any other process and should not be used
 }

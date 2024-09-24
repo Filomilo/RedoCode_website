@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
 import { useToast } from 'primevue/usetoast'
 
 export const useToastStore = defineStore('toastStore', () => {
@@ -9,7 +8,7 @@ export const useToastStore = defineStore('toastStore', () => {
     toast.add({
       severity: 'error',
       summary: 'error',
-      detail: 'Wrong e-mail or passowrd',
+      detail: 'Wrong e-mail or password',
       life: 2000,
     })
   }
@@ -22,11 +21,11 @@ export const useToastStore = defineStore('toastStore', () => {
     })
   }
 
-  const featureNotImplemented = (deatil: string = '') => {
+  const featureNotImplemented = (detail: string = '') => {
     toast.add({
       severity: 'warn',
-      summary: 'unsuported',
-      detail: 'feature not implemented: ' + deatil,
+      summary: 'unsupported',
+      detail: 'feature not implemented: ' + detail,
       life: 1000,
     })
   }
@@ -47,7 +46,7 @@ export const useToastStore = defineStore('toastStore', () => {
       life: 2000,
     })
   }
-  const showProccessingMessage = (message: string) => {
+  const showProcessingMessage = (message: string) => {
     toast.add({
       severity: 'info',
       summary: 'Processing',
@@ -62,6 +61,6 @@ export const useToastStore = defineStore('toastStore', () => {
     featureNotImplemented,
     showSuccessMessage,
     showErrorMessage,
-    showProccessingMessage,
+    showProcessingMessage: showProcessingMessage,
   }
 })

@@ -72,10 +72,6 @@ public class ExerciseCreatorValidationMessage {
   private boolean spaceInupt;
 
   @NotNull
-  @JsonProperty("timeForTaskMin")
-  private Long timeForTaskMin;
-
-  @NotNull
   @JsonProperty("timeForExecutionMs")
   private Long timeForExecutionMs;
 

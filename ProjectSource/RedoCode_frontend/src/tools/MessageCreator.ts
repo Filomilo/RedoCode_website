@@ -1,13 +1,11 @@
-import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
+import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorController'
 import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
-import ExerciseIdToRunMessage from '@/types/ApiMesseages/ExerciseIdToRunMessage'
-import ExerciseTestToRunMesseage from '@/types/ApiMesseages/ExerciseTestToRunMesseage'
-import ExercsieCreatorValidationMesage, {
-  TestsIndexed,
-} from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
+import ExerciseIdToRunMessage from '@/types/ApiMessages/ExerciseIdToRunMessage'
+import ExerciseTestToRunMessage from '@/types/ApiMessages/ExerciseTestToRunMessage'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
-import ExerciseTest from '@/types/ExcericseTest'
+import ExerciseTest from '@/types/ExerciseTest'
 import VarType from '@/types/VarType'
+import ExerciseCreatorValidationMessage from '@/types/ApiMessages/ExerciseCreatorValidationMessage'
 
 namespace MessageCreator {
   // eslint-disable-next-line no-inner-declarations
@@ -37,44 +35,44 @@ namespace MessageCreator {
     return newTest
   }
 
-  export function createExerciseTestToRunMesseage(
+  export function createExerciseTestToRunMessage(
     exerciseCreatorController: ExerciseCreatorController,
     type: CodeRunnerType
-  ): ExerciseTestToRunMesseage {
+  ): ExerciseTestToRunMessage {
     console.log(
       'exerciseCreatorController: ' + JSON.stringify(exerciseCreatorController)
     )
-    const exerciseCreatorControllercopy: ExerciseCreatorController =
-      exerciseCreatorController //JSON.parse(JSON.stringify(exerciseCreatorController)) as ExerciseCreatorController;
+    const exerciseCreatorControllerCopy: ExerciseCreatorController =
+      exerciseCreatorController 
     return {
-      code: exerciseCreatorControllercopy.solutionCodes[type]!,
+      code: exerciseCreatorControllerCopy.solutionCodes[type]!,
       manualTests: testStringParser(
-        exerciseCreatorControllercopy.getSingleRowOfManualTests,
-        exerciseCreatorControllercopy.inputType,
-        exerciseCreatorControllercopy.outputType
+        exerciseCreatorControllerCopy.getSingleRowOfManualTests,
+        exerciseCreatorControllerCopy.inputType,
+        exerciseCreatorControllerCopy.outputType
       ),
-      inputType: exerciseCreatorControllercopy.inputType,
-      outputType: exerciseCreatorControllercopy.outputType,
+      inputType: exerciseCreatorControllerCopy.inputType,
+      outputType: exerciseCreatorControllerCopy.outputType,
       amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-      autoTestminValue: exerciseCreatorControllercopy.autoTestminValue,
-      autoTestMaxValue: exerciseCreatorControllercopy.autoTestMaxValue,
-      lengthRange: exerciseCreatorControllercopy.lengthRange,
-      xArrayRange: exerciseCreatorControllercopy.xArrayRange,
-      yArrayRange: exerciseCreatorControllercopy.yArrayRange,
-      upperCaseInput: exerciseCreatorControllercopy.upperCaseInput,
-      lowerCaseInput: exerciseCreatorControllercopy.lowerCaseInput,
-      numberInput: exerciseCreatorControllercopy.numberInput,
+      autoTestMinValue: exerciseCreatorControllerCopy.autoTestMinValue,
+      autoTestMaxValue: exerciseCreatorControllerCopy.autoTestMaxValue,
+      lengthRange: exerciseCreatorControllerCopy.lengthRange,
+      xArrayRange: exerciseCreatorControllerCopy.xArrayRange,
+      yArrayRange: exerciseCreatorControllerCopy.yArrayRange,
+      upperCaseInput: exerciseCreatorControllerCopy.upperCaseInput,
+      lowerCaseInput: exerciseCreatorControllerCopy.lowerCaseInput,
+      numberInput: exerciseCreatorControllerCopy.numberInput,
       specialCharacterInput:
-        exerciseCreatorControllercopy.specialCharacterInput,
-      breakCharacterInupt: exerciseCreatorControllercopy.breakCharacterInupt,
-      spaceInupt: exerciseCreatorControllercopy.spaceInupt,
-      executionTime: exerciseCreatorControllercopy.timeForExecutionMs,
+        exerciseCreatorControllerCopy.specialCharacterInput,
+      breakCharacterInput: exerciseCreatorControllerCopy.breakCharacterInput,
+      spaceInput: exerciseCreatorControllerCopy.spaceInput,
+      executionTime: exerciseCreatorControllerCopy.timeForExecutionMs,
     }
   }
 
-  export function createExercsieCreatorValidationMesage(
+  export function createExerciseCreatorValidationMessage(
     exerciseCreatorController: ExerciseCreatorController
-  ): ExercsieCreatorValidationMesage {
+  ): ExerciseCreatorValidationMessage {
     const parsedTests: ExerciseTest[] = testStringParser(
       exerciseCreatorController.getSingleRowOfManualTests,
       exerciseCreatorController.inputType,
@@ -82,34 +80,33 @@ namespace MessageCreator {
     )
     console.log('parsedTests: \n' + JSON.stringify(parsedTests))
 
-    const exercsieCreatorValidationMesage: ExercsieCreatorValidationMesage = {
+    const exerciseCreatorValidationMessage: ExerciseCreatorValidationMessage = {
       title: exerciseCreatorController.title,
       description: exerciseCreatorController.desc,
       ram: exerciseCreatorController.ram,
       inputType: exerciseCreatorController.inputType,
       outputType: exerciseCreatorController.outputType,
       amountOfAutoTests: exerciseCreatorController.amountOfAutoTests,
-      autoTestminValue: exerciseCreatorController.autoTestminValue,
+      autoTestMinValue: exerciseCreatorController.autoTestMinValue,
       autoTestMaxValue: exerciseCreatorController.autoTestMaxValue,
       lengthRange: exerciseCreatorController.lengthRange,
       xArrayRange: exerciseCreatorController.xArrayRange,
       yArrayRange: exerciseCreatorController.yArrayRange,
       solutionCodes: exerciseCreatorController.solutionCodes,
-      timeForTaskMin: exerciseCreatorController.timeForTaskMin,
       timeForExecutionMs: exerciseCreatorController.timeForExecutionMs,
       manualTests: parsedTests,
       upperCaseInput: exerciseCreatorController.upperCaseInput,
       lowerCaseInput: exerciseCreatorController.lowerCaseInput,
       numberInput: exerciseCreatorController.numberInput,
       specialCharacterInput: exerciseCreatorController.specialCharacterInput,
-      breakCharacterInupt: exerciseCreatorController.breakCharacterInupt,
-      spaceInupt: exerciseCreatorController.spaceInupt,
+      breakCharacterInput: exerciseCreatorController.breakCharacterInput,
+      spaceInput: exerciseCreatorController.spaceInput,
       executionTime: exerciseCreatorController.timeForExecutionMs,
     }
-    return exercsieCreatorValidationMesage
+    return exerciseCreatorValidationMessage
   }
 
-  export function createExercsieIdToRunMessage(
+  export function createExerciseIdToRunMessage(
     exerciseSolverController: ExerciseSolverController
   ): ExerciseIdToRunMessage {
     const exerciseIdToRunMessage: ExerciseIdToRunMessage = {

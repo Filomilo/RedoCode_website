@@ -127,7 +127,6 @@ class CodeRunHandlerTest {
             .specialCharacterInput(specialCharacterInput)
             .breakCharacterInupt(breakCharacterInput)
             .spaceInupt(spaceInput)
-            .timeForTaskMin(timeForTask)
             .timeForExecutionMs(maxExecutionTimeMS)
             .solutionCodes(solutionCodes)
             .manualTests(Arrays.stream(tests).toList())

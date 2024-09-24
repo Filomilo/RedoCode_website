@@ -1,9 +1,6 @@
-import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-import ExerciseTest from '@/types/ExcericseTest'
 import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
-import { computed, ComputedRef, ref, Ref } from 'vue'
 
-class PlayGroundRunnerCotroller {
+class PlayGroundRunnerController {
   constructor() {}
   public consoleOutput: ConsoleOutput = {
     exitCode: 0,
@@ -18,11 +15,7 @@ class PlayGroundRunnerCotroller {
 
     this.consoleOutput = results.consoleOutput
     this.executionTime = results.executionTime
-    // console.log('  this._consoleOutput.value:  ' + JSON.stringify(  this.consoleOutput.value))
-
-    // this.updateCreationTestData(results.results)
-    // this.updateSubmitAcces()
   }
 }
 
-export default PlayGroundRunnerCotroller
+export default PlayGroundRunnerController

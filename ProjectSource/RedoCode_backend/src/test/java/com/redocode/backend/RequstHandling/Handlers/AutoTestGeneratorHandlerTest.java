@@ -27,7 +27,6 @@ class AutoTestGeneratorHandlerTest {
             .amountOfAutoTests(amtOfAutoTests)
             .user(new User("2"))
             .timeForExecution(22L)
-            .timeForTaskMin(22L)
             .solutionCodes(new HashMap<>())
             .inputType(Variables.VARIABLES_TYPES.ARRAY_OF_INTEGERS)
             .lengthRange(new Range(4, 22))

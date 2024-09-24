@@ -94,11 +94,7 @@ public class ExerciseInfoValidation extends MessageRequestHandler {
       throw new RequestHadndlingException("inoccret max execution limit");
     }
 
-    if (exerciseCretionRequest.getTimeForTaskMin() < 15
-        || exerciseCretionRequest.getTimeForTaskMin() > 60 * 10) {
-      throw new RequestHadndlingException(
-          "inoccret time for task limit: " + exerciseCretionRequest.getTimeForTaskMin());
-    }
+
     if (exerciseCretionRequest.getSolutionCodes().size() == 0) {
       throw new RequestHadndlingException("there should be at least one solution to chekc");
     }

@@ -1,265 +1,222 @@
 import { defineStore } from 'pinia'
-import { ref, computed, type Ref, inject, watch, toHandlerKey } from 'vue'
+import { ref, computed, type Ref, inject } from 'vue'
 import { useToastStore } from './ToastStore'
 import axios from 'axios'
-import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest'
-import router from '@/router'
-import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
 import { VueCookies } from 'vue-cookies'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import { useCodeRunnerStore } from './CodeRunnerStore'
-import AccountInfo from '@/types/ApiMesseages/AccountInfo'
-import EndpointAcces from '@/controllers/EndpointsAcces'
-import USER_TYPE from '@/types/ApiMesseages/UserType'
+import EndpointAccess from '@/controllers/EndpointsAccess'
+import USER_TYPE from '@/types/ApiMessages/UserType'
 import { stringify } from 'flatted'
-
 
 export const useActiveUserStore = defineStore('activeUserStore', () => {
   const toastStore = useToastStore()
-  const unAuthUser={
-    nickname: "",
-    mail: "",
-    profilePicture: "",
-    type: USER_TYPE.UNAUTHENTICATED
-  };
-  
-  
-
+  const unAuthUser = {
+    nickname: '',
+    mail: '',
+    profilePicture: '',
+    type: USER_TYPE.UNAUTHENTICATED,
+  }
 
   //#region Cookies
-  
-  const $cookies: VueCookies|undefined= inject('$cookies');
-  
-  function deleteCookie  () {
-      if ($cookies?.isKey('token')) {
-        $cookies?.remove('token')
-      }
-    }
 
+  const $cookies: VueCookies | undefined = inject('$cookies')
 
-    function getCookie  () {
-     return  $cookies?.get('token');
+  function deleteCookie() {
+    if ($cookies?.isKey('token')) {
+      $cookies?.remove('token')
     }
-    function saveCookieToken () {
-      console.log('Save cookie')
-      $cookies?.set('token', getToken())
-    }
-  
-    function doesCookieExist(): boolean
-    {
-      if($cookies==undefined)
-          return false;
-      return $cookies.isKey('token');
-    }
-  
+  }
+
+  function getCookie() {
+    return $cookies?.get('token')
+  }
+  function saveCookieToken() {
+    console.log('Save cookie')
+    $cookies?.set('token', getToken())
+  }
+
+  function doesCookieExist(): boolean {
+    if ($cookies == undefined) return false
+    return $cookies.isKey('token')
+  }
+
   //#endregion
-  
+
   //#region account Data managing
-  const accountInfo = ref(unAuthUser);
-  const _token: Ref<string|null> = ref(null)
-    const isLogged = computed(()=>{
-      if (import.meta.env.MODE === 'development') {
-          return true;
-        }
-      console.log()
-      return accountInfo.value!=undefined
-      && accountInfo.value!=undefined
-      && accountInfo.value.type!==USER_TYPE.UNAUTHENTICATED
+  const accountInfo = ref(unAuthUser)
+  const _token: Ref<string | null> = ref(null)
+  const isLogged = computed(() => {
+    if (import.meta.env.MODE === 'development') {
+      return true
+    }
+    console.log()
+    return (
+      accountInfo.value != undefined &&
+      accountInfo.value != undefined &&
+      accountInfo.value.type !== USER_TYPE.UNAUTHENTICATED
+    )
   })
-  
-  async function login(email: string, pass: string, stayLoggedIn: boolean): Promise<boolean> {
+
+  async function login(
+    email: string,
+    pass: string,
+    stayLoggedIn: boolean
+  ): Promise<boolean> {
     try {
-      console.log("email: " + email);
-      
-      const token: string = await EndpointAcces.unauthorized.login(email, pass);
-      setToken(token);
+      console.log('email: ' + email)
 
-      if(stayLoggedIn)
-      [
-    saveCookieToken()
-  ]
-      // _token.value = token
-      // isLogged.value = true
-      // if (stayLoggedIn) {
-      //   saveCookie();
-      // }
-      // router.push({ path: '/Home', replace: true });
-      toastStore.showSuccessMessage("Succesfully logged in");
-  
-      return true;
+      const token: string = await EndpointAccess.unauthorized.login(email, pass)
+      setToken(token)
+
+      if (stayLoggedIn) [saveCookieToken()]
+      toastStore.showSuccessMessage('Successfully logged in')
+
+      return true
     } catch (error) {
-      console.error(error);
-      toastStore.showErrorMessage("Couldn't Login, " + error);
-  
-      return false;
+      console.error(error)
+      toastStore.showErrorMessage("Couldn't Login, " + error)
+
+      return false
     }
   }
-  
-  
-  
-  async function  validateAuthentication(): Promise <boolean>
-  {
-    await updateAccountData();
-    console.log("USESR VALIDATED: "+ isLogged.value)
-  return isLogged.value;
+
+  async function validateAuthentication(): Promise<boolean> {
+    await updateAccountData()
+    console.log('USERS VALIDATED: ' + isLogged.value)
+    return isLogged.value
   }
-  
- async function  updateAccountData()
-  {
-    
-      const token:string|null=getToken();
-      console.log("AuthControlelr loading data for token: "+token)
-      if(token!==null && token!=='')
-      {
-        console.log("token loading for: "+ token)
-         const response=await EndpointAcces.authorized.getUserInfo();
-        console.log("Account info: "+ stringify(response))
-      
-         accountInfo.value=response;
-        // Object.assign(accountInfo, response);
-  
-      }
-  else{
-  
-    accountInfo.value=unAuthUser;
-    
-      }
-  
+
+  async function updateAccountData() {
+    const token: string | null = getToken()
+    console.log('AuthController loading data for token: ' + token)
+    if (token !== null && token !== '') {
+      console.log('token loading for: ' + token)
+      const response = await EndpointAccess.authorized.getUserInfo()
+      console.log('Account info: ' + stringify(response))
+
+      accountInfo.value = response
+      // Object.assign(accountInfo, response);
+    } else {
+      accountInfo.value = unAuthUser
+    }
   }
-  
-  
+
   //#endregion
-  
-  
-  
-  
+
   //#region LocalStorage
-  function getToken():string|null {
-      return localStorage.getItem('jwtToken');
-    }
-  
-    function setToken(token: string){
-      console.log("AuthControlelr setToken: "+token)
-      localStorage.setItem('jwtToken', token);
-      console.log("sesssino token: "+  localStorage.getItem('jwtToken') )
-      _token.value=token
-      setupAxios();
-      updateAccountData();
-  
-    }
-    
-  function setupAxios()
-  {
-    console.log("AuthController setupAxios")
-    const token: string| null=getToken();
-    console.log("AuthController setupAxios token: "+ token)
-  if(token!=null && token.length>0)
-  {
-  
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  function getToken(): string | null {
+    return localStorage.getItem('jwtToken')
   }
+
+  function setToken(token: string) {
+    console.log('AuthController setToken: ' + token)
+    localStorage.setItem('jwtToken', token)
+    console.log('session token: ' + localStorage.getItem('jwtToken'))
+    _token.value = token
+    setupAxios()
+    updateAccountData()
   }
-  
+
+  function setupAxios() {
+    console.log('AuthController setupAxios')
+    const token: string | null = getToken()
+    console.log('AuthController setupAxios token: ' + token)
+    if (token != null && token.length > 0) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    }
+  }
+
   //#endregion
-  
-  
+
   //#region Login process
-  
-  const IsToken = computed(()=>{
-    return _token.value!==null &&  _token.value!==undefined &&  _token.value!==''
+
+  const IsToken = computed(() => {
+    return (
+      _token.value !== null && _token.value !== undefined && _token.value !== ''
+    )
   })
 
- async function  register(email: string, nickname: string, pass: string){
-    const toastStore=useToastStore();
-  
-    try{
-      console.log("AuthController register: "+email)
-      const token=await EndpointAcces.unauthorized.register(email, nickname, pass)
-      console.log("AuthController token: "+token)
-      if(token===""){
+  async function register(email: string, nickname: string, pass: string) {
+    const toastStore = useToastStore()
+
+    try {
+      console.log('AuthController register: ' + email)
+      const token = await EndpointAccess.unauthorized.register(
+        email,
+        nickname,
+        pass
+      )
+      console.log('AuthController token: ' + token)
+      if (token === '') {
         toastStore.showErrorMessage("Couldn't register")
-      }
-      else{
-        toastStore.showSuccessMessage("succesfully registered")
+      } else {
+        toastStore.showSuccessMessage('successfully registered')
         setToken(token)
       }
+    } catch (ex: any) {
+      toastStore.showErrorMessage(ex)
+      toastStore.showErrorMessage("Couldn't register")
     }
-  catch(ex:any){
-    toastStore.showErrorMessage(ex)
-    toastStore.showErrorMessage("Couldn't register")
+  }
 
-  }
-  }
-  
   function logout() {
-    console.log("Logout: ")
-    setToken("")
-    localStorage.clear();
-    console.log("token: "+getToken())
+    console.log('Logout: ')
+    setToken('')
+    localStorage.clear()
+    console.log('token: ' + getToken())
     updateAccountData()
-    deleteCookie();
-  
-  //     this._token.value = ''
-  //     this.deleteCookie()
-  //   }
-  
-  //   public login(): string|null{
-  
-  }
-  
+    deleteCookie()
 
-  
-  function loadFromSession(){
-    const token= getToken()
-    if(token!==null)
-    {
+    //     this._token.value = ''
+    //     this.deleteCookie()
+    //   }
+
+    //   public login(): string|null{
+  }
+
+  function loadFromSession() {
+    const token = getToken()
+    if (token !== null) {
       setToken(token)
     }
   }
 
-
-  function loadFromCookies(){
-    const token= getCookie()
-    if(token!==null)
-    {
+  function loadFromCookies() {
+    const token = getCookie()
+    if (token !== null) {
       setToken(token)
     }
   }
-  
+
   //#endregion
-  
-  
 
-
-//#region init
-if(doesCookieExist())
-{
-  loadFromCookies();
-}
-else{
-  loadFromSession();
-}
-
-const apiConnectionStore = useApiConnectionStore()
-const codeRunnerStore = useCodeRunnerStore()
-apiConnectionStore.stompApiConnection.addOnConnectEvent(async () => {
-  const token=getToken();
-  if(token!=null){
-    const strToken: string= token as string;
- await console.log('on connected userAuhtenticaton: ' + JSON.stringify(getToken()))
-  if (strToken.length > 0) {
-    await apiConnectionStore.stompApiSender.authenticationStomp({
-      token: strToken,
-    })
+  //#region init
+  if (doesCookieExist()) {
+    loadFromCookies()
+  } else {
+    loadFromSession()
   }
-  await codeRunnerStore.codeRunnerConnection.updateCodeRunner()}
-})
-  
 
-//#endregion
+  const apiConnectionStore = useApiConnectionStore()
+  const codeRunnerStore = useCodeRunnerStore()
+  apiConnectionStore.stompApiConnection.addOnConnectEvent(async () => {
+    const token = getToken()
+    if (token != null) {
+      const strToken: string = token as string
+      await console.log(
+        'on connected userAuthentication: ' + JSON.stringify(getToken())
+      )
+      if (strToken.length > 0) {
+        await apiConnectionStore.stompApiSender.authenticationStomp({
+          token: strToken,
+        })
+      }
+      await codeRunnerStore.codeRunnerConnection.updateCodeRunner()
+    }
+  })
 
- 
-
+  //#endregion
 
   return {
     // authController
@@ -269,7 +226,7 @@ apiConnectionStore.stompApiConnection.addOnConnectEvent(async () => {
     accountInfo,
     register,
     validateAuthentication,
-    IsToken
+    IsToken,
     // getToken,
   }
 })

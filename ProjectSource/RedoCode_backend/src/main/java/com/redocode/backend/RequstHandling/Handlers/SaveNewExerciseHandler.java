@@ -63,8 +63,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
             .upperCaseInput(testsToRunRequest.isUpperCaseInput())
             .valueLengthRangeMin(testsToRunRequest.getLengthRange().getMin())
             .valueLengthRangeMax(testsToRunRequest.getLengthRange().getMax())
-            .timeForTaskMin(0L) // todo: propably for deletaion
-            .maxExecutionTimeMS(codeRunSpecificationParametersRequest.getTimeForExecution())
+                .maxExecutionTimeMS(codeRunSpecificationParametersRequest.getTimeForExecution())
             .build();
     if (testsToRunRequest.getXArrayRange() != null) {
       excersize.setArrayXLengthRangeMax(testsToRunRequest.getXArrayRange().getMax().intValue());

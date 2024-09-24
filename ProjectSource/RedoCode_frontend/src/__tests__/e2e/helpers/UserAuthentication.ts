@@ -7,7 +7,7 @@ namespace UserAuthentication {
     cy.get('#login-password').type(password)
     cy.get('#login').click()
     cy.get('.p-toast-detail')
-      .contains('Succesfully logged in')
+      .contains('Successfully logged in')
       .should('be.visible')
     cy.get('.p-toast-detail').should('not.exist')
   }

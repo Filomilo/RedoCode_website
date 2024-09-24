@@ -2,14 +2,12 @@
 
 <template>
   <div class="PlayGroundBase">
-    
     <Dialog
       :visible="false"
       modal
       header="Edit Profile"
       :style="{ width: '25rem' }"
     >
-    
       <template #container>
         <div class="CodeRunnerLoadingPanel" id="data-loading-dialog">
           <LoadingIndicator />
@@ -26,9 +24,9 @@
     >
       <template #container>
         <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
-          <LoadingIndicator />
+          <LoadingIndicator class="loadingIndicator" />
           <div>
-            Awiating acces to code runner, plase be patient. Consider Creating
+            Awaiting access to code runner, please be patient. Consider Creating
             and account to have priority in queue
           </div>
         </div>
@@ -38,7 +36,7 @@
     <div
       v-if="
         codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
-        codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
+        codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
       "
       class="heightLimit widthLimit"
     >
@@ -76,6 +74,7 @@
       </Splitter>
     </div>
     <div v-else style="height: 100%">
+      {{ JSON.stringify(props.languageChoices) }}
       <ConnectToCodeRunnerPanel
         :languageChoicesSelection="props.languageChoices"
       />
@@ -86,118 +85,68 @@
 <script lang="ts" setup>
   //#region imports
   import CodeEditor from '@/components/CodeEditorPanel.vue'
-  import BasicButton from '@/components/BasicButton.vue'
-  import type { Button } from 'bootstrap'
-  import { ref, onMounted, type Ref, PropType, computed } from 'vue'
-  import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
-  import axios from 'axios'
+  import { onMounted, PropType, computed } from 'vue'
+  import { onBeforeRouteLeave } from 'vue-router'
   import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
 
-  import type { IFrame } from '@stomp/stompjs'
-  import LanguageDropdown from './LanguageDropdown.vue'
-  // import {
-  //   requstDefaultVmMachine,
-  //   subcribeToVmStatus,
-  //   subscribeToCodeResults
-  // } from '../config/CodeRunnerConnection'
-  import type CodeRunnerState from '@/types/CodeRunnerState'
-  import type CodeToRunMessage from '@/types/CodeToRunMessage'
-  import ResultsPanel from './ResultsPanel.vue'
-  import { basicResultTemplate } from '../config/Data'
-  import type CodeResultsType from '@/types/CodeResultsType'
+
   import CodeResultPanel from './CodeResultPanel.vue'
   import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
-  import ExerciseSetupPanel from './ExerciseSetupPanel.vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import LoadingIndicator from './LoadingIndicator.vue'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
-  import ExerciseTest from '@/types/ExcericseTest'
+  import ExerciseTest from '@/types/ExerciseTest'
   import codeRunnerType from '@/types/CodeRunnerTypes'
-  import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   import { ComputedRef } from 'vue'
-  import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-  import ProgramResult, { ConsoleOutput } from '@/types/ProgramResults'
+  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import { ConsoleOutput } from '@/types/ProgramResults'
   //#endregion
   //#region props
-  const props = defineProps({
-    exerciseInfo: {
-      type: Object as () => IExerciseDescriptionI,
-      required: false,
-    },
-    languageChoices: { type: Array as () => codeRunnerType[], required: true },
-    codeContainerUpdate: { type: Function, required: true },
-    starting: { type: String, required: true },
-    onRunCode: { type: Function, required: true },
-    onSubmit: { type: Function, required: false },
-    onResults: {
-      type: Function as PropType<(result: ProgramResultsMessage) => void>,
-      required: true,
-    },
-    ManualTests: {
-      type: Array as () => ExerciseTest[] | ConsoleOutput,
-      required: true,
-    },
-    AutoTests: { type: Array as () => ExerciseTest[], required: false },
-    SubmitAccess: { type: Boolean, required: false },
-    ExecutionTime: { type: Number, required: false },
-  })
+  const props = defineProps<{
+  exerciseInfo?: IExerciseDescriptionI;
+  languageChoices: codeRunnerType[];
+  codeContainerUpdate: (cose: string) => void;
+  starting: string;
+  onRunCode: () => void;
+  onSubmit?: () => void;
+  onResults: (result: ProgramResultsMessage) => void;
+  ManualTests: ExerciseTest[] | ConsoleOutput;
+  AutoTests?: ExerciseTest[];
+  SubmitAccess?: boolean;
+  ExecutionTime?: number;
+}>();
   //#endregion
 
   const codeRunnerStore = useCodeRunnerStore()
   const ApiConnectionStore = useApiConnectionStore()
-  const subscribeStatus = ref(false)
-  const meaages = ref('')
-  const tryingToEstablishConnection: Ref<boolean> = ref(false)
-  const establishedConnection: Ref<boolean> = ref(false)
-  const VmAcces: Ref<boolean> = ref(false)
-  const chosenLangague: Ref<codeRunnerType> = ref(codeRunnerType.UNIDENTIFIED)
-  const code: Ref<string> = ref('Write Code')
-  const resultData = ref(basicResultTemplate)
 
   const connectStomp = async () => {
     ApiConnectionStore.stompApiConnection.activate()
   }
   const disconnectStomp = () => {
-    ApiConnectionStore.stompApiSubsciptionContorller.removeCodeResultsSubscription(
+    ApiConnectionStore.stompApiSubscriptionController.removeCodeResultsSubscription(
       onResult
     )
     ApiConnectionStore.stompApiConnection.deactivate()
   }
 
-  const updateVmStatus = (state: CodeRunnerState) => {
-    console.log('status: ' + state)
-    if (
-      state.state == CodeRunnerStatus.STOPPED ||
-      state.state == CodeRunnerStatus.RUNNING_MACHINE
-    ) {
-      console.log('vmacces')
-      VmAcces.value = true
-    } else VmAcces.value = false
-  }
-
-  const updateResults = (results: CodeResultsType[]) => {
-    console.log('results recived: ' + JSON.stringify(results))
-    resultData.value = results
-  }
 
 
-  const onResult=(mes: ProgramResultsMessage )=>
-  {
-    console.log("onResult: "+ JSON.stringify(mes));
-    codeRunnerStore.isprocessing=false;
-    props.onResults(mes);
+  const onResult = (mes: ProgramResultsMessage) => {
+    console.log('onResult: ' + JSON.stringify(mes))
+    codeRunnerStore.isProcessing = false
+    props.onResults(mes)
   }
 
   onMounted(() => {
     console.log('props: ' + JSON.stringify(props))
-    console.log("Code runner init")
+    console.log('Code runner init')
     connectStomp()
     codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     // if (props.connectAtStart) {
 
-
-    ApiConnectionStore.stompApiSubsciptionContorller.addCodeResultsSubscription(
+    ApiConnectionStore.stompApiSubscriptionController.addCodeResultsSubscription(
       onResult
     )
     //connectToCodeRunner()
@@ -209,29 +158,19 @@
     next()
   })
 
-  const onSelectLanguage = (lang: codeRunnerType) => {
-    console.log('info selcted:' + lang)
-    chosenLangague.value = lang
-    // if (establishedConnection.value) requstDefaultVmMachine(lang)
-  }
 
   const onRunCode = () => {
-    codeRunnerStore.isprocessing=true;
-    props.onRunCode();
-    
+    codeRunnerStore.isProcessing = true
+    props.onRunCode()
   }
 
-
-
-  onBeforeRouteLeave(async (to, from) => {
-    // console.log("leave************************************************")
-    // codeRunnerStore.disconnetWithCodeRunner();
+  onBeforeRouteLeave(async () => {
     disconnectStomp()
   })
 
   const awaiting: ComputedRef<boolean> = computed(() => {
     if (import.meta.env.MODE === 'development') return false
-    return codeRunnerStore.codeRunnerConnection.isAwaitngCodeRunner
+    return codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
   })
 </script>
 
@@ -243,5 +182,13 @@
   .widthLimit {
     max-width: 100%;
     width: 100%;
+  }
+
+  .loadingIndicator{
+    aspect-ratio: 1/1;
+    width: 5rem;
+    max-width: 5rem;
+    max-height: 5rem;
+
   }
 </style>

@@ -2,7 +2,6 @@
   <main>
     <div class="AuthLoginScreenConatiner" v-if="!activeUserStore.isLogged">
       <div class="CommunicatPanel">
-
         <div class="CommunicatContainer">
           <label class="CommunicatTitle">Join us</label>
           <label class="CommunicatDesc">

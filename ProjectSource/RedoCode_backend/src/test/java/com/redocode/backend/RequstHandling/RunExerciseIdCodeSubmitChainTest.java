@@ -42,7 +42,6 @@ class RunExerciseIdCodeSubmitChainTest {
             .author(usersRepository.findAll().get(0))
             .description("Test description")
             .maxExecutionTimeMS(1000L)
-            .timeForTaskMin(50L)
             .valueLengthRangeMin(-100.0F)
             .valueLengthRangeMax(100.0F)
             .ram_mb(512)

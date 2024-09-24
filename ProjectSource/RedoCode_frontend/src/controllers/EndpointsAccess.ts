@@ -1,66 +1,67 @@
 import { useActiveUserStore } from '@/stores/ActiveUserStore'
-import AccountInfo from '@/types/ApiMesseages/AccountInfo'
-import AuthenticationRequest from '@/types/ApiMesseages/Authentication/AuthenticationRequest'
-import RegisterRequest from '@/types/ApiMesseages/Authentication/RegisterRequest'
-import ExcerciseDataMessage from '@/types/ApiMesseages/ExcerciseDataMessage'
-import ResultData from '@/types/ApiMesseages/ResultData'
-import SolutionsData from '@/types/ApiMesseages/SolutionsData'
-import StatisticMessage from '@/types/ApiMesseages/StatisticMessage'
+import AccountInfo from '@/types/ApiMessages/AccountInfo'
+import AuthenticationRequest from '@/types/ApiMessages/Authentication/AuthenticationRequest'
+import RegisterRequest from '@/types/ApiMessages/Authentication/RegisterRequest'
+import ExerciseDataMessage from '@/types/ApiMessages/ExerciseDataMessage'
+import ResultData from '@/types/ApiMessages/ResultData'
+import SolutionsData from '@/types/ApiMessages/SolutionsData'
+import StatisticMessage from '@/types/ApiMessages/StatisticMessage'
 import CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import ExerciseListRequestMessage from '@/types/ExerciseListRequestMessage'
-import ExerciseSolviingState from '@/types/ExerciseSolviingState'
+import ExerciseSolvingState from '@/types/ExerciseSolvingState'
 import axios from 'axios'
 import { isArray } from 'chart.js/helpers'
 import { stringify } from 'flatted'
 
-namespace EndpointAcces {
+namespace EndpointAccess {
   export namespace unauthorized {
-    
-  export async function register (email: string, nickname: string, pass: string):Promise<string>{
-    const request: RegisterRequest = {
-      nickname: nickname,
-      password: pass,
-      email: email,
+    export async function register(
+      email: string,
+      nickname: string,
+      pass: string
+    ): Promise<string> {
+      const request: RegisterRequest = {
+        nickname: nickname,
+        password: pass,
+        email: email,
+      }
+      const response = await axios.post('/public/auth/register', request)
+      console.log('Response: ' + JSON.stringify(response))
+      if (response.status == 200) {
+        console.log('/public/auth/register success')
+        return response.data.token
+      } else {
+        throw "Couldn't register user"
+      }
     }
-   const response= await axios.post('/public/auth/register', request);
-        console.log('Response: ' + JSON.stringify(response))
-        if (response.status == 200) {
-          console.log("/public/auth/register succes" )
-          return response.data.token;
-        } else {
-          throw "Couldn't register user"
-        }
-  }
 
-
-    export async function login(email: string, password: string):Promise<string> {
+    export async function login(
+      email: string,
+      password: string
+    ): Promise<string> {
       try {
         const request: AuthenticationRequest = {
           password: password,
           email: email,
         }
-        const response= await axios.post('/public/auth/login', request);
-        if(response.status!==200)
-        {
-          throw "Incorrect login details"
+        const response = await axios.post('/public/auth/login', request)
+        if (response.status !== 200) {
+          throw 'Incorrect login details'
         }
-        return response.data.token;
-
+        return response.data.token
       } catch (error) {
         console.error('updateCodeRunner Error:', JSON.stringify(error))
-        throw "Incorrect login details"
+        throw 'Incorrect login details'
       }
     }
 
-   
-
     export async function getExerciseData(
-      exercsieId: number
-    ): Promise<ExcerciseDataMessage> {
+      exerciseId: number
+    ): Promise<ExerciseDataMessage> {
       const params = {
-        id: exercsieId,
+        id: exerciseId,
       }
       const response = await axios.get('/public/exercises/data', {
         params: params,
@@ -71,7 +72,7 @@ namespace EndpointAcces {
         response.data === '' ||
         response.headers['Content-Length'] == 0
       )
-        throw 'no exercise data retrived '
+        throw 'no exercise data retrieved '
 
       return response.data
     }
@@ -100,20 +101,19 @@ namespace EndpointAcces {
         params: request,
       })
       if (response === undefined) {
-        console.error("couldn't retrieve excercise list from server")
-        throw "couldn't retrieve excercise list from server"
+        console.error("couldn't retrieve exercise list from server")
+        throw "couldn't retrieve exercise list from server"
       }
-      console.log('Exercises respones: ' + JSON.stringify(response))
+      console.log('Exercises response: ' + JSON.stringify(response))
       return response.data
       // exerciseData.value = response.data
       // console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
     }
-    export async function getCodeRunnerState(
-    ): Promise<CoderunnerState> {
+    export async function getCodeRunnerState(): Promise<CoderunnerState> {
       try {
-        const activeUserStore = useActiveUserStore();
-     
-        if (   !activeUserStore.IsToken) throw 'token empty'
+        const activeUserStore = useActiveUserStore()
+
+        if (!activeUserStore.IsToken) throw 'token empty'
         // console.log('token: ' + token)
         const response = await axios.post('/public/coderunner/state')
         console.log('updateCodeRunner Response:', response)
@@ -122,7 +122,7 @@ namespace EndpointAcces {
           response.data === '' ||
           response.headers['Content-Length'] == 0
         )
-          throw 'no status codeRunenr'
+          throw 'no status codeRunner'
         return response.data
       } catch (error) {
         console.log('updateCodeRunner Error:', error)
@@ -135,16 +135,12 @@ namespace EndpointAcces {
   }
 
   export namespace authorized {
-    
-
-
-
     export async function getSolutionsData(
-      exerciseid: number,
+      exercised: number
     ): Promise<SolutionsData> {
-      console.log('attempitng /secure/exercises/solutions ')
+      console.log('attempting /secure/exercises/solutions ')
       const params = {
-        id: exerciseid,
+        id: exercised,
       }
       const response = await axios.get('/secure/exercises/solutions', {
         params: params,
@@ -155,7 +151,7 @@ namespace EndpointAcces {
         response.data === '' ||
         response.headers['Content-Length'] == 0
       )
-        throw 'no solutions data retrived '
+        throw 'no solutions data retrieved '
       console.log(
         ' /secure/exercises/solutions data: ' + stringify(response.data)
       )
@@ -165,7 +161,7 @@ namespace EndpointAcces {
     export async function getSolutionsCodesData(
       solutionId: number
     ): Promise<string> {
-      console.log('attempitng /secure/exercises/solutionsCodes ')
+      console.log('attempting /secure/exercises/solutionsCodes ')
       const params = {
         id: solutionId,
       }
@@ -178,7 +174,7 @@ namespace EndpointAcces {
         response.data === '' ||
         response.headers['Content-Length'] == 0
       )
-        throw 'no solution code data retrived '
+        throw 'no solution code data retrieved '
 
       return response.data
     }
@@ -202,11 +198,11 @@ namespace EndpointAcces {
     }
 
     export async function getResultData(
-      exerciseid: number
+      exerciseId: number
     ): Promise<ResultData> {
-      console.log('attempitng /secure/exercises/solutions ')
+      console.log('attempting /secure/exercises/solutions ')
       const params = {
-        id: exerciseid,
+        id: exerciseId,
       }
       try {
         const response = await axios.get('/secure/exercises/results', {
@@ -219,7 +215,7 @@ namespace EndpointAcces {
           response.data === '' ||
           response.headers['Content-Length'] == 0
         )
-          throw 'no solutions data retrived '
+          throw 'no solutions data retrieved '
         console.log(
           '/public/exercises/solutions Response data:',
           stringify(response.data)
@@ -230,12 +226,9 @@ namespace EndpointAcces {
       }
     }
 
-    export async function postRate(
-      selectedRating: number,
-      exercsieID: number,
-    ) {
+    export async function postRate(selectedRating: number, exerciseID: number) {
       const data = {
-        id: exercsieID,
+        id: exerciseID,
         rate: selectedRating,
       }
       const response = await axios.post('/secure/exercises/rate', data)
@@ -247,7 +240,7 @@ namespace EndpointAcces {
 
     export async function getExerciseSolvingState(
       id: number
-    ): Promise<ExerciseSolviingState> {
+    ): Promise<ExerciseSolvingState> {
       const data = {
         id: id,
       }
@@ -266,35 +259,23 @@ namespace EndpointAcces {
       return response.data
     }
 
-    export async function getUserInfo(): Promise<AccountInfo>
-    {
+    export async function getUserInfo(): Promise<AccountInfo> {
+      console.log('getUserInfo')
+      const response = await axios.get('/secure/user/info')
 
-      console.log("getUserInfo")
-      const response = await axios.get(
-        '/secure/user/info'
-      )
-
-      console.log(
-        'getUserInfo: response.data ' +
-          JSON.stringify(response.data)
-      )
+      console.log('getUserInfo: response.data ' + JSON.stringify(response.data))
       return response.data
     }
 
-
-    export async function getUserStatisticData(): Promise<StatisticMessage>{
-      console.log("getUserStatisticData")
-      const response = await axios.get(
-        '/secure/user/stats'
-      )
+    export async function getUserStatisticData(): Promise<StatisticMessage> {
+      console.log('getUserStatisticData')
+      const response = await axios.get('/secure/user/stats')
 
       console.log(
-        'getUserStatisticData: response.data ' +
-          JSON.stringify(response.data)
+        'getUserStatisticData: response.data ' + JSON.stringify(response.data)
       )
       return response.data
     }
-
   }
 }
-export default EndpointAcces
+export default EndpointAccess

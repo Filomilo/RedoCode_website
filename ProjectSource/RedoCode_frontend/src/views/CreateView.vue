@@ -3,7 +3,7 @@
   <br /> -->
 
   <main class="PlayGroundBase">
-    <TabView @tab-click="ontablClik">
+    <TabView @tab-click="onTabClick">
       <div class="childHeight" id="information-switch">
         <TabPanel header="Information" class="childHeight">
           <ExerciseInfoSetup class="childHeight" />
@@ -20,7 +20,7 @@
           key="CreateCodeRunner"
           :languageChoices="codeRunnerStore.exerciseCreatorController.languages"
           :exerciseInfo="codeRunnerStore.exerciseCreatorController"
-          :codeContianer="
+          :codeContainer="
             codeRunnerStore.exerciseCreatorController.solutionCodes
           "
           :starting="
@@ -61,42 +61,29 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted, computed } from 'vue'
-  import axios from 'axios'
+  import { onMounted, computed } from 'vue'
   import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
-  import { useToastStore } from '@/stores/ToastStore'
-  import { onBeforeRouteUpdate } from 'vue-router'
   import ExerciseSetupPanel from '@/components/ExerciseSetupPanel.vue'
-  import ExerciseDescriptionPanel from '@/components/ExerciseDescriptionPanel.vue'
   import ExerciseInfoSetup from '@/components/ExerciseInfoSetup.vue'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-  import { EditorLanguagesMap, languageChoices } from '@/config/Data'
-  import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
-  import { text } from 'stream/consumers'
   import { TabViewClickEvent } from 'primevue/tabview'
-  import ExerciseTest from '@/types/ExcericseTest'
-  import ExercsieCreatorValidationMesage from '@/types/ApiMesseages/ExercsieCreatorValidationMesage'
-  import ProgramResultsMessage from '@/types/ApiMesseages/ProgramResultsMessage'
-  import { useActiveUserStore } from '@/stores/ActiveUserStore'
-  import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
-  import StatisitcPanel from '@/components/StatisitcPanel.vue'
+  import ExerciseTest from '@/types/ExerciseTest'
+  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorController'
   import { useRouter } from 'vue-router'
   import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
-  const ToastStore = useToastStore()
-  const codeRunnerStore = useCodeRunnerStore()
-  const ApiConnectionStore = useApiConnectionStore()
-  const activeUserStore = useActiveUserStore()
-  const exercutionChainStore = useExecutionChainStore()
+    const codeRunnerStore = useCodeRunnerStore()
+  const executionChainStore = useExecutionChainStore()
   const router = useRouter()
 
   onMounted(() => {
-    exercutionChainStore.executionChainController.onCloseSucces = onSuccesCrated
+    executionChainStore.executionChainController.onCloseSuccess = onSuccessCrated
   })
-  const onSuccesCrated = () => {
-    router.replace({ name: 'Excersices' })
+  const onSuccessCrated = () => {
+    router.replace({ name: 'Exercises' })
   }
   const codeUpdate = (code: string) => {
-    console.log('codee update: ' + code)
+    console.log('code update: ' + code)
     codeRunnerStore.exerciseCreatorController.updateSolutionCode(
       code,
       codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
@@ -109,9 +96,6 @@
 
   const onRunCode = () => {
     console.log('On run code')
-    // ApiConnectionStore.codeRunnerConnection.runExercsieTestsCode(
-    //   codeRunnerStore.exerciseCreatorController
-    // )
     codeRunnerStore.codeRunnerSender.runSingleExerciseCreationTest(
       codeRunnerStore.exerciseCreatorController as ExerciseCreatorController,
       codeRunnerStore.codeRunnerConnection.codeRunnerState.codeRunnerType
@@ -119,19 +103,15 @@
   }
 
   const onSubmit = () => {
-    console.log('On sumbit')
-    codeRunnerStore.codeRunnerSender.runExerciseCreationValistaion(
+    console.log('On submit')
+    codeRunnerStore.codeRunnerSender.runExerciseCreationValidation(
       codeRunnerStore.exerciseCreatorController as ExerciseCreatorController
     )
   }
 
-  const exerciseLnageus = computed(() => {
-    return languageChoices.filter(x =>
-      codeRunnerStore.exerciseCreatorController.languages.includes(x.value)
-    )
-  })
 
-  const ontablClik = (event: TabViewClickEvent) => {
+
+  const onTabClick = (event: TabViewClickEvent) => {
     console.log('event: ' + JSON.stringify(event))
     if (event.index === 2) onOpenCodeRunner()
   }
