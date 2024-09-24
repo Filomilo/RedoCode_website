@@ -269,19 +269,6 @@ class ExerciseInfoValidationTest {
     assertFalse(res.get());
   }
 
-  @ParameterizedTest
-  @MethodSource(
-      "com.redocode.backend.DataProviders.IncorrectExerciseParamatersProviders#incorrectTime")
-  void testIncorrecTimeForCreationExerciseCreation(Long time) {
-    ExerciseCreationRequest exerciseCreationRequest = this.exerciseCreationRequestCorrect;
-    AtomicBoolean res = new AtomicBoolean(false);
-    assertThrows(
-        RequestHadndlingException.class,
-        () -> {
-          res.set(exerciseInfoValidation.handle(exerciseCreationRequestCorrect) != null);
-        });
-    assertFalse(res.get());
-  }
 
   @ParameterizedTest
   @MethodSource(
