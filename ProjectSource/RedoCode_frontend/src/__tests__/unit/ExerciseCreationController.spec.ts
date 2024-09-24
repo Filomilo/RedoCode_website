@@ -1,4 +1,4 @@
-import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorControlller'
+import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorController'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import ExerciseTest from '@/types/ExcericseTest'
 import ProgramResult from '@/types/ProgramResults'

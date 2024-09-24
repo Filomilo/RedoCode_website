@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils'
 import HelloWorld from '@/components/HelloWorld.vue'
 import ExerciseCreatorController, {
   TestsIndexed,
-} from '@/controllers/CodeRunner/ExerciseCreatorControlller'
+} from '@/controllers/CodeRunner/ExerciseCreatorController'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import TestsController from '@/controllers/CodeRunner/GroupOfTestsController'
 import ExerciseTest from '@/types/ExcericseTest'
@@ -42,7 +42,7 @@ describe('MessageCreaator', () => {
     exerciseCreatorController.manualTestsSolutions = tests
 
     const messge: ExercsieCreatorValidationmessage =
-      MessageCreator.createExercsieCreatorValidationmessage(
+      MessageCreator.createExerciseCreatorValidationMessage(
         exerciseCreatorController
       )
 
