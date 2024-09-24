@@ -15,7 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 public class ResultData {
   long executionTimeMs;
   long maxExecutionTimeMs;
-  float betterThanProcent;
+  float betterThanPercent;
 
   @JsonProperty("SolutionRanking")
   int SolutionRanking;

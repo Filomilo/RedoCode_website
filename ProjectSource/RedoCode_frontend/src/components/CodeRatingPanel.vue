@@ -30,9 +30,9 @@
           </div> -->
           <div class="DugoutContainer">
             <ProcentDonout
-              :value="props.BetterThanProcent"
+              :value="props.BetterThanPercent"
               :maxValue="100"
-              :label="Math.round(100 * props.BetterThanProcent) / 100 + '%'"
+              :label="Math.round(100 * props.BetterThanPercent) / 100 + '%'"
               fillColor="#a463ac"
               basicColor="#ffffff"
               class="procentText"
@@ -65,7 +65,7 @@
   const props = defineProps<{
     ExecutionTime: number
     MaxExecutionTime: number
-    BetterThanProcent: number
+    BetterThanPercent: number
     RankingPlacement?: number
   }>()
 </script>

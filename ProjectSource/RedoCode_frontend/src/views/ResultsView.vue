@@ -5,7 +5,7 @@
         class="CodeRatingPanel"
         :ExecutionTime="refResultData.executionTimeMs"
         :MaxExecutionTime="refResultData.maxExecutionTimeMs"
-        :BetterThanProcent="refResultData.betterThanPercent"
+        :BetterThanPercent="refResultData.betterThanPercent"
         :RankingPlacement="refResultData.SolutionRanking"
       />
       <div class="" style="margin-top: 5rem">
