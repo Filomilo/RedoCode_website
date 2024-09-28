@@ -408,6 +408,17 @@ export function makeServer({ environment = 'development' } = {}) {
           }
         }
       )
+
+this.post('/secure/user/profilePicture',  (schema, request) => {
+  const attrs = JSON.parse(request.requestBody)
+  console.log("/secure/user/profilePicture: "+JSON.stringify(request) )
+  return {
+    status: 'success',
+    message: 'rating saved!',
+    submittedData: attrs,
+  }
+})
+
     },
   })
 

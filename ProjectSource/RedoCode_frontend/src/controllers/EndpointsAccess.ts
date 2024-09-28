@@ -197,6 +197,26 @@ namespace EndpointAccess {
       }
     }
 
+    export async function postAccountPic(
+      image: string
+    ): Promise<string> {
+      try {
+        const data = {
+          image: image
+        }
+        console.log("postAccountPic: "+JSON.stringify(data))
+        const response = await axios.post('/secure/user/profilePicture', data)
+
+        console.log('response postAccountPic: ' + JSON.stringify(response))
+        if(response.status!=200)
+          throw response.data;
+        return "successfully changed image"
+      } catch (ex) {
+        throw "failed to change image"
+      }
+    }
+
+
     export async function getResultData(
       exerciseId: number
     ): Promise<ResultData> {
@@ -276,6 +296,9 @@ namespace EndpointAccess {
       )
       return response.data
     }
+
+
+
   }
 }
 export default EndpointAccess

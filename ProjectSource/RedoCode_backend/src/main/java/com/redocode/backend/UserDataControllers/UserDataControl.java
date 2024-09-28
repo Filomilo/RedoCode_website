@@ -2,9 +2,7 @@ package com.redocode.backend.UserDataControllers;
 
 import com.redocode.backend.Messages.AmountOfLatlyDonePart;
 import com.redocode.backend.Messages.StatisticMessage;
-import com.redocode.backend.database.ExerciseRepository;
-import com.redocode.backend.database.SolutionPrograms;
-import com.redocode.backend.database.SolutionProgramsRepository;
+import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +14,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -24,6 +23,10 @@ public class UserDataControl {
   @Autowired ExerciseRepository exerciseRepository;
 
   @Autowired private SolutionProgramsRepository solutionProgramsRepository;
+    @Autowired
+    private UsersRepository usersRepository;
+    @Autowired
+    private MediaRepository mediaRepository;
 
   public StatisticMessage getUserStats(long userId) {
 
@@ -61,4 +64,18 @@ public class UserDataControl {
             solutionProgramsRepository.findLanguageAmountForExercsieNotMadeThisUser(userId))
         .build();
   }
+
+    public void changeAccountImage(Long id, byte[] bytes,String ext) {
+
+      Media media = Media.builder()
+              .data(bytes)
+              .extension(ext)
+
+              .build();
+Media saved=mediaRepository.save(media);
+
+      User user= usersRepository.getReferenceById(id);
+    user.setProfilePicture(saved);
+    usersRepository.save(user);
+    }
 }

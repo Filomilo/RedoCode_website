@@ -1,5 +1,10 @@
 <template>
   <main>
+    <Dialog class="image_dialog_container" v-model:visible="changeAccountImageDialogVisible" header="Change account image" id="Change_image_dialog">
+      <ChangeAccountImageDialog 
+      @ChangedProfile="onChangedProfile"
+      />
+    </Dialog>
     <div class="AccountInfoPanel">
       <div class="ImageContainer">
         <img :src="imgURL" class="ProfileImgStyle" />
@@ -85,8 +90,10 @@
   import StatisticPanel from '@/components/StatisticPanel.vue'
   import { useToastStore } from '@/stores/ToastStore'
   import profilePicImageResolve from '@/tools/ImageResolve'
+  import ChangeAccountImageDialog from '@/components/ChangeAccountImageDialog.vue'
   const activeUserStore = useActiveUserStore()
   const ToastStore = useToastStore()
+  const changeAccountImageDialogVisible=ref(true);
   const imgURL = computed(() => {
     return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
   })
@@ -104,7 +111,7 @@
 
   const onLogOutButton = () => {
     activeUserStore.logout()
-    router.push('/home')
+    location.reload();
   }
 
   const onChangePassword = () => {
@@ -116,8 +123,22 @@
   }
 
   const onChangeProfilePic = () => {
-    ToastStore.featureNotImplemented()
+    // ToastStore.featureNotImplemented()
+    changeAccountImageDialogVisible.value=true;
   }
+
+  const onChangedProfile=()=>{
+    changeAccountImageDialogVisible.value=false;
+    activeUserStore.updateAccountData();
+  }
+
 </script>
 
-<style></style>
+<style>
+.image_dialog_container{
+  width: 60vw;
+  height: fit-content;
+}
+
+
+</style>

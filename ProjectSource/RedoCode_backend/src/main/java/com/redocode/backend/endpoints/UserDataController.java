@@ -1,7 +1,9 @@
 package com.redocode.backend.endpoints;
 
 import com.redocode.backend.Messages.AccountInfoMessage;
+import com.redocode.backend.Messages.AccountPicRequest;
 import com.redocode.backend.Messages.StatisticMessage;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.UserDataControllers.UserDataControl;
 import com.redocode.backend.database.User;
 import com.redocode.backend.database.UsersRepository;
@@ -10,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -38,10 +38,23 @@ public class UserDataController {
     return new ResponseEntity<>(accountInfoMessage, HttpStatus.OK);
   }
 
-  @GetMapping("/stats")
+  @GetMapping("/stats" )
   public ResponseEntity<StatisticMessage> getUserStats(@AuthenticationPrincipal User user) {
     User userFromDb = usersRepository.findById(user.getId()).orElse(null);
     StatisticMessage statisticMessage = userDataControl.getUserStats(userFromDb.getId());
     return new ResponseEntity<>(statisticMessage, HttpStatus.OK);
+  }
+
+  @PostMapping("/profilePicture")
+  public ResponseEntity<String> getUserStats(@AuthenticationPrincipal User user, @RequestBody AccountPicRequest request) {
+   log.info("profilePicture requst: "+request);
+   try {
+     userDataControl.changeAccountImage(user.getId(), RedoCodeObjectMapper.jsonMessageToBase64(request.getImage()),RedoCodeObjectMapper.jsonMessageToExtension(request.getImage()));
+   }
+   catch (Exception e) {
+       log.error(e.getMessage());
+     return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+   }
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }

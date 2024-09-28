@@ -101,6 +101,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       accountInfo.value = unAuthUser
     }
   }
+  
 
   //#endregion
 
@@ -165,9 +166,9 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     setToken('')
     localStorage.clear()
     console.log('token: ' + getToken())
-    updateAccountData()
+    // updateAccountData()
     deleteCookie()
-
+    location.reload();
     //     this._token.value = ''
     //     this.deleteCookie()
     //   }
@@ -227,6 +228,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     register,
     validateAuthentication,
     IsToken,
+    updateAccountData
     // getToken,
   }
 })
