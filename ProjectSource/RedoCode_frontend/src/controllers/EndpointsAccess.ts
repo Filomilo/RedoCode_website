@@ -215,7 +215,22 @@ namespace EndpointAccess {
         throw "failed to change image"
       }
     }
-
+    export async function postChangePassword(password: string, newPassword: string): Promise<string> {
+      try {
+        const data = {
+          password: password,
+          newPassword: newPassword
+        }
+        console.log("postChangePassword: "+JSON.stringify(data))
+        const response = await axios.post('/secure/user/changePassword', data)
+        console.log('response postChangePassword: ' + JSON.stringify(response))
+        if(response.status!=200)
+          throw response.data;
+        return "successfully changed password"
+      } catch (ex) {
+        throw "connection error"
+      }
+    }
 
     export async function getResultData(
       exerciseId: number
@@ -296,6 +311,8 @@ namespace EndpointAccess {
       )
       return response.data
     }
+
+
 
 
 
