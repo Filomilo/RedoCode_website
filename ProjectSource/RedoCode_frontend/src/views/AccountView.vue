@@ -93,7 +93,7 @@
   import ChangeAccountImageDialog from '@/components/ChangeAccountImageDialog.vue'
   const activeUserStore = useActiveUserStore()
   const ToastStore = useToastStore()
-  const changeAccountImageDialogVisible=ref(true);
+  const changeAccountImageDialogVisible=ref(false);
   const imgURL = computed(() => {
     return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
   })
