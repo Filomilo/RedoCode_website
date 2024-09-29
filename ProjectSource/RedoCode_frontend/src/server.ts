@@ -408,10 +408,22 @@ export function makeServer({ environment = 'development' } = {}) {
           }
         }
       )
+      
 
-this.post('/secure/user/profilePicture',  (schema, request) => {
+this.post('http://localhost:8080/secure/user/profilePicture',  (schema, request) => {
   const attrs = JSON.parse(request.requestBody)
   console.log("/secure/user/profilePicture: "+JSON.stringify(request) )
+  return {
+    status: 'success',
+    message: 'rating saved!',
+    submittedData: attrs,
+  }
+})
+
+
+this.post('http://localhost:8080/secure/user/remove',  (schema, request) => {
+  const attrs = JSON.parse(request.requestBody)
+  console.log("/secure/user/remove: "+JSON.stringify(request) )
   return {
     status: 'success',
     message: 'rating saved!',

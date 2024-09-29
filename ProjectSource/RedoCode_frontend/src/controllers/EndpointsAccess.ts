@@ -226,11 +226,27 @@ namespace EndpointAccess {
         console.log('response postChangePassword: ' + JSON.stringify(response))
         if(response.status!=200)
           throw response.data;
-        return "successfully changed password"
+        return "successfully removed password"
       } catch (ex) {
         throw "connection error"
       }
     }
+
+    export async function postRemoveAccount(pass: string) {
+      try {
+        const data = {
+          password: pass
+        }
+        console.log("postRemoveAccount: "+JSON.stringify(data))
+        const response = await axios.post('/secure/user/remove', data)
+        console.log('response postRemoveAccount: ' + JSON.stringify(response))
+        if(response.status!=200)
+          throw response.data;
+        return "successfully changed password"
+      } catch (ex) {
+        throw "connection error"
+      }
+      }
 
     export async function getResultData(
       exerciseId: number
@@ -311,6 +327,8 @@ namespace EndpointAccess {
       )
       return response.data
     }
+
+
 
 
 

@@ -141,7 +141,9 @@ import {
       align-items: center;
       flex-direction: column;
     }
-
+.errorText{
+  color: red;
+}
 
     
     </style>

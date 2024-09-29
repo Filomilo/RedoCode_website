@@ -1,18 +1,35 @@
 <template>
   <main>
-    <Dialog class="image_dialog_container" v-model:visible="changeAccountImageDialogVisible" header="Change account image" id="Change_image_dialog">
+    <Dialog 
+          @after-hide="onDialogHide"
+      @show="onDialogShow"
+    class="image_dialog_container" v-model:visible="changeAccountImageDialogVisible" header="Change account image" id="Change_image_dialog">
       <ChangeAccountImageDialog 
       @ChangedProfile="onChangedProfile"
+
       />
+
     </Dialog>
 
-    <Dialog class="password_change_dialog_container" v-model:visible="changePasswordDialogVisible" header="Change password" id="Change_password_dialog">
+    <Dialog 
+          @after-hide="onDialogHide"
+      @show="onDialogShow"
+    class="password_change_dialog_container" v-model:visible="changePasswordDialogVisible" header="Change password" id="Change_password_dialog">
       <ChangePasswordDialog 
       @ChangedPassword="onChangedPassword"
+
       />
+
     </Dialog>
 
 
+    <Dialog @after-hide="onDialogHide" @show="onDialogShow" class="removeAccountDialogVisible" v-model:visible="removeAccountDialogVisible" header="Remove account" id="Remove_account_dialog">
+<RemoveAccountDialog
+/>
+
+</Dialog>
+
+    
     <div class="AccountInfoPanel">
       <div class="ImageContainer">
         <img :src="imgURL" class="ProfileImgStyle" />
@@ -100,13 +117,23 @@
   import profilePicImageResolve from '@/tools/ImageResolve'
   import ChangeAccountImageDialog from '@/components/ChangeAccountImageDialog.vue'
   import ChangePasswordDialog from '@/components/ChangePasswordDialog.vue'
+  import RemoveAccountDialog from '@/components/RemoveAccountDialog.vue'
+
+  
+  import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   const activeUserStore = useActiveUserStore()
+  const globalStateStore=useGlobalStateStore();
   const ToastStore = useToastStore()
+
   const changeAccountImageDialogVisible=ref(false);
-  const changePasswordDialogVisible=ref(true);
+  const changePasswordDialogVisible=ref(false);
+  const removeAccountDialogVisible=ref(true);
+
   const imgURL = computed(() => {
     return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
   })
+
+
 
   enum Panels {
     STATISTIC,
@@ -125,7 +152,7 @@
   }
 
   const onChangePassword = () => {
-    ToastStore.featureNotImplemented()
+    changePasswordDialogVisible.value=true;
   }
 
   const onRemoveAccount = () => {
@@ -143,7 +170,22 @@
 
   const onChangedPassword=()=>{
     changePasswordDialogVisible.value=false;
+
   }
+
+
+  const onDialogShow=()=>{
+    console.log("onDialogShow")
+    globalStateStore.isLocked=true;
+  }
+  const onDialogHide=()=>{
+    console.log("onDialogHide")
+
+    globalStateStore.isLocked=false;
+  }
+
+
+
 
 </script>
 
@@ -153,6 +195,10 @@
   height: fit-content;
 }
 .password_change_dialog_container{
+  width: 60vw;
+  height: fit-content;
+}
+.remove_account_dialog_container{
   width: 60vw;
   height: fit-content;
 }
