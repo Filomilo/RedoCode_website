@@ -89,7 +89,7 @@
           <StatisticPanel />
         </div>
         <div v-if="screenSelected === Panels.SETTINGS">
-          <div class="SettingContentRow">E-mail: {{emailSingauture}}</div>
+          <div class="SettingContentRow">E-mail: {{emailSignature}}</div>
           <div class="SettingContentRow ">
             Description:
             <div class="descriptionContainer">
@@ -119,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, type Ref, computed } from 'vue'
+  import { ref, type Ref, computed,onMounted } from 'vue'
   import IconEdit from '../assets/icons/IconEdit.vue'
   import { useActiveUserStore } from '../stores/ActiveUserStore'
   import router from '@/router'
@@ -132,6 +132,7 @@
 
   
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
+import EndpointAccess from '@/controllers/EndpointsAccess'
   const activeUserStore = useActiveUserStore()
   const globalStateStore=useGlobalStateStore();
   const ToastStore = useToastStore()
@@ -140,15 +141,25 @@
   const changePasswordDialogVisible=ref(false);
   const removeAccountDialogVisible=ref(false);
 
-  const description= ref("<< DESCRIPTION >>");
-  const descriptionEditor= ref("<< DESCRIPTION EDITOR >>");
-  const emailSingauture=ref("<< MAIL >>")
+  const description= ref("");
+  const descriptionEditor= ref("");
+  const emailSignature=ref("")
 
 
+  
   const imgURL = computed(() => {
     return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
   })
 
+  onMounted(()=>{
+    fetchUserDetails();
+  })
+  const fetchUserDetails=()=>{
+    EndpointAccess.authorized.getUserDetails().then(x=>{
+      description.value=x.description;
+      emailSignature.value=x.emailSignature;
+    })
+  }
 
 
   enum Panels {
@@ -190,7 +201,7 @@
   }
 
   const onChangeDescription=()=>{
-    
+
   }
 
 
