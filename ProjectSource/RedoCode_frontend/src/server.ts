@@ -422,7 +422,18 @@ export function makeServer({ environment = 'development' } = {}) {
           }
         }
       )
-      
+      this.post(
+        'http://localhost:8080/secure/user/description',
+        (schema, request) => {
+          const attrs = JSON.parse(request.requestBody)
+          userDetails.description=(attrs as any).description;
+          return {
+            status: 'success',
+            message: 'rating saved!',
+            submittedData: attrs,
+          }
+        }
+      )
 
 this.post('http://localhost:8080/secure/user/profilePicture',  (schema, request) => {
   const attrs = JSON.parse(request.requestBody)

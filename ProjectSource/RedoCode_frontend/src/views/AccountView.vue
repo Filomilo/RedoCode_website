@@ -201,7 +201,14 @@ import EndpointAccess from '@/controllers/EndpointsAccess'
   }
 
   const onChangeDescription=()=>{
-
+      EndpointAccess.authorized.postChangeDescription(descriptionEditor.value)
+      .then(()=>{
+        descriptionEditor.value=""
+        fetchUserDetails();
+        ToastStore.showSuccessMessage("Description changed");
+      }).catch(ex=>{
+        ToastStore.showErrorMessage("Couldn't change description: "+ ex);
+      })
   }
 
 
