@@ -6,6 +6,7 @@ import ExerciseDataMessage from '@/types/ApiMessages/ExerciseDataMessage'
 import ResultData from '@/types/ApiMessages/ResultData'
 import SolutionsData from '@/types/ApiMessages/SolutionsData'
 import StatisticMessage from '@/types/ApiMessages/StatisticMessage'
+import UserDetailsMessage from '@/types/ApiMessages/UserDetailsMessage'
 import CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
@@ -233,19 +234,17 @@ namespace EndpointAccess {
     }
 
     export async function postRemoveAccount(pass: string) {
-      try {
+
         const data = {
           password: pass
         }
         console.log("postRemoveAccount: "+JSON.stringify(data))
         const response = await axios.post('/secure/user/remove', data)
         console.log('response postRemoveAccount: ' + JSON.stringify(response))
-        if(response.status!=200)
+        if(response.status!==200 && response.status!==201 )
           throw response.data;
         return "successfully changed password"
-      } catch (ex) {
-        throw "connection error"
-      }
+      
       }
 
     export async function getResultData(
@@ -277,6 +276,27 @@ namespace EndpointAccess {
       }
     }
 
+    export async function getUserDetails(
+    ): Promise<UserDetailsMessage> {
+      console.log('attempting /secure/user/details ')
+        const response = await axios.get('/secure/user/details')
+        if (response.status !== 200 && response.status !== 201) throw "couldn't get detail data"
+        console.log('/secure/user/details Response:', response)
+        if (
+          response === undefined ||
+          response.data === '' ||
+          response.headers['Content-Length'] == 0
+        )
+          throw 'no details data retrieved '
+        console.log(
+          '/secure/user/details Response data:',
+          stringify(response.data)
+        )
+        return response.data
+      
+    }
+
+
     export async function postRate(selectedRating: number, exerciseID: number) {
       const data = {
         id: exerciseID,
@@ -288,6 +308,20 @@ namespace EndpointAccess {
 
       return response.status
     }
+
+
+    export async function postChangeDescription(desc: string) {
+      const data = {
+        description: desc,
+      }
+      const response = await axios.post('/secure/user/description', data)
+
+      console.log('response /secure/user/description: ' + JSON.stringify(response))
+      if(response.status!==200 && response.status!==201)
+        throw "failed to change description"
+      return response.status
+    }
+
 
     export async function getExerciseSolvingState(
       id: number

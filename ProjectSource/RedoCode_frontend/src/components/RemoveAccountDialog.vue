@@ -45,6 +45,7 @@
     
     <script lang="ts" setup>
     import EndpointAccess from '@/controllers/EndpointsAccess';
+import { useActiveUserStore } from '@/stores/ActiveUserStore';
     import { useToastStore } from '@/stores/ToastStore';
 import useVuelidate from '@vuelidate/core';
 import {
@@ -63,8 +64,9 @@ import {
 
 
     const toastStore = useToastStore();
+    const activeUserStore=useActiveUserStore();
 
-    const showConfirm=ref(true);
+    const showConfirm=ref(false);
     const password_input=ref("");
 
 
@@ -77,6 +79,7 @@ import {
 
     const confirmRemoveAccount=()=>{
     EndpointAccess.authorized.postRemoveAccount(password_input.value).then(()=>{
+        activeUserStore.logout();
         location.reload();
     })
     .catch(ex=>{

@@ -6,6 +6,7 @@ import CodeRunnerType from './types/CodeRunnerTypes'
 import SolutionsData from './types/ApiMessages/SolutionsData'
 import ResultData from './types/ApiMessages/ResultData'
 import StatisticMessage from './types/ApiMessages/StatisticMessage'
+import { Response } from 'miragejs';
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -424,8 +425,9 @@ this.post('http://localhost:8080/secure/user/profilePicture',  (schema, request)
 this.post('http://localhost:8080/secure/user/remove',  (schema, request) => {
   const attrs = JSON.parse(request.requestBody)
   console.log("/secure/user/remove: "+JSON.stringify(request) )
+
   return {
-    status: 'success',
+    status: 'ok',
     message: 'rating saved!',
     submittedData: attrs,
   }

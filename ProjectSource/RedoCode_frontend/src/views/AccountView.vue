@@ -127,7 +127,7 @@
 
   const changeAccountImageDialogVisible=ref(false);
   const changePasswordDialogVisible=ref(false);
-  const removeAccountDialogVisible=ref(true);
+  const removeAccountDialogVisible=ref(false);
 
   const imgURL = computed(() => {
     return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
@@ -156,7 +156,7 @@
   }
 
   const onRemoveAccount = () => {
-    ToastStore.featureNotImplemented()
+    removeAccountDialogVisible.value=true;
   }
 
   const onChangeProfilePic = () => {
