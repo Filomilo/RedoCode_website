@@ -6,6 +6,7 @@ import com.redocode.backend.Messages.UserDetailsMessage;
 import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,6 +29,8 @@ public class UserDataControl {
     private UsersRepository usersRepository;
     @Autowired
     private MediaRepository mediaRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   public StatisticMessage getUserStats(long userId) {
 
@@ -81,19 +84,47 @@ Media saved=mediaRepository.save(media);
     }
 
   public void changePassword(Long id, String password, String newPassword) throws Exception {
-    throw new Exception("Not implemented yet");
+    User user=usersRepository.getReferenceById(id);
+
+    if(!passwordEncoder.matches(password, user.getPassword())) {
+      throw new Exception("Wrong password");
+    }
+    user.setPassword(passwordEncoder.encode(newPassword) );
+    usersRepository.save(user);
   }
 
   public void removeAccount(Long id, String password) throws Exception {
-    throw new Exception("Not implemented yet");
+    User user=usersRepository.getReferenceById(id);
+    if(!passwordEncoder.matches(password, user.getPassword())) {
+      throw new Exception("Wrong password");
+    }
+    Media media=user.getProfilePicture();
+    user.setPassword("REMOVED");
+    user.setDescription("");
+    user.setType(User.USER_TYPE.UNAUTHENTICATED);
+    user.setEmail(UUID.randomUUID().toString()+"@rm.rm");
+    user.setProfilePicture(null);
+    user.setNickname("REMOVED");
+
+    usersRepository.save(user);
+    if(media!=null)
+      mediaRepository.delete(media);
   }
 
   public UserDetailsMessage getUserDetails(Long id) throws Exception {
-    throw new Exception("Not implemented yet");
+    User user=usersRepository.getReferenceById(id);
+    String mail = user.getEmail();
+   UserDetailsMessage userDetailsMessage=UserDetailsMessage.builder()
+           .description(user.getDescription())
+           .emailSignature(mail.substring(0,1)+"***@"+mail.split("@")[1])
+           .build();
+   return userDetailsMessage;
   }
 
   public void setDescription(Long id, String description) throws Exception {
-    throw new Exception("Not implemented yet");
+    User user=usersRepository.getReferenceById(id);
+    user.setDescription(description);
+    usersRepository.save(user);
 
   }
 }

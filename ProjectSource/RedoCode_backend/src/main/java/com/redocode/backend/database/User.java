@@ -31,7 +31,6 @@ public class User implements Comparable, UserDetails {
   @Transient private String sessionID;
 
   @Column(name = "email", unique = true)
-  @NotNull
   @Email
   @NotEmpty
   @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
@@ -48,7 +47,6 @@ public class User implements Comparable, UserDetails {
   private USER_TYPE type;
 
   @Column(name = "password")
-  @NotNull
   @NotEmpty
   private String password;
   @Column(name = "description",columnDefinition = "VARCHAR(3000) DEFAULT ''")
