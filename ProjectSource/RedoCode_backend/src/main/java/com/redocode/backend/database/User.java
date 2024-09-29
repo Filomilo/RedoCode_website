@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,6 +51,10 @@ public class User implements Comparable, UserDetails {
   @NotNull
   @NotEmpty
   private String password;
+  @Column(name = "description",columnDefinition = "VARCHAR(3000) DEFAULT ''")
+  @NotNull
+  @Length( max = 3000)
+  private String description="";
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_pic")
@@ -73,30 +78,6 @@ public class User implements Comparable, UserDetails {
   @Override
   public String getUsername() {
     return this.email;
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    // todo
-    return true;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    // todo
-    return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    // todo
-    return true;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    // todo
-    return true;
   }
 
   @Getter

@@ -2,6 +2,9 @@ package com.redocode.backend.UserDataControllers;
 
 import com.redocode.backend.Messages.LanguageUsePart;
 import com.redocode.backend.Messages.StatisticMessage;
+import com.redocode.backend.Messages.UserDetailsMessage;
+import com.redocode.backend.RedoCodeController;
+import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.*;
 import java.util.*;
@@ -27,10 +31,16 @@ class UserDataControlTest {
 
   @Autowired ExerciseRepository exerciseRepository;
   @Autowired private UsersRepository usersRepository;
+  @Autowired private PasswordEncoder passwordEncoder;
+
   private static User user;
   private static List<SolutionPrograms> solutionPrograms = new ArrayList<SolutionPrograms>();
   private static List<Integer> amounntOFExercsiesDoneTodayAndPreviousDay = new ArrayList<>();
   @Autowired private SolutionProgramsRepository solutionProgramsRepository;
+
+  private static String img="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAQUlEQVR42mOYsFbtPzk4daIMGDNQzQCYALHYKJcPjCk3oDPO+j8IJ1tpkoUpN2Bxlc9/EIYZRCweNWB4GTDgKREAV3gQO7H1SHUAAAAASUVORK5CYII=";
+  private static String ext="png";
+  private static String newPass=UUID.randomUUID().toString();
 
   @BeforeAll
   void setupData() {
@@ -41,6 +51,7 @@ class UserDataControlTest {
             .password(UUID.randomUUID() + "_pass")
             .ProfilePicture(null)
             .type(User.USER_TYPE.AUTHENTICATED)
+                .description("Description_"+UUID.randomUUID())
             .build();
 
     usersRepository.save(user);
@@ -70,7 +81,7 @@ class UserDataControlTest {
   }
 
   @Test
-  void getUserStats() {
+  void testGetUserStats() {
     StatisticMessage statisticMessage = userDataControl.getUserStats(user.getId());
     log.info(
         "statisticMessage: getLanguageUse  "
@@ -125,4 +136,74 @@ class UserDataControlTest {
     log.info(statisticMessage.toString());
     assertNotNull(statisticMessage);
   }
+
+    @Test
+    void changeAccountImage() {
+      byte[] bytes= RedoCodeObjectMapper.Base64ToBytes(img);
+      userDataControl.changeAccountImage(user.getId(),bytes,ext);
+      User userRetrived=usersRepository.getReferenceById(user.getId());
+      assertEquals(bytes,userRetrived.getProfilePicture().getData());
+    }
+
+    @Test
+    void changePassword() {
+      assertDoesNotThrow(()->{
+        userDataControl.changePassword(user.getId(),user.getPassword(),newPass);
+        User userRetrived=usersRepository.getReferenceById(user.getId());
+        assertEquals(passwordEncoder.encode(newPass),userRetrived.getPassword());
+      });
+    }
+
+  @Test
+  void changePasswordFail() {
+    String prevoiudPass=user.getPassword();
+    assertThrows(Exception.class,()->{
+      userDataControl.changePassword(user.getId(),"",newPass);
+      });
+    User userRetrived=usersRepository.getReferenceById(user.getId());
+  assertEquals(prevoiudPass,userRetrived.getPassword());
+  }
+
+    @Test
+    void removeAccount() {
+    assertDoesNotThrow(()->{
+      userDataControl.removeAccount(user.getId(),user.getPassword());
+
+    });
+      User userRetrived=usersRepository.getReferenceById(user.getId());
+      assertEquals("",userRetrived.getPassword());
+      assertNull(userRetrived.getProfilePicture());
+      assertEquals("",userRetrived.getUsername());
+      assertEquals("",userRetrived.getEmail());
+      assertEquals("Deleted",userRetrived.getNickname());
+      assertEquals(User.USER_TYPE.UNAUTHENTICATED,userRetrived.getUserType());
+    }
+  @Test
+  void removeAccountFail() {
+    assertThrows(Exception.class,()->{
+      userDataControl.removeAccount(user.getId(),user.getPassword());
+
+    });
+    User userRetrived=usersRepository.getReferenceById(user.getId());
+    assertEquals(userRetrived.getEmail(),user.getEmail());
+    }
+
+    @Test
+    void getUserDetails() {
+    assertDoesNotThrow(()->{
+      UserDetailsMessage userDetailsMessage= userDataControl.getUserDetails(user.getId());
+      assertEquals(user.getEmail().substring(0,1)+"***"+"@mail.com",userDetailsMessage.getEmailSignature());
+      assertEquals(user.getDescription(),userDetailsMessage.getDescription());
+    });
+    }
+
+    @Test
+    void setDescription() {
+      String desc="desc_"+UUID.randomUUID();
+      assertDoesNotThrow(()->{
+        userDataControl.setDescription(user.getId(),desc);
+      });
+      User userRetrived=usersRepository.getReferenceById(user.getId());
+      assertEquals(desc,userRetrived.getDescription());
+    }
 }
