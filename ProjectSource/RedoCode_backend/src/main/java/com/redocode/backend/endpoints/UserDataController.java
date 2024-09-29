@@ -1,8 +1,6 @@
 package com.redocode.backend.endpoints;
 
-import com.redocode.backend.Messages.AccountInfoMessage;
-import com.redocode.backend.Messages.AccountPicRequest;
-import com.redocode.backend.Messages.StatisticMessage;
+import com.redocode.backend.Messages.*;
 import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.UserDataControllers.UserDataControl;
 import com.redocode.backend.database.User;
@@ -57,4 +55,53 @@ public class UserDataController {
    }
     return new ResponseEntity<>(HttpStatus.OK);
   }
+    @PostMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@AuthenticationPrincipal User user, @RequestBody PasswordChangeMessage request) {
+        log.info("changePassword requst: "+request);
+        try {
+            userDataControl.changePassword(user.getId(), request.getPassword(),request.getNewPassword());
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/remove")
+    public ResponseEntity<String> removeAccount(@AuthenticationPrincipal User user, @RequestBody RemoveAccountMessage request) {
+        log.info("removeAccount requst: "+request);
+        try {
+            userDataControl.removeAccount(user.getId(), request.getPassword());
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<?> getUserDetails(@AuthenticationPrincipal User user) {
+        log.info("getUserDetails requst: "+user.getNickname());
+        try {
+            return new ResponseEntity<UserDetailsMessage>(userDataControl.getUserDetails(user.getId()),HttpStatus.OK);
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PostMapping("/description")
+    public ResponseEntity<String> setDescription(@AuthenticationPrincipal User user, @RequestBody PostDescriptionMessage request) {
+        log.info("setDescription requst: "+request);
+        try {
+            userDataControl.setDescription(user.getId(), request.getDescription());
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

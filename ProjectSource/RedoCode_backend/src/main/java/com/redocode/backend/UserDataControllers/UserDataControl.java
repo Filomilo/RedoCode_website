@@ -2,6 +2,7 @@ package com.redocode.backend.UserDataControllers;
 
 import com.redocode.backend.Messages.AmountOfLatlyDonePart;
 import com.redocode.backend.Messages.StatisticMessage;
+import com.redocode.backend.Messages.UserDetailsMessage;
 import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,4 +79,21 @@ Media saved=mediaRepository.save(media);
     user.setProfilePicture(saved);
     usersRepository.save(user);
     }
+
+  public void changePassword(Long id, String password, String newPassword) throws Exception {
+    throw new Exception("Not implemented yet");
+  }
+
+  public void removeAccount(Long id, String password) throws Exception {
+    throw new Exception("Not implemented yet");
+  }
+
+  public UserDetailsMessage getUserDetails(Long id) throws Exception {
+    throw new Exception("Not implemented yet");
+  }
+
+  public void setDescription(Long id, String description) throws Exception {
+    throw new Exception("Not implemented yet");
+
+  }
 }

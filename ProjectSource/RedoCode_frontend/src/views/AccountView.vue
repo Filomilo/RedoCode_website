@@ -158,6 +158,9 @@ import EndpointAccess from '@/controllers/EndpointsAccess'
     EndpointAccess.authorized.getUserDetails().then(x=>{
       description.value=x.description;
       emailSignature.value=x.emailSignature;
+    }).catch(ex=>{
+
+      ToastStore.showErrorMessage("Couldn't fetch user data: "+ ex)
     })
   }
 
