@@ -42,7 +42,7 @@
       <div class="NickContainer">
         {{ activeUserStore.accountInfo.nickname }}
       </div>
-      <div class="DescriptionContainer">Account description</div>
+      <div class="DescriptionContainer">{{description}}</div>
       <div class="LogoutButtonContainer">
         <Button @click="onLogOutButton" id="logout"> Logout </Button>
       </div>
@@ -89,13 +89,24 @@
           <StatisticPanel />
         </div>
         <div v-if="screenSelected === Panels.SETTINGS">
-          <div class="SettingContentRow">E-mail: e****@gmail.com</div>
+          <div class="SettingContentRow">E-mail: {{emailSingauture}}</div>
+          <div class="SettingContentRow ">
+            Description:
+            <div class="descriptionContainer">
+                         <Textarea v-model="descriptionEditor" rows="5" cols="30" />
+            <Button class="changeButton" style="height: fit-content;" @click="onChangeDescription">
+              change
+            </Button>
+            </div>
+ 
+          </div>
           <div class="SettingContentRow">
             Password: *******
             <Button class="changeButton" @click="onChangePassword">
               change
             </Button>
           </div>
+
           <div class="SettingContentRow center">
             <Button class="removeAccountButton" @click="onRemoveAccount">
               Remove account
@@ -128,6 +139,11 @@
   const changeAccountImageDialogVisible=ref(false);
   const changePasswordDialogVisible=ref(false);
   const removeAccountDialogVisible=ref(false);
+
+  const description= ref("<< DESCRIPTION >>");
+  const descriptionEditor= ref("<< DESCRIPTION EDITOR >>");
+  const emailSingauture=ref("<< MAIL >>")
+
 
   const imgURL = computed(() => {
     return profilePicImageResolve(activeUserStore.accountInfo.profilePicture)
@@ -173,6 +189,10 @@
 
   }
 
+  const onChangeDescription=()=>{
+    
+  }
+
 
   const onDialogShow=()=>{
     console.log("onDialogShow")
@@ -201,6 +221,13 @@
 .remove_account_dialog_container{
   width: 60vw;
   height: fit-content;
+}
+
+.descriptionContainer{
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
 
 </style>
