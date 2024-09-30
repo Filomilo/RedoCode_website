@@ -21,14 +21,14 @@ describe('Account Operations Test', () => {
         
     
   });
-  it.skip('change description',()=>{
+  it('change description',()=>{
     const newDescription="New Description "+ uuidv4();
       AccountPanel.DescriptionShouldBe("");
       AccountPanel.changeDescription(newDescription );
       AccountPanel.DescriptionShouldBe(newDescription);
   });
 
-  it.skip('fail to change description',()=>{
+  it('fail to change description',()=>{
     let newDescription="";
     for (let index = 0; index < 3000; index++) {
       newDescription+="abc";
@@ -48,10 +48,10 @@ describe('Account Operations Test', () => {
     AccountPanel.shouldHavePictureFromApi();
   });
 
-  it.skip('correct email Signature',()=>{
+  it('correct email Signature',()=>{
     AccountPanel.shouldEmailSignatureBe(email.slice(0,1)+"***"+"@"+email.split("@")[1])
   });
-  it.skip('change password',()=>{
+  it('change password',()=>{
     AccountPanel.logout();
     UserAuthentication.login(email,password)
     SwitcherControls.switchUserPanel();
