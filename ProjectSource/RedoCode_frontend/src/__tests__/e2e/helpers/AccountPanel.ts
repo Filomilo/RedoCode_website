@@ -81,7 +81,7 @@ cy.get("#change_password_dialog").should("not.exist");
 export function changeProfilePicture(imageLocation: string){
   cy.get("#change-profile-picture").click();
   cy.get("#change-profile-image-dialog").should("be.visible",true);
-  cy.get("#choose-image-button > span > input[type=file]").selectFile(imageLocation,{force: true});
+  cy.get("#choose-image-button > span > input[type=file]").selectFile(Cypress.config('projectRoot') + '/src/__tests__/e2e/assets/imgtemp.png',{force: true});
   cy.get("#upload-image-button").click();
   ToastHelper.shouldToastNo();
   cy.get("#change-profile-image-dialog").should("not.exist");
