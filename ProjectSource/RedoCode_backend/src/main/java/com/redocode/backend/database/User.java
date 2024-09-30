@@ -94,7 +94,7 @@ public class User implements Comparable, UserDetails {
 
   @Override
   public boolean equals(Object o) {
-    log.info("copmaring " + this.toString() + "with " + o.toString());
+//    log.info("copmaring " + this.toString() + "with " + o.toString());
     if (!(o instanceof User)) {
       log.info("wrong instance: " + o.getClass());
       return false;
