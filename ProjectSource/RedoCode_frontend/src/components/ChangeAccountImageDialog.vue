@@ -1,6 +1,7 @@
 <template>
 <div class="image_upload_container">
     <FileUpload 
+    id="choose-image-button" 
     customUpload 
     name="demo[]" 
     @select="onFileSelect"
@@ -8,14 +9,14 @@
     accept="image/*" 
     :maxFileSize="1024*1024*5"
     class="image_upload_container"
-     mode="basic"
+    mode="basic"
     >
     </FileUpload>
     <div class="image_container" v-if="img" >
         <div class="image_mask">
-             <img :src="img" alt="Image" class="image_uploaded" />
+            <img :src="img" alt="Image" class="image_uploaded" />
         </div>
-        <Button class="buttonUpload" @click="onUploud" :disabled="!allowUpload">
+        <Button id="upload-image-button" class="buttonUpload" @click="onUploud" :disabled="!allowUpload">
             upload
         </Button>
     </div>

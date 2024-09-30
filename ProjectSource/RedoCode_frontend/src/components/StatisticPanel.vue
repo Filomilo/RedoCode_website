@@ -1,6 +1,5 @@
 <template>
   <main>
-    {{ pieChartData }}
     <div class="titleContainer">
       <label class="title"> Amount of language used </label>
     </div>

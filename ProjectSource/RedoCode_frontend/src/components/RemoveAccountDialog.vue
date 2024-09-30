@@ -24,10 +24,12 @@
 
 
 
-      <Dialog v-model:visible="showConfirm" header="Confirm" position="bottomleft" :modal="true" :draggable="false">
+      <Dialog 
+      id="confirm_removal_dialog"
+      v-model:visible="showConfirm" header="Confirm" position="bottomleft" :modal="true" :draggable="false">
  <div class="confirmButtonContainer"  >
-            <Button    class="buttonBase" label="NOT remove account" raised  rounded    @click="declineRemoveAccount"/>
-        <Button    class="buttonBase dangerButton" label="Remove account" severity="danger" raised  rounded @click="confirmRemoveAccount"/>
+            <Button id="not_remove_account_button"   class="buttonBase" label="NOT remove account" raised  rounded    @click="declineRemoveAccount"/>
+        <Button id="do_remove_account_button"   class="buttonBase dangerButton" label="Remove account" severity="danger" raised  rounded @click="confirmRemoveAccount"/>
 
  </div>
 

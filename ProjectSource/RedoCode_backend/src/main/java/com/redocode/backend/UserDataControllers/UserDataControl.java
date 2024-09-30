@@ -122,6 +122,8 @@ Media saved=mediaRepository.save(media);
   }
 
   public void setDescription(Long id, String description) throws Exception {
+    if(description.length()>3000)
+      throw new Exception("Description too long, max 3000 characters");
     User user=usersRepository.getReferenceById(id);
     user.setDescription(description);
     usersRepository.save(user);

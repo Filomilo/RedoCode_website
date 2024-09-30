@@ -5,6 +5,7 @@
       @show="onDialogShow"
     class="image_dialog_container" v-model:visible="changeAccountImageDialogVisible" header="Change account image" id="Change_image_dialog">
       <ChangeAccountImageDialog 
+      id="change-profile-image-dialog"
       @ChangedProfile="onChangedProfile"
 
       />
@@ -12,10 +13,12 @@
     </Dialog>
 
     <Dialog 
+    
           @after-hide="onDialogHide"
       @show="onDialogShow"
     class="password_change_dialog_container" v-model:visible="changePasswordDialogVisible" header="Change password" id="Change_password_dialog">
       <ChangePasswordDialog 
+      id="change_password_dialog"
       @ChangedPassword="onChangedPassword"
 
       />
@@ -24,25 +27,25 @@
 
 
     <Dialog @after-hide="onDialogHide" @show="onDialogShow" class="removeAccountDialogVisible" v-model:visible="removeAccountDialogVisible" header="Remove account" id="Remove_account_dialog">
-<RemoveAccountDialog
+<RemoveAccountDialog id="remove-account-dialog"
 />
 
 </Dialog>
 
     
-    <div class="AccountInfoPanel">
+    <div class="AccountInfoPanel" id="Account_Info_Panel">
       <div class="ImageContainer">
-        <img :src="imgURL" class="ProfileImgStyle" />
+        <img :src="imgURL" class="ProfileImgStyle" id="profile-image" />
       </div>
       <div class="editButtonContainer">
-        <Button class="IconEditImg" @click="onChangeProfilePic">
+        <Button id="change-profile-picture" class="IconEditImg" @click="onChangeProfilePic">
           <IconEdit />
         </Button>
       </div>
-      <div class="NickContainer">
+      <div id="user-nickname" class="NickContainer">
         {{ activeUserStore.accountInfo.nickname }}
       </div>
-      <div class="DescriptionContainer">{{description}}</div>
+      <div class="DescriptionContainer"  id="user_description">{{description}}</div>
       <div class="LogoutButtonContainer">
         <Button @click="onLogOutButton" id="logout"> Logout </Button>
       </div>
@@ -50,6 +53,7 @@
     <div class="BottomPanel">
       <div class="SettingSidePanel">
         <Button
+        id="Statistics-button"
           :class="
             screenSelected === Panels.STATISTIC
               ? 'SettingButtonNavigation selected'
@@ -67,6 +71,7 @@
           />
         </Button>
         <Button
+        id="Settings-button"
           :class="
             screenSelected === Panels.SETTINGS
               ? 'SettingButtonNavigation selected'
@@ -89,12 +94,12 @@
           <StatisticPanel />
         </div>
         <div v-if="screenSelected === Panels.SETTINGS">
-          <div class="SettingContentRow">E-mail: {{emailSignature}}</div>
+          <div id="email-signature" class="SettingContentRow">E-mail: {{emailSignature}}</div>
           <div class="SettingContentRow ">
             Description:
             <div class="descriptionContainer">
-                         <Textarea v-model="descriptionEditor" rows="5" cols="30" />
-            <Button class="changeButton" style="height: fit-content;" @click="onChangeDescription">
+           <Textarea v-model="descriptionEditor" rows="5" cols="30" id="Account_description_input" />
+            <Button id="change_description_button" class="changeButton" style="height: fit-content;" @click="onChangeDescription">
               change
             </Button>
             </div>
@@ -102,13 +107,15 @@
           </div>
           <div class="SettingContentRow">
             Password: *******
-            <Button class="changeButton" @click="onChangePassword">
+            <Button id="Change_Password_button" class="changeButton" @click="onChangePassword">
               change
             </Button>
           </div>
 
           <div class="SettingContentRow center">
-            <Button class="removeAccountButton" @click="onRemoveAccount">
+            <Button 
+            id="remove-button"
+            class="removeAccountButton" @click="onRemoveAccount">
               Remove account
             </Button>
           </div>
@@ -170,7 +177,7 @@ import EndpointAccess from '@/controllers/EndpointsAccess'
     SETTINGS,
   }
 
-  const screenSelected: Ref<Panels> = ref(Panels.SETTINGS)
+  const screenSelected: Ref<Panels> = ref(Panels.STATISTIC)
   const setPanel = (type: Panels) => {
     console.log('select')
     screenSelected.value = type

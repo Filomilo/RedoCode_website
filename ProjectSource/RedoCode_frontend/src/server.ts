@@ -409,6 +409,19 @@ export function makeServer({ environment = 'development' } = {}) {
           }
         }
       )
+      this.post(
+        'http://localhost:8080/secure/user/changePassword',
+        (schema, request) => {
+          const attrs = JSON.parse(request.requestBody)
+          console.log("http://localhost:8080/secure/user/changePassword: "+JSON.stringify(attrs));
+          return {
+            status: 'success',
+            message: 'description changed successfully!',
+            submittedData: attrs,
+          }
+        }
+      )
+      
 
       this.post(
         'http://localhost:8080/secure/exercises/rate',

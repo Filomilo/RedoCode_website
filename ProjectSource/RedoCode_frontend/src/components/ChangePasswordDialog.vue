@@ -20,7 +20,7 @@
         class="TextInputConainer AuthPanelElement passwordCont"
         placeholder="new password"
         :feedback="false"
-        id="previous-password"
+        id="new-password"
       />
       <div v-if="v$.newPassword.$error" class="errorText">
         {{ v$.newPassword.$silentErrors[0].$message }}
@@ -31,7 +31,7 @@
         class="TextInputConainer AuthPanelElement passwordCont"
         placeholder="repeat new password"
         :feedback="false"
-        id="previous-password"
+        id="repeat-new-password"
       />
 
       <div v-if="v$.repeatNewPassword.$error" class="errorText">

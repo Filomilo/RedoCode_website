@@ -234,13 +234,16 @@ namespace EndpointAccess {
         const response = await axios.post('/secure/user/profilePicture', data)
 
         console.log('response postAccountPic: ' + JSON.stringify(response))
-        if(response.status!=200)
+        if(response.status!=200 && response.status!=201)
           throw response.data;
         return "successfully changed image"
       }
       catch({ response }: any)
       {
+        if(response.data)
         throw response.data;
+        else
+        throw response
       }
     }
     export async function postChangePassword(password: string, newPassword: string): Promise<string> {
@@ -252,7 +255,7 @@ namespace EndpointAccess {
         console.log("postChangePassword: "+JSON.stringify(data))
         const response = await axios.post('/secure/user/changePassword', data)
         console.log('response postChangePassword: ' + JSON.stringify(response))
-        if(response.status!=200)
+        if(response.status!=200 && response.status!=201)
           throw response.data;
         return "successfully removed password"
       }
