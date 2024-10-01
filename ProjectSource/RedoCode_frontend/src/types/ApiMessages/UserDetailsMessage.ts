@@ -1,7 +1,6 @@
-
-interface UserDetailsMessage{
-    description: string,
-    emailSignature: string
+interface UserDetailsMessage {
+  description: string
+  emailSignature: string
 }
 
-export default UserDetailsMessage;
+export default UserDetailsMessage

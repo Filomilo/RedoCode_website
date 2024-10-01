@@ -9,11 +9,11 @@ describe('register and sign in', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-     const nick = '___nickname___'
+    const nick = '___nickname___'
     const email = 'mail_' + uuidv4() + '@test.com'
     const password = 'Password+789'
     UrlControls.startPage()
-    UserAuthentication.Register(email, password,nick)
+    UserAuthentication.Register(email, password, nick)
     SwitcherControls.switchUserPanel()
     AccountPanel.logout()
     UserAuthentication.login(email, password)

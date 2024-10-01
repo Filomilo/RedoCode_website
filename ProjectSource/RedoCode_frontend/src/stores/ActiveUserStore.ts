@@ -22,12 +22,11 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const $cookies: VueCookies | undefined = inject('$cookies')
 
-  function  deleteCookie() {
+  function deleteCookie() {
     if ($cookies?.isKey('token')) {
-      console.log("Temoving token")
-     $cookies?.remove('token')
-     if($cookies.isKey('token'))
-      throw "FAILED to REMOVE cookie"
+      console.log('Temoving token')
+      $cookies?.remove('token')
+      if ($cookies.isKey('token')) throw 'FAILED to REMOVE cookie'
     }
   }
 
@@ -103,7 +102,6 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       accountInfo.value = unAuthUser
     }
   }
-  
 
   //#endregion
 
@@ -163,7 +161,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     }
   }
 
-  async function  logout() {
+  async function logout() {
     console.log('Logout: ')
     setToken('')
     await localStorage.clear()
@@ -178,7 +176,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   function loadFromSession() {
-    console.log("attempt to load from Session")
+    console.log('attempt to load from Session')
     const token = getToken()
     if (token !== null) {
       setToken(token)
@@ -186,7 +184,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   function loadFromCookies() {
-    console.log("attempt to load from Cookies")
+    console.log('attempt to load from Cookies')
     const token = getCookie()
     if (token !== null) {
       setToken(token)
@@ -231,7 +229,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     register,
     validateAuthentication,
     IsToken,
-    updateAccountData
+    updateAccountData,
     // getToken,
   }
 })
