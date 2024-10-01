@@ -14,5 +14,5 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 @Builder
 public class RemoveAccountMessage {
-    String password;
+  String password;
 }

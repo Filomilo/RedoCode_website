@@ -14,6 +14,6 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 @Builder
 public class PasswordChangeMessage {
-    String password;
-    String newPassword;
+  String password;
+  String newPassword;
 }

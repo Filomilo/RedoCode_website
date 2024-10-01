@@ -73,7 +73,7 @@ class AuthenticationControllerTest {
             .password(_correctPass)
             .nickname(_correctNick)
             .type(User.USER_TYPE.AUTHENTICATED)
-                .description("")
+            .description("")
             .build();
 
     Authentication response =
@@ -104,7 +104,7 @@ class AuthenticationControllerTest {
             .password(_exisitingPass)
             .nickname(_exisitngNick)
             .type(User.USER_TYPE.AUTHENTICATED)
-                .description("")
+            .description("")
             .build();
 
     Authentication response =

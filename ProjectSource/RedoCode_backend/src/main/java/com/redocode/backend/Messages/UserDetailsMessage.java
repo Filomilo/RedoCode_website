@@ -14,6 +14,6 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 @Builder
 public class UserDetailsMessage {
-    String description;
-    String emailSignature;
+  String description;
+  String emailSignature;
 }

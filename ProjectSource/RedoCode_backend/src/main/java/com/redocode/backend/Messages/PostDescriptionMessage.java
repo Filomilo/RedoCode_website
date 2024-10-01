@@ -14,5 +14,5 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 @Builder
 public class PostDescriptionMessage {
-    String description;
+  String description;
 }

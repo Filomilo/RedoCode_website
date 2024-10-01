@@ -25,12 +25,9 @@ public class UserDataControl {
   @Autowired ExerciseRepository exerciseRepository;
 
   @Autowired private SolutionProgramsRepository solutionProgramsRepository;
-    @Autowired
-    private UsersRepository usersRepository;
-    @Autowired
-    private MediaRepository mediaRepository;
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  @Autowired private UsersRepository usersRepository;
+  @Autowired private MediaRepository mediaRepository;
+  @Autowired private PasswordEncoder passwordEncoder;
 
   public StatisticMessage getUserStats(long userId) {
 
@@ -69,65 +66,61 @@ public class UserDataControl {
         .build();
   }
 
-    public void changeAccountImage(Long id, byte[] bytes,String ext) {
+  public void changeAccountImage(Long id, byte[] bytes, String ext) {
 
-      Media media = Media.builder()
-              .data(bytes)
-              .extension(ext)
+    Media media = Media.builder().data(bytes).extension(ext).build();
 
-              .build();
-Media saved=mediaRepository.save(media);
+    Media saved = mediaRepository.save(media);
 
-      User user= usersRepository.getReferenceById(id);
+    User user = usersRepository.getReferenceById(id);
     user.setProfilePicture(saved);
     usersRepository.save(user);
-    }
+  }
 
   public void changePassword(Long id, String password, String newPassword) throws Exception {
-    User user=usersRepository.getReferenceById(id);
+    User user = usersRepository.getReferenceById(id);
 
-    if(!passwordEncoder.matches(password, user.getPassword())) {
+    if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new Exception("Wrong password");
     }
-    user.setPassword(passwordEncoder.encode(newPassword) );
+    user.setPassword(passwordEncoder.encode(newPassword));
     usersRepository.save(user);
   }
 
   public void removeAccount(Long id, String password) throws Exception {
     String nickname = usersRepository.getReferenceById(id).getNickname();
-    User user=usersRepository.getReferenceById(id);
-    if(!passwordEncoder.matches(password, user.getPassword())) {
+    User user = usersRepository.getReferenceById(id);
+    if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new Exception("Wrong password");
     }
-    Media media=user.getProfilePicture();
+    Media media = user.getProfilePicture();
     user.setPassword("REMOVED");
     user.setDescription("");
     user.setType(User.USER_TYPE.UNAUTHENTICATED);
-    user.setEmail(UUID.randomUUID().toString()+"@rm.rm");
+    user.setEmail(UUID.randomUUID().toString() + "@rm.rm");
     user.setProfilePicture(null);
     user.setNickname("REMOVED");
     usersRepository.save(user);
-    if(media!=null)
-      mediaRepository.delete(media);
-    log.info("Removed user: "+nickname);
+    if (media != null) mediaRepository.delete(media);
+    log.info("Removed user: " + nickname);
   }
 
   public UserDetailsMessage getUserDetails(Long id) throws Exception {
-    User user=usersRepository.getReferenceById(id);
+    User user = usersRepository.getReferenceById(id);
     String mail = user.getEmail();
-   UserDetailsMessage userDetailsMessage=UserDetailsMessage.builder()
-           .description(user.getDescription())
-           .emailSignature(mail.substring(0,1)+"***@"+mail.split("@")[1])
-           .build();
-   return userDetailsMessage;
+    UserDetailsMessage userDetailsMessage =
+        UserDetailsMessage.builder()
+            .description(user.getDescription())
+            .emailSignature(mail.substring(0, 1) + "***@" + mail.split("@")[1])
+            .build();
+    return userDetailsMessage;
   }
 
   public void setDescription(Long id, String description) throws Exception {
-    if(description.length()>3000)
+    if (description.length() > 3000)
       throw new Exception("Description too long, max 3000 characters");
-    User user=usersRepository.getReferenceById(id);
+    User user = usersRepository.getReferenceById(id);
     user.setDescription(description);
     usersRepository.save(user);
-
   }
 }

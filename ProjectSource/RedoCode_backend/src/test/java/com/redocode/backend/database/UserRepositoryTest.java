@@ -28,7 +28,7 @@ public class UserRepositoryTest {
             .password("password")
             .nickname(userNameTest)
             .ProfilePicture(null)
-                .description("")
+            .description("")
             .build();
 
     log.info("user: " + user);

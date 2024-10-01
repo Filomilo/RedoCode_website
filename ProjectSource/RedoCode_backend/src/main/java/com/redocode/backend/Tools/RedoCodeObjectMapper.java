@@ -162,11 +162,10 @@ public class RedoCodeObjectMapper {
         .build();
   }
 
-    public static byte[] jsonMessageToBase64(String image) {
-      String imageData = image.split(",")[1];
-        return Base64ToBytes(imageData);
-
-    }
+  public static byte[] jsonMessageToBase64(String image) {
+    String imageData = image.split(",")[1];
+    return Base64ToBytes(imageData);
+  }
 
   public static String jsonMessageToExtension(String image) {
     return image.split("/")[1].split(";")[0];

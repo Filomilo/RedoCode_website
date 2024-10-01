@@ -49,10 +49,11 @@ public class User implements Comparable, UserDetails {
   @Column(name = "password")
   @NotEmpty
   private String password;
-  @Column(name = "description",columnDefinition = "VARCHAR(3000) DEFAULT ''")
+
+  @Column(name = "description", columnDefinition = "VARCHAR(3000) DEFAULT ''")
   @NotNull
-  @Length( max = 3000)
-  private String description="";
+  @Length(max = 3000)
+  private String description = "";
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_pic")
@@ -94,7 +95,7 @@ public class User implements Comparable, UserDetails {
 
   @Override
   public boolean equals(Object o) {
-//    log.info("copmaring " + this.toString() + "with " + o.toString());
+    //    log.info("copmaring " + this.toString() + "with " + o.toString());
     if (!(o instanceof User)) {
       log.info("wrong instance: " + o.getClass());
       return false;
