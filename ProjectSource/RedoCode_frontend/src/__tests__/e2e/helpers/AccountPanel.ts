@@ -26,6 +26,7 @@ namespace AccountPanel {
 
 export function shouldEmailSignatureBe(signature: string) {
   cy.get('#email-signature.SettingContentRow')
+  .contains('E-mail: ' + signature) 
   .invoke('text')
   .then((text) => {
 
