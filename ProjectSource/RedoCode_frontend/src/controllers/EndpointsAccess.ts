@@ -6,6 +6,7 @@ import ExerciseDataMessage from '@/types/ApiMessages/ExerciseDataMessage'
 import ResultData from '@/types/ApiMessages/ResultData'
 import SolutionsData from '@/types/ApiMessages/SolutionsData'
 import StatisticMessage from '@/types/ApiMessages/StatisticMessage'
+import UserDetailsMessage from '@/types/ApiMessages/UserDetailsMessage'
 import CoderunnerState from '@/types/CodeRunnerState'
 import CodeRunnerStatus from '@/types/CodeRunnerStatus'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
@@ -17,11 +18,13 @@ import { stringify } from 'flatted'
 
 namespace EndpointAccess {
   export namespace unauthorized {
+
     export async function register(
       email: string,
       nickname: string,
       pass: string
     ): Promise<string> {
+      try{
       const request: RegisterRequest = {
         nickname: nickname,
         password: pass,
@@ -35,6 +38,12 @@ namespace EndpointAccess {
       } else {
         throw "Couldn't register user"
       }
+
+    }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
     }
 
     export async function login(
@@ -51,15 +60,17 @@ namespace EndpointAccess {
           throw 'Incorrect login details'
         }
         return response.data.token
-      } catch (error) {
-        console.error('updateCodeRunner Error:', JSON.stringify(error))
-        throw 'Incorrect login details'
+      }     
+      catch({ response }: any)
+      {
+        throw response.data;
       }
     }
 
     export async function getExerciseData(
       exerciseId: number
     ): Promise<ExerciseDataMessage> {
+      try{
       const params = {
         id: exerciseId,
       }
@@ -76,6 +87,11 @@ namespace EndpointAccess {
 
       return response.data
     }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
+    }
 
     export async function getListOfExercises(
       sortByInput: string,
@@ -83,6 +99,7 @@ namespace EndpointAccess {
       rowsPerPage: number,
       page: number
     ) {
+      try{
       const sortby: string =
         sortByInput === undefined
           ? 'name'
@@ -106,8 +123,11 @@ namespace EndpointAccess {
       }
       console.log('Exercises response: ' + JSON.stringify(response))
       return response.data
-      // exerciseData.value = response.data
-      // console.log('exerciseData.value: ' + JSON.stringify(exerciseData.value))
+    }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
     }
     export async function getCodeRunnerState(): Promise<CoderunnerState> {
       try {
@@ -124,12 +144,10 @@ namespace EndpointAccess {
         )
           throw 'no status codeRunner'
         return response.data
-      } catch (error) {
-        console.log('updateCodeRunner Error:', error)
-        return {
-          codeRunnerType: CodeRunnerType.UNIDENTIFIED,
-          state: CodeRunnerStatus.NONE,
-        }
+      }
+      catch({ response }: any)
+      {
+        throw response.data;
       }
     }
   }
@@ -138,6 +156,7 @@ namespace EndpointAccess {
     export async function getSolutionsData(
       exercised: number
     ): Promise<SolutionsData> {
+      try{
       console.log('attempting /secure/exercises/solutions ')
       const params = {
         id: exercised,
@@ -156,6 +175,11 @@ namespace EndpointAccess {
         ' /secure/exercises/solutions data: ' + stringify(response.data)
       )
       return response.data
+    }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
     }
 
     export async function getSolutionsCodesData(
@@ -192,10 +216,74 @@ namespace EndpointAccess {
 
         console.log('response postComment: ' + JSON.stringify(response))
         return response.status
-      } catch (ex) {
-        return -1
+      }
+      catch({ response }: any)
+      {
+        throw response.data;
       }
     }
+
+    export async function postAccountPic(
+      image: string
+    ): Promise<string> {
+      try {
+        const data = {
+          image: image
+        }
+        console.log("postAccountPic: "+JSON.stringify(data))
+        const response = await axios.post('/secure/user/profilePicture', data)
+
+        console.log('response postAccountPic: ' + JSON.stringify(response))
+        if(response.status!=200 && response.status!=201)
+          throw response.data;
+        return "successfully changed image"
+      }
+      catch({ response }: any)
+      {
+        if(response.data)
+        throw response.data;
+        else
+        throw response
+      }
+    }
+    export async function postChangePassword(password: string, newPassword: string): Promise<string> {
+      try {
+        const data = {
+          password: password,
+          newPassword: newPassword
+        }
+        console.log("postChangePassword: "+JSON.stringify(data))
+        const response = await axios.post('/secure/user/changePassword', data)
+        console.log('response postChangePassword: ' + JSON.stringify(response))
+        if(response.status!=200 && response.status!=201)
+          throw response.data;
+        return "successfully removed password"
+      }
+      catch({ response }: any)
+      {
+        throw response.data;
+      }
+    }
+
+    export async function postRemoveAccount(pass: string) {
+
+        const data = {
+          password: pass
+        }
+        try{
+        console.log("postRemoveAccount: "+JSON.stringify(data))
+        const response = await axios.post('/secure/user/remove', data)
+        console.log('response postRemoveAccount: ' + JSON.stringify(response))
+        if(response.status!==200 && response.status!==201 )
+          throw response.data;
+        return "successfully removed account"
+      }
+      catch({ response }: any)
+      {
+        console.log("error cathc: "+JSON.stringify(response))
+        throw response.data;
+      }
+      }
 
     export async function getResultData(
       exerciseId: number
@@ -221,12 +309,40 @@ namespace EndpointAccess {
           stringify(response.data)
         )
         return response.data
-      } catch (ex) {
-        throw "couldn't get result info"
+      }
+      catch({ response }: any)
+      {
+        throw response.data;
       }
     }
 
+    export async function getUserDetails(
+    ): Promise<UserDetailsMessage> {
+      try{
+      console.log('attempting /secure/user/details ')
+        const response = await axios.get('/secure/user/details')
+        if (response.status !== 200 && response.status !== 201) throw "couldn't get detail data"
+        console.log('/secure/user/details Response:', response)
+        if (
+          response === undefined ||
+          response.data === '' ||
+          response.headers['Content-Length'] == 0
+        )
+          throw 'no details data retrieved '
+        console.log(
+          '/secure/user/details Response data:',
+          stringify(response.data)
+        )
+        return response.data
+      }catch({ response }: any)
+      {
+        throw response.data;
+      }
+    }
+
+
     export async function postRate(selectedRating: number, exerciseID: number) {
+     try{
       const data = {
         id: exerciseID,
         rate: selectedRating,
@@ -237,10 +353,36 @@ namespace EndpointAccess {
 
       return response.status
     }
+      catch({ response }: any)
+      {
+        throw response.data;
+      }
+    }
+
+
+    export async function postChangeDescription(desc: string) {
+      try{
+      const data = {
+        description: desc,
+      }
+      const response = await axios.post('/secure/user/description', data)
+
+      console.log('response /secure/user/description: ' + JSON.stringify(response))
+      if(response.status!==200 && response.status!==201)
+        throw "failed to change description"
+      return response.status
+    }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
+    }
+
 
     export async function getExerciseSolvingState(
       id: number
     ): Promise<ExerciseSolvingState> {
+      try{
       const data = {
         id: id,
       }
@@ -258,16 +400,28 @@ namespace EndpointAccess {
       )
       return response.data
     }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
+    }
 
     export async function getUserInfo(): Promise<AccountInfo> {
+      try{
       console.log('getUserInfo')
       const response = await axios.get('/secure/user/info')
 
       console.log('getUserInfo: response.data ' + JSON.stringify(response.data))
       return response.data
     }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
+    }
 
     export async function getUserStatisticData(): Promise<StatisticMessage> {
+      try{
       console.log('getUserStatisticData')
       const response = await axios.get('/secure/user/stats')
 
@@ -276,6 +430,18 @@ namespace EndpointAccess {
       )
       return response.data
     }
+    catch({ response }: any)
+    {
+      throw response.data;
+    }
+    }
+
+
+
+
+
+
+
   }
 }
 export default EndpointAccess

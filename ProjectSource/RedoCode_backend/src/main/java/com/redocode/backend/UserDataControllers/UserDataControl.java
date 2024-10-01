@@ -2,11 +2,11 @@ package com.redocode.backend.UserDataControllers;
 
 import com.redocode.backend.Messages.AmountOfLatlyDonePart;
 import com.redocode.backend.Messages.StatisticMessage;
-import com.redocode.backend.database.ExerciseRepository;
-import com.redocode.backend.database.SolutionPrograms;
-import com.redocode.backend.database.SolutionProgramsRepository;
+import com.redocode.backend.Messages.UserDetailsMessage;
+import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -24,6 +25,12 @@ public class UserDataControl {
   @Autowired ExerciseRepository exerciseRepository;
 
   @Autowired private SolutionProgramsRepository solutionProgramsRepository;
+    @Autowired
+    private UsersRepository usersRepository;
+    @Autowired
+    private MediaRepository mediaRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   public StatisticMessage getUserStats(long userId) {
 
@@ -60,5 +67,67 @@ public class UserDataControl {
         .LanguageUse(
             solutionProgramsRepository.findLanguageAmountForExercsieNotMadeThisUser(userId))
         .build();
+  }
+
+    public void changeAccountImage(Long id, byte[] bytes,String ext) {
+
+      Media media = Media.builder()
+              .data(bytes)
+              .extension(ext)
+
+              .build();
+Media saved=mediaRepository.save(media);
+
+      User user= usersRepository.getReferenceById(id);
+    user.setProfilePicture(saved);
+    usersRepository.save(user);
+    }
+
+  public void changePassword(Long id, String password, String newPassword) throws Exception {
+    User user=usersRepository.getReferenceById(id);
+
+    if(!passwordEncoder.matches(password, user.getPassword())) {
+      throw new Exception("Wrong password");
+    }
+    user.setPassword(passwordEncoder.encode(newPassword) );
+    usersRepository.save(user);
+  }
+
+  public void removeAccount(Long id, String password) throws Exception {
+    String nickname = usersRepository.getReferenceById(id).getNickname();
+    User user=usersRepository.getReferenceById(id);
+    if(!passwordEncoder.matches(password, user.getPassword())) {
+      throw new Exception("Wrong password");
+    }
+    Media media=user.getProfilePicture();
+    user.setPassword("REMOVED");
+    user.setDescription("");
+    user.setType(User.USER_TYPE.UNAUTHENTICATED);
+    user.setEmail(UUID.randomUUID().toString()+"@rm.rm");
+    user.setProfilePicture(null);
+    user.setNickname("REMOVED");
+    usersRepository.save(user);
+    if(media!=null)
+      mediaRepository.delete(media);
+    log.info("Removed user: "+nickname);
+  }
+
+  public UserDetailsMessage getUserDetails(Long id) throws Exception {
+    User user=usersRepository.getReferenceById(id);
+    String mail = user.getEmail();
+   UserDetailsMessage userDetailsMessage=UserDetailsMessage.builder()
+           .description(user.getDescription())
+           .emailSignature(mail.substring(0,1)+"***@"+mail.split("@")[1])
+           .build();
+   return userDetailsMessage;
+  }
+
+  public void setDescription(Long id, String description) throws Exception {
+    if(description.length()>3000)
+      throw new Exception("Description too long, max 3000 characters");
+    User user=usersRepository.getReferenceById(id);
+    user.setDescription(description);
+    usersRepository.save(user);
+
   }
 }

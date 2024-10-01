@@ -17,7 +17,7 @@ export const useToastStore = defineStore('toastStore', () => {
       severity: 'success',
       summary: 'signed in',
       detail: 'signed in',
-      life: 2000,
+      life: 200000,
     })
   }
 

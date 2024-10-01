@@ -46,6 +46,7 @@ class ExerciseInfoValidationTest {
               .nickname("nick")
               .type(User.USER_TYPE.PREMIUM)
               .ProfilePicture(null)
+                  .description("")
               .build();
       usersRepository.save(userCorrect);
     }

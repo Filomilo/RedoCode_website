@@ -15,8 +15,12 @@ namespace UrlControls {
 
   export function visitUserPanel(auth: boolean = true) {
     cy.visit('/Account')
-    if (auth) cy.url().should('eq', Cypress.config().baseUrl + '/Account')
-    else cy.url().should('eq', Cypress.config().baseUrl + '/Home')
+    if (auth) 
+      {
+        cy.url().should('eq', Cypress.config().baseUrl + '/Account')
+        cy.get('#Account_Info_Panel',{timeout: 10000}).should("be.visible");
+      }else cy.url().should('eq', Cypress.config().baseUrl + '/Home')
+    
   }
 
   export function visitPlayground() {

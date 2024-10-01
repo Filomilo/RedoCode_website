@@ -6,6 +6,8 @@ import CodeRunnerType from './types/CodeRunnerTypes'
 import SolutionsData from './types/ApiMessages/SolutionsData'
 import ResultData from './types/ApiMessages/ResultData'
 import StatisticMessage from './types/ApiMessages/StatisticMessage'
+import { Response } from 'miragejs';
+import UserDetailsMessage from './types/ApiMessages/UserDetailsMessage'
 export function makeServer({ environment = 'development' } = {}) {
   const exerciseData: ExerciseType[] = [
     {
@@ -153,6 +155,11 @@ export function makeServer({ environment = 'development' } = {}) {
       description: 'task30 description',
     },
   ]
+
+  const userDetails: UserDetailsMessage={
+    description: 'desc',
+    emailSignature: '2***email.com'
+  }
 
   const solutionData: SolutionsData = {
     maxExecutionTimeMs: 100,
@@ -335,6 +342,12 @@ export function makeServer({ environment = 'development' } = {}) {
 
     return statsData
   }
+  const userDetailsDataHandler = (schema: any, request: any) => {
+    console.log('userDetailsDataHandler ' + JSON.stringify(request))
+
+    return userDetails
+  }
+
 
   const resultDataHandler = (schema: any, request: any) => {
     console.log('resultDataHandler ' + JSON.stringify(request))
@@ -374,6 +387,7 @@ export function makeServer({ environment = 'development' } = {}) {
       )
 
       this.get('http://localhost:8080/secure/user/stats', userStatsDataHandler)
+      this.get('http://localhost:8080/secure/user/details', userDetailsDataHandler)
 
       this.get(
         'http://localhost:8080/secure/exercises/solutionsCodes',
@@ -395,6 +409,19 @@ export function makeServer({ environment = 'development' } = {}) {
           }
         }
       )
+      this.post(
+        'http://localhost:8080/secure/user/changePassword',
+        (schema, request) => {
+          const attrs = JSON.parse(request.requestBody)
+          console.log("http://localhost:8080/secure/user/changePassword: "+JSON.stringify(attrs));
+          return {
+            status: 'success',
+            message: 'description changed successfully!',
+            submittedData: attrs,
+          }
+        }
+      )
+      
 
       this.post(
         'http://localhost:8080/secure/exercises/rate',
@@ -408,6 +435,41 @@ export function makeServer({ environment = 'development' } = {}) {
           }
         }
       )
+      this.post(
+        'http://localhost:8080/secure/user/description',
+        (schema, request) => {
+          const attrs = JSON.parse(request.requestBody)
+          userDetails.description=(attrs as any).description;
+          return {
+            status: 'success',
+            message: 'rating saved!',
+            submittedData: attrs,
+          }
+        }
+      )
+
+this.post('http://localhost:8080/secure/user/profilePicture',  (schema, request) => {
+  const attrs = JSON.parse(request.requestBody)
+  console.log("/secure/user/profilePicture: "+JSON.stringify(request) )
+  return {
+    status: 'success',
+    message: 'rating saved!',
+    submittedData: attrs,
+  }
+})
+
+
+this.post('http://localhost:8080/secure/user/remove',  (schema, request) => {
+  const attrs = JSON.parse(request.requestBody)
+  console.log("/secure/user/remove: "+JSON.stringify(request) )
+
+  return {
+    status: 'ok',
+    message: 'rating saved!',
+    submittedData: attrs,
+  }
+})
+
     },
   })
 

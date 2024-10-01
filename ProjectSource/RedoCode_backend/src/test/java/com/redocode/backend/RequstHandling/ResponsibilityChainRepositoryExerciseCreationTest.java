@@ -45,6 +45,7 @@ class ResponsibilityChainRepositoryExerciseCreationTest {
               .sessionID("uuid" + UUID.randomUUID())
               .nickname("nick")
               .ProfilePicture(null)
+                  .description("")
               .build();
 
       usersRepository.save(userCorrect);

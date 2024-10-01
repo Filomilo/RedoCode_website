@@ -190,18 +190,20 @@ jobs:
         with:
           name: api-logs
           path: ./ProjectSource/RedoCode_frontend/backend_logs
-      - name: upload arifacts
+      - name: upload cypress screenshots
         uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: ./ProjectSource/RedoCode_frontend/cypress/screenshots
-      - uses: actions/upload-artifact@v4
+      - name: upload cypress videos
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-videos
           path: ./ProjectSource/RedoCode_frontend/cypress/videos
-      - uses: actions/upload-artifact@v4
+      - name: upload cypress logs
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-logs

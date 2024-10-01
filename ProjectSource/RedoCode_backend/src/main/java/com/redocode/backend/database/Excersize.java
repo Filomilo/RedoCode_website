@@ -111,7 +111,6 @@ public class Excersize {
 
   public Set<ProgrammingLanguage> getLanguages() {
     HashSet<ProgrammingLanguage> languages = new HashSet<>();
-    log.info(" progmriang solutions: " + Arrays.toString(this.solutions.toArray()));
     for (SolutionPrograms solutionPrograms : this.getSolutions()) {
       languages.add(solutionPrograms.getLanguage());
     }

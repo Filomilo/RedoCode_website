@@ -15,6 +15,7 @@ import com.redocode.backend.VmAcces.CodeRunners.Variables.*;
 import com.redocode.backend.database.User;
 import lombok.SneakyThrows;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -159,5 +160,19 @@ public class RedoCodeObjectMapper {
         .solutionCodes(solutions)
         .idOfExercise(exerciseIdToRunMessage.getExercise_id())
         .build();
+  }
+
+    public static byte[] jsonMessageToBase64(String image) {
+      String imageData = image.split(",")[1];
+        return Base64ToBytes(imageData);
+
+    }
+
+  public static String jsonMessageToExtension(String image) {
+    return image.split("/")[1].split(";")[0];
+  }
+
+  public static byte[] Base64ToBytes(String base64Data) {
+    return Base64.getDecoder().decode(base64Data);
   }
 }

@@ -23,7 +23,7 @@ public class Media {
   @Column(name = "uuid", insertable = false, updatable = false, nullable = false)
   UUID uuid;
 
-  @NotBlank @NotNull byte[] data;
+  @NotNull byte[] data;
   @NotBlank @NotNull String extension;
 
   public String getUrl() {

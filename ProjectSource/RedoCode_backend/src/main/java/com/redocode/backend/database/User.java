@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +31,6 @@ public class User implements Comparable, UserDetails {
   @Transient private String sessionID;
 
   @Column(name = "email", unique = true)
-  @NotNull
   @Email
   @NotEmpty
   @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
@@ -47,9 +47,12 @@ public class User implements Comparable, UserDetails {
   private USER_TYPE type;
 
   @Column(name = "password")
-  @NotNull
   @NotEmpty
   private String password;
+  @Column(name = "description",columnDefinition = "VARCHAR(3000) DEFAULT ''")
+  @NotNull
+  @Length( max = 3000)
+  private String description="";
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_pic")
@@ -75,30 +78,6 @@ public class User implements Comparable, UserDetails {
     return this.email;
   }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    // todo
-    return true;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    // todo
-    return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    // todo
-    return true;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    // todo
-    return true;
-  }
-
   @Getter
   @AllArgsConstructor
   public enum USER_TYPE {
@@ -115,7 +94,7 @@ public class User implements Comparable, UserDetails {
 
   @Override
   public boolean equals(Object o) {
-    log.info("copmaring " + this.toString() + "with " + o.toString());
+//    log.info("copmaring " + this.toString() + "with " + o.toString());
     if (!(o instanceof User)) {
       log.info("wrong instance: " + o.getClass());
       return false;

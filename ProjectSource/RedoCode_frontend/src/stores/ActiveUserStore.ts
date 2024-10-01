@@ -22,9 +22,12 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const $cookies: VueCookies | undefined = inject('$cookies')
 
-  function deleteCookie() {
+  function  deleteCookie() {
     if ($cookies?.isKey('token')) {
-      $cookies?.remove('token')
+      console.log("Temoving token")
+     $cookies?.remove('token')
+     if($cookies.isKey('token'))
+      throw "FAILED to REMOVE cookie"
     }
   }
 
@@ -52,7 +55,6 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     }
     console.log()
     return (
-      accountInfo.value != undefined &&
       accountInfo.value != undefined &&
       accountInfo.value.type !== USER_TYPE.UNAUTHENTICATED
     )
@@ -101,6 +103,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
       accountInfo.value = unAuthUser
     }
   }
+  
 
   //#endregion
 
@@ -160,14 +163,13 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     }
   }
 
-  function logout() {
+  async function  logout() {
     console.log('Logout: ')
     setToken('')
-    localStorage.clear()
+    await localStorage.clear()
     console.log('token: ' + getToken())
-    updateAccountData()
-    deleteCookie()
-
+    await deleteCookie()
+    // updateAccountData()
     //     this._token.value = ''
     //     this.deleteCookie()
     //   }
@@ -176,6 +178,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   function loadFromSession() {
+    console.log("attempt to load from Session")
     const token = getToken()
     if (token !== null) {
       setToken(token)
@@ -183,6 +186,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   function loadFromCookies() {
+    console.log("attempt to load from Cookies")
     const token = getCookie()
     if (token !== null) {
       setToken(token)
@@ -227,6 +231,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     register,
     validateAuthentication,
     IsToken,
+    updateAccountData
     // getToken,
   }
 })
