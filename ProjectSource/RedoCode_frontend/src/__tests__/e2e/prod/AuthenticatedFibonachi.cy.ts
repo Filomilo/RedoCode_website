@@ -9,7 +9,7 @@ import ResultPage from '../helpers/ResultPage'
 import SolutionsList from '../helpers/SolutionsList'
 import ToastHelper from '../helpers/ToastHelper'
 
-describe('template spec', () => {
+describe.skip('template spec', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

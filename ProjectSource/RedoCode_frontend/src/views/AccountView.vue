@@ -183,8 +183,8 @@ import EndpointAccess from '@/controllers/EndpointsAccess'
     screenSelected.value = type
   }
 
-  const onLogOutButton = () => {
-    activeUserStore.logout()
+  const  onLogOutButton = async () => {
+    await activeUserStore.logout()
     location.reload();
   }
 
