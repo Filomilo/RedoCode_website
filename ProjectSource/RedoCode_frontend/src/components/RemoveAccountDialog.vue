@@ -86,7 +86,7 @@ import {
 
     activeUserStore.logout().then(()=>{
         console.log("Account removed now reload")
-        // location.reload();
+        location.reload();
     })
        
     })
