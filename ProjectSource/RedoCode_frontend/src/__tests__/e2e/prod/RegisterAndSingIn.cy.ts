@@ -9,7 +9,7 @@ describe('register and sign in', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
-     const nick = 'nick'
+     const nick = 'nickname'
     const email = 'mail_' + uuidv4() + '@test.com'
     const password = 'Password+789'
     UrlControls.startPage()

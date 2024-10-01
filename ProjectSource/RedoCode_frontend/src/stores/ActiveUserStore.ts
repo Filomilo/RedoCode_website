@@ -168,7 +168,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     console.log('token: ' + getToken())
     // updateAccountData()
     deleteCookie()
-    location.reload();
+   
     //     this._token.value = ''
     //     this.deleteCookie()
     //   }
