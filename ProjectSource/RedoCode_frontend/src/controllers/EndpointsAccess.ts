@@ -280,6 +280,7 @@ namespace EndpointAccess {
       }
       catch({ response }: any)
       {
+        console.log("error cathc: "+JSON.stringify(response))
         throw response.data;
       }
       }
