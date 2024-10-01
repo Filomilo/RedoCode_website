@@ -84,7 +84,7 @@ import {
     EndpointAccess.authorized.postRemoveAccount(password_input.value).then(()=>{
     activeUserStore.logout().then(()=>{
         console.log("Account removed now reload")
-        location.reload();
+        // location.reload();
     })
        
     })

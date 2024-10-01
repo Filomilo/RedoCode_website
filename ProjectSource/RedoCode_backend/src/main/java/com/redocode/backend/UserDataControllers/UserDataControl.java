@@ -94,6 +94,7 @@ Media saved=mediaRepository.save(media);
   }
 
   public void removeAccount(Long id, String password) throws Exception {
+    String nickname = usersRepository.getReferenceById(id).getNickname();
     User user=usersRepository.getReferenceById(id);
     if(!passwordEncoder.matches(password, user.getPassword())) {
       throw new Exception("Wrong password");
@@ -105,10 +106,10 @@ Media saved=mediaRepository.save(media);
     user.setEmail(UUID.randomUUID().toString()+"@rm.rm");
     user.setProfilePicture(null);
     user.setNickname("REMOVED");
-
     usersRepository.save(user);
     if(media!=null)
       mediaRepository.delete(media);
+    log.info("Removed user: "+nickname);
   }
 
   public UserDetailsMessage getUserDetails(Long id) throws Exception {
