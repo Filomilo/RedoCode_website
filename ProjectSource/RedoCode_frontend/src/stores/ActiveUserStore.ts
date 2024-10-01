@@ -165,8 +165,11 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     setToken('')
     await localStorage.clear()
     console.log('token: ' + getToken())
-   
     await deleteCookie()
+    if(getToken()!==null)
+      throw "local storage token not null"
+    if(getCookie()!==undefined || getCookie()!==null)
+      throw "Cookie not null";
     // updateAccountData()
     //     this._token.value = ''
     //     this.deleteCookie()
