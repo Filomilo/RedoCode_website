@@ -22,9 +22,12 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
 
   const $cookies: VueCookies | undefined = inject('$cookies')
 
-  async function  deleteCookie() {
+  function  deleteCookie() {
     if ($cookies?.isKey('token')) {
-     await $cookies?.remove('token')
+      console.log("Temoving token")
+     $cookies?.remove('token')
+     if($cookies.isKey('token'))
+      throw "FAILED to REMOVE cookie"
     }
   }
 
@@ -166,10 +169,6 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     await localStorage.clear()
     console.log('token: ' + getToken())
     await deleteCookie()
-    if(getToken()!==null)
-      throw "local storage token not null"
-    if(getCookie()!==undefined || getCookie()!==null)
-      throw "Cookie not null";
     // updateAccountData()
     //     this._token.value = ''
     //     this.deleteCookie()
