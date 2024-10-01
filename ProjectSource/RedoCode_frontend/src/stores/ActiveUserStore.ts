@@ -178,6 +178,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   function loadFromSession() {
+    console.log("attempt to load from Session")
     const token = getToken()
     if (token !== null) {
       setToken(token)
@@ -185,6 +186,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   function loadFromCookies() {
+    console.log("attempt to load from Cookies")
     const token = getCookie()
     if (token !== null) {
       setToken(token)
