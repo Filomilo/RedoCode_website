@@ -80,8 +80,10 @@ import {
     }
 
     const confirmRemoveAccount= ()=>{
+    console.log("Account removal requested")
     EndpointAccess.authorized.postRemoveAccount(password_input.value).then(()=>{
     activeUserStore.logout().then(()=>{
+        console.log("Account removed now reload")
         location.reload();
     })
        
