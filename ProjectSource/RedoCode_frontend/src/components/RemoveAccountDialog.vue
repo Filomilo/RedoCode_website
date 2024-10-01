@@ -79,10 +79,12 @@ import {
         showConfirm.value=true;
     }
 
-    const confirmRemoveAccount=()=>{
+    const confirmRemoveAccount= ()=>{
     EndpointAccess.authorized.postRemoveAccount(password_input.value).then(()=>{
-        activeUserStore.logout();
+    activeUserStore.logout().then(()=>{
         location.reload();
+    })
+       
     })
     .catch(ex=>{
         toastStore.showErrorMessage("Error deleting account: "+ ex)
