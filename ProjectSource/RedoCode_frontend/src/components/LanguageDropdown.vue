@@ -1,22 +1,5 @@
 <template>
   <div>
-    <!-- <dropdown-menu 
-    :withDropdownCloser="true"
-    >
-      <template #trigger>
-        <button>{{chosenValue}}</button>
-      </template>
-
-      <template #body>
-        
-          <div v-for="i in languageChoices" :key="i" >
-            <div class="excercise-table-row" @click="onValueClick(i)"   dropdown-closer  >
-            {{i}}
-        </div>
-          </div>
-      </template>
-      
-    </dropdown-menu> -->
 
     <Dropdown
       :v-model="chosenValue"
@@ -34,8 +17,6 @@
   import Dropdown from 'primevue/dropdown'
   import { languageChoices } from '../config/Data'
   import { ref, onMounted, type Ref } from 'vue'
-
-  const selectedCity: Ref<string> = ref('')
 
   defineProps({
     chosenValue: Object as () => string,
