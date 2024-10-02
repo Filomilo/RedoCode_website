@@ -19,7 +19,7 @@ function getExtension(id: string) {
   const splits = id.split('/')
   return splits[splits.length - 1].split('.')[1]
 }
-// https://vitejs.dev/config/
+
 export default defineConfig({
   base: '',
   plugins: [vue(), vueJsx()],
@@ -28,9 +28,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  // esbuild: {
-  //   drop: ['console', 'debugger'],
-  // },
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
 
   build: {
     modulePreload: {
