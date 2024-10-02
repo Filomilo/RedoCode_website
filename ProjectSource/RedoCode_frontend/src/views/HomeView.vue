@@ -44,6 +44,7 @@
           class="BasicButton"
           label="Sign in"
           @click="onSginInButton"
+          :disabled="isSignInDisabled"
         />
       </div>
     </div>
@@ -121,8 +122,13 @@
   const inputPass = ref('Password+123')
   const stayLoggedIn = ref(false)
 
+  const isSignInDisabled=ref(false)
+
   const onSginInButton = () => {
-    activeUserStore.login(inputLogin.value, inputPass.value, stayLoggedIn.value)
+    isSignInDisabled.value=true;
+    activeUserStore.login(inputLogin.value, inputPass.value, stayLoggedIn.value).finally(()=>{
+      isSignInDisabled.value=false
+    })
   }
 </script>
 
