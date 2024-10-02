@@ -50,6 +50,9 @@ export default defineConfig({
           // console.log("folder: "+folder);
           // console.log("name: "+name);
           // console.log("extension: "+extension);
+          if (id.includes('.css') || id.includes('.scss')){
+return "style"
+          }
           if (id.includes('node_modules')) {
             if (id.includes('@vue')) return 'vendor/vendor-vue'
             if (id.includes('primevue')) {
