@@ -8,153 +8,35 @@ import ResultData from './types/ApiMessages/ResultData'
 import StatisticMessage from './types/ApiMessages/StatisticMessage'
 import { Response } from 'miragejs'
 import UserDetailsMessage from './types/ApiMessages/UserDetailsMessage'
+import { uniqueNamesGenerator, adjectives, colors, animals, Config } from 'unique-names-generator';
+import ExerciseListMessage from './types/ApiMessages/ExerciseListMessage'
+
+
+const config: Config = {
+  dictionaries: [adjectives, colors, animals],
+  separator: '-',
+  seed: 120498,
+};
+
+
+
 export function makeServer({ environment = 'development' } = {}) {
-  const exerciseData: ExerciseType[] = [
-    {
-      name: 'task13',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'medium',
-      popularity: 312,
-      id: 1,
-      description: 'task13 description',
-    },
-    {
-      name: 'task14',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'hard',
-      popularity: 654,
-      id: 14,
-      description: 'task14 description',
-    },
-    {
-      name: 'task15',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'easy',
-      popularity: 111,
-      id: 15,
-      description: 'task15 description',
-    },
-    {
-      name: 'task16',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'medium',
-      popularity: 432,
-      id: 16,
-      description: 'task16 description',
-    },
-    {
-      name: 'task17',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'hard',
-      popularity: 765,
-      id: 17,
-      description: 'task17 description',
-    },
-    {
-      name: 'task18',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'easy',
-      popularity: 234,
-      id: 18,
-      description: 'task18 description',
-    },
-    {
-      name: 'task19',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'medium',
-      popularity: 654,
-      id: 19,
-      description: 'task19 description',
-    },
-    {
-      name: 'task20',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'hard',
-      popularity: 987,
-      id: 20,
-      description: 'task20 description',
-    },
-    {
-      name: 'task21',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'easy',
-      popularity: 222,
-      id: 21,
-      description: 'task21 description',
-    },
-    {
-      name: 'task22',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'medium',
-      popularity: 543,
-      id: 22,
-      description: 'task22 description',
-    },
-    {
-      name: 'task23',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'hard',
-      popularity: 876,
-      id: 23,
-      description: 'task23 description',
-    },
-    {
-      name: 'task24',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'easy',
-      popularity: 333,
-      id: 24,
-      description: 'task24 description',
-    },
-    {
-      name: 'task25',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'medium',
-      popularity: 543,
-      id: 25,
-      description: 'task25 description',
-    },
-    {
-      name: 'task26',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'hard',
-      popularity: 987,
-      id: 26,
-      description: 'task26 description',
-    },
-    {
-      name: 'task27',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'easy',
-      popularity: 234,
-      id: 27,
-      description: 'task27 description',
-    },
-    {
-      name: 'task28',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'medium',
-      popularity: 543,
-      id: 28,
-      description: 'task28 description',
-    },
-    {
-      name: 'task29',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'hard',
-      popularity: 876,
-      id: 29,
-      description: 'task29 description',
-    },
-    {
-      name: 'task30',
-      languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: 'easy',
-      popularity: 333,
-      id: 30,
-      description: 'task30 description',
-    },
-  ]
+  const exerciseData: ExerciseType[] =[];
+
+  for (let index = 0; index < 1000; index++) {
+    exerciseData.push(
+      {
+        name: uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals] })+'_'+(index+1),
+        languages: [{ name: 'python' }, { name: 'javascript' }],
+        difficulty: 4,
+        popularity: 333,
+        id: 30,
+        description: 'task30 description',
+        alreadyDone: Math.random() < 0.5
+      }
+    )
+    
+  }
 
   const userDetails: UserDetailsMessage = {
     description: 'desc',
@@ -162,7 +44,7 @@ export function makeServer({ environment = 'development' } = {}) {
   }
 
   const solutionData: SolutionsData = {
-    maxExecutionTimeMs: 100,
+    maxExecutionTimeMs: 10,
     solutionList: [
       {
         username: 'Username1 ',
@@ -318,13 +200,37 @@ export function makeServer({ environment = 'development' } = {}) {
     ],
   }
 
-  const exerciseListHandler = (schema: any, request: any) => {
+  const exerciseListHandler = (schema: any, request: any):ExerciseListMessage => {
     const req: ExerciseListRequestMessage = request.queryParams
     const start: number = (req.page - 1) * req.rowsPerPage
     const end: number =
       parseInt(String(start)) + parseInt(String(req.rowsPerPage))
-    console.log('list: ' + start + ', ' + end)
-    return exerciseData.slice(start, end)
+    console.log("exerciseListHandler: "+JSON.stringify(req))
+      console.log('list: ' + start + ', ' + end)
+
+
+    const exercisesSearched: ExerciseType[]=exerciseData.filter
+    (x=>x.name.startsWith(req.searchField));
+
+
+    const exercisesSorted: ExerciseType[]=exercisesSearched.sort((a, b) => {
+      switch (req.sortBy) {
+        case "name":
+          return a.name.localeCompare(b.name); 
+        case "difficulty":
+          return a.difficulty - b.difficulty;    
+        default:
+          return 0;
+      }
+    });
+
+    const exerciseDirections: ExerciseType[]=req.sortBy?exercisesSorted:exercisesSorted.reverse();
+
+    const mess:ExerciseListMessage={
+      fullAmount: exerciseDirections.length,
+      list: exerciseDirections.slice(start, end)
+    }
+    return mess
   }
 
   const exerciseDataHandler = () => {

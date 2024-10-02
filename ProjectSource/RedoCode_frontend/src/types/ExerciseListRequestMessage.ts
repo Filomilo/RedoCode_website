@@ -3,4 +3,5 @@ export default interface ExerciseListRequestMessage {
   page: number
   rowsPerPage: number
   sortDirection: boolean
+  searchField: string
 }

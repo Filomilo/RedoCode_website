@@ -1,63 +1,76 @@
 <template>
-  <main class="PlayGroundBase locked">
-    <div class="dataTable-container">
-      <EasyDataTable
-        :headers="fields"
-        :items="exerciseData"
-        alternating
-        buttons-pagination
-        class="dataTableStyle"
-        :server-items-length="1"
-        theme-color="var(--primary)"
-        v-model:server-options="serverOptions"
-      >
-        <template #expand="item">
-          {{ item.description }}
-        </template>
-
-        <template #loading>
-          <LoadingIndicator />
-        </template>
-        <template #item-lang="item">
-          {{ item.languages.map((element: any) => element.name) }}
-        </template>
-        <template #item-actions="item">
-          <Button
-            :id="'try_exercise-button-' + item.id"
-            v-on:click="onExerciseButton(item.id)"
-            style="
-              background-color: transparent;
-              border-color: transparent;
-              fill: white;
-            "
-          >
-            <IconPlay height="1.3rem" />
-          </Button>
-        </template>
-
-        <template #pagination="{ prevPage, nextPage, isFirstPage, isLastPage }">
-          <div class="paginatorButtons">
-            <Button :disabled="isFirstPage" @click="prevPage">
-              <IconNextLeft />
-            </Button>
-            <Button :disabled="isLastPage" @click="nextPage">
-              <IconNextRight />
-            </Button>
-          </div>
-
-          <router-link
-            to="/Create"
-            class="createButton"
-            id="Home_Button"
-            :class="ActiveUserStore.isLogged ? '' : 'disabled'"
-          >
-            <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
-              Create
-            </Button>
-          </router-link>
-        </template>
-      </EasyDataTable>
+  <main class="PlayGroundBase locked ">
+    <div class="MainEXercisesViewContainer">
+      <div class="SearchOptionContainer">
+  
+        <IconField>
+          <InputIcon class="pi pi-search" />
+          <InputText v-model="searchField" placeholder="Search" />
+        </IconField>
+        
+        
+            </div>
+            <div class="exercise-dataTable-container">
+              <EasyDataTable
+                :headers="fields"
+                :items="exerciseData"
+                alternating
+                buttons-pagination
+                class="dataTableStyle"
+                :server-items-length="searchResultAmount"
+                :sort-by="serverOptions.sortBy"
+                theme-color="var(--primary)"
+                v-model:server-options="serverOptions"
+              >
+                <template #expand="item">
+                  {{ item.description }}
+                </template>
+        
+                <template #loading>
+                  <LoadingIndicator />
+                </template>
+                <template #item-lang="item">
+                  {{ item.languages.map((element: any) => element.name) }}
+                </template>
+                <template #item-actions="item">
+                  <Button
+                    :id="'try_exercise-button-' + item.id"
+                    v-on:click="onExerciseButton(item.id)"
+                    style="
+                      background-color: transparent;
+                      border-color: transparent;
+                      fill: white;
+                    "
+                  >
+                    <IconPlay height="1.3rem" />
+                  </Button>
+                </template>
+        
+                <template #pagination="{ prevPage, nextPage, isFirstPage, isLastPage }">
+                  <div class="paginatorButtons">
+                    <Button :disabled="isFirstPage" @click="prevPage">
+                      <IconNextLeft />
+                    </Button>
+                    <Button :disabled="isLastPage" @click="nextPage">
+                      <IconNextRight />
+                    </Button>
+                  </div>
+        
+                  <router-link
+                    to="/Create"
+                    class="createButton"
+                    id="Home_Button"
+                    :class="ActiveUserStore.isLogged ? '' : 'disabled'"
+                  >
+                    <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
+                      Create
+                    </Button>
+                  </router-link>
+                </template>
+              </EasyDataTable>
+            </div>
     </div>
+
   </main>
 </template>
 
@@ -74,15 +87,19 @@
   import { isArray } from 'chart.js/helpers'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import EndpointAccess from '@/controllers/EndpointsAccess'
+  import IconField from 'primevue/iconfield';
+  import InputIcon from 'primevue/inputicon';
+import ExerciseListMessage from '@/types/ApiMessages/ExerciseListMessage'
 
   const ActiveUserStore = useActiveUserStore()
   const router = useRouter()
-
+  const searchField=ref("")
+  const searchResultAmount=ref(0);
   const fields: any[] = [
-    { text: 'Name', value: 'name' },
-    { text: 'language', value: 'lang' },
-    { text: 'difficulty', value: 'difficulty' },
-    { text: '', value: 'actions', width: 30 },
+    { text: 'Name', value: 'name',sortable :true },
+    { text: 'language', value: 'lang'  },
+    { text: 'difficulty', value: 'difficulty',sortable :true  },
+    { text: '', value: 'actions', width: 30 ,sortable :true },
   ]
 
   const onExerciseButton = (id: number) => {
@@ -110,10 +127,12 @@
         sortby,
         sortby,
         serverOptions.value.rowsPerPage,
-        serverOptions.value.page
+        serverOptions.value.page,
+        searchField.value
       )
-      .then((data: ExerciseType[]) => {
-        exerciseData.value = data
+      .then((data: ExerciseListMessage) => {
+        exerciseData.value = data.list
+        searchResultAmount.value=data.fullAmount
       })
   }
 
@@ -127,6 +146,12 @@
     },
     { immediate: true, deep: true }
   )
+
+
+  watch(searchField, (newValue, oldValue) => {
+    serverOptions.value.page=1;
+    loadFromServer()
+  })
 
   /*
 onBeforeRouteUpdate(()=>{
@@ -153,5 +178,22 @@ onBeforeRouteUpdate(()=>{
 
   .disabled {
     pointer-events: none;
+  }
+
+  .SearchOptionContainer{
+    height: fit-content;
+    display: flex;
+    margin: 1rem;
+  }
+
+  .MainEXercisesViewContainer{
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .exercise-dataTable-container{
+    height: calc(100% - 5rem);
+    overflow: hidden;
   }
 </style>

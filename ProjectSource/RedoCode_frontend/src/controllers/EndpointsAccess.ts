@@ -3,6 +3,7 @@ import AccountInfo from '@/types/ApiMessages/AccountInfo'
 import AuthenticationRequest from '@/types/ApiMessages/Authentication/AuthenticationRequest'
 import RegisterRequest from '@/types/ApiMessages/Authentication/RegisterRequest'
 import ExerciseDataMessage from '@/types/ApiMessages/ExerciseDataMessage'
+import ExerciseListMessage from '@/types/ApiMessages/ExerciseListMessage'
 import ResultData from '@/types/ApiMessages/ResultData'
 import SolutionsData from '@/types/ApiMessages/SolutionsData'
 import StatisticMessage from '@/types/ApiMessages/StatisticMessage'
@@ -89,8 +90,9 @@ namespace EndpointAccess {
       sortByInput: string,
       sortDirection: string,
       rowsPerPage: number,
-      page: number
-    ) {
+      page: number,
+      searchField:string
+    ):Promise<ExerciseListMessage> {
       try {
         const sortby: string =
           sortByInput === undefined
@@ -103,9 +105,10 @@ namespace EndpointAccess {
           sortBy: sortby,
           rowsPerPage: rowsPerPage,
           page: page,
-          sortDirection: sortDirection === 'desc',
+          sortDirection: true,
+          searchField: searchField
         }
-        console.log('Getting exercises')
+        console.log('ExerciseListRequestMessage: '+JSON.stringify(request))
         const response = await axios.get('/public/exercises/list', {
           params: request,
         })
