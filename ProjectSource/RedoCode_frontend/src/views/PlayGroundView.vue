@@ -25,7 +25,7 @@
   import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   const ApiConnectionStore = useApiConnectionStore()
   const setupPlayground = () => {
-    toastStore.featureNotImplemented('setupPlayground')
+
   }
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
@@ -41,13 +41,13 @@
   }
 
   const onRunCode = () => {
-    toastStore.featureNotImplemented('onRunCode')
+    // toastStore.featureNotImplemented('onRunCode')
     // ApiConnectionStore.codeRunnerConnection.runRawCode(activeCode.value)
     codeRunnerStore.codeRunnerSender.runRawCode(activeCode.value)
   }
 
   const onSubmit = () => {
-    toastStore.featureNotImplemented('feature not related')
+    // toastStore.featureNotImplemented('feature not related')
   }
   const onCodeResult = (results: ProgramResultsMessage) => {
     console.log('playgronud view results: ' + JSON.stringify(results))
