@@ -11,12 +11,15 @@
       <div class="" style="margin-top: 5rem">
         <h2>Rate difficulty to see other solutions</h2>
       </div>
-      <RateSelector
+      <Suspense>
+              <RateSelector
         class="RateSelectorContainer"
         :rateOptions="rateOptions"
         id="Result-rate"
         v-model="selectedRating"
       />
+      </Suspense>
+
       <div class="" style="margin-top: 2rem">
         <Button class="saveButton" @click="onSaveRate" id="save-rate-click">
           save Rate
