@@ -85,7 +85,6 @@ jobs:
       - name: Run Cypress Tests
         run: |
           yarn test:dev:e2e
-            - name: upload cypress screenshots
       - name: Uploud screnschots
         uses: actions/upload-artifact@v4
         if: failure()
