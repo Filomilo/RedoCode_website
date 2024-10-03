@@ -31,16 +31,13 @@
 
 <script setup lang="ts">
   import { RateOption } from '@/components/RateSelector.vue'
-  import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   import { Ref, ref } from 'vue'
   import EndpointAcces from '@/controllers/EndpointsAccess'
   import { useRoute, useRouter } from 'vue-router'
   import { onMounted } from 'vue'
-  import ResultData from '@/types/ApiMessages/ResultData'
-  import NoDataFoundPanel from '@/components/NoDataFoundPanel.vue'
   import { useToastStore } from '@/stores/ToastStore'
-
+  import ResultData from '@/types/ApiMessages/ResultData'
   const globalStateStore = useGlobalStateStore()
   const route = useRoute()
   const router = useRouter()
@@ -49,6 +46,12 @@
 
   import { defineAsyncComponent } from 'vue'
 
+  const CodeRatingPanel=  defineAsyncComponent(
+    () => import('@/components/CodeRatingPanel.vue')
+  )
+  const NoDataFoundPanel=  defineAsyncComponent(
+    () => import('@/components/NoDataFoundPanel.vue')
+  )
   const RateSelector = defineAsyncComponent(
     () => import('@/components/RateSelector.vue')
   )

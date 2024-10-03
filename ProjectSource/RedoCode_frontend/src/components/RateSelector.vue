@@ -38,7 +38,10 @@
 <script setup lang="ts">
   import { required } from '@vuelidate/validators'
   import { computed, ComputedRef, ModelRef, Ref, ref, onMounted } from 'vue'
-  import chroma from 'chroma-js'
+  const chroma = await import('chroma-js')
+
+
+
   const props = defineProps<{
     rateOptions: RateOption[]
     heightChange?: number

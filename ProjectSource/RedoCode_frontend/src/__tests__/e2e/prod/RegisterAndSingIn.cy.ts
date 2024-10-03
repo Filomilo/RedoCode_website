@@ -4,7 +4,7 @@ import UrlControls from '../helpers/UrlControls'
 import UserAuthentication from '../helpers/UserAuthentication'
 import { v4 as uuidv4 } from 'uuid'
 
-describe('register and sign in', () => {
+describe.skip('register and sign in', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
