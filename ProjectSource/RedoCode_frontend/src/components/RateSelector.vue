@@ -90,7 +90,7 @@
   }
 
   const gradient = chroma.scale(['#00ff00', '#ff0000']).mode('lab').colors(5) // Generate 10 colors between the two
-  console.log(`geadint: ${JSON.stringify(gradient)}`)
+  console.log(`Rate Selector gradient: ${JSON.stringify(gradient)}`)
   const getColorSelection = (val: number): string => {
     return gradient[val]
   }
