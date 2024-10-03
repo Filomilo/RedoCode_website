@@ -1,6 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 
 import java.util.Arrays;
@@ -8,7 +9,7 @@ import java.util.UUID;
 
 public class JsCodeRunner extends CodeRunner {
 
-  public JsCodeRunner(int ramMb) throws ContainerException {
+  public JsCodeRunner(int ramMb) throws ContainerException, VmControllerException {
     super("filipredocode/redocode:JsRunner", ramMb);
     type = CODE_RUNNER_TYPE.JS_RUNNER;
   }

@@ -5,13 +5,21 @@ import StompApiConnection from '@/controllers/Stomp/StompApiConnection'
 import StompApiSender from '@/controllers/Stomp/StompApiSender'
 import StompApiSubscriptionsController from '@/controllers/Stomp/StompApiSubscriptionController'
 import StompApiSubscriptionController from '@/controllers/Stomp/StompApiSubscriptionController'
+import MessageNotification, { messageType } from '@/types/ApiMessages/MessageNotification'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
   const isConnected = ref(false)
   if (import.meta.env.MODE === 'development') {
     isConnected.value = true
   }
-  const toastStore = useToastStore()
+  const toastStore = useToastStore();
+
+
+
+
+
+
+
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
     () => {
@@ -39,6 +47,18 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
 
   const stompApiSubscriptionController: StompApiSubscriptionsController =
     new StompApiSubscriptionController(stompApiConnection)
+
+
+
+    stompApiSubscriptionController.addServerNotificationsSubscription((notif: MessageNotification)=>{
+      console.log("stompApiSubscriptionController toast: "+ JSON.stringify(notif))
+      switch(notif.type){
+        case messageType.ERROR:  toastStore.showServerError(notif.message); break;
+        case messageType.INFO: toastStore.showServerInfo(notif.message); break;
+        case messageType.WARNING: toastStore.showServerWarn(notif.message); break;
+      }
+    })
+  
 
   return {
     stompApiSender,

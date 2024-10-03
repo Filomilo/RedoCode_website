@@ -1,6 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CppCodeRunnerTest {
 
   @Test
-  void testCppHelloWorldRaw() throws ContainerException {
+  void testCppHelloWorldRaw() throws ContainerException, VmControllerException {
     String code =
         "#include <iostream>\n"
             + "\n"
@@ -34,7 +35,7 @@ class CppCodeRunnerTest {
   }
 
   @Test
-  void testCompileError() throws ContainerException {
+  void testCompileError() throws ContainerException, VmControllerException {
     String code =
         "#include <iostream>\n"
             + "\n"
