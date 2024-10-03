@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-  import RateSelector, { RateOption } from '@/components/RateSelector.vue'
+  import { RateOption } from '@/components/RateSelector.vue'
   import CodeRatingPanel from '@/components/CodeRatingPanel.vue'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   import { Ref, ref } from 'vue'
@@ -46,6 +46,12 @@
   const router = useRouter()
   const toastStore = useToastStore()
   const refResultData: Ref<ResultData | undefined> = ref()
+
+import { defineAsyncComponent } from 'vue'
+
+const RateSelector = defineAsyncComponent(() =>
+  import('@/components/RateSelector.vue')
+)
 
   console.log('route.params: ' + JSON.stringify(route.params))
   const exercsieID: number = Number(route.params.id)
