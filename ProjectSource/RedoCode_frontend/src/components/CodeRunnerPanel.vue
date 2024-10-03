@@ -167,7 +167,7 @@
 
   const awaiting: ComputedRef<boolean> = computed(() => {
     if (import.meta.env.MODE === 'development') return false
-    return codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
+    return codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner 
   })
 </script>
 
