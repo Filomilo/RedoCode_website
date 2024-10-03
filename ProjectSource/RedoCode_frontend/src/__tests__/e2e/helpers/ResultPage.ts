@@ -61,10 +61,12 @@ namespace ResultPage {
 
   export namespace Rating {
     export function clickRating(index: number) {
+      cy.get('#Result-rate-' + index).should('be.visible');
       cy.get('#Result-rate-' + index).should('be.visible').click()
     }
 
     export function selectedRating(label: string) {
+      cy.get('#Result-rate-selection').should('be.visible');
       cy.get('#Result-rate-selection').should('be.visible').contains(label)
     }
 
