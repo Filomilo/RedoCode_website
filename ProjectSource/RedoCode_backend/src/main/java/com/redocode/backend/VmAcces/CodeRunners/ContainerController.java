@@ -1,6 +1,8 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
 import com.github.dockerjava.api.exception.NotFoundException;
+import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.Tools.StringFormatter;
 import com.redocode.backend.VmAcces.VmStatus;
 import com.redocode.backend.VmAcces.vmConnection.VmConnector;
@@ -14,14 +16,22 @@ import java.util.concurrent.TimeoutException;
 public class ContainerController {
   static Logger logger = LoggerFactory.getLogger(ContainerController.class);
   private String containerId;
-  static final VmConnector vmConnector = VmConnectorFactory.getVmConnector();
+  static final VmConnector vmConnector;
 
-  private void createContainer(String image, int ram) {
+    static {
+        try {
+            vmConnector = VmConnectorFactory.getVmConnector();
+        } catch (VmControllerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void createContainer(String image, int ram) throws ContainerException {
     logger.info("attempting creation of container controller for image " + image);
     this.containerId = vmConnector.createVm(image, ram);
   }
 
-  public ContainerController(String image, int ram) {
+  public ContainerController(String image, int ram) throws ContainerException {
     createContainer(image, ram);
   }
 

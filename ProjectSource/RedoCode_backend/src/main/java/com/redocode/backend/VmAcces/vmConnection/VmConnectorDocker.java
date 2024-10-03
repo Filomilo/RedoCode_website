@@ -12,6 +12,8 @@ import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.github.dockerjava.transport.DockerHttpClient;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
+import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.VmStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,7 @@ public class VmConnectorDocker extends VmConnector {
 
   private final DockerClient dockerClient;
 
-  VmConnectorDocker() {
+  VmConnectorDocker() throws VmControllerException {
 
     String dockerHost = System.getenv("DOCKER_HOST");
     if (dockerHost == null) {
@@ -69,22 +71,27 @@ public class VmConnectorDocker extends VmConnector {
       throw ex;
     }
     Request request = Request.builder().method(Request.Method.GET).path("/_ping").build();
+    try {
+      Response response = httpClient.execute(request);
 
-    Response response = httpClient.execute(request);
     if (response.getStatusCode() != 200) {
       log.error("error establishing connection with docker api: " + response.getBody());
-      throw new RuntimeException(
+      throw new VmControllerException(
           "error establishing connection with docker api: " + response.getBody());
-      // todo: replace with custom exeption
     } else {
       log.info("successfully established connection docker api");
     }
     dockerClient = DockerClientImpl.getInstance(dockerConfiguration, httpClient);
     log.info("dockerClient: " + dockerClient);
+    }
+    catch (Exception ex) {
+      log.error("Error initializing Docker client: "+ex.getMessage());
+      throw new VmControllerException("Error initializing Docker client: "+ex.getMessage());
+    }
   }
 
   @Override
-  public String createVm(String Image, int ram) {
+  public String createVm(String Image, int ram) throws ContainerException {
 
     HostConfig hostConfig = HostConfig.newHostConfig().withMemory((long) ram * 1024 * 1024);
 
@@ -97,9 +104,9 @@ public class VmConnectorDocker extends VmConnector {
       try {
         pullImageSync(Image);
         response = dockerClient.createContainerCmd(Image).withHostConfig(hostConfig).exec();
-      } catch (InterruptedException e) {
-        throw new RuntimeException(e);
-        // todo: add own exception
+      }
+      catch (Exception e) {
+        throw new ContainerException("Couldn't create container: "+e.getMessage());
       }
     }
     String virtualMachineIdentifiaction = response.getId();

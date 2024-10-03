@@ -1,5 +1,6 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
+import com.redocode.backend.Excpetions.ContainerException;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,7 @@ public class CodeRunnerBuilder {
 
   CodeRunner instance;
 
-  public CodeRunnerBuilder(CODE_RUNNER_TYPE type, int ram) {
+  public CodeRunnerBuilder(CODE_RUNNER_TYPE type, int ram) throws ContainerException {
     switch (type) {
       case CPP_RUNNER -> instance = new CppCodeRunner(ram);
       case JS_RUNNER -> instance = new JsCodeRunner(ram);
@@ -21,7 +22,7 @@ public class CodeRunnerBuilder {
     return instance;
   }
 
-  public static CodeRunner build(CodeRunnerRequest codeRunnerRequest) {
+  public static CodeRunner build(CodeRunnerRequest codeRunnerRequest) throws ContainerException {
     return new CodeRunnerBuilder(codeRunnerRequest.getCodeRunnerType(), codeRunnerRequest.getRam())
         .build();
   }

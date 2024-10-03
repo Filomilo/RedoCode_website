@@ -1,5 +1,6 @@
 package com.redocode.backend.VmAcces.vmConnection;
 
+import com.redocode.backend.Excpetions.VmControllerException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -9,7 +10,7 @@ public class VmConnectorFactory {
 
   static VmConnector instance = null;
 
-  public static VmConnector getVmConnector() {
+  public static VmConnector getVmConnector() throws VmControllerException {
     if (instance != null) return instance;
     String vmMangager = System.getenv("CONTAINER_MANGER");
     logger.info("CONTAINER_MANGER: " + vmMangager);

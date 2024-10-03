@@ -1,6 +1,7 @@
 package com.redocode.backend.VmAcces;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.redocode.backend.Excpetions.ContainerException;
 import com.redocode.backend.database.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
 import com.redocode.backend.ConnectionCotrollers.MessageSender;
@@ -61,10 +62,16 @@ public class CodeRunnersController {
   private void updateQueue() {
     log.info("updating queue");
     if (requestQueue.size() > 0) {
-      log.info("removing request from queue and creating new vm");
-      CodeRunnerRequest rq = requestQueue.poll();
-      this.requestMessageSet.remove(rq);
-      this.createNewVm(rq);
+
+        log.info("removing request from queue and creating new vm");
+        CodeRunnerRequest rq = requestQueue.poll();
+        this.requestMessageSet.remove(rq);
+      try {
+        this.createNewVm(rq);
+      }
+      catch (ContainerException e) {
+        log.error(e.getMessage());
+      }
     }
   }
 
@@ -99,7 +106,7 @@ public class CodeRunnersController {
   }
 
   @Synchronized
-  private void createNewVm(CodeRunnerRequest codeRunnerRequest) {
+  private void createNewVm(CodeRunnerRequest codeRunnerRequest) throws ContainerException {
     log.info("creating new vm per request: " + codeRunnerRequest);
     CodeRunner codeRunner = CodeRunnerBuilder.build(codeRunnerRequest);
     this.usersCodeRunenrs.put(codeRunnerRequest.getUser(), codeRunner);
@@ -114,7 +121,12 @@ public class CodeRunnersController {
     }
 
     if (usersCodeRunenrs.size() < maxAmountOfVm) {
-      createNewVm(codeRunnerRequest);
+      try {
+        createNewVm(codeRunnerRequest);
+      }
+      catch (ContainerException e) {
+        log.error(e.getMessage());
+      }
     } else {
       addToQueue(codeRunnerRequest);
     }

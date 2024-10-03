@@ -32,11 +32,16 @@ public class CodeRunnersConnectionController {
   @MessageMapping("/codeRunnerRequest")
   public void codeRunnerRequest(Principal principal, CodeRunnerRequestMessage requestMessageSource)
       throws Exception {
-    String userId = principal.getName();
-    log.info("code runner reuqest from: " + userId + " : " + requestMessageSource);
-    CodeRunnerRequest req =
-        new CodeRunnerRequest(
-            redoCodeController.getUserByConnectionUUID(userId), requestMessageSource);
-    codeRunnersController.requestVm(req);
+    try {
+      String userId = principal.getName();
+      log.info("code runner reuqest from: " + userId + " : " + requestMessageSource);
+      CodeRunnerRequest req =
+              new CodeRunnerRequest(
+                      redoCodeController.getUserByConnectionUUID(userId), requestMessageSource);
+      codeRunnersController.requestVm(req);
+    }
+    catch (Exception e) {
+      log.error("Error requesting code runner: "+ e.getMessage());
+    }
   }
 }

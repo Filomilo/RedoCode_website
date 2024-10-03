@@ -25,12 +25,15 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     },
     (message: string) => {
       toastStore.showErrorMessage(message)
+      isConnected.value = false
+ 
     },
     () => {
       isConnected.value = false
       console.log('on discontented settings value: ' + isConnected.value)
     }
   )
+
 
   const stompApiSender: StompApiSender = new StompApiSender(stompApiConnection)
 
