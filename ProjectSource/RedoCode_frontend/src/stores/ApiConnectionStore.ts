@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useToastStore } from './ToastStore'
 import StompApiConnection from '@/controllers/Stomp/StompApiConnection'
 import StompApiSender from '@/controllers/Stomp/StompApiSender'
@@ -8,9 +8,16 @@ import StompApiSubscriptionController from '@/controllers/Stomp/StompApiSubscrip
 import MessageNotification, { messageType } from '@/types/ApiMessages/MessageNotification'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
-  const isConnected = ref(false)
+  const _isConnected= ref(false)
+  const isConnected = computed(()=>{
+    if (import.meta.env.MODE === 'development') {
+      return true;
+    }
+    return _isConnected.value;
+  })
+
   if (import.meta.env.MODE === 'development') {
-    isConnected.value = true
+    _isConnected.value = true
   }
   const toastStore = useToastStore();
 
@@ -28,16 +35,16 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     () => {
       toastStore.showSuccessMessage('successfully connected')
 
-      isConnected.value = true
+      _isConnected.value = true
       console.log('on connected settings value: ' + isConnected.value)
     },
     (message: string) => {
       toastStore.showErrorMessage(message)
-      isConnected.value = false
+      _isConnected.value = false
  
     },
     () => {
-      isConnected.value = false
+      _isConnected.value = false
       console.log('on discontented settings value: ' + isConnected.value)
     }
   )
@@ -65,5 +72,6 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     stompApiSubscriptionController,
     stompApiConnection,
     isConnected,
+    
   }
 })
