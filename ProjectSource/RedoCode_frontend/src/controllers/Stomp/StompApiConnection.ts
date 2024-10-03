@@ -2,6 +2,7 @@ import { ActivationState, Client, IFrame, StompHeaders } from '@stomp/stompjs'
 import StompApiSubscription from './StompApiSubscription'
 import { computed } from 'vue'
 import { log } from 'console'
+import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
 
 export default class StompApiConnection {
   userName: String | null = null
@@ -62,6 +63,8 @@ export default class StompApiConnection {
       onWebSocketError: (frame: IFrame) => {
         console.log(connectionUrl + ' onWebSocketError')
         this._onError('there was an websocket error wtih server connection')
+        const codeRunnerStore = useCodeRunnerStore();
+        codeRunnerStore.codeRunnerConnection.updateCodeRunner();
       },
       onDisconnect: (frame: IFrame) => {
         this._onDisconnected()

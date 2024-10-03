@@ -35,8 +35,10 @@
 
     <div
       v-if="
+      (
         codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
-        codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
+        codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner 
+      ) && ApiConnectionStore.isConnected
       "
       class="heightLimit widthLimit"
     >
