@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
   import { required } from '@vuelidate/validators'
-  import { computed, ComputedRef, ModelRef, Ref, ref } from 'vue'
+  import { computed, ComputedRef, ModelRef, Ref, ref,onMounted } from 'vue'
   import chroma from 'chroma-js'
   const props = defineProps<{
     rateOptions: RateOption[]
@@ -104,6 +104,12 @@
     '--heightChangeColumn',
     `${heightChangeColumn}px`
   )
+
+
+onMounted(()=>{
+  console.log("Rate selctor props: "+JSON.stringify(props))
+})
+
 </script>
 <script lang="ts">
   export interface RateOption {
