@@ -108,31 +108,10 @@ for (let i = 2; i < val; i++) {
 }
     return arr[val - 1];
 }',
- 100
+ 300
     ,1,
  CURRENT_DATE
-),
-(
-    DEFAULT,
-    1,
-    3,
-    e'function solution(val) {
-    let arr = new Array(val);
-
-    if (val >= 0)
-        arr[0] = 0;
-    if (val >= 2)
-        arr[1] = 1;
-for (let i = 2; i < val; i++) {
-        arr[i] = arr[i - 1] + arr[i - 2];
-}
-    return arr[val - 1];
-}',
-    100
-    ,4,
-    CURRENT_DATE
-)
-;
+);
 
 -- INSERT INTO Media (data)
 -- VALUES (LOAD_FILE('/DefaultMedia/sunny.png'));
