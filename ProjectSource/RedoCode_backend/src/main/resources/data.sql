@@ -88,7 +88,7 @@ for(int i=2;i<val;i++)
 }
     return arr[val-1];
 }',
- 100,
+ 300,
  1,
  CURRENT_DATE
 ),
@@ -108,7 +108,7 @@ for (let i = 2; i < val; i++) {
 }
     return arr[val - 1];
 }',
- 100
+ 300
     ,1,
  CURRENT_DATE
 );

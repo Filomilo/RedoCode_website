@@ -1,7 +1,4 @@
 <template>
-  <!-- data solutions:{{ JSON.stringify(codeRunnerStore.exerciseCreatorController) }} <br />
-  <br /> -->
-
   <main class="PlayGroundBase">
     <TabView @tab-click="onTabClick">
       <div class="childHeight" id="information-switch">

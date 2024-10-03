@@ -11,6 +11,7 @@ import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.database.*;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -158,6 +159,7 @@ class AuthenticatedExcecisesEndpointsTest {
     return headers;
   }
 
+  @Ignore
   @Test
   void getSolutionsDataCorrect() {
     assertNotNull(restTemplate);

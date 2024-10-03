@@ -1,6 +1,5 @@
 <template>
   <div class="DataResultContainer">
-    {{ JSON.stringify(props.AutoTests) }}
     <TestResultCard
       v-for="(item, index) in tests"
       :key="index"

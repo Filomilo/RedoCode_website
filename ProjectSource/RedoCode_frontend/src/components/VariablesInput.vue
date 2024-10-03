@@ -1,5 +1,4 @@
 <template>
-  {{ JSON.stringify(props.isInput) }}
   <div
     style="
       width: 100%;

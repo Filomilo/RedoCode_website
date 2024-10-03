@@ -49,7 +49,6 @@
   .titleContainer * {
     height: 1rem;
     max-height: 1rem;
-    background-color: red;
   }
   .descritptionConatiner {
     height: 100rem;

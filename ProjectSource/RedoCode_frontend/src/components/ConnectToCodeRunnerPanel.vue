@@ -10,9 +10,8 @@
     <div class="LoginPanelConatiner" v-else>
       <div class="AuthPanelElement boldText centered-text">
         your start coding you need to connect to a code runner, this can be
-        changed latert
+        changed later
       </div>
-      {{ JSON.stringify(props) }}
       <Dropdown
         v-model="chosenLangague"
         :options="laguageDropDown"
