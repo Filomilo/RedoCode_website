@@ -103,7 +103,9 @@
       return ''
     }
     const manualTests = props.ManualTests as ConsoleOutput | undefined
-    return manualTests ? StringParser.parseStringToCodeResult(manualTests.output) : ''
+    return manualTests
+      ? StringParser.parseStringToCodeResult(manualTests.output)
+      : ''
   })
 
   const formattedError = computed<string>(() => {

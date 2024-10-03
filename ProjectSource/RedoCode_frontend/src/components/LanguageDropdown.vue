@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Dropdown
       :v-model="chosenValue"
       :options="languageChoices"

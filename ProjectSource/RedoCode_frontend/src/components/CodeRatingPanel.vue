@@ -24,7 +24,6 @@
       <div class="RatingPanelContaier">
         <div class="RatingPanelHeader">Your solution is better than</div>
         <div class="RatingPanel">
-
           <div class="DugoutContainer">
             <ProcentDonout
               :value="props.BetterThanPercent"

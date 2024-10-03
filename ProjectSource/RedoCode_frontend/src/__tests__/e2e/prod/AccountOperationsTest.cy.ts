@@ -37,16 +37,16 @@ describe('Account Operations Test', () => {
 
   it('change profile picture', () => {
     if (Cypress.platform !== 'linux') {
-    let newDescription = ''
-    for (let index = 0; index < 3000; index++) {
-      newDescription += 'abc'
+      let newDescription = ''
+      for (let index = 0; index < 3000; index++) {
+        newDescription += 'abc'
+      }
+      AccountPanel.shouldHaveBasePicture()
+      AccountPanel.changeProfilePicture(
+        '.\\src\\__tests__\\e2e\\assets\\imgtemp.png'
+      )
+      AccountPanel.shouldHavePictureFromApi()
     }
-    AccountPanel.shouldHaveBasePicture()
-    AccountPanel.changeProfilePicture(
-      '.\\src\\__tests__\\e2e\\assets\\imgtemp.png'
-    )
-    AccountPanel.shouldHavePictureFromApi()
-  }
   })
 
   it('correct email Signature', () => {

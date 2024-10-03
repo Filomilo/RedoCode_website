@@ -5,17 +5,13 @@ namespace StringParser {
     return txt
   }
 
-  export function parseStringToCodeResult(txt:string): string
-  {
-    if(txt==="")
-      return "";
-      const lineBegin=">>    ";
+  export function parseStringToCodeResult(txt: string): string {
+    if (txt === '') return ''
+    const lineBegin = '>>    '
 
-      const lineBeginning=lineBegin+txt.replaceAll("\n","\n"+lineBegin);
-      return parseStringToHtml(lineBeginning);
+    const lineBeginning = lineBegin + txt.replaceAll('\n', '\n' + lineBegin)
+    return parseStringToHtml(lineBeginning)
   }
 }
-
-
 
 export default StringParser

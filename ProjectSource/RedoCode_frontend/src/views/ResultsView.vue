@@ -47,11 +47,11 @@
   const toastStore = useToastStore()
   const refResultData: Ref<ResultData | undefined> = ref()
 
-import { defineAsyncComponent } from 'vue'
+  import { defineAsyncComponent } from 'vue'
 
-const RateSelector = defineAsyncComponent(() =>
-  import('@/components/RateSelector.vue')
-)
+  const RateSelector = defineAsyncComponent(
+    () => import('@/components/RateSelector.vue')
+  )
 
   console.log('route.params: ' + JSON.stringify(route.params))
   const exercsieID: number = Number(route.params.id)

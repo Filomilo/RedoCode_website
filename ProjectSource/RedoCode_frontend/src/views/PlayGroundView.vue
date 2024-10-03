@@ -24,9 +24,7 @@
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   const ApiConnectionStore = useApiConnectionStore()
-  const setupPlayground = () => {
-
-  }
+  const setupPlayground = () => {}
   const codeRunnerStore = useCodeRunnerStore()
   const toastStore = useToastStore()
   onMounted(() => {

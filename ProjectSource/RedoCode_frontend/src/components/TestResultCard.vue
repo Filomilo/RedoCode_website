@@ -71,7 +71,7 @@
   import type ExerciseTest from '@/types/ExerciseTest'
   import { formatToHtml } from '@/config/Tools'
   import { computed } from 'vue'
-import StringParser from '@/tools/StringParser';
+  import StringParser from '@/tools/StringParser'
   const props = defineProps<{
     data: ExerciseTest
     index: number

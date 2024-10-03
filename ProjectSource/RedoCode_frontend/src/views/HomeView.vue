@@ -122,13 +122,15 @@
   const inputPass = ref('Password+123')
   const stayLoggedIn = ref(false)
 
-  const isSignInDisabled=ref(false)
+  const isSignInDisabled = ref(false)
 
   const onSginInButton = () => {
-    isSignInDisabled.value=true;
-    activeUserStore.login(inputLogin.value, inputPass.value, stayLoggedIn.value).finally(()=>{
-      isSignInDisabled.value=false
-    })
+    isSignInDisabled.value = true
+    activeUserStore
+      .login(inputLogin.value, inputPass.value, stayLoggedIn.value)
+      .finally(() => {
+        isSignInDisabled.value = false
+      })
   }
 </script>
 
