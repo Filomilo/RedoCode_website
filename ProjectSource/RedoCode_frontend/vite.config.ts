@@ -50,36 +50,36 @@ export default defineConfig({
           // console.log("folder: "+folder);
           // console.log("name: "+name);
           // console.log("extension: "+extension);
-          if (id.includes('.css') || id.includes('.scss')){
-return "style"
-          }
-          if (id.includes('node_modules')) {
-            if (id.includes('@vue')) return 'vendor/vendor-vue'
-            if (id.includes('primevue')) {
-              return 'vendor/primevue/vendor-primevue-' + folder
-            }
-            if (id.includes('chart')) return 'vendor/vendor-chart'
+//           if (id.includes('.css') || id.includes('.scss')){
+// return "style"
+//           }
+//           if (id.includes('node_modules')) {
+//             if (id.includes('@vue')) return 'vendor/vendor-vue'
+//             if (id.includes('primevue')) {
+//               return 'vendor/primevue/vendor-primevue-' + folder
+//             }
+//             if (id.includes('chart')) return 'vendor/vendor-chart'
 
-            return 'vendor/vendor'
-          }
+//             return 'vendor/vendor'
+//           }
 
-          if (folder === 'components') {
-            return 'components'
-          }
+//           if (folder === 'components') {
+//             return 'components'
+//           }
 
-          if (folder === 'views') {
-            return 'views/' + name
-          }
+//           if (folder === 'views') {
+//             return 'views/' + name
+//           }
 
-          if (id.includes('src/components')) {
-            return 'components'
-          }
-          if (id.includes('src/controllers')) {
-            return 'controllers'
-          }
-          if (id.includes('src/types')) {
-            return 'types'
-          }
+//           if (id.includes('src/components')) {
+//             return 'components'
+//           }
+//           if (id.includes('src/controllers')) {
+//             return 'controllers'
+//           }
+//           if (id.includes('src/types')) {
+//             return 'types'
+//           }
         },
       },
     },
