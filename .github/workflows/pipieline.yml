@@ -62,47 +62,47 @@ jobs:
   #     - run: yarn install
   #     - run: yarn test:dev:unit
 
-  vue-e2e-dev:
-    # needs:
-    #   - build-backend
-    #   - build-frontend
-    defaults:
-      run:
-        working-directory: ./ProjectSource/RedoCode_frontend
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
-          yarn install
-      - name: Run Cypress Tests
-        run: |
-          yarn test:dev:e2e
-      - name: Uploud screnschots
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: cypress-dev-screenshots
-          path: ./ProjectSource/RedoCode_frontend/cypress/screenshots
-      - name: upload cypress videos
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: cypress-dev-videos
-          path: ./ProjectSource/RedoCode_frontend/cypress/videos
-      - name: upload cypress logs
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: cypress-dev-logs
-          path: ./ProjectSource/RedoCode_frontend/logs
+  # vue-e2e-dev:
+  #   needs:
+  #     - build-backend
+  #     - build-frontend
+  #   defaults:
+  #     run:
+  #       working-directory: ./ProjectSource/RedoCode_frontend
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20
+  #     - name: Install Dependencies
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
+  #         yarn install
+  #     - name: Run Cypress Tests
+  #       run: |
+  #         yarn test:dev:e2e
+  #     - name: Uploud screnschots
+  #       uses: actions/upload-artifact@v4
+  #       if: failure()
+  #       with:
+  #         name: cypress-dev-screenshots
+  #         path: ./ProjectSource/RedoCode_frontend/cypress/screenshots
+  #     - name: upload cypress videos
+  #       uses: actions/upload-artifact@v4
+  #       if: failure()
+  #       with:
+  #         name: cypress-dev-videos
+  #         path: ./ProjectSource/RedoCode_frontend/cypress/videos
+  #     - name: upload cypress logs
+  #       uses: actions/upload-artifact@v4
+  #       if: failure()
+  #       with:
+  #         name: cypress-dev-logs
+  #         path: ./ProjectSource/RedoCode_frontend/logs
       
 
   # backend-junit-dev-docker:
@@ -144,86 +144,86 @@ jobs:
   #     - name: run test
   #       run: |
   #         docker exec -t projectsource-api-1 mvn clean install
-  # docker_structure_test:
-  #   defaults:
-  #     run:
-  #       working-directory: ./ProjectSource
+  docker_structure_test:
+    defaults:
+      run:
+        working-directory: ./ProjectSource
     # needs:
     #   - vue-vitest
     #   - vue-e2e-dev
     #   - backend-junit-dev-docker
-    # runs-on: ubuntu-20.04
-    # steps:
-    #   - name: Checkout Repository
-    #     uses: actions/checkout@v2
-    #   - name: install docker
-    #     run: |
-    #       sudo apt-get update
-    #       sudo apt-get install ca-certificates curl
-    #       sudo install -m 0755 -d /etc/apt/keyrings
-    #       sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    #       sudo chmod a+r /etc/apt/keyrings/docker.asc
-    #       echo \
-    #         "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    #         $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    #         sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    #       sudo apt-get update
-    #       sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-    #   - name: start containers
-    #     run: |
-    #       docker compose up -d
-    #       docker ps
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: install docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install ca-certificates curl
+          sudo install -m 0755 -d /etc/apt/keyrings
+          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          sudo chmod a+r /etc/apt/keyrings/docker.asc
+          echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          sudo apt-get update
+          sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+      - name: start containers
+        run: |
+          docker compose up -d
+          docker ps
 
-    #   - name: Set up Nodejs
-    #     uses: actions/setup-node@v3
-    #     with:
-    #       node-version: 20
+      - name: Set up Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
         
-    #   - name: install node dependencies
-    #     working-directory: ./ProjectSource/RedoCode_frontend
-    #     run: |
-    #       sudo apt-get update
-    #       sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
-    #       yarn add cypress
-    #       yarn install
-    #   - name: run test
-    #     working-directory: ./ProjectSource/RedoCode_frontend
-    #     run: |
-    #       docker run --network="host" -v $PWD:/e2e -w /e2e --entrypoint cypress cypress/included:13.14.1 run --e2e -C config/cypress-prod.config.ts
-    #   - name: copy backed logs
-    #     working-directory: ./
-    #     if: failure()
-    #     run: |
-    #       sudo docker cp projectsource-api-1:/logs ./ProjectSource/RedoCode_frontend/backend_logs
-    #   - name: file testing
-    #     working-directory: ./ProjectSource/RedoCode_frontend
-    #     if: always()
-    #     run: |
-    #       tree $PWD
-    #       ls
-    #       ls -r
-    #       pwd
-    #   - name: upload backed logs
-    #     uses: actions/upload-artifact@v4
-    #     if: failure()
-    #     with:
-    #       name: api-logs
-    #       path: ./ProjectSource/RedoCode_frontend/backend_logs
-    #   - name: upload cypress screenshots
-    #     uses: actions/upload-artifact@v4
-    #     if: failure()
-    #     with:
-    #       name: cypress-prod-screenshots
-    #       path: ./ProjectSource/RedoCode_frontend/cypress/screenshots
-    #   - name: upload cypress videos
-    #     uses: actions/upload-artifact@v4
-    #     if: always()
-    #     with:
-    #       name: cypress-prod-videos
-    #       path: ./ProjectSource/RedoCode_frontend/cypress/videos
-    #   - name: upload cypress logs
-    #     uses: actions/upload-artifact@v4
-    #     if: always()
-    #     with:
-    #       name: cypress-prod-logs
-    #       path: ./ProjectSource/RedoCode_frontend/logs
+      - name: install node dependencies
+        working-directory: ./ProjectSource/RedoCode_frontend
+        run: |
+          sudo apt-get update
+          sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb -y
+          yarn add cypress
+          yarn install
+      - name: run test
+        working-directory: ./ProjectSource/RedoCode_frontend
+        run: |
+          docker run --network="host" -v $PWD:/e2e -w /e2e --entrypoint cypress cypress/included:13.14.1 run --e2e -C config/cypress-prod.config.ts
+      - name: copy backed logs
+        working-directory: ./
+        if: failure()
+        run: |
+          sudo docker cp projectsource-api-1:/logs ./ProjectSource/RedoCode_frontend/backend_logs
+      - name: file testing
+        working-directory: ./ProjectSource/RedoCode_frontend
+        if: always()
+        run: |
+          tree $PWD
+          ls
+          ls -r
+          pwd
+      - name: upload backed logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: api-logs
+          path: ./ProjectSource/RedoCode_frontend/backend_logs
+      - name: upload cypress screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-prod-screenshots
+          path: ./ProjectSource/RedoCode_frontend/cypress/screenshots
+      - name: upload cypress videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-prod-videos
+          path: ./ProjectSource/RedoCode_frontend/cypress/videos
+      - name: upload cypress logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-prod-logs
+          path: ./ProjectSource/RedoCode_frontend/logs
