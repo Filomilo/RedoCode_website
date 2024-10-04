@@ -6,7 +6,7 @@ describe('hello world js run ', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       if (err.message.includes('ResizeObserver')) {
-          return false
+        return false
       }
     })
     cy.reload()

@@ -3,7 +3,6 @@ import UrlControls from '../helpers/UrlControls'
 
 describe('switch without authentication', () => {
   it('passes', () => {
-
     const email = 'mailmail@test.com'
     const password = 'Password+789'
 

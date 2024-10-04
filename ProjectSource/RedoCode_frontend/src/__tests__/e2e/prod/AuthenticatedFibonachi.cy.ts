@@ -13,7 +13,7 @@ describe('Authenticated FIbonachi', () => {
   it('Full sovling fibonachi', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       if (err.message.includes('ResizeObserver')) {
-          return false
+        return false
       }
     })
     const mail = 'sparky@mail.com'

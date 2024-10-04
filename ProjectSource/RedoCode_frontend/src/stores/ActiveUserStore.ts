@@ -215,15 +215,13 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
         'on connected userAuthentication: ' + JSON.stringify(getToken())
       )
       if (strToken.length > 0 && apiConnectionStore.isConnected) {
-        try{
-        await apiConnectionStore.stompApiSender.authenticationStomp({
-          token: strToken,
-        })
-      }
-      catch(ex)
-      {
-        console.warn("couldnt authrnticated stomp: "+ ex)
-      }
+        try {
+          await apiConnectionStore.stompApiSender.authenticationStomp({
+            token: strToken,
+          })
+        } catch (ex) {
+          console.warn('couldnt authrnticated stomp: ' + ex)
+        }
       }
       await codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     }

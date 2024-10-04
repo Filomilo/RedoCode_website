@@ -7,8 +7,6 @@ import ErrorPage from '../helpers/ErrorPage'
 
 describe('Phibonachi new exercise', () => {
   it('passes', () => {
-
-
     const cppSolution = `int solution(int val)
     {
         int* arr=new int[val];

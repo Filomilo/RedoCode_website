@@ -11,7 +11,7 @@ describe('Create new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       if (err.message.includes('ResizeObserver')) {
-          return false
+        return false
       }
     })
     const email = 'sunny@mail.com'
