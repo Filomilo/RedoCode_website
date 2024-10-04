@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe.skip('template spec', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

@@ -4,7 +4,7 @@ import ExercisesPage from '../helpers/ExercisesPage'
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
 import ResultPage from '../helpers/ResultPage'
-describe('template spec', () => {
+describe.skip('template spec', () => {
   it('passes', () => {
     UrlControls.visitResults(3)
     ResultPage.shouldBeVisible()

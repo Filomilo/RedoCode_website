@@ -61,22 +61,22 @@ namespace ResultPage {
 
   export namespace Rating {
     export function clickRating(index: number) {
-      cy.document().then((doc) => {
-        const htmlContent = doc.documentElement.outerHTML;
-        cy.log(htmlContent)
-        cy.writeFile('cypress/results/snapshot.html', htmlContent);
-      });
+      // cy.document().then((doc) => {
+      //   const htmlContent = doc.documentElement.outerHTML;
+      //   cy.log(htmlContent)
+      //   cy.writeFile('cypress/results/snapshot.html', htmlContent);
+      // });
 
       cy.get('#Result-rate-' + index).should('be.visible');
       cy.get('#Result-rate-' + index).should('be.visible').click()
     }
 
     export function selectedRating(label: string) {
-      cy.document().then((doc) => {
-        const htmlContent = doc.documentElement.outerHTML;
-        cy.log(htmlContent)
-       cy.writeFile('cypress/results/snapshot.html', htmlContent);
-      });
+      // cy.document().then((doc) => {
+      //   const htmlContent = doc.documentElement.outerHTML;
+      //   cy.log(htmlContent)
+      //  cy.writeFile('cypress/results/snapshot.html', htmlContent);
+      // });
       cy.get('#Result-rate-selection').should('be.visible');
       cy.get('#Result-rate-selection').should('be.visible').contains(label)
     }

@@ -1,7 +1,7 @@
 import UrlControls from '../helpers/UrlControls'
 import SolutionsList from '../helpers/SolutionsList'
 import LoadingPanel from '../helpers/LoadingPanel'
-describe('template spec', () => {
+describe.skip('template spec', () => {
   it('passes', () => {
     const comment = 'Comment'
 

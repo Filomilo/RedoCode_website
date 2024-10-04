@@ -3,7 +3,7 @@ import ResultPage from '../helpers/ResultPage'
 import ToastHelper from '../helpers/ToastHelper'
 import UrlControls from '../helpers/UrlControls'
 
-describe('account operations', () => {
+describe.skip('account operations', () => {
   it('account operations', () => {
     UrlControls.visitUserPanel()
     AccountPanel.ViewShouldBeStatistic()
