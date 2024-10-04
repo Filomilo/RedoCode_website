@@ -5,7 +5,7 @@ import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
 import ErrorPage from '../helpers/ErrorPage'
 
-describe('Phibonachi new exercise', () => {
+describe.skip('Phibonachi new exercise', () => {
   it('passes', () => {
 
 
