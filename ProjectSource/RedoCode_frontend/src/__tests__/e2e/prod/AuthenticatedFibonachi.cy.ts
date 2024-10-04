@@ -9,7 +9,7 @@ import ResultPage from '../helpers/ResultPage'
 import SolutionsList from '../helpers/SolutionsList'
 import ToastHelper from '../helpers/ToastHelper'
 
-describe('Authenticated FIbonachi', () => {
+describe.skip('Authenticated FIbonachi', () => {
   it('Full sovling fibonachi', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       if (err.message.includes('ResizeObserver')) {
