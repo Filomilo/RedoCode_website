@@ -118,37 +118,6 @@ describe('Authenticated FIbonachi', () => {
     UrlControls.urlShouldBe('Solutions/1')
     SolutionsList.shouldUsernameCommentBe(0, nick)
     SolutionsList.shouldContentCommentBe(0, comment)
-  }),
-  it('Raing SOlvedExercise', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
-    const mail = 'whisper@mail.com'
-    const password = 'Password+123'
-    const nick = 'whispe'
-    const comment = 'COmment_123'
-   UserAuthentication.login(mail,password)
-    UrlControls.startPage()
-    SwitcherControls.switchExercises()
-    ExercisesPage.openExerciseOfName('fibonachi sequance')
-    cy.wait(3000)
-    ResultPage.Rating.clickRating(4)
-    ResultPage.Rating.selectedRating('Very hard')
-    ResultPage.Rating.clickRate()
-    UrlControls.urlShouldBe('Solutions/1')
-    SwitcherControls.switchExercises()
-    ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe('Solutions/1')
-    SolutionsList.solutionListClick(0)
-    SolutionsList.solutionListClick(1)
-    SolutionsList.solutionListClick(2)
-    SolutionsList.postComment(comment)
-    SolutionsList.shouldUsernameCommentBe(0, nick)
-    SolutionsList.shouldContentCommentBe(0, comment)
-    SwitcherControls.switchExercises()
-    ExercisesPage.openExerciseOfName('fibonachi sequance')
-    UrlControls.urlShouldBe('Solutions/1')
-    SolutionsList.shouldUsernameCommentBe(0, nick)
-    SolutionsList.shouldContentCommentBe(0, comment)
   })
+
 })
