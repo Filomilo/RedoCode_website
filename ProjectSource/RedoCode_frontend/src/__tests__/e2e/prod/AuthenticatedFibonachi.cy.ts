@@ -131,6 +131,7 @@ describe('Authenticated FIbonachi', () => {
     UrlControls.startPage()
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
+    cy.wait(3000)
     ResultPage.Rating.clickRating(4)
     ResultPage.Rating.selectedRating('Very hard')
     ResultPage.Rating.clickRate()
