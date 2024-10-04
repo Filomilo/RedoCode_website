@@ -137,6 +137,7 @@
     align-items: center;
     flex-direction: column;
     font-size: 1.5rem;
+    min-height: 5rem;
   }
   .ColumnsContainer {
     display: flex;
