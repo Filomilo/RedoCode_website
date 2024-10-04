@@ -2,7 +2,9 @@
   <div v-if="props.rateOptions !== undefined && props.rateOptions.length > 0">
     <div class="RateSelector">
       <div class="ColumnsContainer">
-        <div
+        <Suspense>
+
+   <div
           v-for="(item, index) in props.rateOptions"
           v-bind:key="item.value"
           :id="props.id + '-' + index"
@@ -23,6 +25,13 @@
             @mouseleave="columnleave"
           />
         </div>
+
+
+          <template #fallback>
+            <span>Loading...</span>
+          </template>
+        </Suspense>
+     
       </div>
       <p
         class="labelContaiener"
