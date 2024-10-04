@@ -4,9 +4,7 @@ import UrlControls from '../helpers/UrlControls'
 
 describe('hello world js run ', () => {
   it('passes', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
+
     cy.reload()
     const helloWorldProgram = 'console.log("Hello World!")'
 

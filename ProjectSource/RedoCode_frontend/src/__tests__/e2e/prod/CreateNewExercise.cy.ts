@@ -9,9 +9,6 @@ import SolutionsList from '../helpers/SolutionsList'
 
 describe('Create new exercise', () => {
   it('passes', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
     const email = 'sunny@mail.com'
     const password = 'Password+123'
     const nick = 'sunny'

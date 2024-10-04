@@ -7,9 +7,7 @@ import ErrorPage from '../helpers/ErrorPage'
 
 describe('Phibonachi new exercise', () => {
   it('passes', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
+
 
     const cppSolution = `int solution(int val)
     {
