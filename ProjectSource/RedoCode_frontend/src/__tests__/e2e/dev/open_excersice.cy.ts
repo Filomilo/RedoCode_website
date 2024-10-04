@@ -1,6 +1,6 @@
 import { url } from 'inspector'
 
-describe.skip('open first exercise', () => {
+describe('open first exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false

@@ -10,7 +10,7 @@ import SolutionsList from '../helpers/SolutionsList'
 import ToastHelper from '../helpers/ToastHelper'
 
 describe('Authenticated FIbonachi', () => {
-  it.skip('Full sovling fibonachi', () => {
+  it('Full sovling fibonachi', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
