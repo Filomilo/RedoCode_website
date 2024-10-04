@@ -12,12 +12,12 @@
         <h2>Rate difficulty to see other solutions</h2>
       </div>
       <Suspense>
-              <RateSelector
-        class="RateSelectorContainer"
-        :rateOptions="rateOptions"
-        id="Result-rate"
-        v-model="selectedRating"
-      />
+        <RateSelector
+          class="RateSelectorContainer"
+          :rateOptions="rateOptions"
+          id="Result-rate"
+          v-model="selectedRating"
+        />
       </Suspense>
 
       <div class="" style="margin-top: 2rem">
@@ -49,10 +49,10 @@
 
   import { defineAsyncComponent } from 'vue'
 
-  const CodeRatingPanel=  defineAsyncComponent(
+  const CodeRatingPanel = defineAsyncComponent(
     () => import('@/components/CodeRatingPanel.vue')
   )
-  const NoDataFoundPanel=  defineAsyncComponent(
+  const NoDataFoundPanel = defineAsyncComponent(
     () => import('@/components/NoDataFoundPanel.vue')
   )
   const RateSelector = defineAsyncComponent(

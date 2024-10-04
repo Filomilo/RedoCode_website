@@ -48,9 +48,10 @@ export default class CodeRunnerConnection {
       .then((data: CoderunnerState) => {
         console.log('updateCodeRunner: ' + JSON.stringify(data))
         this.codeRunnerState.value = data
-      }).catch(ex=>{
-        console.warn("Couldn't get code runner state: "+ ex);
-        this.setNoneStatus();
+      })
+      .catch(ex => {
+        console.warn("Couldn't get code runner state: " + ex)
+        this.setNoneStatus()
       })
   }
 

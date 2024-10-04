@@ -89,25 +89,23 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   async function updateAccountData() {
-    try{
-    const token: string | null = getToken()
-    console.log('AuthController loading data for token: ' + token)
-    if (token !== null && token !== '') {
-      console.log('token loading for: ' + token)
-      const response = await EndpointAccess.authorized.getUserInfo()
-      console.log('Account info: ' + stringify(response))
+    try {
+      const token: string | null = getToken()
+      console.log('AuthController loading data for token: ' + token)
+      if (token !== null && token !== '') {
+        console.log('token loading for: ' + token)
+        const response = await EndpointAccess.authorized.getUserInfo()
+        console.log('Account info: ' + stringify(response))
 
-      accountInfo.value = response
-      // Object.assign(accountInfo, response);
-    } else {
+        accountInfo.value = response
+        // Object.assign(accountInfo, response);
+      } else {
+        accountInfo.value = unAuthUser
+      }
+    } catch (ex) {
+      console.warn('couldnt get user data ' + ex)
       accountInfo.value = unAuthUser
     }
-  }
-  catch(ex)
-  {
-    console.warn("couldnt get user data "+ex);
-    accountInfo.value = unAuthUser
-  }
   }
 
   //#endregion

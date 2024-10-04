@@ -3,35 +3,32 @@
     <div class="RateSelector">
       <div class="ColumnsContainer">
         <Suspense>
-
-   <div
-          v-for="(item, index) in props.rateOptions"
-          v-bind:key="item.value"
-          :id="props.id + '-' + index"
-          class="ColumnContainer"
-          :style="
-            'height: ' +
-            (100 / (props.rateOptions.length + 1)) * (index + 2) +
-            '%'
-          "
-        >
           <div
-            class="Column"
-            @click="selectColumn(index)"
+            v-for="(item, index) in props.rateOptions"
+            v-bind:key="item.value"
+            :id="props.id + '-' + index"
+            class="ColumnContainer"
             :style="
-              'background-color: ' + getColorForcolumnOfIndex(index) + ' ;'
+              'height: ' +
+              (100 / (props.rateOptions.length + 1)) * (index + 2) +
+              '%'
             "
-            @mouseover="columnEnter(index)"
-            @mouseleave="columnleave"
-          />
-        </div>
-
+          >
+            <div
+              class="Column"
+              @click="selectColumn(index)"
+              :style="
+                'background-color: ' + getColorForcolumnOfIndex(index) + ' ;'
+              "
+              @mouseover="columnEnter(index)"
+              @mouseleave="columnleave"
+            />
+          </div>
 
           <template #fallback>
             <span>Loading...</span>
           </template>
         </Suspense>
-     
       </div>
       <p
         class="labelContaiener"
@@ -48,8 +45,6 @@
   import { required } from '@vuelidate/validators'
   import { computed, ComputedRef, ModelRef, Ref, ref, onMounted } from 'vue'
   const chroma = await import('chroma-js')
-
-
 
   const props = defineProps<{
     rateOptions: RateOption[]

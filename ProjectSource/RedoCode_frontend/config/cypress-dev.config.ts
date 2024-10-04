@@ -11,7 +11,7 @@ export default defineConfig({
     video: true,
     screenshotOnRunFailure: true,
     setupNodeEvents(on, config) {
-        installLogsPrinter(on, {
+      installLogsPrinter(on, {
         logToFilesOnAfterRun: true,
         printLogsToConsole: 'always',
         printLogsToFile: 'always',
@@ -23,4 +23,3 @@ export default defineConfig({
     },
   },
 })
-

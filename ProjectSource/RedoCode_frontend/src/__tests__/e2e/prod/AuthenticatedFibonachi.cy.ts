@@ -119,5 +119,4 @@ describe('Authenticated FIbonachi', () => {
     SolutionsList.shouldUsernameCommentBe(0, nick)
     SolutionsList.shouldContentCommentBe(0, comment)
   })
-
 })

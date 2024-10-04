@@ -4,9 +4,9 @@
   import ChainOfReposibiltyWindow from '@/components/ChainOfReposibiltyWindow.vue'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
   import LoadingPanelVue from '@/components/LoadingPanel.vue'
-import { useApiConnectionStore } from './stores/ApiConnectionStore'
+  import { useApiConnectionStore } from './stores/ApiConnectionStore'
   const globalStateStore = useGlobalStateStore()
-  const ApiConnectionStore = useApiConnectionStore();
+  const ApiConnectionStore = useApiConnectionStore()
 </script>
 
 <template>

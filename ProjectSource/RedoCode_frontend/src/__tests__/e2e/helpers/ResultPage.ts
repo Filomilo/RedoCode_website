@@ -67,8 +67,10 @@ namespace ResultPage {
       //   cy.writeFile('cypress/results/snapshot.html', htmlContent);
       // });
 
-      cy.get('#Result-rate-' + index).should('be.visible');
-      cy.get('#Result-rate-' + index).should('be.visible').click()
+      cy.get('#Result-rate-' + index).should('be.visible')
+      cy.get('#Result-rate-' + index)
+        .should('be.visible')
+        .click()
     }
 
     export function selectedRating(label: string) {
@@ -77,7 +79,7 @@ namespace ResultPage {
       //   cy.log(htmlContent)
       //  cy.writeFile('cypress/results/snapshot.html', htmlContent);
       // });
-      cy.get('#Result-rate-selection').should('be.visible');
+      cy.get('#Result-rate-selection').should('be.visible')
       cy.get('#Result-rate-selection').should('be.visible').contains(label)
     }
 

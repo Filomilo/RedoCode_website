@@ -5,27 +5,23 @@ import StompApiConnection from '@/controllers/Stomp/StompApiConnection'
 import StompApiSender from '@/controllers/Stomp/StompApiSender'
 import StompApiSubscriptionsController from '@/controllers/Stomp/StompApiSubscriptionController'
 import StompApiSubscriptionController from '@/controllers/Stomp/StompApiSubscriptionController'
-import MessageNotification, { messageType } from '@/types/ApiMessages/MessageNotification'
+import MessageNotification, {
+  messageType,
+} from '@/types/ApiMessages/MessageNotification'
 
 export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
-  const _isConnected= ref(false)
-  const isConnected = computed(()=>{
+  const _isConnected = ref(false)
+  const isConnected = computed(() => {
     if (import.meta.env.MODE === 'development') {
-      return true;
+      return true
     }
-    return _isConnected.value;
+    return _isConnected.value
   })
 
   if (import.meta.env.MODE === 'development') {
     _isConnected.value = true
   }
-  const toastStore = useToastStore();
-
-
-
-
-
-
+  const toastStore = useToastStore()
 
   const stompApiConnection: StompApiConnection = new StompApiConnection(
     'ws://localhost:8080/public/web-socket',
@@ -41,7 +37,6 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     (message: string) => {
       toastStore.showErrorMessage(message)
       _isConnected.value = false
- 
     },
     () => {
       _isConnected.value = false
@@ -49,29 +44,34 @@ export const useApiConnectionStore = defineStore('apiConnectionStore', () => {
     }
   )
 
-
   const stompApiSender: StompApiSender = new StompApiSender(stompApiConnection)
 
   const stompApiSubscriptionController: StompApiSubscriptionsController =
     new StompApiSubscriptionController(stompApiConnection)
 
-
-
-    stompApiSubscriptionController.addServerNotificationsSubscription((notif: MessageNotification)=>{
-      console.log("stompApiSubscriptionController toast: "+ JSON.stringify(notif))
-      switch(notif.type){
-        case messageType.ERROR:  toastStore.showServerError(notif.message); break;
-        case messageType.INFO: toastStore.showServerInfo(notif.message); break;
-        case messageType.WARNING: toastStore.showServerWarn(notif.message); break;
+  stompApiSubscriptionController.addServerNotificationsSubscription(
+    (notif: MessageNotification) => {
+      console.log(
+        'stompApiSubscriptionController toast: ' + JSON.stringify(notif)
+      )
+      switch (notif.type) {
+        case messageType.ERROR:
+          toastStore.showServerError(notif.message)
+          break
+        case messageType.INFO:
+          toastStore.showServerInfo(notif.message)
+          break
+        case messageType.WARNING:
+          toastStore.showServerWarn(notif.message)
+          break
       }
-    })
-  
+    }
+  )
 
   return {
     stompApiSender,
     stompApiSubscriptionController,
     stompApiConnection,
     isConnected,
-    
   }
 })

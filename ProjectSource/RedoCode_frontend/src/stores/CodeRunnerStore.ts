@@ -20,12 +20,10 @@ export const useCodeRunnerStore = defineStore('codeRunnerStore', () => {
     codeRunnerConnection
   )
 
-
-  apiConnectionStore.stompApiConnection.addOnDisconnectEvent(()=>{
-    console.log("updateCodeRunner on Discconet event")
-    codeRunnerConnection.updateCodeRunner();
+  apiConnectionStore.stompApiConnection.addOnDisconnectEvent(() => {
+    console.log('updateCodeRunner on Discconet event')
+    codeRunnerConnection.updateCodeRunner()
   })
-
 
   const playGroundRunnerController: PlayGroundRunnerController =
     new PlayGroundRunnerController()

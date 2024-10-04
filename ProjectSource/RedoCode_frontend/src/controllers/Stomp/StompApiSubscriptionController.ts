@@ -93,10 +93,14 @@ class StompApiSubscriptionController {
 
   private _ServerNotificationsCallBack(message: object) {
     const results: MessageNotification = message as MessageNotification
-    console.log('_ServerNotificationsCallBack received  ' + JSON.stringify(results))
+    console.log(
+      '_ServerNotificationsCallBack received  ' + JSON.stringify(results)
+    )
     this._ServerNotificationsSubscriptions.forEach(
       (element: (notifications: MessageNotification) => void) => {
-        console.log("_ServerNotificationsCallBack subs: "+element+" for "+ results)
+        console.log(
+          '_ServerNotificationsCallBack subs: ' + element + ' for ' + results
+        )
         element(results)
       }
     )
@@ -213,8 +217,6 @@ class StompApiSubscriptionController {
   }
   //#endregion
 
-
-
   //#region execution chain scheme
   private _ServerNotificationsSubscriptions: ((
     notifications: MessageNotification
@@ -223,7 +225,7 @@ class StompApiSubscriptionController {
   public addServerNotificationsSubscription(
     method: (notifications: MessageNotification) => void
   ): void {
-    console.log("addServerNotificationsSubscription: "+method)
+    console.log('addServerNotificationsSubscription: ' + method)
     this._ServerNotificationsSubscriptions.push(method)
   }
   public removeServerNotificationsSubscription(
@@ -241,7 +243,6 @@ class StompApiSubscriptionController {
     this._ServerNotificationsSubscriptions = []
   }
   //#endregion
-
 
   //#endregion
 }

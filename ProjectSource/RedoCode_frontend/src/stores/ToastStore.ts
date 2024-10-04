@@ -3,15 +3,21 @@ import { useToast } from 'primevue/usetoast'
 import { useApiConnectionStore } from './ApiConnectionStore'
 import StompApiSubscriptionsController from '@/controllers/Stomp/StompApiSubscriptionController'
 
-import MessageNotification, { messageType } from '@/types/ApiMessages/MessageNotification'
+import MessageNotification, {
+  messageType,
+} from '@/types/ApiMessages/MessageNotification'
 import StompApiConnection from '@/controllers/Stomp/StompApiConnection'
 
 export const useToastStore = defineStore('toastStore', () => {
   const toast = useToast()
-  const apiConnectionStore = useApiConnectionStore();
+  const apiConnectionStore = useApiConnectionStore()
 
-  const stompApiSubscriptionController: StompApiSubscriptionsController=apiConnectionStore.stompApiSubscriptionController as StompApiSubscriptionsController; 
-console.log("apiConnectionStore.isConnected: "+JSON.stringify( apiConnectionStore.isConnected))
+  const stompApiSubscriptionController: StompApiSubscriptionsController =
+    apiConnectionStore.stompApiSubscriptionController as StompApiSubscriptionsController
+  console.log(
+    'apiConnectionStore.isConnected: ' +
+      JSON.stringify(apiConnectionStore.isConnected)
+  )
   const shotWrongLogin = () => {
     toast.add({
       severity: 'error',
@@ -63,17 +69,10 @@ console.log("apiConnectionStore.isConnected: "+JSON.stringify( apiConnectionStor
     })
   }
 
-
-
-
-
-
   //#region Server notifacations
 
-
-
   const showServerInfo = (message: string) => {
-    console.log("showServerInfo: "+JSON.stringify(message))
+    console.log('showServerInfo: ' + JSON.stringify(message))
     toast.add({
       severity: 'info',
       summary: 'Server info',
@@ -82,7 +81,7 @@ console.log("apiConnectionStore.isConnected: "+JSON.stringify( apiConnectionStor
     })
   }
   const showServerWarn = (message: string) => {
-    console.log("showServerWarn: "+JSON.stringify(message))
+    console.log('showServerWarn: ' + JSON.stringify(message))
     toast.add({
       severity: 'warn',
       summary: 'Server warrning',
@@ -91,7 +90,7 @@ console.log("apiConnectionStore.isConnected: "+JSON.stringify( apiConnectionStor
     })
   }
   const showServerError = (message: string) => {
-    console.log("showServerError: "+JSON.stringify(message))
+    console.log('showServerError: ' + JSON.stringify(message))
     toast.add({
       severity: 'error',
       summary: 'Server error',
@@ -102,11 +101,6 @@ console.log("apiConnectionStore.isConnected: "+JSON.stringify( apiConnectionStor
 
   //#endregion
 
-
-
-
-
-
   return {
     shotWrongLogin,
     shotCorrectLogin,
@@ -114,8 +108,8 @@ console.log("apiConnectionStore.isConnected: "+JSON.stringify( apiConnectionStor
     showSuccessMessage,
     showErrorMessage,
     showProcessingMessage: showProcessingMessage,
-    showServerInfo, 
+    showServerInfo,
     showServerWarn,
-    showServerError
+    showServerError,
   }
 })

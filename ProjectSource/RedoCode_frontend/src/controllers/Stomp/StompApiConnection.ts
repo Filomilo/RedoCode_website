@@ -63,8 +63,8 @@ export default class StompApiConnection {
       onWebSocketError: (frame: IFrame) => {
         console.log(connectionUrl + ' onWebSocketError')
         this._onError('there was an websocket error wtih server connection')
-        const codeRunnerStore = useCodeRunnerStore();
-        codeRunnerStore.codeRunnerConnection.updateCodeRunner();
+        const codeRunnerStore = useCodeRunnerStore()
+        codeRunnerStore.codeRunnerConnection.updateCodeRunner()
       },
       onDisconnect: (frame: IFrame) => {
         this._onDisconnected()
