@@ -6,7 +6,7 @@ namespace StringParser {
   }
 
   export function parseStringToCodeResult(txt: string): string {
-    if (txt === '') return ''
+    if (!txt || txt === '') return ''
     const lineBegin = '>>    '
 
     const lineBeginning = lineBegin + txt.replaceAll('\n', '\n' + lineBegin)

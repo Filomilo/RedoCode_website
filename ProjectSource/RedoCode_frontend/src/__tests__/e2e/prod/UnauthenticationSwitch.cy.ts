@@ -3,9 +3,7 @@ import UrlControls from '../helpers/UrlControls'
 
 describe('switch without authentication', () => {
   it('passes', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
+
     const email = 'mailmail@test.com'
     const password = 'Password+789'
 
