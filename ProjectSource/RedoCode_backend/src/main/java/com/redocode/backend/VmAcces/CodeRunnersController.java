@@ -1,6 +1,9 @@
 package com.redocode.backend.VmAcces;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.RequestHadndlingException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.database.User;
 import com.redocode.backend.ConnectionCotrollers.CodeRunnersConnectionController;
 import com.redocode.backend.ConnectionCotrollers.MessageSender;
@@ -61,10 +64,18 @@ public class CodeRunnersController {
   private void updateQueue() {
     log.info("updating queue");
     if (requestQueue.size() > 0) {
-      log.info("removing request from queue and creating new vm");
-      CodeRunnerRequest rq = requestQueue.poll();
-      this.requestMessageSet.remove(rq);
-      this.createNewVm(rq);
+
+        log.info("removing request from queue and creating new vm");
+        CodeRunnerRequest rq = requestQueue.poll();
+        this.requestMessageSet.remove(rq);
+      try {
+        this.createNewVm(rq);
+      }
+      catch (ContainerException e) {
+        log.error("Conatienr eroro: "+e.getMessage());
+      } catch (VmControllerException e) {
+          log.error("Vm Controoler eroro: "+e.getMessage());
+      }
     }
   }
 
@@ -99,7 +110,7 @@ public class CodeRunnersController {
   }
 
   @Synchronized
-  private void createNewVm(CodeRunnerRequest codeRunnerRequest) {
+  private void createNewVm(CodeRunnerRequest codeRunnerRequest) throws ContainerException, VmControllerException {
     log.info("creating new vm per request: " + codeRunnerRequest);
     CodeRunner codeRunner = CodeRunnerBuilder.build(codeRunnerRequest);
     this.usersCodeRunenrs.put(codeRunnerRequest.getUser(), codeRunner);
@@ -108,13 +119,23 @@ public class CodeRunnersController {
     updateCodeRunnerState(codeRunnerRequest.getUser());
   }
 
-  public void requestVm(CodeRunnerRequest codeRunnerRequest) {
+  public void requestVm(CodeRunnerRequest codeRunnerRequest) throws RequestHadndlingException {
     if (usersCodeRunenrs.containsKey(codeRunnerRequest.getUser())) {
       deregisterUser(codeRunnerRequest.getUser());
     }
 
     if (usersCodeRunenrs.size() < maxAmountOfVm) {
-      createNewVm(codeRunnerRequest);
+      try {
+        createNewVm(codeRunnerRequest);
+      }
+      catch (ContainerException e) {
+        log.error(e.getMessage());
+        throw new RequestHadndlingException("Error creating container");
+      } catch (VmControllerException e) {
+        log.error("Vm controler error: "+e.getMessage());
+        throw new RequestHadndlingException("Error connecting to vm controller");
+
+      }
     } else {
       addToQueue(codeRunnerRequest);
     }

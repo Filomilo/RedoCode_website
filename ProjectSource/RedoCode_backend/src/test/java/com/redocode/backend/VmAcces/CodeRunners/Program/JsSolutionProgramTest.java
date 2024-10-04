@@ -1,5 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners.Program;
 
+import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.CppCodeRunner;
@@ -22,7 +24,7 @@ public class JsSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleIntProvider")
-  void runProgramJsReturnInt(Integer val) {
+  void runProgramJsReturnInt(Integer val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     Program program =
         ProgramFactory.createSolutionProgram()
@@ -45,7 +47,7 @@ public class JsSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleFloatProvider")
-  void runProgramJsReturnFloat(Float val) {
+  void runProgramJsReturnFloat(Float val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     Program program =
         ProgramFactory.createSolutionProgram()
@@ -65,7 +67,7 @@ public class JsSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#singleStringProvider")
-  void runProgramJsReturnString(String val) {
+  void runProgramJsReturnString(String val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     Program program =
         ProgramFactory.createSolutionProgram()
@@ -85,7 +87,7 @@ public class JsSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
-  void runProgramJSReturnStringArray(String[] val) {
+  void runProgramJSReturnStringArray(String[] val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     ArrayOfStrings resultTemplate = new ArrayOfStrings();
     resultTemplate.setW(val.length);
@@ -107,7 +109,7 @@ public class JsSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayIntProvider")
-  void runProgramJsReturnIntArray(Integer[] val) {
+  void runProgramJsReturnIntArray(Integer[] val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     ArrayOfIntegers resultTemplate = new ArrayOfIntegers();
     resultTemplate.setW(val.length);
@@ -130,7 +132,7 @@ public class JsSolutionProgramTest {
   //
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayFloatProvider")
-  void runProgramJsReturnIntArray(Float[] val) {
+  void runProgramJsReturnIntArray(Float[] val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     ArrayOfFloats resultTemplate = new ArrayOfFloats();
     resultTemplate.setW(val.length);
@@ -155,7 +157,7 @@ public class JsSolutionProgramTest {
   //
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
-  void runProgramJsReturnStringDoubleArray(String[][] val) {
+  void runProgramJsReturnStringDoubleArray(String[][] val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfStrings resultTemplate = new DoubleArrayOfStrings();
     resultTemplate.setW(val[0].length);
@@ -184,7 +186,7 @@ public class JsSolutionProgramTest {
   //
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
-  void runProgramJsReturnIntDoubleArray(Integer[][] val) {
+  void runProgramJsReturnIntDoubleArray(Integer[][] val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfIntegers resultTemplate = new DoubleArrayOfIntegers();
     resultTemplate.setW(val[0].length);
@@ -216,7 +218,7 @@ public class JsSolutionProgramTest {
   //
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
-  void runProgramJsReturnFloatDoubleArray(Float[][] val) {
+  void runProgramJsReturnFloatDoubleArray(Float[][] val) throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfFloats resultTemplate = new DoubleArrayOfFloats();
     resultTemplate.setW(val[0].length);

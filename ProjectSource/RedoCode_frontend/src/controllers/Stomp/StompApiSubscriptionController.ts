@@ -5,6 +5,7 @@ import ExecutionResponseBase from '@/types/ApiMessages/ExecutionResponses/Execut
 import ExecutionChainScheme from '@/types/ApiMessages/ExecutionResponses/ExecutionChainScheme'
 import ExecutionResponseStatusUpdate from '@/types/ApiMessages/ExecutionResponses/ExecutionResponseStatusUpdate'
 import StompApiSubscription from './StompApiSubscription'
+import MessageNotification from '@/types/ApiMessages/MessageNotification'
 
 class StompApiSubscriptionController {
   private _stompApiConnection: StompApiConnection
@@ -31,12 +32,18 @@ class StompApiSubscriptionController {
       '/user/public/topic/ExecutionResponses',
       this._ExecutionChainCallBack.bind(this)
     )
+
+    this._ServerNotificationSubscriptions = this._stompApiConnection.subscribe(
+      '/user/public/topic/ServerNotifications',
+      this._ServerNotificationsCallBack.bind(this)
+    )
   }
 
   //#region Subscription objects
   private _vmStatusSubscription!: StompApiSubscription
   private _CodeResultsSubscription!: StompApiSubscription
   private _ExecutionChainSubscription!: StompApiSubscription
+  private _ServerNotificationSubscriptions!: StompApiSubscription
   //#endregion
 
   //#region Subscription CallBacks
@@ -82,6 +89,17 @@ class StompApiSubscriptionController {
           element(responseBase as ExecutionResponseStatusUpdate)
         }
       )
+  }
+
+  private _ServerNotificationsCallBack(message: object) {
+    const results: MessageNotification = message as MessageNotification
+    console.log('_ServerNotificationsCallBack received  ' + JSON.stringify(results))
+    this._ServerNotificationsSubscriptions.forEach(
+      (element: (notifications: MessageNotification) => void) => {
+        console.log("_ServerNotificationsCallBack subs: "+element+" for "+ results)
+        element(results)
+      }
+    )
   }
   //#endregion
 
@@ -194,6 +212,36 @@ class StompApiSubscriptionController {
     this._CodeResultsSubscriptions = []
   }
   //#endregion
+
+
+
+  //#region execution chain scheme
+  private _ServerNotificationsSubscriptions: ((
+    notifications: MessageNotification
+  ) => void)[] = []
+
+  public addServerNotificationsSubscription(
+    method: (notifications: MessageNotification) => void
+  ): void {
+    console.log("addServerNotificationsSubscription: "+method)
+    this._ServerNotificationsSubscriptions.push(method)
+  }
+  public removeServerNotificationsSubscription(
+    method: (notifications: MessageNotification) => void
+  ): void {
+    const indexToRemove = this._ServerNotificationsSubscriptions.findIndex(
+      item => item === method
+    )
+    if (indexToRemove !== -1) {
+      this._ServerNotificationsSubscriptions.splice(indexToRemove, 1)
+    }
+  }
+
+  public clearServerNotificationsSubscriptions() {
+    this._ServerNotificationsSubscriptions = []
+  }
+  //#endregion
+
 
   //#endregion
 }

@@ -1,5 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
+import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseIdToRunMessage;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunnersController;
@@ -27,7 +29,7 @@ public class FromMessageProgramRun {
   static CodeRunner cppCodeRunner;
 
   @BeforeAll
-  static void initlizeCodeRunners() {
+  static void initlizeCodeRunners() throws ContainerException, VmControllerException {
     cppCodeRunner = new CppCodeRunner(128);
     cppCodeRunner.start();
   }

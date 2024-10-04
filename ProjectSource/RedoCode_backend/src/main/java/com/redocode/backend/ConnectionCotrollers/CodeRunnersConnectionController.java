@@ -1,9 +1,11 @@
 package com.redocode.backend.ConnectionCotrollers;
 
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
+import com.redocode.backend.Messages.MessageNotification;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.VmAcces.CodeRunnersController;
+import com.redocode.backend.database.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,7 +23,7 @@ public class CodeRunnersConnectionController {
   public static final String codeRunnerResultEndPoint = "public/topic/codeRunnerResults";
 
   @Autowired private CodeRunnersController codeRunnersController;
-
+  @Autowired private  MessageSender messageSender;
   @Autowired private RedoCodeController redoCodeController;
 
   @Autowired
@@ -34,9 +36,20 @@ public class CodeRunnersConnectionController {
       throws Exception {
     String userId = principal.getName();
     log.info("code runner reuqest from: " + userId + " : " + requestMessageSource);
-    CodeRunnerRequest req =
-        new CodeRunnerRequest(
-            redoCodeController.getUserByConnectionUUID(userId), requestMessageSource);
-    codeRunnersController.requestVm(req);
+    User user = redoCodeController.getUserByConnectionUUID(userId);
+    try {
+
+      CodeRunnerRequest req =
+              new CodeRunnerRequest(
+                      user, requestMessageSource);
+      codeRunnersController.requestVm(req);
+    }
+    catch (Exception e) {
+      log.error("Error requesting code runner: "+ e.getMessage());
+      messageSender.sendMessageNotification(user, MessageNotification.builder()
+                      .type(MessageNotification.MessageType.ERROR)
+                      .message(e.getMessage()+" : please contact administrator")
+              .build() );
+    }
   }
 }

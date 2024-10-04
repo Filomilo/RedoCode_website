@@ -1,5 +1,6 @@
 package com.redocode.backend.VmAcces.vmConnection;
 
+import com.redocode.backend.Excpetions.ContainerException;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.VmStatus;
 
@@ -8,7 +9,7 @@ import java.util.concurrent.TimeoutException;
 
 public abstract class VmConnector {
 
-  public abstract String createVm(String vmName, int ramMb);
+  public abstract String createVm(String vmName, int ramMb) throws  ContainerException;
 
   abstract void pullImageSync(String Image) throws InterruptedException;
 

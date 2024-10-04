@@ -1,5 +1,6 @@
 package com.redocode.backend.ConnectionCotrollers;
 
+import com.redocode.backend.Messages.MessageNotification;
 import com.redocode.backend.database.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,4 +27,11 @@ public class MessageSender {
   public void sendMessage(User user, String dir, Object payload) {
     sendMessage(user.getSessionID(), dir, payload);
   }
+  public void sendMessageNotification(User user, MessageNotification notification) {
+    sendMessageNotification(user.getSessionID(), notification);
+  }
+  public void sendMessageNotification(String id, MessageNotification notification) {
+    sendMessage(id,"/public/topic/ServerNotifications", notification);
+  }
+
 }

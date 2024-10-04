@@ -135,7 +135,11 @@ namespace EndpointAccess {
           throw 'no status codeRunner'
         return response.data
       } catch ({ response }: any) {
+        if(!response)
+          throw "Couldn't get get codeRunner state"
+        if(response.data)
         throw response.data
+      throw response;
       }
     }
   }
@@ -382,7 +386,11 @@ namespace EndpointAccess {
         )
         return response.data
       } catch ({ response }: any) {
+        if(!response)
+          throw "unknown error while getting user info"
+        if(response.data)
         throw response.data
+      throw response
       }
     }
 

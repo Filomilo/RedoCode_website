@@ -9,8 +9,8 @@ import ResultPage from '../helpers/ResultPage'
 import SolutionsList from '../helpers/SolutionsList'
 import ToastHelper from '../helpers/ToastHelper'
 
-describe('template spec', () => {
-  it('passes', () => {
+describe('Authenticated FIbonachi', () => {
+  it('Full sovling fibonachi', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
@@ -119,4 +119,5 @@ describe('template spec', () => {
     SolutionsList.shouldUsernameCommentBe(0, nick)
     SolutionsList.shouldContentCommentBe(0, comment)
   })
+
 })

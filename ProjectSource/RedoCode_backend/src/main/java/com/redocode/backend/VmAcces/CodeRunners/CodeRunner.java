@@ -1,5 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
+import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
@@ -12,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 public abstract class CodeRunner extends ContainerController {
 
-  protected CodeRunner(String image, int ramMb) {
+  protected CodeRunner(String image, int ramMb) throws ContainerException, VmControllerException {
     super(image, ramMb);
     type = CODE_RUNNER_TYPE.UNIDENTIFIED;
   }

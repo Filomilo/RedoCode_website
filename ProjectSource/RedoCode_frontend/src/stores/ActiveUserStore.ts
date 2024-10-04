@@ -89,6 +89,7 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
   }
 
   async function updateAccountData() {
+    try{
     const token: string | null = getToken()
     console.log('AuthController loading data for token: ' + token)
     if (token !== null && token !== '') {
@@ -101,6 +102,12 @@ export const useActiveUserStore = defineStore('activeUserStore', () => {
     } else {
       accountInfo.value = unAuthUser
     }
+  }
+  catch(ex)
+  {
+    console.warn("couldnt get user data "+ex);
+    accountInfo.value = unAuthUser
+  }
   }
 
   //#endregion

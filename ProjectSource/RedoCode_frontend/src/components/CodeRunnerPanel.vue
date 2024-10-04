@@ -35,8 +35,10 @@
 
     <div
       v-if="
+      (
         codeRunnerStore.codeRunnerConnection.doesHaveACtiveToCodeRunner ||
-        codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
+        codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner 
+      ) && ApiConnectionStore.isConnected
       "
       class="heightLimit widthLimit"
     >
@@ -165,7 +167,7 @@
 
   const awaiting: ComputedRef<boolean> = computed(() => {
     if (import.meta.env.MODE === 'development') return false
-    return codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner
+    return codeRunnerStore.codeRunnerConnection.isAwaitingCodeRunner 
   })
 </script>
 

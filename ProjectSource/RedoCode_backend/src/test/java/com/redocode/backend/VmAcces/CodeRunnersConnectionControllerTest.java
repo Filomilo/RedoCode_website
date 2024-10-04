@@ -1,6 +1,7 @@
 package com.redocode.backend.VmAcces;
 
 import com.redocode.backend.Auth.*;
+import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
@@ -268,7 +269,7 @@ class CodeRunnersConnectionControllerTest {
   }
 
   @Test
-  void testAutoStartFromQueue() {
+  void testAutoStartFromQueue() throws RequestHadndlingException {
     List<User> bufferFillUser = new ArrayList<>();
     for (int i = 0; i < CodeRunnersController.maxAmountOfVm; i++) {
       User user = new User(UUID.randomUUID().toString());

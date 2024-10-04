@@ -85,6 +85,25 @@ jobs:
       - name: Run Cypress Tests
         run: |
           yarn test:dev:e2e
+      - name: Uploud screnschots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-dev-screenshots
+          path: ./ProjectSource/RedoCode_frontend/cypress/screenshots
+      - name: upload cypress videos
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-dev-videos
+          path: ./ProjectSource/RedoCode_frontend/cypress/videos
+      - name: upload cypress logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-dev-logs
+          path: ./ProjectSource/RedoCode_frontend/logs
+      
 
   backend-junit-dev-docker:
     needs:
@@ -194,17 +213,17 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: cypress-screenshots
+          name: cypress-prod-screenshots
           path: ./ProjectSource/RedoCode_frontend/cypress/screenshots
       - name: upload cypress videos
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-videos
+          name: cypress-prod-videos
           path: ./ProjectSource/RedoCode_frontend/cypress/videos
       - name: upload cypress logs
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-logs
+          name: cypress-prod-logs
           path: ./ProjectSource/RedoCode_frontend/logs

@@ -1,5 +1,7 @@
 package com.redocode.backend.VmAcces.CodeRunners;
 
+import com.redocode.backend.Excpetions.ContainerException;
+import com.redocode.backend.Excpetions.VmControllerException;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Program;
 import lombok.SneakyThrows;
 
@@ -8,7 +10,7 @@ import java.util.UUID;
 
 public class CppCodeRunner extends CodeRunner {
 
-  public CppCodeRunner(int ramMb) {
+  public CppCodeRunner(int ramMb) throws ContainerException, VmControllerException {
     super("filipredocode/redocode:CppRunner", ramMb);
     type = CODE_RUNNER_TYPE.CPP_RUNNER;
   }

@@ -2,7 +2,9 @@
   <div v-if="props.rateOptions !== undefined && props.rateOptions.length > 0">
     <div class="RateSelector">
       <div class="ColumnsContainer">
-        <div
+        <Suspense>
+
+   <div
           v-for="(item, index) in props.rateOptions"
           v-bind:key="item.value"
           :id="props.id + '-' + index"
@@ -23,6 +25,13 @@
             @mouseleave="columnleave"
           />
         </div>
+
+
+          <template #fallback>
+            <span>Loading...</span>
+          </template>
+        </Suspense>
+     
       </div>
       <p
         class="labelContaiener"
@@ -38,7 +47,10 @@
 <script setup lang="ts">
   import { required } from '@vuelidate/validators'
   import { computed, ComputedRef, ModelRef, Ref, ref, onMounted } from 'vue'
-  import chroma from 'chroma-js'
+  const chroma = await import('chroma-js')
+
+
+
   const props = defineProps<{
     rateOptions: RateOption[]
     heightChange?: number
@@ -87,7 +99,7 @@
   }
 
   const gradient = chroma.scale(['#00ff00', '#ff0000']).mode('lab').colors(5) // Generate 10 colors between the two
-  console.log(`geadint: ${JSON.stringify(gradient)}`)
+  console.log(`Rate Selector gradient: ${JSON.stringify(gradient)}`)
   const getColorSelection = (val: number): string => {
     return gradient[val]
   }
@@ -125,6 +137,7 @@
     align-items: center;
     flex-direction: column;
     font-size: 1.5rem;
+    min-height: 5rem;
   }
   .ColumnsContainer {
     display: flex;
