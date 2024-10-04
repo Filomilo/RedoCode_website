@@ -11,6 +11,11 @@ import ToastHelper from '../helpers/ToastHelper'
 
 describe('Authenticated FIbonachi', () => {
   it('Full sovling fibonachi', () => {
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      if (err.message.includes('ResizeObserver')) {
+          return false
+      }
+    })
     const mail = 'sparky@mail.com'
     const password = 'Password+123'
     const nick = 'sparky'

@@ -4,7 +4,11 @@ import UrlControls from '../helpers/UrlControls'
 // test doenst make ene needs fixing later
 describe('hello world cpp run ', () => {
   it('passes', () => {
-
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      if (err.message.includes('ResizeObserver')) {
+          return false
+      }
+    })
     cy.reload()
     const helloWorldProgram = 'console.log("Hello World!")'
 
