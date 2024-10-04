@@ -65,16 +65,15 @@ public class CodeRunnersController {
     log.info("updating queue");
     if (requestQueue.size() > 0) {
 
-        log.info("removing request from queue and creating new vm");
-        CodeRunnerRequest rq = requestQueue.poll();
-        this.requestMessageSet.remove(rq);
+      log.info("removing request from queue and creating new vm");
+      CodeRunnerRequest rq = requestQueue.poll();
+      this.requestMessageSet.remove(rq);
       try {
         this.createNewVm(rq);
-      }
-      catch (ContainerException e) {
-        log.error("Conatienr eroro: "+e.getMessage());
+      } catch (ContainerException e) {
+        log.error("Conatienr eroro: " + e.getMessage());
       } catch (VmControllerException e) {
-          log.error("Vm Controoler eroro: "+e.getMessage());
+        log.error("Vm Controoler eroro: " + e.getMessage());
       }
     }
   }
@@ -110,7 +109,8 @@ public class CodeRunnersController {
   }
 
   @Synchronized
-  private void createNewVm(CodeRunnerRequest codeRunnerRequest) throws ContainerException, VmControllerException {
+  private void createNewVm(CodeRunnerRequest codeRunnerRequest)
+      throws ContainerException, VmControllerException {
     log.info("creating new vm per request: " + codeRunnerRequest);
     CodeRunner codeRunner = CodeRunnerBuilder.build(codeRunnerRequest);
     this.usersCodeRunenrs.put(codeRunnerRequest.getUser(), codeRunner);
@@ -127,14 +127,12 @@ public class CodeRunnersController {
     if (usersCodeRunenrs.size() < maxAmountOfVm) {
       try {
         createNewVm(codeRunnerRequest);
-      }
-      catch (ContainerException e) {
+      } catch (ContainerException e) {
         log.error(e.getMessage());
         throw new RequestHadndlingException("Error creating container");
       } catch (VmControllerException e) {
-        log.error("Vm controler error: "+e.getMessage());
+        log.error("Vm controler error: " + e.getMessage());
         throw new RequestHadndlingException("Error connecting to vm controller");
-
       }
     } else {
       addToQueue(codeRunnerRequest);

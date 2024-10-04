@@ -87,7 +87,8 @@ public class JsSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
-  void runProgramJSReturnStringArray(String[] val) throws ContainerException, VmControllerException {
+  void runProgramJSReturnStringArray(String[] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     ArrayOfStrings resultTemplate = new ArrayOfStrings();
     resultTemplate.setW(val.length);
@@ -157,7 +158,8 @@ public class JsSolutionProgramTest {
   //
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
-  void runProgramJsReturnStringDoubleArray(String[][] val) throws ContainerException, VmControllerException {
+  void runProgramJsReturnStringDoubleArray(String[][] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfStrings resultTemplate = new DoubleArrayOfStrings();
     resultTemplate.setW(val[0].length);
@@ -186,7 +188,8 @@ public class JsSolutionProgramTest {
   //
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
-  void runProgramJsReturnIntDoubleArray(Integer[][] val) throws ContainerException, VmControllerException {
+  void runProgramJsReturnIntDoubleArray(Integer[][] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfIntegers resultTemplate = new DoubleArrayOfIntegers();
     resultTemplate.setW(val[0].length);
@@ -218,7 +221,8 @@ public class JsSolutionProgramTest {
   //
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
-  void runProgramJsReturnFloatDoubleArray(Float[][] val) throws ContainerException, VmControllerException {
+  void runProgramJsReturnFloatDoubleArray(Float[][] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfFloats resultTemplate = new DoubleArrayOfFloats();
     resultTemplate.setW(val[0].length);

@@ -14,11 +14,12 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 @Builder
 public class MessageNotification {
-    public enum MessageType {
-        ERROR, INFO, WARNING
-    }
+  public enum MessageType {
+    ERROR,
+    INFO,
+    WARNING
+  }
 
-    MessageType type;
-    String message;
-
+  MessageType type;
+  String message;
 }

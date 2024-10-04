@@ -9,7 +9,7 @@ import java.util.concurrent.TimeoutException;
 
 public abstract class VmConnector {
 
-  public abstract String createVm(String vmName, int ramMb) throws  ContainerException;
+  public abstract String createVm(String vmName, int ramMb) throws ContainerException;
 
   abstract void pullImageSync(String Image) throws InterruptedException;
 

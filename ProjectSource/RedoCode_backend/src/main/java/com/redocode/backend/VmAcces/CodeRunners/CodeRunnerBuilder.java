@@ -12,7 +12,8 @@ public class CodeRunnerBuilder {
 
   CodeRunner instance;
 
-  public CodeRunnerBuilder(CODE_RUNNER_TYPE type, int ram) throws ContainerException, VmControllerException {
+  public CodeRunnerBuilder(CODE_RUNNER_TYPE type, int ram)
+      throws ContainerException, VmControllerException {
     switch (type) {
       case CPP_RUNNER -> instance = new CppCodeRunner(ram);
       case JS_RUNNER -> instance = new JsCodeRunner(ram);
@@ -23,7 +24,8 @@ public class CodeRunnerBuilder {
     return instance;
   }
 
-  public static CodeRunner build(CodeRunnerRequest codeRunnerRequest) throws ContainerException, VmControllerException {
+  public static CodeRunner build(CodeRunnerRequest codeRunnerRequest)
+      throws ContainerException, VmControllerException {
     return new CodeRunnerBuilder(codeRunnerRequest.getCodeRunnerType(), codeRunnerRequest.getRam())
         .build();
   }

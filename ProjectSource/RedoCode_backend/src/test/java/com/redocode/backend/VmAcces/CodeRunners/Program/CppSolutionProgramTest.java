@@ -115,7 +115,8 @@ class CppSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#arrayStringProvider")
-  void runProgramCppReturnStringArray(String[] val) throws ContainerException, VmControllerException {
+  void runProgramCppReturnStringArray(String[] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     ArrayOfStrings resultTemplate = new ArrayOfStrings();
     resultTemplate.setW(val.length);
@@ -194,7 +195,8 @@ class CppSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayStringProvider")
-  void runProgramCppReturnStringDoubleArray(String[][] val) throws ContainerException, VmControllerException {
+  void runProgramCppReturnStringDoubleArray(String[][] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfStrings resultTemplate = new DoubleArrayOfStrings();
     resultTemplate.setW(val[0].length);
@@ -225,7 +227,8 @@ class CppSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayIntProvider")
-  void runProgramCppReturnIntDoubleArray(Integer[][] val) throws ContainerException, VmControllerException {
+  void runProgramCppReturnIntDoubleArray(Integer[][] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfIntegers resultTemplate = new DoubleArrayOfIntegers();
     resultTemplate.setW(val[0].length);
@@ -257,7 +260,8 @@ class CppSolutionProgramTest {
 
   @ParameterizedTest
   @MethodSource("com.redocode.backend.DataProviders.ValuesProvider#doubleArrayFloatProvider")
-  void runProgramCppReturnFloatDoubleArray(Float[][] val) throws ContainerException, VmControllerException {
+  void runProgramCppReturnFloatDoubleArray(Float[][] val)
+      throws ContainerException, VmControllerException {
     log.info("Code runner cpp return");
     DoubleArrayOfFloats resultTemplate = new DoubleArrayOfFloats();
     resultTemplate.setW(val[0].length);

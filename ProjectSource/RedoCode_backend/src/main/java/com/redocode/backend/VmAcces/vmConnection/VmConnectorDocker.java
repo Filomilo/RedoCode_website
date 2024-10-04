@@ -74,19 +74,18 @@ public class VmConnectorDocker extends VmConnector {
     try {
       Response response = httpClient.execute(request);
 
-    if (response.getStatusCode() != 200) {
-      log.error("error establishing connection with docker api: " + response.getBody());
-      throw new VmControllerException(
-          "error establishing connection with docker api: " + response.getBody());
-    } else {
-      log.info("successfully established connection docker api");
-    }
-    dockerClient = DockerClientImpl.getInstance(dockerConfiguration, httpClient);
-    log.info("dockerClient: " + dockerClient);
-    }
-    catch (Exception ex) {
-      log.error("Error initializing Docker client: "+ex.getMessage());
-      throw new VmControllerException("Error initializing Docker client: "+ex.getMessage());
+      if (response.getStatusCode() != 200) {
+        log.error("error establishing connection with docker api: " + response.getBody());
+        throw new VmControllerException(
+            "error establishing connection with docker api: " + response.getBody());
+      } else {
+        log.info("successfully established connection docker api");
+      }
+      dockerClient = DockerClientImpl.getInstance(dockerConfiguration, httpClient);
+      log.info("dockerClient: " + dockerClient);
+    } catch (Exception ex) {
+      log.error("Error initializing Docker client: " + ex.getMessage());
+      throw new VmControllerException("Error initializing Docker client: " + ex.getMessage());
     }
   }
 
@@ -104,9 +103,8 @@ public class VmConnectorDocker extends VmConnector {
       try {
         pullImageSync(Image);
         response = dockerClient.createContainerCmd(Image).withHostConfig(hostConfig).exec();
-      }
-      catch (Exception e) {
-        throw new ContainerException("Couldn't create container: "+e.getMessage());
+      } catch (Exception e) {
+        throw new ContainerException("Couldn't create container: " + e.getMessage());
       }
     }
     String virtualMachineIdentifiaction = response.getId();

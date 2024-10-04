@@ -16,18 +16,17 @@ import java.util.concurrent.TimeoutException;
 public class ContainerController {
   static Logger logger = LoggerFactory.getLogger(ContainerController.class);
   private String containerId;
-  static  VmConnector vmConnector;
+  static VmConnector vmConnector;
 
-
-
-    private void createContainer(String image, int ram) throws ContainerException {
+  private void createContainer(String image, int ram) throws ContainerException {
     logger.info("attempting creation of container controller for image " + image);
     this.containerId = vmConnector.createVm(image, ram);
   }
 
-  public ContainerController(String image, int ram) throws ContainerException, VmControllerException {
-      vmConnector = VmConnectorFactory.getVmConnector();
-      createContainer(image, ram);
+  public ContainerController(String image, int ram)
+      throws ContainerException, VmControllerException {
+    vmConnector = VmConnectorFactory.getVmConnector();
+    createContainer(image, ram);
   }
 
   private void stopContainer() {

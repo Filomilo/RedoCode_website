@@ -23,7 +23,7 @@ public class CodeRunnersConnectionController {
   public static final String codeRunnerResultEndPoint = "public/topic/codeRunnerResults";
 
   @Autowired private CodeRunnersController codeRunnersController;
-  @Autowired private  MessageSender messageSender;
+  @Autowired private MessageSender messageSender;
   @Autowired private RedoCodeController redoCodeController;
 
   @Autowired
@@ -39,17 +39,16 @@ public class CodeRunnersConnectionController {
     User user = redoCodeController.getUserByConnectionUUID(userId);
     try {
 
-      CodeRunnerRequest req =
-              new CodeRunnerRequest(
-                      user, requestMessageSource);
+      CodeRunnerRequest req = new CodeRunnerRequest(user, requestMessageSource);
       codeRunnersController.requestVm(req);
-    }
-    catch (Exception e) {
-      log.error("Error requesting code runner: "+ e.getMessage());
-      messageSender.sendMessageNotification(user, MessageNotification.builder()
-                      .type(MessageNotification.MessageType.ERROR)
-                      .message(e.getMessage()+" : please contact administrator")
-              .build() );
+    } catch (Exception e) {
+      log.error("Error requesting code runner: " + e.getMessage());
+      messageSender.sendMessageNotification(
+          user,
+          MessageNotification.builder()
+              .type(MessageNotification.MessageType.ERROR)
+              .message(e.getMessage() + " : please contact administrator")
+              .build());
     }
   }
 }
