@@ -1,7 +1,7 @@
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
 
-describe.skip('switch without authentication', () => {
+describe('switch without authentication', () => {
   it('passes', () => {
 
     const email = 'mailmail@test.com'
