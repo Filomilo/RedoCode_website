@@ -44,7 +44,7 @@
           placeholder="repeat password"
           :feedback="false"
           id="register-repeatpassword"
-            @keyup.enter="regster"
+          @keyup.enter="regster"
         />
         <div v-if="v$.repeatPassword.$error" class="errorText">
           {{ v$.repeatPassword.$errors[0].$message }}
