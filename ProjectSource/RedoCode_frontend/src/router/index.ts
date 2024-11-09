@@ -32,8 +32,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: '',
-      component: () => import('@/views/HomeView.vue'),
+redirect: "/Home"
     },
     {
       path: '/Home',
