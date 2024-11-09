@@ -32,7 +32,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/Home',
+redirect: "/Home"
     },
     {
       path: '/Home',
