@@ -51,7 +51,7 @@ namespace AccountPanel {
   }
 
   export function ViewShouldBeStatistic() {
-    cy.get('.selected').should('have.text', ' Statistics ')
+    cy.get('.SettingSidePanel .selected').should('have.text', ' Statistics ')
   }
 
   export function GoToSetting() {
