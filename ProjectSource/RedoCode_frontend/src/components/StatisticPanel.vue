@@ -13,7 +13,7 @@
         No data, you need to first solve some exercises
       </div>
     </div>
-    <div class="titleContainer">
+    <div class="titleContainerStats">
       <label class="title"> Lately done exercises </label>
     </div>
     <div class="statContainer barContainer" v-if="latelyDoneData !== undefined">
@@ -143,7 +143,7 @@
     height: 100%;
   }
 
-  .titleContainer {
+  .titleContainerStats {
     width: 100%;
     align-items: center;
     justify-content: center;
