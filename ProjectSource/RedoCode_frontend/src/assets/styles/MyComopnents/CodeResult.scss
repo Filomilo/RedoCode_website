@@ -239,7 +239,8 @@
   border-color: white;
   width: 50%;
   max-width: 50%;
-  height: 100rem;
+  min-height: 100%;
+  max-height: fit-content;
   text-wrap: wrap;
   display: block;
   white-space: wrap;

@@ -11,7 +11,7 @@
           header="Console"
           :pt="{ id: 'tab-result-console-' + props.index }"
         >
-          <div style="overflow: scroll">
+          <div style="overflow-y: scroll; height: 100%" class="tabPanelContent">
             <div
               class="ConsoleResultConsoleCOntainerText"
               style="height: fit-content; max-height: fit-content; color: red"
@@ -128,5 +128,15 @@
   .testValidationSection * {
     width: 100%;
     margin: 0.5rem;
+  }
+
+  .tabPanelContent{
+
+  }
+  .p-tabview-panel{
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: scroll;
   }
 </style>
