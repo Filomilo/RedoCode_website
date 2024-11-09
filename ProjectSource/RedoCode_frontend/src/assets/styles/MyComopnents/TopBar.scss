@@ -54,3 +54,24 @@
 a {
   text-decoration: none !important;
 }
+
+
+.TopBarItemContainer svg{
+  // fill: red;
+  fill: #a54fb3;
+}
+
+.selected .TopBarItemIcon {
+  fill: #1d1d1d;
+
+}
+
+.TopBarItemContainer.selected{
+  background-color: #a54fb3;
+  box-shadow: inset 0em 0em 0.2rem  rgb(0, 0, 0,0.2);
+}
+
+
+.selected .TopBarItemTitle {
+  color: #1d1d1d;
+}
