@@ -130,10 +130,9 @@
     margin: 0.5rem;
   }
 
-  .tabPanelContent{
-
+  .tabPanelContent {
   }
-  .p-tabview-panel{
+  .p-tabview-panel {
     min-height: 100%;
     height: 100%;
     max-height: 100%;
