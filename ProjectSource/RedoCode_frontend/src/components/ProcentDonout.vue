@@ -65,6 +65,7 @@
     aspect-ratio: 1/1;
     justify-self: center;
     align-self: center;
+    padding: 0.35rem;
   }
 
   .dount {
