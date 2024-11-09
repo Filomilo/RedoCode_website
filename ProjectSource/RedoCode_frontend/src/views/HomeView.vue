@@ -16,9 +16,9 @@
           type="text"
           v-model="inputLogin"
           class="TextInputConainer AuthPanelElement"
-          ca
           placeholder="nick/email"
           id="login-email"
+         
         />
         <Password
           v-model="inputPass"
@@ -26,6 +26,7 @@
           placeholder="password"
           :feedback="false"
           id="login-password"
+             @keyup.enter="onSginInButton"
         />
         <div class="StayLoggedIn">
           <Checkbox v-model="stayLoggedIn" :binary="true" />
