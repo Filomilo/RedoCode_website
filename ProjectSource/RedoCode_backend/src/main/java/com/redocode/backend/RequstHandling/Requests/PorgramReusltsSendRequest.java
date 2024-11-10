@@ -1,8 +1,9 @@
 package com.redocode.backend.RequstHandling.Requests;
 
-import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeResultsRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestResultsRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
+import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -15,6 +16,6 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public class PorgramReusltsSendRequest extends RequestBase implements ICodeResultsRequest {
-  Map<CODE_RUNNER_TYPE, List<ProgramResult>> programResults;
+public class PorgramReusltsSendRequest extends RequestBase implements ITestResultsRequest {
+  Map<CODE_RUNNER_TYPE, List<TestResults>> programResults;
 }

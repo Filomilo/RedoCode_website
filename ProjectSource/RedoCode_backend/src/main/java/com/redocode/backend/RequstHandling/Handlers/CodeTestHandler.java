@@ -14,6 +14,7 @@ import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.Factory.ProgramFactory;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.SolutionProgram;
+import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import com.redocode.backend.database.ExerciseTests;
@@ -38,8 +39,8 @@ public class CodeTestHandler extends BaseRequestHandler {
       (CodeRunnersController)
           SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
-  protected ProgramResult checkTest(ExerciseTests test, RequestBase request, CodeRunner codeRunner)
-      throws RequestHadndlingException, CodeErroeException {
+  protected TestResults checkTest(ExerciseTests test, RequestBase request, CodeRunner codeRunner)
+          throws RequestHadndlingException, CodeErroeException, JsonProcessingException {
 
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
@@ -65,7 +66,8 @@ public class CodeTestHandler extends BaseRequestHandler {
               .setTimeout(codeRunSpecificationParametersRequest.getTimeForExecution())
               .build();
       log.info("solution program being tested: " + solutionProgram.getInput());
-      ProgramResult result = codeRunner.runProgram(solutionProgram);
+      TestResults result = (TestResults) codeRunner.runProgram(solutionProgram);
+      result.setExpectedRes(test.getParsedOutput(test.getExcersize().getOutputType()));
       log.info(
           "program: \n\n" + solutionProgram.getProgramCode() + "\n\nresulted in: \n\n\n" + result);
       if (result.getConsoleOutput().getErrorOutput().length() > 0) {
@@ -106,12 +108,12 @@ public class CodeTestHandler extends BaseRequestHandler {
     assert request instanceof ISolutionCodesRequest;
     assert request instanceof ITestsToRunRequest;
     assert request instanceof ICodeRunnerRequest;
-    assert request instanceof ICodeResultsRequest;
+    assert request instanceof ITestResultsRequest;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
     ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
-    ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
-    List<ProgramResult> programResults = new ArrayList<>();
+    ITestResultsRequest codeResultsRequest = (ITestResultsRequest) request;
+    List<TestResults> programResults = new ArrayList<>();
 
     this.nodeUpdate(
         request,
@@ -134,9 +136,9 @@ public class CodeTestHandler extends BaseRequestHandler {
         programResults.add(checkTest(exTest, request, codeRunner));
       } catch (Exception ex) {
         programResults.add(
-            ProgramResult.builder()
-                .consoleOutput(ConsoleOutput.builder().errorOutput(ex.getMessage()).build())
-                .build());
+                (TestResults) TestResults.builder()
+                    .consoleOutput(ConsoleOutput.builder().errorOutput(ex.getMessage()).build())
+                    .build());
         if (!is_continueOnError())
           throw new RequestHadndlingException("Test " + i + " failed: " + ex.getMessage());
         else break;

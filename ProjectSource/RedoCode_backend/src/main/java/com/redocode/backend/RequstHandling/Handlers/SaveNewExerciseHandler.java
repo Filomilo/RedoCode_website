@@ -8,6 +8,7 @@ import com.redocode.backend.RequstHandling.Requests.SaveExerciseSolutionRequest;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
+import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import com.redocode.backend.database.*;
 
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
     assert request instanceof IExerciseInfoRequest;
     assert request instanceof ITestsToRunRequest;
     assert request instanceof ICodeRunnerRequest;
-    assert request instanceof ICodeResultsRequest;
+    assert request instanceof ITestResultsRequest;
     assert request instanceof ICodeRunSpecificationParametersRequest;
     assert request instanceof ISolutionCodesRequest;
 
@@ -42,7 +43,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
     ICodeRunnerRequest codeRunnerRequest = (ICodeRunnerRequest) request;
     ICodeRunSpecificationParametersRequest codeRunSpecificationParametersRequest =
         (ICodeRunSpecificationParametersRequest) request;
-    ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
+    ITestResultsRequest codeResultsRequest = (ITestResultsRequest) request;
     ISolutionCodesRequest codeSolutionsRequest = (ISolutionCodesRequest) request;
 
     Excersize excersize =
@@ -85,7 +86,7 @@ public class SaveNewExerciseHandler extends MessageRequestHandler {
 
     SaveExerciseSolutionHandler saveExerciseSolutionHandler = new SaveExerciseSolutionHandler();
     for (CODE_RUNNER_TYPE codeRunnerType : codeResultsRequest.getProgramResults().keySet()) {
-      Map<CODE_RUNNER_TYPE, List<ProgramResult>> resultOfSepcifCodeRunner = new HashMap<>();
+      Map<CODE_RUNNER_TYPE, List<TestResults>> resultOfSepcifCodeRunner = new HashMap<>();
       resultOfSepcifCodeRunner.put(
           codeRunnerType, codeResultsRequest.getProgramResults().get(codeRunnerType));
 

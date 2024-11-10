@@ -56,8 +56,20 @@ namespace CodeRunnerPanel {
     }
     export function shouldAllTesCorrect(amountOfTest: number) {
       shouldNotBeLoading()
+      // cy.pause();
       for (let index = 0; index < amountOfTest; index++) {
         cy.get('#testResultStatus_' + index).should('have.text', 'Correct')
+        cy.get(`#tab-result-achieved-container-${index}`).should("exist").invoke('text').then(achivedText=>{
+          cy.get(`#tab-result-expected-container-${index}`).should("exist").invoke("text").then(expectedText=>{
+            const expectedString=expectedText.slice(10);
+            const achivedStrinf=achivedText.slice(10);
+            cy.log(`expeted:: [ ${expectedString} ] equals to [ ${achivedStrinf} ] `)
+
+            cy.wrap(expectedString).should("equal",achivedStrinf)
+      
+          })
+        })
+
       }
     }
 
@@ -75,7 +87,52 @@ namespace CodeRunnerPanel {
         )
       }
     }
-  }
+
+    export function compareExpectedANdResult(fun: (epxected: any, result: any) => boolean) {
+      
+      let shouldContinue:boolean=true;
+      let counter=0;
+
+      cy.get('.resultPanelContainer').each(($el, index, $list) => {
+     
+
+        cy.get(`#tab-result-achieved-container-${index}`).should("exist").invoke('text').then(achivedText=>{
+          cy.get(`#tab-result-expected-container-${index}`).should("exist").invoke("text").then(expectedText=>{
+            
+            const expectedString=expectedText.slice(10);
+            const achivedStrinf=achivedText.slice(10);
+            const extectedObject=JSON.parse(expectedString);
+            const achovedObject=JSON.parse(achivedStrinf);
+            cy.wrap(fun(extectedObject,achovedObject)).should('be.true');
+            cy.log(`expected: [ ${expectedString} ] --- achived: [ ${achivedStrinf} ]`)
+            // cy.pause();
+          })
+        })
+
+
+    });
+
+
+      // while(shouldContinue)
+      // {
+        // cy.get('body').then(($body) => {
+        //   if ($body.find(`#TestResultCard${counter}`).length > 0)
+        //   {
+
+        //   }
+          cy.pause();
+        //   else{
+            // shouldContinue=false;
+            // cy.pause;
+        //   }
+        //   counter++;
+        // })
+      }
+
+
+    }
+
+  // }
 
   export function selectInitialLanguage(lang: string) {
     cy.get('#coderunner-dropdown').click()

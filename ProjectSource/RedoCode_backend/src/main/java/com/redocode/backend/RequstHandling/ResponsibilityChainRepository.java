@@ -95,7 +95,7 @@ public class ResponsibilityChainRepository {
           .next(new AutoTestGeneratorHandler())
           .next(new CodeTestHandler())
           .setContinueOnError(true)
-          .next(new SendProgramResultsHandler())
+          .next(new SendTestResultsHandler())
           .build();
 
   public static final BaseRequestHandler runDataBaseTestCode =
@@ -105,7 +105,7 @@ public class ResponsibilityChainRepository {
           .next(new AutoTestGeneratorHandler())
           .next(new CodeTestHandler())
           .setContinueOnError(true)
-          .next(new SendProgramResultsHandler())
+          .next(new SendTestResultsHandler())
           .build();
 
   public static final BaseRequestHandler runRawCode =
@@ -113,7 +113,7 @@ public class ResponsibilityChainRepository {
           .setSteps()
           .next(new CodeRunnerAccesValidationHandler())
           .next(new RawCodeRunHandler())
-          .next(new SendProgramResultsHandler())
+          .next(new SendTestResultsHandler())
           .build();
 
   /**
@@ -132,7 +132,7 @@ public class ResponsibilityChainRepository {
           .next(new UnsolvedDatabaseTestsHandler())
           .next(new CodeTestHandler())
           .setContinueOnError(true)
-          .next(new SendProgramResultsHandler())
+          .next(new SendTestResultsHandler())
           .build();
 
   /**

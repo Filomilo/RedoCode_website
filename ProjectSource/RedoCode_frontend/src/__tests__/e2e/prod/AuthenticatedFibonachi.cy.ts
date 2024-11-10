@@ -9,6 +9,21 @@ import ResultPage from '../helpers/ResultPage'
 import SolutionsList from '../helpers/SolutionsList'
 import ToastHelper from '../helpers/ToastHelper'
 
+
+
+function fibSolve(val:number) {
+  let arr = new Array(val);
+
+  if (val >= 0)
+      arr[0] = 0;
+  if (val >= 2)
+      arr[1] = 1;
+for (let i = 2; i < val; i++) {
+      arr[i] = arr[i - 1] + arr[i - 2];
+}
+  return arr[val - 1];
+}
+
 describe('Authenticated FIbonachi', () => {
   it('Full sovling fibonachi', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
@@ -92,6 +107,11 @@ describe('Authenticated FIbonachi', () => {
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution)
     CodeRunnerPanel.run()
     CodeRunnerPanel.Tests.shouldAllTesCorrect(7)
+    CodeRunnerPanel.Tests.compareExpectedANdResult((epxected: any,result: any)=>{
+      return epxected===result;
+    });
+    cy.log("compareExpectedANdResult")
+    cy.pause();
     CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()
