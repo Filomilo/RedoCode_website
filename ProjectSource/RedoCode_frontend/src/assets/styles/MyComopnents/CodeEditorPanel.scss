@@ -10,13 +10,17 @@
 
 .CodeEditorPanelSetting {
   background-color: rgb(58, 58, 58);
-  height: 2.2rem;
+  height: 2.7rem;
   background-color: rgb(56, 56, 56);
   margin-left: auto;
   margin-right: auto;
   color: $textInputColor;
   display: flex;
   flex: 1;
+
+}
+.CodeEditorPanelSetting .p-inputtext{
+  font-size: 0.9rem;
 }
 
 .CodeEditorDropDownContainer {
