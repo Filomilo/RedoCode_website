@@ -16,5 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Getter
 public class TestResults extends ProgramResult{
-   @Setter @NotNull  private Variables expectedRes;
+   @Setter  private Variables expectedRes=null;
+   public TestResults(ProgramResult programResult)
+   {
+      this.setConsoleOutput(programResult.getConsoleOutput());
+      this.setVariables(programResult.getVariables());
+      this.setExecutionTime(programResult.getExecutionTime());
+      this.setVariablesInput(programResult.getVariablesInput());
+   }
+
 }

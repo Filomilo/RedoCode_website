@@ -98,7 +98,7 @@
   import ExerciseTest from '@/types/ExerciseTest'
   import codeRunnerType from '@/types/CodeRunnerTypes'
   import { ComputedRef } from 'vue'
-  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   import { ConsoleOutput } from '@/types/ProgramResults'
   //#endregion
   //#region props
@@ -109,7 +109,7 @@
     starting: string
     onRunCode: () => void
     onSubmit?: () => void
-    onResults: (result: ProgramResultsMessage) => void
+    onResults: (result: TestsResultsMessage) => void
     ManualTests: ExerciseTest[] | ConsoleOutput
     AutoTests?: ExerciseTest[]
     SubmitAccess?: boolean
@@ -130,7 +130,7 @@
     ApiConnectionStore.stompApiConnection.deactivate()
   }
 
-  const onResult = (mes: ProgramResultsMessage) => {
+  const onResult = (mes: TestsResultsMessage) => {
     console.log('onResult: ' + JSON.stringify(mes))
     codeRunnerStore.isProcessing = false
     props.onResults(mes)

@@ -6,6 +6,7 @@ import generateStartingFunction from '@/tools/StartingFunctionGenerator'
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import ProgramResult from '@/types/ProgramResults'
 import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
+import TestResults from '@/types/TestResults'
 
 export default class ExerciseSolverController
   extends CodeRunnerControllerBase
@@ -58,7 +59,7 @@ export default class ExerciseSolverController
       (this.isSolved = false)
   }
 
-  updateTests(results: ProgramResult[]) {
+  updateTests(results: TestResults[]) {
     console.log(
       'ExerciseSolverController update ts: ' + JSON.stringify(results)
     )

@@ -107,11 +107,6 @@ describe('Authenticated FIbonachi', () => {
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(cppSolution)
     CodeRunnerPanel.run()
     CodeRunnerPanel.Tests.shouldAllTesCorrect(7)
-    CodeRunnerPanel.Tests.compareExpectedANdResult((epxected: any,result: any)=>{
-      return epxected===result;
-    });
-    cy.log("compareExpectedANdResult")
-    cy.pause();
     CodeRunnerPanel.submit()
     ExecutionChain.checkSuccses(executionChainTemplate)
     ExecutionChain.close()

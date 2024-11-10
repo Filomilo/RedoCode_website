@@ -1,5 +1,6 @@
 import ProgramResult from '../ProgramResults'
+import TestResults from '../TestResults'
 
-export default interface ProgramResultsMessage {
-  results: ProgramResult[]
+export default interface TestsResultsMessage {
+  results: TestResults[]
 }

@@ -66,8 +66,9 @@ public class CodeTestHandler extends BaseRequestHandler {
               .setTimeout(codeRunSpecificationParametersRequest.getTimeForExecution())
               .build();
       log.info("solution program being tested: " + solutionProgram.getInput());
-      TestResults result = (TestResults) codeRunner.runProgram(solutionProgram);
-      result.setExpectedRes(test.getParsedOutput(test.getExcersize().getOutputType()));
+      ProgramResult programResult=codeRunner.runProgram(solutionProgram);
+      TestResults result =new TestResults(programResult);
+
       log.info(
           "program: \n\n" + solutionProgram.getProgramCode() + "\n\nresulted in: \n\n\n" + result);
       if (result.getConsoleOutput().getErrorOutput().length() > 0) {
@@ -75,7 +76,9 @@ public class CodeTestHandler extends BaseRequestHandler {
       }
       Variables recived = result.getVariables();
       if (test.getExpectedOutput() == null) return result;
+
       Variables expcected = test.getParsedOutput(testsToRunRequest.getOutputType());
+      result.setExpectedRes(expcected);
       log.info("program resuult: " + recived);
       log.info("expected program resuult: " + expcected);
       if (recived == null || !recived.equals(expcected)) {
