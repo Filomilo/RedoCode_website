@@ -14,7 +14,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task13',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 312,
       id: 1,
       description: 'task13 description',
@@ -22,7 +22,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task14',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 654,
       id: 14,
       description: 'task14 description',
@@ -30,7 +30,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task15',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 111,
       id: 15,
       description: 'task15 description',
@@ -38,7 +38,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task16',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 432,
       id: 16,
       description: 'task16 description',
@@ -46,7 +46,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task17',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 765,
       id: 17,
       description: 'task17 description',
@@ -54,7 +54,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task18',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 234,
       id: 18,
       description: 'task18 description',
@@ -62,7 +62,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task19',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 654,
       id: 19,
       description: 'task19 description',
@@ -70,7 +70,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task20',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 987,
       id: 20,
       description: 'task20 description',
@@ -78,7 +78,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task21',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 222,
       id: 21,
       description: 'task21 description',
@@ -86,7 +86,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task22',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 543,
       id: 22,
       description: 'task22 description',
@@ -94,7 +94,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task23',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 876,
       id: 23,
       description: 'task23 description',
@@ -102,7 +102,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task24',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 333,
       id: 24,
       description: 'task24 description',
@@ -110,7 +110,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task25',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 543,
       id: 25,
       description: 'task25 description',
@@ -118,7 +118,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task26',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 987,
       id: 26,
       description: 'task26 description',
@@ -126,7 +126,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task27',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 234,
       id: 27,
       description: 'task27 description',
@@ -134,7 +134,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task28',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 543,
       id: 28,
       description: 'task28 description',
@@ -142,7 +142,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task29',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 876,
       id: 29,
       description: 'task29 description',
@@ -150,7 +150,7 @@ export function makeServer({ environment = 'development' } = {}) {
     {
       name: 'task30',
       languages: [{ name: 'python' }, { name: 'javascript' }],
-      difficulty: Math.random()*4+1,
+      difficulty: Math.random() * 4 + 1,
       popularity: 333,
       id: 30,
       description: 'task30 description',
