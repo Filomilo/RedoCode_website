@@ -1,5 +1,19 @@
 <template>
-  <main class="PlayGroundBase locked">
+  <main class="dataTablePage locked">
+    <div class="ExercisesTopBar">
+      <router-link
+      to="/Create"
+      class="createButton"
+      id="Home_Button"
+      :class="ActiveUserStore.isLogged ? '' : 'disabled'"
+    >
+          <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
+      Create
+    </Button>
+    </router-link>
+
+    </div>
+
     <div class="dataTable-container">
       <EasyDataTable
         :headers="fields"
@@ -45,16 +59,7 @@
             </Button>
           </div>
 
-          <router-link
-            to="/Create"
-            class="createButton"
-            id="Home_Button"
-            :class="ActiveUserStore.isLogged ? '' : 'disabled'"
-          >
-            <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
-              Create
-            </Button>
-          </router-link>
+     
         </template>
       </EasyDataTable>
     </div>
@@ -135,8 +140,13 @@ onBeforeRouteUpdate(()=>{
 */
 </script>
 <style>
+
+.dataTablePage{
+  display: flex;
+  flex-direction: column;
+}
   .dataTable-container {
-    height: 100%;
+   flex: 1;
   }
   .dataTableStyle {
     height: 100%;
@@ -153,5 +163,24 @@ onBeforeRouteUpdate(()=>{
 
   .disabled {
     pointer-events: none;
+  }
+
+  .ExercisesTopBar{
+    
+    display: flex;
+    flex-direction: column;
+  }
+
+  #Create-button{
+    border-radius: 0.4rem;
+    background-color: var(--primary) ;
+    align-self: flex-end;
+    border: none;
+    margin: 0.5rem;
+  }
+  .createButton{
+
+    align-self: flex-end;
+
   }
 </style>
