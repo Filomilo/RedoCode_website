@@ -2,16 +2,15 @@
   <main class="dataTablePage locked">
     <div class="ExercisesTopBar">
       <router-link
-      to="/Create"
-      class="createButton"
-      id="Home_Button"
-      :class="ActiveUserStore.isLogged ? '' : 'disabled'"
-    >
-          <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
-      Create
-    </Button>
-    </router-link>
-
+        to="/Create"
+        class="createButton"
+        id="Home_Button"
+        :class="ActiveUserStore.isLogged ? '' : 'disabled'"
+      >
+        <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
+          Create
+        </Button>
+      </router-link>
     </div>
 
     <div class="dataTable-container">
@@ -58,8 +57,6 @@
               <IconNextRight />
             </Button>
           </div>
-
-     
         </template>
       </EasyDataTable>
     </div>
@@ -140,13 +137,12 @@ onBeforeRouteUpdate(()=>{
 */
 </script>
 <style>
-
-.dataTablePage{
-  display: flex;
-  flex-direction: column;
-}
+  .dataTablePage {
+    display: flex;
+    flex-direction: column;
+  }
   .dataTable-container {
-   flex: 1;
+    flex: 1;
   }
   .dataTableStyle {
     height: 100%;
@@ -165,22 +161,19 @@ onBeforeRouteUpdate(()=>{
     pointer-events: none;
   }
 
-  .ExercisesTopBar{
-    
+  .ExercisesTopBar {
     display: flex;
     flex-direction: column;
   }
 
-  #Create-button{
+  #Create-button {
     border-radius: 0.4rem;
-    background-color: var(--primary) ;
+    background-color: var(--primary);
     align-self: flex-end;
     border: none;
     margin: 0.5rem;
   }
-  .createButton{
-
+  .createButton {
     align-self: flex-end;
-
   }
 </style>
