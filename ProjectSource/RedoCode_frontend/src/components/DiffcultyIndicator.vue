@@ -36,9 +36,9 @@
     })
 
     const getStyleOveride=(index:number):string=>{
-        if(Math.floor(props.difficulty)>index+1)
+        if(Math.floor(props.difficulty)>=index+1)
         return "";
-        if(Math.ceil(props.difficulty)<=index+1)
+        if(Math.ceil(props.difficulty)<index+1)
         return "background-color: grey;";
         const procent=props.difficulty-Math.floor(props.difficulty);
 
@@ -48,6 +48,7 @@
         const rounded=Math.round(props.difficulty);
         switch(rounded)
         {
+            case 0: return "Not rated";
             case 1: return "Very easy";
             case 2: return "Easy";
             case 3: return "Normal";
