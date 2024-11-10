@@ -165,15 +165,16 @@ onBeforeRouteUpdate(()=>{
   }
 
   .ExercisesTopBar{
-
+    
     display: flex;
     flex-direction: column;
   }
 
   #Create-button{
-    border-radius: 0.3rem;
+    border-radius: 0.4rem;
     background-color: var(--primary) ;
     align-self: flex-end;
     border: none;
+    margin: 0.5rem;
   }
 </style>
