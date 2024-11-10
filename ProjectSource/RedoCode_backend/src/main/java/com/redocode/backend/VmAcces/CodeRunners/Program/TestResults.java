@@ -1,29 +1,28 @@
 package com.redocode.backend.VmAcces.CodeRunners.Program;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.Range;
-
-@Slf4j
 @SuperBuilder
-@Data
+@Slf4j
 @AllArgsConstructor
-//@Value
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)
-public class ProgramResult {
-  @NonNull private ConsoleOutput consoleOutput;
-  private Variables variables;
-  private Variables variablesInput;
+@Setter
+@Getter
+public class TestResults extends ProgramResult{
+   @Setter  private Variables expectedRes=null;
+   public TestResults(ProgramResult programResult)
+   {
+      this.setConsoleOutput(programResult.getConsoleOutput());
+      this.setVariables(programResult.getVariables());
+      this.setExecutionTime(programResult.getExecutionTime());
+      this.setVariablesInput(programResult.getVariablesInput());
+   }
 
-  @NotNull
-  @Range(min = 0)
-  private Long executionTime;
 }

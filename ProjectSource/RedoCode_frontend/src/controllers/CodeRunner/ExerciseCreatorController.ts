@@ -13,6 +13,7 @@ import VarType, {
 } from '@/types/VarType'
 import ProgramResult from '@/types/ProgramResults'
 import CodeRunnerControllerBase from './CodeRunnerControllerBase'
+import TestResults from '@/types/TestResults'
 
 export type StringIndexed = {
   [key in CodeRunnerType]?: string
@@ -213,7 +214,7 @@ export default class ExerciseCreatorController
     })
   }
 
-  public updateTests(results: ProgramResult[], language: CodeRunnerType) {
+  public updateTests(results: TestResults[], language: CodeRunnerType) {
     console.log('---------------------------------------------------\n')
     console.log('create test language update: ' + JSON.stringify(language))
     console.log('create test result update: ' + JSON.stringify(results))

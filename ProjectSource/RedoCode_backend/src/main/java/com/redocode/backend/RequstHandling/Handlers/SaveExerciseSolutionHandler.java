@@ -2,7 +2,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
-import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeResultsRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestResultsRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
 import com.redocode.backend.RequstHandling.Requests.RequestBase;
@@ -48,11 +48,11 @@ public class SaveExerciseSolutionHandler extends MessageRequestHandler {
     }
     assert request instanceof IExerciseIdRequest;
     assert request instanceof ISolutionCodesRequest;
-    assert request instanceof ICodeResultsRequest;
+    assert request instanceof ITestResultsRequest;
 
     IExerciseIdRequest exerciseIdRequest = (IExerciseIdRequest) request;
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
-    ICodeResultsRequest codeResultsRequest = (ICodeResultsRequest) request;
+    ITestResultsRequest codeResultsRequest = (ITestResultsRequest) request;
     log.info("Saving exercise for user: " + request.getUser());
 
     CODE_RUNNER_TYPE codeRunnerType =

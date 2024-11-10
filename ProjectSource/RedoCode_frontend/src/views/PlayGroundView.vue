@@ -22,7 +22,7 @@
   import { languageChoices } from '@/config/Data'
   import { useToastStore } from '@/stores/ToastStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
-  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   const ApiConnectionStore = useApiConnectionStore()
   const setupPlayground = () => {}
   const codeRunnerStore = useCodeRunnerStore()
@@ -47,7 +47,7 @@
   const onSubmit = () => {
     // toastStore.featureNotImplemented('feature not related')
   }
-  const onCodeResult = (results: ProgramResultsMessage) => {
+  const onCodeResult = (results: TestsResultsMessage) => {
     console.log('playgronud view results: ' + JSON.stringify(results))
     // console.error("unimplmented")
     // toastStore.featureNotImplemented('onRunCode')

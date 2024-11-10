@@ -9,6 +9,7 @@ import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.RawProgram;
+import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import com.redocode.backend.VmAcces.CodeRunnersController;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,11 +41,11 @@ public class RawCodeRunHandler extends BaseRequestHandler {
     request =
         PorgramReusltsSendRequest.builder()
             .programResults(
-                new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
+                new HashMap<CODE_RUNNER_TYPE, List<TestResults>>() {
                   {
                     put(
                         requestRawCodeRunRequest.getCodeRunnerType(),
-                        List.of(new ProgramResult[] {results}));
+                        List.of(new TestResults[] {(TestResults) results}));
                   }
                 })
             .user(requestRawCodeRunRequest.getUser())

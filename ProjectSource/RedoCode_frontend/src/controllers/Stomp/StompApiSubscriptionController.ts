@@ -1,6 +1,6 @@
 import CoderunnerState from '@/types/CodeRunnerState'
 import StompApiConnection from './StompApiConnection'
-import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
 import ExecutionResponseBase from '@/types/ApiMessages/ExecutionResponses/ExecutionResponseBase'
 import ExecutionChainScheme from '@/types/ApiMessages/ExecutionResponses/ExecutionChainScheme'
 import ExecutionResponseStatusUpdate from '@/types/ApiMessages/ExecutionResponses/ExecutionResponseStatusUpdate'
@@ -63,10 +63,10 @@ class StompApiSubscriptionController {
     })
   }
   private _CodeResultsCallBack(message: object) {
-    const results: ProgramResultsMessage = message as ProgramResultsMessage
+    const results: TestsResultsMessage = message as TestsResultsMessage
     console.log('_CodeResultsCallBack received  ' + JSON.stringify(results))
     this._CodeResultsSubscriptions.forEach(
-      (element: (results: ProgramResultsMessage) => void) => {
+      (element: (results: TestsResultsMessage) => void) => {
         element(results)
       }
     )
@@ -139,17 +139,16 @@ class StompApiSubscriptionController {
   //#endregion
 
   //#region codeResults
-  private _CodeResultsSubscriptions: { (arg: ProgramResultsMessage): void }[] =
-    []
+  private _CodeResultsSubscriptions: { (arg: TestsResultsMessage): void }[] = []
 
   public addCodeResultsSubscription(method: {
-    (arg: ProgramResultsMessage): void
+    (arg: TestsResultsMessage): void
   }): void {
     console.log('addCodeResultsSubscription: ' + method)
     this._CodeResultsSubscriptions.push(method)
   }
   public removeCodeResultsSubscription(method: {
-    (arg: ProgramResultsMessage): void
+    (arg: TestsResultsMessage): void
   }): void {
     const indexToRemove = this._CodeResultsSubscriptions.findIndex(
       item => item === method

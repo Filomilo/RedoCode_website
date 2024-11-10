@@ -6,7 +6,7 @@ import com.redocode.backend.Messages.Authentication.Authentication;
 import com.redocode.backend.Messages.CodeRunnerRequestMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseCreatorValidationMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.ExerciseTestToRunMesseage;
-import com.redocode.backend.Messages.CodeRunningMessages.ProgramResultsMessage;
+import com.redocode.backend.Messages.CodeRunningMessages.TestResultsMessage;
 import com.redocode.backend.Messages.CodeRunningMessages.RawCodeToRunMessage;
 import com.redocode.backend.Messages.ExecutionResponses.ExecutionChainScheme;
 import com.redocode.backend.Messages.ExecutionResponses.ExecutionResponseBase;
@@ -542,9 +542,9 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         .atMost(60, SECONDS)
         .untilAsserted(
             () -> {
-              ProgramResultsMessage result =
+              TestResultsMessage result =
                   objectMapper.readValue(
-                      blockingQueue.poll(100, SECONDS), ProgramResultsMessage.class);
+                      blockingQueue.poll(100, SECONDS), TestResultsMessage.class);
               ;
 
               assertEquals(1, result.getResults().size());
@@ -589,9 +589,9 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         .atMost(50, SECONDS)
         .untilAsserted(
             () -> {
-              ProgramResultsMessage result =
+              TestResultsMessage result =
                   objectMapper.readValue(
-                      blockingQueue.poll(60, SECONDS), ProgramResultsMessage.class);
+                      blockingQueue.poll(60, SECONDS), TestResultsMessage.class);
               ;
 
               assertEquals(1, result.getResults().size());

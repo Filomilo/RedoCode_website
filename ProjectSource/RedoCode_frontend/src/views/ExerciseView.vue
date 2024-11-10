@@ -26,7 +26,7 @@
   import { useRoute, useRouter } from 'vue-router'
   import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   import EndpointAccess from '@/controllers/EndpointsAccess'
   import ExerciseSolverController from '@/controllers/CodeRunner/ExerciseSolverController'
   import { useExecutionChainStore } from '@/stores/ExecutionChainStore'
@@ -78,7 +78,7 @@
     )
   }
 
-  const onCodeResult = (results: ProgramResultsMessage) => {
+  const onCodeResult = (results: TestsResultsMessage) => {
     console.log('Exercise view results: ' + JSON.stringify(results))
     codeRunnerStore.exerciseSolverController.updateTests(results.results)
   }

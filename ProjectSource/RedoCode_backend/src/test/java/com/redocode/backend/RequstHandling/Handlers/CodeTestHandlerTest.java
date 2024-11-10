@@ -3,7 +3,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.RequstHandling.Requests.CodeRunnerRequest;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
-import com.redocode.backend.RequstHandling.Requests.Interfaces.ICodeResultsRequest;
+import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestResultsRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.CodeRunner;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
@@ -143,8 +143,8 @@ class CodeTestHandlerTest {
         CodeRunnerRequest.builder().codeRunnerType(CODE_RUNNER_TYPE.CPP_RUNNER).user(user).build());
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
     assertNotNull(codeRunner);
-    ICodeResultsRequest porgramReusltsSendRequest =
-        (ICodeResultsRequest) codeTestHandler.handle(codeTestRequest);
+    ITestResultsRequest porgramReusltsSendRequest =
+        (ITestResultsRequest) codeTestHandler.handle(codeTestRequest);
     assertEquals(1, porgramReusltsSendRequest.getProgramResults().size());
     assertTrue(
         porgramReusltsSendRequest

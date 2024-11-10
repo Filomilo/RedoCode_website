@@ -98,8 +98,8 @@ public class UnsolvedDatabaseTestsHandler extends MessageRequestHandler {
             .build();
 
     CodeTestHandler codeTestHandler = new CodeTestHandler();
-    ICodeResultsRequest resultsfromCodeTest =
-        (ICodeResultsRequest) codeTestHandler.handle(codeTestRequest);
+    ITestResultsRequest resultsfromCodeTest =
+        (ITestResultsRequest) codeTestHandler.handle(codeTestRequest);
 
     log.info("resultsfromCodeTest: " + resultsfromCodeTest);
     final int[] i = {0};

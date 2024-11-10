@@ -4,7 +4,7 @@ export interface ConsoleOutput {
   errorOutput: string
 }
 type Vars = number[] | number | string | string[] | null
-
+export { Vars }
 export default interface ProgramResult {
   consoleOutput: ConsoleOutput
   variables: Vars

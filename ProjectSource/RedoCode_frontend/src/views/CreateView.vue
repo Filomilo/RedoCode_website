@@ -42,7 +42,7 @@
             ]?.autoTests
           "
           :onResults="
-            (results: ProgramResultsMessage) => {
+            (results: TestsResultsMessage) => {
               codeRunnerStore.exerciseCreatorController.updateTests(
                 results.results,
                 codeRunnerStore.codeRunnerConnection.codeRunnerState
@@ -65,7 +65,7 @@
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
   import { TabViewClickEvent } from 'primevue/tabview'
   import ExerciseTest from '@/types/ExerciseTest'
-  import ProgramResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   import ExerciseCreatorController from '@/controllers/CodeRunner/ExerciseCreatorController'
   import { useRouter } from 'vue-router'
   import { useExecutionChainStore } from '@/stores/ExecutionChainStore'

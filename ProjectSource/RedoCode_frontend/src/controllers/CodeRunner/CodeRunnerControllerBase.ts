@@ -1,6 +1,7 @@
 import CodeRunnerType from '@/types/CodeRunnerTypes'
 import ExerciseTest from '@/types/ExerciseTest'
 import ProgramResult from '@/types/ProgramResults'
+import TestResults from '@/types/TestResults'
 
 export default abstract class CodeRunnerControllerBase {
   protected _languages: CodeRunnerType[] = []
@@ -16,7 +17,7 @@ export default abstract class CodeRunnerControllerBase {
   abstract reset(): void
 
   protected processCodeResultLoad(
-    results: ProgramResult[],
+    results: TestResults[],
     testGroup: TestGroup
   ) {
     testGroup.autoTests = []
@@ -34,7 +35,7 @@ export default abstract class CodeRunnerControllerBase {
         testGroup.autoTests.push({
           input: results[i].variablesInput!,
           output: results[i].variables,
-          expectedOutput: null,
+          expectedOutput: results[i].expectedRes,
           errorOutput: results[i].consoleOutput.errorOutput,
           consoleOutput: results[i].consoleOutput.output,
           isSolved: results[i].consoleOutput.errorOutput === '',
