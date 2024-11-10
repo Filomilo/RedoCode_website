@@ -5,6 +5,7 @@ import com.redocode.backend.Tools.RedoCodeObjectMapper;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
+import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.SingleInteger;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.SolutionPrograms;
@@ -41,10 +42,10 @@ class SaveExerciseSolutionHandlerTest {
     solutions.put(type, solution);
     SaveExerciseSolutionHandler handler = new SaveExerciseSolutionHandler();
     Long[] ExecutionTimes = new Long[] {1L, 5L, 8L, 4L, 10L, 5L, 5L};
-    ArrayList<ProgramResult> results = new ArrayList<>();
+    ArrayList<TestResults> results = new ArrayList<>();
     for (Long executionTime : ExecutionTimes) {
       results.add(
-          ProgramResult.builder()
+              TestResults.builder()
               .variables(new SingleInteger(0))
               .variablesInput(new SingleInteger(0))
               .executionTime(executionTime)
@@ -55,7 +56,7 @@ class SaveExerciseSolutionHandlerTest {
     SaveExerciseSolutionRequest request =
         SaveExerciseSolutionRequest.builder()
             .programResults(
-                new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
+                new HashMap<CODE_RUNNER_TYPE, List<TestResults>>() {
                   {
                     put(type, results);
                   }

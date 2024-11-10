@@ -4,6 +4,7 @@ import com.redocode.backend.Messages.UtilContainers.Range;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
 import com.redocode.backend.VmAcces.CodeRunners.ConsoleOutput;
 import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
+import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.*;
 import com.redocode.backend.RequstHandling.Requests.ExerciseCreationRequest;
@@ -108,28 +109,28 @@ class SaveNewExerciseHandlerTest {
               .build(),
         };
 
-    Map<CODE_RUNNER_TYPE, List<ProgramResult>> results =
-        new HashMap<CODE_RUNNER_TYPE, List<ProgramResult>>() {
+    Map<CODE_RUNNER_TYPE, List<TestResults>> results =
+        new HashMap<CODE_RUNNER_TYPE, List<TestResults>>() {
           {
             put(
                 CPP_RUNNER,
                 Arrays.asList(
-                    ProgramResult.builder()
+                        TestResults.builder()
                         .executionTime(22l)
                         .consoleOutput(ConsoleOutput.builder().output("").build())
                         .build(),
-                    ProgramResult.builder()
+                        TestResults.builder()
                         .executionTime(22l)
                         .consoleOutput(ConsoleOutput.builder().output("").build())
                         .build()));
             put(
                 JS_RUNNER,
                 Arrays.asList(
-                    ProgramResult.builder()
+                        TestResults.builder()
                         .executionTime(33l)
                         .consoleOutput(ConsoleOutput.builder().output("").build())
                         .build(),
-                    ProgramResult.builder()
+                        TestResults.builder()
                         .executionTime(33l)
                         .consoleOutput(ConsoleOutput.builder().output("").build())
                         .build()));
