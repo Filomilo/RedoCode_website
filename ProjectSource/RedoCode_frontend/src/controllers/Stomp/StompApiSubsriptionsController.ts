@@ -119,8 +119,7 @@ class StompApiSubscriptionController {
   //#endregion
 
   //#region codeResults
-  private _CodeResultsSubscriptions: { (arg: TestsResultsMessage): void }[] =
-    []
+  private _CodeResultsSubscriptions: { (arg: TestsResultsMessage): void }[] = []
 
   public addCodeResultsSubscription(method: {
     (arg: TestsResultsMessage): void
