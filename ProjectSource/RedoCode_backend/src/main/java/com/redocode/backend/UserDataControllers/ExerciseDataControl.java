@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,16 +33,14 @@ public class ExerciseDataControl {
     SolutionPrograms thisUserProgram =
         solutionProgramsRepository.findFirstByExcersizeIdAndSolutionAuthorId(
             idOfExercise, idOfUser);
-    int AllOFSolutions = solutionProgramsRepository.countAllByExcersizeId(idOfExercise);
-    int solutionWorseThanUSer =
-        solutionProgramsRepository.countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(
-            idOfExercise, thisUserProgram.getAvgExecutionTime());
-
-    return ResultData.builder()
-        .betterThanPercent((float) solutionWorseThanUSer / AllOFSolutions * 100)
+    int AllOFSolutions = solutionProgramsRepository.countAllByExcersizeId(idOfExercise)-1;
+    List<SolutionPrograms> solutionBetter=solutionProgramsRepository.findAllByExcersizeId(idOfExercise).stream().filter(x->x.getAvgExecutionTime()<thisUserProgram.getAvgExecutionTime() && !Objects.equals(x.getId(), thisUserProgram.getId())).collect(Collectors.toList());
+    long solutionBetterThanUSer = solutionBetter.size();
+      return ResultData.builder()
+        .betterThanPercent(AllOFSolutions==0?100:100-(float) solutionBetterThanUSer /(float) AllOFSolutions * 100)
         .executionTimeMs(thisUserProgram.getAvgExecutionTime())
         .maxExecutionTimeMs(thisUserProgram.getExcersize().getMaxExecutionTimeMS())
-        .SolutionRanking(AllOFSolutions - solutionWorseThanUSer)
+        .SolutionRanking((int)solutionBetterThanUSer+1)
         .build();
   }
 
@@ -144,4 +143,5 @@ public class ExerciseDataControl {
     if (rating == null) return ExerciseSolvingState.SOLVED;
     return ExerciseSolvingState.RATED;
   }
+
 }
