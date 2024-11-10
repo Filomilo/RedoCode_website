@@ -590,8 +590,7 @@ class CodeRunHandlerStompTest extends WebSocketTestBase {
         .untilAsserted(
             () -> {
               TestResultsMessage result =
-                  objectMapper.readValue(
-                      blockingQueue.poll(60, SECONDS), TestResultsMessage.class);
+                  objectMapper.readValue(blockingQueue.poll(60, SECONDS), TestResultsMessage.class);
               ;
 
               assertEquals(1, result.getResults().size());

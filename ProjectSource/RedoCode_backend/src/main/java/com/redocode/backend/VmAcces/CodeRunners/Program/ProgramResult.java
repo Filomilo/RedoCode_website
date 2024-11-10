@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Range;
 @SuperBuilder
 @Data
 @AllArgsConstructor
-//@Value
+// @Value
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(force = true)

@@ -4,7 +4,6 @@ import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestResultsReque
 import com.redocode.backend.RequstHandling.Requests.Interfaces.IExerciseIdRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;

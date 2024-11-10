@@ -2,7 +2,6 @@ package com.redocode.backend.RequstHandling.Requests;
 
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestResultsRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

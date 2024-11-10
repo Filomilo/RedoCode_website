@@ -1,7 +1,6 @@
 package com.redocode.backend.Messages.CodeRunningMessages;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

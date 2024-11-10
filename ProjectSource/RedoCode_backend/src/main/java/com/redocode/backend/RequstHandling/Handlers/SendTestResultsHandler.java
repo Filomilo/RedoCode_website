@@ -25,13 +25,15 @@ public class SendTestResultsHandler extends BaseRequestHandler {
   RequestBase handle(RequestBase request) throws RequestHadndlingException {
     ITestResultsRequest codeResultsRequest = (ITestResultsRequest) (request);
     log.info("SendProgramResultsHandler: " + request.toString());
-    List<TestResults> testResults=codeResultsRequest.getProgramResults().values().stream().findFirst().get().stream().map(x->{
-     return  (TestResults)x;
-    }).toList();
+    List<TestResults> testResults =
+        codeResultsRequest.getProgramResults().values().stream().findFirst().get().stream()
+            .map(
+                x -> {
+                  return (TestResults) x;
+                })
+            .toList();
     TestResultsMessage programResultsMessage =
-        TestResultsMessage.builder()
-            .results(testResults)
-            .build();
+        TestResultsMessage.builder().results(testResults).build();
 
     messageSender.sendMessage(
         request.getUser(), "/public/topic/codeRunnerResults", programResultsMessage);

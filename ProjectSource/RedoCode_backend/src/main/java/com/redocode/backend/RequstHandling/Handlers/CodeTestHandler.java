@@ -40,7 +40,7 @@ public class CodeTestHandler extends BaseRequestHandler {
           SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
   protected TestResults checkTest(ExerciseTests test, RequestBase request, CodeRunner codeRunner)
-          throws RequestHadndlingException, CodeErroeException, JsonProcessingException {
+      throws RequestHadndlingException, CodeErroeException, JsonProcessingException {
 
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
@@ -66,8 +66,8 @@ public class CodeTestHandler extends BaseRequestHandler {
               .setTimeout(codeRunSpecificationParametersRequest.getTimeForExecution())
               .build();
       log.info("solution program being tested: " + solutionProgram.getInput());
-      ProgramResult programResult=codeRunner.runProgram(solutionProgram);
-      TestResults result =new TestResults(programResult);
+      ProgramResult programResult = codeRunner.runProgram(solutionProgram);
+      TestResults result = new TestResults(programResult);
 
       log.info(
           "program: \n\n" + solutionProgram.getProgramCode() + "\n\nresulted in: \n\n\n" + result);
@@ -139,7 +139,8 @@ public class CodeTestHandler extends BaseRequestHandler {
         programResults.add(checkTest(exTest, request, codeRunner));
       } catch (Exception ex) {
         programResults.add(
-                (TestResults) TestResults.builder()
+            (TestResults)
+                TestResults.builder()
                     .consoleOutput(ConsoleOutput.builder().errorOutput(ex.getMessage()).build())
                     .build());
         if (!is_continueOnError())

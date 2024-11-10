@@ -1,7 +1,6 @@
 package com.redocode.backend.RequstHandling.Requests.Interfaces;
 
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 
 import java.util.List;

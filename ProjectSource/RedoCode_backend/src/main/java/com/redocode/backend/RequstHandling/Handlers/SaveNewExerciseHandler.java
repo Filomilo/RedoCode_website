@@ -7,7 +7,6 @@ import com.redocode.backend.RequstHandling.Requests.RequestBase;
 import com.redocode.backend.RequstHandling.Requests.SaveExerciseSolutionRequest;
 import com.redocode.backend.SpringContextUtil;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import com.redocode.backend.database.*;
 

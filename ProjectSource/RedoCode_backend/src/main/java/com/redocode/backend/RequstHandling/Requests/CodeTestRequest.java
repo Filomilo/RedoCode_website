@@ -5,7 +5,6 @@ import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestResultsReque
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ISolutionCodesRequest;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.ITestsToRunRequest;
 import com.redocode.backend.VmAcces.CodeRunners.CODE_RUNNER_TYPE;
-import com.redocode.backend.VmAcces.CodeRunners.Program.ProgramResult;
 import com.redocode.backend.VmAcces.CodeRunners.Program.TestResults;
 import com.redocode.backend.VmAcces.CodeRunners.Variables.Variables;
 import com.redocode.backend.database.ExerciseTests;
