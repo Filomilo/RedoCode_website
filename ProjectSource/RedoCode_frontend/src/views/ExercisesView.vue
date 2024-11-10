@@ -1,9 +1,17 @@
 <template>
   <main class="dataTablePage locked">
     <div class="ExercisesTopBar">
+      <router-link
+      to="/Create"
+      class="createButton"
+      id="Home_Button"
+      :class="ActiveUserStore.isLogged ? '' : 'disabled'"
+    >
           <Button :disabled="!ActiveUserStore.isLogged" id="Create-button">
       Create
     </Button>
+    </router-link>
+
     </div>
 
     <div class="dataTable-container">
@@ -51,14 +59,7 @@
             </Button>
           </div>
 
-          <router-link
-            to="/Create"
-            class="createButton"
-            id="Home_Button"
-            :class="ActiveUserStore.isLogged ? '' : 'disabled'"
-          >
-
-          </router-link>
+     
         </template>
       </EasyDataTable>
     </div>
@@ -176,5 +177,10 @@ onBeforeRouteUpdate(()=>{
     align-self: flex-end;
     border: none;
     margin: 0.5rem;
+  }
+  .createButton{
+
+    align-self: flex-end;
+
   }
 </style>
