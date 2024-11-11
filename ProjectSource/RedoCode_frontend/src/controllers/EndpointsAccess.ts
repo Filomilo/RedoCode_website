@@ -3,6 +3,7 @@ import AccountInfo from '@/types/ApiMessages/AccountInfo'
 import AuthenticationRequest from '@/types/ApiMessages/Authentication/AuthenticationRequest'
 import RegisterRequest from '@/types/ApiMessages/Authentication/RegisterRequest'
 import ExerciseDataMessage from '@/types/ApiMessages/ExerciseDataMessage'
+import { PromotionDataMessage } from '@/types/ApiMessages/PromotionDataMessage'
 import ResultData from '@/types/ApiMessages/ResultData'
 import SolutionsData from '@/types/ApiMessages/SolutionsData'
 import StatisticMessage from '@/types/ApiMessages/StatisticMessage'
@@ -136,6 +137,26 @@ namespace EndpointAccess {
         return response.data
       } catch ({ response }: any) {
         if (!response) throw "Couldn't get get codeRunner state"
+        if (response.data) throw response.data
+        throw response
+      }
+    }
+
+    export async function getPromotionExercises(): Promise<PromotionDataMessage> {
+      try {
+        console.log('getPromotionExercises fetch:')
+
+        const response = await axios.get('/public/exercises/promotions')
+        console.log('getPromotionExercises Response:', response)
+        if (
+          response === undefined ||
+          response.data === '' ||
+          response.headers['Content-Length'] == 0
+        )
+          throw 'no promotion data'
+        return response.data
+      } catch ({ response }: any) {
+        if (!response) throw "Couldn't get get Promotion Data "
         if (response.data) throw response.data
         throw response
       }
