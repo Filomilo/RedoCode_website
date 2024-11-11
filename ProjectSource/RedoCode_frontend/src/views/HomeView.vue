@@ -108,7 +108,7 @@
 
 <script setup lang="ts">
   import InputText from 'primevue/inputtext'
-  import { ref } from 'vue'
+  import { onMounted, Ref, ref } from 'vue'
   import BasicButton from '@/components/BasicButton.vue'
   import ExcerciseListPromotion from '../components/ExcerciseListPromotion.vue'
   import FrontImage1 from '@/assets/Images/fronImage1.png'
@@ -116,13 +116,17 @@
   import FrontImage3 from '@/assets/Images/fronImage3.png'
   import { useActiveUserStore } from '../stores/ActiveUserStore'
   import { useToast } from 'primevue/usetoast'
-  const toast = useToast()
+import EndpointAccess from '@/controllers/EndpointsAccess'
+import { PromotionDataMessage } from '@/types/ApiMessages/PromotionDataMessage'
+import { useToastStore } from '@/stores/ToastStore'
+  const ToastStore = useToastStore()
   const activeUserStore = useActiveUserStore()
   const inputLogin = ref('sunny@mail.com')
   const inputPass = ref('Password+123')
   const stayLoggedIn = ref(false)
 
   const isSignInDisabled = ref(false)
+
 
   const onSginInButton = () => {
     isSignInDisabled.value = true
@@ -132,6 +136,10 @@
         isSignInDisabled.value = false
       })
   }
+
+
+
+
 </script>
 
 <style>
