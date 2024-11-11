@@ -19,17 +19,18 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CodeExerciseTab {
-    String title;
-    String description;
-    Long id;
-    List<CODE_RUNNER_TYPE> languages;
-    public CodeExerciseTab(Excersize e)
-    {
-        this.id=e.getId();
-    this.title=e.getExcersizeName();
-    this.description=e.getDescription();
-    this.languages=e.getLanguages().stream().map((x)-> RedoCodeObjectMapper.LanguageNameToCodeRunner(x.getName())).toList();
-    }
+  String title;
+  String description;
+  Long id;
+  List<CODE_RUNNER_TYPE> languages;
 
-
+  public CodeExerciseTab(Excersize e) {
+    this.id = e.getId();
+    this.title = e.getExcersizeName();
+    this.description = e.getDescription();
+    this.languages =
+        e.getLanguages().stream()
+            .map((x) -> RedoCodeObjectMapper.LanguageNameToCodeRunner(x.getName()))
+            .toList();
+  }
 }

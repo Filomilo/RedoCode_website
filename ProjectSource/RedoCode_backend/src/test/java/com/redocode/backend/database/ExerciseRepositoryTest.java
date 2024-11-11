@@ -78,12 +78,9 @@ class ExerciseRepositoryTest {
     }
   }
 
-
   @Test
   void getPopularExercises() {
     List<?> list = exerciseRepository.getPopularExerciseList();
     log.info("list size: " + list);
-
   }
-
 }

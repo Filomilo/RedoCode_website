@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
-public class PromotionDataMessage
-{
-    List<CodeExerciseTab> promotions;
+public class PromotionDataMessage {
+  List<CodeExerciseTab> promotions;
 }
