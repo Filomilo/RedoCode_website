@@ -13,6 +13,7 @@ return 0;
 `;
 
 const helloWorldProgramJS = 'console.log("Hello World!")'
+const TESTProgramJS = 'console.log("TEST")'
 
 describe('Switching between code runners ', () => {
   it('swtiching between pages', () => {
@@ -41,7 +42,12 @@ describe('Switching between code runners ', () => {
   SwitcherControls.switchExercises();
   SwitcherControls.switchPlayground();
 
-  
-  
+  //RUN JS 
+  CodeRunnerPanel.selectInitialLanguage('js')
+  CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
+  CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(TESTProgramJS)
+  CodeRunnerPanel.RawCodeResults.shouldResultBe('')
+  CodeRunnerPanel.run()
+  CodeRunnerPanel.RawCodeResults.shouldResultBe('TEST')
   })
 })

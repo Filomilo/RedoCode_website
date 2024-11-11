@@ -22,7 +22,10 @@ namespace CodeRunnerPanel {
         cy.get(codeEditorSequance).focus()
         cy.get(codeEditorSequance).type(backspaces, { force: true })
         cy.get(codeEditorSequance).type(backspaces, { force: true })
-        cy.get(codeEditorSequance).clear()
+        if (!Cypress.isBrowser('firefox')) {
+          cy.get(codeEditorSequance).clear()       
+         }
+
       }
       codeRunnerShouldBeEmpty()
     }

@@ -8,6 +8,7 @@ export default defineConfig({
     defaultCommandTimeout: 100000,
     supportFile: 'src/__tests__/e2e/config/support.ts',
     experimentalMemoryManagement: true,
+    numTestsKeptInMemory: 0, //optinal
     setupNodeEvents(on, config) {
       installLogsPrinter(on, {
         logToFilesOnAfterRun: true,
