@@ -1,7 +1,8 @@
 import CodeRunnerPanel from '../helpers/CodeRunnerPanel'
 import SwitcherControls from '../helpers/SwitcherControls'
 import UrlControls from '../helpers/UrlControls'
-
+import { slowCypressDown } from 'cypress-slow-down'
+// slowCypressDown()
 
 const helloWorldProgramCPP = `
 #include<iostream>

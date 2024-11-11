@@ -2653,6 +2653,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cypress-plugin-config@npm:^1.0.0":
+  version: 1.2.1
+  resolution: "cypress-plugin-config@npm:1.2.1"
+  checksum: ea346b1a9bd8050fba0c4248fa4a39edbb2b35eee3e9c567576fc7db933ea7be18c227eb824d0c7ed40c61aa545de1cdfb7d9db1df3405a25d1a745ed1076e7b
+  languageName: node
+  linkType: hard
+
+"cypress-slow-down@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "cypress-slow-down@npm:1.3.1"
+  dependencies:
+    cypress-plugin-config: "npm:^1.0.0"
+  checksum: 66e38fadeac6a7e0e54894466c95ff4f339ee3459e104ebc749e276d9e9d6cb062bdd6923564ef03606e4d0653f4529203d2fc5c773ff2fb710ffc4afbbe6219
+  languageName: node
+  linkType: hard
+
 "cypress-terminal-report@npm:^6.1.2":
   version: 6.2.0
   resolution: "cypress-terminal-report@npm:6.2.0"
@@ -7710,6 +7726,7 @@ __metadata:
     chart.js: "npm:^4.4.2"
     chroma-js: "npm:^3.0.0"
     cypress: "npm:13.15.2"
+    cypress-slow-down: "npm:^1.3.1"
     cypress-terminal-report: "npm:^6.1.2"
     eslint: "npm:^8.49.0"
     eslint-plugin-cypress: "npm:^2.15.1"

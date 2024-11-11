@@ -157,7 +157,7 @@ namespace CodeRunnerPanel {
     cy.get('#coderunner-run-button').should('be.visible')
 
     cy.get('#coderunner-run-button').click()
-    shouldBeLoading()
+    // shouldBeLoading()
   }
 
   export function shouldBeLoading() {

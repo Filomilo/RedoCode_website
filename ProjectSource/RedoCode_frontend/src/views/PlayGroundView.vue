@@ -39,6 +39,7 @@
   }
 
   const onRunCode = () => {
+    console.log("Play ground on Run Code")
     // toastStore.featureNotImplemented('onRunCode')
     // ApiConnectionStore.codeRunnerConnection.runRawCode(activeCode.value)
     codeRunnerStore.codeRunnerSender.runRawCode(activeCode.value)

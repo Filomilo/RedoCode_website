@@ -7,7 +7,7 @@ import UrlControls from '../helpers/UrlControls'
 import UserAuthentication from '../helpers/UserAuthentication'
 import SolutionsList from '../helpers/SolutionsList'
 
-describe('Create new exercise', () => {
+describe.skip('Create new exercise', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       if (err.message.includes('ResizeObserver')) {

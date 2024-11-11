@@ -142,7 +142,7 @@
     connectStomp()
     codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     // if (props.connectAtStart) {
-
+      codeRunnerStore.isProcessing=false;
     ApiConnectionStore.stompApiSubscriptionController.addCodeResultsSubscription(
       onResult
     )
