@@ -100,6 +100,7 @@
   import { ComputedRef } from 'vue'
   import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   import { ConsoleOutput } from '@/types/ProgramResults'
+import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   //#endregion
   //#region props
   const props = defineProps<{
@@ -151,8 +152,18 @@
   })
 
   onBeforeRouteLeave(async (to, from, next) => {
-    disconnectStomp()
-    next()
+let shouldLeave=true;
+
+    if(codeRunnerStore.codeRunnerConnection.codeRunnerState.state==CodeRunnerStatus.ACTIVE && !window.confirm("Are you sure you want to leave the page?\n You will lose your connection to code runner and all progress")) {
+      shouldLeave=false;
+    }
+
+    if(shouldLeave)
+    {
+      disconnectStomp()
+      next()
+    }
+
   })
 
   const onRunCode = () => {
