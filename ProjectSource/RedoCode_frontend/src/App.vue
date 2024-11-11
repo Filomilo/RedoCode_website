@@ -15,7 +15,7 @@
     <ChainOfReposibiltyWindow />
     <div
       id="MainPageContainer"
-      :class="globalStateStore.isLocked ? 'lock' : ''"
+      :class="globalStateStore.isLocked || globalStateStore.loadingMessage !== ''  ? 'lock' : ''"
     >
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">

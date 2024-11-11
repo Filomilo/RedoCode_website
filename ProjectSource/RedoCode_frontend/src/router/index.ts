@@ -6,6 +6,7 @@ import {
 } from 'vue-router'
 import RouterValidators from '@/controllers/RouterValidators'
 import { stringify } from 'flatted'
+import { useGlobalStateStore } from '@/stores/GlobalStateStore'
 
 type ValidateFunction = (params: any) => Promise<string | null>
 const validate = async (
@@ -141,5 +142,16 @@ const router = createRouter({
     },
   ],
 })
+router.beforeEach((to, from) => {
+  const GlobalStateStore=useGlobalStateStore();
+  GlobalStateStore.showLoadingScreen("Loading page...")
+  
+})
 
+router.afterEach((to, from) => {
+  const GlobalStateStore=useGlobalStateStore();
+  if(GlobalStateStore.loadingMessage==="Loading page...")
+  GlobalStateStore.hideLoadingScreen();
+  
+})
 export default router
