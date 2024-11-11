@@ -135,11 +135,7 @@ const router = createRouter({
       name: 'NotFound',
       component: () => import('@/views/WebsiteNotExist.vue'),
     },
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('@/views/TestView.vue'),
-    },
+
     {
       path :'/:pathMatch(.*)*',
       name: "fallback",
@@ -147,6 +143,15 @@ const router = createRouter({
   }
   ],
 })
+
+if (import.meta.env.MODE === 'development') {
+  router.addRoute(    {
+    path: '/test',
+    name: 'test',
+    component: () => import('@/views/TestView.vue'),
+  })
+}
+
 router.beforeEach((to, from) => {
   const GlobalStateStore=useGlobalStateStore();
   GlobalStateStore.showLoadingScreen("Loading page...")

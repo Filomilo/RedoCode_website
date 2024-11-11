@@ -2,7 +2,7 @@
   <main>
     <div class="MainContainer">
       <div class="MessageContainer">
-        Specifed webiste does nto exist
+        err
         <Button id="GotToLogin" @click="onGoToLogin"> Go to home page </Button>
       </div>
     </div>
