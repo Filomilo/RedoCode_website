@@ -100,7 +100,7 @@
   import { ComputedRef } from 'vue'
   import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
   import { ConsoleOutput } from '@/types/ProgramResults'
-import CodeRunnerStatus from '@/types/CodeRunnerStatus'
+  import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   //#endregion
   //#region props
   const props = defineProps<{
@@ -138,14 +138,14 @@ import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   }
 
   onMounted(() => {
-    console.log("Code Runner componenet: On MOunted")
+    console.log('Code Runner componenet: On MOunted')
 
     console.log('props: ' + JSON.stringify(props))
     console.log('Code runner init')
     connectStomp()
     codeRunnerStore.codeRunnerConnection.updateCodeRunner()
     // if (props.connectAtStart) {
-      codeRunnerStore.isProcessing=false;
+    codeRunnerStore.isProcessing = false
     ApiConnectionStore.stompApiSubscriptionController.addCodeResultsSubscription(
       onResult
     )
@@ -154,26 +154,29 @@ import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   })
 
   onBeforeRouteLeave(async (to, from, next) => {
-    console.log("Code Runner componenet: On LEAVE")
-let shouldLeave=true;
+    console.log('Code Runner componenet: On LEAVE')
+    let shouldLeave = true
 
-    if(codeRunnerStore.codeRunnerConnection.codeRunnerState.state==CodeRunnerStatus.ACTIVE && !window.confirm("Are you sure you want to leave the page?\n You will lose your connection to code runner and all progress")) {
-      shouldLeave=false;
+    if (
+      codeRunnerStore.codeRunnerConnection.codeRunnerState.state ==
+        CodeRunnerStatus.ACTIVE &&
+      !window.confirm(
+        'Are you sure you want to leave the page?\n You will lose your connection to code runner and all progress'
+      )
+    ) {
+      shouldLeave = false
     }
 
-    if(shouldLeave)
-    {
+    if (shouldLeave) {
       disconnectStomp()
       next()
     }
-
   })
 
   const onRunCode = () => {
     codeRunnerStore.isProcessing = true
     props.onRunCode()
   }
-
 
   const awaiting: ComputedRef<boolean> = computed(() => {
     if (import.meta.env.MODE === 'development') return false

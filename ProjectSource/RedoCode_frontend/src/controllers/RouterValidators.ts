@@ -135,7 +135,12 @@ namespace RouterValidators {
     return null
   }
 
-  export function ActiveCodeRunnerLeave(to: any, from: any, next: any, ActiveCodeRunnerLeave: any) {
+  export function ActiveCodeRunnerLeave(
+    to: any,
+    from: any,
+    next: any,
+    ActiveCodeRunnerLeave: any
+  ) {
     throw new Error('Function not implemented.')
   }
 }

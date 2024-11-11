@@ -17,7 +17,7 @@ describe('hello world cpp run ', () => {
     std::cout<<"Hello World!";
     return 0;
     }
-    `;
+    `
 
     UrlControls.startPage()
 

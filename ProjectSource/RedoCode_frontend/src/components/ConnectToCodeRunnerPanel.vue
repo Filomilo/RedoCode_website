@@ -4,7 +4,7 @@
     class="AuthLoginScreenConatiner"
     style="align-items: center; display: flex; justify-content: center"
   >
-  {{ ApiConnectionStore.isConnected }}
+    {{ ApiConnectionStore.isConnected }}
     <div v-if="!ApiConnectionStore.isConnected">
       trying to establish connection to api
     </div>
