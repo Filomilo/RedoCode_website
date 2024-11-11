@@ -1,5 +1,5 @@
 <template>
-  <div style="noDataFoundContainer">No page found</div>
+  <div style="noDataFoundContainer">No data found</div>
 </template>
 
 <style lang="css">
