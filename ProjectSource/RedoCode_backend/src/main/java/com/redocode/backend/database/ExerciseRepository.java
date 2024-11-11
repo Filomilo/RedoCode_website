@@ -16,4 +16,12 @@ public interface ExerciseRepository extends JpaRepository<Excersize, Long> {
       "SELECT distinct   new com.redocode.backend.database.ExcersizeListEntry (e )  FROM Excersize"
           + " e   left JOIN  e.solutions left join e.ratings")
   List<ExcersizeListEntry> getSimpleExcersizeList();
+  @Query("""
+    SELECT e FROM Excersize e
+    LEFT JOIN e.ratings r
+    GROUP BY e
+    ORDER BY COUNT(r) DESC
+    LIMIT 5
+""")
+  List<Excersize> getPopularExerciseList();
 }

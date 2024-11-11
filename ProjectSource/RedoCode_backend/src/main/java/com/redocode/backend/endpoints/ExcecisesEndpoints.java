@@ -1,8 +1,10 @@
 package com.redocode.backend.endpoints;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.redocode.backend.Messages.CodeExerciseTab;
 import com.redocode.backend.Messages.ExcerciseDataMessage;
 import com.redocode.backend.Messages.ExerciseListRequestMessage;
+import com.redocode.backend.Messages.PromotionDataMessage;
 import com.redocode.backend.database.Excersize;
 import com.redocode.backend.database.ExcersizeListEntry;
 import com.redocode.backend.database.ExerciseRepository;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,4 +43,20 @@ public class ExcecisesEndpoints {
     log.info("sending exercse list: " + exerciseRepository.getSimpleExcersizeList());
     return exerciseRepository.getSimpleExcersizeList();
   }
+
+
+  @GetMapping("/promotions")
+  public PromotionDataMessage getPromotions() {
+    log.info("promotions list request");
+    List<Excersize> popularExercises=exerciseRepository.getPopularExerciseList();
+    List<CodeExerciseTab> promotions= popularExercises.stream().map(x->new CodeExerciseTab(x)).toList();
+    return new PromotionDataMessage(promotions);
+  }
+
+
+
+
+
+
+
 }

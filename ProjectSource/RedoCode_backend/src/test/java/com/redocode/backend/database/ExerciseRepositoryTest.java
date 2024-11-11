@@ -77,4 +77,13 @@ class ExerciseRepositoryTest {
       throw new RuntimeException(e);
     }
   }
+
+
+  @Test
+  void getPopularExercises() {
+    List<?> list = exerciseRepository.getPopularExerciseList();
+    log.info("list size: " + list);
+
+  }
+
 }
