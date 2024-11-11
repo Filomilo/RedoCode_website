@@ -26,7 +26,7 @@ public class ExcersizeListEntry {
     this.languages = e.getLanguages();
     this.difficulty =
         e.getRatings().size() != 0
-            ? (float)e.getRatings().stream().mapToDouble(element -> element.getRating()).sum()
+            ? (float) e.getRatings().stream().mapToDouble(element -> element.getRating()).sum()
                 / e.getRatings().size()
             : 0f;
     this.popularity = (long) e.getSolutions().size();
