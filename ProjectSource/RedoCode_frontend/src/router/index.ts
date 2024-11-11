@@ -137,15 +137,15 @@ const router = createRouter({
     },
 
     {
-      path :'/:pathMatch(.*)*',
-      name: "fallback",
-     redirect: "/notFound"
-  }
+      path: '/:pathMatch(.*)*',
+      name: 'fallback',
+      redirect: '/notFound',
+    },
   ],
 })
 
 if (import.meta.env.MODE === 'development') {
-  router.addRoute(    {
+  router.addRoute({
     path: '/test',
     name: 'test',
     component: () => import('@/views/TestView.vue'),
@@ -153,15 +153,13 @@ if (import.meta.env.MODE === 'development') {
 }
 
 router.beforeEach((to, from) => {
-  const GlobalStateStore=useGlobalStateStore();
-  GlobalStateStore.showLoadingScreen("Loading page...")
-  
+  const GlobalStateStore = useGlobalStateStore()
+  GlobalStateStore.showLoadingScreen('Loading page...')
 })
 
 router.afterEach((to, from) => {
-  const GlobalStateStore=useGlobalStateStore();
-  if(GlobalStateStore.loadingMessage==="Loading page...")
-  GlobalStateStore.hideLoadingScreen();
-  
+  const GlobalStateStore = useGlobalStateStore()
+  if (GlobalStateStore.loadingMessage === 'Loading page...')
+    GlobalStateStore.hideLoadingScreen()
 })
 export default router

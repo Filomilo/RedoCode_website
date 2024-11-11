@@ -7,7 +7,7 @@
   import { useApiConnectionStore } from './stores/ApiConnectionStore'
   const globalStateStore = useGlobalStateStore()
   const ApiConnectionStore = useApiConnectionStore()
-  const route=useRoute();
+  const route = useRoute()
 </script>
 
 <template>
@@ -16,7 +16,11 @@
     <ChainOfReposibiltyWindow />
     <div
       id="MainPageContainer"
-      :class="globalStateStore.isLocked || globalStateStore.loadingMessage !== ''  ? 'lock' : ''"
+      :class="
+        globalStateStore.isLocked || globalStateStore.loadingMessage !== ''
+          ? 'lock'
+          : ''
+      "
     >
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
