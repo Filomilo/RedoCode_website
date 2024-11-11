@@ -18,7 +18,7 @@ const helloWorldProgramJS = 'console.log("Hello World!")'
 const TESTProgramJS = 'console.log("TEST")'
 
 describe('Switching between code runners ', () => {
-  it.skip('swtiching between pages', () => {
+  it('swtiching between pages', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       if (err.message.includes('ResizeObserver')) {
         return false

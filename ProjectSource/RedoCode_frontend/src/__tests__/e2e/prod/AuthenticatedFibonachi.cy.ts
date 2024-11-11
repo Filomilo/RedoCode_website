@@ -20,7 +20,7 @@ function fibSolve(val: number) {
   return arr[val - 1]
 }
 
-describe.skip('Authenticated FIbonachi', () => {
+describe('Authenticated FIbonachi', () => {
   it('Full sovling fibonachi', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       if (err.message.includes('ResizeObserver')) {
