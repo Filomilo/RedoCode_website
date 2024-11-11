@@ -6,6 +6,7 @@ import {
 } from 'vue-router'
 import RouterValidators from '@/controllers/RouterValidators'
 import { stringify } from 'flatted'
+import { useGlobalStateStore } from '@/stores/GlobalStateStore'
 
 type ValidateFunction = (params: any) => Promise<string | null>
 const validate = async (
@@ -134,12 +135,31 @@ const router = createRouter({
       name: 'NotFound',
       component: () => import('@/views/WebsiteNotExist.vue'),
     },
+
     {
-      path: '/test',
-      name: 'test',
-      component: () => import('@/views/TestView.vue'),
+      path: '/:pathMatch(.*)*',
+      name: 'fallback',
+      redirect: '/notFound',
     },
   ],
 })
 
+if (import.meta.env.MODE === 'development') {
+  router.addRoute({
+    path: '/test',
+    name: 'test',
+    component: () => import('@/views/TestView.vue'),
+  })
+}
+
+router.beforeEach((to, from) => {
+  const GlobalStateStore = useGlobalStateStore()
+  GlobalStateStore.showLoadingScreen('Loading page...')
+})
+
+router.afterEach((to, from) => {
+  const GlobalStateStore = useGlobalStateStore()
+  if (GlobalStateStore.loadingMessage === 'Loading page...')
+    GlobalStateStore.hideLoadingScreen()
+})
 export default router

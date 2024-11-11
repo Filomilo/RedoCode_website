@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { RouterLink, RouterView } from 'vue-router'
+  import { RouterLink, RouterView, useRoute } from 'vue-router'
   import TopBar from '@/components/TopBar.vue'
   import ChainOfReposibiltyWindow from '@/components/ChainOfReposibiltyWindow.vue'
   import { useGlobalStateStore } from '@/stores/GlobalStateStore'
@@ -7,6 +7,7 @@
   import { useApiConnectionStore } from './stores/ApiConnectionStore'
   const globalStateStore = useGlobalStateStore()
   const ApiConnectionStore = useApiConnectionStore()
+  const route = useRoute()
 </script>
 
 <template>
@@ -15,7 +16,11 @@
     <ChainOfReposibiltyWindow />
     <div
       id="MainPageContainer"
-      :class="globalStateStore.isLocked ? 'lock' : ''"
+      :class="
+        globalStateStore.isLocked || globalStateStore.loadingMessage !== ''
+          ? 'lock'
+          : ''
+      "
     >
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
