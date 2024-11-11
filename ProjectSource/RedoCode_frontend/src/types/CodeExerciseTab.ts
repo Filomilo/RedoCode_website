@@ -1,4 +1,4 @@
-import CodeRunnerType from "./CodeRunnerTypes"
+import CodeRunnerType from './CodeRunnerTypes'
 
 export default interface CodeExerciseTab {
   title: string

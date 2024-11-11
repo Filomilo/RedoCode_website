@@ -320,19 +320,19 @@ export function makeServer({ environment = 'development' } = {}) {
     ],
   }
 
-  const  promotionDataMessage: PromotionDataMessage={
-    promotions:[
+  const promotionDataMessage: PromotionDataMessage = {
+    promotions: [
       {
         title: 'Exercise 1',
         description: 'Desc 11',
         languages: [CodeRunnerType.CPP_RUNNER, CodeRunnerType.JS_RUNNER],
-        id: 0
+        id: 0,
       },
       {
         title: 'Exercise 2',
         description: 'Desc 22222222222222222222222',
         languages: [CodeRunnerType.JS_RUNNER],
-        id: 1
+        id: 1,
       },
       {
         title: 'Exercise 3',
@@ -358,9 +358,9 @@ Curabitur at leo in ante laoreet molestie. Aliquam in tincidunt ante, a dapibus 
 
 Suspendisse at leo velit. Ut neque nibh, semper quis ligula a, sollicitudin congue metus. Nunc pulvinar facilisis bibendum. Nam non mattis nulla. Duis sit amet orci nisl. Fusce dolor diam, convallis finibus turpis in, finibus consectetur mauris. Phasellus cursus nisl elit, a interdum diam malesuada in. Vestibulum congue arcu purus, et ultrices sem ullamcorper quis. Sed bibendum nulla quam, id porttitor urna vulputate sit amet. Praesent elementum at tortor et consequat. Duis arcu velit, finibus eu dictum efficitur, eleifend ac purus. `,
         languages: [CodeRunnerType.CPP_RUNNER],
-        id: 2
-      }
-    ]
+        id: 2,
+      },
+    ],
   }
 
   const exerciseListHandler = (schema: any, request: any) => {

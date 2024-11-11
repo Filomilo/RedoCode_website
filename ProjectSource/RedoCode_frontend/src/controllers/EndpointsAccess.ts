@@ -144,7 +144,7 @@ namespace EndpointAccess {
 
     export async function getPromotionExercises(): Promise<PromotionDataMessage> {
       try {
-        console.log('getPromotionExercises fetch:');
+        console.log('getPromotionExercises fetch:')
 
         const response = await axios.get('/public/exercises/promotions')
         console.log('getPromotionExercises Response:', response)

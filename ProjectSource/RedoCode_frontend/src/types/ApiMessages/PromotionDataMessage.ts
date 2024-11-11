@@ -1,5 +1,5 @@
-import CodeExerciseTab from "../CodeExerciseTab";
+import CodeExerciseTab from '../CodeExerciseTab'
 
-export interface PromotionDataMessage{
-    promotions: CodeExerciseTab[]
+export interface PromotionDataMessage {
+  promotions: CodeExerciseTab[]
 }

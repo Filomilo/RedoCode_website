@@ -116,9 +116,9 @@
   import FrontImage3 from '@/assets/Images/fronImage3.png'
   import { useActiveUserStore } from '../stores/ActiveUserStore'
   import { useToast } from 'primevue/usetoast'
-import EndpointAccess from '@/controllers/EndpointsAccess'
-import { PromotionDataMessage } from '@/types/ApiMessages/PromotionDataMessage'
-import { useToastStore } from '@/stores/ToastStore'
+  import EndpointAccess from '@/controllers/EndpointsAccess'
+  import { PromotionDataMessage } from '@/types/ApiMessages/PromotionDataMessage'
+  import { useToastStore } from '@/stores/ToastStore'
   const ToastStore = useToastStore()
   const activeUserStore = useActiveUserStore()
   const inputLogin = ref('sunny@mail.com')
@@ -126,7 +126,6 @@ import { useToastStore } from '@/stores/ToastStore'
   const stayLoggedIn = ref(false)
 
   const isSignInDisabled = ref(false)
-
 
   const onSginInButton = () => {
     isSignInDisabled.value = true
@@ -136,10 +135,6 @@ import { useToastStore } from '@/stores/ToastStore'
         isSignInDisabled.value = false
       })
   }
-
-
-
-
 </script>
 
 <style>

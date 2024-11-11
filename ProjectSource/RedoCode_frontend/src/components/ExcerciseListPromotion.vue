@@ -21,29 +21,25 @@
   import ExerciseCard from './ExerciseCard.vue'
   import type CodeExerciseTab from '../types/CodeExerciseTab'
   import { computed, Ref, ref, ComputedRef, watch, onMounted } from 'vue'
-import EndpointAccess from '@/controllers/EndpointsAccess';
-import { useToastStore } from '@/stores/ToastStore';
-import { PromotionDataMessage } from '@/types/ApiMessages/PromotionDataMessage';
+  import EndpointAccess from '@/controllers/EndpointsAccess'
+  import { useToastStore } from '@/stores/ToastStore'
+  import { PromotionDataMessage } from '@/types/ApiMessages/PromotionDataMessage'
 
+  const ToastStore = useToastStore()
 
-const ToastStore= useToastStore();
-
-  const promtionData: Ref<CodeExerciseTab[]>=ref([])
+  const promtionData: Ref<CodeExerciseTab[]> = ref([])
 
   onMounted(() => {
     fetchPromotionData()
   })
   const fetchPromotionData = () => {
     EndpointAccess.unauthorized
-    .getPromotionExercises()
-      .then((x:PromotionDataMessage) => {
-        promtionData.value=x.promotions;
+      .getPromotionExercises()
+      .then((x: PromotionDataMessage) => {
+        promtionData.value = x.promotions
       })
       .catch(ex => {
         ToastStore.showErrorMessage("Couldn't fetch promotion data ")
       })
   }
-
-
-
 </script>

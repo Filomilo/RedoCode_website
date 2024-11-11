@@ -3,23 +3,17 @@
     <div class="ExerciseCardTopBar">
       <div class="topBarInfoSection">
         <div class="ExerciseCardTile">
-          {{excerciseData.title}}
+          {{ excerciseData.title }}
         </div>
         <div class="ExerciseCardLangaugesConatinenr">
-          <label v-for="lang in excerciseData.languages ">
-{{ lang }},
-          </label>
-  
-      </div>
+          <label v-for="lang in excerciseData.languages"> {{ lang }}, </label>
+        </div>
       </div>
       <div class="topBarButonSection">
         <div class="button">
-          <RouterLink
-          :to="`/Exercises/${excerciseData.id}`"
-          >
-          <IconPlay width="6rem" class="svg-icon" style="fill: white" />
+          <RouterLink :to="`/Exercises/${excerciseData.id}`">
+            <IconPlay width="6rem" class="svg-icon" style="fill: white" />
           </RouterLink>
-     
         </div>
       </div>
     </div>
@@ -49,36 +43,34 @@
   }>()
 </script>
 
-
 <style lang="css">
-.ExerciseCard{
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.ExerciseCardTopBar{
-  border-bottom: 0.3rem solid var(--primary);
-  display: flex;
-  margin: 1rem;
+  .ExerciseCard {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .ExerciseCardTopBar {
+    border-bottom: 0.3rem solid var(--primary);
+    display: flex;
+    margin: 1rem;
+  }
+  .DescritpionCardSection {
+    height: 100%;
+    overflow-y: scroll;
+    margin: 0.6rem;
+  }
 
-}
-.DescritpionCardSection{
-  height: 100%;
-  overflow-y: scroll;
-  margin: 0.6rem;
-}
+  .topBarInfoSection {
+    flex: 1;
+  }
 
-.topBarInfoSection{
-  flex: 1;
-}
+  .topBarButonSection {
+  }
 
-.topBarButonSection{
-}
-
-.ExerciseCardTile{
-  font-size: 2rem;
-  color: var(--primary);
-}
-.ExerciseCardLangaugesConatinenr{
-}
+  .ExerciseCardTile {
+    font-size: 2rem;
+    color: var(--primary);
+  }
+  .ExerciseCardLangaugesConatinenr {
+  }
 </style>
