@@ -29,8 +29,6 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
 
   int countAllByExcersizeId(Long exerciseId);
 
-  int countAllByExcersizeIdAndAvgExecutionTimeGreaterThan(Long exerciseId, Long avgExecutionTime);
-
   @Query(
       """
       SELECT new com.redocode.backend.Messages.LanguageUsePart(pl.name, COUNT(e))
@@ -45,4 +43,6 @@ public interface SolutionProgramsRepository extends JpaRepository<SolutionProgra
       @Param("authorId") Long authorId);
 
   List<SolutionPrograms> findAllBySolutionAuthorId(Long author);
+
+  List<SolutionPrograms> findAllByExcersizeId(Long exerciseId);
 }

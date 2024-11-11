@@ -15,7 +15,7 @@ public class ExcersizeListEntry {
   private Long id;
   private String name;
   private Set<ProgrammingLanguage> languages;
-  private int difficulty;
+  private float difficulty;
   private Long popularity;
   private String description;
 
@@ -26,9 +26,9 @@ public class ExcersizeListEntry {
     this.languages = e.getLanguages();
     this.difficulty =
         e.getRatings().size() != 0
-            ? e.getRatings().stream().mapToInt(element -> element.getRating()).sum()
+            ? (float)e.getRatings().stream().mapToDouble(element -> element.getRating()).sum()
                 / e.getRatings().size()
-            : 0;
+            : 0f;
     this.popularity = (long) e.getSolutions().size();
     this.description = e.getDescription();
   }

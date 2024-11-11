@@ -34,6 +34,9 @@
         <template #item-lang="item">
           {{ item.languages.map((element: any) => element.name) }}
         </template>
+        <template #item-difficulty="item">
+          <DiffcultyIndicator :difficulty="item.difficulty" />
+        </template>
         <template #item-actions="item">
           <Button
             :id="'try_exercise-button-' + item.id"
@@ -76,6 +79,7 @@
   import { isArray } from 'chart.js/helpers'
   import { useActiveUserStore } from '@/stores/ActiveUserStore'
   import EndpointAccess from '@/controllers/EndpointsAccess'
+  import DiffcultyIndicator from '@/components/DiffcultyIndicator.vue'
 
   const ActiveUserStore = useActiveUserStore()
   const router = useRouter()
