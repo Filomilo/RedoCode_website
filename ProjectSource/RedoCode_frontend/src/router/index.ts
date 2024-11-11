@@ -140,6 +140,11 @@ const router = createRouter({
       name: 'test',
       component: () => import('@/views/TestView.vue'),
     },
+    {
+      path :'/:pathMatch(.*)*',
+      name: "fallback",
+     redirect: "/notFound"
+  }
   ],
 })
 router.beforeEach((to, from) => {
