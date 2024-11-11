@@ -138,6 +138,8 @@ import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   }
 
   onMounted(() => {
+    console.log("Code Runner componenet: On MOunted")
+
     console.log('props: ' + JSON.stringify(props))
     console.log('Code runner init')
     connectStomp()
@@ -152,6 +154,7 @@ import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   })
 
   onBeforeRouteLeave(async (to, from, next) => {
+    console.log("Code Runner componenet: On LEAVE")
 let shouldLeave=true;
 
     if(codeRunnerStore.codeRunnerConnection.codeRunnerState.state==CodeRunnerStatus.ACTIVE && !window.confirm("Are you sure you want to leave the page?\n You will lose your connection to code runner and all progress")) {
@@ -171,9 +174,6 @@ let shouldLeave=true;
     props.onRunCode()
   }
 
-  onBeforeRouteLeave(async () => {
-    disconnectStomp()
-  })
 
   const awaiting: ComputedRef<boolean> = computed(() => {
     if (import.meta.env.MODE === 'development') return false

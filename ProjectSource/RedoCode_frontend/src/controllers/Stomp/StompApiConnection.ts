@@ -18,8 +18,8 @@ export default class StompApiConnection {
     })
   }
   private _onDisconnected() {
-    console.log('on disconnected evetn')
-    this._onConnectedEvents.forEach((element: () => void) => {
+    console.log('on disconnected evetn: '+this)
+    this._onDisconnectEvents.forEach((element: () => void) => {
       element()
     })
   }
