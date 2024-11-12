@@ -1,44 +1,46 @@
 <template>
-  <div
-    class=""
-    role="status"
-    style="height: 100%; width: 100%; aspect-ratio: 1/1"
-  >
-    <span class="loader"></span>
+  <div class="loaderContainer" role="status" style="">
+    <div class="lds-dual-ring"></div>
   </div>
 </template>
 
 <style lang="css">
-  .loader {
-    width: 100%;
-    height: 100%;
-    border: 0px solid #fff;
-    border-radius: 90%;
-    display: inline-block;
-    position: relative;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-  }
-  .loader::after {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    border-radius: 70%;
-    border: 9px solid;
-    border-color: var(--primary-color) transparent;
-  }
+.loaderContainer {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
 
-  @keyframes rotation {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+.lds-dual-ring,
+.lds-dual-ring:after {
+  box-sizing: border-box;
+}
+.lds-dual-ring {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 70%;
+  height: 70%;
+  margin: 8px;
+  border-radius: 50%;
+  border: 7.4px solid currentColor;
+  border-color: currentColor transparent currentColor transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
   }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>
