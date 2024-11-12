@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="titleContainer">
+    <div class="titleContainerStats">
       <label class="title"> Amount of language used </label>
     </div>
     <div class="statContainer">
