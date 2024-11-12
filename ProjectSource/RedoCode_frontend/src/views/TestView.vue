@@ -1,17 +1,30 @@
 <template>
   <main>
-    <div class="MainContainer">
-      <div class="MessageContainer">
-        err
-        <Button id="GotToLogin" @click="onGoToLogin"> Go to home page </Button>
-      </div>
-    </div>
+    <CodeEditor
+    class="CodeEditorContainer"
+    :starting="''"
+    :codeUpdateMethod="()=>{}"
+    :onRunCode="()=>{}"
+    :languageChoices="[]"
+  />
   </main>
 </template>
 
 <script setup lang="ts">
-  import { useRouter, useRoute } from 'vue-router'
-
+  import CodeEditorPanel from '@/components/CodeEditorPanel.vue';
+import { useRouter, useRoute } from 'vue-router'
+import CodeEditor from '@/components/CodeEditorPanel.vue'
+  import { onMounted, PropType, computed } from 'vue'
+  import { onBeforeRouteLeave } from 'vue-router'
+    import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+  import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
+  import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
+  import ExerciseTest from '@/types/ExerciseTest'
+  import codeRunnerType from '@/types/CodeRunnerTypes'
+  import { ComputedRef } from 'vue'
+  import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+  import { ConsoleOutput } from '@/types/ProgramResults'
+  import CodeRunnerStatus from '@/types/CodeRunnerStatus'
   const router = useRouter()
   const route = useRoute()
   const onGoToLogin = () => {

@@ -29,7 +29,6 @@
     <NoDataFoundPanel v-else />
   </main>
 
-  <!-- <Image :src=data.profilePic class="profilePic" /> -->
 </template>
 
 <script setup lang="ts">

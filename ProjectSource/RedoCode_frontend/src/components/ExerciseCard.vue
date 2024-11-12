@@ -21,18 +21,6 @@
       {{ excerciseData.description }}
     </div>
   </div>
-  <!-- <div class="ExerciseCardTopBar">
-    <div class="titleContainer">
-      <div class="title">
-        {{ excerciseData.title }}
-      </div>
-    
-  </div>
-
-  </div>
-  <div class="content">
-    
-  </div> -->
 </template>
 
 <script setup lang="ts">

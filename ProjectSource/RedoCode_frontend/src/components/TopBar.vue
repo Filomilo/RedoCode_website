@@ -1,7 +1,6 @@
 <template>
   <nav class="">
     <div class="TopBarContainer">
-      <!-- {{ route }} -->
       <div class="TopBarList">
         <router-link
           to="/Home"
