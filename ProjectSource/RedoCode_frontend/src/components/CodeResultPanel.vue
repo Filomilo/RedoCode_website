@@ -1,6 +1,4 @@
 <template>
-  <!-- type: -->
-
   <div class="CodeResultContainer">
     <div class="EngineStatusContainer">
       <div class="EngineStatusPanel">
