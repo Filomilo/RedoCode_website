@@ -30,13 +30,13 @@
     margin: -30% 0 0 -30%;
     width: 60%;
     aspect-ratio: 1;
-    background: rgb(179, 179, 179);
+    background: rgb(223, 223, 223);
     animation:
       l1-1 2s infinite,
       l1-2 0.5s infinite;
   }
   .loader:after {
-    background: rgb(179, 179, 179);
+    background: rgb(223, 223, 223);
     animation-delay: -1s, 0s;
   }
   @keyframes l1-1 {
