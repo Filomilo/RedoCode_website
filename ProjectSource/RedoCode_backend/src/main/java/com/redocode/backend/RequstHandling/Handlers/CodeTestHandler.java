@@ -41,7 +41,10 @@ public class CodeTestHandler extends BaseRequestHandler {
           SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
   protected TestResults checkTest(ExerciseTests test, RequestBase request, CodeRunner codeRunner)
-          throws RequestHadndlingException, CodeErroeException, JsonProcessingException, IncorrectTestResultExceptions {
+      throws RequestHadndlingException,
+          CodeErroeException,
+          JsonProcessingException,
+          IncorrectTestResultExceptions {
 
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
@@ -131,15 +134,12 @@ public class CodeTestHandler extends BaseRequestHandler {
     for (ExerciseTests exTest : tests) {
       try {
         programResults.add(checkTest(exTest, request, codeRunner));
-      }
-      catch (IncorrectTestResultExceptions ex)
-      {
+      } catch (IncorrectTestResultExceptions ex) {
         programResults.add(ex.getTestResults());
         if (!is_continueOnError())
           throw new RequestHadndlingException("Test " + i + " failed: " + ex.getMessage());
         else break;
-      }
-      catch (Exception ex) {
+      } catch (Exception ex) {
         programResults.add(
             (TestResults)
                 TestResults.builder()
