@@ -33,14 +33,14 @@ public class CodeRunHandler {
   @MessageMapping({ConnectionTargets.INrunExerciseById})
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
-  public void runExerciseIdCode(
-      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) throws RequestHadndlingException {
+  public void runExerciseIdCode(Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage)
+      throws RequestHadndlingException {
 
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
     log.info(user + " runExerciseIdCode " + exerciseIdToRunMessage);
-    CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(user);
-    if(userCodeRunner==null) {
+    CodeRunner userCodeRunner = codeRunnersController.getUserCodeRunner(user);
+    if (userCodeRunner == null) {
       throw new RequestHadndlingException("Coudlnt run exercise of id, No Coderunner active");
     }
     SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
@@ -52,12 +52,13 @@ public class CodeRunHandler {
   @MessageMapping({ConnectionTargets.INrunRawCode})
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
-  public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage) throws RequestHadndlingException {
+  public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage)
+      throws RequestHadndlingException {
     String useruuid = principal.getName();
     log.info("user: " + useruuid + " runs runRawCode: " + rawCodeToRunMessage);
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
-    CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(user);
-    if(userCodeRunner==null) {
+    CodeRunner userCodeRunner = codeRunnersController.getUserCodeRunner(user);
+    if (userCodeRunner == null) {
       throw new RequestHadndlingException("Coudlnt run raw code, No Coderunner active");
     }
     RawCodeRunRequest rawCodeRunRequest =
@@ -71,13 +72,15 @@ public class CodeRunHandler {
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
   public void runExercsieIdValidationCode(
-      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) throws RequestHadndlingException {
+      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage)
+      throws RequestHadndlingException {
 
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
-    CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(user);
-    if(userCodeRunner==null) {
-      throw new RequestHadndlingException("Coudlnt run zxercsieId validation, No Coderunner active");
+    CodeRunner userCodeRunner = codeRunnersController.getUserCodeRunner(user);
+    if (userCodeRunner == null) {
+      throw new RequestHadndlingException(
+          "Coudlnt run zxercsieId validation, No Coderunner active");
     }
     log.info("user: " + useruuid + " runs runExerciseIdCodeSubmit with " + exerciseIdToRunMessage);
     SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
@@ -89,12 +92,13 @@ public class CodeRunHandler {
   @MessageMapping({ConnectionTargets.INrunExercsieTestsCode})
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
-  public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest) throws RequestHadndlingException {
+  public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest)
+      throws RequestHadndlingException {
     String useruuid = principal.getName();
     log.info("user: " + useruuid + " runs runExercsieTestsCode: " + codeTestRequest);
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
     CodeRunner activeCodeRunner = codeRunnersController.getUserCodeRunner(user);
-    if(activeCodeRunner==null) {
+    if (activeCodeRunner == null) {
       throw new RequestHadndlingException("Coudlnt run Exercise Tests Code, No Coderunner active");
     }
     CodeTestRequest exerciseCreationRequest =

@@ -34,7 +34,7 @@ public class RawCodeRunHandler extends BaseRequestHandler {
     RawCodeRunRequest requestRawCodeRunRequest = (RawCodeRunRequest) request;
 
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(request.getUser());
-    if(codeRunner==null)
+    if (codeRunner == null)
       throw new RequestHadndlingException("Error running taw code, no code runner found");
     ProgramResult results =
         codeRunner.runProgram(
