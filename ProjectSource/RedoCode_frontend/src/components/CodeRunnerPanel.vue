@@ -89,7 +89,7 @@
   import { onBeforeRouteLeave } from 'vue-router'
   import ConnectToCodeRunnerPanel from './ConnectToCodeRunnerPanel.vue'
 
-  import CodeResultPanel from './CodeResultPanel.vue'
+  import CodeResultPanel from '@/components/CodeResultPanel.vue'
   import ExerciseDescriptionPanel from './ExerciseDescriptionPanel.vue'
   import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import LoadingIndicator from './LoadingIndicator.vue'

@@ -2,6 +2,7 @@
   <!-- type: -->
 
   <div class="CodeResultContainer">
+    {{ JSON.stringify(props) }}
     <div class="EngineStatusContainer">
       <div class="EngineStatusPanel">
         <div class="EngineStatusTitle">Machine:</div>
