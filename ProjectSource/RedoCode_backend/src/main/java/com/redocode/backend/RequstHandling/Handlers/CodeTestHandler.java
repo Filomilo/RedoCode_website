@@ -2,6 +2,7 @@ package com.redocode.backend.RequstHandling.Handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.redocode.backend.Excpetions.CodeErroeException;
+import com.redocode.backend.Excpetions.IncorrectTestResultExceptions;
 import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.UtilContainers.ChainNodeInfo;
 import com.redocode.backend.RequstHandling.Requests.Interfaces.*;
@@ -40,7 +41,7 @@ public class CodeTestHandler extends BaseRequestHandler {
           SpringContextUtil.getApplicationContext().getBean(CodeRunnersController.class);
 
   protected TestResults checkTest(ExerciseTests test, RequestBase request, CodeRunner codeRunner)
-      throws RequestHadndlingException, CodeErroeException, JsonProcessingException {
+          throws RequestHadndlingException, CodeErroeException, JsonProcessingException, IncorrectTestResultExceptions {
 
     ISolutionCodesRequest solutionCodesRequest = (ISolutionCodesRequest) request;
     ITestsToRunRequest testsToRunRequest = (ITestsToRunRequest) request;
@@ -82,14 +83,7 @@ public class CodeTestHandler extends BaseRequestHandler {
       log.info("program resuult: " + recived);
       log.info("expected program resuult: " + expcected);
       if (recived == null || !recived.equals(expcected)) {
-        throw new RequestHadndlingException(
-            "expected: "
-                        + test.getParsedOutput(testsToRunRequest.getOutputType()).getValue()
-                        + " but recived: "
-                        + result.getVariables()
-                    != null
-                ? result.getVariables().getValue().toString()
-                : "null");
+        throw new IncorrectTestResultExceptions(result);
       }
       return result;
     } catch (JsonProcessingException ex) {
@@ -137,7 +131,15 @@ public class CodeTestHandler extends BaseRequestHandler {
     for (ExerciseTests exTest : tests) {
       try {
         programResults.add(checkTest(exTest, request, codeRunner));
-      } catch (Exception ex) {
+      }
+      catch (IncorrectTestResultExceptions ex)
+      {
+        programResults.add(ex.getTestResults());
+        if (!is_continueOnError())
+          throw new RequestHadndlingException("Test " + i + " failed: " + ex.getMessage());
+        else break;
+      }
+      catch (Exception ex) {
         programResults.add(
             (TestResults)
                 TestResults.builder()

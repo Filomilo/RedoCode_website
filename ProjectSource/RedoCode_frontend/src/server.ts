@@ -164,7 +164,7 @@ export function makeServer({ environment = 'development' } = {}) {
   }
 
   const solutionData: SolutionsData = {
-    maxExecutionTimeMs: 100,
+    maxExecutionTimeMs: 10000,
     solutionList: [
       {
         username: 'Username1 ',
@@ -177,7 +177,7 @@ export function makeServer({ environment = 'development' } = {}) {
       {
         username: 'Username2',
         date: new Date(),
-        executionTimeMs: 25,
+        executionTimeMs: 205,
         profilePic: '',
         solutionId: 2,
         codeRunner: CodeRunnerType.CPP_RUNNER,
@@ -185,7 +185,7 @@ export function makeServer({ environment = 'development' } = {}) {
       {
         username: 'Username3',
         date: new Date(),
-        executionTimeMs: 44,
+        executionTimeMs: 4004,
         profilePic: '',
         solutionId: 3,
         codeRunner: CodeRunnerType.CPP_RUNNER,

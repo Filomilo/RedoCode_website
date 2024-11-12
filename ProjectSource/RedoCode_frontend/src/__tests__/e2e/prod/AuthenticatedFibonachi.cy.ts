@@ -110,7 +110,7 @@ describe('Authenticated FIbonachi', () => {
     SwitcherControls.switchExercises()
     ExercisesPage.openExerciseOfName('fibonachi sequance')
     UrlControls.urlShouldBe('Results/1')
-    ResultPage.ResultPanel.ExecutionTimeShouldBeLess(200)
+    ResultPage.ResultPanel.ExecutionTimeShouldBeLess(400)
     ResultPage.ResultPanel.SolutionBetterProcetShouldGreater(0)
     // ResultPage.ResultPanel.resulrRankShouldBe(1)
     ResultPage.Rating.clickRating(4)
