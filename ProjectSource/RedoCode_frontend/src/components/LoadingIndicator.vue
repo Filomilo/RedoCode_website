@@ -30,7 +30,7 @@
     margin: -30% 0 0 -30%;
     width: 60%;
     aspect-ratio: 1;
-    background:rgb(179, 179, 179);
+    background: rgb(179, 179, 179);
     animation:
       l1-1 2s infinite,
       l1-2 0.5s infinite;

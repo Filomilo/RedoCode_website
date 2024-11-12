@@ -25,9 +25,8 @@
       <template #container>
         <div class="CodeRunnerLoadingPanel" id="coderunner-loading-dialog">
           <!-- <div class="loadingIndicatorContainer"> -->
-          <LoadingIndicator  
-          />
-        <!-- </div> -->
+          <LoadingIndicator />
+          <!-- </div> -->
           <div>
             Awaiting access to code runner, please be patient. Consider Creating
             and account to have priority in queue

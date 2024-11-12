@@ -98,7 +98,6 @@
     text-align: center;
     line-height: 9px;
     color: rgb(197, 197, 197);
-    text-shadow: 0px 0px 4px var(--primary)
-    
+    text-shadow: 0px 0px 4px var(--primary);
   }
 </style>
