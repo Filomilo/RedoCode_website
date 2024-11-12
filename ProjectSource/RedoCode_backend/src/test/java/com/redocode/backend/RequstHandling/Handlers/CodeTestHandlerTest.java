@@ -103,7 +103,7 @@ class CodeTestHandlerTest {
                 .user(user)
                 .build()));
     CodeRunner codeRunner = codeRunnersController.getUserCodeRunner(user);
-    assertNotNull(codeRunner);
+    assertNotNull(codeRunner,"Could not get codeRunner");
 
     assertNotNull(codeTestHandler.handle(codeTestRequest));
   }

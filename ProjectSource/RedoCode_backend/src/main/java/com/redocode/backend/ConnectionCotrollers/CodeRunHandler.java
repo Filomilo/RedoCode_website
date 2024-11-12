@@ -1,5 +1,6 @@
 package com.redocode.backend.ConnectionCotrollers;
 
+import com.redocode.backend.Excpetions.RequestHadndlingException;
 import com.redocode.backend.Messages.CodeRunningMessages.*;
 import com.redocode.backend.RedoCodeController;
 import com.redocode.backend.RequstHandling.Requests.CodeTestRequest;
@@ -33,27 +34,35 @@ public class CodeRunHandler {
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
   public void runExerciseIdCode(
-      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) {
+      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) throws RequestHadndlingException {
 
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
     log.info(user + " runExerciseIdCode " + exerciseIdToRunMessage);
+    CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(user);
+    if(userCodeRunner==null) {
+      throw new RequestHadndlingException("Coudlnt run exercise of id, No Coderunner active");
+    }
     SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
         RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
-            exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
+            exerciseIdToRunMessage, user, userCodeRunner.getType());
     runExerciseIdCode.startChain(singleDatabaseExerciseTestRequest);
   }
 
   @MessageMapping({ConnectionTargets.INrunRawCode})
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
-  public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage) {
+  public void runRawCode(Principal principal, RawCodeToRunMessage rawCodeToRunMessage) throws RequestHadndlingException {
     String useruuid = principal.getName();
     log.info("user: " + useruuid + " runs runRawCode: " + rawCodeToRunMessage);
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
+    CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(user);
+    if(userCodeRunner==null) {
+      throw new RequestHadndlingException("Coudlnt run raw code, No Coderunner active");
+    }
     RawCodeRunRequest rawCodeRunRequest =
         RedoCodeObjectMapper.toRunRawCodeRequest(
-            rawCodeToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
+            rawCodeToRunMessage, user, userCodeRunner.getType());
     log.info("runRawCode chain start");
     ResponsibilityChainRepository.runRawCode.startChain(rawCodeRunRequest);
   }
@@ -62,25 +71,32 @@ public class CodeRunHandler {
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
   public void runExercsieIdValidationCode(
-      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) {
+      Principal principal, ExerciseIdToRunMessage exerciseIdToRunMessage) throws RequestHadndlingException {
 
     String useruuid = principal.getName();
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
+    CodeRunner userCodeRunner=codeRunnersController.getUserCodeRunner(user);
+    if(userCodeRunner==null) {
+      throw new RequestHadndlingException("Coudlnt run zxercsieId validation, No Coderunner active");
+    }
     log.info("user: " + useruuid + " runs runExerciseIdCodeSubmit with " + exerciseIdToRunMessage);
     SingleDatabaseExerciseTestRequest singleDatabaseExerciseTestRequest =
         RedoCodeObjectMapper.toSingleDatabaseExerciseTestRequest(
-            exerciseIdToRunMessage, user, codeRunnersController.getUserCodeRunner(user).getType());
+            exerciseIdToRunMessage, user, userCodeRunner.getType());
     runExerciseIdCodeSubmit.startChain(singleDatabaseExerciseTestRequest);
   }
 
   @MessageMapping({ConnectionTargets.INrunExercsieTestsCode})
   // todo:: consider possibluty of mapping global configuaraiton like languegs encpoint etcc to soem
   // global config
-  public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest) {
+  public void runExerciseTestsCode(Principal principal, ExerciseTestToRunMesseage codeTestRequest) throws RequestHadndlingException {
     String useruuid = principal.getName();
     log.info("user: " + useruuid + " runs runExercsieTestsCode: " + codeTestRequest);
     User user = redoCodeController.getUserByConnectionUUID(useruuid);
     CodeRunner activeCodeRunner = codeRunnersController.getUserCodeRunner(user);
+    if(activeCodeRunner==null) {
+      throw new RequestHadndlingException("Coudlnt run Exercise Tests Code, No Coderunner active");
+    }
     CodeTestRequest exerciseCreationRequest =
         RedoCodeObjectMapper.toExerciseTestsRunRequest(
             codeTestRequest, user, activeCodeRunner.getType());
