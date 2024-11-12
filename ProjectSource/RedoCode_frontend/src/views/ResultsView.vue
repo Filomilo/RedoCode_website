@@ -28,7 +28,6 @@
     </div>
     <NoDataFoundPanel v-else />
   </main>
-
 </template>
 
 <script setup lang="ts">

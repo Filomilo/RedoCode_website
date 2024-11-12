@@ -1,22 +1,22 @@
 <template>
   <main>
     <CodeEditor
-    class="CodeEditorContainer"
-    :starting="''"
-    :codeUpdateMethod="()=>{}"
-    :onRunCode="()=>{}"
-    :languageChoices="[]"
-  />
+      class="CodeEditorContainer"
+      :starting="''"
+      :codeUpdateMethod="() => {}"
+      :onRunCode="() => {}"
+      :languageChoices="[]"
+    />
   </main>
 </template>
 
 <script setup lang="ts">
-  import CodeEditorPanel from '@/components/CodeEditorPanel.vue';
-import { useRouter, useRoute } from 'vue-router'
-import CodeEditor from '@/components/CodeEditorPanel.vue'
+  import CodeEditorPanel from '@/components/CodeEditorPanel.vue'
+  import { useRouter, useRoute } from 'vue-router'
+  import CodeEditor from '@/components/CodeEditorPanel.vue'
   import { onMounted, PropType, computed } from 'vue'
   import { onBeforeRouteLeave } from 'vue-router'
-    import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
+  import { useCodeRunnerStore } from '../stores/CodeRunnerStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import IExerciseDescriptionI from '@/types/IExerciseDescriptionI'
   import ExerciseTest from '@/types/ExerciseTest'
