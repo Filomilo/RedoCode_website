@@ -37,6 +37,8 @@
     width: 10rem;
     height: 10rem;
     margin: 3rem;
+    display: flex;
+    justify-content: center;
   }
 
   .panelContainer {

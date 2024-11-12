@@ -1,6 +1,6 @@
 <template>
   <div class="loaderContainer" role="status" style="">
-    <div class="lds-dual-ring"></div>
+    <div class="loader"></div> 
   </div>
 </template>
 
@@ -14,33 +14,38 @@
   align-items: center;
   align-content: center;
 }
+.loader {
+  width: 40%;
+  aspect-ratio: 1;
+  position: relative;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: -30% 0 0 -30%;
+  width: 60%;
+  aspect-ratio: 1;
+  background:  var(--primary);
+  animation:
+    l1-1 2s  infinite,
+    l1-2 .5s infinite;
+}
+.loader:after {
+  background: var(--primary);
+  animation-delay: -1s,0s;
+}
+@keyframes l1-1 {
+  0%   {top:0   ;left:0}
+  25%  {top:100%;left:0}
+  50%  {top:100%;left:100%}
+  75%  {top:0   ;left:100%}
+  100% {top:0   ;left:0}
+}
+@keyframes l1-2 {
+   80%,100% {transform: rotate(0.5turn)}
+}
 
-.lds-dual-ring,
-.lds-dual-ring:after {
-  box-sizing: border-box;
-}
-.lds-dual-ring {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 70%;
-  height: 70%;
-  margin: 8px;
-  border-radius: 50%;
-  border: 7.4px solid currentColor;
-  border-color: currentColor transparent currentColor transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 </style>
