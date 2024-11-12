@@ -45,7 +45,7 @@ public class RawCodeRunHandler extends BaseRequestHandler {
                   {
                     put(
                         requestRawCodeRunRequest.getCodeRunnerType(),
-                        List.of(new TestResults[] {(TestResults) results}));
+                        List.of(new TestResults[] {new TestResults (results)}));
                   }
                 })
             .user(requestRawCodeRunRequest.getUser())

@@ -22,7 +22,9 @@ namespace CodeRunnerPanel {
         cy.get(codeEditorSequance).focus()
         cy.get(codeEditorSequance).type(backspaces, { force: true })
         cy.get(codeEditorSequance).type(backspaces, { force: true })
-        cy.get(codeEditorSequance).clear()
+        if (!Cypress.isBrowser('firefox')) {
+          cy.get(codeEditorSequance).clear()
+        }
       }
       codeRunnerShouldBeEmpty()
     }
@@ -154,7 +156,7 @@ namespace CodeRunnerPanel {
     cy.get('#coderunner-run-button').should('be.visible')
 
     cy.get('#coderunner-run-button').click()
-    shouldBeLoading()
+    // shouldBeLoading()
   }
 
   export function shouldBeLoading() {

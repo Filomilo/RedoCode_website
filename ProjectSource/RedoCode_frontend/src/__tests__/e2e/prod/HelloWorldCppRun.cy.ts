@@ -10,12 +10,19 @@ describe('hello world cpp run ', () => {
       }
     })
     cy.reload()
-    const helloWorldProgram = 'console.log("Hello World!")'
+    const helloWorldProgram = `
+    #include<iostream>
+    int main()
+    {
+    std::cout<<"Hello World!";
+    return 0;
+    }
+    `
 
     UrlControls.startPage()
 
     SwitcherControls.switchPlayground()
-    CodeRunnerPanel.selectInitialLanguage('js')
+    CodeRunnerPanel.selectInitialLanguage('cpp')
     CodeRunnerPanel.CodeRunnerInput.clearCodeRunner()
     CodeRunnerPanel.CodeRunnerInput.inputToCodeRunner(helloWorldProgram)
     CodeRunnerPanel.RawCodeResults.shouldResultBe('')

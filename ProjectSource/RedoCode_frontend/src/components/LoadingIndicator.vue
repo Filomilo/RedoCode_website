@@ -12,8 +12,8 @@
   .loader {
     width: 100%;
     height: 100%;
-    border: 8px solid #fff;
-    border-radius: 50%;
+    border: 0px solid #fff;
+    border-radius: 90%;
     display: inline-block;
     position: relative;
     box-sizing: border-box;
@@ -29,7 +29,7 @@
     width: 100%;
     height: 100%;
     border-radius: 70%;
-    border: 7px solid;
+    border: 9px solid;
     border-color: var(--primary-color) transparent;
   }
 

@@ -9,6 +9,7 @@ export default defineConfig({
     experimentalMemoryManagement: true,
     video: true,
     screenshotOnRunFailure: true,
+    numTestsKeptInMemory: 0, //optinal
     setupNodeEvents(on, config) {
       installLogsPrinter(on, {
         logToFilesOnAfterRun: true,

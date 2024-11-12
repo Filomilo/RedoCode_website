@@ -134,6 +134,15 @@ namespace RouterValidators {
     if (state == ExerciseSolvingState.UNSOLVED) return 'Exercise'
     return null
   }
+
+  export function ActiveCodeRunnerLeave(
+    to: any,
+    from: any,
+    next: any,
+    ActiveCodeRunnerLeave: any
+  ) {
+    throw new Error('Function not implemented.')
+  }
 }
 
 export default RouterValidators
