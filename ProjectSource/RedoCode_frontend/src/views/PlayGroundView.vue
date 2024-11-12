@@ -6,7 +6,7 @@
       starting=""
       :onRunCode="onRunCode"
       :onResults="onCodeResult"
-      :ManualTests="codeRunnerStore.playGroundRunnerController.consoleOutput"
+      :ManualTests="conseleOutput"
       :ExecutionTime="codeRunnerStore.playGroundRunnerController.executionTime"
     />
   </main>
@@ -15,7 +15,7 @@
 <script lang="ts" setup>
   import CodeRunnerPanel from '@/components/CodeRunnerPanel.vue'
   import { useCodeRunnerStore } from '@/stores/CodeRunnerStore'
-  import { onMounted, Ref, ref } from 'vue'
+  import { computed, ComputedRef, onMounted, Ref, ref } from 'vue'
   import LoadingIndicator from '@/components/LoadingIndicator.vue'
   import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
   import { setTimeout } from 'timers'
@@ -23,6 +23,7 @@
   import { useToastStore } from '@/stores/ToastStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
+import { ConsoleOutput } from '@/types/ProgramResults'
   const ApiConnectionStore = useApiConnectionStore()
   const setupPlayground = () => {}
   const codeRunnerStore = useCodeRunnerStore()
@@ -54,6 +55,9 @@
     // toastStore.featureNotImplemented('onRunCode')
     codeRunnerStore.playGroundRunnerController.updateResult(results.results[0])
   }
+  const conseleOutput: ComputedRef<ConsoleOutput>=computed(()=>{
+    return  (codeRunnerStore.playGroundRunnerController.consoleOutput as unknown as Ref<ConsoleOutput>).value;
+  })
 </script>
 
 <style></style>
