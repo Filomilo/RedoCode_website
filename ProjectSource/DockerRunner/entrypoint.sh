@@ -5,6 +5,8 @@
 # 
 # tail -f /dev/null
 echo '------------------------------------ ENTRY POINT.SH --------------------------'
+ps aux
+pkill -f "dockerd"
 rm -f /var/run/docker.pid # to remveo prevos docker preoces from previous run
 export DOCKER_HOST=tcp://0.0.0.0:2376
 echo "start docker"
