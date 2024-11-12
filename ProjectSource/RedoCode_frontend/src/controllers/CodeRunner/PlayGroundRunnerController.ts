@@ -17,16 +17,14 @@ class PlayGroundRunnerController {
     this.consoleOutput.value = results.consoleOutput
     this.executionTime = results.executionTime
   }
-  public clear()
-  {
-    this.executionTime=0;
-    this.consoleOutput.value={
+  public clear() {
+    this.executionTime = 0
+    this.consoleOutput.value = {
       exitCode: 0,
       output: '',
       errorOutput: '',
     }
-    console.log("Playground CLEAR: "+ JSON.stringify(this.consoleOutput));
-
+    console.log('Playground CLEAR: ' + JSON.stringify(this.consoleOutput))
   }
 }
 

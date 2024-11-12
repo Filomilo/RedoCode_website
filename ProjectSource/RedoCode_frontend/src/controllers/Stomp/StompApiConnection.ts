@@ -145,7 +145,7 @@ export default class StompApiConnection {
   }
 
   public addOnDisconnectEvent(method: () => void): void {
-    console.log("add on diconnetct event: "+method)
+    console.log('add on diconnetct event: ' + method)
     this._onDisconnectEvents.push(method)
   }
   public removeOnDisconnectEvent(method: () => void): void {

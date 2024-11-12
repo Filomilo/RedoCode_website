@@ -23,7 +23,7 @@
   import { useToastStore } from '@/stores/ToastStore'
   import { useApiConnectionStore } from '@/stores/ApiConnectionStore'
   import TestsResultsMessage from '@/types/ApiMessages/ProgramResultsMessage'
-import { ConsoleOutput } from '@/types/ProgramResults'
+  import { ConsoleOutput } from '@/types/ProgramResults'
   const ApiConnectionStore = useApiConnectionStore()
   const setupPlayground = () => {}
   const codeRunnerStore = useCodeRunnerStore()
@@ -55,8 +55,11 @@ import { ConsoleOutput } from '@/types/ProgramResults'
     // toastStore.featureNotImplemented('onRunCode')
     codeRunnerStore.playGroundRunnerController.updateResult(results.results[0])
   }
-  const conseleOutput: ComputedRef<ConsoleOutput>=computed(()=>{
-    return  (codeRunnerStore.playGroundRunnerController.consoleOutput as unknown as Ref<ConsoleOutput>).value;
+  const conseleOutput: ComputedRef<ConsoleOutput> = computed(() => {
+    return (
+      codeRunnerStore.playGroundRunnerController
+        .consoleOutput as unknown as Ref<ConsoleOutput>
+    ).value
   })
 </script>
 
