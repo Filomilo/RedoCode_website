@@ -1,10 +1,4 @@
 <template>
-  <!-- test
-  {{
-    JSON.stringify(
-      codeRunnerStore.exerciseCreatorController.getSingleRowOfManualTests
-    )
-  }} -->
   <div>
     <div class="VerticalLine">
       <label class="VerticalLineElement">Input</label>

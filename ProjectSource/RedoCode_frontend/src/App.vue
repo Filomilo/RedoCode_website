@@ -25,8 +25,7 @@
       <TopBar id="TopBarContainer" />
       <div class="BackGroundContainer">
         <Toast style="margin-top: 4rem" />
-        <!-- <div  id="ContentConatiner" style="background-color: red;"></div> -->
-        <RouterView id="ContentConatiner" />
+\        <RouterView id="ContentConatiner" />
       </div>
     </div>
   </html>

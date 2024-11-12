@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="promotionScrollPanel"> -->
   <ScrollPanel
     style="width: 100%; height: fit-content; margin-top: 6rem"
     orientation="horizontal"
@@ -14,7 +13,6 @@
       </div>
     </div>
   </ScrollPanel>
-  <!-- </div> -->
 </template>
 
 <script setup lang="ts">

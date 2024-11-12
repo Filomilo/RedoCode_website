@@ -11,7 +11,6 @@
       </TabPanel>
 
       <TabPanel header="Solution" :disabled="!testValidation">
-        <!-- <CodeRunnerPanel /> -->
         <CodeRunnerPanel
           :v-if="testValidation"
           key="CreateCodeRunner"

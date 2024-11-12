@@ -4,8 +4,6 @@
       {{ difficultyName }}
     </header>
     <div class="DiffucltyBarContainer">
-      <!-- Diff:
- {{ props.difficulty }} -->
       <div class="BasicDiffSquare" :style="getStyleOveride(0)" />
       <div class="BasicDiffSquare" :style="getStyleOveride(1)" />
       <div class="BasicDiffSquare" :style="getStyleOveride(2)" />
