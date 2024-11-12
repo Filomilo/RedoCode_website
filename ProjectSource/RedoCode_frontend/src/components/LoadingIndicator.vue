@@ -13,6 +13,8 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+    align-self: center;
+    padding: 10%;
   }
   .loader {
     width: 40%;
@@ -28,13 +30,13 @@
     margin: -30% 0 0 -30%;
     width: 60%;
     aspect-ratio: 1;
-    background: var(--primary);
+    background:rgb(179, 179, 179);
     animation:
       l1-1 2s infinite,
       l1-2 0.5s infinite;
   }
   .loader:after {
-    background: var(--primary);
+    background: rgb(179, 179, 179);
     animation-delay: -1s, 0s;
   }
   @keyframes l1-1 {

@@ -24,7 +24,7 @@ class PlayGroundRunnerController {
       output: '',
       errorOutput: '',
     }
-    console.log('Playground CLEAR: ' + JSON.stringify(this.consoleOutput))
+    // console.log('Playground CLEAR: ' + JSON.stringify(this.consoleOutput))
   }
 }
 
