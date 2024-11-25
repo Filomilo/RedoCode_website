@@ -7,7 +7,7 @@ import com.redocode.backend.VmAcces.VmStatus;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-public abstract class VmConnector {
+public interface VmConnector {
 
   public abstract String createVm(String vmName, int ramMb) throws ContainerException;
 

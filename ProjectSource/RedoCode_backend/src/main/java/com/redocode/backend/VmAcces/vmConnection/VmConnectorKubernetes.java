@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Slf4j
-public class VmConnectorKubernetes extends VmConnector {
+public class VmConnectorKubernetes implements VmConnector {
 
   KubernetesClient kubernetesClient = null;
 
@@ -105,7 +105,7 @@ public class VmConnectorKubernetes extends VmConnector {
   }
 
   @Override
-  void pullImageSync(String Image) throws InterruptedException {}
+  public void pullImageSync(String Image) throws InterruptedException {}
 
   @Override
   public void startVm(String id) {}
@@ -175,7 +175,7 @@ public class VmConnectorKubernetes extends VmConnector {
   }
 
   @Override
-  List<String> getRunningVmList() {
+  public List<String> getRunningVmList() {
     DeploymentList list =
         this.kubernetesClient.apps().deployments().inNamespace(codeRunnersNamespace).list();
     return list.getItems().stream().map(deployment -> deployment.getMetadata().getName()).toList();

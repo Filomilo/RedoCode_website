@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 @Slf4j
-public class VmConnectorDocker extends VmConnector {
+public class VmConnectorDocker implements VmConnector {
 
   private final DockerClient dockerClient;
 
