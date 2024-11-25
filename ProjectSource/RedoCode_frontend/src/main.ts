@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import { makeServer } from './server'
 // import "bootstrap"
-import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
+import { loader, install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import PrimeVue from 'primevue/config'
 import Toast from 'primevue/toast'
 import Splitter from 'primevue/splitter'
@@ -48,7 +48,10 @@ import ToastService from 'primevue/toastservice'
 import Timeline from 'primevue/timeline'
 import Vue from 'vue'
 import VueCookies from 'vue-cookies'
-
+// @ts-ignore
+import * as MonacoLoader  from './config/monaco/loader.js';
+// @ts-ignore
+window.require = () => {}
 const app = createApp(App)
 if (import.meta.env.MODE === 'development') {
   const { makeServer } = await import('./server')
@@ -88,7 +91,8 @@ app.use(ToastService)
 
 app.use(VueMonacoEditorPlugin, {
   paths: {
-    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs',
+    // @ts-ignore
+    vs: "/src/config/monaco",
   },
 })
 app.use(VueCookies, { expires: '30d' })

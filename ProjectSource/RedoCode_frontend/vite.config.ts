@@ -37,19 +37,23 @@ export default defineConfig({
     modulePreload: {
       resolveDependencies: () => [],
     },
-    // minify: false,
+    minify: false,
     rollupOptions: {
       output: {
         manualChunks(id) {
+       
           console.log('getFileName: ' + id)
 
           const folder = getFolder(id)
           const name = getFileName(id)
           const extension = getExtension(id)
-
+          return `${folder}/${name}.${extension}`;
           console.log('folder: ' + folder)
           console.log('name: ' + name)
           console.log('extension: ' + extension)
+          if (id.includes('config/monaco')) {
+            return `vendor/monaco/${name}`
+          }
           if (id.includes('.css') || id.includes('.scss')) {
             return 'style'
           }
