@@ -1,6 +1,7 @@
 # build stage
-FROM node:21-alpine as build-stage
+FROM node:23-alpine as build-stage
 WORKDIR /app
+RUN yarn set version 4.0.2
 COPY package*.json ./
 RUN yarn 
 COPY . .
