@@ -6,6 +6,8 @@ import VarType, {
   isTypeSingle,
   isTypeString,
 } from '@/types/VarType'
+import { v4 as uuidv4 } from 'uuid'
+
 //#endregion
 
 export default class GroupOfTestsController {
@@ -42,7 +44,7 @@ export default class GroupOfTestsController {
       errorOutput: '',
       consoleOutput: '',
       isSolved: null,
-      uuid: crypto.randomUUID(),
+      uuid: uuidv4(),
       executionTime: -1,
     })
     console.log('added: ' + JSON.stringify(this.tests))
